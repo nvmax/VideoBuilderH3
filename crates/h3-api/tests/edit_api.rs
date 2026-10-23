@@ -142,6 +142,13 @@ async fn a_project_is_built_edited_and_deleted_through_the_api() {
     assert_eq!(after.as_object().unwrap().len() as u64, done["scenes_assigned"].as_u64().unwrap());
     let (code, _) = s.call(Method::POST, &format!("{p}/references/assign-scenes"), &[], Some(json!({"character_pattern": "shuffle"}))).await;
     assert_eq!(code, 400);
+    // Story settings are saved, a bad value is refused, and the Storyboard-only steps say so.
+    let saved = s.ok(Method::PUT, &format!("{p}/story/settings"), json!({"defaults": {"camera_motion_speed": 6}, "story": {"overall_story_idea": "A fox"}})).await;
+    assert_eq!((saved["defaults"]["camera_motion_speed"].as_f64(), saved["story"]["overall_story_idea"].as_str()), (Some(6.0), Some("A fox")));
+    let (code, _) = s.call(Method::PUT, &format!("{p}/story/settings"), &[], Some(json!({"defaults": {"camera_motion_speed": 40}}))).await;
+    assert_eq!(code, 400);
+    let (code, body) = s.call(Method::POST, &format!("{p}/story/arc"), &[], Some(json!({}))).await;
+    assert_eq!((code, body["error"]["code"].as_str()), (501, Some("NOT_SUPPORTED")));
     s.ok(Method::DELETE, &format!("{p}/references/subjects/subj1"), json!(null)).await;
 
     // Deleting needs the id typed back.

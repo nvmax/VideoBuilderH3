@@ -18,6 +18,7 @@ pub mod scaffold;
 pub mod scene_ops;
 pub mod session;
 pub mod session_ops;
+pub mod story;
 pub mod takes;
 
 pub use atomic::{atomic_write_json, atomic_write_text};

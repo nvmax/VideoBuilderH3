@@ -1,0 +1,6354 @@
+{
+ "sessions": {
+  "empty": {
+   "project_name": "S",
+   "revision": 4,
+   "builder_save_revision": 4,
+   "segments": []
+  },
+  "with_layer": {
+   "project_name": "S",
+   "revision": 7,
+   "builder_save_revision": 7,
+   "segments": [],
+   "builder_story_layer": {
+    "overall_story_idea": "  a boy and a fox ",
+    "lyric_story_strength": 3,
+    "image_world_style": "",
+    "extra_key": 1
+   },
+   "builder_storyboard_defaults": {
+    "camera_flow": "slow",
+    "video_style": "noir",
+    "keep": true
+   }
+  },
+  "camel_layer": {
+   "project_name": "S",
+   "revision": 2,
+   "segments": [],
+   "builderStoryLayer": {
+    "enabled": false,
+    "song_story_brief": " brief "
+   }
+  }
+ },
+ "cases": [
+  {
+   "session": "empty",
+   "params": {},
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {},
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {},
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": null
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": null
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": null
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": null
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "story_arc_detail": "rich"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "story_arc_detail": "rich"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "story_arc_detail": "rich"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "story_arc_detail": "rich"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "video_style": "a"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "video_style": "a"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {
+      "video_style": "a"
+     },
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "video_style": "a"
+     },
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": 4,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": true,
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 5,
+     "builder_save_revision": 5,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "empty",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 4.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {},
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {},
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {},
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 6.0
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 6.0
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 6.0
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 6.0
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 1.0
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 1.0
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 1.0
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "camera_motion_speed": 1.0
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": "lead_only"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": "lead_only"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": "lead_only"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": "lead_only"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": null
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": null
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": null
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "temporal_protected_characters": null
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "guided_film"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "guided_film"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "guided_film"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "guided_film"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "story_arc_detail": "rich"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "story_arc_detail": "rich"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "story_arc_detail": "rich"
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true,
+      "story_arc_detail": "rich"
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "A boy and a fox",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "A boy and a fox",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "A boy and a fox",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "A boy and a fox",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": false,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": false,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": false,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": false,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z"
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z"
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z"
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "x",
+      "song_story_brief": "y",
+      "image_custom_style_direction": "z"
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "a",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "b",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "a",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "b",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "a",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "b",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "a",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "b",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": 7,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "story": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_flow": "slow",
+      "video_style": "noir",
+      "keep": true
+     },
+     "builder_story_layer": {
+      "overall_story_idea": "a boy and a fox",
+      "lyric_story_strength": 3,
+      "image_world_style": "natural",
+      "extra_key": 1,
+      "enabled": true,
+      "user_story_arc": "",
+      "song_story_brief": "",
+      "image_custom_style_direction": ""
+     },
+     "revision": 8,
+     "builder_save_revision": 8,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "with_layer",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 7.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {},
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {},
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {},
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 6.0,
+      "video_style": "noir"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 6,
+     "video_style": "noir"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 7.5,
+      "character_motion_speed": 0.0,
+      "temporal_background_intensity": 10.0
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "7.5",
+     "character_motion_speed": 0,
+     "temporal_background_intensity": 10
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": "fast"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "camera_motion_speed must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "camera_motion_speed": 1.0
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "camera_motion_speed": true
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "nonsense": 1,
+     "alpha": 2
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Unknown scene default(s): alpha, nonsense. Allowed: global_consistency_phrase, camera_motion_speed, character_motion_speed, minimax_h3_cut_frequency, minimax_h3_cut_style, defaults_speed_preset, defaults_music_preset, camera_guidance, character_guidance, performance_style, short_film_planning_mode, camera_flow, custom_camera_flow_sequence, image_shot_flow, image_aesthetic, video_style, video_style_custom, temporal_world_effect, temporal_world_effect_custom, temporal_allow_background_extras, temporal_background_intensity, temporal_environment_time_passage, temporal_protected_characters, temporal_protected_custom, fx_preset, fx_custom_json, story_arc_detail.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_allow_background_extras": true,
+      "temporal_environment_time_passage": false
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": true,
+     "temporal_environment_time_passage": false
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_allow_background_extras": "yes"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "temporal_allow_background_extras must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": "lead_only"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "lead_only"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": "everyone"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "temporal_protected_characters must be one of: all_referenced, lead_only, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": null
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": null
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "temporal_protected_characters": null
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "temporal_protected_characters": null
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "temporal_protected_characters": null
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "guided_film"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "Guided Film"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "custom"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "short_film_planning_mode": "fully_custom"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "fully-custom"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "short_film_planning_mode": "random"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "short_film_planning_mode must be one of: guided_film, fully_custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "story_arc_detail": "rich"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "story_arc_detail": "rich"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "story_arc_detail": "rich"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "story_arc_detail": "rich"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "rich"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "story_arc_detail": "huge"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "story_arc_detail must be one of: compact, standard, detailed, rich.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "A boy and a fox",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 9.0,
+      "image_world_style": "surreal_subject"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "overall_story_idea": "A boy and a fox",
+     "lyric_story_strength": 9,
+     "image_world_style": "surreal_subject"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "enabled": "no"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "enabled must be true or false.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "enabled": false
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "image_world_style": "pastel"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "image_world_style must be one of: natural, surreal_subject, balanced_surreal, full_surreal, abstract, custom.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "lyric_story_strength": 12
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "lyric_story_strength must be a number from 0 to 10.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "y",
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "y",
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "y",
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "y",
+      "overall_story_idea": "",
+      "user_story_arc": "x",
+      "image_custom_style_direction": "z",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "user_story_arc": "x",
+     "song_story_brief": "y",
+     "image_custom_style_direction": "z"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": null,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "story": {
+     "mystery": 1
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Unknown story field(s): mystery. Allowed: enabled, overall_story_idea, user_story_arc, song_story_brief, lyric_story_strength, image_world_style, image_custom_style_direction, story_book_text, story_settings, story_acts, story_scene_plan, story_spot_min_scenes, story_cast_ids, story_allow_new_cast, story_video_style, story_continuation_mode.",
+    "code": "VALIDATION_ERROR"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {
+      "video_style": "a"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "video_style": "a"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {
+      "video_style": "a"
+     },
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {
+      "video_style": "a"
+     },
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "b",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": {
+     "video_style": "a"
+    },
+    "story": {
+     "overall_story_idea": "b"
+    }
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": null,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": 2,
+   "return": {
+    "result": {
+     "defaults": {},
+     "story": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3
+    },
+    "after": {
+     "builder_storyboard_defaults": {},
+     "builder_story_layer": {
+      "enabled": false,
+      "song_story_brief": "brief",
+      "overall_story_idea": "",
+      "user_story_arc": "",
+      "image_custom_style_direction": "",
+      "lyric_story_strength": 7,
+      "image_world_style": "natural"
+     },
+     "revision": 3,
+     "builder_save_revision": 3,
+     "has_camel": false
+    }
+   }
+  },
+  {
+   "session": "camel_layer",
+   "params": {
+    "defaults": "not a dict",
+    "story": [
+     "nor this"
+    ]
+   },
+   "if_match": 99,
+   "return": {
+    "error": "Project revision conflict: incoming revision 99 < saved revision 2.",
+    "code": "REVISION_CONFLICT"
+   }
+  }
+ ]
+}

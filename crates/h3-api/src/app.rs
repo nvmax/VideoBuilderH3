@@ -81,6 +81,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/timeline/calibrate", post(sr::calibrate))
         .route("/projects/{pid}/references/scene-mapping", get(sr::get_scene_mapping).put(sr::put_scene_mapping))
         .route("/projects/{pid}/references/assign-scenes", post(sr::assign_scenes))
+        .route("/projects/{pid}/story/settings", axum::routing::put(sr::story_settings))
+        .route("/projects/{pid}/story/{step}", post(sr::story_step))
         .route("/projects/{pid}/references/{kind}/{rid}", axum::routing::put(sr::put_reference).delete(sr::delete_reference))
         .route("/projects/{pid}/scenes/{sid}/prompts/{field}", axum::routing::put(sr::put_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/minimax/validate", post(sr::validate_prompt))
