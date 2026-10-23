@@ -18,4 +18,5 @@ tokio.workspace = true
 
 [dev-dependencies]
 axum = "0.8"
+image.workspace = true
 tempfile.workspace = true

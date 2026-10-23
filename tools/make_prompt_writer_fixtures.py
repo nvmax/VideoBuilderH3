@@ -110,6 +110,75 @@ def main() -> int:
     except Exception as exc:  # noqa: BLE001
         entry["error"] = str(exc)
     cases.append(entry)
+    # Timed cue maps and scenes continued from the previous scene (with and without its final frame).
+    def add(name, session, index, previous_frame=False, shots=None):
+        cards = sync.scene_cards(session)
+        segment = session["segments"][index]
+        pa = importlib.import_module("vrgdg_pack.minimax.prompt_assembly")
+        entry = {"name": name, "session": session, "index": index, "previous_frame": previous_frame}
+        try:
+            probe = {}
+            state["reply"] = shots_json(shots or 1)
+            if shots is None:
+                # One shot per planned cut, found by asking the pack for the plan it will use.
+                freq = int((session.get("builder_storyboard_defaults") or {}).get("minimax_h3_cut_frequency") or 0)
+                shots = pa.storyboard_cut_plan_for_duration(segment["end"] - segment["start"], freq)["shot_count"]
+                state["reply"] = shots_json(shots)
+            entry["reply"] = state["reply"]
+            result = orch.generate_scene_prompt(session, ROOT, segment, cards[index], index, {}, previous_frame="Z:\\frame.png" if previous_frame else "")
+            entry.update({"prompt": result["prompt"], "characters": result["characters"], "shots": result["shots"], "used_previous_frame": result["used_previous_frame"], "warnings": result["warnings"]})
+            _ = probe
+        except Exception as exc:  # noqa: BLE001
+            entry["reply"] = state["reply"]
+            entry["error"] = str(exc)
+        cases.append(entry)
+
+    def cue_session(rows, mode="cue_map", **extra):
+        session = base_session(**extra)
+        session["segments"][2]["lyric_performance_mode"] = mode
+        session["segments"][2]["lyric_cue_map"] = rows
+        return session
+
+    two = [
+        {"type": "vocal", "text": "we run through the night", "singer_name": "Ava", "start": 0.0, "vocal_start": 0.3, "vocal_end": 2.8},
+        {"type": "vocal", "text": "and never look back", "singer_name": "Ava", "start": 3.4, "vocal_start": 3.6, "vocal_end": 6.0},
+    ]
+    three = two[:1] + [{"type": "instrumental", "start": 3.0}] + [dict(two[1], start=4.5, vocal_start=4.6, vocal_end=6.3)]
+    add("cue_two_rows", cue_session(two), 2, shots=2)
+    add("cue_three_rows_instrumental", cue_session(three), 2, shots=3)
+    add("cue_unknown_singer", cue_session([dict(two[0], singer_name="Zed"), dict(two[1], singer_name="")]), 2, shots=2)
+    add("cue_missing_start_is_ignored", cue_session([dict(two[0]), {k: v for k, v in two[1].items() if k != "start"}]), 2)
+    add("cue_ignored_built_in_audio", cue_session(two, minimax_h3_settings={"audio_mode": "built_in_audio", "aspect_ratio": "16:9"}), 2)
+    add("cue_not_cue_map_mode", cue_session(two, mode="together"), 2)
+    add("cue_with_cut_style", cue_session(two, builder_storyboard_defaults={"minimax_h3_cut_frequency": 4, "minimax_h3_cut_style": "hard"}), 2, shots=2)
+    add("cue_structured", cue_session(two, use_structured_outputs=True), 2, shots=2)
+
+    def continued(preset="normal", custom="", start=None, direction="", location_for_s2="l1", saved_prompt=True, **extra):
+        session = base_session(**extra)
+        settings = {"audio_mode": "input_audio", "aspect_ratio": "16:9", "continuity_mode": "latent_continuation_masked", "location_transition_preset": preset, "location_transition_custom": custom}
+        session["minimax_h3_settings"] = {**settings, **(extra.get("minimax_h3_settings") or {})}
+        session["flux_reference_builder"]["locations"].append({"id": "l2", "name": "Club", "description": "a neon club floor. Smoke hangs low.", "image": {"path": ROOT + "\\subject_location\\location\\Club.png"}})
+        session["flux_reference_builder"]["scene_map"]["s2"] = location_for_s2
+        if saved_prompt:
+            session["segments"][0]["minimax_h3_prompt"] = "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+        if start is not None:
+            session["segments"][1]["minimax_h3_continuation_start_seconds"] = start
+        if direction:
+            session["segments"][1]["minimax_h3_continuation_direction"] = direction
+        session["segments"][1]["lyric_text"] = "we keep going"
+        session["segments"][1]["lyric_no_lip_sync"] = False
+        return session
+
+    for preset in ("normal", "masked", "surreal", "cinematic", "inner_world", "match", "motion", "creative_auto", "custom"):
+        add(f"continued_{preset}_new_location", continued(preset, custom="walk through the door" if preset == "custom" else "", location_for_s2="l2"), 1)
+    add("continued_same_location", continued(), 1)
+    add("continued_start_and_direction", continued("masked", start=1.5, direction="  push in\nslowly  ", location_for_s2="l2"), 1)
+    add("continued_no_saved_prompt", continued(saved_prompt=False), 1)
+    add("continued_with_frame", continued("masked", location_for_s2="l2"), 1, previous_frame=True)
+    add("continued_with_frame_same_location", continued(), 1, previous_frame=True)
+    add("continued_cut_frequency", continued("masked", location_for_s2="l2", builder_storyboard_defaults={"minimax_h3_cut_frequency": 5}), 1)
+    add("continued_first_scene_is_standalone", continued(), 0)
+    add("frame_given_but_not_continued", base_session(), 1, previous_frame=True)
     (out / "writer.json").write_text(json.dumps({"cases": cases}, indent=1, ensure_ascii=False), encoding="utf-8")
     print("writer cases:", len(cases), "errors:", sum(1 for c in cases if "error" in c))
     for c in cases:

@@ -7,6 +7,7 @@ pub mod error;
 pub mod image_jobs;
 pub mod image_routes;
 pub mod job_handlers;
+pub mod continued_prompt;
 pub mod llm_jobs;
 pub mod lyric_jobs;
 pub mod llm_routes;

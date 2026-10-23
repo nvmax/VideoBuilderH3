@@ -103,7 +103,8 @@ fn scene_ref(params: &Value) -> Result<String, JobError> {
 
 async fn render_one(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let scene = scene_ref(&ctx.params)?;
-    let (run, folder) = context_for(&state, &ctx).await?;
+    let (mut run, folder) = context_for(&state, &ctx).await?;
+    run.before_scene = Some(crate::continued_prompt::hook(&state));
     let done = render_scene_full(&run, &folder, &scene, render_params(&ctx.params), finish_options(&ctx.params), reporter(&ctx, Some(scene.clone())))
         .await
         .map_err(fail)?;
@@ -138,7 +139,8 @@ fn scene_list(value: Option<&Value>) -> Vec<String> {
 
 async fn render_batch(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let params = &ctx.params;
-    let (run, folder) = context_for(&state, &ctx).await?;
+    let (mut run, folder) = context_for(&state, &ctx).await?;
+    run.before_scene = Some(crate::continued_prompt::hook(&state));
     let range = params.get("range").and_then(Value::as_array).filter(|r| r.len() == 2).and_then(|r| Some((r[0].as_u64()? as usize, r[1].as_u64()? as usize)));
     let resume = params.get("resume").and_then(Value::as_bool).unwrap_or(false) || params.get("run_mode").and_then(Value::as_str) == Some("resume_missing");
     let options = BatchOptions {

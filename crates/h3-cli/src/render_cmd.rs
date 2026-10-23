@@ -190,7 +190,7 @@ pub async fn stitch(cfg: &AppConfig, args: StitchArgs) -> Result<()> {
     let tools = Tools::find(&cfg.ffmpeg_path, &cfg.ffprobe_path).map_err(|e| anyhow!("{e}"))?;
     // A stitch needs no ComfyUI, only ffmpeg.
     let env = Arc::new(LiveEnv::new(Value::Null, ComfyDirs { output: String::new(), input: String::new(), temp: String::new() }, tools));
-    let ctx = RunContext { client: ComfyClient::new(cfg.comfy_base()), env, cancel: Arc::new(AtomicBool::new(false)) };
+    let ctx = RunContext { client: ComfyClient::new(cfg.comfy_base()), env, cancel: Arc::new(AtomicBool::new(false)), before_scene: None };
     let mut params = Obj::new();
     if !args.scenes.is_empty() {
         params.insert("scene_ids".into(), Value::Array(args.scenes.iter().map(|s| s.parse::<i64>().map(Value::from).unwrap_or_else(|_| Value::String(s.clone()))).collect()));

@@ -8,6 +8,7 @@ pub mod cues;
 pub mod emotion;
 pub mod frame;
 pub mod lyrics;
+pub mod masked;
 pub mod performance;
 pub mod plan;
 pub mod task;

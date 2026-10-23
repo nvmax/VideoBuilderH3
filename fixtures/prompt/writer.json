@@ -2140,6 +2140,2553 @@
    "index": 0,
    "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
    "error": "Scene 1 has no mapped Reference Builder image. Map a character to the scene first."
+  },
+  {
+   "name": "cue_two_rows",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "start": 3.4,
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 0.3 s to 2.8 s, <d>[English] We run through the night.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] At 00:03.400, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 3.6 s to 6 s, <d>[English] And never look back.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.",
+   "characters": 858,
+   "shots": 2,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_three_rows_instrumental",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "instrumental",
+        "start": 3.0
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "start": 4.5,
+        "vocal_start": 4.6,
+        "vocal_end": 6.3
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 3.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 0.3 s to 2.8 s, <d>[English] We run through the night.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] At 00:03.000, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2. The action takes place in the environment from <Picture 2>.\n\n[Shot 3] At 00:04.500, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 3. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 4.6 s to 6.3 s, <d>[English] And never look back.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.",
+   "characters": 1078,
+   "shots": 3,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_unknown_singer",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Zed",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "",
+        "start": 3.4,
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 0.3 s to 2.8 s, <d>[English] We run through the night.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] At 00:03.400, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 3.6 s to 6 s, <d>[English] And never look back.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.",
+   "characters": 858,
+   "shots": 2,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_missing_start_is_ignored",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We run through the night and never look back.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 382,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_ignored_built_in_audio",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "built_in_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "start": 3.4,
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. The action takes place in the environment from <Picture 2>.",
+   "characters": 277,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_not_cue_map_mode",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "together",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "start": 3.4,
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We run through the night and never look back.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 382,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_with_cut_style",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "start": 3.4,
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    },
+    "builder_storyboard_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 0.3 s to 2.8 s, <d>[English] We run through the night.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] At 00:03.400, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2. <Subject 1> is the only visible performer singing, in sync with <Audio 1> from 3.6 s to 6 s, <d>[English] And never look back.</d>; every other visible performer remains silent. The action takes place in the environment from <Picture 2>.",
+   "characters": 858,
+   "shots": 2,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "cue_structured",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus",
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "we run through the night",
+        "singer_name": "Ava",
+        "start": 0.0,
+        "vocal_start": 0.3,
+        "vocal_end": 2.8
+       },
+       {
+        "type": "vocal",
+        "text": "and never look back",
+        "singer_name": "Ava",
+        "start": 3.4,
+        "vocal_start": 3.6,
+        "vocal_end": 6.0
+       }
+      ]
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    },
+    "use_structured_outputs": true
+   },
+   "index": 2,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2.\"}]}",
+   "prompt": "subject_definitions:\n<Subject 1> is the Ava in <Picture 1>; <Picture 1> is the visual authority for character identity, face, hair, clothing, and body-proportion reference.\n<Subject 2> is the environment in <Picture 2>, used as environment, location, architecture, layout, and atmosphere reference: a rooftop at dusk with string lights.\n<Audio 1> is the complete synchronized song and vocal track for the target video, reused as the target video's complete final soundtrack and timing reference.\n\nsummary:\n[reference generation + audio reuse] The target video is a photorealistic cinematic scene featuring <Subject 1> (Ava) and <Subject 2> (environment). <Audio 1> is reused as the complete soundtrack and timing reference.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - reference identity, face, hair, wardrobe, and accessories remain consistent.\n<Subject 2> (appears in [Shot 1], [Shot 2]): fully_preserved - a rooftop at dusk with string lights and its reference identity remain consistent.\n<Audio 1>: fully_copy - <Audio 1> is reused 1:1 as the target video's complete final audio track.\n\ndetailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> (Ava) is the only visible performer singing, in sync with <Audio 1> from 0.3 s to 2.8 s, <d>[English] We run through the night.</d>; every other visible performer remains silent.\n\n[Shot 2] At 00:03.400, the camera cuts. <Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2. <Subject 1> (Ava) is the only visible performer singing, in sync with <Audio 1> from 3.6 s to 6 s, <d>[English] And never look back.</d>; every other visible performer remains silent.\n\noverall_soundscape:\n<Audio 1> remains the sole complete audience-facing soundtrack with its original mix, timing, vocals, music, and dynamics intact.\n\nnon_diegetic_music:\n<Audio 1> is reused as the complete audience-facing song/music track.",
+   "characters": 2134,
+   "shots": 2,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_normal_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "normal",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_masked_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "masked",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_surreal_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "surreal",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_cinematic_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "cinematic",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_inner_world_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "inner_world",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_match_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "match",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_motion_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "motion",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_creative_auto_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "creative_auto",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_custom_new_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "custom",
+     "location_transition_custom": "walk through the door"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_same_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "normal",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_start_and_direction",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "masked",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "minimax_h3_continuation_start_seconds": 1.5,
+      "minimax_h3_continuation_direction": "  push in\nslowly  ",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_no_saved_prompt",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "normal",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_with_frame",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "masked",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": true,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": true,
+   "warnings": []
+  },
+  {
+   "name": "continued_with_frame_same_location",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "normal",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": true,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 351,
+   "shots": 1,
+   "used_previous_frame": true,
+   "warnings": []
+  },
+  {
+   "name": "continued_cut_frequency",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "masked",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l2",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    },
+    "builder_storyboard_defaults": {
+     "minimax_h3_cut_frequency": 5
+    }
+   },
+   "index": 1,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2.\"}, {\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 3.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] We keep going.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] At 00:01.667, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 2. The action takes place in the environment from <Picture 2>.\n\n[Shot 3] At 00:03.333, the camera cuts. <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 3. The action takes place in the environment from <Picture 2>.",
+   "characters": 787,
+   "shots": 3,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "continued_first_scene_is_standalone",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9",
+     "continuity_mode": "latent_continuation_masked",
+     "location_transition_preset": "normal",
+     "location_transition_custom": ""
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof.",
+      "minimax_h3_prompt": "detailed_description:\nstyle line\n\n[Shot 1] At 0:00, Ava sings on the roof, the camera easing in.\n\n[Shot 2] At 0:02, Ava turns toward the skyline, wind lifting her jacket and the lights behind her."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "we keep going",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in",
+      "lyric_no_lip_sync": false
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      },
+      {
+       "id": "l2",
+       "name": "Club",
+       "description": "a neon club floor. Smoke hangs low.",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Club.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 0,
+   "previous_frame": false,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. <Subject 1> sings <d>[English] Hold me close tonight.</d> in sync with <Audio 1>. The action takes place in the environment from <Picture 2>.",
+   "characters": 359,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
+  },
+  {
+   "name": "frame_given_but_not_continued",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "video_engine": "minimax_h3",
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio",
+     "aspect_ratio": "16:9"
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.0,
+      "label": "Scene 1",
+      "lyric_text": "hold me close tonight",
+      "story_beat": "She sings on a roof."
+     },
+     {
+      "id": "s2",
+      "start": 4.0,
+      "end": 9.0,
+      "label": "Scene 2",
+      "lyric_text": "[instrumental]",
+      "notes": "slow drift",
+      "i2v_notes": "gentle push in"
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 15.5,
+      "label": "Scene 3",
+      "lyric_text": "we run through the night\nand never look back",
+      "camera_motion_speed": 7,
+      "lyric_section": "Chorus"
+     }
+    ],
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava",
+       "description": "short dark hair, denim jacket",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\subject\\Ava.png"
+       }
+      }
+     ],
+     "locations": [
+      {
+       "id": "l1",
+       "name": "Roof",
+       "description": "a rooftop at dusk with string lights",
+       "image": {
+        "path": "Z:\\h3fixture\\proj\\subject_location\\location\\Roof.png"
+       }
+      }
+     ],
+     "subject_scene_map": {
+      "s1": [
+       "a"
+      ],
+      "s2": [
+       "a"
+      ],
+      "s3": [
+       "a"
+      ]
+     },
+     "scene_map": {
+      "s1": "l1",
+      "s2": "l1",
+      "s3": "l1"
+     },
+     "use_subject_reference": true,
+     "use_location_references": true
+    }
+   },
+   "index": 1,
+   "previous_frame": true,
+   "reply": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1.\"}]}",
+   "prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide, shot 1. The action takes place in the environment from <Picture 2>.",
+   "characters": 277,
+   "shots": 1,
+   "used_previous_frame": false,
+   "warnings": []
   }
  ]
 }

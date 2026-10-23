@@ -22,5 +22,5 @@ pub async fn connect(cfg: &AppConfig) -> Result<RunContext, String> {
         dirs.output = cfg.comfy_output_dir.trim().to_string();
     }
     let object_info = client.object_info().await.map_err(|e| e.to_string())?;
-    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools)), cancel: Arc::new(AtomicBool::new(false)) })
+    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools)), cancel: Arc::new(AtomicBool::new(false)), before_scene: None })
 }

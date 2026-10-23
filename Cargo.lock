@@ -1830,6 +1830,7 @@ dependencies = [
  "h3-llm",
  "h3-media",
  "h3-project",
+ "image",
  "serde_json",
  "tempfile",
  "thiserror 2.0.21",

@@ -179,12 +179,18 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
     })
 }
 
+/// Work to do just before a scene renders, such as writing its prompt from the previous scene's final frame. It gets the
+/// project folder, the scene reference and whether the render was given a prompt of its own.
+pub type SceneHook = Arc<dyn Fn(std::path::PathBuf, String, bool) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<(), String>> + Send>> + Send + Sync>;
+
 /// Everything a run needs: the ComfyUI client, the environment and a flag that cancels it.
 #[derive(Clone)]
 pub struct RunContext {
     pub client: ComfyClient,
     pub env: Arc<LiveEnv>,
     pub cancel: Arc<AtomicBool>,
+    /// Runs before each scene renders. `None` renders the saved project as it is.
+    pub before_scene: Option<SceneHook>,
 }
 
 /// The MiniMax seed settings. Same list as `SEED_FIELDS` in the pack's `settings_payload.py`.
@@ -232,6 +238,10 @@ pub async fn render_scene_full(
     if params.overrides.remove("randomize_seed").is_some_and(|v| truthy(&v)) {
         let (env, path, scene) = (Arc::clone(&ctx.env), project_path.clone(), scene_ref.to_string());
         tokio::task::spawn_blocking(move || randomize_seeds(&env, &path, &scene)).await.map_err(other)??;
+    }
+    if let Some(hook) = &ctx.before_scene {
+        let has_prompt = params.overrides.get("prompt").is_some_and(truthy);
+        hook(project_path.clone(), scene_ref.to_string(), has_prompt).await.map_err(other)?;
     }
     let loaded = {
         let path = project_path.clone();

@@ -34,12 +34,17 @@ async fn prompts_match_the_pack() {
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/prompt/writer.json");
     let cases: Value = serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
     let (cfg, shared) = start().await;
+    let dir = tempfile::tempdir().unwrap();
+    let frame = dir.path().join("frame.png");
+    image::RgbImage::from_pixel(32, 18, image::Rgb([30, 60, 90])).save(&frame).unwrap();
     let mut compared = 0;
+    let mut with_frame = 0;
     for case in cases["cases"].as_array().unwrap() {
         let name = case["name"].as_str().unwrap();
         shared.lock().unwrap().0 = case["reply"].as_str().unwrap().to_string();
         let session = case["session"].as_object().unwrap();
-        let result = generate_scene_prompt(&cfg, session, case["index"].as_u64().unwrap() as usize, &PromptParams::default()).await;
+        let params = PromptParams { previous_frame: case["previous_frame"].as_bool().unwrap_or(false).then(|| frame.clone()), ..PromptParams::default() };
+        let result = generate_scene_prompt(&cfg, session, case["index"].as_u64().unwrap() as usize, &params).await;
         match (result, case.get("error")) {
             (Err(PromptError::Invalid(m)), Some(want)) => assert_eq!(&json!(m), want, "{name}"),
             (Ok(written), None) => {
@@ -47,12 +52,18 @@ async fn prompts_match_the_pack() {
                 assert_eq!(json!(written.characters), case["characters"], "{name}");
                 assert_eq!(json!(written.shots), case["shots"], "{name}");
                 assert_eq!(written.attempts, 1, "{name}");
+                if let Some(used) = case.get("used_previous_frame") {
+                    assert_eq!(json!(written.used_previous_frame), *used, "{name}: used_previous_frame");
+                    assert_eq!(json!(written.warnings), case["warnings"], "{name}: warnings");
+                    with_frame += usize::from(written.used_previous_frame);
+                }
                 compared += 1;
             }
             (other, want) => panic!("{name}: {other:?} vs {want:?}"),
         }
     }
-    assert_eq!(compared, 24);
+    assert_eq!(compared, 49);
+    assert_eq!(with_frame, 2, "two cases show the previous frame to the LLM");
     // The request carries the pack's instructions, the shot task and the default notes.
     let sent = shared.lock().unwrap().1[0].clone();
     let text = sent["messages"][0]["content"].as_str().unwrap();

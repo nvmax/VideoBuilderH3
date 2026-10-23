@@ -76,7 +76,7 @@ async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
     if limit > 0 {
         targets.truncate(limit);
     }
-    let params = PromptParams { temperature: num(&ctx.params, "temperature", 0.45), top_p: num(&ctx.params, "top_p", 0.92), max_new_tokens: num(&ctx.params, "max_new_tokens", 4000.0) as u32 };
+    let params = PromptParams { temperature: num(&ctx.params, "temperature", 0.45), top_p: num(&ctx.params, "top_p", 0.92), max_new_tokens: num(&ctx.params, "max_new_tokens", 4000.0) as u32, previous_frame: None };
     let total = targets.len();
     let (mut created, mut failures) = (Vec::new(), Vec::new());
     let mut revision = loaded.revision;
