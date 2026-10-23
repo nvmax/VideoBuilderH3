@@ -1692,13 +1692,16 @@ name = "h3-api"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "base64 0.22.1",
  "h3-comfy",
  "h3-core",
  "h3-graph",
+ "h3-image",
  "h3-jobs",
  "h3-media",
  "h3-pipeline",
  "h3-project",
+ "image",
  "reqwest 0.12.28",
  "serde",
  "serde_json",
@@ -1761,6 +1764,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "h3-image"
+version = "0.1.0"
+dependencies = [
+ "h3-comfy",
+ "h3-core",
+ "image",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.21",
+ "tokio",
+]
+
+[[package]]
 name = "h3-jobs"
 version = "0.1.0"
 dependencies = [
@@ -1810,10 +1827,12 @@ dependencies = [
 name = "h3-project"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "chrono",
  "dirs 6.0.0",
  "filetime",
  "h3-core",
+ "image",
  "serde",
  "serde_json",
  "sha1",

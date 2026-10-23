@@ -37,11 +37,11 @@ pub fn register(state: &Arc<AppState>) {
     }
 }
 
-fn fail(error: impl Into<ApiError>) -> JobError {
+pub(crate) fn fail(error: impl Into<ApiError>) -> JobError {
     error.into().into_job_error()
 }
 
-async fn context_for(state: &AppState, ctx: &JobCtx) -> Result<(RunContext, std::path::PathBuf), JobError> {
+pub(crate) async fn context_for(state: &AppState, ctx: &JobCtx) -> Result<(RunContext, std::path::PathBuf), JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
     let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
     let mut run = connect(&state.cfg).await.map_err(|e| {

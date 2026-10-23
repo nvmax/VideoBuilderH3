@@ -3,6 +3,8 @@
 
 pub mod app;
 pub mod error;
+pub mod image_jobs;
+pub mod image_routes;
 pub mod job_handlers;
 pub mod views;
 
@@ -29,7 +31,8 @@ pub fn build_state(cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, Stri
         Err(e) => eprintln!("[VRGDG-RS API] Could not check for interrupted jobs: {e}"),
     }
     let roots = views::project_roots(&cfg.project_root);
-    Ok(Arc::new(AppState { cfg, roots, jobs }))
+    let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
+    Ok(Arc::new(AppState { cfg, roots, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir }))
 }
 
 /// Serve the API until the process stops.

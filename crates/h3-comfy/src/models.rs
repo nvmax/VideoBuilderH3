@@ -22,6 +22,17 @@ fn combo_options(spec: &Value) -> Vec<String> {
     list.map(|items| items.iter().filter_map(|v| v.as_str().map(str::to_string)).collect()).unwrap_or_default()
 }
 
+/// The options of one combo input of one node class, e.g. `("UNETLoader", "unet_name")`. Empty when it is not a combo.
+pub fn combo_choices(object_info: &Value, class_type: &str, input: &str) -> Vec<String> {
+    let info = object_info.get(class_type).and_then(|n| n.get("input"));
+    ["required", "optional"]
+        .iter()
+        .filter_map(|section| info.and_then(|i| i.get(*section)).and_then(|m| m.get(input)))
+        .map(combo_options)
+        .find(|options| !options.is_empty())
+        .unwrap_or_default()
+}
+
 /// File names ComfyUI lists for a model folder category. Empty when ComfyUI has no loader for it.
 pub fn model_choices(object_info: &Value, category: &str) -> Vec<String> {
     let mut found: Vec<String> = Vec::new();

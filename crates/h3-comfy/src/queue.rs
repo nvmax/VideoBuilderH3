@@ -200,6 +200,19 @@ pub fn extract_videos(history: &Value, prompt_id: &str, node_id: Option<&str>) -
     outputs.values().flat_map(from_node).collect()
 }
 
+/// Images a prompt produced, in node order (`filename`, `subfolder`, `type`). `nodes` limits the result to those nodes
+/// when any of them produced an image.
+pub fn extract_images(history: &Value, prompt_id: &str, nodes: &[String]) -> Vec<Value> {
+    let root = entry(history, prompt_id);
+    let Some(outputs) = root.get("outputs").and_then(Value::as_object) else { return vec![] };
+    let images_of = |out: &Value| -> Vec<Value> { out.get("images").and_then(Value::as_array).cloned().unwrap_or_default() };
+    let wanted: Vec<Value> = nodes.iter().filter_map(|id| outputs.get(id)).flat_map(images_of).collect();
+    if !wanted.is_empty() {
+        return wanted;
+    }
+    outputs.values().flat_map(images_of).collect()
+}
+
 /// Where ComfyUI keeps its files.
 #[derive(Debug, Clone)]
 pub struct ComfyDirs {

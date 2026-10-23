@@ -27,12 +27,15 @@ use tower_http::cors::{Any, CorsLayer};
 
 use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
+use crate::image_routes as ir;
 use crate::views::{self, SceneFilter};
 
 pub struct AppState {
     pub cfg: AppConfig,
     pub roots: Vec<PathBuf>,
     pub jobs: JobManager,
+    pub presets: h3_image::PresetStore,
+    pub presets_dir: PathBuf,
 }
 
 pub type Shared = State<Arc<AppState>>;
@@ -40,6 +43,7 @@ pub type Shared = State<Arc<AppState>>;
 /// Build the `/api/v1` router and register the job handlers.
 pub fn router(state: Arc<AppState>) -> Router {
     job_handlers::register(&state);
+    crate::image_jobs::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -61,6 +65,20 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/video/render", post(render_batch))
         .route("/projects/{pid}/video/graph", post(video_graph))
         .route("/projects/{pid}/stitch", post(stitch))
+        .route("/image-presets", get(ir::list_presets))
+        .route("/image-presets/import", post(ir::import_preset))
+        .route("/image-presets/{id}", get(ir::get_one_preset).put(ir::update_preset).delete(ir::delete_preset))
+        .route("/image-presets/{id}/choices", get(ir::preset_choices))
+        .route("/image-presets/{id}/graph", post(ir::preset_graph))
+        .route("/projects/{pid}/images/generate", post(ir::generate_batch_images))
+        .route("/projects/{pid}/scenes/{sid}/image", axum::routing::put(ir::put_scene_image).delete(ir::delete_scene_image))
+        .route("/projects/{pid}/scenes/{sid}/image/generate", post(ir::generate_scene_image))
+        .route("/projects/{pid}/scenes/{sid}/image/approve", post(ir::approve_scene_image))
+        .route("/projects/{pid}/scenes/{sid}/image/revert", post(ir::revert_scene_image))
+        .route("/projects/{pid}/scenes/{sid}/image/history", get(ir::scene_image_history))
+        .route("/projects/{pid}/references", get(ir::get_references))
+        .route("/projects/{pid}/references/{kind}/{rid}/image", axum::routing::put(ir::put_reference_image))
+        .route("/projects/{pid}/references/{kind}/{rid}/image/generate", post(ir::generate_reference_image))
         .route("/projects/{pid}/latents", get(latent_list))
         .route("/projects/{pid}/latents/dirty", get(latent_dirty))
         .route("/projects/{pid}/scenes/{sid}/latent", get(latent_one).delete(latent_delete));
@@ -70,11 +88,11 @@ pub fn router(state: Arc<AppState>) -> Router {
 
 // -- helpers ----------------------------------------------------------------------------------------------------------------
 
-async fn blocking<T: Send + 'static>(work: impl FnOnce() -> T + Send + 'static) -> Result<T, ApiError> {
+pub(crate) async fn blocking<T: Send + 'static>(work: impl FnOnce() -> T + Send + 'static) -> Result<T, ApiError> {
     tokio::task::spawn_blocking(work).await.map_err(|e| ApiError::internal(e.to_string()))
 }
 
-async fn load(state: &AppState, pid: &str) -> Result<LoadedSession, ApiError> {
+pub(crate) async fn load(state: &AppState, pid: &str) -> Result<LoadedSession, ApiError> {
     let folder = views::resolve_project(&state.roots, pid)?;
     blocking(move || load_session(&folder)).await?.map_err(|e| ApiError::internal(e.to_string()))
 }
@@ -86,14 +104,14 @@ fn if_match(headers: &HeaderMap) -> Result<Option<i64>, ApiError> {
     }
 }
 
-fn check_revision(headers: &HeaderMap, current: i64) -> Result<(), ApiError> {
+pub(crate) fn check_revision(headers: &HeaderMap, current: i64) -> Result<(), ApiError> {
     match if_match(headers)? {
         Some(incoming) if incoming != current => Err(ApiError::revision_conflict(current, incoming)),
         _ => Ok(()),
     }
 }
 
-fn body_object(body: Option<Json<Value>>) -> Result<Obj, ApiError> {
+pub(crate) fn body_object(body: Option<Json<Value>>) -> Result<Obj, ApiError> {
     match body.map(|b| b.0) {
         None | Some(Value::Null) => Ok(Obj::new()),
         Some(Value::Object(map)) => Ok(map),
@@ -101,7 +119,7 @@ fn body_object(body: Option<Json<Value>>) -> Result<Obj, ApiError> {
     }
 }
 
-fn job_response(job: &h3_jobs::Job) -> Response {
+pub(crate) fn job_response(job: &h3_jobs::Job) -> Response {
     respond(StatusCode::ACCEPTED, json!({"job_id": job.id, "status": job.status, "job": job.to_api()}), None)
 }
 

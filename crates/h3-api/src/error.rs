@@ -87,6 +87,21 @@ impl From<ManagerError> for ApiError {
     }
 }
 
+impl From<h3_image::ImageError> for ApiError {
+    fn from(e: h3_image::ImageError) -> Self {
+        use h3_image::ImageError as E;
+        let message = e.to_string();
+        match e {
+            E::Preset(_) | E::Input(_) => Self::validation(message),
+            E::MissingNodes(nodes) => Self::new(StatusCode::UNPROCESSABLE_ENTITY, "COMFY_NODES_MISSING", message).details(json!({"missing_nodes": nodes})),
+            E::NotFound(id) => Self::new(StatusCode::NOT_FOUND, "PRESET_NOT_FOUND", message).details(json!({"preset_id": id})),
+            E::NoImage(prompt_id) => Self::new(StatusCode::BAD_GATEWAY, "COMFY_NO_OUTPUT", message).details(json!({"prompt_id": prompt_id})),
+            E::Comfy(c) => c.into(),
+            E::Io(_) | E::Other(_) => Self::internal(message),
+        }
+    }
+}
+
 impl From<RenderError> for ApiError {
     fn from(e: RenderError) -> Self {
         let message = e.to_string();

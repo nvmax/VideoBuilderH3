@@ -47,3 +47,14 @@ cargo run -p h3-cli -- serve --project-root "D:\Projects"     # projects are the
 ```
 
 Same paths, envelopes and error codes as the pack's agent API. The pack's MCP server connects with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`. Jobs are saved in `jobs.db` next to the config file. A job a stopped app left unfinished shows as `interrupted`, and `POST /jobs/{id}/retry` with `{"resume": true}` renders only the scenes without a clip.
+
+## Image presets
+
+The app generates scene and reference card images in ComfyUI from presets. Three come with the app: `zimage`, `flux_klein` and `ernie`. To use another model, export its workflow from ComfyUI with Workflow > Export (API) and import it:
+
+```powershell
+curl -X POST http://127.0.0.1:8190/api/v1/image-presets/import -H "Content-Type: application/json" -d '{"name": "My model", "workflow": { ...the exported workflow... }}'
+curl -X POST http://127.0.0.1:8190/api/v1/projects/MySong/scenes/3/image/generate -d '{"preset_id": "my_model", "prompt": "a rainy street"}'
+```
+
+The import guesses which node inputs are the prompt, size, seed and models. `PUT /image-presets/{id}` changes the bindings.
