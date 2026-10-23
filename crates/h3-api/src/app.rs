@@ -27,6 +27,7 @@ use tower_http::cors::{Any, CorsLayer};
 
 use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
+use crate::edit_routes as er;
 use crate::image_routes as ir;
 use crate::views::{self, SceneFilter};
 
@@ -36,6 +37,8 @@ pub struct AppState {
     pub jobs: JobManager,
     pub presets: h3_image::PresetStore,
     pub presets_dir: PathBuf,
+    /// Edits of a project run one at a time, so two requests cannot overwrite each other's changes.
+    pub edit_lock: tokio::sync::Mutex<()>,
 }
 
 pub type Shared = State<Arc<AppState>>;
@@ -59,8 +62,16 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}", get(get_project))
         .route("/projects/{pid}/summary", get(project_summary))
         .route("/projects/{pid}/settings", get(get_settings).patch(patch_settings))
-        .route("/projects/{pid}/scenes", get(list_scenes))
-        .route("/projects/{pid}/scenes/{sid}", get(get_scene))
+        .route("/projects/{pid}/scenes", get(list_scenes).post(er::create_scene))
+        .route("/projects/{pid}/scenes/{sid}", get(get_scene).delete(er::delete_scene))
+        .route("/projects/{pid}/scenes/{sid}/split", post(er::split_scene))
+        .route("/projects/{pid}/scenes/{sid}/merge", post(er::merge_scene))
+        .route("/projects/{pid}/scenes/{sid}/move", post(er::move_scene))
+        .route("/projects/{pid}/scenes/{sid}/resize", post(er::resize_scene))
+        .route("/projects/{pid}/timeline/bulk", post(er::timeline_bulk))
+        .route("/projects/{pid}/timeline/close-gaps", post(er::close_gaps))
+        .route("/projects/{pid}/timeline/snap", post(er::snap))
+        .route("/projects/{pid}/validate", post(er::validate))
         .route("/projects/{pid}/scenes/{sid}/video/render", post(render_scene))
         .route("/projects/{pid}/video/render", post(render_batch))
         .route("/projects/{pid}/video/graph", post(video_graph))
@@ -97,7 +108,7 @@ pub(crate) async fn load(state: &AppState, pid: &str) -> Result<LoadedSession, A
     blocking(move || load_session(&folder)).await?.map_err(|e| ApiError::internal(e.to_string()))
 }
 
-fn if_match(headers: &HeaderMap) -> Result<Option<i64>, ApiError> {
+pub(crate) fn if_match(headers: &HeaderMap) -> Result<Option<i64>, ApiError> {
     match headers.get("if-match").and_then(|v| v.to_str().ok()) {
         None => Ok(None),
         Some(text) => text.trim().trim_matches('"').parse().map(Some).map_err(|_| ApiError::validation("If-Match must be the project revision number.")),

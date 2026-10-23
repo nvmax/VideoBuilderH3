@@ -1,0 +1,1079 @@
+{
+ "cases": [
+  {
+   "patch": {
+    "label": " Hello ",
+    "notes": "plan\r\nmore",
+    "director_note": "dir"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "label": "Hello",
+    "notes": "plan\nmore",
+    "timeline_note": "dir"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Hello",
+    "lyric_text": "old",
+    "notes": "plan\nmore",
+    "timeline_note": "dir"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "label": " Hello ",
+    "notes": "plan\r\nmore",
+    "director_note": "dir"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "label": "Hello",
+    "notes": "plan\nmore",
+    "timeline_note": "dir"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Hello",
+    "lyric_text": "old",
+    "notes": "plan\nmore",
+    "timeline_note": "dir"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "lyrics": "la la",
+    "lyric_text": "la la"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "lyric_text": "la la"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "la la"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "lyrics": "la la",
+    "lyric_text": "la la"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "lyric_text": "la la"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "la la"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "lyrics": "la",
+    "lyric_text": "different"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "lyrics and lyric_text set the same field to different values."
+  },
+  {
+   "patch": {
+    "lyrics": "la",
+    "lyric_text": "different"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "lyrics and lyric_text set the same field to different values."
+  },
+  {
+   "patch": {
+    "performance_mode": "No-Lip Sync",
+    "include_microphone": true,
+    "no_character_present": false
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "performance_mode": "no_lip_sync",
+    "include_microphone": true,
+    "no_character_present": false
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "performance_mode": "no_lip_sync",
+    "include_microphone": true,
+    "no_character_present": false
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "performance_mode": "No-Lip Sync",
+    "include_microphone": true,
+    "no_character_present": false
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "performance_mode": "no_lip_sync",
+    "include_microphone": true,
+    "no_character_present": false
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "performance_mode": "no_lip_sync",
+    "include_microphone": true,
+    "no_character_present": false
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "performance_mode": "dancing"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "performance_mode must be one of: singing, speaking, no_lip_sync."
+  },
+  {
+   "patch": {
+    "performance_mode": "dancing"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "performance_mode must be one of: singing, speaking, no_lip_sync."
+  },
+  {
+   "patch": {
+    "include_microphone": "yes"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "include_microphone must be true or false."
+  },
+  {
+   "patch": {
+    "include_microphone": "yes"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "include_microphone must be true or false."
+  },
+  {
+   "patch": {
+    "label": 5,
+    "story_beat": null
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "label": "5",
+    "story_beat": ""
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "5",
+    "lyric_text": "old",
+    "story_beat": ""
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "label": 5,
+    "story_beat": null
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "label": "5",
+    "story_beat": ""
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "5",
+    "lyric_text": "old",
+    "story_beat": ""
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "label": true
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "label must be text."
+  },
+  {
+   "patch": {
+    "label": true
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "label must be text."
+  },
+  {
+   "patch": {
+    "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "label is longer than 180 characters."
+  },
+  {
+   "patch": {
+    "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "label is longer than 180 characters."
+  },
+  {
+   "patch": {
+    "subject_ids": [
+     "a",
+     "b",
+     "a",
+     " "
+    ],
+    "location_id": "loc1"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "subject_ids": [
+     "a",
+     "b"
+    ],
+    "location_id": "loc1"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "subject_ids": [
+     "a",
+     "b",
+     "a",
+     " "
+    ],
+    "location_id": "loc1"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "subject_ids": [
+     "a",
+     "b"
+    ],
+    "location_id": "loc1"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "subject_ids": "solo",
+    "lyric_singers": "Ava"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "subject_ids": [
+     "solo"
+    ],
+    "lyric_singers": [
+     "Ava"
+    ]
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "lyric_singers": [
+     "Ava"
+    ]
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "subject_ids": "solo",
+    "lyric_singers": "Ava"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "subject_ids": [
+     "solo"
+    ],
+    "lyric_singers": [
+     "Ava"
+    ]
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "lyric_singers": [
+     "Ava"
+    ]
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "subject_ids": [
+     1.5
+    ]
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "subject_ids must be a list of names or ids."
+  },
+  {
+   "patch": {
+    "subject_ids": [
+     1.5
+    ]
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "subject_ids must be a list of names or ids."
+  },
+  {
+   "patch": {
+    "lyric_cue_map": [
+     {
+      "a": 1
+     }
+    ],
+    "lyric_shot_word_timing_enabled": true
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "lyric_cue_map": [
+     {
+      "a": 1
+     }
+    ],
+    "lyric_shot_word_timing_enabled": true
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "lyric_cue_map": [
+     {
+      "a": 1
+     }
+    ],
+    "lyric_shot_word_timing_enabled": true
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "lyric_cue_map": [
+     {
+      "a": 1
+     }
+    ],
+    "lyric_shot_word_timing_enabled": true
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "lyric_cue_map": [
+     {
+      "a": 1
+     }
+    ],
+    "lyric_shot_word_timing_enabled": true
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "lyric_cue_map": [
+     {
+      "a": 1
+     }
+    ],
+    "lyric_shot_word_timing_enabled": true
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "lyric_cue_map": [
+     "x"
+    ]
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "lyric_cue_map must be a list of objects."
+  },
+  {
+   "patch": {
+    "lyric_cue_map": [
+     "x"
+    ]
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "lyric_cue_map must be a list of objects."
+  },
+  {
+   "patch": {
+    "image_prompt": "a still",
+    "video_prompt": "a clip",
+    "video_prompt_origin": "gemma"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "image_prompt": "a still",
+    "video_prompt": "a clip",
+    "video_prompt_origin": "gemma"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "t2i_prompt": "a still",
+    "flux_prompt": "a still",
+    "nb_prompt": "a still",
+    "flow_gpt_prompt": "a still",
+    "minimax_h3_prompt": "a clip",
+    "minimax_h3_prompt_origin": "gemma"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "image_prompt": "a still",
+    "video_prompt": "a clip",
+    "video_prompt_origin": "gemma"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "image_prompt": "a still",
+    "video_prompt": "a clip",
+    "video_prompt_origin": "gemma"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "t2i_prompt": "a still",
+    "flux_prompt": "a still",
+    "i2v_prompt": "a clip",
+    "i2v_prompt_origin": "gemma"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_prompt": "only clip"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "video_prompt": "only clip"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "minimax_h3_prompt": "only clip",
+    "minimax_h3_prompt_origin": "manual"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_prompt": "only clip"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "video_prompt": "only clip"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "i2v_prompt": "only clip",
+    "i2v_prompt_origin": "manual"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_prompt_origin": "manual"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "video_prompt_origin": "manual"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "minimax_h3_prompt_origin": "manual"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_prompt_origin": "manual"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "video_prompt_origin": "manual"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "i2v_prompt_origin": "manual"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_style": "noir",
+    "video_style_custom": "grain",
+    "temporal_world_effect_override": ""
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "video_style": "noir",
+    "video_style_custom": "grain",
+    "temporal_world_effect_override": "global"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "minimax_h3_video_style": "noir",
+    "minimax_h3_video_style_custom": "grain",
+    "temporal_world_effect_override": "global"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_style": "noir",
+    "video_style_custom": "grain",
+    "temporal_world_effect_override": ""
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "video_style": "noir",
+    "video_style_custom": "grain",
+    "temporal_world_effect_override": "global"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "minimax_h3_video_style": "noir",
+    "minimax_h3_video_style_custom": "grain",
+    "temporal_world_effect_override": "global"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "speaker_assignments": [
+     {
+      "speaker_id": "s1",
+      "speaker_name": " Ava ",
+      "text": " Hello ",
+      "start": "1.5",
+      "end": -2
+     },
+     {
+      "type": "Instrumental",
+      "text": ""
+     }
+    ]
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "speaker_assignments": [
+     {
+      "id": "speaker_cue_1",
+      "type": "dialogue",
+      "speaker_id": "s1",
+      "speaker_name": "Ava",
+      "text": "Hello",
+      "action_note": "",
+      "start": 1.5,
+      "end": 0.0
+     },
+     {
+      "id": "speaker_cue_2",
+      "type": "instrumental",
+      "speaker_id": "",
+      "speaker_name": "",
+      "text": "",
+      "action_note": "",
+      "start": null,
+      "end": null
+     }
+    ]
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "Hello",
+    "minimax_speaker_assignments": [
+     {
+      "id": "speaker_cue_1",
+      "type": "dialogue",
+      "speaker_id": "s1",
+      "speaker_name": "Ava",
+      "text": "Hello",
+      "action_note": "",
+      "start": 1.5,
+      "end": 0.0
+     },
+     {
+      "id": "speaker_cue_2",
+      "type": "instrumental",
+      "speaker_id": "",
+      "speaker_name": "",
+      "text": "",
+      "action_note": "",
+      "start": null,
+      "end": null
+     }
+    ],
+    "lyric_singers": [
+     "Ava"
+    ]
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "speaker_assignments": [
+     {
+      "speaker_id": "s1",
+      "speaker_name": " Ava ",
+      "text": " Hello ",
+      "start": "1.5",
+      "end": -2
+     },
+     {
+      "type": "Instrumental",
+      "text": ""
+     }
+    ]
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "speaker_assignments": [
+     {
+      "id": "speaker_cue_1",
+      "type": "dialogue",
+      "speaker_id": "s1",
+      "speaker_name": "Ava",
+      "text": "Hello",
+      "action_note": "",
+      "start": 1.5,
+      "end": 0.0
+     },
+     {
+      "id": "speaker_cue_2",
+      "type": "instrumental",
+      "speaker_id": "",
+      "speaker_name": "",
+      "text": "",
+      "action_note": "",
+      "start": null,
+      "end": null
+     }
+    ]
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "Hello",
+    "minimax_speaker_assignments": [
+     {
+      "id": "speaker_cue_1",
+      "type": "dialogue",
+      "speaker_id": "s1",
+      "speaker_name": "Ava",
+      "text": "Hello",
+      "action_note": "",
+      "start": 1.5,
+      "end": 0.0
+     },
+     {
+      "id": "speaker_cue_2",
+      "type": "instrumental",
+      "speaker_id": "",
+      "speaker_name": "",
+      "text": "",
+      "action_note": "",
+      "start": null,
+      "end": null
+     }
+    ],
+    "lyric_singers": [
+     "Ava"
+    ]
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "speaker_assignments": "nope"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "speaker_assignments must be a list of {speaker_id, speaker_name, text} objects."
+  },
+  {
+   "patch": {
+    "speaker_assignments": "nope"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "speaker_assignments must be a list of {speaker_id, speaker_name, text} objects."
+  },
+  {
+   "patch": {
+    "speaker_assignments": [
+     "x"
+    ]
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "error": "Each speaker assignment must be an object."
+  },
+  {
+   "patch": {
+    "speaker_assignments": [
+     "x"
+    ]
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "error": "Each speaker assignment must be an object."
+  },
+  {
+   "patch": {
+    "prompt_summary": "card only",
+    "trigger_phrase": "tp"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "prompt_summary": "card only",
+    "trigger_phrase": "tp"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old"
+   },
+   "card_only": [
+    "prompt_summary",
+    "trigger_phrase"
+   ]
+  },
+  {
+   "patch": {
+    "prompt_summary": "card only",
+    "trigger_phrase": "tp"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "prompt_summary": "card only",
+    "trigger_phrase": "tp"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old"
+   },
+   "card_only": [
+    "prompt_summary",
+    "trigger_phrase"
+   ]
+  },
+  {
+   "patch": {
+    "unknown_field": 1,
+    "i2v_notes": "motion",
+    "t2i_prompt": "legacy"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "i2v_notes": "motion"
+   },
+   "rest": {
+    "unknown_field": 1,
+    "t2i_prompt": "legacy"
+   },
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "i2v_notes": "motion",
+    "video_notes": "motion"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "unknown_field": 1,
+    "i2v_notes": "motion",
+    "t2i_prompt": "legacy"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "i2v_notes": "motion"
+   },
+   "rest": {
+    "unknown_field": 1,
+    "t2i_prompt": "legacy"
+   },
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "i2v_notes": "motion",
+    "video_notes": "motion"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "minimax_h3_pass2_prompt": "second",
+    "continuity_direction": "keep"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "values": {
+    "minimax_h3_pass2_prompt": "second",
+    "continuity": "keep"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "minimax_h3_pass2_prompt": "second",
+    "continuity": "keep"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "minimax_h3_pass2_prompt": "second",
+    "continuity_direction": "keep"
+   },
+   "engine": "ltx",
+   "mode": "flux_klein",
+   "values": {
+    "minimax_h3_pass2_prompt": "second",
+    "continuity": "keep"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "minimax_h3_pass2_prompt": "second",
+    "continuity": "keep"
+   },
+   "card_only": []
+  },
+  {
+   "names": [
+    "audio_direction",
+    "camera_motion",
+    "character_motion",
+    "continuity",
+    "continuity_direction",
+    "director_note",
+    "director_notes",
+    "emotion_expression_tags",
+    "facial_performance",
+    "facial_performance_custom",
+    "flf_carry_forward",
+    "flf_end_state",
+    "flf_start_state",
+    "flf_transformation",
+    "i2v_notes",
+    "image_prompt",
+    "include_microphone",
+    "label",
+    "location_id",
+    "lyric_cue_map",
+    "lyric_instrumental",
+    "lyric_no_lip_sync",
+    "lyric_performance_mode",
+    "lyric_section",
+    "lyric_shot_word_timing_enabled",
+    "lyric_singers",
+    "lyric_text",
+    "lyrics",
+    "minimax_h3_pass2_prompt",
+    "minimax_speaker_assignments",
+    "motion_summary",
+    "no_character_present",
+    "notes",
+    "performance_mode",
+    "performance_style",
+    "planning_notes",
+    "prompt_summary",
+    "shot_type",
+    "speaker_assignments",
+    "story_beat",
+    "subject_ids",
+    "summary",
+    "temporal_world_effect_custom",
+    "temporal_world_effect_override",
+    "timeline_note",
+    "trigger_phrase",
+    "trigger_position",
+    "video_notes",
+    "video_prompt",
+    "video_prompt_origin",
+    "video_prompt_type",
+    "video_style",
+    "video_style_custom"
+   ]
+  }
+ ]
+}

@@ -159,6 +159,50 @@ def main() -> int:
                 entry["applied"] = segs
             cases.append(entry)
     write("length_fix", cases)
+
+    # scene card fields
+    card = importlib.import_module("vrgdg_pack.storyboard.scene_card_fields")
+    patches = [
+        {"label": " Hello ", "notes": "plan\r\nmore", "director_note": "dir"},
+        {"lyrics": "la la", "lyric_text": "la la"},
+        {"lyrics": "la", "lyric_text": "different"},
+        {"performance_mode": "No-Lip Sync", "include_microphone": True, "no_character_present": False},
+        {"performance_mode": "dancing"},
+        {"include_microphone": "yes"},
+        {"label": 5, "story_beat": None},
+        {"label": True},
+        {"label": "x" * 200},
+        {"subject_ids": ["a", "b", "a", " "], "location_id": "loc1"},
+        {"subject_ids": "solo", "lyric_singers": "Ava"},
+        {"subject_ids": [1.5]},
+        {"lyric_cue_map": [{"a": 1}], "lyric_shot_word_timing_enabled": True},
+        {"lyric_cue_map": ["x"]},
+        {"image_prompt": "a still", "video_prompt": "a clip", "video_prompt_origin": "gemma"},
+        {"video_prompt": "only clip"},
+        {"video_prompt_origin": "manual"},
+        {"video_style": "noir", "video_style_custom": "grain", "temporal_world_effect_override": ""},
+        {"speaker_assignments": [{"speaker_id": "s1", "speaker_name": " Ava ", "text": " Hello ", "start": "1.5", "end": -2}, {"type": "Instrumental", "text": ""}]},
+        {"speaker_assignments": "nope"},
+        {"speaker_assignments": ["x"]},
+        {"prompt_summary": "card only", "trigger_phrase": "tp"},
+        {"unknown_field": 1, "i2v_notes": "motion", "t2i_prompt": "legacy"},
+        {"minimax_h3_pass2_prompt": "second", "continuity_direction": "keep"},
+    ]
+    cases = []
+    base_seg = {"id": "s1", "start": 0, "end": 4, "label": "Scene 1", "lyric_text": "old"}
+    for patch in patches:
+        for engine, mode in (("minimax_h3", "zimage"), ("ltx", "flux_klein")):
+            entry = {"patch": patch, "engine": engine, "mode": mode}
+            try:
+                values, rest = card.parse_scene_card_patch(patch)
+                segment = copy.deepcopy(base_seg)
+                card.apply_to_segment(segment, values, video_engine=engine, image_mode=mode)
+                entry.update({"values": values, "rest": rest, "segment": segment, "card_only": card.card_only_names(values)})
+            except card.SceneCardFieldError as exc:
+                entry["error"] = str(exc)
+            cases.append(entry)
+    cases.append({"names": card.field_names()})
+    write("scene_card", cases)
     return 0
 
 
