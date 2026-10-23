@@ -239,6 +239,12 @@ def main() -> int:
                 print(f"UNEXPECTED ERROR {name}: {type(exc).__name__}: {exc}")
         (args.out / f"{name}.json").write_text(
             json.dumps(record, indent=1, sort_keys=True, default=str, ensure_ascii=False), encoding="utf-8")
+    # What the fake ComfyUI reports, so the Rust tests answer the same questions the same way.
+    env_path = args.out.parent / "graph_env.json"
+    env_path.write_text(json.dumps({
+        "fake_root": pack_env.FAKE_ROOT, "output_dir": pack_env.FAKE_OUTPUT, "song_seconds": SONG_SECONDS,
+        "models": pack_env.MODEL_FILES,
+    }, indent=1, sort_keys=True, ensure_ascii=False), encoding="utf-8")
     print(f"wrote {ok + failed} fixtures ({ok} graphs, {failed} errors) to {args.out}")
     return 0
 

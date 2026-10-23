@@ -130,3 +130,39 @@ pub fn collapse_ws(text: &str) -> String {
 pub fn take_chars(text: &str, n: usize) -> String {
     text.chars().take(n).collect()
 }
+
+/// Python `int(value)`: whole numbers, floats (truncated), bools and integer text. `None` where Python would raise.
+pub fn to_int(value: &Value) -> Option<i64> {
+    match value {
+        Value::Number(n) => n.as_i64().or_else(|| n.as_f64().filter(|f| f.is_finite()).map(|f| f.trunc() as i64)),
+        Value::Bool(b) => Some(i64::from(*b)),
+        Value::String(s) => s.trim().replace('_', "").parse::<i64>().ok(),
+        _ => None,
+    }
+}
+
+/// `_int_payload`: `int(payload.get(key, default))` clamped to `[min, max]`, the default when it is not a number.
+pub fn int_payload(payload: &Obj, key: &str, default: i64, min: i64, max: i64) -> i64 {
+    let value = payload.get(key).map_or(Some(default), to_int).unwrap_or(default);
+    value.clamp(min, max)
+}
+
+/// `_float_payload`: `float(payload.get(key, default))` clamped to `[min, max]`.
+pub fn float_payload(payload: &Obj, key: &str, default: f64, min: f64, max: f64) -> f64 {
+    let value = payload.get(key).map_or(Some(default), to_float).unwrap_or(default);
+    max.min(value).max(min)
+}
+
+/// `_bool_payload`: text such as `"true"` or `"on"` is true, anything else follows Python truthiness.
+pub fn bool_payload(payload: &Obj, key: &str, default: bool) -> bool {
+    match payload.get(key) {
+        None => default,
+        Some(Value::String(s)) => matches!(s.trim().to_lowercase().as_str(), "1" | "true" | "yes" | "on"),
+        Some(v) => truthy(v),
+    }
+}
+
+/// `_first_payload_value`: the first listed key that is present and not null.
+pub fn first_value<'a>(payload: &'a Obj, keys: &[&str]) -> Option<&'a Value> {
+    keys.iter().filter_map(|k| payload.get(*k)).find(|v| !v.is_null())
+}

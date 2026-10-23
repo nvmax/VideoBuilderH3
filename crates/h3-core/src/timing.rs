@@ -5,7 +5,7 @@ use std::str::FromStr;
 
 use rust_decimal::prelude::*;
 use rust_decimal::RoundingStrategy;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
 use crate::error::CoreError;
 
@@ -87,7 +87,7 @@ pub struct TimingInput {
     pub pad_warmup: bool,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct TimingPlan {
     pub timeline_start_seconds: f64,
     pub timeline_end_seconds: f64,

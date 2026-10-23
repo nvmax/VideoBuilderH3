@@ -11,7 +11,7 @@ pub mod derived;
 pub mod journal;
 pub mod latents;
 pub mod layout;
-pub mod pyjson;
+pub use h3_core::pyjson;
 pub mod scaffold;
 pub mod session;
 pub mod takes;

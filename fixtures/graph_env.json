@@ -1,0 +1,32 @@
+{
+ "fake_root": "Z:\\h3fixture",
+ "models": {
+  "clip": [],
+  "diffusion_models": [
+   "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+   "minimax_h3_fl2va_pruned_int8_convrot.safetensors"
+  ],
+  "latent_upscale_models": [
+   "minimax_h3_latent_upscaler_3d_bf16.safetensors"
+  ],
+  "loras": [
+   "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+   "minimax_h3_turbo_4step_ema_ckpt850.safetensors",
+   "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+   "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy_resized_avg_rank_21_bf16.safetensors",
+   "style\\film_look.safetensors",
+   "style\\soft_light.safetensors"
+  ],
+  "text_encoders": [
+   "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors"
+  ],
+  "unet": [],
+  "upscale_models": [],
+  "vae": [
+   "minimax_h3_video_vae_fp16.safetensors",
+   "minimax_h3_audio_vae_fp32.safetensors"
+  ]
+ },
+ "output_dir": "Z:\\h3fixture\\comfy\\output",
+ "song_seconds": 215.0
+}

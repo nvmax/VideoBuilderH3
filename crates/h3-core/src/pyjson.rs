@@ -129,3 +129,38 @@ pub fn dumps_file(value: &Value) -> String {
 pub fn parse(text: &str) -> Result<Value, serde_json::Error> {
     serde_json::from_str(text.trim_start_matches('\u{feff}'))
 }
+
+fn write_inline(out: &mut String, value: &Value) {
+    match value {
+        Value::Array(items) => {
+            out.push('[');
+            for (i, item) in items.iter().enumerate() {
+                if i > 0 {
+                    out.push_str(", ");
+                }
+                write_inline(out, item);
+            }
+            out.push(']');
+        }
+        Value::Object(map) => {
+            out.push('{');
+            for (i, (key, item)) in map.iter().enumerate() {
+                if i > 0 {
+                    out.push_str(", ");
+                }
+                write_string(out, key);
+                out.push_str(": ");
+                write_inline(out, item);
+            }
+            out.push('}');
+        }
+        other => write_value(out, other, 0),
+    }
+}
+
+/// `json.dumps(value, ensure_ascii=False)` with no indent: items are separated by `", "` and keys by `": "`.
+pub fn dumps_inline(value: &Value) -> String {
+    let mut out = String::new();
+    write_inline(&mut out, value);
+    out
+}
