@@ -39,7 +39,10 @@ async fn start() -> Server {
         "/v1/chat/completions",
         post(|Json(body): Json<Value>| async move {
             // A picture request gets a description, anything else gets one shot.
-            let text = if body["messages"][0]["content"].is_array() {
+            let asks_for_locations = body["messages"][0]["content"].as_str().is_some_and(|c| c.contains("location scout"));
+            let text = if asks_for_locations {
+                "{\"locations\": [{\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof under a string of warm bulbs.\"}, {\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow over wet asphalt.\"}]}"
+            } else if body["messages"][0]["content"].is_array() {
                 "A young woman with short dark hair wears a red leather jacket, black boots and silver rings."
             } else {
                 "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on a roof as wind lifts her jacket, the camera drifting in.\"}]}"
@@ -143,6 +146,24 @@ async fn prompts_are_written_for_scenes_without_one_and_saved_on_the_scene() {
     assert_eq!(job["result"]["created"], 1, "{job}");
     let (_, scenes) = s.call(Method::GET, "/projects/Demo/scenes/2", None).await;
     assert_ne!(scenes["data"]["minimax_h3_prompt"], "keep this one");
+}
+
+#[tokio::test]
+async fn locations_are_scouted_and_added_once() {
+    let s = start().await;
+    s.call(Method::PUT, "/llm/settings", Some(json!({"runner": "own_server", "own_server_url": s.mock, "own_server_model": "m"}))).await;
+    let (code, body) = s.call(Method::POST, "/projects/Demo/references/locations/extract", Some(json!({"style_theme": "Neon noir"}))).await;
+    assert_eq!(code, 202, "{body}");
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!(job["status"], "succeeded", "{job}");
+    assert_eq!((job["result"]["added"].as_i64(), job["result"]["total_locations"].as_i64()), (Some(2), Some(2)));
+    let (_, refs) = s.call(Method::GET, "/projects/Demo/references", None).await;
+    let names: Vec<&str> = refs["data"]["locations"].as_array().unwrap().iter().map(|l| l["name"].as_str().unwrap()).collect();
+    assert_eq!(names, ["Rooftop Garden", "Corner Bodega"]);
+    // The same answer again adds nothing, because the names are already there.
+    let (_, body) = s.call(Method::POST, "/projects/Demo/references/locations/extract", Some(json!({}))).await;
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!((job["result"]["added"].as_i64(), job["result"]["updated"].as_i64(), job["result"]["total_locations"].as_i64()), (Some(0), Some(0), Some(2)));
 }
 
 #[tokio::test]

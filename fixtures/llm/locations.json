@@ -1,0 +1,1449 @@
+{
+ "scout": [
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "locations": [
+     {
+      "name": "Corner Bodega",
+      "description": "Red awnings glow under amber lights."
+     },
+     {
+      "name": "Rooftop Garden",
+      "description": "Potted trees ring a tar roof."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: ```json {\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \" Chrome stools line a counter. \"}]} ```"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"},]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "locations": [
+     {
+      "name": "Dock",
+      "description": "Wet planks."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{locations: [{name: 'x', description: \"y\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {locations: [{name: 'x', description: \"y\"}]}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "locations": [
+     {
+      "name": "Dock",
+      "description": "a"
+     },
+     {
+      "name": "Pier",
+      "description": ""
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": []}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {\"locations\": []}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "no json at all",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: no json at all"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "[{\"name\": \"A\", \"description\": \"b\"}]",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: [{\"name\": \"A\", \"description\": \"b\"}]"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"}\n{\"name\": \"B\", \"description\": \"c\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "locations": [
+     {
+      "name": "A",
+      "description": "b"
+     },
+     {
+      "name": "B",
+      "description": "c"
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "locations": [
+     {
+      "name": "Cave",
+      "description": "Dark."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "walking down the street\nlights fading",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": \"nope\"}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\n(none)\n\nSong lyrics:\nwalking down the street\nlights fading",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {\"locations\": \"nope\"}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "locations": [
+     {
+      "name": "Corner Bodega",
+      "description": "Red awnings glow under amber lights."
+     },
+     {
+      "name": "Rooftop Garden",
+      "description": "Potted trees ring a tar roof."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: ```json {\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \" Chrome stools line a counter. \"}]} ```"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"},]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "locations": [
+     {
+      "name": "Dock",
+      "description": "Wet planks."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "{locations: [{name: 'x', description: \"y\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {locations: [{name: 'x', description: \"y\"}]}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "locations": [
+     {
+      "name": "Dock",
+      "description": "a"
+     },
+     {
+      "name": "Pier",
+      "description": ""
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "{\"locations\": []}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {\"locations\": []}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "no json at all",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: no json at all"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "[{\"name\": \"A\", \"description\": \"b\"}]",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: [{\"name\": \"A\", \"description\": \"b\"}]"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"}\n{\"name\": \"B\", \"description\": \"c\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "locations": [
+     {
+      "name": "A",
+      "description": "b"
+     },
+     {
+      "name": "B",
+      "description": "c"
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "locations": [
+     {
+      "name": "Cave",
+      "description": "Dark."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [
+     {
+      "concept": "a rooftop at dusk",
+      "notes": "wind"
+     },
+     {
+      "concept": "",
+      "notes": ""
+     },
+     {
+      "concept": "an alley",
+      "notes": ""
+     }
+    ],
+    "style_theme": "Global theme/style:\nNeon noir\n\nLocation extraction notes:\nNo warehouses",
+    "subject_context": "Ava (character): dark hair",
+    "existing_locations": [
+     {
+      "name": "Roof",
+      "description": "x"
+     },
+     {
+      "name": "  ",
+      "description": ""
+     },
+     {
+      "name": "Club   Floor"
+     }
+    ]
+   },
+   "reply": "{\"locations\": \"nope\"}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\nGlobal theme/style:\nNeon noir\nLocation extraction notes:\nNo warehouses\n\nCharacter notes:\nAva (character): dark hair\n\nExisting user locations (do not repeat these):\n- Roof\n- Club Floor\n\nScene concepts and notes (optional extra context):\nScene 1: a rooftop at dusk | notes: wind\nScene 3: an alley\n\nSong lyrics:\n(none)",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {\"locations\": \"nope\"}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "locations": [
+     {
+      "name": "Corner Bodega",
+      "description": "Red awnings glow under amber lights."
+     },
+     {
+      "name": "Rooftop Garden",
+      "description": "Potted trees ring a tar roof."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: ```json {\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \" Chrome stools line a counter. \"}]} ```"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"},]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "locations": [
+     {
+      "name": "Dock",
+      "description": "Wet planks."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{locations: [{name: 'x', description: \"y\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {locations: [{name: 'x', description: \"y\"}]}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "locations": [
+     {
+      "name": "Dock",
+      "description": "a"
+     },
+     {
+      "name": "Pier",
+      "description": ""
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": []}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {\"locations\": []}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "no json at all",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: no json at all"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "[{\"name\": \"A\", \"description\": \"b\"}]",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: [{\"name\": \"A\", \"description\": \"b\"}]"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"}\n{\"name\": \"B\", \"description\": \"c\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "locations": [
+     {
+      "name": "A",
+      "description": "b"
+     },
+     {
+      "name": "B",
+      "description": "c"
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "locations": [
+     {
+      "name": "Cave",
+      "description": "Dark."
+     }
+    ]
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "x",
+    "scenes": [
+     {
+      "concept": "c",
+      "notes": "n"
+     }
+    ],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": \"nope\"}",
+   "instruction": "You are a senior music video location scout and production designer.\n\nYour job is to take song lyrics, creative context, and user style/theme notes, then generate 18–22 unique, cinematic, and shootable filming locations.\n\nINPUTS:\n- Song lyrics: Primary narrative and tonal anchor.\n- Style/theme notes: Dictates visual world, neighborhood/region, cultural textures, lighting palette, and any explicit negative restrictions (banned locations/elements).\n- Character notes: Visual context for scale, social milieu, and authenticity.\n\nCRITICAL DIRECTIVE ON RESTRICTIONS & BANNED ELEMENTS:\n- Parse all negative constraints in the style/theme notes FIRST (e.g., \"No warehouses\", \"No industrial areas\", \"No parking garages\", \"No concrete\").\n- NEVER output spaces that share materials, mood, or function with banned concepts.\n- If industrial/concrete settings are banned or unfitting, prioritize vibrant, lived-in, culturally grounded spaces:\n  * Commercial & Retail: Bodegas, neon-lit late-night diners, barber shops, nail salons, laundromats, sneaker boutiques, jewelry counters.\n  * Residential & Domestic: Brownstone stoops, fire escapes over active streets, narrow apartment hallways with peel-and-stick wallpaper, cramped kitchenettes, high-rise balconies with skyline views.\n  * Entertainment & Nightlife: Velvet-draped VIP lounges, dimly lit pool halls, basement card rooms, karaoke booths, after-hours speakeasies.\n  * Transit & Community: Subway platforms under amber tile, corner intersections under sodium vapor streetlights, chain-link basketball courts under floodlights, deli awnings in the rain.\n\nLOCATION RULES:\n- Every location must be an authentic, specific, and shootable physical place where a camera and performer can set up.\n- Avoid generic descriptions like \"city street\" or \"room.\" Specify exact architectural details, lighting temperatures, window displays, signage, floor/wall materials, and street-level clutter.\n- Ensure all 18–22 locations feel distinct from one another. Vary between intimate domestic sets, street-level community spots, elevated vantage points, and stylized interior commercial rooms.\n\nDESCRIPTION CONSTRAINTS:\n- Describe strictly physical architecture, fixtures, surfaces, lighting sources, colors, weather, and environmental atmosphere.\n- Zero character action or blocking: do not include people, performers, clothing, story events, or motion.\n- Do not explain, interpret, or quote the lyrics.\n- Length: Exactly one complete sentence, strictly between 20 and 38 words.\n\nOUTPUT FORMAT:\n- Return valid, parseable JSON only.\n- No markdown formatting, backticks, or explanatory text before or after the JSON.\n- No trailing commas.\n\nUse exactly this structure:\n\n{\n  \"locations\": [\n    {\n      \"name\": \"Corner Bodega Exterior\",\n      \"description\": \"Weathered red-and-yellow vinyl awnings glow under buzzing amber streetlights, casting reflections across wet asphalt outside glass storefront windows packed with stacked merchandise and illuminated lottery signage.\"\n    }\n  ]\n}\n\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n(none)\n\nCharacter notes:\n(none)\n\nExisting user locations (do not repeat these):\n(none)\n\nScene concepts and notes (optional extra context):\nScene 1: c | notes: n\n\nSong lyrics:\nx",
+   "return": {
+    "error": "The LLM did not return usable location JSON. Raw response preview: {\"locations\": \"nope\"}"
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"},]}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{locations: [{name: 'x', description: \"y\"}]}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": []}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "no json at all",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "[{\"name\": \"A\", \"description\": \"b\"}]",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"}\n{\"name\": \"B\", \"description\": \"c\"}]}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  },
+  {
+   "input": {
+    "lyrics_text": "",
+    "scenes": [],
+    "style_theme": "",
+    "subject_context": "",
+    "existing_locations": []
+   },
+   "reply": "{\"locations\": \"nope\"}",
+   "instruction": null,
+   "return": {
+    "error": "LM Extract needs lyrics, scene notes, or concept prompts first."
+   }
+  }
+ ],
+ "schema": {
+  "type": "object",
+  "properties": {
+   "locations": {
+    "type": "array",
+    "items": {
+     "type": "object",
+     "properties": {
+      "name": {
+       "type": "string"
+      },
+      "description": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "name",
+      "description"
+     ],
+     "additionalProperties": false
+    }
+   }
+  },
+  "required": [
+   "locations"
+  ],
+  "additionalProperties": false
+ },
+ "repair": [
+  {
+   "input": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}",
+   "return": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}"
+  },
+  {
+   "input": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```",
+   "return": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```"
+  },
+  {
+   "input": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"},]}",
+   "return": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"}]}"
+  },
+  {
+   "input": "{locations: [{name: 'x', description: \"y\"}]}",
+   "return": "{\"locations\": [{\"name\": 'x', \"description\": \"y\"}]}"
+  },
+  {
+   "input": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}",
+   "return": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}"
+  },
+  {
+   "input": "{\"locations\": []}",
+   "return": "{\"locations\": []}"
+  },
+  {
+   "input": "no json at all",
+   "return": "no json at all"
+  },
+  {
+   "input": "[{\"name\": \"A\", \"description\": \"b\"}]",
+   "return": "[{\"name\": \"A\", \"description\": \"b\"}]"
+  },
+  {
+   "input": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"}\n{\"name\": \"B\", \"description\": \"c\"}]}",
+   "return": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"},\n{\"name\": \"B\", \"description\": \"c\"}]}"
+  },
+  {
+   "input": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}",
+   "return": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}"
+  },
+  {
+   "input": "{\"locations\": \"nope\"}",
+   "return": "{\"locations\": \"nope\"}"
+  },
+  {
+   "input": "{\"a\": 1,}",
+   "return": "{\"a\": 1}"
+  },
+  {
+   "input": "{'a': 1}",
+   "return": "{'a': 1}"
+  },
+  {
+   "input": "{\"scene_map\": [1] \"x\": 2}",
+   "return": "{\"scene_map\": [1] \"x\": 2}"
+  },
+  {
+   "input": "// c\n{\"a\": 1}",
+   "return": "\n{\"a\": 1}"
+  },
+  {
+   "input": "{Scene 1: \"x\"}",
+   "return": "{\"Scene1\": \"x\"}"
+  },
+  {
+   "input": "",
+   "return": ""
+  },
+  {
+   "input": "{}",
+   "return": "{}"
+  }
+ ],
+ "extract": [
+  {
+   "input": "{\"locations\": [{\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow under amber lights.\"}, {\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof.\"}]}",
+   "return": {
+    "value": {
+     "locations": [
+      {
+       "name": "Corner Bodega",
+       "description": "Red awnings glow under amber lights."
+      },
+      {
+       "name": "Rooftop Garden",
+       "description": "Potted trees ring a tar roof."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "input": "```json\n{\"locations\": [{\"name\": \" Neon Diner, \", \"description\": \"  Chrome   stools\nline a counter. \"}]}\n```",
+   "return": {
+    "error": true,
+    "message": "Invalid control character at: line 1 column 75 (char 74)"
+   }
+  },
+  {
+   "input": "Here you go: {\"locations\": [{\"name\": \"Dock\", \"description\": \"Wet planks.\"},]}",
+   "return": {
+    "value": {
+     "locations": [
+      {
+       "name": "Dock",
+       "description": "Wet planks."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "input": "{locations: [{name: 'x', description: \"y\"}]}",
+   "return": {
+    "error": true,
+    "message": "Expecting value: line 1 column 25 (char 24)"
+   }
+  },
+  {
+   "input": "{\"locations\": [{\"name\": \"Dock\", \"description\": \"a\"}, {\"name\": \"dock\", \"description\": \"b\"}, {\"name\": \"\", \"description\": \"c\"}, \"junk\", {\"name\": \"Pier.-\", \"description\": null}]}",
+   "return": {
+    "value": {
+     "locations": [
+      {
+       "name": "Dock",
+       "description": "a"
+      },
+      {
+       "name": "dock",
+       "description": "b"
+      },
+      {
+       "name": "",
+       "description": "c"
+      },
+      "junk",
+      {
+       "name": "Pier.-",
+       "description": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "input": "{\"locations\": []}",
+   "return": {
+    "value": {
+     "locations": []
+    }
+   }
+  },
+  {
+   "input": "no json at all",
+   "return": {
+    "error": true,
+    "message": "Expecting value: line 1 column 1 (char 0)"
+   }
+  },
+  {
+   "input": "[{\"name\": \"A\", \"description\": \"b\"}]",
+   "return": {
+    "value": {
+     "name": "A",
+     "description": "b"
+    }
+   }
+  },
+  {
+   "input": "{\"locations\": [{\"name\": \"A\", \"description\": \"b\"}\n{\"name\": \"B\", \"description\": \"c\"}]}",
+   "return": {
+    "value": {
+     "locations": [
+      {
+       "name": "A",
+       "description": "b"
+      },
+      {
+       "name": "B",
+       "description": "c"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "input": "<think>hmm</think>{\"locations\": [{\"name\": \"Cave\", \"description\": \"Dark.\"}]}",
+   "return": {
+    "value": {
+     "locations": [
+      {
+       "name": "Cave",
+       "description": "Dark."
+      }
+     ]
+    }
+   }
+  },
+  {
+   "input": "{\"locations\": \"nope\"}",
+   "return": {
+    "value": {
+     "locations": "nope"
+    }
+   }
+  },
+  {
+   "input": "{\"a\": 1,}",
+   "return": {
+    "value": {
+     "a": 1
+    }
+   }
+  },
+  {
+   "input": "{'a': 1}",
+   "return": {
+    "error": true,
+    "message": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+   }
+  },
+  {
+   "input": "{\"scene_map\": [1] \"x\": 2}",
+   "return": {
+    "error": true,
+    "message": "Expecting ',' delimiter: line 1 column 19 (char 18)"
+   }
+  },
+  {
+   "input": "// c\n{\"a\": 1}",
+   "return": {
+    "value": {
+     "a": 1
+    }
+   }
+  },
+  {
+   "input": "{Scene 1: \"x\"}",
+   "return": {
+    "value": {
+     "Scene1": "x"
+    }
+   }
+  },
+  {
+   "input": "",
+   "return": {
+    "error": true,
+    "message": "Gemma did not return a JSON object."
+   }
+  },
+  {
+   "input": "{}",
+   "return": {
+    "value": {}
+   }
+  }
+ ],
+ "context": [
+  {
+   "input": "",
+   "return": "",
+   "meta": true
+  },
+  {
+   "input": "plain theme",
+   "return": "plain theme",
+   "meta": false
+  },
+  {
+   "input": "line one\n\nline two",
+   "return": "line one\nline two",
+   "meta": false
+  },
+  {
+   "input": "see C:\\music\\themestyle.txt for more",
+   "return": "",
+   "meta": false
+  },
+  {
+   "input": "as in subjectsandscenes.txt only",
+   "return": "",
+   "meta": true
+  },
+  {
+   "input": "I can't do that",
+   "return": "",
+   "meta": true
+  },
+  {
+   "input": "Here is the reusable location list:\nRoof\nClub",
+   "return": "Roof\nClub",
+   "meta": true
+  },
+  {
+   "input": "Global theme/style:\nNeon\n\nLocation extraction notes:\nNo warehouses",
+   "return": "Global theme/style:\nNeon\nLocation extraction notes:\nNo warehouses",
+   "meta": false
+  },
+  {
+   "input": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "return": "",
+   "meta": true
+  },
+  {
+   "input": "x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x room",
+   "return": "x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x room",
+   "meta": false
+  },
+  {
+   "input": "output format: json",
+   "return": "",
+   "meta": true
+  },
+  {
+   "input": "keep it\r\nwindows lines",
+   "return": "keep it\nwindows lines",
+   "meta": false
+  },
+  {
+   "input": "the user input says go",
+   "return": "",
+   "meta": true
+  }
+ ],
+ "subject_context": [
+  {
+   "refs": {},
+   "return": ""
+  },
+  {
+   "refs": {
+    "subjects": []
+   },
+   "return": ""
+  },
+  {
+   "refs": {
+    "subjects": [
+     {
+      "name": "Ava",
+      "description": "dark hair"
+     },
+     {
+      "name": "",
+      "description": ""
+     },
+     {
+      "name": "Ben",
+      "reference_type": "extra"
+     },
+     {
+      "description": "unnamed"
+     }
+    ]
+   },
+   "return": "Ava (character): dark hair\nBen (extra)\nReference (character): unnamed"
+  }
+ ]
+}

@@ -18,11 +18,16 @@ use crate::views::resolve_project;
 
 pub const MINIMAX_PROMPTS: &str = "minimax.prompts";
 pub const REFERENCE_DESCRIBE: &str = "reference.describe";
+pub const EXTRACT_LOCATIONS: &str = "reference.extract_locations";
 
 type Run = fn(Arc<AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
 pub fn register(state: &Arc<AppState>) {
-    let table: [(&str, Run); 2] = [(MINIMAX_PROMPTS, |s, c| Box::pin(minimax_prompts(s, c))), (REFERENCE_DESCRIBE, |s, c| Box::pin(describe_reference(s, c)))];
+    let table: [(&str, Run); 3] = [
+        (MINIMAX_PROMPTS, |s, c| Box::pin(minimax_prompts(s, c))),
+        (REFERENCE_DESCRIBE, |s, c| Box::pin(describe_reference(s, c))),
+        (EXTRACT_LOCATIONS, |s, c| Box::pin(extract_locations(s, c))),
+    ];
     for (kind, run) in table {
         let owned = Arc::clone(state);
         let handler: Handler = Arc::new(move |ctx| run(Arc::clone(&owned), ctx));
@@ -147,6 +152,84 @@ async fn describe_reference(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, 
     };
     let saved = saved.map_err(internal)?.map_err(internal)?;
     Ok(json!({"id": card_id, "kind": kind, "name": name, "description": description, "model": model, "revision": saved["revision"]}))
+}
+
+/// First of the keys that has text, like Python's `a or b or c`, stripped.
+fn first_text(segment: &Value, keys: &[&str]) -> String {
+    keys.iter().filter_map(|k| segment.get(*k)).find(|v| h3_core::pyval::truthy(v)).map(|v| text_or_empty(Some(v)).trim().to_string()).unwrap_or_default()
+}
+
+/// The project's theme file and the location notes, as the scout gets them.
+fn location_style_theme_text(folder: &std::path::Path, session: &Obj, local_notes: &str) -> String {
+    let use_context = session.get("use_vrgdg_text_context").is_none_or(h3_core::pyval::truthy);
+    let theme = if use_context { std::fs::read_to_string(folder.join("project_context").join("themestyle.txt")).map(|t| t.trim().to_string()).unwrap_or_default() } else { String::new() };
+    let mut parts = Vec::new();
+    if !theme.is_empty() {
+        parts.push(format!("Global theme/style:\n{theme}"));
+    }
+    if !local_notes.trim().is_empty() {
+        parts.push(format!("Location extraction notes:\n{}", local_notes.trim()));
+    }
+    parts.join("\n\n").trim().to_string()
+}
+
+fn new_location_id(taken: &[String]) -> String {
+    let now = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default();
+    let mut salt = now.subsec_nanos() as u64;
+    loop {
+        salt = salt.wrapping_mul(6364136223846793005).wrapping_add(1442695040888963407);
+        let id = format!("loc_{}_{}", now.as_millis(), (salt >> 33) % 10000);
+        if !taken.contains(&id) {
+            return id;
+        }
+    }
+}
+
+/// Ask the LLM for filming locations from the lyrics and scene notes and add them to the Reference Builder.
+async fn extract_locations(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let loaded = read_session(&folder).await?;
+    let session = &loaded.session;
+    let segments: Vec<&Value> = session.get("segments").and_then(Value::as_array).map(|a| a.iter().filter(|s| s.is_object()).collect()).unwrap_or_default();
+    let (mut lyric_lines, mut planning) = (Vec::new(), Vec::new());
+    for segment in &segments {
+        let lyric = text_or_empty(segment.get("lyric_text")).trim().to_string();
+        if !lyric.is_empty() {
+            lyric_lines.push(format!("Scene {}: {lyric}", lyric_lines.len() + 1));
+        }
+        let concept = first_text(segment, &["t2i_prompt", "flux_prompt", "notes", "flux_notes"]);
+        let notes = ["notes", "timeline_note", "i2v_notes"].iter().map(|k| text_or_empty(segment.get(*k)).trim().to_string()).filter(|p| !p.is_empty()).collect::<Vec<_>>().join("\n");
+        if !concept.is_empty() || !notes.is_empty() {
+            planning.push((concept, notes));
+        }
+    }
+    if lyric_lines.is_empty() && planning.is_empty() {
+        return Err(fail(ApiError::validation("LM Extract needs lyrics, scene notes, or concept prompts first. Create the scenes from the lyrics first.")));
+    }
+    let refs = session.get("flux_reference_builder").cloned().unwrap_or_else(|| json!({}));
+    let given = text_or_empty(ctx.params.get("style_theme")).trim().to_string();
+    let local_notes = if given.is_empty() { text_or_empty(refs.get("location_style_theme")).trim().to_string() } else { given };
+    let input = h3_llm::locations::ScoutInput {
+        lyrics_text: lyric_lines.join("\n"),
+        scenes: planning,
+        style_theme: location_style_theme_text(&folder, session, &local_notes),
+        subject_context: h3_llm::locations::subject_context_for_locations(&refs),
+        existing_locations: refs.get("locations").and_then(Value::as_array).map(|a| a.iter().map(|l| text_or_empty(l.get("name"))).collect()).unwrap_or_default(),
+        max_new_tokens: ctx.params.get("max_new_tokens").and_then(Value::as_u64).map(|n| n as u32),
+        ..Default::default()
+    };
+    ctx.progress(ProgressUpdate { percent: 10.0, stage: "extracting_locations".into(), message: "Asking the LLM location scout...".into(), stage_count: 1, ..Default::default() });
+    let found = h3_llm::locations::scout_locations(&current(&state), &input).await.map_err(|e| fail(ApiError::from(e)))?;
+    let pairs: Vec<(String, String)> = found.locations.iter().map(|l| (l.name.clone(), l.description.clone())).collect();
+    let saved = {
+        let _guard = state.edit_lock.lock().await;
+        let folder = folder.clone();
+        tokio::task::spawn_blocking(move || session_ops::merge_scouted_locations(&folder, &pairs, &local_notes, &mut |taken| new_location_id(taken), None, &Stamp::now())).await
+    };
+    let mut saved = saved.map_err(internal)?.map_err(internal)?;
+    saved["model"] = json!(found.model);
+    Ok(saved)
 }
 
 fn field_text(session: &Obj, kind: &str, card_id: &str, key: &str) -> String {

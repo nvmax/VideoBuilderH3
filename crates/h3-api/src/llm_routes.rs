@@ -108,6 +108,14 @@ pub async fn describe_reference(State(state): Shared, axum::extract::Path((pid, 
     Ok(crate::app::job_response(&job))
 }
 
+/// Ask the LLM for filming locations from the lyrics and add them to the Reference Builder, as a job.
+pub async fn extract_locations(State(state): Shared, axum::extract::Path(pid): axum::extract::Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let params = body_object(body)?;
+    crate::app::load(&state, &pid).await?;
+    let job = state.jobs.submit(crate::llm_jobs::EXTRACT_LOCATIONS, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
 /// Send one short request and report whether the model answers.
 pub async fn test(State(state): Shared) -> ApiResult {
     let cfg = current(&state);

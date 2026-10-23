@@ -311,6 +311,45 @@ pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj
     Ok(json!({if is_subject { "subject" } else { "location" }: saved, "revision": revision}))
 }
 
+/// Add the locations the scout found. A name already on a card (any letter case) is not added again, and fills in that
+/// card's description when it has none. `new_id` makes the id of each new card.
+pub fn merge_scouted_locations(project: &Path, found: &[(String, String)], style_notes: &str, new_id: &mut dyn FnMut(&[String]) -> String, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    let list = card_list(&mut edit.session, "locations")?;
+    let mut used: Vec<String> = list.iter().map(|c| text_or_empty(c.get("id"))).collect();
+    let (mut added, mut updated) = (0, 0);
+    for (name, description) in found {
+        if name.is_empty() {
+            continue;
+        }
+        let key = name.to_lowercase();
+        let position = list.iter().position(|c| text_or_empty(c.get("name")).trim().to_lowercase() == key);
+        match position {
+            None => {
+                let id = new_id(&used);
+                used.push(id.clone());
+                list.push(json!({"id": id, "name": name, "description": description, "image": {"path": "", "data": "", "name": ""}}));
+                added += 1;
+            }
+            Some(i) => {
+                let empty = text_or_empty(list[i].get("description")).trim().is_empty();
+                if empty && !description.is_empty() {
+                    list[i]["description"] = json!(description);
+                    updated += 1;
+                }
+            }
+        }
+    }
+    let cards: Vec<Value> = list.clone();
+    let refs = edit.session.get_mut("flux_reference_builder").and_then(Value::as_object_mut).expect("card_list made it");
+    refs.insert("locations_cleared".into(), json!(false));
+    refs.insert("location_style_theme".into(), json!(style_notes));
+    refs.insert("use_location_references".into(), json!(!cards.is_empty()));
+    let revision = edit.save(now)?;
+    let summary: Vec<Value> = cards.iter().map(|c| json!({"id": c["id"], "name": c["name"]})).collect();
+    Ok(json!({"added": added, "updated": updated, "total_locations": cards.len(), "locations": summary, "revision": revision}))
+}
+
 /// Delete a card and take it out of the scene maps.
 pub fn delete_reference(project: &Path, kind: &str, card_id: &str, if_match: Option<i64>, now: &Stamp) -> OpResult {
     let mut edit = open(project, if_match)?;
