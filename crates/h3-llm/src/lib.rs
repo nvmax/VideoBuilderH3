@@ -1,1 +1,9 @@
-//! LLM providers and prompt orchestration. Never loads, unloads or switches a model.
+//! LLM providers. LM Studio is used through the model that is already loaded: this crate never loads, unloads or
+//! switches a model.
+
+pub mod clean;
+pub mod client;
+pub mod config;
+
+pub use client::{chat, describe_active, loaded_lm_studio_models, ActiveLlm, ChatReply, ChatRequest, LlmError, LoadedModel};
+pub use config::LlmConfig;

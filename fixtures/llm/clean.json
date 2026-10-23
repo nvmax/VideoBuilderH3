@@ -1,0 +1,89 @@
+{
+ "cases": [
+  {
+   "input": "plain answer",
+   "strip": "plain answer",
+   "plain": "plain answer"
+  },
+  {
+   "input": "  spaced \r\n answer \r ",
+   "strip": "spaced \n answer",
+   "plain": "spaced \n answer"
+  },
+  {
+   "input": "<think>hidden</think>The answer.",
+   "strip": "The answer.",
+   "plain": "The answer."
+  },
+  {
+   "input": "<thought>one</thought> A <think>two</think> B",
+   "strip": "A  B",
+   "plain": "A  B"
+  },
+  {
+   "input": "reasoning without opener</think>Real answer",
+   "strip": "Real answer",
+   "plain": "Real answer"
+  },
+  {
+   "input": "Thinking: step one\nstep two\nFinal answer: Done.",
+   "strip": "Done.",
+   "plain": "Done."
+  },
+  {
+   "input": "Thought process: stuff\nAnswer: 42",
+   "strip": "42",
+   "plain": "42"
+  },
+  {
+   "input": "Analysis: just a label then text",
+   "strip": "just a label then text",
+   "plain": "just a label then text"
+  },
+  {
+   "input": "<|channel|>thought: tail",
+   "strip": "tail",
+   "plain": "tail"
+  },
+  {
+   "input": "```json\n{\"a\": 1}\n```",
+   "strip": "```json\n{\"a\": 1}\n```",
+   "plain": "{\"a\": 1}"
+  },
+  {
+   "input": "```text\nhello\n```",
+   "strip": "```text\nhello\n```",
+   "plain": "hello"
+  },
+  {
+   "input": "Assistant: hi there",
+   "strip": "Assistant: hi there",
+   "plain": "hi there"
+  },
+  {
+   "input": "Final answer: yes",
+   "strip": "Final answer: yes",
+   "plain": "yes"
+  },
+  {
+   "input": "Answer:   spaced",
+   "strip": "Answer:   spaced",
+   "plain": "spaced"
+  },
+  {
+   "input": "<think>unclosed",
+   "strip": "<think>unclosed",
+   "plain": "<think>unclosed"
+  },
+  {
+   "input": "",
+   "strip": "",
+   "plain": ""
+  },
+  {
+   "input": "Reasoning: x\n\nresponse: y\nsecond line",
+   "strip": "y\nsecond line",
+   "plain": "y\nsecond line"
+  }
+ ]
+}
