@@ -45,7 +45,7 @@ pub fn read_audio_peaks(tools: &Tools, path: &Path, target: usize) -> Result<Aud
         .map(|s| s.to_string())
         .collect();
     let output = tools.ffmpeg_checked(&args, "ffmpeg could not read the audio")?;
-    let samples: Vec<f32> = output.stdout.chunks_exact(4).map(|b| f32::from_le_bytes([b[0], b[1], b[2], b[3]])).collect();
+    let samples: Vec<f32> = output.stdout.as_chunks::<4>().0.iter().map(|b| f32::from_le_bytes(*b)).collect();
     Ok(peaks_from_samples(&samples, target, SAMPLE_RATE))
 }
 

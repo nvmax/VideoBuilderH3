@@ -119,12 +119,12 @@ fn rewrite_all(session: &mut Obj, segs: &mut Vec<Value>, renamed: &Renamed) {
 }
 
 /// An open edit of a project: the loaded session and the revision check.
-struct Edit {
-    project: std::path::PathBuf,
-    session: Obj,
+pub(crate) struct Edit {
+    pub(crate) project: std::path::PathBuf,
+    pub(crate) session: Obj,
 }
 
-fn open(project: &Path, if_match: Option<i64>) -> Result<Edit, OpError> {
+pub(crate) fn open(project: &Path, if_match: Option<i64>) -> Result<Edit, OpError> {
     recover_pending(project);
     let loaded = load_session(project)?;
     let current = current_revision(&loaded.session);
@@ -135,7 +135,7 @@ fn open(project: &Path, if_match: Option<i64>) -> Result<Edit, OpError> {
 }
 
 impl Edit {
-    fn segments(&mut self) -> Vec<Value> {
+    pub(crate) fn segments(&mut self) -> Vec<Value> {
         let value = self.session.entry("segments").or_insert_with(|| json!([])).take();
         match value {
             Value::Array(items) => items,
@@ -143,11 +143,11 @@ impl Edit {
         }
     }
 
-    fn put_segments(&mut self, segs: Vec<Value>) {
+    pub(crate) fn put_segments(&mut self, segs: Vec<Value>) {
         self.session.insert("segments".into(), Value::Array(segs));
     }
 
-    fn save(self, now: &Stamp) -> Result<i64, OpError> {
+    pub(crate) fn save(self, now: &Stamp) -> Result<i64, OpError> {
         Ok(persist_session(&self.project, self.session, now.clone())?.revision)
     }
 }
