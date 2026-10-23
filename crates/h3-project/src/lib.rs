@@ -14,6 +14,7 @@ pub mod latents;
 pub mod layout;
 pub use h3_core::pyjson;
 pub mod scaffold;
+pub mod scene_ops;
 pub mod session;
 pub mod takes;
 
