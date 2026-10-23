@@ -1,0 +1,19 @@
+[package]
+name = "h3-cli"
+description = "Command line for the H3 app: doctor, and later render, render-all and stitch."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "h3"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+clap.workspace = true
+h3-comfy.workspace = true
+h3-project.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

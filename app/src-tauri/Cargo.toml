@@ -1,0 +1,22 @@
+[package]
+name = "h3-studio"
+description = "VRGDG H3 Studio desktop app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+# The `_lib` suffix keeps the lib name distinct from the bin name on Windows (cargo issue 8519).
+name = "h3_studio_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+h3-comfy.workspace = true
+h3-project.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"

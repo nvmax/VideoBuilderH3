@@ -1,0 +1,8 @@
+[package]
+name = "h3-pipeline"
+description = "Scene render, render all, build full video and stitch."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]

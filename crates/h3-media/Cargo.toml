@@ -1,0 +1,8 @@
+[package]
+name = "h3-media"
+description = "ffmpeg and ffprobe wrapper, audio decode, peaks and beats."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]

@@ -1,0 +1,8 @@
+[package]
+name = "h3-graph"
+description = "ComfyUI API graph building from the H3 templates."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]

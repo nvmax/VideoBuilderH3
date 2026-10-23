@@ -1,0 +1,8 @@
+[package]
+name = "h3-core"
+description = "Pure MiniMax H3 logic: resolution, timing, token math, settings, scene inputs and shot prompts. No IO."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]

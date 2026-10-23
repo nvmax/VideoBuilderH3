@@ -1,0 +1,31 @@
+[workspace]
+resolver = "2"
+members = ["crates/*", "app/src-tauri"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[workspace.dependencies]
+h3-core = { path = "crates/h3-core" }
+h3-project = { path = "crates/h3-project" }
+h3-comfy = { path = "crates/h3-comfy" }
+h3-graph = { path = "crates/h3-graph" }
+h3-media = { path = "crates/h3-media" }
+h3-llm = { path = "crates/h3-llm" }
+h3-jobs = { path = "crates/h3-jobs" }
+h3-pipeline = { path = "crates/h3-pipeline" }
+h3-api = { path = "crates/h3-api" }
+
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+dirs = "6"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+tempfile = "3"
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

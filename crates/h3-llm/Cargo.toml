@@ -1,0 +1,8 @@
+[package]
+name = "h3-llm"
+description = "LLM providers and prompt orchestration. Never loads, unloads or switches a model."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
