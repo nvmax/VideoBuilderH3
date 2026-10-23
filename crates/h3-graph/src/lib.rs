@@ -7,6 +7,7 @@ pub mod api;
 pub mod env;
 pub mod inputs;
 pub mod patches;
+pub mod refmod;
 pub mod timestamp;
 pub mod workflows;
 

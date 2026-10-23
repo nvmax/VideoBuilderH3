@@ -1,0 +1,374 @@
+{
+ "files": {
+  "identity/darrel": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"video\", \"latent_t\": 4, \"latent_h\": 32, \"latent_w\": 24, \"concept_type\": \"character\", \"description\": \"a man\", \"tags\": [\"man\", 7], \"mode\": \"video\"}"
+   }
+  },
+  "identity/brad": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"image\", \"latent_t\": 1, \"latent_h\": 40, \"latent_w\": 40}"
+   }
+  },
+  "background/meadow": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"image\", \"latent_h\": 20, \"latent_w\": 30, \"concept_type\": \"\", \"description\": null}"
+   }
+  },
+  "Style/Film": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"video\", \"latent_t\": \"3\", \"latent_h\": \"16\", \"latent_w\": \"16\"}"
+   }
+  },
+  "loose": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"image\", \"latent_h\": 8, \"latent_w\": 8}"
+   }
+  },
+  "audio/voice": {
+   "__metadata__": {
+    "audio_refmod_meta": "{\"kind\": \"audio\", \"latent_t\": 5}"
+   }
+  },
+  "identity/broken_meta": {
+   "__metadata__": {
+    "refmod_meta": "not json"
+   }
+  },
+  "identity/no_meta": {
+   "x": 1
+  },
+  "identity/odd_numbers": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"video\", \"latent_t\": 3, \"latent_h\": 15, \"latent_w\": 9}"
+   }
+  },
+  "identity/bad_numbers": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"video\", \"latent_t\": \"many\", \"latent_h\": 2, \"latent_w\": 2}"
+   }
+  },
+  "graph_presets/skipped": {
+   "__metadata__": {
+    "refmod_meta": "{\"kind\": \"image\", \"latent_h\": 8, \"latent_w\": 8}"
+   }
+  }
+ },
+ "previews": [
+  "identity/darrel"
+ ],
+ "find": [
+  "identity/darrel",
+  "identity\\brad",
+  "loose",
+  "audio/voice",
+  "../outside",
+  "/abs",
+  "C:x",
+  "",
+  "identity/missing",
+  " background/meadow "
+ ],
+ "answers": {
+  "list": [
+   {
+    "name": "background/meadow",
+    "folder": "background",
+    "type": "background",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     480,
+     320
+    ],
+    "tokens": 150,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 149
+   },
+   {
+    "name": "extra/more",
+    "folder": "extra",
+    "type": "extra",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     64,
+     64
+    ],
+    "tokens": 4,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 100
+   },
+   {
+    "name": "identity/brad",
+    "folder": "identity",
+    "type": "identity",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     640,
+     640
+    ],
+    "tokens": 400,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 119
+   },
+   {
+    "name": "identity/darrel",
+    "folder": "identity",
+    "type": "character",
+    "kind": "video",
+    "frames": 4,
+    "canvas": [
+     384,
+     512
+    ],
+    "tokens": 768,
+    "description": "a man",
+    "tags": [
+     "man",
+     "7"
+    ],
+    "mode": "video",
+    "has_preview": true,
+    "size": 225
+   },
+   {
+    "name": "identity/odd_numbers",
+    "folder": "identity",
+    "type": "identity",
+    "kind": "video",
+    "frames": 3,
+    "canvas": [
+     144,
+     240
+    ],
+    "tokens": 84,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 118
+   },
+   {
+    "name": "loose",
+    "folder": "",
+    "type": "generic",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     128,
+     128
+    ],
+    "tokens": 16,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 100
+   },
+   {
+    "name": "Style/Film",
+    "folder": "Style",
+    "type": "Style",
+    "kind": "video",
+    "frames": 3,
+    "canvas": [
+     256,
+     256
+    ],
+    "tokens": 192,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 131
+   }
+  ],
+  "folders": {
+   "identity": [
+    {
+     "name": "identity/brad",
+     "folder": "identity",
+     "type": "identity",
+     "kind": "image",
+     "frames": 1,
+     "canvas": [
+      640,
+      640
+     ],
+     "tokens": 400,
+     "description": "",
+     "tags": [],
+     "mode": "",
+     "has_preview": false,
+     "size": 119
+    },
+    {
+     "name": "identity/darrel",
+     "folder": "identity",
+     "type": "character",
+     "kind": "video",
+     "frames": 4,
+     "canvas": [
+      384,
+      512
+     ],
+     "tokens": 768,
+     "description": "a man",
+     "tags": [
+      "man",
+      "7"
+     ],
+     "mode": "video",
+     "has_preview": true,
+     "size": 225
+    },
+    {
+     "name": "identity/odd_numbers",
+     "folder": "identity",
+     "type": "identity",
+     "kind": "video",
+     "frames": 3,
+     "canvas": [
+      144,
+      240
+     ],
+     "tokens": 84,
+     "description": "",
+     "tags": [],
+     "mode": "",
+     "has_preview": false,
+     "size": 118
+    }
+   ],
+   "extra": [
+    {
+     "name": "extra/more",
+     "folder": "extra",
+     "type": "extra",
+     "kind": "image",
+     "frames": 1,
+     "canvas": [
+      64,
+      64
+     ],
+     "tokens": 4,
+     "description": "",
+     "tags": [],
+     "mode": "",
+     "has_preview": false,
+     "size": 100
+    }
+   ],
+   "nope": [],
+   "Style": [
+    {
+     "name": "Style/Film",
+     "folder": "Style",
+     "type": "Style",
+     "kind": "video",
+     "frames": 3,
+     "canvas": [
+      256,
+      256
+     ],
+     "tokens": 192,
+     "description": "",
+     "tags": [],
+     "mode": "",
+     "has_preview": false,
+     "size": 131
+    }
+   ]
+  },
+  "find": {
+   "identity/darrel": {
+    "name": "identity/darrel",
+    "folder": "identity",
+    "type": "character",
+    "kind": "video",
+    "frames": 4,
+    "canvas": [
+     384,
+     512
+    ],
+    "tokens": 768,
+    "description": "a man",
+    "tags": [
+     "man",
+     "7"
+    ],
+    "mode": "video",
+    "has_preview": true,
+    "size": 225
+   },
+   "identity\\brad": {
+    "name": "identity/brad",
+    "folder": "identity",
+    "type": "identity",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     640,
+     640
+    ],
+    "tokens": 400,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 119
+   },
+   "loose": {
+    "name": "loose",
+    "folder": "",
+    "type": "generic",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     128,
+     128
+    ],
+    "tokens": 16,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 100
+   },
+   "audio/voice": null,
+   "../outside": null,
+   "/abs": null,
+   "C:x": null,
+   "": null,
+   "identity/missing": null,
+   " background/meadow ": {
+    "name": "background/meadow",
+    "folder": "background",
+    "type": "background",
+    "kind": "image",
+    "frames": 1,
+    "canvas": [
+     480,
+     320
+    ],
+    "tokens": 150,
+    "description": "",
+    "tags": [],
+    "mode": "",
+    "has_preview": false,
+    "size": 149
+   }
+  }
+ }
+}

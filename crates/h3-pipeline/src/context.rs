@@ -37,6 +37,36 @@ pub async fn comfy_dirs(cfg: &AppConfig) -> Result<ComfyDirs, String> {
     Ok(dirs)
 }
 
+/// Folders the saved RefMods are read from: the ones ComfyUI registers for `refmods`, `models/refmods` and the
+/// `ComfyUI-MiniMaxH3Mod/mods` folder of the MiniMaxH3Mod node pack. Only folders that exist are kept.
+pub fn refmod_dirs(folder_paths: Option<&serde_json::Value>) -> Vec<std::path::PathBuf> {
+    use std::path::PathBuf;
+    let paths_of = |key: &str| -> Vec<PathBuf> {
+        folder_paths.and_then(|f| f.get(key)).and_then(serde_json::Value::as_array).map(|a| a.iter().filter_map(|v| v.as_str()).map(PathBuf::from).collect()).unwrap_or_default()
+    };
+    let mut dirs = paths_of("refmods");
+    let models_dir = ["checkpoints", "loras", "diffusion_models", "vae", "unet"].iter().flat_map(|k| paths_of(k)).find_map(|p| p.parent().filter(|d| d.file_name().is_some_and(|n| n == "models")).map(PathBuf::from));
+    if let Some(models) = models_dir {
+        dirs.push(models.join("refmods"));
+    }
+    if let Some(custom_nodes) = paths_of("custom_nodes").first() {
+        dirs.push(custom_nodes.join("ComfyUI-MiniMaxH3Mod").join("mods"));
+    }
+    let mut seen: Vec<PathBuf> = Vec::new();
+    for dir in dirs {
+        if dir.is_dir() && !seen.contains(&dir) {
+            seen.push(dir);
+        }
+    }
+    seen
+}
+
+/// The RefMod folders of the running ComfyUI. Empty when ComfyUI is not reachable.
+pub async fn refmod_dirs_of(cfg: &AppConfig) -> Vec<std::path::PathBuf> {
+    let client = ComfyClient::new(cfg.comfy_base());
+    refmod_dirs(client.folder_paths().await.as_ref())
+}
+
 /// ComfyUI, ffmpeg and the folders, ready to run a render. Reads `/object_info` once, so build a new context per run.
 pub async fn connect(cfg: &AppConfig) -> Result<RunContext, String> {
     let tools = Tools::find(&cfg.ffmpeg_path, &cfg.ffprobe_path).map_err(|e| e.to_string())?;
@@ -49,5 +79,5 @@ pub async fn connect(cfg: &AppConfig) -> Result<RunContext, String> {
         dirs.output = cfg.comfy_output_dir.trim().to_string();
     }
     let object_info = client.object_info().await.map_err(|e| e.to_string())?;
-    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools)), cancel: Arc::new(AtomicBool::new(false)), before_scene: None })
+    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools).with_refmod_dirs(refmod_dirs(folder_paths.as_ref()))), cancel: Arc::new(AtomicBool::new(false)), before_scene: None })
 }

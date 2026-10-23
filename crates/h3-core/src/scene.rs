@@ -61,7 +61,7 @@ fn has_image(image: Option<&Value>) -> bool {
     image.and_then(Value::as_object).is_some_and(|o| !field(o, "path").is_empty() || !field(o, "data").is_empty())
 }
 
-fn split_ids(value: Option<&Value>) -> Vec<String> {
+pub(crate) fn split_ids(value: Option<&Value>) -> Vec<String> {
     match value {
         Some(Value::Array(items)) => items.iter().map(|i| text(Some(i))).filter(|t| !t.is_empty()).collect(),
         other => text_or_empty(other).split(',').map(|s| s.trim().to_string()).filter(|s| !s.is_empty()).collect(),
@@ -88,7 +88,7 @@ pub fn scene_map_value(mapping: Option<&Value>, segment: &Obj, index: usize) -> 
     source.get(&(index + 1).to_string()).cloned()
 }
 
-fn builder(session: &Value) -> Obj {
+pub(crate) fn builder(session: &Value) -> Obj {
     session.get("flux_reference_builder").and_then(Value::as_object).cloned().unwrap_or_default()
 }
 
@@ -188,7 +188,7 @@ fn has_meaningful_subject(refs: &Obj) -> bool {
     false
 }
 
-fn subject_items_for_segment(refs: &Obj, segment: &Obj, index: usize) -> Vec<Obj> {
+pub(crate) fn subject_items_for_segment(refs: &Obj, segment: &Obj, index: usize) -> Vec<Obj> {
     let empty = Obj::new();
     let primary_has_image = has_image(refs.get("subject").and_then(|s| s.get("image")));
     let subjects: Vec<Obj> = objs(refs.get("subjects")).into_iter().cloned().collect();
@@ -274,7 +274,7 @@ fn key_of(item: &Obj) -> String {
 }
 
 /// Extras mapped to this scene that go to MiniMax.
-fn forced_extra_keys(refs: &Obj, segment: &Obj, index: usize) -> Vec<String> {
+pub(crate) fn forced_extra_keys(refs: &Obj, segment: &Obj, index: usize) -> Vec<String> {
     if flag(segment, "no_character_present") || !flag(refs, "extras_enabled") {
         return vec![];
     }

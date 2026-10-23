@@ -57,6 +57,10 @@ pub trait GraphEnv {
     fn pass1_latent_matches(&self, project: &str, scene: u32) -> bool;
     /// A seed for a negative (random) seed setting.
     fn random_seed(&self) -> u64;
+    /// A saved RefMod by name, for the RefMod pipeline. `None` when there is no such RefMod.
+    fn refmod_entry(&self, _name: &str) -> Option<crate::refmod::RefmodEntry> {
+        None
+    }
     /// Memory efficient Sage Attention needs the SageAttention package. Return the reason when it is missing.
     fn check_memory_efficient_sage_attention(&self) -> std::result::Result<(), String> {
         Ok(())

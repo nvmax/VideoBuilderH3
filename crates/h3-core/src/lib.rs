@@ -5,6 +5,7 @@ pub mod error;
 pub mod prompt;
 pub mod pyjson;
 pub mod pyval;
+pub mod refmod;
 pub mod resolution;
 pub mod scene;
 pub mod scene_card;

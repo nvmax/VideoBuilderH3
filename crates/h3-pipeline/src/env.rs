@@ -16,11 +16,18 @@ pub struct LiveEnv {
     pub object_info: Value,
     pub dirs: ComfyDirs,
     pub tools: Tools,
+    /// Folders the saved RefMods are read from.
+    pub refmod_dirs: Vec<std::path::PathBuf>,
 }
 
 impl LiveEnv {
     pub fn new(object_info: Value, dirs: ComfyDirs, tools: Tools) -> Self {
-        Self { object_info, dirs, tools }
+        Self { object_info, dirs, tools, refmod_dirs: Vec::new() }
+    }
+
+    pub fn with_refmod_dirs(mut self, dirs: Vec<std::path::PathBuf>) -> Self {
+        self.refmod_dirs = dirs;
+        self
     }
 }
 
@@ -75,6 +82,10 @@ impl GraphEnv for LiveEnv {
 
     fn pass1_latent_matches(&self, project: &str, scene: u32) -> bool {
         latents::pass1_latent_matches(Path::new(project), scene)
+    }
+
+    fn refmod_entry(&self, name: &str) -> Option<h3_graph::refmod::RefmodEntry> {
+        crate::refmod_library::find_refmod(&self.refmod_dirs, name).map(|e| e.as_graph_entry())
     }
 
     fn random_seed(&self) -> u64 {

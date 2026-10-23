@@ -131,9 +131,7 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
     if !pass2_prompt.is_empty() {
         payload.insert("pass2_prompt".into(), json!(pass2_prompt));
     }
-    if settings.get("pipeline").and_then(Value::as_str) == Some("refmod") {
-        return Err(RenderError::Invalid("The RefMod pipeline is not built into this app yet.".into()));
-    }
+    let refmod = settings.get("pipeline").and_then(Value::as_str) == Some("refmod");
 
     // The scene inputs the UI resolves per render: reference images, continuity, reference videos and the last frame.
     let continuity_mode = match p.get("continuity_mode") {
@@ -143,6 +141,22 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
     let configured_images: Option<Vec<Value>> = p.get("image_paths").and_then(Value::as_array).cloned();
     let configured_videos: Option<Vec<Value>> = p.get("video_references").and_then(Value::as_array).cloned();
     let render_pass = settings.get("render_pass").and_then(Value::as_str).unwrap_or("single").to_string();
+    if refmod {
+        // The RefMod pipeline renders from saved RefMods in scene order, with no images.
+        let items: Vec<Obj> = h3_core::refmod::refmod_items_for_scene(&session, &segment, index).into_iter().filter(|i| i.get("strength").and_then(Value::as_f64).unwrap_or(0.0) > 0.0).collect();
+        let items = h3_core::refmod::assign_labels(&items, false);
+        if items.is_empty() {
+            return Err(RenderError::Invalid(format!("Scene {scene_number} needs at least one RefMod. Pick a RefMod on a Reference Builder card and map it to the scene.")));
+        }
+        let wanted = text_or_empty(p.get("continuity_mode").filter(|v| truthy(v))).trim().to_string();
+        let continuity = if wanted.is_empty() { text_or_empty(settings.get("continuity_mode").filter(|v| truthy(v))).trim().to_string() } else { wanted };
+        let continuity = if continuity.is_empty() { "off".to_string() } else { continuity };
+        payload.insert("pipeline".into(), json!("refmod"));
+        payload.insert("refmod_references".into(), Value::Array(h3_core::refmod::reference_payload(&items)));
+        payload.insert("continuity_mode".into(), json!(if canonical_continuity_mode(Some(&json!(continuity))) == Some(MASKED) { MASKED } else { "off" }));
+        payload.insert("image_paths".into(), json!([]));
+        payload.insert("video_references".into(), json!([]));
+    }
     let args = SceneInputsArgs {
         continuity_mode: &continuity_mode,
         has_previous_segment: index > 0,

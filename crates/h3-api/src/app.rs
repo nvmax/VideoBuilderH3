@@ -111,6 +111,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/video", axum::routing::delete(crate::video_routes::delete_route))
         .route("/projects/{pid}/timeline/notes", get(crate::notes_routes::list_notes).post(crate::notes_routes::create_note))
         .route("/projects/{pid}/timeline/notes/{nid}", axum::routing::patch(crate::notes_routes::update_note).delete(crate::notes_routes::delete_note))
+        .route("/refmods", get(crate::refmod_routes::list))
         .route("/post/luts", get(crate::post_routes::list_luts))
         .route("/post/luts/upload", post(crate::post_routes::upload_lut))
         .route("/projects/{pid}/scenes/{sid}/post/lut", post(crate::post_routes::lut_route))

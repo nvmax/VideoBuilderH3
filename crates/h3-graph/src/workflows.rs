@@ -308,7 +308,7 @@ pub fn build_single(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
 
     let continuation = patch_latent_continuation(env, &mut prompt, &payload)?;
     let save_latent = patch_save_latent(env, &mut prompt, &payload, Some(&timing))?;
-    let refmod = apply_refmod_if_requested(&payload)?;
+    let refmod = apply_refmod_if_requested(env, &mut prompt, &payload)?;
     if video_mode == "image_to_video" {
         patch_i2v_keyframe_timing(&mut prompt, &timing);
     }
@@ -344,9 +344,10 @@ pub fn build_single(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     })))
 }
 
-fn apply_refmod_if_requested(payload: &Obj) -> Result<Value> {
-    if text(payload.get("pipeline")).to_lowercase() == "refmod" {
-        return Err(GraphError::new("The RefMod pipeline is not built into this app yet. Use the standard pipeline."));
+/// Rewire the built graph to the RefMod pipeline when the render asks for it. `null` otherwise.
+fn apply_refmod_if_requested(env: &dyn GraphEnv, prompt: &mut Obj, payload: &Obj) -> Result<Value> {
+    if crate::refmod::refmod_requested(payload) {
+        return crate::refmod::apply_refmod_pipeline(prompt, payload, &|name| env.refmod_entry(name));
     }
     Ok(Value::Null)
 }
@@ -727,7 +728,7 @@ pub fn build_two_pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     if video_mode == "image_to_video" {
         patch_i2v_keyframe_timing(&mut prompt, &timing);
     }
-    let refmod = apply_refmod_if_requested(payload)?;
+    let refmod = apply_refmod_if_requested(env, &mut prompt, payload)?;
     let pass1_steps = inputs(&prompt, "124").and_then(|i| i.get("steps")).cloned().unwrap_or(Value::Null);
     let pass2_steps = inputs(&prompt, "190").and_then(|i| i.get("value")).cloned().unwrap_or(Value::Null);
     let any = |key: &str| ["pass1", "pass2"].iter().any(|t| flag(t, key));
@@ -1015,6 +1016,9 @@ pub fn build_advanced(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
 
 /// Pick the builder for a workflow key (`minimax_h3`, `minimax_h3_2pass`, `minimax_h3_advanced_2pass`).
 pub fn build(env: &dyn GraphEnv, workflow_key: &str, payload: &Obj) -> Result<Obj> {
+    if workflow_key == "minimax_h3_advanced_2pass" && crate::refmod::refmod_requested(payload) {
+        return Err(GraphError::new("The RefMod pipeline supports Single and 2 Pass only. Choose one of those passes."));
+    }
     match workflow_key {
         "minimax_h3_advanced_2pass" => build_advanced(env, payload),
         "minimax_h3_2pass" => build_two_pass(env, payload),
