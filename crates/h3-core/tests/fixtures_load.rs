@@ -8,7 +8,7 @@ use common::{cases, files_in, load};
 fn manifest_counts_match_files() {
     let manifest = load("MANIFEST.json");
     assert!(manifest["pack_commit"].as_str().is_some_and(|c| c.len() >= 7), "pack commit recorded");
-    for folder in ["graphs", "core", "scene", "prompt", "cases"] {
+    for folder in ["graphs", "core", "scene", "prompt", "project", "cases"] {
         let expected = manifest["files"][folder].as_u64().unwrap() as usize;
         let found = files_in(folder).len();
         assert_eq!(found, expected, "fixture count in {folder}");

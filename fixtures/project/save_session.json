@@ -1,0 +1,1308 @@
+{
+ "function": "builder.project._save_builder_session",
+ "cases": [
+  {
+   "input": {
+    "name": "fresh",
+    "existing": null,
+    "session": {
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "note": "fresh"
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "note": "fresh",
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "note",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "next_revision",
+    "existing": {
+     "revision": 5,
+     "builder_save_revision": 5,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "kept": "yes"
+    },
+    "session": {
+     "builder_save_revision": 5,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "extra_key": {
+      "a": 1
+     }
+    }
+   },
+   "stale": false,
+   "revision": 6,
+   "saved_session": {
+    "builder_save_revision": 5,
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "extra_key": {
+     "a": 1
+    },
+    "revision": 6,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "builder_save_revision",
+    "segments",
+    "extra_key",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 1,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "session_backups/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "stale_snapshot",
+    "existing": {
+     "revision": 9,
+     "builder_save_revision": 9,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "marker": "server"
+    },
+    "session": {
+     "builder_save_revision": 4,
+     "segments": [],
+     "marker": "client"
+    }
+   },
+   "stale": true,
+   "revision": 9,
+   "saved_session": {
+    "revision": 9,
+    "builder_save_revision": 9,
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "marker": "server"
+   },
+   "saved_key_order": [
+    "revision",
+    "builder_save_revision",
+    "segments",
+    "marker"
+   ],
+   "has_updated": false,
+   "srt": null,
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": 9,
+   "derived": {},
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "equal_revision",
+    "existing": {
+     "revision": 3,
+     "builder_save_revision": 3,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    },
+    "session": {
+     "builder_save_revision": 3,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    }
+   },
+   "stale": false,
+   "revision": 4,
+   "saved_session": {
+    "builder_save_revision": 3,
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "revision": 4,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "builder_save_revision",
+    "segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 1,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "session_backups/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "no_incoming_revision",
+    "existing": {
+     "revision": 7,
+     "builder_save_revision": 8,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    },
+    "session": {
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "marker": "no revision sent"
+    }
+   },
+   "stale": false,
+   "revision": 8,
+   "saved_session": {
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "marker": "no revision sent",
+    "revision": 8,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "marker",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 1,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "session_backups/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "existing_without_revision",
+    "existing": {
+     "builder_save_revision": 3,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    },
+    "session": {
+     "builder_save_revision": 3,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    }
+   },
+   "stale": false,
+   "revision": 4,
+   "saved_session": {
+    "builder_save_revision": 3,
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "revision": 4,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "builder_save_revision",
+    "segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 1,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "session_backups/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "null_reference_builder_keeps_previous",
+    "existing": {
+     "revision": 2,
+     "builder_save_revision": 2,
+     "flux_reference_builder": {
+      "subjects": [
+       {
+        "id": "a"
+       }
+      ]
+     }
+    },
+    "session": {
+     "builder_save_revision": 2,
+     "flux_reference_builder": null,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    }
+   },
+   "stale": false,
+   "revision": 3,
+   "saved_session": {
+    "builder_save_revision": 2,
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a"
+      }
+     ]
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "revision": 3,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "builder_save_revision",
+    "flux_reference_builder",
+    "segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 1,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n",
+    "subject_location/reference_descriptions.json": "{\n  \"subjects\": [\n    {\n      \"id\": \"a\"\n    }\n  ],\n  \"locations\": []\n}\n",
+    "subject_location/subject/Subject 1.txt": ""
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "session_backups/",
+    "subject_location/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "null_reference_builder_no_previous",
+    "existing": {
+     "revision": 2,
+     "builder_save_revision": 2,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    },
+    "session": {
+     "builder_save_revision": 2,
+     "flux_reference_builder": null,
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ]
+    }
+   },
+   "stale": false,
+   "revision": 3,
+   "saved_session": {
+    "builder_save_revision": 2,
+    "flux_reference_builder": null,
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "revision": 3,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "builder_save_revision",
+    "flux_reference_builder",
+    "segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 1,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "session_backups/",
+    "zimage_approved/"
+   ],
+   "_before_files": [
+    "vrgdg_builder_session.json"
+   ],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "overlay_slots",
+    "existing": null,
+    "session": {
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "overlay_segments": [
+      {
+       "id": "o1"
+      },
+      {
+       "id": "o2",
+       "overlay_slot_number": 10005
+      },
+      {
+       "id": "o3",
+       "overlay_slot_number": 10005
+      },
+      {
+       "id": "o4",
+       "slot_number": "10002"
+      },
+      {
+       "id": "o5",
+       "scene_slot_number": 3
+      }
+     ]
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "overlay_segments": [
+     {
+      "id": "o1",
+      "overlay_slot_number": 10001
+     },
+     {
+      "id": "o2",
+      "overlay_slot_number": 10005
+     },
+     {
+      "id": "o3",
+      "overlay_slot_number": 10006
+     },
+     {
+      "id": "o4",
+      "slot_number": "10002",
+      "overlay_slot_number": 10002
+     },
+     {
+      "id": "o5",
+      "scene_slot_number": 3,
+      "overlay_slot_number": 10007
+     }
+    ],
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "overlay_segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "bad_segments_type",
+    "existing": null,
+    "session": {
+     "segments": "nope"
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "segments": [],
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{}\n",
+    "builder_segments.srt": "\n",
+    "prompts/i2v_prompts.txt": "",
+    "prompts/t2i_prompts.txt": ""
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "overlay_not_a_list",
+    "existing": null,
+    "session": {
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First scene",
+       "t2i_prompt": "a"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.25,
+       "label": "Second scene",
+       "i2v_prompt": "b"
+      }
+     ],
+     "overlay_segments": "nope"
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First scene",
+      "t2i_prompt": "a"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.25,
+      "label": "Second scene",
+      "i2v_prompt": "b"
+     }
+    ],
+    "overlay_segments": [],
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "overlay_segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst scene\n\n2\n00:00:04,500 --> 00:00:09,250\nSecond scene\n",
+    "prompts/i2v_prompts.txt": "b\n",
+    "prompts/t2i_prompts.txt": "a\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "derived_files",
+    "existing": null,
+    "session": {
+     "video_engine": "minimax_h3",
+     "segments": [
+      {
+       "id": "s1",
+       "start": 0.0,
+       "end": 4.5,
+       "label": "First",
+       "t2i_prompt": " image one ",
+       "timeline_note": "note one"
+      },
+      {
+       "id": "s2",
+       "start": 4.5,
+       "end": 9.0,
+       "i2v_prompt": "motion two",
+       "timeline_note": null
+      },
+      {
+       "id": "s3",
+       "start": 9.0,
+       "end": 12.0,
+       "t2i_prompt": "image three",
+       "i2v_prompt": "motion three",
+       "timeline_note": "café"
+      }
+     ],
+     "overlay_segments": [
+      {
+       "id": "o1",
+       "start": 1.0,
+       "t2i_prompt": "overlay image"
+      }
+     ],
+     "lyric_mapper": {
+      "source_text": "  Line one\nLine two  "
+     },
+     "flux_reference_builder": {
+      "subjects": [
+       {
+        "name": "Mara",
+        "description": "red jacket"
+       },
+       {
+        "name": "A/B:C?",
+        "description": ""
+       },
+       {
+        "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "description": "long name"
+       },
+       {
+        "description": "unnamed"
+       },
+       "junk"
+      ],
+      "locations": [
+       {
+        "name": "Neon street",
+        "description": "wet street"
+       }
+      ],
+      "scene_map": {
+       "s1": "loc1"
+      }
+     }
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "video_engine": "minimax_h3",
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 4.5,
+      "label": "First",
+      "t2i_prompt": " image one ",
+      "timeline_note": "note one"
+     },
+     {
+      "id": "s2",
+      "start": 4.5,
+      "end": 9.0,
+      "i2v_prompt": "motion two",
+      "timeline_note": null
+     },
+     {
+      "id": "s3",
+      "start": 9.0,
+      "end": 12.0,
+      "t2i_prompt": "image three",
+      "i2v_prompt": "motion three",
+      "timeline_note": "café"
+     }
+    ],
+    "overlay_segments": [
+     {
+      "id": "o1",
+      "start": 1.0,
+      "t2i_prompt": "overlay image",
+      "overlay_slot_number": 10001
+     }
+    ],
+    "lyric_mapper": {
+     "source_text": "  Line one\nLine two  "
+    },
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "name": "Mara",
+       "description": "red jacket"
+      },
+      {
+       "name": "A/B:C?",
+       "description": ""
+      },
+      {
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "description": "long name"
+      },
+      {
+       "description": "unnamed"
+      },
+      "junk"
+     ],
+     "locations": [
+      {
+       "name": "Neon street",
+       "description": "wet street"
+      }
+     ],
+     "scene_map": {
+      "s1": "loc1"
+     }
+    },
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "video_engine",
+    "segments",
+    "overlay_segments",
+    "lyric_mapper",
+    "flux_reference_builder",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst\n\n2\n00:00:04,500 --> 00:00:09,000\nScene 2\n\n3\n00:00:09,000 --> 00:00:12,000\nimage three\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "MINIMAX_PROJECT_FILES.md": "# MiniMax H3 project files\n\nGenerated by the Video Builder. The session JSON is the source of truth for MiniMax prompts and settings.\n\n## Primary MiniMax data\n\n- `vrgdg_builder_session.json` — project `video_engine`, `minimax_h3_settings`, two/three-pass flags, and per-scene `minimax_h3_prompt`, mode, audio mode, references, continuity, stage outputs, and render history.\n- `subject_location/reference_descriptions.json` — portable character and location names, IDs, and descriptions.\n- `subject_location/subject/<name>.txt` — one character/subject description per file.\n- `subject_location/location/<name>.txt` — one location description per file.\n\n## References and audio\n\n- `project_context/flux_references/subjects/` — character reference images.\n- `project_context/flux_references/locations/` — location reference images.\n- `project_context/flux_references/ingredients_sheets/` — ingredient/reference sheets when used.\n- `project_audio/` — project/global audio copied into the project.\n- `scene_audio/` — scene audio assets, including MiniMax scene audio when applicable.\n- `scene_audio_trimmed/` — trimmed scene-audio derivatives when created.\n\n## Rendered MiniMax outputs\n\n- `rendered_scene_videos/video_####-audio.mp4` — final per-scene clips.\n- `rendered_scene_videos_backup/scene_####/` — replaced/backed-up scene clips.\n- `scene_video_thumbnails/` — rendered clip thumbnails.\n- `render_logs/` — MiniMax render progress and diagnostics.\n\n## Not MiniMax-specific\n\n- `prompts/t2i_prompts.txt` — image-generation prompts.\n- `prompts/i2v_prompts.txt` — LTX image-to-video prompts; MiniMax prompts are in the session JSON.\n- `builder_segments.srt`, `SceneNotes.json`, and other shared context files.\n",
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"note one\",\n  \"SceneNote2\": \"\",\n  \"SceneNote3\": \"café\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:04,500\nFirst\n\n2\n00:00:04,500 --> 00:00:09,000\nScene 2\n\n3\n00:00:09,000 --> 00:00:12,000\nimage three\n",
+    "project_context/full_lyrics.txt": "Line one\nLine two\n",
+    "prompts/i2v_prompts.txt": "motion two\n\nmotion three\n",
+    "prompts/t2i_prompts.txt": "image one\n\noverlay image\n\nimage three\n",
+    "subject_location/location/Neon street.txt": "wet street\n",
+    "subject_location/reference_descriptions.json": "{\n  \"subjects\": [\n    {\n      \"name\": \"Mara\",\n      \"description\": \"red jacket\"\n    },\n    {\n      \"name\": \"A/B:C?\",\n      \"description\": \"\"\n    },\n    {\n      \"name\": \"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\",\n      \"description\": \"long name\"\n    },\n    {\n      \"description\": \"unnamed\"\n    },\n    \"junk\"\n  ],\n  \"locations\": [\n    {\n      \"name\": \"Neon street\",\n      \"description\": \"wet street\"\n    }\n  ],\n  \"scene_map\": {\n    \"s1\": \"loc1\"\n  }\n}\n",
+    "subject_location/subject/A_B_C.txt": "",
+    "subject_location/subject/Mara.txt": "red jacket\n",
+    "subject_location/subject/Subject 4.txt": "unnamed\n",
+    "subject_location/subject/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx_3afbb13286.txt": "long name\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "subject_location/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "unicode_and_floats",
+    "existing": null,
+    "session": {
+     "segments": [
+      {
+       "id": "u",
+       "start": 0,
+       "end": 1.0,
+       "label": "café 中文",
+       "x": 1e-05
+      }
+     ],
+     "ratio": 0.1
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "segments": [
+     {
+      "id": "u",
+      "start": 0,
+      "end": 1.0,
+      "label": "café 中文",
+      "x": 1e-05
+     }
+    ],
+    "ratio": 0.1,
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "ratio",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:01,000\ncafé 中文\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:01,000\ncafé 中文\n",
+    "prompts/i2v_prompts.txt": "",
+    "prompts/t2i_prompts.txt": ""
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  },
+  {
+   "input": {
+    "name": "srt_ordering",
+    "existing": null,
+    "session": {
+     "segments": [
+      {
+       "id": "b",
+       "start": 5,
+       "end": 6,
+       "label": "late"
+      },
+      {
+       "id": "a",
+       "start": 0,
+       "end": 0.01,
+       "label": ""
+      },
+      {
+       "id": "c",
+       "start": 2.0004,
+       "t2i_prompt": "prompt text"
+      }
+     ]
+    }
+   },
+   "stale": false,
+   "revision": 1,
+   "saved_session": {
+    "segments": [
+     {
+      "id": "b",
+      "start": 5,
+      "end": 6,
+      "label": "late"
+     },
+     {
+      "id": "a",
+      "start": 0,
+      "end": 0.01,
+      "label": ""
+     },
+     {
+      "id": "c",
+      "start": 2.0004,
+      "t2i_prompt": "prompt text"
+     }
+    ],
+    "revision": 1,
+    "audio_path": "",
+    "project_folder": "<root>"
+   },
+   "saved_key_order": [
+    "segments",
+    "revision",
+    "audio_path",
+    "project_folder",
+    "updated"
+   ],
+   "has_updated": true,
+   "srt": "1\n00:00:00,000 --> 00:00:00,100\nScene 1\n\n2\n00:00:02,000 --> 00:00:06,000\nprompt text\n\n3\n00:00:05,000 --> 00:00:06,000\nlate\n",
+   "backup_count": 0,
+   "backup_text": null,
+   "stale_current_revision": null,
+   "derived": {
+    "SceneNotes.json": "{\n  \"SceneNote1\": \"\",\n  \"SceneNote2\": \"\",\n  \"SceneNote3\": \"\"\n}\n",
+    "builder_segments.srt": "1\n00:00:00,000 --> 00:00:00,100\nScene 1\n\n2\n00:00:02,000 --> 00:00:06,000\nprompt text\n\n3\n00:00:05,000 --> 00:00:06,000\nlate\n",
+    "prompts/i2v_prompts.txt": "",
+    "prompts/t2i_prompts.txt": "prompt text\n"
+   },
+   "folders_created": [
+    "project_context/",
+    "prompts/",
+    "zimage_approved/"
+   ],
+   "_before_files": [],
+   "saved_text_equals_dumps": true
+  }
+ ]
+}

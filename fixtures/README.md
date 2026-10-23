@@ -8,6 +8,7 @@ Generated from the pack (read-only) by the scripts in `../tools`. Do not edit by
 | `core/` | Tables of `{input, output}` or `{input, error}` for timing, token math, masked context, resolution, tile plan, settings normalization, payload building. | `make_core_fixtures.py` |
 | `scene/` | Reference choices, ordered references, image paths and scene input resolution against `session.json` and `segments.json`. | `make_scene_fixtures.py` |
 | `prompt/` | Cut plans, craft text, cue handling, reference definitions, assembly, validation, lyric tagging, continuation text. | `make_prompt_fixtures.py` |
+| `project/` | File system cases for the project layer: JSON text, session saves and revisions, renumbering, latent dirty flags, per take latents, the rename journal. Each holds the folder tree before and after. | `make_project_fixtures.py` |
 | `cases/` | The pack's own case files, copied unchanged. | `make_all.py` |
 | `object_info_h3.json` | `/object_info` entries for the H3 node classes. | `capture_object_info.py` |
 | `session_shape.json` | Key paths and value types of 20 real sessions. No values. | `session_shape.py` |

@@ -1,0 +1,151 @@
+{
+ "cases": [
+  {
+   "info": {
+    "dirty": false,
+    "exists": true,
+    "fps": 24.0,
+    "frame_count": 97,
+    "ok": true,
+    "path": "latents/scene_001.latent",
+    "scene_number": 1,
+    "size_bytes": 6,
+    "tail_padding_frames": 9,
+    "timestamp": 1700000000.5,
+    "token_count": 26
+   },
+   "input": {
+    "files": {
+     "latents/scene_001.latent": "abcdef",
+     "latents/scene_001.latent.json": "{\"frame_count\": \"97\", \"token_count\": \"26\", \"fps\": \"24.0\", \"timestamp\": \"1700000000.5\", \"tail_padding_frames\": \"9\"}"
+    },
+    "name": "full"
+   }
+  },
+  {
+   "info": {
+    "dirty": false,
+    "exists": true,
+    "fps": 24.0,
+    "frame_count": 97,
+    "ok": true,
+    "path": "latents/scene_001.latent",
+    "scene_number": 1,
+    "size_bytes": 6,
+    "tail_padding_frames": null,
+    "timestamp": 1700000000.5,
+    "token_count": 26
+   },
+   "input": {
+    "files": {
+     "latents/scene_001.latent": "abcdef",
+     "latents/scene_001.latent.json": "{\"frame_count\": \"97\", \"token_count\": \"26\", \"timestamp\": \"1700000000.5\"}"
+    },
+    "name": "no_tail"
+   }
+  },
+  {
+   "info": {
+    "dirty": false,
+    "exists": true,
+    "fps": 24.0,
+    "frame_count": 0,
+    "ok": true,
+    "path": "latents/scene_001.latent",
+    "scene_number": 1,
+    "size_bytes": 6,
+    "tail_padding_frames": null,
+    "timestamp": 10.0,
+    "token_count": 5
+   },
+   "input": {
+    "files": {
+     "latents/scene_001.latent": "abcdef",
+     "latents/scene_001.latent.json": "{\"token_count\": \"5\", \"tail_padding_frames\": \"\", \"timestamp\": \"10\"}"
+    },
+    "name": "empty_tail"
+   }
+  },
+  {
+   "info": {
+    "dirty": false,
+    "exists": true,
+    "fps": 24.0,
+    "frame_count": 0,
+    "ok": true,
+    "path": "latents/scene_001.latent",
+    "scene_number": 1,
+    "size_bytes": 6,
+    "tail_padding_frames": 9,
+    "timestamp": 10.0,
+    "token_count": 5
+   },
+   "input": {
+    "files": {
+     "latents/scene_001.latent": "abcdef",
+     "latents/scene_001.latent.json": "{\"token_count\": \"5\", \"tail_padding_frames\": \"9.0\", \"timestamp\": \"10\"}"
+    },
+    "name": "float_tail"
+   }
+  },
+  {
+   "info": {
+    "dirty": false,
+    "exists": true,
+    "fps": 24.0,
+    "frame_count": 0,
+    "ok": true,
+    "path": "latents/scene_001.latent",
+    "scene_number": 1,
+    "size_bytes": 6,
+    "tail_padding_frames": null,
+    "token_count": 0
+   },
+   "input": {
+    "files": {
+     "latents/scene_001.latent": "abcdef",
+     "latents/scene_001.latent.json": "not json"
+    },
+    "name": "bad_json"
+   }
+  },
+  {
+   "info": {
+    "dirty": false,
+    "exists": true,
+    "fps": 24.0,
+    "frame_count": 0,
+    "ok": true,
+    "path": "latents/scene_001.latent",
+    "scene_number": 1,
+    "size_bytes": 6,
+    "tail_padding_frames": null,
+    "token_count": 0
+   },
+   "input": {
+    "files": {
+     "latents/scene_001.latent": "abcdef"
+    },
+    "name": "none"
+   }
+  },
+  {
+   "info": {
+    "dirty": false,
+    "exists": false,
+    "frame_count": 0,
+    "ok": true,
+    "path": "latents/scene_004.latent",
+    "scene_number": 4,
+    "size_bytes": 0,
+    "token_count": 0
+   },
+   "input": {
+    "files": {},
+    "name": "missing",
+    "scene": 4
+   }
+  }
+ ],
+ "function": "SceneLatentManager.get_latent_info"
+}

@@ -1,0 +1,278 @@
+{
+ "cases": [
+  {
+   "input": {
+    "name": "commit",
+    "steps": [
+     {
+      "content": "{\"revision\": 1}",
+      "op": "write",
+      "path": "vrgdg_builder_session.json"
+     },
+     {
+      "content": "one",
+      "op": "write",
+      "path": "zimage_approved/image_0001.png"
+     },
+     {
+      "content": "two",
+      "op": "write",
+      "path": "zimage_approved/image_0002.png"
+     },
+     {
+      "name": "create_scene",
+      "op": "start",
+      "t": 1
+     },
+     {
+      "from": "zimage_approved/image_0002.png",
+      "op": "rename",
+      "t": 2,
+      "to": "zimage_approved/image_0003.png"
+     },
+     {
+      "op": "commit",
+      "t": 3
+     }
+    ]
+   },
+   "results": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "tree_after": {
+    "vrgdg_builder_session.json": "{\"revision\": 1}",
+    "zimage_approved/": null,
+    "zimage_approved/image_0001.png": "one",
+    "zimage_approved/image_0003.png": "two"
+   }
+  },
+  {
+   "input": {
+    "name": "rollback_restores_names_and_session",
+    "steps": [
+     {
+      "content": "{\"revision\": 1}",
+      "op": "write",
+      "path": "vrgdg_builder_session.json"
+     },
+     {
+      "content": "one",
+      "op": "write",
+      "path": "zimage_approved/image_0001.png"
+     },
+     {
+      "content": "two",
+      "op": "write",
+      "path": "zimage_approved/image_0002.png"
+     },
+     {
+      "name": "delete_scene",
+      "op": "start",
+      "t": 1
+     },
+     {
+      "from": "zimage_approved/image_0002.png",
+      "op": "rename",
+      "t": 2,
+      "to": "zimage_approved/image_0003.png"
+     },
+     {
+      "from": "zimage_approved/image_0001.png",
+      "op": "rename",
+      "t": 3,
+      "to": "zimage_approved/image_0002.png"
+     },
+     {
+      "content": "{\"revision\": 99}",
+      "op": "overwrite_session",
+      "t": 4
+     },
+     {
+      "op": "rollback",
+      "t": 5
+     }
+    ]
+   },
+   "results": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "tree_after": {
+    "vrgdg_builder_session.json": "{\"revision\": 1}",
+    "zimage_approved/": null,
+    "zimage_approved/image_0001.png": "one",
+    "zimage_approved/image_0002.png": "two"
+   }
+  },
+  {
+   "input": {
+    "name": "recover_after_crash",
+    "steps": [
+     {
+      "content": "{\"revision\": 1}",
+      "op": "write",
+      "path": "vrgdg_builder_session.json"
+     },
+     {
+      "content": "one",
+      "op": "write",
+      "path": "zimage_approved/image_0001.png"
+     },
+     {
+      "content": "two",
+      "op": "write",
+      "path": "zimage_approved/image_0002.png"
+     },
+     {
+      "name": "split_scene",
+      "op": "start",
+      "t": 1
+     },
+     {
+      "from": "zimage_approved/image_0002.png",
+      "op": "rename",
+      "t": 2,
+      "to": "zimage_approved/image_0003.png"
+     },
+     {
+      "content": "{\"revision\": 50}",
+      "op": "overwrite_session",
+      "t": 3
+     },
+     {
+      "op": "recover",
+      "t": 4
+     },
+     {
+      "op": "recover",
+      "t": 5
+     }
+    ]
+   },
+   "results": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    true,
+    false
+   ],
+   "tree_after": {
+    "vrgdg_builder_session.json": "{\"revision\": 1}",
+    "zimage_approved/": null,
+    "zimage_approved/image_0001.png": "one",
+    "zimage_approved/image_0002.png": "two"
+   }
+  },
+  {
+   "input": {
+    "name": "recover_nothing_pending",
+    "steps": [
+     {
+      "content": "{\"revision\": 1}",
+      "op": "write",
+      "path": "vrgdg_builder_session.json"
+     },
+     {
+      "content": "one",
+      "op": "write",
+      "path": "zimage_approved/image_0001.png"
+     },
+     {
+      "content": "two",
+      "op": "write",
+      "path": "zimage_approved/image_0002.png"
+     },
+     {
+      "op": "recover",
+      "t": 1
+     }
+    ]
+   },
+   "results": [
+    null,
+    null,
+    null,
+    false
+   ],
+   "tree_after": {
+    "vrgdg_builder_session.json": "{\"revision\": 1}",
+    "zimage_approved/": null,
+    "zimage_approved/image_0001.png": "one",
+    "zimage_approved/image_0002.png": "two"
+   }
+  },
+  {
+   "input": {
+    "name": "rollback_skips_blocked_rename",
+    "steps": [
+     {
+      "content": "{\"revision\": 1}",
+      "op": "write",
+      "path": "vrgdg_builder_session.json"
+     },
+     {
+      "content": "one",
+      "op": "write",
+      "path": "zimage_approved/image_0001.png"
+     },
+     {
+      "content": "two",
+      "op": "write",
+      "path": "zimage_approved/image_0002.png"
+     },
+     {
+      "name": "merge_scenes",
+      "op": "start",
+      "t": 1
+     },
+     {
+      "from": "zimage_approved/image_0002.png",
+      "op": "rename",
+      "t": 2,
+      "to": "zimage_approved/image_0003.png"
+     },
+     {
+      "content": "a new file took the old name",
+      "op": "write",
+      "path": "zimage_approved/image_0002.png"
+     },
+     {
+      "op": "rollback",
+      "t": 3
+     }
+    ]
+   },
+   "results": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "tree_after": {
+    "vrgdg_builder_session.json": "{\"revision\": 1}",
+    "zimage_approved/": null,
+    "zimage_approved/image_0001.png": "one",
+    "zimage_approved/image_0002.png": "a new file took the old name",
+    "zimage_approved/image_0003.png": "two"
+   }
+  }
+ ],
+ "function": "TimelineJournal and recover_pending_journal"
+}

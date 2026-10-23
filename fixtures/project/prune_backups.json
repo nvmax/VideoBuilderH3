@@ -1,0 +1,39 @@
+{
+ "cases": [
+  {
+   "input": {
+    "made": 30,
+    "max_keep": 25
+   },
+   "kept": [
+    "other.txt",
+    "vrgdg_builder_session_20260101_000005.json",
+    "vrgdg_builder_session_20260101_000006.json",
+    "vrgdg_builder_session_20260101_000007.json",
+    "vrgdg_builder_session_20260101_000008.json",
+    "vrgdg_builder_session_20260101_000009.json",
+    "vrgdg_builder_session_20260101_000010.json",
+    "vrgdg_builder_session_20260101_000011.json",
+    "vrgdg_builder_session_20260101_000012.json",
+    "vrgdg_builder_session_20260101_000013.json",
+    "vrgdg_builder_session_20260101_000014.json",
+    "vrgdg_builder_session_20260101_000015.json",
+    "vrgdg_builder_session_20260101_000016.json",
+    "vrgdg_builder_session_20260101_000017.json",
+    "vrgdg_builder_session_20260101_000018.json",
+    "vrgdg_builder_session_20260101_000019.json",
+    "vrgdg_builder_session_20260101_000020.json",
+    "vrgdg_builder_session_20260101_000021.json",
+    "vrgdg_builder_session_20260101_000022.json",
+    "vrgdg_builder_session_20260101_000023.json",
+    "vrgdg_builder_session_20260101_000024.json",
+    "vrgdg_builder_session_20260101_000025.json",
+    "vrgdg_builder_session_20260101_000026.json",
+    "vrgdg_builder_session_20260101_000027.json",
+    "vrgdg_builder_session_20260101_000028.json",
+    "vrgdg_builder_session_20260101_000029.json"
+   ]
+  }
+ ],
+ "function": "_prune_session_backups"
+}

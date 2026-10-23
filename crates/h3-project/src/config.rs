@@ -58,7 +58,8 @@ impl AppConfig {
 
     /// Save atomically.
     pub fn save(&self, path: &Path) -> io::Result<()> {
-        atomic_write_json(path, self)
+        let value = serde_json::to_value(self).map_err(io::Error::other)?;
+        atomic_write_json(path, &value)
     }
 
     /// ComfyUI base URL with any trailing slash removed.

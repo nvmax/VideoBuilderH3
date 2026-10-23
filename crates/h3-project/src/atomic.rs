@@ -7,7 +7,9 @@ use std::fs;
 use std::io::{self, Write};
 use std::path::Path;
 
-use serde::Serialize;
+use serde_json::Value;
+
+use crate::pyjson;
 
 /// Write `content` to `path` atomically, creating parent folders as needed.
 pub fn atomic_write_text(path: &Path, content: &str) -> io::Result<()> {
@@ -16,20 +18,16 @@ pub fn atomic_write_text(path: &Path, content: &str) -> io::Result<()> {
         _ => Path::new("."),
     };
     fs::create_dir_all(parent)?;
-    let mut tmp = tempfile::Builder::new()
-        .prefix(".h3-")
-        .suffix(".tmp")
-        .tempfile_in(parent)?;
+    let mut tmp = tempfile::Builder::new().prefix(".h3-").suffix(".tmp").tempfile_in(parent)?;
     tmp.write_all(content.as_bytes())?;
     tmp.as_file().sync_all()?;
     tmp.persist(path).map_err(|e| e.error)?;
     Ok(())
 }
 
-/// Serialize `value` as pretty JSON (2-space indent, UTF-8) and write it atomically.
-pub fn atomic_write_json<T: Serialize>(path: &Path, value: &T) -> io::Result<()> {
-    let text = serde_json::to_string_pretty(value).map_err(io::Error::other)?;
-    atomic_write_text(path, &text)
+/// Write `value` the way the pack does (`json.dumps(indent=2, ensure_ascii=False)` plus a newline), atomically.
+pub fn atomic_write_json(path: &Path, value: &Value) -> io::Result<()> {
+    atomic_write_text(path, &pyjson::dumps_file(value))
 }
 
 #[cfg(test)]
@@ -42,8 +40,8 @@ mod tests {
         let path = dir.path().join("nested").join("state.json");
         atomic_write_json(&path, &serde_json::json!({"a": 1})).unwrap();
         atomic_write_json(&path, &serde_json::json!({"a": 2})).unwrap();
-        let back: serde_json::Value = serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
-        assert_eq!(back["a"], 2);
+        let text = fs::read_to_string(&path).unwrap();
+        assert_eq!(text, "{\n  \"a\": 2\n}\n");
         let leftovers: Vec<_> = fs::read_dir(path.parent().unwrap())
             .unwrap()
             .filter_map(Result::ok)

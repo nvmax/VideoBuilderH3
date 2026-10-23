@@ -1,6 +1,6 @@
 # VRGDG H3 Studio (Rust): Implementation Plan
 
-Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. Next: P3. Everything stays local: no remote, no push.
+Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. P3 done 2026-10-23. Next: P4. Everything stays local: no remote, no push.
 Reference pack commit: `14421d2` (branch `newbuilder`).
 Location: `rustapp/` inside the pack folder, excluded from git through `.git/info/exclude` (no tracked file changed).
 
@@ -202,3 +202,13 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - **F11.** Prompt patterns use lookahead and lookbehind, so `h3-core` uses `fancy-regex`. Python slices strings by character and Rust by byte, so every cut in the port goes through characters.
 - **F12.** Deferred from P2 to the phase that needs them: `minimax/prompt_assembly.py` (the agent API's cut plan from duration and frequency, and its context builder) goes to P6 and P8. `schema`, `attention summary` and seed randomizing in `settings_payload.py` go to P10.
 - Test count after P2: 39 fixture tests in `h3-core`, covering 233 timing, 156 masked context, 360 scene input and 1,038 prompt cases. A deliberate typo in one pack sentence made the prompt test fail, so the string checks are real.
+
+## 13. P3 findings
+
+- **F13.** The Python Builder writes sessions as `json.dumps(indent=2, ensure_ascii=False)` plus a newline. `h3-project` writes the same bytes. Of 20 real sessions, 16 are byte identical after a Rust round trip, the same count Python's own dump gives. The other 4 are older saves with CRLF line endings, a byte order mark or no final newline. Loading accepts all of them and saving writes the current form.
+- **F14.** Two things broke byte equality until the real projects exposed them. `serde_json` needs the `float_roundtrip` feature, or it parses some floats one step off. Python also breaks an exact tie between two shortest spellings toward the even digit, where Rust rounds up (`0.18913650512695312` against `...313`). `pyjson.rs` formats again with exact rounding at the shortest length. Both cases are fixtures now.
+- **F15.** A save changes only `revision`, `updated` and `project_folder` in a real session, and keeps every key and its order. Tested on all 20 projects with `H3_REAL_PROJECTS`. The test never prints session text.
+- **F16.** The save writes the same derived files as the pack: `builder_segments.srt`, `SceneNotes.json` (the pack falls back to it for an empty timeline note, so a stale copy would bring an old note back), `prompts/*.txt`, `full_lyrics.txt`, the reference descriptions folder and `MINIMAX_PROJECT_FILES.md`.
+- **F17.** Left to later phases: copying the audio into `project_audio/` on first save (the caller passes the audio path), `project_context_files`, the global model defaults file, moving a project folder (`_rehydrate_builder_session`), and `_save_builder_project_as`.
+- **F18.** The pack has no project level undo. The Rust app uses the pack's own `session_backups/` (newest 25) as the history. `restore_backup` backs up the current session first and raises the revision.
+- **F19.** One pack bug is not ported: a non-object entry in `overlay_segments` makes the pack's save raise. The Rust save skips such an entry.

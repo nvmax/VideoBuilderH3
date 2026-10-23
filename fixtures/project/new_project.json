@@ -1,0 +1,22 @@
+{
+ "cases": [
+  {
+   "input": {
+    "name": "Song"
+   },
+   "tree": {
+    "latents/": null,
+    "project_context/": null,
+    "project_context/ConceptPrompts.txt": "",
+    "project_context/I2VMotionNotes.txt": "",
+    "project_context/full_lyrics.txt": "",
+    "project_context/storyconcept.txt": "",
+    "project_context/subjectsandscenes.txt": "",
+    "project_context/themestyle.txt": "",
+    "prompts/": null,
+    "zimage_approved/": null
+   }
+  }
+ ],
+ "function": "_new_builder_project"
+}
