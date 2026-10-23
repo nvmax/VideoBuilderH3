@@ -76,7 +76,7 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
             frames: f64_of(trim.get("frames")) as u32,
             label: "minimax_exact".into(),
             mark_as_audio_video: true,
-            restore_audio: None,
+            restore_audio: outcome.restore_audio.clone(),
         };
         match trim_scene_video(&env.tools, &request, &Stamp::now().compact) {
             Ok(result) => source = result.video_path,

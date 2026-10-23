@@ -3,7 +3,7 @@
 //! clip it made. Trimming to the exact timeline length, collecting the clip into the project and recording it on the
 //! scene come with the media phase.
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::time::{Duration, SystemTime};
@@ -61,6 +61,8 @@ pub struct Prepared {
     pub scene_id: String,
     pub workflow_key: &'static str,
     pub payload: Obj,
+    /// An enabled Audio Mask renders with its masked mix. The finished clip gets this real audio back: file and start second.
+    pub restore_audio: Option<(PathBuf, f64)>,
 }
 
 /// What a render produced.
@@ -78,6 +80,7 @@ pub struct RenderOutcome {
     /// Timing plan, exact trim, seed and the other summaries the graph builder reported.
     pub graph: Obj,
     pub graph_nodes: Value,
+    pub restore_audio: Option<(PathBuf, f64)>,
 }
 
 fn segment_text(segment: &Obj, key: &str) -> String {
@@ -227,6 +230,20 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
         Some(v) if truthy(v) => text_or_empty(Some(v)).trim().to_string(),
         _ => text_or_empty(loaded.session.get("audio_path")).trim().to_string(),
     };
+    // An enabled Audio Mask renders with its masked mix (kept vocals plus the music). The finished clip gets the real audio back.
+    let mut restore_audio = None;
+    let built_in = text_or_empty(payload.get("audio_mode").filter(|v| truthy(v))).trim() == "built_in_audio";
+    let mut audio = audio;
+    if !audio.is_empty() && !built_in {
+        let masked = crate::audio_mask::audio_override_for_scene(&segment, &loaded.project_folder, duration)
+            .map_err(|e| RenderError::Invalid(format!("Scene {scene_number}: {e}")))?;
+        if let Some(masked) = masked {
+            restore_audio = Some((PathBuf::from(&audio), start));
+            audio = masked.path.display().to_string();
+            payload.insert("source_start_seconds".into(), json!(0.0));
+            payload.insert("source_duration_seconds".into(), json!(masked.duration_seconds));
+        }
+    }
     payload.insert("audio_path".into(), json!(audio));
     Ok(Prepared {
         scene_index: index,
@@ -234,6 +251,7 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
         scene_id: segment.get("id").and_then(Value::as_str).unwrap_or("").to_string(),
         workflow_key: key,
         payload,
+        restore_audio,
     })
 }
 
@@ -322,5 +340,6 @@ pub async fn render_scene(
         output_folder,
         graph: graph_result.clone().into_iter().filter(|(k, _)| k != "prompt").collect(),
         graph_nodes: graph,
+        restore_audio: prepared.restore_audio.clone(),
     })
 }

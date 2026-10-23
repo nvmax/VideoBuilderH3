@@ -3,6 +3,7 @@
 //! `render` prepares a scene exactly as the pack's orchestrator does, builds the graph, runs it in ComfyUI and finds the
 //! clip it made.
 
+pub mod audio_mask;
 pub mod context;
 pub mod env;
 pub mod finish;
