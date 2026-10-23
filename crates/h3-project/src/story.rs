@@ -93,6 +93,24 @@ fn revision_of(session: &Obj) -> i64 {
     pick("revision").or_else(|| pick("builder_save_revision")).unwrap_or(0)
 }
 
+/// The saved story layer as it is, whatever it holds: `builder_story_layer`, else the camel case key, else `story`.
+pub fn saved_story(session: &Obj) -> Value {
+    ["builder_story_layer", "builderStoryLayer", "story"].iter().filter_map(|k| session.get(*k)).find(|v| truthy(v)).cloned().unwrap_or_else(|| json!({}))
+}
+
+/// Replace the story layer with `story`. `if_match` must equal the saved revision when given.
+pub fn put_story(project: &Path, story: &Value, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, None)?;
+    let current = revision_of(&edit.session);
+    if let Some(incoming) = if_match.filter(|i| *i != current) {
+        return Err(OpError::Conflict { current, incoming });
+    }
+    edit.session.insert("builder_story_layer".into(), story.clone());
+    edit.session.shift_remove("builderStoryLayer");
+    let revision = edit.save(now)?;
+    Ok(json!({"story": story, "revision": revision}))
+}
+
 /// Save scene defaults (video style, camera flow, motion speeds) and story fields. Both groups are optional.
 /// `if_match` must equal the saved revision when given.
 pub fn set_story_settings(project: &Path, params: &Obj, if_match: Option<i64>, now: &Stamp) -> OpResult {

@@ -20,6 +20,7 @@ pub mod session;
 pub mod session_ops;
 pub mod story;
 pub mod takes;
+pub mod timeline_notes;
 
 pub use atomic::{atomic_write_json, atomic_write_text};
 pub use config::AppConfig;

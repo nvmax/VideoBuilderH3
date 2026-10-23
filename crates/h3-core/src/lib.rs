@@ -14,6 +14,7 @@ pub mod tiles;
 pub mod lyric_scenes;
 pub mod timed_lines;
 pub mod timeline;
+pub mod timeline_markers;
 pub mod timing;
 pub mod tokens;
 

@@ -142,6 +142,49 @@ async fn a_project_is_built_edited_and_deleted_through_the_api() {
     assert_eq!(after.as_object().unwrap().len() as u64, done["scenes_assigned"].as_u64().unwrap());
     let (code, _) = s.call(Method::POST, &format!("{p}/references/assign-scenes"), &[], Some(json!({"character_pattern": "shuffle"}))).await;
     assert_eq!(code, 400);
+    // Timeline notes: added, listed with the scenes they overlap, changed, deleted.
+    let created = s.call(Method::POST, &format!("{p}/timeline/notes"), &[], Some(json!({"id": "n1", "start": 0.5, "end": 3.0, "label": "Intro"}))).await;
+    assert_eq!(created.0, 201, "{}", created.1);
+    let (code, bad) = s.call(Method::POST, &format!("{p}/timeline/notes"), &[], Some(json!({"label": "no start"}))).await;
+    assert_eq!((code, bad["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
+    let (_, listed) = s.get(&format!("{p}/timeline/notes")).await;
+    assert_eq!((listed["data"]["count"].as_i64(), listed["data"]["notes"][0]["label"].as_str()), (Some(1), Some("Intro")));
+    assert!(listed["data"]["notes"][0]["scene_ids"].as_array().is_some_and(|a| !a.is_empty()));
+    let (code, changed) = s.call(Method::PATCH, &format!("{p}/timeline/notes/n1"), &[], Some(json!({"end": null, "label": "Hook"}))).await;
+    assert_eq!((code, changed["data"]["note"]["end"].is_null(), changed["data"]["note"]["label"].as_str()), (200, true, Some("Hook")));
+    let (code, _) = s.call(Method::PATCH, &format!("{p}/timeline/notes/nope"), &[], Some(json!({"label": "x"}))).await;
+    assert_eq!(code, 404);
+    let (code, gone) = s.call(Method::DELETE, &format!("{p}/timeline/notes/n1"), &[], None).await;
+    assert_eq!((code, gone["data"]["deleted"]["id"].as_str(), gone["data"]["notes"].as_array().map(Vec::len)), (200, Some("n1"), Some(0)));
+
+    // Enforce scene lengths: the dry run says what would change and saves nothing, the real run makes the same edits.
+    let (code, _) = s.call(Method::POST, &format!("{p}/timeline/enforce-length"), &[], Some(json!({"min_scene_seconds": 5}))).await;
+    assert_eq!(code, 400);
+    let (code, _) = s.call(Method::POST, &format!("{p}/timeline/enforce-length"), &[], Some(json!({"min_scene_seconds": 5, "max_scene_seconds": 2}))).await;
+    assert_eq!(code, 400);
+    let limits = json!({"min_scene_seconds": 0.5, "max_scene_seconds": 1.0});
+    let (_, before) = s.get(&format!("{p}/scenes")).await;
+    let scenes_before = before["data"].as_array().map_or(0, Vec::len);
+    let dry = s.ok(Method::POST, &format!("{p}/timeline/enforce-length"), json!({"min_scene_seconds": 0.5, "max_scene_seconds": 1.0, "dry_run": true})).await;
+    assert_eq!((dry["dry_run"].as_bool(), dry["scenes_before"].as_u64().map(|n| n as usize)), (Some(true), Some(scenes_before)));
+    let (_, after_dry) = s.get(&format!("{p}/scenes")).await;
+    assert_eq!(after_dry["data"].as_array().map_or(0, Vec::len), scenes_before, "a dry run saves nothing");
+    let real = s.ok(Method::POST, &format!("{p}/timeline/enforce-length"), limits).await;
+    assert_eq!((real["scenes_after"].clone(), real["splits"].clone(), real["merges"].clone()), (dry["scenes_after"].clone(), dry["splits"].clone(), dry["merges"].clone()));
+    let (_, after) = s.get(&format!("{p}/scenes")).await;
+    assert_eq!(after["data"].as_array().map_or(0, Vec::len), real["scenes_after"].as_u64().unwrap() as usize);
+
+    // The whole story layer can be read and replaced, and the settings are checked against the engine.
+    let (code, story) = s.get(&format!("{p}/story")).await;
+    assert_eq!(code, 200, "{story}");
+    let (code, put) = s.call(Method::PUT, &format!("{p}/story"), &[], Some(json!({"overall_story_idea": "A fox", "song_story_brief": "Brief"}))).await;
+    assert_eq!((code, put["data"]["song_story_brief"].as_str()), (200, Some("Brief")));
+    let (_, again) = s.get(&format!("{p}/story")).await;
+    assert_eq!(again["data"]["overall_story_idea"], "A fox");
+    let (code, check) = s.call(Method::POST, &format!("{p}/settings/preflight"), &[], None).await;
+    assert_eq!(code, 200, "{check}");
+    assert!(check["data"]["valid"].is_boolean() && check["data"]["effective_settings"].is_object());
+
     // Story settings are saved, a bad value is refused, and the Storyboard-only steps say so.
     let saved = s.ok(Method::PUT, &format!("{p}/story/settings"), json!({"defaults": {"camera_motion_speed": 6}, "story": {"overall_story_idea": "A fox"}})).await;
     assert_eq!((saved["defaults"]["camera_motion_speed"].as_f64(), saved["story"]["overall_story_idea"].as_str()), (Some(6.0), Some("A fox")));

@@ -10,6 +10,7 @@ pub mod job_handlers;
 pub mod continued_prompt;
 pub mod llm_jobs;
 pub mod lyric_jobs;
+pub mod notes_routes;
 pub mod post_routes;
 pub mod video_routes;
 pub mod llm_routes;

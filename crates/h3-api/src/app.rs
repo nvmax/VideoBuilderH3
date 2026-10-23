@@ -84,6 +84,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/references/scene-mapping", get(sr::get_scene_mapping).put(sr::put_scene_mapping))
         .route("/projects/{pid}/references/assign-scenes", post(sr::assign_scenes))
         .route("/projects/{pid}/story/settings", axum::routing::put(sr::story_settings))
+        .route("/projects/{pid}/story", get(sr::get_story).put(sr::put_story))
+        .route("/projects/{pid}/settings/preflight", post(preflight_settings))
         .route("/projects/{pid}/story/{step}", post(sr::story_step))
         .route("/projects/{pid}/references/{kind}/{rid}", axum::routing::put(sr::put_reference).delete(sr::delete_reference))
         .route("/projects/{pid}/scenes/{sid}/prompts/{field}", axum::routing::put(sr::put_prompt))
@@ -98,12 +100,15 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/resize", post(er::resize_scene))
         .route("/projects/{pid}/timeline/bulk", post(er::timeline_bulk))
         .route("/projects/{pid}/timeline/close-gaps", post(er::close_gaps))
+        .route("/projects/{pid}/timeline/enforce-length", post(er::enforce_length))
         .route("/projects/{pid}/scenes/{sid}/video/takes", get(crate::video_routes::takes_route))
         .route("/projects/{pid}/scenes/{sid}/video/trim", post(crate::video_routes::trim_route))
         .route("/projects/{pid}/scenes/{sid}/video/match-start-color", post(crate::video_routes::match_color_route))
         .route("/projects/{pid}/scenes/{sid}/video/select", post(crate::video_routes::select_route))
         .route("/projects/{pid}/scenes/{sid}/video/recover", post(crate::video_routes::recover_route))
         .route("/projects/{pid}/scenes/{sid}/video", axum::routing::delete(crate::video_routes::delete_route))
+        .route("/projects/{pid}/timeline/notes", get(crate::notes_routes::list_notes).post(crate::notes_routes::create_note))
+        .route("/projects/{pid}/timeline/notes/{nid}", axum::routing::patch(crate::notes_routes::update_note).delete(crate::notes_routes::delete_note))
         .route("/post/luts", get(crate::post_routes::list_luts))
         .route("/post/luts/upload", post(crate::post_routes::upload_lut))
         .route("/projects/{pid}/scenes/{sid}/post/lut", post(crate::post_routes::lut_route))
@@ -302,6 +307,26 @@ async fn project_summary(State(state): Shared, Path(pid): Path<String>) -> ApiRe
 async fn get_settings(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
     let loaded = load(&state, &pid).await?;
     Ok(success(views::settings_view(&loaded.session), Some(loaded.revision)))
+}
+
+/// Check the saved settings against the engine the project uses.
+async fn preflight_settings(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
+    let loaded = load(&state, &pid).await?;
+    let effective = views::settings_view(&loaded.session);
+    let mut errors: Vec<&str> = Vec::new();
+    let engine = effective["project"]["video_engine"].as_str().unwrap_or("minimax_h3").to_string();
+    if engine == "minimax_h3" {
+        let mm = &effective["minimax_h3"];
+        if mm["aspect_ratio"].as_str().is_none_or(|a| a.is_empty()) {
+            errors.push("MiniMax aspect_ratio is required.");
+        }
+        if mm["steps"].as_f64().unwrap_or(0.0) <= 0.0 {
+            errors.push("MiniMax steps must be greater than 0.");
+        }
+    } else if engine == "ltx" && effective["ltx_video"]["fps"].as_f64().unwrap_or(0.0) <= 0.0 {
+        errors.push("LTX fps must be greater than 0.");
+    }
+    Ok(success(json!({"valid": errors.is_empty(), "errors": errors, "warnings": [], "effective_settings": effective}), None))
 }
 
 async fn patch_settings(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {

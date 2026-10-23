@@ -1,0 +1,1809 @@
+[
+ {
+  "op": "normalize",
+  "raw": [],
+  "return": []
+ },
+ {
+  "op": "normalize",
+  "raw": null,
+  "return": []
+ },
+ {
+  "op": "normalize",
+  "raw": "not a list",
+  "return": []
+ },
+ {
+  "op": "normalize",
+  "raw": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": " big "
+   },
+   {
+    "start": 2
+   },
+   {
+    "id": "c",
+    "start": -4,
+    "end": 1
+   }
+  ],
+  "return": [
+   {
+    "id": "c",
+    "start": 0.0,
+    "end": 1.0,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "mark_1",
+    "start": 2.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "a",
+    "start": 5.0,
+    "end": 8.0,
+    "type": "beat",
+    "label": "Drop",
+    "note": "big"
+   }
+  ]
+ },
+ {
+  "op": "normalize",
+  "raw": [
+   {
+    "id": "p",
+    "start": "3.5",
+    "end": "3.5"
+   },
+   {
+    "id": "q",
+    "start": null,
+    "end": "x"
+   },
+   7,
+   {
+    "id": "r",
+    "start": "inf"
+   },
+   {
+    "id": "s",
+    "start": 2,
+    "end": "nan"
+   }
+  ],
+  "return": [
+   {
+    "id": "q",
+    "start": 0.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "mark_1",
+    "start": 0.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "r",
+    "start": 0.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "s",
+    "start": 2.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "p",
+    "start": 3.5,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "op": "normalize",
+  "raw": [
+   {
+    "id": 12,
+    "start": 1,
+    "label": "  ",
+    "type": "",
+    "note": null
+   },
+   {
+    "start": true
+   }
+  ],
+  "return": [
+   {
+    "id": "12",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   {
+    "id": "mark_1",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1
+  },
+  "return": {
+   "note": {
+    "id": "mark_1",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "mark_1",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": ""
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 2,
+   "end": 5,
+   "type": "beat",
+   "label": "Hit",
+   "note": "snare"
+  },
+  "return": {
+   "note": {
+    "id": "mark_1",
+    "start": 2.0,
+    "end": 5.0,
+    "type": "beat",
+    "label": "Hit",
+    "note": "snare"
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "mark_1",
+     "start": 2.0,
+     "end": 5.0,
+     "type": "beat",
+     "label": "Hit",
+     "note": "snare"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "id": "fixed",
+   "start": 0
+  },
+  "return": {
+   "note": {
+    "id": "fixed",
+    "start": 0.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "fixed",
+     "start": 0.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": ""
+    },
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "id": "fixed",
+   "start": 3
+  },
+  "return": {
+   "note": {
+    "id": "fixed",
+    "start": 3.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "fixed",
+     "start": 3.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": ""
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "end": 4
+  },
+  "return": {
+   "error": "start is required (seconds on the project timeline)."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": "x"
+  },
+  "return": {
+   "error": "start must be a number of seconds."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": true
+  },
+  "return": {
+   "error": "start must be a number of seconds."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": -1
+  },
+  "return": {
+   "error": "start must be a number of seconds that is 0 or more."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 5,
+   "end": 5
+  },
+  "return": {
+   "error": "end must be later than start. Send end: null for a point note."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 5,
+   "end": 4
+  },
+  "return": {
+   "error": "end must be later than start. Send end: null for a point note."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1,
+   "end": ""
+  },
+  "return": {
+   "note": {
+    "id": "mark_1",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "mark_1",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": ""
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1,
+   "label": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  },
+  "return": {
+   "error": "label is longer than 500 characters."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1,
+   "type": [
+    "list"
+   ]
+  },
+  "return": {
+   "error": "type must be text."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1,
+   "note": 12.5
+  },
+  "return": {
+   "note": {
+    "id": "mark_1",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": "12.5"
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "mark_1",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": "12.5"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1,
+   "mystery": 1,
+   "another": 2
+  },
+  "return": {
+   "error": "Unknown timeline note fields: another, mystery. Allowed: id, start, end, type, label, note."
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 1,
+   "label": null
+  },
+  "return": {
+   "note": {
+    "id": "mark_1",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "mark_1",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": ""
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": {
+   "start": 7,
+   "label": "   "
+  },
+  "return": {
+   "note": {
+    "id": "mark_1",
+    "start": 7.0,
+    "end": null,
+    "type": "note",
+    "label": "Timeline note",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    },
+    {
+     "id": "mark_1",
+     "start": 7.0,
+     "end": null,
+     "type": "note",
+     "label": "Timeline note",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "create",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "fields": "nope",
+  "return": {
+   "error": "The timeline note must be a JSON object."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "label": "Renamed"
+  },
+  "return": {
+   "note": {
+    "id": "a",
+    "start": 5.0,
+    "end": 8.0,
+    "type": "beat",
+    "label": "Renamed",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Renamed",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "start": 20
+  },
+  "return": {
+   "error": "end must be later than start. Send end: null for a point note."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "start": 9
+  },
+  "return": {
+   "error": "end must be later than start. Send end: null for a point note."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "end": null
+  },
+  "return": {
+   "note": {
+    "id": "a",
+    "start": 5.0,
+    "end": null,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": null,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "end": ""
+  },
+  "return": {
+   "note": {
+    "id": "a",
+    "start": 5.0,
+    "end": null,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": null,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "end": 4
+  },
+  "return": {
+   "error": "end must be later than start. Send end: null for a point note."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "id": "a",
+   "note": "same id is fine"
+  },
+  "return": {
+   "note": {
+    "id": "a",
+    "start": 5.0,
+    "end": 8.0,
+    "type": "beat",
+    "label": "Drop",
+    "note": "same id is fine"
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": "same id is fine"
+    }
+   ]
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "id": "b"
+  },
+  "return": {
+   "error": "A timeline note id cannot change."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "nope": 1
+  },
+  "return": {
+   "error": "Unknown timeline note field: nope. Allowed: id, start, end, type, label, note."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "zzz",
+  "fields": {
+   "label": "x"
+  },
+  "return": {
+   "missing": "zzz"
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "start": -2
+  },
+  "return": {
+   "error": "start must be a number of seconds that is 0 or more."
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": {
+   "type": ""
+  },
+  "return": {
+   "note": {
+    "id": "a",
+    "start": 5.0,
+    "end": 8.0,
+    "type": "note",
+    "label": "Drop",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    },
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "note",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "update",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "fields": "nope",
+  "return": {
+   "error": "The timeline note must be a JSON object."
+  }
+ },
+ {
+  "op": "delete",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "a",
+  "return": {
+   "note": {
+    "id": "a",
+    "start": 5.0,
+    "end": 8.0,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   "markers": [
+    {
+     "id": "b",
+     "start": 1.0,
+     "end": null,
+     "type": "note",
+     "label": "Intro",
+     "note": "x"
+    }
+   ]
+  }
+ },
+ {
+  "op": "delete",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "b",
+  "return": {
+   "note": {
+    "id": "b",
+    "start": 1.0,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   },
+   "markers": [
+    {
+     "id": "a",
+     "start": 5.0,
+     "end": 8.0,
+     "type": "beat",
+     "label": "Drop",
+     "note": ""
+    }
+   ]
+  }
+ },
+ {
+  "op": "delete",
+  "markers": [
+   {
+    "id": "a",
+    "start": 5,
+    "end": 8,
+    "type": "beat",
+    "label": "Drop",
+    "note": ""
+   },
+   {
+    "id": "b",
+    "start": 1,
+    "end": null,
+    "type": "note",
+    "label": "Intro",
+    "note": "x"
+   }
+  ],
+  "id": "zzz",
+  "return": {
+   "missing": "zzz"
+  }
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "b",
+   "start": 1.0,
+   "end": null,
+   "type": "note",
+   "label": "Intro",
+   "note": "x"
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": [
+   "s1"
+  ]
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "a",
+   "start": 5.0,
+   "end": 8.0,
+   "type": "beat",
+   "label": "Drop",
+   "note": ""
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": [
+   "s2"
+  ]
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "p",
+   "start": 4,
+   "end": null
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": [
+   "s2"
+  ]
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "q",
+   "start": 3.9,
+   "end": 4.1
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": [
+   "s1",
+   "s2"
+  ]
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "r",
+   "start": 11,
+   "end": 20
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": [
+   "s3",
+   ""
+  ]
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "t",
+   "start": 20,
+   "end": null
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": []
+ },
+ {
+  "op": "overlap",
+  "marker": {
+   "id": "u",
+   "start": 0,
+   "end": 100
+  },
+  "segments": [
+   {
+    "id": "s1",
+    "start": 0,
+    "end": 4
+   },
+   {
+    "id": "s2",
+    "start": 4,
+    "end": 8
+   },
+   {
+    "id": "s3",
+    "start": 8,
+    "end": 12
+   },
+   {
+    "id": "s4",
+    "start": 12,
+    "end": 12
+   },
+   {
+    "id": "",
+    "start": 12,
+    "end": 14
+   },
+   "junk"
+  ],
+  "return": [
+   "s1",
+   "s2",
+   "s3",
+   ""
+  ]
+ }
+]

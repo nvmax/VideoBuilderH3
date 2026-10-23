@@ -128,6 +128,83 @@ pub async fn timeline_bulk(State(state): Shared, Path(pid): Path<String>, body: 
     .await
 }
 
+/// Merge scenes shorter than `min_scene_seconds` and cut scenes longer than `max_scene_seconds`, one transactional edit at
+/// a time. Scenes with a rendered clip are left alone and reported. `dry_run` returns the edits without making them.
+pub async fn enforce_length(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    use h3_core::lyric_scenes::{apply_length_fix, next_length_fix, LengthFix};
+    use h3_core::pyval::{round_to, text_or_empty, truthy};
+    let body = body_object(body)?;
+    let (Some(min_s), Some(max_s)) = (number(&body, "min_scene_seconds"), number(&body, "max_scene_seconds")) else {
+        return Err(ApiError::validation("min_scene_seconds and max_scene_seconds are required numbers."));
+    };
+    if min_s <= 0.0 || max_s < min_s {
+        return Err(ApiError::validation("min_scene_seconds must be positive and not larger than max_scene_seconds."));
+    }
+    let dry_run = body.get("dry_run").is_some_and(truthy);
+    let max_edits = number(&body, "max_edits").map_or(400, |n| (n as i64).max(1));
+    // Done in one blocking step under the edit lock: each fix is a golden-tested scene operation on the project.
+    edit(&state, &pid, StatusCode::OK, move |folder, now| {
+        let segments_of = |folder: &std::path::Path| -> Result<Vec<Value>, OpError> {
+            Ok(h3_project::load_session(folder)?.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default())
+        };
+        let locked_ids = |segments: &[Value]| -> Vec<String> { segments.iter().filter(|s| h3_core::timeline::has_locked_video(s)).map(|s| text_or_empty(s.get("id"))).collect() };
+        let scenes_before = segments_of(folder)?.len();
+        let mut working = segments_of(folder)?;
+        let mut edits: Vec<LengthFix> = Vec::new();
+        let mut finished = false;
+        for _ in 0..max_edits {
+            let current = if dry_run { working.clone() } else { segments_of(folder)? };
+            let locked = locked_ids(&current);
+            let Some(fix) = next_length_fix(&current, min_s, max_s, &locked).map_err(OpError::Validation)? else {
+                finished = true;
+                break;
+            };
+            if dry_run {
+                apply_length_fix(&mut working, &fix, &mut new_scene_id).map_err(OpError::Validation)?;
+            } else {
+                match &fix {
+                    LengthFix::Split { scene_id, at_time } => {
+                        let mut id = new_scene_id;
+                        scene_ops::split_scene(folder, scene_id, *at_time, true, None, now, &mut id)?;
+                    }
+                    LengthFix::Merge { scene_id, with } => {
+                        scene_ops::merge_scenes(folder, scene_id, with, None, now)?;
+                    }
+                }
+            }
+            edits.push(fix);
+        }
+        if !finished {
+            return Err(OpError::Validation(format!("Stopped after {max_edits} edits without reaching the limits; check the minimum and maximum.")));
+        }
+        let final_segments = if dry_run { working } else { segments_of(folder)? };
+        let locked = locked_ids(&final_segments);
+        let span = |s: &Value| h3_core::timeline::num(s, "end", 0.0) - h3_core::timeline::num(s, "start", 0.0);
+        let lengths: Vec<f64> = final_segments.iter().map(span).collect();
+        let outside: Vec<Value> = final_segments
+            .iter()
+            .filter(|s| span(s) > max_s + 0.01 || (final_segments.len() > 1 && span(s) < min_s - 0.01))
+            .map(|s| {
+                let id = text_or_empty(s.get("id"));
+                json!({"scene_id": s.get("id").cloned().unwrap_or(Value::Null), "seconds": round_to(span(s), 2), "reason": if locked.contains(&id) { "has rendered video" } else { "no valid edit" }})
+            })
+            .collect();
+        let shortest = lengths.iter().copied().fold(f64::INFINITY, f64::min);
+        let longest = lengths.iter().copied().fold(f64::NEG_INFINITY, f64::max);
+        Ok(json!({
+            "dry_run": dry_run,
+            "splits": edits.iter().filter(|e| matches!(e, LengthFix::Split { .. })).count(),
+            "merges": edits.iter().filter(|e| matches!(e, LengthFix::Merge { .. })).count(),
+            "scenes_before": scenes_before,
+            "scenes_after": final_segments.len(),
+            "shortest_seconds": if lengths.is_empty() { Value::Null } else { json!(round_to(shortest, 2)) },
+            "longest_seconds": if lengths.is_empty() { Value::Null } else { json!(round_to(longest, 2)) },
+            "still_outside_limits": outside,
+        }))
+    })
+    .await
+}
+
 pub async fn close_gaps(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
     edit(&state, &pid, StatusCode::OK, scene_ops::close_gaps).await
 }

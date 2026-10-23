@@ -174,6 +174,23 @@ pub async fn put_scene_mapping(State(state): Shared, Path(pid): Path<String>, he
     edit(&state, &pid, move |folder, now| session_ops::update_scene_mapping(folder, &mapping, expected, now)).await
 }
 
+/// `GET .../story`: the saved story layer as it is.
+pub async fn get_story(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
+    let loaded = load(&state, &pid).await?;
+    Ok(success(h3_project::story::saved_story(&loaded.session), None))
+}
+
+/// `PUT .../story`: replace the story layer. The answer is the story, with the new revision in the envelope.
+pub async fn put_story(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
+    let story = Value::Object(body_object(body)?);
+    let expected = if_match(&headers)?;
+    let folder = views::resolve_project(&state.roots, &pid)?;
+    let _guard = state.edit_lock.lock().await;
+    let result = blocking(move || h3_project::story::put_story(&folder, &story, expected, &Stamp::now())).await?.map_err(|e| op_error(e, &pid))?;
+    let revision = result.get("revision").and_then(Value::as_i64);
+    Ok(respond(StatusCode::OK, result["story"].clone(), revision))
+}
+
 /// Save the Storyboard scene defaults and the story idea. Body: `{"defaults": {...}, "story": {...}}`.
 pub async fn story_settings(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
     let params = body_object(body)?;
