@@ -9,6 +9,8 @@ pub mod resolution;
 pub mod scene;
 pub mod settings;
 pub mod tiles;
+pub mod lyric_scenes;
+pub mod timeline;
 pub mod timing;
 pub mod tokens;
 

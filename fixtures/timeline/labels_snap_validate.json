@@ -1,0 +1,641 @@
+{
+ "cases": [
+  {
+   "op": "labels",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "audio_duration": null,
+   "return": []
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "audio_duration": 10.0,
+   "return": [
+    {
+     "type": "exceeds_audio",
+     "message": "Timeline duration (16.0s) exceeds audio duration (10.0s)."
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "audio_duration": 16.0,
+   "return": []
+  },
+  {
+   "op": "labels",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "audio_duration": null,
+   "return": []
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "audio_duration": 10.0,
+   "return": [
+    {
+     "type": "exceeds_audio",
+     "message": "Timeline duration (16.0s) exceeds audio duration (10.0s)."
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "audio_duration": 16.0,
+   "return": []
+  },
+  {
+   "op": "labels",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "audio_duration": null,
+   "return": []
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "audio_duration": 10.0,
+   "return": [
+    {
+     "type": "exceeds_audio",
+     "message": "Timeline duration (12.0s) exceeds audio duration (10.0s)."
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "audio_duration": 16.0,
+   "return": []
+  },
+  {
+   "op": "labels",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "audio_duration": null,
+   "return": [
+    {
+     "type": "timeline_gap",
+     "message": "First scene does not start at 0.0 (starts at 1).",
+     "fix": "Run close-gaps or set first scene start to 0."
+    },
+    {
+     "type": "gap",
+     "message": "Gap of 1.0s between Scene 1 and Scene 2.",
+     "scenes": [
+      "s1",
+      "s2"
+     ]
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "audio_duration": 10.0,
+   "return": [
+    {
+     "type": "timeline_gap",
+     "message": "First scene does not start at 0.0 (starts at 1).",
+     "fix": "Run close-gaps or set first scene start to 0."
+    },
+    {
+     "type": "gap",
+     "message": "Gap of 1.0s between Scene 1 and Scene 2.",
+     "scenes": [
+      "s1",
+      "s2"
+     ]
+    },
+    {
+     "type": "exceeds_audio",
+     "message": "Timeline duration (12.0s) exceeds audio duration (10.0s)."
+    }
+   ]
+  },
+  {
+   "op": "validate",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "audio_duration": 16.0,
+   "return": [
+    {
+     "type": "timeline_gap",
+     "message": "First scene does not start at 0.0 (starts at 1).",
+     "fix": "Run close-gaps or set first scene start to 0."
+    },
+    {
+     "type": "gap",
+     "message": "Gap of 1.0s between Scene 1 and Scene 2.",
+     "scenes": [
+      "s1",
+      "s2"
+     ]
+    }
+   ]
+  },
+  {
+   "op": "snap",
+   "t": 1.0,
+   "beats": [
+    0.9,
+    1.1,
+    2.0
+   ],
+   "return": 0.9
+  },
+  {
+   "op": "snap",
+   "t": 1.0,
+   "beats": [
+    {
+     "time": 1.13
+    }
+   ],
+   "return": 1.13
+  },
+  {
+   "op": "snap",
+   "t": 1.0,
+   "beats": [],
+   "return": 1.0
+  },
+  {
+   "op": "snap",
+   "t": 5.0,
+   "beats": [
+    1.0
+   ],
+   "return": 5.0
+  },
+  {
+   "op": "snap",
+   "t": 0.5,
+   "beats": [
+    0.64,
+    0.36
+   ],
+   "return": 0.36
+  }
+ ]
+}

@@ -1,0 +1,12354 @@
+{
+ "cases": [
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 6.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 6.5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 6.5,
+     "label": "Scene 1"
+    },
+    "delta": 2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 6.5,
+     "end": 10.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 10.5,
+     "end": 14.5,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 14.5,
+     "end": 18.5,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 1"
+    },
+    "delta": 2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 8.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    },
+    "delta": 20.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 24.0,
+     "end": 28.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 28.0,
+     "end": 32.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 32.0,
+     "end": 36.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 1"
+    },
+    "delta": 20.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.0,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.0,
+     "end": 6.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 14.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    "delta": -3.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 4.1,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.1,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 12.1,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    "delta": -3.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 7.9,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 7.9,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 7.9,
+     "label": "Scene 1"
+    },
+    "delta": 7.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 11.0,
+     "end": 15.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 15.0,
+     "end": 19.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 19.0,
+     "end": 23.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    "delta": 7.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.1,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -4.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -4.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 2.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.5,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    "delta": -1.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.5,
+     "end": 10.5,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.5,
+     "end": 14.5,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    "delta": -1.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 8.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s4",
+     "start": 12.0,
+     "end": 16,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    },
+    "delta": 16.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 24.0,
+     "end": 28.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 28.0,
+     "end": 32.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 2"
+    },
+    "delta": 16.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 6.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 6.0,
+     "label": "Scene 2"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 6.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 14.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 6.0,
+     "label": "Scene 2"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 4.1,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.1,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 4.1,
+     "label": "Scene 2"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 4.1,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.1,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 12.1,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 4.1,
+     "label": "Scene 2"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    "delta": 3.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 15.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 15.0,
+     "end": 19.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    "delta": 3.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -8.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -8.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -5.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 6.5,
+     "end": 10.5,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    "delta": -5.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 12.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s4",
+     "start": 12.0,
+     "end": 16.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s3",
+     "start": 16.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 16.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    },
+    "delta": 12.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 24.0,
+     "end": 28.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 3"
+    },
+    "delta": 12.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 14.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 12.1,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 11.0,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 11.0,
+     "end": 15.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12.0,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 6.5,
+     "end": 10.5,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 10.5,
+     "end": 14.5,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 14.5,
+     "end": 18.5,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 1"
+    },
+    "delta": 2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    },
+    "delta": 20.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 24.0,
+     "end": 28.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 28.0,
+     "end": 32.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 32.0,
+     "end": 36.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 1"
+    },
+    "delta": 20.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.0,
+     "end": 6.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 14.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    "delta": -3.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 4.1,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.1,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 12.1,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    "delta": -3.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 7.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 11.0,
+     "end": 15.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 15.0,
+     "end": 19.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 19.0,
+     "end": 23.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    "delta": 7.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 4.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.1,
+     "end": 4.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -4.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 4.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 8.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 12.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.0,
+     "end": 4.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -4.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 2.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.5,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -1.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.5,
+     "end": 10.5,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.5,
+     "end": 14.5,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 6.5,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -1.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 8.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 4"
+    },
+    "delta": 16.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 24.0,
+     "end": 28.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 28.0,
+     "end": 32.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 24.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": 16.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 6.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 6.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 6.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 14.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 6.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 4.1,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.1,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 4.1,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 4.1,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.1,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 12.1,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 4.1,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 11.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 11.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": 3.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 11.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 15.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 15.0,
+     "end": 19.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 11.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": 3.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 4,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -8.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 4.0,
+     "end": 8.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -8.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8.0,
+     "video_path": "v2.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    "delta": -5.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 6.5,
+     "end": 10.5,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 6.5,
+     "label": "Scene 2"
+    },
+    "delta": -5.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s4",
+     "start": 12.0,
+     "end": 16.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 3"
+    },
+    {
+     "id": "s3",
+     "start": 16.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 16.0,
+     "end": 24.0,
+     "label": "Scene 4"
+    },
+    "delta": 12.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 24.0,
+     "end": 28.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "label": "Scene 3"
+    },
+    "delta": 12.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 10.0,
+     "end": 14.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 10.0,
+     "label": "Scene 3"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 8.1,
+     "end": 12.1,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 8.1,
+     "label": "Scene 3"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 11.0,
+     "end": 15.0,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 11.0,
+     "label": "Scene 3"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4",
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4",
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.5,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    "delta": 2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.5,
+     "end": 8.5,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 8.5,
+     "end": 11.5,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 11.5,
+     "end": 14.5,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    "delta": 2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 6.0,
+     "label": "1. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 4"
+    },
+    "delta": 20.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 23.0,
+     "end": 26.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 26.0,
+     "end": 29.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 29.0,
+     "end": 32.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 1"
+    },
+    "delta": 20.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.0,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.0,
+     "end": 5.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 5.0,
+     "end": 8.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 2.0,
+     "label": "Scene 1"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    "delta": -2.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 3.1,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 3.1,
+     "end": 6.1,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 6.1,
+     "end": 9.1,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    "delta": -2.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 5.9,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.9,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 5.9,
+     "label": "Scene 1"
+    },
+    "delta": 8.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 11.0,
+     "end": 14.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 14.0,
+     "end": 17.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 17.0,
+     "end": 20.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    "delta": 8.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 0.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.1,
+     "end": 3.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 3.0,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.1,
+     "end": 3.0,
+     "label": "2. Rooftop"
+    },
+    "delta": -3.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 3.0,
+     "end": 6.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 6.0,
+     "end": 9.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "2. Rooftop"
+    },
+    "delta": -3.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 2.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 5.5,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "2. Rooftop"
+    },
+    "delta": -0.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 5.5,
+     "end": 8.5,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 8.5,
+     "end": 11.5,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "2. Rooftop"
+    },
+    "delta": -0.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 6.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 9.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9.0,
+     "end": 12,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "4. Rooftop"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "4. Rooftop"
+    },
+    "delta": 17.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 23.0,
+     "end": 26.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 26.0,
+     "end": 29.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "2. Rooftop"
+    },
+    "delta": 17.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 5.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 5.0,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3.0,
+     "end": 5.0,
+     "label": "2. Rooftop"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 5.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 5.0,
+     "end": 8.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3,
+     "end": 5.0,
+     "label": "2. Rooftop"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 3.1,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 3.1,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3.0,
+     "end": 3.1,
+     "label": "2. Rooftop"
+    },
+    "delta": -2.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 3.1,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 3.1,
+     "end": 6.1,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 6.1,
+     "end": 9.1,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3,
+     "end": 3.1,
+     "label": "2. Rooftop"
+    },
+    "delta": -2.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 8.9,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 8.9,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3.0,
+     "end": 8.9,
+     "label": "2. Rooftop"
+    },
+    "delta": 5.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 11.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 14.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 14.0,
+     "end": 17.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3,
+     "end": 11.0,
+     "label": "2. Rooftop"
+    },
+    "delta": 5.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 3,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6.0,
+     "label": "3. Rooftop"
+    },
+    {
+     "id": "s4",
+     "start": 6.0,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Chorus"
+    },
+    "delta": -6.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "3. Rooftop"
+    },
+    {
+     "id": "s4",
+     "start": 3.0,
+     "end": 6.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Chorus"
+    },
+    "delta": -6.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 3.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6.0,
+     "label": "3. Rooftop"
+    },
+    {
+     "id": "s4",
+     "start": 6.0,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 3.0,
+     "label": "Chorus"
+    },
+    "delta": -3.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Chorus"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "3. Rooftop"
+    },
+    {
+     "id": "s4",
+     "start": 5.5,
+     "end": 8.5,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Chorus"
+    },
+    "delta": -3.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 9.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s4",
+     "start": 9.0,
+     "end": 12.0,
+     "label": "Scene 3"
+    },
+    {
+     "id": "s3",
+     "start": 12.0,
+     "end": 23.0,
+     "label": "Chorus"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 12.0,
+     "end": 23.0,
+     "label": "Chorus"
+    },
+    "delta": 14.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 23.0,
+     "end": 26.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Chorus"
+    },
+    "delta": 14.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 8.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6.0,
+     "end": 8.0,
+     "label": "Chorus"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 8.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 11.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6,
+     "end": 8.0,
+     "label": "Chorus"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 6.1,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 6.1,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6.0,
+     "end": 6.1,
+     "label": "Chorus"
+    },
+    "delta": -2.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 6.1,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 6.1,
+     "end": 9.1,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6,
+     "end": 6.1,
+     "label": "Chorus"
+    },
+    "delta": -2.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 11.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 11.0,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6.0,
+     "end": 11.0,
+     "label": "Chorus"
+    },
+    "delta": 2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 11.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 11.0,
+     "end": 14.0,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6,
+     "end": 11.0,
+     "label": "Chorus"
+    },
+    "delta": 2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6.0,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 9.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9.0,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6.0,
+     "end": 9.0,
+     "label": "Chorus"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9.0,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": "Scene 4"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 6,
+     "end": 9.0,
+     "label": "Chorus"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 7.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 7.0,
+     "end": 11.0,
+     "custom_audio_timeline_start": 7.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    "delta": 1.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 6.5,
+     "end": 9.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 9.5,
+     "end": 13.5,
+     "custom_audio_timeline_start": 10.0,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 1"
+    },
+    "delta": 1.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 8.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 3"
+    },
+    "delta": 19.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 24.0,
+     "end": 27.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 27.0,
+     "end": 31.0,
+     "custom_audio_timeline_start": 27.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 1"
+    },
+    "delta": 19.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 7.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 7.0,
+     "end": 11.0,
+     "custom_audio_timeline_start": 7.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 1,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 1.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 1.1,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 1.1,
+     "label": "Scene 1"
+    },
+    "delta": -2.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 1.1,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.1,
+     "end": 5.1,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 5.1,
+     "end": 9.1,
+     "custom_audio_timeline_start": 5.6,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 1,
+     "end": 1.1,
+     "label": "Scene 1"
+    },
+    "delta": -2.9
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 7.9,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 7.9,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 7.9,
+     "label": "Scene 1"
+    },
+    "delta": 7.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 12.0,
+     "end": 15.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 15.0,
+     "end": 19.0,
+     "custom_audio_timeline_start": 15.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 1,
+     "end": 11.0,
+     "label": "Scene 1"
+    },
+    "delta": 7.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 4.0,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 0.0,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s1",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s1",
+     "start": 1,
+     "end": 4.0,
+     "label": "Scene 1"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 1.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s1",
+     "start": 1.0,
+     "end": 4.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.0,
+     "end": 1.0,
+     "label": "Scene 1"
+    },
+    "delta": -5.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s2",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 3.0,
+     "end": 7.0,
+     "custom_audio_timeline_start": 3.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 0.0,
+     "end": 3.0,
+     "label": "Scene 1"
+    },
+    "delta": -5.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 2.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 5.5,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 2"
+    },
+    "delta": -2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 5.5,
+     "end": 9.5,
+     "custom_audio_timeline_start": 6.0,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 2.5,
+     "end": 5.5,
+     "label": "Scene 2"
+    },
+    "delta": -2.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 8.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 12.0,
+     "end": 23.0,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 12.0,
+     "end": 23.0,
+     "label": "Scene 3"
+    },
+    "delta": 15.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 23.0,
+     "end": 27.0,
+     "custom_audio_timeline_start": 23.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 20.0,
+     "end": 23.0,
+     "label": "Scene 2"
+    },
+    "delta": 15.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 5.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.0,
+     "end": 7.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 7.0,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5.0,
+     "end": 7.0,
+     "label": "Scene 2"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 7.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 7.0,
+     "end": 11.0,
+     "custom_audio_timeline_start": 7.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5,
+     "end": 7.0,
+     "label": "Scene 2"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 5.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.0,
+     "end": 5.1,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 5.1,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5.0,
+     "end": 5.1,
+     "label": "Scene 2"
+    },
+    "delta": -2.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 5.1,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 5.1,
+     "end": 9.1,
+     "custom_audio_timeline_start": 5.6,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5,
+     "end": 5.1,
+     "label": "Scene 2"
+    },
+    "delta": -2.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 5.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.0,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5.0,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    "delta": 3.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 11.0,
+     "end": 15.0,
+     "custom_audio_timeline_start": 11.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5,
+     "end": 11.0,
+     "label": "Scene 2"
+    },
+    "delta": 3.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 5.0,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5.0,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5.0,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "s2",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s2",
+     "start": 5,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 5.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 5.0,
+     "end": 8.0,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 1"
+    },
+    "delta": -8.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "start": 0.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 0.0,
+     "end": 4.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 1"
+    },
+    "delta": -8.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 5.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 5.0,
+     "end": 8.0,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 5.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 2"
+    },
+    "delta": -5.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "start": 2.5,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s3",
+     "start": 2.5,
+     "end": 6.5,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 2.5,
+     "end": 6.5,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 2"
+    },
+    "delta": -5.5
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 20.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": 12.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "start": 20.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 20.0,
+     "end": 24.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": 12.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 10.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 10.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 10.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 10.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": -2.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 8.1,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 8.1,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 8.1,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 8.1,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": -3.9000000000000004
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 11.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 11.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 11.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 11.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": -1.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8.0,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8.0,
+     "end": 12.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "3",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "segments": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8,
+     "label": "Scene 2"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    }
+   ],
+   "return": {
+    "scene": {
+     "id": "s3",
+     "start": 8,
+     "end": 12.0,
+     "custom_audio_timeline_start": 8.5,
+     "label": "Scene 3"
+    },
+    "delta": 0.0
+   }
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "start": 0.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "start": 2.5,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "move",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "start": 20.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": 2.0,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": 0.01,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": 11.0,
+   "ripple": true,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": false,
+   "error": "Scene zz not found"
+  },
+  {
+   "op": "resize",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "scene": "zz",
+   "duration": null,
+   "end": null,
+   "ripple": true,
+   "error": "Scene zz not found"
+  }
+ ]
+}

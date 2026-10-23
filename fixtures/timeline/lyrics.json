@@ -1,0 +1,699 @@
+{
+ "cases": [
+  {
+   "op": "instrumental",
+   "text": "",
+   "return": false
+  },
+  {
+   "op": "split",
+   "text": "",
+   "fraction": 0.1,
+   "return": [
+    "[instrumental]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "",
+   "fraction": 0.5,
+   "return": [
+    "[instrumental]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "",
+   "fraction": 0.9,
+   "return": [
+    "[instrumental]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "",
+   "b": "",
+   "return": "[instrumental]"
+  },
+  {
+   "op": "merge",
+   "a": "",
+   "b": "tail",
+   "return": "tail"
+  },
+  {
+   "op": "merge",
+   "a": "",
+   "b": "[instrumental]",
+   "return": "[instrumental]"
+  },
+  {
+   "op": "merge",
+   "a": "",
+   "b": "",
+   "return": "[instrumental]"
+  },
+  {
+   "op": "instrumental",
+   "text": "[instrumental]",
+   "return": true
+  },
+  {
+   "op": "split",
+   "text": "[instrumental]",
+   "fraction": 0.1,
+   "return": [
+    "[instrumental]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "[instrumental]",
+   "fraction": 0.5,
+   "return": [
+    "[instrumental]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "[instrumental]",
+   "fraction": 0.9,
+   "return": [
+    "[instrumental]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "[instrumental]",
+   "b": "",
+   "return": "[instrumental]"
+  },
+  {
+   "op": "merge",
+   "a": "[instrumental]",
+   "b": "tail",
+   "return": "tail"
+  },
+  {
+   "op": "merge",
+   "a": "[instrumental]",
+   "b": "[instrumental]",
+   "return": "[instrumental]"
+  },
+  {
+   "op": "merge",
+   "a": "[instrumental]",
+   "b": "[instrumental]",
+   "return": "[instrumental]"
+  },
+  {
+   "op": "instrumental",
+   "text": "Hello world",
+   "return": false
+  },
+  {
+   "op": "split",
+   "text": "Hello world",
+   "fraction": 0.1,
+   "return": [
+    "Hello",
+    "world"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "Hello world",
+   "fraction": 0.5,
+   "return": [
+    "Hello",
+    "world"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "Hello world",
+   "fraction": 0.9,
+   "return": [
+    "Hello",
+    "world"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "Hello world",
+   "b": "",
+   "return": "Hello world"
+  },
+  {
+   "op": "merge",
+   "a": "Hello world",
+   "b": "tail",
+   "return": "Hello world\ntail"
+  },
+  {
+   "op": "merge",
+   "a": "Hello world",
+   "b": "[instrumental]",
+   "return": "Hello world"
+  },
+  {
+   "op": "merge",
+   "a": "Hello world",
+   "b": "Hello world",
+   "return": "Hello world"
+  },
+  {
+   "op": "instrumental",
+   "text": "line one\nline two\nline three",
+   "return": false
+  },
+  {
+   "op": "split",
+   "text": "line one\nline two\nline three",
+   "fraction": 0.1,
+   "return": [
+    "line one",
+    "line two\nline three"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "line one\nline two\nline three",
+   "fraction": 0.5,
+   "return": [
+    "line one\nline two",
+    "line three"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "line one\nline two\nline three",
+   "fraction": 0.9,
+   "return": [
+    "line one\nline two",
+    "line three"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "line one\nline two\nline three",
+   "b": "",
+   "return": "line one\nline two\nline three"
+  },
+  {
+   "op": "merge",
+   "a": "line one\nline two\nline three",
+   "b": "tail",
+   "return": "line one\nline two\nline three\ntail"
+  },
+  {
+   "op": "merge",
+   "a": "line one\nline two\nline three",
+   "b": "[instrumental]",
+   "return": "line one\nline two\nline three"
+  },
+  {
+   "op": "merge",
+   "a": "line one\nline two\nline three",
+   "b": "line one\nline two\nline three",
+   "return": "line one\nline two\nline three"
+  },
+  {
+   "op": "instrumental",
+   "text": "one two three four five",
+   "return": false
+  },
+  {
+   "op": "split",
+   "text": "one two three four five",
+   "fraction": 0.1,
+   "return": [
+    "one",
+    "two three four five"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "one two three four five",
+   "fraction": 0.5,
+   "return": [
+    "one two",
+    "three four five"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "one two three four five",
+   "fraction": 0.9,
+   "return": [
+    "one two three four",
+    "five"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "one two three four five",
+   "b": "",
+   "return": "one two three four five"
+  },
+  {
+   "op": "merge",
+   "a": "one two three four five",
+   "b": "tail",
+   "return": "one two three four five\ntail"
+  },
+  {
+   "op": "merge",
+   "a": "one two three four five",
+   "b": "[instrumental]",
+   "return": "one two three four five"
+  },
+  {
+   "op": "merge",
+   "a": "one two three four five",
+   "b": "one two three four five",
+   "return": "one two three four five"
+  },
+  {
+   "op": "instrumental",
+   "text": "single",
+   "return": false
+  },
+  {
+   "op": "split",
+   "text": "single",
+   "fraction": 0.1,
+   "return": [
+    "single",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "single",
+   "fraction": 0.5,
+   "return": [
+    "single",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "single",
+   "fraction": 0.9,
+   "return": [
+    "single",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "single",
+   "b": "",
+   "return": "single"
+  },
+  {
+   "op": "merge",
+   "a": "single",
+   "b": "tail",
+   "return": "single\ntail"
+  },
+  {
+   "op": "merge",
+   "a": "single",
+   "b": "[instrumental]",
+   "return": "single"
+  },
+  {
+   "op": "merge",
+   "a": "single",
+   "b": "single",
+   "return": "single"
+  },
+  {
+   "op": "instrumental",
+   "text": "no vocals",
+   "return": true
+  },
+  {
+   "op": "split",
+   "text": "no vocals",
+   "fraction": 0.1,
+   "return": [
+    "no vocals",
+    "no vocals"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "no vocals",
+   "fraction": 0.5,
+   "return": [
+    "no vocals",
+    "no vocals"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "no vocals",
+   "fraction": 0.9,
+   "return": [
+    "no vocals",
+    "no vocals"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "no vocals",
+   "b": "",
+   "return": "no vocals"
+  },
+  {
+   "op": "merge",
+   "a": "no vocals",
+   "b": "tail",
+   "return": "tail"
+  },
+  {
+   "op": "merge",
+   "a": "no vocals",
+   "b": "[instrumental]",
+   "return": "no vocals"
+  },
+  {
+   "op": "merge",
+   "a": "no vocals",
+   "b": "no vocals",
+   "return": "no vocals"
+  },
+  {
+   "op": "instrumental",
+   "text": "Instrumental break",
+   "return": true
+  },
+  {
+   "op": "split",
+   "text": "Instrumental break",
+   "fraction": 0.1,
+   "return": [
+    "Instrumental break",
+    "Instrumental break"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "Instrumental break",
+   "fraction": 0.5,
+   "return": [
+    "Instrumental break",
+    "Instrumental break"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "Instrumental break",
+   "fraction": 0.9,
+   "return": [
+    "Instrumental break",
+    "Instrumental break"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "Instrumental break",
+   "b": "",
+   "return": "Instrumental break"
+  },
+  {
+   "op": "merge",
+   "a": "Instrumental break",
+   "b": "tail",
+   "return": "tail"
+  },
+  {
+   "op": "merge",
+   "a": "Instrumental break",
+   "b": "[instrumental]",
+   "return": "Instrumental break"
+  },
+  {
+   "op": "merge",
+   "a": "Instrumental break",
+   "b": "Instrumental break",
+   "return": "Instrumental break"
+  },
+  {
+   "op": "instrumental",
+   "text": "[Break]",
+   "return": false
+  },
+  {
+   "op": "split",
+   "text": "[Break]",
+   "fraction": 0.1,
+   "return": [
+    "[Break]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "[Break]",
+   "fraction": 0.5,
+   "return": [
+    "[Break]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "split",
+   "text": "[Break]",
+   "fraction": 0.9,
+   "return": [
+    "[Break]",
+    "[instrumental]"
+   ]
+  },
+  {
+   "op": "merge",
+   "a": "[Break]",
+   "b": "",
+   "return": "[Break]"
+  },
+  {
+   "op": "merge",
+   "a": "[Break]",
+   "b": "tail",
+   "return": "[Break]\ntail"
+  },
+  {
+   "op": "merge",
+   "a": "[Break]",
+   "b": "[instrumental]",
+   "return": "[Break]"
+  },
+  {
+   "op": "merge",
+   "a": "[Break]",
+   "b": "[Break]",
+   "return": "[Break]"
+  },
+  {
+   "op": "carry",
+   "old": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "lyric_text": "a b c d",
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "lyric_text": "x\ny"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "lyric_text": "[instrumental]"
+    }
+   ],
+   "ranges": [
+    [
+     0,
+     8
+    ],
+    [
+     8,
+     12
+    ]
+   ],
+   "return": [
+    {
+     "lyric_text": "a b c d\nx\ny",
+     "lyric_no_lip_sync": false,
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "lyric_text": "[instrumental]",
+     "lyric_no_lip_sync": true
+    }
+   ]
+  },
+  {
+   "op": "carry",
+   "old": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "lyric_text": "a b c d",
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "lyric_text": "x\ny"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "lyric_text": "[instrumental]"
+    }
+   ],
+   "ranges": [
+    [
+     0,
+     2
+    ],
+    [
+     2,
+     4
+    ],
+    [
+     4,
+     12
+    ]
+   ],
+   "return": [
+    {
+     "lyric_text": "a b",
+     "lyric_no_lip_sync": false,
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "lyric_text": "c d",
+     "lyric_no_lip_sync": false,
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "lyric_text": "x\ny",
+     "lyric_no_lip_sync": false
+    }
+   ]
+  },
+  {
+   "op": "carry",
+   "old": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "lyric_text": "a b c d",
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "lyric_text": "x\ny"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "lyric_text": "[instrumental]"
+    }
+   ],
+   "ranges": [
+    [
+     20,
+     24
+    ]
+   ],
+   "return": [
+    {
+     "lyric_text": "a b c d\nx\ny",
+     "lyric_no_lip_sync": false,
+     "lyric_singers": [
+      "Ava"
+     ]
+    }
+   ]
+  },
+  {
+   "op": "carry",
+   "old": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4,
+     "lyric_text": "a b c d",
+     "lyric_singers": [
+      "Ava"
+     ]
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "lyric_text": "x\ny"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "lyric_text": "[instrumental]"
+    }
+   ],
+   "ranges": [
+    [
+     0,
+     12
+    ]
+   ],
+   "return": [
+    {
+     "lyric_text": "a b c d\nx\ny",
+     "lyric_no_lip_sync": false,
+     "lyric_singers": [
+      "Ava"
+     ]
+    }
+   ]
+  }
+ ]
+}

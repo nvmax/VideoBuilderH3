@@ -23,7 +23,7 @@ CASE_FILES = [
     "story_mode_cases.json", "temporal_effect_cases.json", "video_style_cases.json",
 ]
 
-GENERATORS = ["make_graph_fixtures.py", "make_core_fixtures.py", "make_scene_fixtures.py", "make_prompt_fixtures.py", "make_project_fixtures.py", "make_media_fixtures.py", "make_pipeline_fixtures.py", "make_image_fixtures.py"]
+GENERATORS = ["make_graph_fixtures.py", "make_core_fixtures.py", "make_scene_fixtures.py", "make_prompt_fixtures.py", "make_project_fixtures.py", "make_media_fixtures.py", "make_pipeline_fixtures.py", "make_image_fixtures.py", "make_timeline_fixtures.py"]
 
 
 def run(*args) -> None:
@@ -59,7 +59,7 @@ def main() -> int:
         shutil.copyfile(pack / "tests" / name, cases_dir / name)
 
     counts = {}
-    for folder in ("graphs", "core", "scene", "prompt", "project", "pipeline", "image", "cases"):
+    for folder in ("graphs", "core", "scene", "prompt", "project", "pipeline", "image", "timeline", "cases"):
         counts[folder] = len(list((FIXTURES / folder).glob("*.json")))
     manifest = {"pack_commit": pack_commit(pack), "python": sys.version.split()[0], "files": counts}
     (FIXTURES / "MANIFEST.json").write_text(json.dumps(manifest, indent=1), encoding="utf-8")

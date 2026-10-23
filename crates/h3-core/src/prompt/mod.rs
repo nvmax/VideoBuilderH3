@@ -1,7 +1,7 @@
 //! MiniMax H3 prompt text the Video Builder writes around the LLM's shot descriptions. Port of
 //! `minimax/shot_prompt.py`.
 
-mod rx;
+pub(crate) mod rx;
 
 pub mod continuation;
 pub mod cues;

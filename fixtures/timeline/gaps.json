@@ -1,0 +1,1036 @@
+{
+ "cases": [
+  {
+   "op": "close_all",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 4,
+   "end": 8,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 8.0
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 12.0
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 0,
+   "end": 0,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 8,
+   "end": 12.5,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.5
+  },
+  {
+   "op": "close_all",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 4,
+   "end": 8,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 8.0
+    },
+    {
+     "id": "s4",
+     "start": 8.0,
+     "end": 12.0,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 0,
+   "end": 0,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 8,
+   "end": 12.5,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 4,
+     "end": 8,
+     "video_path": "v2.mp4"
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12
+    },
+    {
+     "id": "s4",
+     "start": 12,
+     "end": 16,
+     "video_path": "v4.mp4"
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.5
+  },
+  {
+   "op": "close_all",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 4,
+   "end": 8,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s4",
+     "start": 5.0,
+     "end": 8.0,
+     "label": ""
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 0,
+   "end": 0,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 8,
+   "end": 12.5,
+   "output": [
+    {
+     "id": "s1",
+     "start": 0,
+     "end": 3,
+     "label": "Scene 1"
+    },
+    {
+     "id": "s2",
+     "start": 3,
+     "end": 6,
+     "label": "2. Rooftop"
+    },
+    {
+     "id": "s3",
+     "start": 6,
+     "end": 9,
+     "label": "Chorus"
+    },
+    {
+     "id": "s4",
+     "start": 9,
+     "end": 12,
+     "label": ""
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.5
+  },
+  {
+   "op": "close_all",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "output": [
+    {
+     "id": "s1",
+     "start": 0.0,
+     "end": 3.0
+    },
+    {
+     "id": "s2",
+     "start": 3.0,
+     "end": 6.0
+    },
+    {
+     "id": "s3",
+     "start": 6.0,
+     "end": 10.0,
+     "custom_audio_timeline_start": 6.5
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 4.0,
+     "end": 5.0
+    }
+   ],
+   "return": 5.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 4,
+   "end": 8,
+   "output": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s3",
+     "start": 4.0,
+     "end": 8.0,
+     "custom_audio_timeline_start": 4.5
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 0,
+   "end": 0,
+   "output": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 0.0
+  },
+  {
+   "op": "close_one",
+   "input": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "overlay": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "start": 8,
+   "end": 12.5,
+   "output": [
+    {
+     "id": "s1",
+     "start": 1,
+     "end": 4
+    },
+    {
+     "id": "s2",
+     "start": 5,
+     "end": 8
+    },
+    {
+     "id": "s3",
+     "start": 8,
+     "end": 12,
+     "custom_audio_timeline_start": 8.5
+    }
+   ],
+   "overlay_output": [
+    {
+     "id": "s90",
+     "start": 5,
+     "end": 6
+    }
+   ],
+   "return": 4.5
+  }
+ ]
+}
