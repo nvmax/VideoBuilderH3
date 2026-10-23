@@ -42,6 +42,7 @@ fn has_audio(tools: &Tools, path: &Path) -> Result<bool, MediaError> {
 
 /// Grade `input` with the `.cube` file and write an H.264 clip to `output`. The source audio is kept when `preserve_audio`
 /// is set and there is some. Returns what the pack reports about the render.
+#[allow(clippy::too_many_arguments)]
 pub fn apply_lut_to_video(tools: &Tools, input: &Path, output: &Path, cube: &Path, strength: f64, preserve_audio: bool, crf: i64, preset: &str) -> Result<Value, MediaError> {
     if !input.is_file() {
         return Err(MediaError::Failed(format!("Input video was not found: {}", input.display())));
@@ -73,9 +74,8 @@ pub fn apply_lut_to_video(tools: &Tools, input: &Path, output: &Path, cube: &Pat
         let _ = fs::remove_file(&temp_output);
         return Err(MediaError::Failed(format!("ffmpeg could not encode the video: {}", failure_text(&out, "ffmpeg failed."))));
     }
-    let (frames, fps) = clip_frame_length(tools, &temp_output).map_err(|e| {
+    let (frames, fps) = clip_frame_length(tools, &temp_output).inspect_err(|_| {
         let _ = fs::remove_file(&temp_output);
-        e
     })?;
     let media = probe_output_media(tools, &temp_output);
     let output_has_audio = has_audio(tools, &temp_output).unwrap_or(false);
