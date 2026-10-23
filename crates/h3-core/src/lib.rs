@@ -4,6 +4,7 @@ pub mod continuity;
 pub mod error;
 pub mod pyval;
 pub mod resolution;
+pub mod scene;
 pub mod settings;
 pub mod tiles;
 pub mod timing;
