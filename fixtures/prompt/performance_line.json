@@ -1,0 +1,47 @@
+{
+ "cases": [
+  {
+   "input": {
+    "has_vocals": false,
+    "part": "opening"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "has_vocals": false,
+    "part": "transition"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "has_vocals": false,
+    "part": "other"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "has_vocals": true,
+    "part": "opening"
+   },
+   "output": " The performer is mid-performance, so keep singing the scene's lyrics without a pause from the first frame, lips and mouth in continuous sync with <Audio 1>."
+  },
+  {
+   "input": {
+    "has_vocals": true,
+    "part": "transition"
+   },
+   "output": " The performer keeps singing the scene's lyrics on camera through the whole movement, lips and mouth in continuous sync with <Audio 1>, and the movement keeps their face in view (it may travel around them but never hides the face for more than a moment)."
+  },
+  {
+   "input": {
+    "has_vocals": true,
+    "part": "other"
+   },
+   "output": " The performer is mid-performance, so keep singing the scene's lyrics without a pause from the first frame, lips and mouth in continuous sync with <Audio 1>."
+  }
+ ],
+ "function": "performance_line"
+}

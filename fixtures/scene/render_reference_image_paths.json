@@ -1,0 +1,2398 @@
+{
+ "cases": [
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "sc1"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "sc1"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "sc1"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "sc1"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 1,
+    "mode": "reference_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 1,
+    "mode": "reference_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 1,
+    "mode": "image_to_video",
+    "segment": "sc2"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 1,
+    "mode": "image_to_video",
+    "segment": "sc2"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 1,
+    "mode": "image_reference_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 1,
+    "mode": "image_reference_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 1,
+    "mode": "video_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 1,
+    "mode": "video_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 1,
+    "mode": "text_to_video",
+    "segment": "sc2"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 1,
+    "mode": "text_to_video",
+    "segment": "sc2"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 2,
+    "mode": "reference_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 2,
+    "mode": "reference_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 2,
+    "mode": "image_to_video",
+    "segment": "sc3"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 2,
+    "mode": "image_to_video",
+    "segment": "sc3"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 2,
+    "mode": "image_reference_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 2,
+    "mode": "image_reference_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 2,
+    "mode": "video_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 2,
+    "mode": "video_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 2,
+    "mode": "text_to_video",
+    "segment": "sc3"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 2,
+    "mode": "text_to_video",
+    "segment": "sc3"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 3,
+    "mode": "reference_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 3,
+    "mode": "reference_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 3,
+    "mode": "image_to_video",
+    "segment": "sc4"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 3,
+    "mode": "image_to_video",
+    "segment": "sc4"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 3,
+    "mode": "image_reference_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 3,
+    "mode": "image_reference_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 3,
+    "mode": "video_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 3,
+    "mode": "video_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 3,
+    "mode": "text_to_video",
+    "segment": "sc4"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 3,
+    "mode": "text_to_video",
+    "segment": "sc4"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 4,
+    "mode": "reference_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 4,
+    "mode": "reference_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 4,
+    "mode": "image_to_video",
+    "segment": "sc5"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 4,
+    "mode": "image_to_video",
+    "segment": "sc5"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 4,
+    "mode": "image_reference_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 4,
+    "mode": "image_reference_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 4,
+    "mode": "video_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 4,
+    "mode": "video_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 4,
+    "mode": "text_to_video",
+    "segment": "sc5"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 4,
+    "mode": "text_to_video",
+    "segment": "sc5"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 5,
+    "mode": "reference_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 5,
+    "mode": "reference_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 5,
+    "mode": "image_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 5,
+    "mode": "image_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 5,
+    "mode": "image_reference_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 5,
+    "mode": "image_reference_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 5,
+    "mode": "video_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 5,
+    "mode": "video_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 5,
+    "mode": "text_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 5,
+    "mode": "text_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "no_character"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "no_character"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "no_character"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "no_character"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\extra1.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "extra_paths"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "extra_paths"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\extra1.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\extra1.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "extra_paths"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "extra_paths"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "with_image"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "with_image"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\img\\b.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\img\\b.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\img\\b.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\img\\b.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "with_history"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "with_history"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "start_frame"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "start_frame"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "flf"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "flf"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "C:\\h3-fixture-does-not-exist\\missing.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "C:\\h3-fixture-does-not-exist\\missing.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "C:\\h3-fixture-does-not-exist\\missing.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "C:\\h3-fixture-does-not-exist\\missing.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "missing_file"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "missing_file"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "video_refs"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "video_refs"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "video_refs"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "video_refs"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x0.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x1.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x2.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x3.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x4.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x5.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "nine_extra"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "nine_extra"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x0.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x1.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x2.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x3.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x4.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x5.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x0.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x1.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x2.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x3.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x4.png",
+    "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x5.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+   ]
+  },
+  {
+   "input": {
+    "configured": null,
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "nine_extra"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "configured": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\cfg\\one.png"
+    ],
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "nine_extra"
+   },
+   "output": []
+  }
+ ],
+ "function": "render_reference_image_paths"
+}

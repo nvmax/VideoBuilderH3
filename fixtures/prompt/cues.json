@@ -1,0 +1,99 @@
+{
+ "cases": [
+  {
+   "input": {
+    "segment": "together"
+   },
+   "rows": []
+  },
+  {
+   "contract": "Timed singer/lyric shot contract — authoritative:\n[Shot 1]: <Subject 1> (Mara) is the only performer singing <d>[English] Hold on tight.</d> from <Audio 1>. The singer sings from 0.5 s to 2.25 s. Other visible performers remain silent, mouth closed or naturally reacting.\n[Shot 2]: use only the assigned visual action and camera direction. Visual action note: camera cranes up over the crowd\n[Shot 3]: <Subject 1> (Mara) is the only performer singing <d>[English] Don't let go.</d> from <Audio 1>. The singer sings from 4.1 s to 6 s. Other visible performers remain silent, mouth closed or naturally reacting.\nEach listed cue is its own shot. Do not swap singers, merge lyric cues, or anticipate a later vocal cue. Apply vocal direction only to the assigned vocal row and its exact timing.\nWrite each vocal cue as <d>[Language, emotion, emotion, singing] exact words</d>: choose two specific emotions that fit this line's meaning, the story beat and the song, wrap the 1–3 words the singer leans on (a rhyme word, a key verb) in <i>...</i>, and put <breath> between two lines where the singer breathes. Keep every word unchanged and in order, and follow the cue with that singer's concrete facial acting.",
+   "cut_plan": {
+    "continuous_shot": false,
+    "cue_driven": true,
+    "cut_count": 2,
+    "cut_times_seconds": [
+     2.5,
+     4.0
+    ],
+    "exact_duration_seconds": 6.5,
+    "frequency": 0,
+    "shot_count": 3
+   },
+   "enforced": [
+    {
+     "output": "A wide shot of the singer on stage, singing the line. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 0.5 s to 2.25 s, <d>[English] Hold on tight.</d>; every other visible performer remains silent."
+    },
+    {
+     "output": "<Subject 1> sings the assigned vocal cue softly. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 0.5 s to 2.25 s, <d>[English, tender, wistful] <i>Hold</i> on tight.</d>; every other visible performer remains silent."
+    },
+    {
+     "output": "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+    },
+    {
+     "output": "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+    },
+    {
+     "output": "A wide shot of the singer on stage, singing the line. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 4.1 s to 6 s, <d>[English] Don't let go.</d>; every other visible performer remains silent."
+    },
+    {
+     "output": "<Subject 1> sings the assigned vocal cue softly. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 4.1 s to 6 s, <d>[English, tender, wistful] Don't let go.</d>; every other visible performer remains silent."
+    }
+   ],
+   "input": {
+    "segment": "cue_map"
+   },
+   "rows": [
+    {
+     "action_note": "",
+     "singer_id": "s1",
+     "singer_name": "Mara",
+     "start": 0.0,
+     "text": "hold on tight",
+     "type": "vocal",
+     "vocal_end": 2.25,
+     "vocal_start": 0.5
+    },
+    {
+     "action_note": "camera cranes up over the crowd",
+     "singer_id": "",
+     "singer_name": "",
+     "start": 2.5,
+     "text": "",
+     "type": "instrumental",
+     "vocal_end": null,
+     "vocal_start": null
+    },
+    {
+     "action_note": "",
+     "singer_id": "s2",
+     "singer_name": "Joe",
+     "start": 4.0,
+     "text": "don't let go",
+     "type": "vocal",
+     "vocal_end": 6.0,
+     "vocal_start": 4.1
+    }
+   ]
+  },
+  {
+   "input": {
+    "segment": "cue_map_missing_start"
+   },
+   "rows": []
+  },
+  {
+   "input": {
+    "segment": "cue_map_blank_vocal"
+   },
+   "rows": []
+  },
+  {
+   "input": {
+    "segment": "empty"
+   },
+   "rows": []
+  }
+ ],
+ "function": "timed_cue_rows / cue_shot_contract / cue_cut_plan / enforce_cue_shot"
+}

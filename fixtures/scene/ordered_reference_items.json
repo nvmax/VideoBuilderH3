@@ -1,0 +1,3911 @@
+{
+ "cases": [
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "sc1"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 1,
+    "mode": "reference_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "backup dancer",
+     "image": {
+      "name": "dancer.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png"
+     },
+     "key": "extra:e1",
+     "kind": "extra",
+     "label": "Dancer",
+     "reference_image_type": "single",
+     "source_id": "e1"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 1,
+    "mode": "image_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "backup dancer",
+     "image": {
+      "name": "dancer.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png"
+     },
+     "key": "extra:e1",
+     "kind": "extra",
+     "label": "Dancer",
+     "reference_image_type": "single",
+     "source_id": "e1"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 1,
+    "mode": "image_reference_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "backup dancer",
+     "image": {
+      "name": "dancer.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png"
+     },
+     "key": "extra:e1",
+     "kind": "extra",
+     "label": "Dancer",
+     "reference_image_type": "single",
+     "source_id": "e1"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 1,
+    "mode": "video_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "backup dancer",
+     "image": {
+      "name": "dancer.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png"
+     },
+     "key": "extra:e1",
+     "kind": "extra",
+     "label": "Dancer",
+     "reference_image_type": "single",
+     "source_id": "e1"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 1,
+    "mode": "text_to_video",
+    "segment": "sc2"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "backup dancer",
+     "image": {
+      "name": "dancer.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png"
+     },
+     "key": "extra:e1",
+     "kind": "extra",
+     "label": "Dancer",
+     "reference_image_type": "single",
+     "source_id": "e1"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 2,
+    "mode": "reference_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 2,
+    "mode": "image_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 2,
+    "mode": "image_reference_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 2,
+    "mode": "video_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 2,
+    "mode": "text_to_video",
+    "segment": "sc3"
+   },
+   "output": [
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    },
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 3,
+    "mode": "reference_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 3,
+    "mode": "image_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 3,
+    "mode": "image_reference_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 3,
+    "mode": "video_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 3,
+    "mode": "text_to_video",
+    "segment": "sc4"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 4,
+    "mode": "reference_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "guitar and mic",
+     "image": {
+      "name": "props.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+     },
+     "key": "ingredients:g1",
+     "kind": "ingredients",
+     "label": "Props",
+     "reference_image_type": "single",
+     "source_id": "g1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 4,
+    "mode": "image_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "guitar and mic",
+     "image": {
+      "name": "props.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+     },
+     "key": "ingredients:g1",
+     "kind": "ingredients",
+     "label": "Props",
+     "reference_image_type": "single",
+     "source_id": "g1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 4,
+    "mode": "image_reference_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "guitar and mic",
+     "image": {
+      "name": "props.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+     },
+     "key": "ingredients:g1",
+     "kind": "ingredients",
+     "label": "Props",
+     "reference_image_type": "single",
+     "source_id": "g1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 4,
+    "mode": "video_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "guitar and mic",
+     "image": {
+      "name": "props.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+     },
+     "key": "ingredients:g1",
+     "kind": "ingredients",
+     "label": "Props",
+     "reference_image_type": "single",
+     "source_id": "g1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 4,
+    "mode": "text_to_video",
+    "segment": "sc5"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "guitar and mic",
+     "image": {
+      "name": "props.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+     },
+     "key": "ingredients:g1",
+     "kind": "ingredients",
+     "label": "Props",
+     "reference_image_type": "single",
+     "source_id": "g1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 5,
+    "mode": "reference_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 5,
+    "mode": "image_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 5,
+    "mode": "image_reference_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 5,
+    "mode": "video_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 5,
+    "mode": "text_to_video",
+    "segment": "sc6_unmapped"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "no_character"
+   },
+   "output": [
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "explicit_keys"
+   },
+   "output": [
+    {
+     "description": "rooftop lounge",
+     "image": {
+      "name": "roof.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+     },
+     "key": "location:l2",
+     "kind": "location",
+     "label": "Rooftop",
+     "reference_image_type": "single",
+     "source_id": "l2"
+    },
+    {
+     "description": "drummer",
+     "image": {
+      "name": "joe.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+     },
+     "key": "subject:s2",
+     "kind": "subject",
+     "label": "Joe",
+     "reference_image_type": "single",
+     "source_id": "s2"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "empty_explicit_keys"
+   },
+   "output": []
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "extra_paths"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "with_image"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "with_history"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    {
+     "image": {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+     },
+     "key": "scene:start_frame",
+     "kind": "start_frame",
+     "label": "Scene start frame"
+    },
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "start_frame"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    {
+     "image": {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+     },
+     "key": "scene:start_frame",
+     "kind": "start_frame",
+     "label": "Scene start frame"
+    },
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "start_frame_choice"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "flf"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "flf_no_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "normal_ignores_end"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "missing_file"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "video_refs"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "reference_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "image_reference_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "video_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  },
+  {
+   "input": {
+    "index": 0,
+    "mode": "text_to_video",
+    "segment": "nine_extra"
+   },
+   "output": [
+    {
+     "description": "lead singer, red jacket",
+     "image": {
+      "name": "mara.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+     },
+     "key": "subject:s1",
+     "kind": "subject",
+     "label": "Mara",
+     "reference_image_type": "single",
+     "source_id": "s1"
+    },
+    {
+     "description": "",
+     "image": {
+      "name": "mara_side.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+     },
+     "key": "subject:s1b",
+     "kind": "subject",
+     "label": "Mara side",
+     "reference_image_type": "single",
+     "source_id": "s1b"
+    },
+    {
+     "description": "wet street at night",
+     "image": {
+      "name": "street.png",
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+     },
+     "key": "location:l1",
+     "kind": "location",
+     "label": "Neon street",
+     "reference_image_type": "single",
+     "source_id": "l1"
+    }
+   ]
+  }
+ ],
+ "function": "ordered_reference_items"
+}

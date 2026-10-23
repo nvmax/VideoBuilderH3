@@ -1,0 +1,103 @@
+{
+ "cases": [
+  {
+   "canonical": null,
+   "input": {
+    "value": null
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": null,
+   "input": {
+    "value": ""
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": "off",
+   "input": {
+    "value": "off"
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": "off",
+   "input": {
+    "value": "OFF"
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": "latent_continuation_masked",
+   "input": {
+    "value": "latent"
+   },
+   "normalized": "latent_continuation_masked"
+  },
+  {
+   "canonical": "latent_continuation_masked",
+   "input": {
+    "value": "Latent Continuation"
+   },
+   "normalized": "latent_continuation_masked"
+  },
+  {
+   "canonical": "latent_continuation_masked",
+   "input": {
+    "value": "latent-continuation-masked"
+   },
+   "normalized": "latent_continuation_masked"
+  },
+  {
+   "canonical": "latent_continuation_masked",
+   "input": {
+    "value": "latent_exact_frame"
+   },
+   "normalized": "latent_continuation_masked"
+  },
+  {
+   "canonical": "latent_continuation_masked",
+   "input": {
+    "value": "latent_masked_av"
+   },
+   "normalized": "latent_continuation_masked"
+  },
+  {
+   "canonical": "latent_continuation_masked",
+   "input": {
+    "value": "continuation"
+   },
+   "normalized": "latent_continuation_masked"
+  },
+  {
+   "canonical": "off",
+   "input": {
+    "value": "spatial"
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": "off",
+   "input": {
+    "value": "exact_start_frame"
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": null,
+   "input": {
+    "value": "bogus"
+   },
+   "normalized": "off"
+  },
+  {
+   "canonical": null,
+   "input": {
+    "value": 5
+   },
+   "normalized": "off"
+  }
+ ],
+ "function": "canonical_continuity_mode / normalize_continuity_mode"
+}

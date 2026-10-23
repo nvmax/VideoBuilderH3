@@ -1,0 +1,83 @@
+{
+ "cases": [
+  {
+   "input": {
+    "index": 0,
+    "mapping": {
+     "sc1": "a"
+    },
+    "segment": {
+     "id": "sc1"
+    }
+   },
+   "output": "a"
+  },
+  {
+   "input": {
+    "index": 1,
+    "mapping": {
+     "sc1": "a"
+    },
+    "segment": {
+     "id": "sc2"
+    }
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "index": 1,
+    "mapping": {
+     "1": "n1",
+     "2": "n2"
+    },
+    "segment": {
+     "id": "zz"
+    }
+   },
+   "output": "n2"
+  },
+  {
+   "input": {
+    "index": 0,
+    "mapping": {
+     "1": "n1",
+     "x": "bad"
+    },
+    "segment": {
+     "id": "zz"
+    }
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "index": 0,
+    "mapping": {},
+    "segment": {
+     "id": "sc1"
+    }
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "index": 0,
+    "mapping": null,
+    "segment": {}
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "index": 2,
+    "mapping": {
+     "3": "n3"
+    },
+    "segment": {}
+   },
+   "output": "n3"
+  }
+ ],
+ "function": "scene_map_value"
+}

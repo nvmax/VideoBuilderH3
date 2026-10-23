@@ -1,0 +1,114 @@
+{
+ "empty_explicit_keys": {
+  "id": "sc1",
+  "minimax_h3_reference_keys": []
+ },
+ "explicit_keys": {
+  "id": "sc1",
+  "minimax_h3_reference_keys": [
+   "location:l2",
+   "subject:s2",
+   "bogus:key",
+   "subject:s2"
+  ]
+ },
+ "extra_paths": {
+  "id": "sc1",
+  "minimax_h3_image_paths": [
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\extra1.png",
+   {
+    "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+   }
+  ]
+ },
+ "flf": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "first_last_frame_end_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+  "id": "sc1",
+  "minimax_h3_i2v_frame_mode": "flf"
+ },
+ "flf_no_end": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "id": "sc1",
+  "minimax_h3_i2v_frame_mode": "flf"
+ },
+ "missing_file": {
+  "approved_image_path": "C:\\h3-fixture-does-not-exist\\missing.png",
+  "id": "sc1"
+ },
+ "nine_extra": {
+  "id": "sc1",
+  "minimax_h3_image_paths": [
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x0.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x1.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x2.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x3.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x4.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x5.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x6.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x7.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x8.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\refs\\x9.png"
+  ]
+ },
+ "no_character": {
+  "id": "sc1",
+  "no_character_present": true
+ },
+ "normal_ignores_end": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "first_last_frame_end_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+  "id": "sc1",
+  "minimax_h3_i2v_frame_mode": "normal"
+ },
+ "sc1": {
+  "id": "sc1"
+ },
+ "sc2": {
+  "id": "sc2"
+ },
+ "sc3": {
+  "id": "sc3"
+ },
+ "sc4": {
+  "id": "sc4"
+ },
+ "sc5": {
+  "id": "sc5"
+ },
+ "sc6_unmapped": {
+  "id": "sc6"
+ },
+ "start_frame": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "id": "sc1",
+  "minimax_h3_use_scene_image_as_start_frame": true
+ },
+ "start_frame_choice": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "id": "sc1",
+  "minimax_h3_scene_image_use": "exact-start-frame"
+ },
+ "video_refs": {
+  "id": "sc1",
+  "minimax_h3_video_references": [
+   {
+    "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+    "use_audio": true
+   }
+  ]
+ },
+ "with_history": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "id": "sc1",
+  "image_history": [
+   "Z:\\h3fixture\\Projects\\Demo Song\\img\\a.png",
+   "Z:\\h3fixture\\Projects\\Demo Song\\img\\b.png"
+  ],
+  "image_history_index": 1
+ },
+ "with_image": {
+  "approved_image_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+  "id": "sc1"
+ }
+}

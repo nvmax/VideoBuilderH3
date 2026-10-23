@@ -1,0 +1,53 @@
+{
+ "cases": [
+  {
+   "input": {
+    "header": null
+   },
+   "output": "English"
+  },
+  {
+   "input": {
+    "header": ""
+   },
+   "output": "English"
+  },
+  {
+   "input": {
+    "header": "English"
+   },
+   "output": "English"
+  },
+  {
+   "input": {
+    "header": "english, tender, wistful"
+   },
+   "output": "english, tender, wistful"
+  },
+  {
+   "input": {
+    "header": "Spanish, angry, bold, singing"
+   },
+   "output": "Spanish, angry, bold, singing"
+  },
+  {
+   "input": {
+    "header": "tender, wistful"
+   },
+   "output": "English, tender, wistful"
+  },
+  {
+   "input": {
+    "header": "[English] x"
+   },
+   "output": "English, English x"
+  },
+  {
+   "input": {
+    "header": "French , joy"
+   },
+   "output": "French, joy"
+  }
+ ],
+ "function": "cue_header"
+}

@@ -1,0 +1,397 @@
+{
+ "cases": [
+  {
+   "input": {
+    "character_speed": 0,
+    "seed": ""
+   },
+   "output": [
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object",
+    "a glance away and back",
+    "shoulders dropping after a held pose",
+    "a slow blink"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 0,
+    "seed": "scene-1"
+   },
+   "output": [
+    "a small smile that fades",
+    "jaw tension then release",
+    "a lean toward or away from the camera",
+    "an unfinished gesture",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 0,
+    "seed": "scene-2"
+   },
+   "output": [
+    "jaw tension then release",
+    "a lean toward or away from the camera",
+    "an unfinished gesture",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 0,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a slow blink",
+    "a head tilt on a sustained note",
+    "a hand brushing hair or collar",
+    "a small smile that fades",
+    "jaw tension then release",
+    "a lean toward or away from the camera"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 2,
+    "seed": ""
+   },
+   "output": [
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object",
+    "a glance away and back",
+    "shoulders dropping after a held pose",
+    "a slow blink"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 2,
+    "seed": "scene-1"
+   },
+   "output": [
+    "a small smile that fades",
+    "jaw tension then release",
+    "a lean toward or away from the camera",
+    "an unfinished gesture",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 2,
+    "seed": "scene-2"
+   },
+   "output": [
+    "jaw tension then release",
+    "a lean toward or away from the camera",
+    "an unfinished gesture",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 2,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a slow blink",
+    "a head tilt on a sustained note",
+    "a hand brushing hair or collar",
+    "a small smile that fades",
+    "jaw tension then release",
+    "a lean toward or away from the camera"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 4,
+    "seed": ""
+   },
+   "output": [
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object",
+    "a glance away and back",
+    "shoulders dropping after a held pose",
+    "a slow blink"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 4,
+    "seed": "scene-1"
+   },
+   "output": [
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 4,
+    "seed": "scene-2"
+   },
+   "output": [
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 4,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a slow blink",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 5,
+    "seed": ""
+   },
+   "output": [
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object",
+    "a glance away and back",
+    "shoulders dropping after a held pose",
+    "a slow blink"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 5,
+    "seed": "scene-1"
+   },
+   "output": [
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 5,
+    "seed": "scene-2"
+   },
+   "output": [
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 5,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a slow blink",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 6,
+    "seed": ""
+   },
+   "output": [
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object",
+    "a glance away and back",
+    "shoulders dropping after a held pose",
+    "a slow blink"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 6,
+    "seed": "scene-1"
+   },
+   "output": [
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 6,
+    "seed": "scene-2"
+   },
+   "output": [
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note",
+    "breath catching before a held note",
+    "weight shifting from one foot to the other",
+    "fingers tightening then loosening on an object"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 6,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a slow blink",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 8,
+    "seed": ""
+   },
+   "output": [
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 8,
+    "seed": "scene-1"
+   },
+   "output": [
+    "hands slicing the air with the rhythm",
+    "a lean into the camera then a push away",
+    "a stumble that turns into a dance step",
+    "a laugh breaking out mid-motion",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 8,
+    "seed": "scene-2"
+   },
+   "output": [
+    "a lean into the camera then a push away",
+    "a stumble that turns into a dance step",
+    "a laugh breaking out mid-motion",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 8,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a head throw back on the high note",
+    "a jump landing with bent knees",
+    "a quick glance at the other person mid-stride",
+    "hands slicing the air with the rhythm",
+    "a lean into the camera then a push away",
+    "a stumble that turns into a dance step"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 10,
+    "seed": ""
+   },
+   "output": [
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat",
+    "a spin that ends in a pose",
+    "a fast reach and grab",
+    "a head throw back on the high note"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 10,
+    "seed": "scene-1"
+   },
+   "output": [
+    "hands slicing the air with the rhythm",
+    "a lean into the camera then a push away",
+    "a stumble that turns into a dance step",
+    "a laugh breaking out mid-motion",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 10,
+    "seed": "scene-2"
+   },
+   "output": [
+    "a lean into the camera then a push away",
+    "a stumble that turns into a dance step",
+    "a laugh breaking out mid-motion",
+    "a snap turn that whips the hair",
+    "a quick step then a hard stop",
+    "shoulders driving on the downbeat"
+   ]
+  },
+  {
+   "input": {
+    "character_speed": 10,
+    "seed": "Mara 17"
+   },
+   "output": [
+    "a head throw back on the high note",
+    "a jump landing with bent knees",
+    "a quick glance at the other person mid-stride",
+    "hands slicing the air with the rhythm",
+    "a lean into the camera then a push away",
+    "a stumble that turns into a dance step"
+   ]
+  }
+ ],
+ "function": "life_movements"
+}

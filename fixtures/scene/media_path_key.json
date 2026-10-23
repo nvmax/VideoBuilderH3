@@ -1,0 +1,41 @@
+{
+ "cases": [
+  {
+   "input": {
+    "path": null
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "path": ""
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "path": "C:\\A\\B.PNG"
+   },
+   "output": "c:/a/b.png"
+  },
+  {
+   "input": {
+    "path": "c://a//b.png"
+   },
+   "output": "c:/a/b.png"
+  },
+  {
+   "input": {
+    "path": " /x/y "
+   },
+   "output": "/x/y"
+  },
+  {
+   "input": {
+    "path": "a\\\\b"
+   },
+   "output": "a/b"
+  }
+ ],
+ "function": "media_path_key"
+}

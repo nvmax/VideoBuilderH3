@@ -1,0 +1,145 @@
+{
+ "cases": [
+  {
+   "input": {
+    "limit": 20,
+    "text": ""
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "limit": 60,
+    "text": ""
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "limit": 140,
+    "text": ""
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "limit": 240,
+    "text": ""
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "limit": 20,
+    "text": "short text"
+   },
+   "output": "short text"
+  },
+  {
+   "input": {
+    "limit": 60,
+    "text": "short text"
+   },
+   "output": "short text"
+  },
+  {
+   "input": {
+    "limit": 140,
+    "text": "short text"
+   },
+   "output": "short text"
+  },
+  {
+   "input": {
+    "limit": 240,
+    "text": "short text"
+   },
+   "output": "short text"
+  },
+  {
+   "input": {
+    "limit": 20,
+    "text": "A long description, with clauses; and more words follow here to pass the limit easily today."
+   },
+   "output": "A long description"
+  },
+  {
+   "input": {
+    "limit": 60,
+    "text": "A long description, with clauses; and more words follow here to pass the limit easily today."
+   },
+   "output": "A long description, with clauses; and more words follow here"
+  },
+  {
+   "input": {
+    "limit": 140,
+    "text": "A long description, with clauses; and more words follow here to pass the limit easily today."
+   },
+   "output": "A long description, with clauses; and more words follow here to pass the limit easily today"
+  },
+  {
+   "input": {
+    "limit": 240,
+    "text": "A long description, with clauses; and more words follow here to pass the limit easily today."
+   },
+   "output": "A long description, with clauses; and more words follow here to pass the limit easily today"
+  },
+  {
+   "input": {
+    "limit": 20,
+    "text": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForALongTimeAndKeepsGoingAndGoing"
+   },
+   "output": "NoSpacesAtAllJustOne"
+  },
+  {
+   "input": {
+    "limit": 60,
+    "text": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForALongTimeAndKeepsGoingAndGoing"
+   },
+   "output": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForA"
+  },
+  {
+   "input": {
+    "limit": 140,
+    "text": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForALongTimeAndKeepsGoingAndGoing"
+   },
+   "output": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForALongTimeAndKeepsGoingAndGoing"
+  },
+  {
+   "input": {
+    "limit": 240,
+    "text": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForALongTimeAndKeepsGoingAndGoing"
+   },
+   "output": "NoSpacesAtAllJustOneVeryLongTokenThatNeverBreaksAnywhereForALongTimeAndKeepsGoingAndGoing"
+  },
+  {
+   "input": {
+    "limit": 20,
+    "text": "ends with period.  "
+   },
+   "output": "ends with period"
+  },
+  {
+   "input": {
+    "limit": 60,
+    "text": "ends with period.  "
+   },
+   "output": "ends with period"
+  },
+  {
+   "input": {
+    "limit": 140,
+    "text": "ends with period.  "
+   },
+   "output": "ends with period"
+  },
+  {
+   "input": {
+    "limit": 240,
+    "text": "ends with period.  "
+   },
+   "output": "ends with period"
+  }
+ ],
+ "function": "_compact_description"
+}

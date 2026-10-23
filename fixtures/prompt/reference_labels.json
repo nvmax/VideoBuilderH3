@@ -1,0 +1,713 @@
+{
+ "cases": [
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "singer_only",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "singer_only",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "singer_only",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "input": {
+    "items": "singer_only",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion. Use <Picture 2> for <Subject 2>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "full_cast",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 2>",
+      "name": "the Joe",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "extra",
+      "label": "<Subject 3>",
+      "name": "Dancer",
+      "picture": "<Picture 3>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 4>",
+      "name": "Neon street",
+      "picture": "<Picture 4>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 5>",
+      "name": "Props",
+      "picture": "<Picture 5>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion. Use <Picture 2> for <Subject 2>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "full_cast",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 2>",
+      "name": "the Joe",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "extra",
+      "label": "<Subject 3>",
+      "name": "Dancer",
+      "picture": "<Picture 3>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 4>",
+      "name": "Neon street",
+      "picture": "<Picture 4>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 5>",
+      "name": "Props",
+      "picture": "<Picture 5>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "full_cast",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 2>",
+      "name": "the Joe",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "extra",
+      "label": "<Subject 3>",
+      "name": "Dancer",
+      "picture": "<Picture 3>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 4>",
+      "name": "Neon street",
+      "picture": "<Picture 4>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 5>",
+      "name": "Props",
+      "picture": "<Picture 5>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion. Use <Picture 2> for <Subject 2>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> stands. The action takes place in the environment from <Picture 4>.\n\n[Shot 2] At 00:02.500, <Subject 2> cuts in. The action takes place in the environment from <Picture 4>.\n\n[Shot 3] At 00:05.000, wide. The action takes place in the environment from <Picture 4>."
+   },
+   "input": {
+    "items": "full_cast",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 2>",
+      "name": "the Joe",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "extra",
+      "label": "<Subject 3>",
+      "name": "Dancer",
+      "picture": "<Picture 3>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 4>",
+      "name": "Neon street",
+      "picture": "<Picture 4>"
+     },
+     {
+      "kind": "subject",
+      "label": "<Subject 5>",
+      "name": "Props",
+      "picture": "<Picture 5>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 2> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "start_frame",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 2>",
+      "name": "Rooftop",
+      "picture": "<Picture 3>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 2> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "start_frame",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 2>",
+      "name": "Rooftop",
+      "picture": "<Picture 3>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "start_frame",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 2>",
+      "name": "Rooftop",
+      "picture": "<Picture 3>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 2> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> stands. The action takes place in the environment from <Picture 3>.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in. The action takes place in the environment from <Picture 3>.\n\n[Shot 3] At 00:05.000, wide. The action takes place in the environment from <Picture 3>."
+   },
+   "input": {
+    "items": "start_frame",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     },
+     {
+      "kind": "location",
+      "label": "<Subject 2>",
+      "name": "Rooftop",
+      "picture": "<Picture 3>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 2> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "start_and_end",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 2> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "start_and_end",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "start_and_end",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 2> for <Subject 1>'s character identity, face, hair, clothing, and body-proportion."
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "input": {
+    "items": "start_and_end",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 2>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "location_only",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "location",
+      "label": "<Subject 1>",
+      "name": "Empty hall",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "location_only",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "location",
+      "label": "<Subject 1>",
+      "name": "Empty hall",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "location_only",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "location",
+      "label": "<Subject 1>",
+      "name": "Empty hall",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> (Mara) stands. The action takes place in the environment from <Picture 1>.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in. The action takes place in the environment from <Picture 1>.\n\n[Shot 3] At 00:05.000, wide. The action takes place in the environment from <Picture 1>."
+   },
+   "input": {
+    "items": "location_only",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "location",
+      "label": "<Subject 1>",
+      "name": "Empty hall",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s voice and face."
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "custom_purpose",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s voice and face."
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "custom_purpose",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "custom_purpose",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": "Use <Picture 1> for <Subject 1>'s voice and face."
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "input": {
+    "items": "custom_purpose",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": [
+     {
+      "kind": "subject",
+      "label": "<Subject 1>",
+      "name": "Mara",
+      "picture": "<Picture 1>"
+     }
+    ]
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "input": {
+    "items": "none",
+    "text": "<Subject 1> sings. <Subject 2> plays drums."
+   },
+   "labels": {
+    "output": []
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "input": {
+    "items": "none",
+    "text": "<Subject 1> (S1) walks while <Subject 2> (the drummer) waits."
+   },
+   "labels": {
+    "output": []
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "Nobody is named here."
+   },
+   "input": {
+    "items": "none",
+    "text": "Nobody is named here."
+   },
+   "labels": {
+    "output": []
+   }
+  },
+  {
+   "bindings": {
+    "output": ""
+   },
+   "compact": {
+    "output": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "input": {
+    "items": "none",
+    "text": "[Shot 1] <Subject 1> (Mara) stands.\n\n[Shot 2] At 00:02.500, <Subject 2> (Joe) cuts in.\n\n[Shot 3] At 00:05.000, wide."
+   },
+   "labels": {
+    "output": []
+   }
+  }
+ ],
+ "function": "reference_labels / character_reference_bindings / compact_reference_prompt"
+}

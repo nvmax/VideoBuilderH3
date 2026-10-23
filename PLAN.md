@@ -1,6 +1,6 @@
 # VRGDG H3 Studio (Rust): Implementation Plan
 
-Status: approved 2026-10-22 (answers in Section 10). P0 done 2026-10-22. Next: P1. Everything stays local: no remote, no push.
+Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. Next: P2. Everything stays local: no remote, no push.
 Reference pack commit: `14421d2` (branch `newbuilder`).
 Location: `rustapp/` inside the pack folder, excluded from git through `.git/info/exclude` (no tracked file changed).
 
@@ -132,9 +132,10 @@ The graphs call these nodes. The app checks them at startup with `/object_info` 
 | VRGDG pack | `VRGDG_MiniMaxH3AudioDrive`, `VRGDG_MiniMaxH3ReferenceMediaFromPaths`, Save/Load Latent, Apply Masked Continuation, latent upscaler nodes, `VRGDG_MiniMaxH3SpatialTilePlan`, `H3FastVAEDecode`, `VRGDG_MiniMaxH3KeyframeTiming`, `VRGDG_TextBox` |
 | comfyui-kjnodes | `DiffusionModelLoaderKJ`, `ImageResizeKJv2`, `MiniMaxH3MemoryEfficientSageAttentionPatch` |
 | VideoHelperSuite | `VHS_LoadAudio`, `VHS_VideoCombine` |
-| comfyui-minimax-h3-audio-T8 | `MiniMaxH3AVLatentSeparateT8`, `MiniMaxH3AVDecodeT8` |
+| comfyui-minimax-h3-audio-T8 | `MiniMaxH3AVLatentSeparateT8` |
 | TE-Speed-MiniMaxH3-OSS | `TESpeedMiniMaxH3` |
-| ComfyUI-PT_H3ConcatAVLatent | `PT_H3ConcatAVLatent` (3 pass) |
+| Comfyui-MMH3-UltimateUpscale | `MMH3UltimateUpscale`, `MMH3SpatialSplitParams`, `MMH3TemporalSplitParams` (2 Pass Advanced) |
+| ComfyUI core and comfyui-kjnodes | `BlockSparseAttention` (core), `MiniMaxChunkFeedForward` (kjnodes), optional model patches |
 | ComfyUI-MiniMaxH3Mod | RefMod text encode (RefMod pipeline only) |
 
 The VRGDG nodes are Python and must run inside ComfyUI. Rust cannot replace them. See Q2.
@@ -146,7 +147,7 @@ Each phase ends with a check you can run. Order matters: pure logic and parity f
 | Phase | Work | Done when |
 | :--- | :--- | :--- |
 | **P0 Scaffold** | Install Rust (MSVC), Tauri CLI, Node; workspace and crates; config file (ComfyUI URL, project root, ffmpeg path); `tracing` logs with `[VRGDG-RS]` prefix; `COPIED_FROM.md`. | `cargo test` passes on empty crates; `h3 doctor` pings ComfyUI `/system_stats` and lists missing nodes from Section 7. |
-| **P1 Fixtures** | Dev-only Python scripts in `tools/` run with the portable Python against the pack read-only and dump: built graphs for a settings matrix (modes x passes x audio mode x continuity x LoRAs x attention options), render payloads, timing tables, assembled prompts, a few real session files. Copy the `*_cases.json` files. | `fixtures/` holds about 100 graph/payload pairs and the case files. |
+| **P1 Fixtures** (done) | Dev-only Python in `tools/` runs against the pack read-only. `tools/make_all.py` regenerates: 84 graph cases (78 graphs, 6 expected errors), 16 core tables (timing, token math, masked context, resolution, tile plan, settings, payload), 10 scene input tables, 22 prompt tables, the pack's 7 case files, a node snapshot from the live ComfyUI and a types-only shape of 20 real sessions. Output is identical on every run. | `cargo test` loads every fixture (`h3-core/tests/fixtures_load.rs`) and every node class in every graph is in the preflight list. |
 | **P2 Pure core** | `h3-core`: resolution, tile plan, token math, timing, masked context plan, settings normalize/migrate/scene override, scene inputs, shot prompt build/parse/validate, 7,000-character budget, lyric `<d>` tagging. | All fixture and case tests pass. |
 | **P3 Project** | `h3-project`: session model with preserved unknown keys, atomic save, revision check, new project scaffold, renumber after insert/remove with journal rollback, latent dirty bookkeeping, undo history. | Load and save 5 of your real projects with zero diff except `revision`; renumber tests match the pack's. |
 | **P4 First render (CLI)** | `h3-comfy` + `h3-graph`: template load, all patchers, queue, WS progress, history, output pick (node `142`). Single pass and 2 Pass, Reference to Video, input audio. | Rust graphs equal the golden graphs; `h3 render --project X --scene 3` produces the same clip the Builder makes with the same seed. **Milestone M1.** |
@@ -155,7 +156,7 @@ Each phase ends with a check you can run. Order matters: pure logic and parity f
 | **P6b Image presets** | Preset store, workflow import (API format), input binding editor data model, built-in presets copied from the pack templates, image jobs, image history per scene and per reference card. | Generate a character image with Flux Klein and with one imported custom workflow, and use both as H3 references. |
 | **P7 UI MVP** | Project list/new/open, audio import with waveform, timeline (scene blocks, resize, split, merge, insert, delete, snap to beats), scene inspector, H3 settings panel, reference cards (import images, map to scenes), prompt editor with validation, render queue with live progress, preview player, final video panel. | You build a short video end to end in the app without the Builder. **Milestone M3.** |
 | **P8 LLM and story** | `h3-llm`: LM Studio (loaded model only), own OpenAI-compatible server, OpenAI, Anthropic, Gemini; JSON repair; character describe, location extract, assign scenes, story settings/arc/brief/beats, MiniMax prompt generation, prompt from previous final frame; lyrics: paste lines, ElevenLabs Scribe word timing, `timeline/from-lines`. | The `MUSIC_VIDEO_AGENT_PROMPT.md` flow runs inside the app from song + lyrics + character image. |
-| **P9 Full H3 coverage** | 2 Pass Advanced (tile plan), 3 pass, Image to Video Normal/FLF, RefMod pipeline, built-in audio, Audio Mask with Demucs stems (ComfyUI graph), per-scene locked settings, takes and re-trim, LUT via ffmpeg `lut3d`. | Golden graphs for every mode pass; each mode renders once on your machine. |
+| **P9 Full H3 coverage** | 2 Pass Advanced (tile plan), Image to Video Normal/FLF, RefMod pipeline, built-in audio, Audio Mask with Demucs stems (ComfyUI graph), per-scene locked settings, takes and re-trim, LUT via ffmpeg `lut3d`. | Golden graphs for every mode pass; each mode renders once on your machine. |
 | **P10 Full API and release** | Rest of the `/api/v1` contract with contract tests against `openapi.json`; Tauri installer (NSIS), code signing, LGPL ffmpeg sidecar, first-run setup (ComfyUI URL, project root, node check), update channel, optional slim companion node pack. | A fresh Windows user account installs and renders against a ComfyUI install. |
 
 Start with P0, P1, P2. They have no UI and no GPU work, and they catch most porting mistakes early.
@@ -181,3 +182,15 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - **Q7.** Own local git repository in `rustapp/`, no remote.
 - **Q8.** Public. D12.
 - **Q9.** Install whatever is needed. Keep everything local.
+
+## 11. Findings from P1 (they change how later phases are built)
+
+- **F1. `three_pass` is 2 Pass Advanced.** The saved `render_pass: "three_pass"` runs the tile-plan graph (`MMH3UltimateUpscale`). The older fixed 3 pass builder (`_build_minimax_h3_3pass_api_prompt`, nodes `PT_H3ConcatAVLatent`, `MiniMaxH3AVDecodeT8`, LayerStyle) can only be reached by naming its mode and the Video Builder never does. The app drops it. Two `legacy_*` fixtures keep it on record.
+- **F2. Settings normalize before graphs.** `normalize_minimax_h3_settings` migrates and clamps every value. I2V needs `i2v_pass_settings_version: 1` to keep 2 Pass, and its default LoRA is the FL2V turbo (`minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16`). Saves without the version fall back to Single (`i2v_legacy_save_migrates_to_single`).
+- **F3. Seeds.** A pass seed below 0 means random in the pack, so golden graphs use fixed seeds on every pass.
+- **F4. Output folder names hash the project path.** `VRGDG_MiniMaxH3/<name>_<sha1(normcase(path))[:8]>/scene_NNNN`. The Rust builder must compute the same hash on Windows paths.
+- **F5. Real sessions hold API keys.** `llm_api_key_project`, `elevenlabs_api_key_project`, `lm_studio_api_key`, `own_server_api_key_project` and `nb_image_settings.api_key` sit inside `vrgdg_builder_session.json`. The session model must keep them untouched on save. The app stores its own keys in the Windows credential store and never writes new ones into a session.
+- **F6. Session size.** 127 top-level keys and about 1,000 distinct segment key paths across 20 sessions (`fixtures/session_shape.json`). P3 uses a typed core with a flattened extra-keys map so unknown keys survive a round trip.
+- **F7. Real project round-trip test stays local.** P3 reads real sessions from a path given by the `H3_REAL_PROJECTS` environment variable, never from committed files, because the repo will become public.
+- **F8. Masked continuation inputs.** The graph needs the predecessor latent header (`token_count`, `tail_padding_frames` from `scene_NNN.latent.json`). The limits are real: a 192 frame context needs a predecessor of about 241 frames or more, and the mode is refused in 2 Pass Advanced, I2V and Image + Reference.
+

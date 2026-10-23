@@ -1,0 +1,527 @@
+{
+ "cases": [
+  {
+   "chunks": {
+    "output": [
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "",
+    "shots": 1
+   },
+   "lines": [],
+   "quoted": {
+    "output": [
+     "A wide shot."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "",
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "",
+    "shots": 2
+   },
+   "lines": [],
+   "quoted": {
+    "output": [
+     "A wide shot.",
+     "A close-up."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "",
+     "",
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "",
+    "shots": 3
+   },
+   "lines": [],
+   "quoted": {
+    "output": [
+     "A wide shot.",
+     "A close-up.",
+     "A last shot."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "Hold on tight Don't let go"
+    ]
+   },
+   "input": {
+    "lyrics": "Hold on tight\nDon't let go",
+    "shots": 1
+   },
+   "lines": [
+    "Hold on tight",
+    "Don't let go"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight Don't let go.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "Hold on tight",
+     "Don't let go"
+    ]
+   },
+   "input": {
+    "lyrics": "Hold on tight\nDon't let go",
+    "shots": 2
+   },
+   "lines": [
+    "Hold on tight",
+    "Don't let go"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] Don't let go.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "Hold on tight",
+     "Don't let go",
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "Hold on tight\nDon't let go",
+    "shots": 3
+   },
+   "lines": [
+    "Hold on tight",
+    "Don't let go"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] Don't let go.</d> in sync with <Audio 1>.",
+     "A last shot."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "Hold on tight Don't let go We are the night"
+    ]
+   },
+   "input": {
+    "lyrics": "[Verse 1]\nHold on tight\n\nDon't let go\n[Chorus]\nWe are the night",
+    "shots": 1
+   },
+   "lines": [
+    "Hold on tight",
+    "Don't let go",
+    "We are the night"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight Don't let go We are the night.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "Hold on tight Don't let go",
+     "We are the night"
+    ]
+   },
+   "input": {
+    "lyrics": "[Verse 1]\nHold on tight\n\nDon't let go\n[Chorus]\nWe are the night",
+    "shots": 2
+   },
+   "lines": [
+    "Hold on tight",
+    "Don't let go",
+    "We are the night"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight Don't let go.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] We are the night.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "Hold on tight",
+     "Don't let go",
+     "We are the night"
+    ]
+   },
+   "input": {
+    "lyrics": "[Verse 1]\nHold on tight\n\nDon't let go\n[Chorus]\nWe are the night",
+    "shots": 3
+   },
+   "lines": [
+    "Hold on tight",
+    "Don't let go",
+    "We are the night"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] Don't let go.</d> in sync with <Audio 1>.",
+     "A last shot. the singer sings <d>[English] We are the night.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "One line only"
+    ]
+   },
+   "input": {
+    "lyrics": "One line only",
+    "shots": 1
+   },
+   "lines": [
+    "One line only"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] One line only.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "One line only",
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "One line only",
+    "shots": 2
+   },
+   "lines": [
+    "One line only"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] One line only.</d> in sync with <Audio 1>.",
+     "A close-up."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "One line only",
+     "",
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "One line only",
+    "shots": 3
+   },
+   "lines": [
+    "One line only"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] One line only.</d> in sync with <Audio 1>.",
+     "A close-up.",
+     "A last shot."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "a b c d e f g"
+    ]
+   },
+   "input": {
+    "lyrics": "a\nb\nc\nd\ne\nf\ng",
+    "shots": 1
+   },
+   "lines": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] A b c d e f g.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "a b c d",
+     "e f g"
+    ]
+   },
+   "input": {
+    "lyrics": "a\nb\nc\nd\ne\nf\ng",
+    "shots": 2
+   },
+   "lines": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] A b c d.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] E f g.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "a b c",
+     "d e",
+     "f g"
+    ]
+   },
+   "input": {
+    "lyrics": "a\nb\nc\nd\ne\nf\ng",
+    "shots": 3
+   },
+   "lines": [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] A b c.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] D e.</d> in sync with <Audio 1>.",
+     "A last shot. the singer sings <d>[English] F g.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "spaced out line second line"
+    ]
+   },
+   "input": {
+    "lyrics": "  spaced   out   line  \r\nsecond line\r\n",
+    "shots": 1
+   },
+   "lines": [
+    "spaced out line",
+    "second line"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Spaced out line second line.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "spaced out line",
+     "second line"
+    ]
+   },
+   "input": {
+    "lyrics": "  spaced   out   line  \r\nsecond line\r\n",
+    "shots": 2
+   },
+   "lines": [
+    "spaced out line",
+    "second line"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Spaced out line.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] Second line.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "chunks": {
+    "output": [
+     "spaced out line",
+     "second line",
+     ""
+    ]
+   },
+   "input": {
+    "lyrics": "  spaced   out   line  \r\nsecond line\r\n",
+    "shots": 3
+   },
+   "lines": [
+    "spaced out line",
+    "second line"
+   ],
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Spaced out line.</d> in sync with <Audio 1>.",
+     "A close-up. the singer sings <d>[English] Second line.</d> in sync with <Audio 1>.",
+     "A last shot."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "<Subject 1> sings <d>[English] Hold on tight.</d> now."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "the singer",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "<Subject 1> sings <d>[English] Hold on tight.</d> now."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "<Subject 1> sings <d>[English] Hold on tight.</d> now."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "<Subject 1> (Mara)",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "<Subject 1> sings <d>[English] Hold on tight.</d> now."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "She sings \"Hold on tight\" loudly."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "the singer",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "She sings <d>[English] Hold on tight.</d> loudly."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "She sings \"Hold on tight\" loudly."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "<Subject 1> (Mara)",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "She sings <d>[English] Hold on tight.</d> loudly."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "She sings hold on tight loudly."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "the singer",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "She sings <d>[English] Hold on tight.</d> loudly."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "She sings hold on tight loudly."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "<Subject 1> (Mara)",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "She sings <d>[English] Hold on tight.</d> loudly."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "A wide shot."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "the singer",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "A wide shot. the singer sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+    ]
+   }
+  },
+  {
+   "input": {
+    "descriptions": [
+     "A wide shot."
+    ],
+    "lyrics": "Hold on tight",
+    "performer": "<Subject 1> (Mara)",
+    "shots": 1
+   },
+   "quoted": {
+    "output": [
+     "A wide shot. <Subject 1> (Mara) sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+    ]
+   }
+  }
+ ],
+ "function": "lyric_lines / lyric_chunks / ensure_quoted_lyrics"
+}

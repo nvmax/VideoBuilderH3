@@ -1,0 +1,587 @@
+{
+ "cases": [
+  {
+   "input": {
+    "fn": "literal_scene_instruction"
+   },
+   "output": "LITERAL SCENE CLARITY — MANDATORY: Write natural, fluent shot prose that H3 can follow literally. Lead physical action with the person doing it; use their possessive for a body part or worn item and clear pronouns afterward. For example: '<Subject 1> steps past the ground-level camera, her boot briefly crossing the foreground.' Describe how the camera films that same action instead of independently placing a body part in the foreground and its owner elsewhere. A close-up identifies whose body part is framed; describe cropping only when needed to understand the shot. Keep ownership and spatial checks in your reasoning; finished sentences describe visible action, not explanations of anatomy or routine clothing attachment. Rewrite ambiguous scene-card or image-prompt wording into ordinary action-led sentences rather than copying it. Keep character, camera and prop positions consistent from the opening through the ending. Place loose props explicitly and use only objects supported by this scene's directions or mapped references. Carry an object from an adjacent scene only when the current scene explicitly does so. Before returning, read the shot by itself: every action has an actor, every item has a clear owner or placement, and the camera movement fits the same physical action. Resolve uncertainty with clear verbs and possessives, not explanatory qualifiers. Return only the requested shot JSON with natural visual prose."
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fn": "scene_timing_instruction",
+    "plan": "one_shot"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 3.5 seconds.\nShot 1: 0–3.5s (3.5 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fn": "scene_timing_instruction",
+    "plan": "two_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 3.5 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–3.5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fn": "scene_timing_instruction",
+    "plan": "one_cut"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 3.5 seconds.\nShot 1: 0–2s (2 seconds available).\nShot 2: 2–3.5s (1.5 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fn": "scene_timing_instruction",
+    "plan": "many_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 3.5 seconds.\nShot 1: 0–1.5s (1.5 seconds available).\nShot 2: 1.5–3s (1.5 seconds available).\nShot 3: 3–4.5s (1.5 seconds available).\nShot 4: 4.5–7.25s (2.75 seconds available).\nShot 5: 7.25–9s (1.75 seconds available).\nShot 6: 9–10.5s (1.5 seconds available).\nShot 7: 10.5–3.5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fn": "scene_timing_instruction",
+    "plan": "continuous_two"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 3.5 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–3.5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fn": "scene_timing_instruction",
+    "plan": "long_minute"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 3.5 seconds.\nShot 1: 0–61.234s (61.234 seconds available).\nShot 2: 61.234–3.5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 5.0,
+    "fn": "scene_timing_instruction",
+    "plan": "one_shot"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 5 seconds.\nShot 1: 0–5s (5 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 5.0,
+    "fn": "scene_timing_instruction",
+    "plan": "two_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 5 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 5.0,
+    "fn": "scene_timing_instruction",
+    "plan": "one_cut"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 5 seconds.\nShot 1: 0–2s (2 seconds available).\nShot 2: 2–5s (3 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 5.0,
+    "fn": "scene_timing_instruction",
+    "plan": "many_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 5 seconds.\nShot 1: 0–1.5s (1.5 seconds available).\nShot 2: 1.5–3s (1.5 seconds available).\nShot 3: 3–4.5s (1.5 seconds available).\nShot 4: 4.5–7.25s (2.75 seconds available).\nShot 5: 7.25–9s (1.75 seconds available).\nShot 6: 9–10.5s (1.5 seconds available).\nShot 7: 10.5–5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 5.0,
+    "fn": "scene_timing_instruction",
+    "plan": "continuous_two"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 5 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 5.0,
+    "fn": "scene_timing_instruction",
+    "plan": "long_minute"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 5 seconds.\nShot 1: 0–61.234s (61.234 seconds available).\nShot 2: 61.234–5s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 8.25,
+    "fn": "scene_timing_instruction",
+    "plan": "one_shot"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 8.25 seconds.\nShot 1: 0–8.25s (8.25 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 8.25,
+    "fn": "scene_timing_instruction",
+    "plan": "two_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 8.25 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–8.25s (3.125 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 8.25,
+    "fn": "scene_timing_instruction",
+    "plan": "one_cut"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 8.25 seconds.\nShot 1: 0–2s (2 seconds available).\nShot 2: 2–8.25s (6.25 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 8.25,
+    "fn": "scene_timing_instruction",
+    "plan": "many_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 8.25 seconds.\nShot 1: 0–1.5s (1.5 seconds available).\nShot 2: 1.5–3s (1.5 seconds available).\nShot 3: 3–4.5s (1.5 seconds available).\nShot 4: 4.5–7.25s (2.75 seconds available).\nShot 5: 7.25–9s (1.75 seconds available).\nShot 6: 9–10.5s (1.5 seconds available).\nShot 7: 10.5–8.25s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 8.25,
+    "fn": "scene_timing_instruction",
+    "plan": "continuous_two"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 8.25 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–8.25s (3.125 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 8.25,
+    "fn": "scene_timing_instruction",
+    "plan": "long_minute"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 8.25 seconds.\nShot 1: 0–61.234s (61.234 seconds available).\nShot 2: 61.234–8.25s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 12.0,
+    "fn": "scene_timing_instruction",
+    "plan": "one_shot"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 12 seconds.\nShot 1: 0–12s (12 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 12.0,
+    "fn": "scene_timing_instruction",
+    "plan": "two_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 12 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–12s (6.875 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 12.0,
+    "fn": "scene_timing_instruction",
+    "plan": "one_cut"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 12 seconds.\nShot 1: 0–2s (2 seconds available).\nShot 2: 2–12s (10 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 12.0,
+    "fn": "scene_timing_instruction",
+    "plan": "many_cuts"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 12 seconds.\nShot 1: 0–1.5s (1.5 seconds available).\nShot 2: 1.5–3s (1.5 seconds available).\nShot 3: 3–4.5s (1.5 seconds available).\nShot 4: 4.5–7.25s (2.75 seconds available).\nShot 5: 7.25–9s (1.75 seconds available).\nShot 6: 9–10.5s (1.5 seconds available).\nShot 7: 10.5–12s (1.5 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 12.0,
+    "fn": "scene_timing_instruction",
+    "plan": "continuous_two"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 12 seconds.\nShot 1: 0–2.5s (2.5 seconds available).\nShot 2: 2.5–5.125s (2.625 seconds available).\nShot 3: 5.125–12s (6.875 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "duration": 12.0,
+    "fn": "scene_timing_instruction",
+    "plan": "long_minute"
+   },
+   "output": "SCENE TIMING — MANDATORY: The complete scene lasts exactly 12 seconds.\nShot 1: 0–61.234s (61.234 seconds available).\nShot 2: 61.234–12s (0 seconds available).\nUse the scene beat and storyboard directions together to stage only what can physically finish within each shot's available time. Reserve time for the required singing or speaking and any supplied entrance, reveal, or transition. For a brief shot, express the essential beat through one economical continuous action and the requested camera move; let performance and camera movement happen together where physically possible. Keep optional gestures and reactions only when time remains. Do not invent sequential steps, pivots, glances, or framing changes to fill a checklist. Preserve explicitly requested action and exact vocal words; simplify optional choreography rather than rushing required performance. Motion speed sets the energy of the chosen movement, not the number of actions. Before returning, check that the opening, action, camera travel, and ending fit the available time without an extra cut, rushed final beat, or action continuing beyond the shot."
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": ""
+   },
+   "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": ""
+   },
+   "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Soft film grain and warm light.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": ""
+   },
+   "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": ""
+   },
+   "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Soft film grain and warm light. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": "cinematic realism"
+   },
+   "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": "cinematic realism"
+   },
+   "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Soft film grain and warm light.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": "cinematic realism"
+   },
+   "output": "detailed_description:\nThe target video is in a cinematic realism music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": "cinematic realism"
+   },
+   "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Soft film grain and warm light. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": "anime"
+   },
+   "output": "detailed_description:\nThe target video is in a anime music-video style.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": "anime"
+   },
+   "output": "detailed_description:\nThe target video is in a anime music-video style: Soft film grain and warm light.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": "anime"
+   },
+   "output": "detailed_description:\nThe target video is in a anime music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": "anime"
+   },
+   "output": "detailed_description:\nThe target video is in a anime music-video style: Soft film grain and warm light. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": "  claymation  "
+   },
+   "output": "detailed_description:\nThe target video is in a   claymation   music-video style.\n\n"
+  },
+  {
+   "input": {
+    "continuous": false,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": "  claymation  "
+   },
+   "output": "detailed_description:\nThe target video is in a   claymation   music-video style: Soft film grain and warm light.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "",
+    "style": "  claymation  "
+   },
+   "output": "detailed_description:\nThe target video is in a   claymation   music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "continuous": true,
+    "fn": "opening_wrapper",
+    "guidance": "Soft film grain and warm light.",
+    "style": "  claymation  "
+   },
+   "output": "detailed_description:\nThe target video is in a   claymation   music-video style: Soft film grain and warm light. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+  },
+  {
+   "input": {
+    "camera": 0,
+    "character": 0,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 0,
+    "character": 3,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 0,
+    "character": 5,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The requested performer action has steady physical energy."
+  },
+  {
+   "input": {
+    "camera": 0,
+    "character": 8,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 0,
+    "character": 10,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 2,
+    "character": 0,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 2,
+    "character": 3,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 2,
+    "character": 5,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The requested performer action has steady physical energy."
+  },
+  {
+   "input": {
+    "camera": 2,
+    "character": 8,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 2,
+    "character": 10,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves slowly, or holds a locked frame. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 4.5,
+    "character": 0,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 4.5,
+    "character": 3,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 4.5,
+    "character": 5,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The requested performer action has steady physical energy."
+  },
+  {
+   "input": {
+    "camera": 4.5,
+    "character": 8,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 4.5,
+    "character": 10,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 5,
+    "character": 0,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 5,
+    "character": 3,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 5,
+    "character": 5,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The requested performer action has steady physical energy."
+  },
+  {
+   "input": {
+    "camera": 5,
+    "character": 8,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 5,
+    "character": 10,
+    "fn": "motion_energy_text"
+   },
+   "output": "The camera moves at a steady pace with a clear direction. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 7,
+    "character": 0,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 7,
+    "character": 3,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 7,
+    "character": 5,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The requested performer action has steady physical energy."
+  },
+  {
+   "input": {
+    "camera": 7,
+    "character": 8,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 7,
+    "character": 10,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 10,
+    "character": 0,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 10,
+    "character": 3,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The performers use small movements and held poses with life detail."
+  },
+  {
+   "input": {
+    "camera": 10,
+    "character": 5,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The requested performer action has steady physical energy."
+  },
+  {
+   "input": {
+    "camera": 10,
+    "character": 8,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The requested performer action has high energy and decisive physical movement."
+  },
+  {
+   "input": {
+    "camera": 10,
+    "character": 10,
+    "fn": "motion_energy_text"
+   },
+   "output": "The requested camera movement is fast and energetic. The requested performer action has high energy and decisive physical movement."
+  }
+ ],
+ "function": "literal_scene_instruction / scene_timing_instruction / opening_wrapper / motion_energy_text"
+}

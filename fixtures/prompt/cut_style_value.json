@@ -1,0 +1,41 @@
+{
+ "cases": [
+  {
+   "input": {
+    "value": null
+   },
+   "output": "free"
+  },
+  {
+   "input": {
+    "value": ""
+   },
+   "output": "free"
+  },
+  {
+   "input": {
+    "value": "free"
+   },
+   "output": "free"
+  },
+  {
+   "input": {
+    "value": "continuous"
+   },
+   "output": "continuous"
+  },
+  {
+   "input": {
+    "value": " Continuous "
+   },
+   "output": "continuous"
+  },
+  {
+   "input": {
+    "value": "x"
+   },
+   "output": "free"
+  }
+ ],
+ "function": "cut_style_value"
+}

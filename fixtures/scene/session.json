@@ -1,0 +1,135 @@
+{
+ "flux_reference_builder": {
+  "extra_scene_map": {
+   "sc2": [
+    {
+     "extra_id": "e1"
+    }
+   ],
+   "sc3": [
+    {
+     "extra_id": "e2"
+    }
+   ]
+  },
+  "extra_subjects": [
+   {
+    "description": "backup dancer",
+    "id": "e1",
+    "image": {
+     "name": "dancer.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png"
+    },
+    "name": "Dancer",
+    "send_to_minimax": true
+   },
+   {
+    "description": "crowd member",
+    "id": "e2",
+    "image": {
+     "name": "fan.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\fan.png"
+    },
+    "name": "Fan",
+    "send_to_minimax": false
+   }
+  ],
+  "extras_enabled": true,
+  "ingredients_scene_map": {
+   "sc5": "g1"
+  },
+  "ingredients_sheets": [
+   {
+    "description": "guitar and mic",
+    "id": "g1",
+    "image": {
+     "name": "props.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\props.png"
+    },
+    "name": "Props"
+   }
+  ],
+  "locations": [
+   {
+    "description": "wet street at night",
+    "id": "l1",
+    "image": {
+     "name": "street.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    },
+    "name": "Neon street"
+   },
+   {
+    "description": "rooftop lounge",
+    "id": "l2",
+    "image": {
+     "name": "roof.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png"
+    },
+    "name": "Rooftop"
+   },
+   {
+    "description": "placeholder",
+    "id": "l3",
+    "image": {},
+    "name": "No image yet"
+   }
+  ],
+  "scene_map": {
+   "sc1": "l1",
+   "sc2": "l1",
+   "sc3": "l2",
+   "sc4": "l3",
+   "sc5": "l2"
+  },
+  "subject": {
+   "description": "lead singer, red jacket",
+   "image": {
+    "name": "mara.png",
+    "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+   }
+  },
+  "subject_count": 2,
+  "subject_scene_map": {
+   "sc1": "s1",
+   "sc2": "s1,s2",
+   "sc3": "s2",
+   "sc4": [
+    "s1",
+    "s1b"
+   ]
+  },
+  "subjects": [
+   {
+    "description": "lead singer, red jacket",
+    "id": "s1",
+    "image": {
+     "name": "mara.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png"
+    },
+    "name": "Mara",
+    "reference_image_type": "single"
+   },
+   {
+    "description": "drummer",
+    "id": "s2",
+    "image": {
+     "name": "joe.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    },
+    "name": "Joe",
+    "reference_image_type": "single"
+   },
+   {
+    "extra_reference_for": "s1",
+    "id": "s1b",
+    "image": {
+     "name": "mara_side.png",
+     "path": "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png"
+    },
+    "name": "Mara side"
+   }
+  ],
+  "use_subject_reference": true
+ }
+}

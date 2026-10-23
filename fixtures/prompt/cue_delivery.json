@@ -1,0 +1,68 @@
+{
+ "cases": [
+  {
+   "input": {
+    "cue_text": "hold on tight",
+    "llm_body": "hold on tight"
+   },
+   "output": "hold on tight"
+  },
+  {
+   "input": {
+    "cue_text": "hold on tight",
+    "llm_body": "<i>hold</i> on tight"
+   },
+   "output": "<i>hold</i> on tight"
+  },
+  {
+   "input": {
+    "cue_text": "hold on tight",
+    "llm_body": "hold <breath> on tight"
+   },
+   "output": "hold <breath> on tight"
+  },
+  {
+   "input": {
+    "cue_text": "Hold on tight, don't let go.",
+    "llm_body": "Hold on <i>tight</i>, <breath> don't let <i>go</i>."
+   },
+   "output": "Hold on <i>tight</i>, <breath> don't let <i>go</i>."
+  },
+  {
+   "input": {
+    "cue_text": "hold on tight",
+    "llm_body": "something else entirely"
+   },
+   "output": "hold on tight"
+  },
+  {
+   "input": {
+    "cue_text": "a b c d e f",
+    "llm_body": "<i>a</i> <i>b</i> <i>c</i> <i>d</i> <i>e</i> f"
+   },
+   "output": "a b c d e f"
+  },
+  {
+   "input": {
+    "cue_text": "it's  fine",
+    "llm_body": "<i>it's</i> fine"
+   },
+   "output": "<i>it's</i> fine"
+  },
+  {
+   "input": {
+    "cue_text": "",
+    "llm_body": ""
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "cue_text": "don’t stop",
+    "llm_body": "don't <i>stop</i>"
+   },
+   "output": "don’t <i>stop</i>"
+  }
+ ],
+ "function": "cue_delivery"
+}

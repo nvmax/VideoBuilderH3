@@ -1,0 +1,149 @@
+{
+ "cases": [
+  {
+   "input": {
+    "segment": "sc1"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "sc2"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "sc3"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "sc4"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "sc5"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "sc6_unmapped"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "no_character"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "explicit_keys"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "empty_explicit_keys"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "extra_paths"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "with_image"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+  },
+  {
+   "input": {
+    "segment": "with_history"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\img\\b.png"
+  },
+  {
+   "input": {
+    "segment": "start_frame"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+  },
+  {
+   "input": {
+    "segment": "start_frame_choice"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+  },
+  {
+   "input": {
+    "segment": "flf"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+  },
+  {
+   "input": {
+    "segment": "flf_no_end"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+  },
+  {
+   "input": {
+    "segment": "normal_ignores_end"
+   },
+   "output": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+  },
+  {
+   "input": {
+    "segment": "missing_file"
+   },
+   "output": "C:\\h3-fixture-does-not-exist\\missing.png"
+  },
+  {
+   "input": {
+    "segment": "video_refs"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": "nine_extra"
+   },
+   "output": ""
+  },
+  {
+   "input": {
+    "segment": {
+     "image_history": [
+      "a.png"
+     ],
+     "image_history_index": 9
+    }
+   },
+   "output": "a.png"
+  },
+  {
+   "input": {
+    "segment": {
+     "custom_image_path": "c.png",
+     "image_history": [
+      "",
+      "b.png"
+     ],
+     "image_history_index": 0
+    }
+   },
+   "output": "c.png"
+  }
+ ],
+ "function": "segment_image_path"
+}

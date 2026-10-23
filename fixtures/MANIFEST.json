@@ -1,0 +1,11 @@
+{
+ "pack_commit": "14421d2",
+ "python": "3.12.10",
+ "files": {
+  "graphs": 84,
+  "core": 16,
+  "scene": 10,
+  "prompt": 22,
+  "cases": 7
+ }
+}

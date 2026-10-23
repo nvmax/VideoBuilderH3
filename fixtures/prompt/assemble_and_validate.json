@@ -1,0 +1,3577 @@
+{
+ "cases": [
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_one",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 1.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n[Shot 1] A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.\n\n[Shot 2] At 00:02.500, the camera cuts. Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.\n\n[Shot 3] At 00:05.125, the camera cuts, continuing directly from the final moment of Shot 2. <Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "ok_three",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 2 descriptions, got 3.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 00:02.000, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "short_final",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street.\n\n[Shot 2] At 01:01.234, the camera cuts. Short."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "no_punctuation",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] A wide shot of the street at night with rain\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up of her face as she sings the final line with feeling"
+   },
+   "validate_prompt": {
+    "error": {
+     "code": "INCOMPLETE_FINAL_SHOT",
+     "message": "The MiniMax H3 prompt has an incomplete final shot description.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 93,
+     "hard_limit": 7000,
+     "shot_chars": 6407,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 100,
+     "hard_limit": 7000,
+     "shot_chars": 6400,
+     "shot_count": 1,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "one_shot",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 1 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 175,
+     "hard_limit": 7000,
+     "shot_chars": 6325,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 182,
+     "hard_limit": 7000,
+     "shot_chars": 6318,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "two_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "one_cut",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 00:02.000, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 339,
+     "hard_limit": 7000,
+     "shot_chars": 6161,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 346,
+     "hard_limit": 7000,
+     "shot_chars": 6154,
+     "shot_count": 7,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "many_cuts",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 7 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 576,
+     "hard_limit": 7000,
+     "shot_chars": 5924,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 583,
+     "hard_limit": 7000,
+     "shot_chars": 5917,
+     "shot_count": 3,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "continuous_two",
+    "style": ""
+   },
+   "shot_body": {
+    "error": {
+     "code": "WRONG_SHOT_COUNT",
+     "message": "Cannot assemble MiniMax shots: expected 3 descriptions, got 2.",
+     "type": "ShotPromptError"
+    }
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 134,
+     "hard_limit": 7000,
+     "shot_chars": 6366,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": "cinematic realism"
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a cinematic realism music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   }
+  },
+  {
+   "assemble_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "character_budget": {
+    "output": {
+     "fixed_chars": 141,
+     "hard_limit": 7000,
+     "shot_chars": 6359,
+     "shot_count": 2,
+     "target_limit": 6500
+    }
+   },
+   "input": {
+    "descriptions": "picture_leak",
+    "guidance": "Warm grain.",
+    "plan": "long_minute",
+    "style": ""
+   },
+   "shot_body": {
+    "output": "[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   },
+   "validate_prompt": {
+    "output": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style: Warm grain.\n\n[Shot 1] Starting from <Picture 1>, the camera follows her down the street and she sings the first line.\n\n[Shot 2] At 01:01.234, the camera cuts. A close-up."
+   }
+  }
+ ],
+ "function": "shot_body / assemble_prompt / character_budget / validate_prompt"
+}

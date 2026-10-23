@@ -1,0 +1,6953 @@
+{
+ "cases": [
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc1"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc1"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\dancer.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "sc2"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "sc2"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "no_character"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "no_character"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\roof.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\joe.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "explicit_keys"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "with_image"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "with_image"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "start_frame"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "start_frame"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "last_frame_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "last_frame_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "last_frame_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "last_frame_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "last_frame_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png"
+    ],
+    "last_frame_path": "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0002.png",
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "First–Last Frame needs a saved last-frame image. Choose or upload it before rendering.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "First–Last Frame needs a saved last-frame image. Choose or upload it before rendering.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "First–Last Frame needs a saved last-frame image. Choose or upload it before rendering.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "First–Last Frame needs a saved last-frame image. Choose or upload it before rendering.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "First–Last Frame needs a saved last-frame image. Choose or upload it before rendering.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "First–Last Frame needs a saved last-frame image. Choose or upload it before rendering.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\zimage_approved\\image_0001.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "flf_no_end"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [
+     "C:\\h3-fixture-does-not-exist\\missing.png"
+    ],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "missing_file"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs at least one reference video path.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "missing_file"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "two_pass",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "reference_to_video",
+    "render_pass": "three_pass",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   }
+  },
+  {
+   "error": {
+    "message": "This scene needs a selected scene image for MiniMax Image to Video.",
+    "type": "ValueError"
+   },
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "image_reference_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": []
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": [
+     {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+      "use_audio": true
+     }
+    ]
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "off",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": [
+     {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+      "use_audio": true
+     }
+    ]
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": [
+     {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+      "use_audio": true
+     }
+    ]
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "latent_continuation_masked",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "latent_continuation_masked",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": [
+     {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+      "use_audio": true
+     }
+    ]
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 1,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": [
+     {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+      "use_audio": true
+     }
+    ]
+   }
+  },
+  {
+   "final_frames_requested": [],
+   "input": {
+    "continuity": "bogus",
+    "mode": "video_to_video",
+    "render_pass": "single",
+    "scene_number": 3,
+    "segment": "video_refs"
+   },
+   "output": {
+    "continuity_image_number": 0,
+    "continuity_mode": "off",
+    "image_paths": [
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\mara_side.png",
+     "Z:\\h3fixture\\Projects\\Demo Song\\refs\\street.png"
+    ],
+    "missing_image_paths": [],
+    "video_references": [
+     {
+      "path": "Z:\\h3fixture\\Projects\\Demo Song\\clips\\a.mp4",
+      "use_audio": true
+     }
+    ]
+   }
+  }
+ ],
+ "function": "resolve_scene_inputs"
+}

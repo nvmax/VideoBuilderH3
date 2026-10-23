@@ -1,0 +1,472 @@
+{
+ "cases": [
+  {
+   "input": {
+    "expected": 1,
+    "raw": "[\"a\", \"b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "[\"a\", \"b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "[\"a\", \"b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "error": {
+    "code": "WRONG_SHOT_COUNT",
+    "message": "The LLM returned 2 shot descriptions, but 1 were expected.",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 1,
+    "raw": "{\"shots\": [\"a\", \"b\"]}"
+   }
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "{\"shots\": [\"a\", \"b\"]}"
+   },
+   "output": [
+    "a",
+    "b"
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "{\"shots\": [\"a\", \"b\"]}"
+   },
+   "output": [
+    "a",
+    "b",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "{\"descriptions\": [\"a\", \"b\", \"c\"]}"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "{\"descriptions\": [\"a\", \"b\", \"c\"]}"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "{\"descriptions\": [\"a\", \"b\", \"c\"]}"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\n```json\n[\"a\", \"b\"]\n```",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 1,
+    "raw": "```json\n[\"a\", \"b\"]\n```"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\n```json\n[\"a\", \"b\"]\n```",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 2,
+    "raw": "```json\n[\"a\", \"b\"]\n```"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\n```json\n[\"a\", \"b\"]\n```",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 3,
+    "raw": "```json\n[\"a\", \"b\"]\n```"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\nHere you go: [\"a\",\"b\"] hope that helps",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 1,
+    "raw": "Here you go: [\"a\",\"b\"] hope that helps"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\nHere you go: [\"a\",\"b\"] hope that helps",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 2,
+    "raw": "Here you go: [\"a\",\"b\"] hope that helps"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\nHere you go: [\"a\",\"b\"] hope that helps",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 3,
+    "raw": "Here you go: [\"a\",\"b\"] hope that helps"
+   }
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "[\"only one\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "[\"only one\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "[\"only one\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "[]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "[]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "[]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "error": {
+    "code": "EMPTY_SHOTS",
+    "message": "The LLM returned an empty MiniMax shot-description payload.",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 1,
+    "raw": ""
+   }
+  },
+  {
+   "error": {
+    "code": "EMPTY_SHOTS",
+    "message": "The LLM returned an empty MiniMax shot-description payload.",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 2,
+    "raw": ""
+   }
+  },
+  {
+   "error": {
+    "code": "EMPTY_SHOTS",
+    "message": "The LLM returned an empty MiniMax shot-description payload.",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 3,
+    "raw": ""
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\nnot json at all",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 1,
+    "raw": "not json at all"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\nnot json at all",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 2,
+    "raw": "not json at all"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\nnot json at all",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 3,
+    "raw": "not json at all"
+   }
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "{\"shot_1\": \"a\", \"shot_2\": \"b\"}"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "{\"shot_1\": \"a\", \"shot_2\": \"b\"}"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "{\"shot_1\": \"a\", \"shot_2\": \"b\"}"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "[{\"description\": \"a\"}, {\"description\": \"b\"}]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "[{\"description\": \"a\"}, {\"description\": \"b\"}]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "[{\"description\": \"a\"}, {\"description\": \"b\"}]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\n[\"a\", \"b\",]",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 1,
+    "raw": "[\"a\", \"b\",]"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\n[\"a\", \"b\",]",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 2,
+    "raw": "[\"a\", \"b\",]"
+   }
+  },
+  {
+   "error": {
+    "code": "BAD_JSON",
+    "message": "The LLM did not return valid JSON shot descriptions. Raw output:\n[\"a\", \"b\",]",
+    "type": "ShotPromptError"
+   },
+   "input": {
+    "expected": 3,
+    "raw": "[\"a\", \"b\",]"
+   }
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "[\"[Shot 1] a\", \"[Shot 2] At 00:02.500, b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "[\"[Shot 1] a\", \"[Shot 2] At 00:02.500, b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "[\"[Shot 1] a\", \"[Shot 2] At 00:02.500, b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "[\"a\"\n, \"b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "[\"a\"\n, \"b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "[\"a\"\n, \"b\"]"
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 1,
+    "raw": "\"just a string\""
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 2,
+    "raw": "\"just a string\""
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  },
+  {
+   "input": {
+    "expected": 3,
+    "raw": "\"just a string\""
+   },
+   "output": [
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action.",
+    "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+   ]
+  }
+ ],
+ "function": "parse_shot_descriptions"
+}

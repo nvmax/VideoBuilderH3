@@ -1,0 +1,135 @@
+{
+ "cases": [
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. ",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. ",
+   "input": {
+    "text": ""
+   },
+   "normalize_description": "",
+   "post_cut_text": "the camera cuts. ",
+   "strip_negative_sentences": ""
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1.   A steady shot.  ",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4.   A steady shot.  ",
+   "input": {
+    "text": "  A steady shot.  "
+   },
+   "normalize_description": "A steady shot.",
+   "post_cut_text": "the camera cuts. A steady shot.",
+   "strip_negative_sentences": "A steady shot."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. Camera pans left. No tears or crying. The singer smiles.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. Camera pans left. No tears or crying. The singer smiles.",
+   "input": {
+    "text": "Camera pans left. No tears or crying. The singer smiles."
+   },
+   "normalize_description": "Camera pans left. No tears or crying. The singer smiles.",
+   "post_cut_text": "the camera cuts. Camera pans left. No tears or crying. The singer smiles.",
+   "strip_negative_sentences": "Camera pans left. The singer smiles."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. no text overlays, the subject runs.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. no text overlays, the subject runs.",
+   "input": {
+    "text": "no text overlays, the subject runs."
+   },
+   "normalize_description": "no text overlays, the subject runs.",
+   "post_cut_text": "the camera cuts. No text overlays, the subject runs.",
+   "strip_negative_sentences": ""
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. The camera cuts to a close-up of <Subject 1>. She sings <d>[English] Hold on tight.</d> and smiles.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. The camera cuts to a close-up of <Subject 1>. She sings <d>[English] Hold on tight.</d> and smiles.",
+   "input": {
+    "text": "The camera cuts to a close-up of <Subject 1>. She sings <d>[English] Hold on tight.</d> and smiles."
+   },
+   "normalize_description": "The camera cuts to a close-up of <Subject 1>. She sings <d>[English] Hold on tight.</d> and smiles.",
+   "post_cut_text": "the camera cuts. A close-up of <Subject 1>. She sings <d>[English] Hold on tight.</d> and smiles.",
+   "strip_negative_sentences": "The camera cuts to a close-up of <Subject 1>. She sings <d>[English] Hold on tight.</d> and smiles."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. [Shot 3] At 00:04.250, the camera cuts to a wide shot.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. [Shot 3] At 00:04.250, the camera cuts to a wide shot.",
+   "input": {
+    "text": "[Shot 3] At 00:04.250, the camera cuts to a wide shot."
+   },
+   "normalize_description": "[Shot 3] At 00:04.250, the camera cuts to a wide shot.",
+   "post_cut_text": "the camera cuts. [Shot 3] At 00:04.250, the camera cuts to a wide shot.",
+   "strip_negative_sentences": "[Shot 3] At 00:04.250, the camera cuts to a wide shot."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. At 00:04.250, the camera cuts to a wide shot of the room.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. At 00:04.250, the camera cuts to a wide shot of the room.",
+   "input": {
+    "text": "At 00:04.250, the camera cuts to a wide shot of the room."
+   },
+   "normalize_description": "At 00:04.250, the camera cuts to a wide shot of the room.",
+   "post_cut_text": "the camera cuts. At 00:04.250, the camera cuts to a wide shot of the room.",
+   "strip_negative_sentences": "At 00:04.250, the camera cuts to a wide shot of the room."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. Cut to a low angle. The drummer hits hard.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. Cut to a low angle. The drummer hits hard.",
+   "input": {
+    "text": "Cut to a low angle. The drummer hits hard."
+   },
+   "normalize_description": "Cut to a low angle. The drummer hits hard.",
+   "post_cut_text": "the camera cuts. A low angle. The drummer hits hard.",
+   "strip_negative_sentences": "Cut to a low angle. The drummer hits hard."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. Without any sweat, she dances. Never blinks.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. Without any sweat, she dances. Never blinks.",
+   "input": {
+    "text": "Without any sweat, she dances. Never blinks."
+   },
+   "normalize_description": "Without any sweat, she dances. Never blinks.",
+   "post_cut_text": "the camera cuts. Without any sweat, she dances. Never blinks.",
+   "strip_negative_sentences": ""
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. A  double  spaced   sentence .",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. A  double  spaced   sentence .",
+   "input": {
+    "text": "A  double  spaced   sentence ."
+   },
+   "normalize_description": "A double spaced sentence .",
+   "post_cut_text": "the camera cuts. A double spaced sentence .",
+   "strip_negative_sentences": "A double spaced sentence ."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. Hard cut to black. Then <Subject 2> stands.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. Hard cut to black. Then <Subject 2> stands.",
+   "input": {
+    "text": "Hard cut to black. Then <Subject 2> stands."
+   },
+   "normalize_description": "Hard cut to black. Then <Subject 2> stands.",
+   "post_cut_text": "the camera cuts. Hard cut to black. Then <Subject 2> stands.",
+   "strip_negative_sentences": "Hard cut to black. Then <Subject 2> stands."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. the camera cuts to: a wide shot.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. the camera cuts to: a wide shot.",
+   "input": {
+    "text": "the camera cuts to: a wide shot."
+   },
+   "normalize_description": "the camera cuts to: a wide shot.",
+   "post_cut_text": "the camera cuts. A wide shot.",
+   "strip_negative_sentences": "the camera cuts to: a wide shot."
+  },
+  {
+   "continuous_cut_text_2": "the camera cuts, continuing directly from the final moment of Shot 1. Avoid blur; keep sharp. The band plays on.",
+   "continuous_cut_text_5": "the camera cuts, continuing directly from the final moment of Shot 4. Avoid blur; keep sharp. The band plays on.",
+   "input": {
+    "text": "Avoid blur; keep sharp. The band plays on."
+   },
+   "normalize_description": "Avoid blur; keep sharp. The band plays on.",
+   "post_cut_text": "the camera cuts. Avoid blur; keep sharp. The band plays on.",
+   "strip_negative_sentences": "The band plays on."
+  }
+ ],
+ "function": "strip_negative_sentences / normalize_description / continuous_cut_text / post_cut_text"
+}

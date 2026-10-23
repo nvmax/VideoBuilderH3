@@ -1,0 +1,793 @@
+{
+ "cases": [
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [],
+    "exact_duration_seconds": 5.0,
+    "frequency": 0
+   },
+   "input": {
+    "cut_style": null,
+    "plan": "one_shot"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Use one smooth, continuous, uninterrupted shot for the full 5.0-second segment. Output only [Shot 1]. Use no additional shot label, hard cut, angle reset, montage, dissolve, scene change, or transition. Camera and character movement may develop inside the same continuous take.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [],
+    "exact_duration_seconds": 5.0,
+    "frequency": 0
+   },
+   "input": {
+    "cut_style": "free",
+    "plan": "one_shot"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Use one smooth, continuous, uninterrupted shot for the full 5.0-second segment. Output only [Shot 1]. Use no additional shot label, hard cut, angle reset, montage, dissolve, scene change, or transition. Camera and character movement may develop inside the same continuous take.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [],
+    "exact_duration_seconds": 5.0,
+    "frequency": 0
+   },
+   "input": {
+    "cut_style": "continuous",
+    "plan": "one_shot"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Use one smooth, continuous, uninterrupted shot for the full 5.0-second segment. Output only [Shot 1]. Use no additional shot label, hard cut, angle reset, montage, dissolve, scene change, or transition. Camera and character movement may develop inside the same continuous take.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [],
+    "exact_duration_seconds": 5.0,
+    "frequency": 0
+   },
+   "input": {
+    "cut_style": "CONTINUOUS",
+    "plan": "one_shot"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Use one smooth, continuous, uninterrupted shot for the full 5.0-second segment. Output only [Shot 1]. Use no additional shot label, hard cut, angle reset, montage, dissolve, scene change, or transition. Camera and character movement may develop inside the same continuous take.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": null,
+    "plan": "two_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": "free",
+    "plan": "two_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": "continuous",
+    "plan": "two_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": "CONTINUOUS",
+    "plan": "two_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     2.0
+    ],
+    "exact_duration_seconds": 4.0,
+    "frequency": 3
+   },
+   "input": {
+    "cut_style": null,
+    "plan": "one_cut"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 3/10 for this exact 4.0-second segment requires exactly 1 hard cut at 00:02.000, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.0,
+     "timecode": "00:02.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     2.0
+    ],
+    "exact_duration_seconds": 4.0,
+    "frequency": 3
+   },
+   "input": {
+    "cut_style": "free",
+    "plan": "one_cut"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 3/10 for this exact 4.0-second segment requires exactly 1 hard cut at 00:02.000, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.0,
+     "timecode": "00:02.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     2.0
+    ],
+    "exact_duration_seconds": 4.0,
+    "frequency": 3
+   },
+   "input": {
+    "cut_style": "continuous",
+    "plan": "one_cut"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 3/10 for this exact 4.0-second segment requires exactly 1 hard cut at 00:02.000, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.0,
+     "timecode": "00:02.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     2.0
+    ],
+    "exact_duration_seconds": 4.0,
+    "frequency": 3
+   },
+   "input": {
+    "cut_style": "CONTINUOUS",
+    "plan": "one_cut"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 3/10 for this exact 4.0-second segment requires exactly 1 hard cut at 00:02.000, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.0,
+     "timecode": "00:02.000"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     1.5,
+     3.0,
+     4.5,
+     7.25,
+     9.0,
+     10.5
+    ],
+    "exact_duration_seconds": 12.0,
+    "frequency": 9
+   },
+   "input": {
+    "cut_style": null,
+    "plan": "many_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 9/10 for this exact 12.0-second segment requires exactly 6 hard cuts at 00:01.500, 00:03.000, 00:04.500, 00:07.250, 00:09.000, 00:10.500, creating 7 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 1.5,
+     "timecode": "00:01.500"
+    },
+    {
+     "number": 3,
+     "time": 3.0,
+     "timecode": "00:03.000"
+    },
+    {
+     "number": 4,
+     "time": 4.5,
+     "timecode": "00:04.500"
+    },
+    {
+     "number": 5,
+     "time": 7.25,
+     "timecode": "00:07.250"
+    },
+    {
+     "number": 6,
+     "time": 9.0,
+     "timecode": "00:09.000"
+    },
+    {
+     "number": 7,
+     "time": 10.5,
+     "timecode": "00:10.500"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     1.5,
+     3.0,
+     4.5,
+     7.25,
+     9.0,
+     10.5
+    ],
+    "exact_duration_seconds": 12.0,
+    "frequency": 9
+   },
+   "input": {
+    "cut_style": "free",
+    "plan": "many_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 9/10 for this exact 12.0-second segment requires exactly 6 hard cuts at 00:01.500, 00:03.000, 00:04.500, 00:07.250, 00:09.000, 00:10.500, creating 7 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 1.5,
+     "timecode": "00:01.500"
+    },
+    {
+     "number": 3,
+     "time": 3.0,
+     "timecode": "00:03.000"
+    },
+    {
+     "number": 4,
+     "time": 4.5,
+     "timecode": "00:04.500"
+    },
+    {
+     "number": 5,
+     "time": 7.25,
+     "timecode": "00:07.250"
+    },
+    {
+     "number": 6,
+     "time": 9.0,
+     "timecode": "00:09.000"
+    },
+    {
+     "number": 7,
+     "time": 10.5,
+     "timecode": "00:10.500"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     1.5,
+     3.0,
+     4.5,
+     7.25,
+     9.0,
+     10.5
+    ],
+    "exact_duration_seconds": 12.0,
+    "frequency": 9
+   },
+   "input": {
+    "cut_style": "continuous",
+    "plan": "many_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 9/10 for this exact 12.0-second segment requires exactly 6 hard cuts at 00:01.500, 00:03.000, 00:04.500, 00:07.250, 00:09.000, 00:10.500, creating 7 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 1.5,
+     "timecode": "00:01.500"
+    },
+    {
+     "number": 3,
+     "time": 3.0,
+     "timecode": "00:03.000"
+    },
+    {
+     "number": 4,
+     "time": 4.5,
+     "timecode": "00:04.500"
+    },
+    {
+     "number": 5,
+     "time": 7.25,
+     "timecode": "00:07.250"
+    },
+    {
+     "number": 6,
+     "time": 9.0,
+     "timecode": "00:09.000"
+    },
+    {
+     "number": 7,
+     "time": 10.5,
+     "timecode": "00:10.500"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     1.5,
+     3.0,
+     4.5,
+     7.25,
+     9.0,
+     10.5
+    ],
+    "exact_duration_seconds": 12.0,
+    "frequency": 9
+   },
+   "input": {
+    "cut_style": "CONTINUOUS",
+    "plan": "many_cuts"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 9/10 for this exact 12.0-second segment requires exactly 6 hard cuts at 00:01.500, 00:03.000, 00:04.500, 00:07.250, 00:09.000, 00:10.500, creating 7 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 1.5,
+     "timecode": "00:01.500"
+    },
+    {
+     "number": 3,
+     "time": 3.0,
+     "timecode": "00:03.000"
+    },
+    {
+     "number": 4,
+     "time": 4.5,
+     "timecode": "00:04.500"
+    },
+    {
+     "number": 5,
+     "time": 7.25,
+     "timecode": "00:07.250"
+    },
+    {
+     "number": 6,
+     "time": 9.0,
+     "timecode": "00:09.000"
+    },
+    {
+     "number": 7,
+     "time": 10.5,
+     "timecode": "00:10.500"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": null,
+    "plan": "continuous_two"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": "free",
+    "plan": "continuous_two"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": "continuous",
+    "plan": "continuous_two"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     2.5,
+     5.125
+    ],
+    "exact_duration_seconds": 8.25,
+    "frequency": 5
+   },
+   "input": {
+    "cut_style": "CONTINUOUS",
+    "plan": "continuous_two"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 5/10 for this exact 8.25-second segment requires exactly 2 hard cuts at 00:02.500, 00:05.125, creating 3 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 2.5,
+     "timecode": "00:02.500"
+    },
+    {
+     "number": 3,
+     "time": 5.125,
+     "timecode": "00:05.125"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     61.234
+    ],
+    "exact_duration_seconds": 75.0,
+    "frequency": 2
+   },
+   "input": {
+    "cut_style": null,
+    "plan": "long_minute"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 2/10 for this exact 75.0-second segment requires exactly 1 hard cut at 01:01.234, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 61.234,
+     "timecode": "01:01.234"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": false,
+    "cut_times_seconds": [
+     61.234
+    ],
+    "exact_duration_seconds": 75.0,
+    "frequency": 2
+   },
+   "input": {
+    "cut_style": "free",
+    "plan": "long_minute"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 2/10 for this exact 75.0-second segment requires exactly 1 hard cut at 01:01.234, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 61.234,
+     "timecode": "01:01.234"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     61.234
+    ],
+    "exact_duration_seconds": 75.0,
+    "frequency": 2
+   },
+   "input": {
+    "cut_style": "continuous",
+    "plan": "long_minute"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 2/10 for this exact 75.0-second segment requires exactly 1 hard cut at 01:01.234, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 61.234,
+     "timecode": "01:01.234"
+    }
+   ]
+  },
+  {
+   "applied": {
+    "continuous": true,
+    "cut_times_seconds": [
+     61.234
+    ],
+    "exact_duration_seconds": 75.0,
+    "frequency": 2
+   },
+   "input": {
+    "cut_style": "CONTINUOUS",
+    "plan": "long_minute"
+   },
+   "instruction": "EDITING / CUT PLAN — MANDATORY: Cut frequency 2/10 for this exact 75.0-second segment requires exactly 1 hard cut at 01:01.234, creating 2 coherent shots. The builder will write [Shot 1] and every later [Shot N] At MM:SS.mmm label. Return only the creative description for each shot. Each later description should stage a continuity-preserving camera/shot cut. Do not omit, merge, add, or shift a scheduled cut. Do not add extra shots, montage beats, dissolves, scene changes, or transitions outside this schedule.\n\nMULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them as consecutive camera views of one uninterrupted physical performance in the same place and moment. Shot 1 establishes staging. In every later description, write a complete sentence explicitly continuing directly from the previous shot's final moment. At the instant of the cut, preserve the previous ending position, posture, body orientation, eyeline and prop contact, then carry the ongoing movement forward at its existing pace and direction. For a scene with active singing, for example: 'Continuing directly from the previous shot's final moment, <Subject 1> remains seated in the same position on the curb, her torso still angled toward the doorway, and continues the same uninterrupted singing performance in sync with the assigned audio.' Use the actual preceding physical state, not a generic continuity phrase. Do not restart an action, reset a pose, or replace continued performance with an unrelated beauty shot. An ongoing action may span scheduled cuts. Only camera angle, framing and camera movement change at a cut unless the scene explicitly requests a new action or transition. Show any requested physical change developing naturally from the inherited state. During every shot's active vocal interval, explicitly state that the assigned performer continues singing or speaking in sync with the assigned audio. Preserve cue timing and speaker assignments; instrumental, no-lip-sync and silent intervals remain non-vocal. Follow supplied lyric/dialogue allocations without duplicating an already quoted cue or restarting the scene's lyrics after a cut. Use complete grammatical sentences rather than fragments such as 'Still seated on the curb.' Self-contained shot prose and varied camera coverage must preserve the shared staging. Before returning, check every adjacent pair for a matching end-to-start physical state and continuous performance. CONTINUOUS MOMENT ACROSS CUTS — MANDATORY: All shots are one unbroken moment filmed from different camera angles. Each later shot starts exactly where the previous shot ended: the same spot, the same position and body orientation, the same wardrobe, props, light and weather, and the action already in progress. Only the camera angle, distance and framing change at a cut. The action may move forward naturally (a step, a turn, a gesture finishing), but never jumps in time, never resets a pose, and never moves anyone to a new place. Begin each later description by naming the new framing and what it continues from, for example: 'the camera cuts to a low-angle close-up of <Subject 1>, continuing her raised-hand gesture from the shot before'.",
+   "shot_plan": [
+    {
+     "number": 1,
+     "time": 0.0,
+     "timecode": "00:00.000"
+    },
+    {
+     "number": 2,
+     "time": 61.234,
+     "timecode": "01:01.234"
+    }
+   ]
+  }
+ ],
+ "function": "shot_plan / apply_cut_style / cut_plan_instruction"
+}
