@@ -29,6 +29,7 @@ use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
 use crate::edit_routes as er;
 use crate::image_routes as ir;
+use crate::session_routes as sr;
 use crate::views::{self, SceneFilter};
 
 pub struct AppState {
@@ -58,12 +59,23 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/jobs/{id}/log", get(job_log))
         .route("/jobs/{id}/cancel", post(cancel_job))
         .route("/jobs/{id}/retry", post(retry_job))
-        .route("/projects", get(list_projects))
-        .route("/projects/{pid}", get(get_project))
+        .route("/projects", get(list_projects).post(sr::create_project))
+        .route("/files", get(sr::serve_file))
+        .route("/projects/{pid}", get(get_project).delete(sr::delete_project))
+        .route("/projects/{pid}/finals", get(sr::list_finals))
+        .route("/projects/{pid}/lyrics", get(sr::get_lyrics).put(sr::put_lyrics))
+        .route("/projects/{pid}/audio", axum::routing::put(sr::put_audio))
+        .route("/projects/{pid}/audio/waveform", get(sr::get_waveform))
+        .route("/projects/{pid}/audio/beats", get(sr::get_beats).put(sr::put_beats))
+        .route("/projects/{pid}/timeline/calibrate", post(sr::calibrate))
+        .route("/projects/{pid}/references/scene-mapping", get(sr::get_scene_mapping).put(sr::put_scene_mapping))
+        .route("/projects/{pid}/references/{kind}/{rid}", axum::routing::put(sr::put_reference).delete(sr::delete_reference))
+        .route("/projects/{pid}/scenes/{sid}/prompts/{field}", axum::routing::put(sr::put_prompt))
+        .route("/projects/{pid}/scenes/{sid}/prompts/minimax/validate", post(sr::validate_prompt))
         .route("/projects/{pid}/summary", get(project_summary))
         .route("/projects/{pid}/settings", get(get_settings).patch(patch_settings))
         .route("/projects/{pid}/scenes", get(list_scenes).post(er::create_scene))
-        .route("/projects/{pid}/scenes/{sid}", get(get_scene).delete(er::delete_scene))
+        .route("/projects/{pid}/scenes/{sid}", get(get_scene).delete(er::delete_scene).patch(sr::patch_scene))
         .route("/projects/{pid}/scenes/{sid}/split", post(er::split_scene))
         .route("/projects/{pid}/scenes/{sid}/merge", post(er::merge_scene))
         .route("/projects/{pid}/scenes/{sid}/move", post(er::move_scene))

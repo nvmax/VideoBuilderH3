@@ -7,6 +7,7 @@ pub mod error;
 pub mod image_jobs;
 pub mod image_routes;
 pub mod job_handlers;
+pub mod session_routes;
 pub mod views;
 
 use std::path::Path;

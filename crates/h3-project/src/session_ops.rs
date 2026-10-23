@@ -415,3 +415,72 @@ pub fn delete_project(folder: &Path) -> Result<(), OpError> {
     fs::remove_dir_all(folder)?;
     Ok(())
 }
+
+// -- audio ------------------------------------------------------------------------------------------------------------------
+
+/// What an analysed song gives the session.
+pub struct AudioInfo {
+    pub saved_path: String,
+    pub duration: f64,
+    pub peaks: Vec<f64>,
+    pub beats: Vec<f64>,
+    pub tempo_bpm: f64,
+}
+
+/// Record the project's song in the session with the keys the Builder saves.
+pub fn attach_audio(project: &Path, info: &AudioInfo, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    edit.session.insert("audio_path".into(), json!(info.saved_path));
+    edit.session.insert("audio_duration".into(), json!(info.duration));
+    edit.session.insert("audio_peaks".into(), json!(info.peaks));
+    edit.session.insert("beat_markers".into(), json!(info.beats));
+    if info.tempo_bpm > 0.0 {
+        edit.session.insert("detected_tempo_bpm".into(), json!(info.tempo_bpm));
+    }
+    let tempo = edit.session.get("detected_tempo_bpm").cloned().unwrap_or(Value::Null);
+    let revision = edit.save(now)?;
+    Ok(json!({"audio_path": info.saved_path, "duration": info.duration, "peaks_count": info.peaks.len(), "beat_count": info.beats.len(), "tempo_bpm": tempo, "revision": revision}))
+}
+
+/// Beat markers as the Builder saves them (`beat_markers`), else the older `beats` key.
+pub fn session_beats(session: &Obj) -> Vec<Value> {
+    let list = |key: &str| session.get(key).and_then(Value::as_array).cloned().unwrap_or_default();
+    let markers = list("beat_markers");
+    if markers.is_empty() { list("beats") } else { markers }
+}
+
+/// Replace the beat markers and optionally the tempo.
+pub fn set_beats(project: &Path, beats: Vec<Value>, tempo_bpm: Option<f64>, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    let count = beats.len();
+    edit.session.insert("beat_markers".into(), Value::Array(beats));
+    edit.session.shift_remove("beats");
+    if let Some(t) = tempo_bpm {
+        edit.session.insert("detected_tempo_bpm".into(), json!(t));
+    }
+    let tempo = edit.session.get("detected_tempo_bpm").cloned().unwrap_or(Value::Null);
+    let revision = edit.save(now)?;
+    Ok(json!({"beat_count": count, "tempo_bpm": tempo, "revision": revision}))
+}
+
+/// Shift every beat by `offset` seconds.
+pub fn calibrate_beats(project: &Path, offset: f64, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    let shifted: Vec<Value> = session_beats(&edit.session)
+        .into_iter()
+        .map(|b| match b {
+            Value::Object(mut map) => {
+                let t = map.get("time").and_then(to_float).unwrap_or(0.0) + offset;
+                map.insert("time".into(), json!(h3_core::pyval::round_to(t, 4)));
+                Value::Object(map)
+            }
+            other => json!(h3_core::pyval::round_to(to_float(&other).unwrap_or(0.0) + offset, 4)),
+        })
+        .collect();
+    let count = shifted.len();
+    edit.session.insert("beat_markers".into(), Value::Array(shifted));
+    edit.session.shift_remove("beats");
+    edit.session.insert("beat_calibration".into(), json!({"offset_seconds": offset, "calibrated": true}));
+    let revision = edit.save(now)?;
+    Ok(json!({"calibrated": true, "offset_seconds": offset, "beat_count": count, "revision": revision}))
+}

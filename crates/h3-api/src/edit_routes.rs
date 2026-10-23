@@ -129,7 +129,7 @@ pub async fn timeline_bulk(State(state): Shared, Path(pid): Path<String>, body: 
 }
 
 pub async fn close_gaps(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
-    edit(&state, &pid, StatusCode::OK, |folder, now| scene_ops::close_gaps(folder, now)).await
+    edit(&state, &pid, StatusCode::OK, scene_ops::close_gaps).await
 }
 
 pub async fn snap(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
@@ -148,3 +148,4 @@ pub async fn validate(State(state): Shared, Path(pid): Path<String>) -> ApiResul
     let issues = h3_core::timeline::validate_timeline_consistency(&mut segs, audio);
     Ok(success(json!({"valid": issues.is_empty(), "issues": issues}), Some(loaded.revision)))
 }
+

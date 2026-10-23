@@ -428,10 +428,7 @@ pub fn close_gaps(project: &Path, now: &Stamp) -> OpResult {
 /// Snap a scene edge, or every scene start, to the nearest beat.
 pub fn snap_to_beats(project: &Path, scope: &str, scene_id: Option<&str>, edge: &str, now: &Stamp) -> OpResult {
     let mut edit = open(project, None)?;
-    let beats: Vec<Value> = match edit.session.get("beat_markers").or_else(|| edit.session.get("beats")) {
-        Some(Value::Array(a)) => a.clone(),
-        _ => vec![],
-    };
+    let beats: Vec<Value> = crate::session_ops::session_beats(&edit.session);
     if beats.is_empty() {
         return Err(OpError::Validation("No beats loaded in project. Analyze audio first.".into()));
     }
