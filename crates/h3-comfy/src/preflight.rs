@@ -1,7 +1,9 @@
 //! Startup node check: which node classes the H3 graphs need, and which ComfyUI is missing.
 //!
-//! Node lists come from the templates in `Workflows/UsedForUIDoNotTouch/minimax_*.json` and the nodes the
-//! pack's patchers add (`runner/minimax_patches.py`, `minimax_inputs.py`, `minimax_refmod.py`), pack commit 14421d2.
+//! Node lists come from the graphs the pack builds for each render mode (see `fixtures/graphs`) and the nodes its
+//! patchers add (`runner/minimax_patches.py`, `minimax_inputs.py`, `minimax_refmod.py`), pack commit 14421d2.
+//! The legacy fixed 3 pass graph (`minimax_ref2video_3pass_audio_driven_api.json`) is not reachable from the
+//! Video Builder, so its nodes are not required.
 
 use serde::Serialize;
 use serde_json::Value;
@@ -14,8 +16,8 @@ pub enum Feature {
     Core,
     FastVaeDecode,
     SageAttention,
+    ModelPatches,
     TwoPassAdvanced,
-    ThreePass,
     ImageToVideo,
     RefMod,
     BuiltInAudio,
@@ -27,8 +29,8 @@ impl Feature {
             Feature::Core => "Core (Reference to Video, Single and 2 Pass)",
             Feature::FastVaeDecode => "Fast VAE decode",
             Feature::SageAttention => "Memory-efficient Sage attention",
+            Feature::ModelPatches => "Feed-forward chunking and block-sparse attention",
             Feature::TwoPassAdvanced => "2 Pass Advanced",
-            Feature::ThreePass => "3 Pass",
             Feature::ImageToVideo => "Image to Video",
             Feature::RefMod => "RefMod pipeline",
             Feature::BuiltInAudio => "Built-in audio",
@@ -54,10 +56,8 @@ const KJ: &str = "comfyui-kjnodes";
 const VHS: &str = "ComfyUI-VideoHelperSuite";
 const T8: &str = "comfyui-minimax-h3-audio-T8";
 const TE_SPEED: &str = "TE-Speed-MiniMaxH3-OSS";
-const PT_CONCAT: &str = "ComfyUI-PT_H3ConcatAVLatent";
 const H3MOD: &str = "ComfyUI-MiniMaxH3Mod";
 const MMH3: &str = "Comfyui-MMH3-UltimateUpscale";
-const LAYER_STYLE: &str = "ComfyUI_LayerStyle";
 
 /// Every node class the H3 graphs can use, grouped by the feature that needs it.
 pub const REQUIRED_NODES: &[NodeRequirement] = &[
@@ -93,18 +93,16 @@ pub const REQUIRED_NODES: &[NodeRequirement] = &[
     req("TESpeedMiniMaxH3", TE_SPEED, Feature::Core),
     req("H3FastVAEDecode", VRGDG, Feature::FastVaeDecode),
     req("MiniMaxH3MemoryEfficientSageAttentionPatch", KJ, Feature::SageAttention),
+    req("MiniMaxChunkFeedForward", KJ, Feature::ModelPatches),
+    req("BlockSparseAttention", CORE_COMFY, Feature::ModelPatches),
     req("VRGDG_MiniMaxH3SpatialTilePlan", VRGDG, Feature::TwoPassAdvanced),
     req("VRGDG_MiniMaxH3UltimateUpscaleParams", VRGDG, Feature::TwoPassAdvanced),
     req("MMH3UltimateUpscale", MMH3, Feature::TwoPassAdvanced),
     req("MMH3SpatialSplitParams", MMH3, Feature::TwoPassAdvanced),
     req("MMH3TemporalSplitParams", MMH3, Feature::TwoPassAdvanced),
-    req("PT_H3ConcatAVLatent", PT_CONCAT, Feature::ThreePass),
-    req("MiniMaxH3AVDecodeT8", T8, Feature::ThreePass),
-    req("VAEEncode", CORE_COMFY, Feature::ThreePass),
-    req("VAEEncodeAudio", CORE_COMFY, Feature::ThreePass),
-    req("LayerUtility: ImageScaleByAspectRatio V2", LAYER_STYLE, Feature::ThreePass),
     req("MiniMaxH3ImageToVideo", CORE_COMFY, Feature::ImageToVideo),
     req("VRGDG_MiniMaxH3KeyframeTiming", VRGDG, Feature::ImageToVideo),
+    req("VRGDG_MiniMaxH3ImageReferenceToVideo", VRGDG, Feature::ImageToVideo),
     req("MiniMaxH3RefModsLoader", H3MOD, Feature::RefMod),
     req("MiniMaxH3RefModTextEncode", H3MOD, Feature::RefMod),
     req("MiniMaxH3RefModAudioExtract", H3MOD, Feature::RefMod),
@@ -158,7 +156,7 @@ mod tests {
         assert!(check_nodes(&Value::Object(info.clone())).missing.is_empty());
 
         info.remove("VRGDG_MiniMaxH3AudioDrive");
-        info.remove("PT_H3ConcatAVLatent");
+        info.remove("MMH3UltimateUpscale");
         let report = check_nodes(&Value::Object(info));
         assert_eq!(report.missing.len(), 2);
         assert!(!report.core_ready());
@@ -172,5 +170,31 @@ mod tests {
             .map(|r| (r.class_type.to_string(), json!({})))
             .collect();
         assert!(check_nodes(&Value::Object(info)).core_ready());
+    }
+
+    /// Every node class in every golden graph from the pack must be in `REQUIRED_NODES`.
+    #[test]
+    fn required_nodes_cover_every_golden_graph() {
+        let dir = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/graphs");
+        let mut checked = 0;
+        let mut uncovered = std::collections::BTreeSet::new();
+        for entry in std::fs::read_dir(&dir).expect("fixtures/graphs exists") {
+            let path = entry.unwrap().path();
+            // The legacy fixed 3 pass graph is not reachable from the Video Builder (see module docs).
+            if path.file_name().unwrap().to_string_lossy().starts_with("legacy_") {
+                continue;
+            }
+            let record: Value = serde_json::from_str(&std::fs::read_to_string(&path).unwrap()).unwrap();
+            let Some(graph) = record.pointer("/result/prompt").and_then(Value::as_object) else { continue };
+            checked += 1;
+            for node in graph.values() {
+                let class = node["class_type"].as_str().unwrap();
+                if !REQUIRED_NODES.iter().any(|r| r.class_type == class) {
+                    uncovered.insert(class.to_string());
+                }
+            }
+        }
+        assert!(checked > 50, "expected the golden graphs, found {checked}");
+        assert!(uncovered.is_empty(), "node classes used by graphs but not in REQUIRED_NODES: {uncovered:?}");
     }
 }

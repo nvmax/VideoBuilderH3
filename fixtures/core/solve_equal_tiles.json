@@ -1,0 +1,665 @@
+{
+ "cases": [
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 1,
+    "total_px": 704
+   },
+   "output": [
+    704,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 1,
+    "total_px": 704
+   },
+   "output": [
+    704,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 1,
+    "total_px": 704
+   },
+   "output": [
+    704,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 2,
+    "total_px": 704
+   },
+   "output": [
+    384,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 2,
+    "total_px": 704
+   },
+   "output": [
+    416,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 2,
+    "total_px": 704
+   },
+   "output": [
+    448,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 3,
+    "total_px": 704
+   },
+   "output": [
+    288,
+    80
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 3,
+    "total_px": 704
+   },
+   "output": [
+    320,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 3,
+    "total_px": 704
+   },
+   "output": [
+    352,
+    176
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 4,
+    "total_px": 704
+   },
+   "output": [
+    224,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 4,
+    "total_px": 704
+   },
+   "output": [
+    320,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 4,
+    "total_px": 704
+   },
+   "output": [
+    320,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 1,
+    "total_px": 1088
+   },
+   "output": [
+    1088,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 1,
+    "total_px": 1088
+   },
+   "output": [
+    1088,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 1,
+    "total_px": 1088
+   },
+   "output": [
+    1088,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 2,
+    "total_px": 1088
+   },
+   "output": [
+    576,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 2,
+    "total_px": 1088
+   },
+   "output": [
+    608,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 2,
+    "total_px": 1088
+   },
+   "output": [
+    640,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 3,
+    "total_px": 1088
+   },
+   "output": [
+    416,
+    80
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 3,
+    "total_px": 1088
+   },
+   "output": [
+    448,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 3,
+    "total_px": 1088
+   },
+   "output": [
+    480,
+    176
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 4,
+    "total_px": 1088
+   },
+   "output": [
+    320,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 4,
+    "total_px": 1088
+   },
+   "output": [
+    416,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 4,
+    "total_px": 1088
+   },
+   "output": [
+    416,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 1,
+    "total_px": 1280
+   },
+   "output": [
+    1280,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 1,
+    "total_px": 1280
+   },
+   "output": [
+    1280,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 1,
+    "total_px": 1280
+   },
+   "output": [
+    1280,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 2,
+    "total_px": 1280
+   },
+   "output": [
+    672,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 2,
+    "total_px": 1280
+   },
+   "output": [
+    704,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 2,
+    "total_px": 1280
+   },
+   "output": [
+    736,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 3,
+    "total_px": 1280
+   },
+   "output": [
+    480,
+    80
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 3,
+    "total_px": 1280
+   },
+   "output": [
+    512,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 3,
+    "total_px": 1280
+   },
+   "output": [
+    544,
+    176
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 4,
+    "total_px": 1280
+   },
+   "output": [
+    416,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 4,
+    "total_px": 1280
+   },
+   "output": [
+    416,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 4,
+    "total_px": 1280
+   },
+   "output": [
+    512,
+    256
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 1,
+    "total_px": 1920
+   },
+   "output": [
+    1920,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 1,
+    "total_px": 1920
+   },
+   "output": [
+    1920,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 1,
+    "total_px": 1920
+   },
+   "output": [
+    1920,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 2,
+    "total_px": 1920
+   },
+   "output": [
+    992,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 2,
+    "total_px": 1920
+   },
+   "output": [
+    1024,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 2,
+    "total_px": 1920
+   },
+   "output": [
+    1056,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 3,
+    "total_px": 1920
+   },
+   "output": [
+    704,
+    96
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 3,
+    "total_px": 1920
+   },
+   "output": [
+    736,
+    144
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 3,
+    "total_px": 1920
+   },
+   "output": [
+    768,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 4,
+    "total_px": 1920
+   },
+   "output": [
+    576,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 4,
+    "total_px": 1920
+   },
+   "output": [
+    576,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 4,
+    "total_px": 1920
+   },
+   "output": [
+    672,
+    256
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 1,
+    "total_px": 2560
+   },
+   "output": [
+    2560,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 1,
+    "total_px": 2560
+   },
+   "output": [
+    2560,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 1,
+    "total_px": 2560
+   },
+   "output": [
+    2560,
+    0
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 2,
+    "total_px": 2560
+   },
+   "output": [
+    1312,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 2,
+    "total_px": 2560
+   },
+   "output": [
+    1344,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 2,
+    "total_px": 2560
+   },
+   "output": [
+    1376,
+    192
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 3,
+    "total_px": 2560
+   },
+   "output": [
+    896,
+    64
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 3,
+    "total_px": 2560
+   },
+   "output": [
+    960,
+    160
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 3,
+    "total_px": 2560
+   },
+   "output": [
+    960,
+    160
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 64,
+    "count": 4,
+    "total_px": 2560
+   },
+   "output": [
+    736,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 128,
+    "count": 4,
+    "total_px": 2560
+   },
+   "output": [
+    736,
+    128
+   ]
+  },
+  {
+   "input": {
+    "base_overlap_px": 160,
+    "count": 4,
+    "total_px": 2560
+   },
+   "output": [
+    832,
+    256
+   ]
+  }
+ ],
+ "function": "solve_equal_tiles"
+}

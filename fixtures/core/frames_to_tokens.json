@@ -1,0 +1,239 @@
+{
+ "cases": [
+  {
+   "input": {
+    "frames": 0
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 1
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 2
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 3
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 4
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 5
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 6
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 7
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 8
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "frames": 9
+   },
+   "output": 3
+  },
+  {
+   "input": {
+    "frames": 10
+   },
+   "output": 3
+  },
+  {
+   "input": {
+    "frames": 11
+   },
+   "output": 3
+  },
+  {
+   "input": {
+    "frames": 12
+   },
+   "output": 3
+  },
+  {
+   "input": {
+    "frames": 13
+   },
+   "output": 4
+  },
+  {
+   "input": {
+    "frames": 14
+   },
+   "output": 4
+  },
+  {
+   "input": {
+    "frames": 15
+   },
+   "output": 4
+  },
+  {
+   "input": {
+    "frames": 16
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "frames": 17
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "frames": 18
+   },
+   "output": 6
+  },
+  {
+   "input": {
+    "frames": 19
+   },
+   "output": 6
+  },
+  {
+   "input": {
+    "frames": 20
+   },
+   "output": 6
+  },
+  {
+   "input": {
+    "frames": 21
+   },
+   "output": 6
+  },
+  {
+   "input": {
+    "frames": 22
+   },
+   "output": 7
+  },
+  {
+   "input": {
+    "frames": 23
+   },
+   "output": 7
+  },
+  {
+   "input": {
+    "frames": 24
+   },
+   "output": 7
+  },
+  {
+   "input": {
+    "frames": 25
+   },
+   "output": 7
+  },
+  {
+   "input": {
+    "frames": 26
+   },
+   "output": 8
+  },
+  {
+   "input": {
+    "frames": 27
+   },
+   "output": 8
+  },
+  {
+   "input": {
+    "frames": 28
+   },
+   "output": 8
+  },
+  {
+   "input": {
+    "frames": 29
+   },
+   "output": 8
+  },
+  {
+   "input": {
+    "frames": 97
+   },
+   "output": 28
+  },
+  {
+   "input": {
+    "frames": 121
+   },
+   "output": 36
+  },
+  {
+   "input": {
+    "frames": 145
+   },
+   "output": 43
+  },
+  {
+   "input": {
+    "frames": 169
+   },
+   "output": 49
+  },
+  {
+   "input": {
+    "frames": 193
+   },
+   "output": 57
+  },
+  {
+   "input": {
+    "frames": 241
+   },
+   "output": 71
+  },
+  {
+   "input": {
+    "frames": 289
+   },
+   "output": 85
+  },
+  {
+   "input": {
+    "frames": 337
+   },
+   "output": 99
+  },
+  {
+   "input": {
+    "frames": 361
+   },
+   "output": 106
+  }
+ ],
+ "function": "_frames_to_tokens"
+}

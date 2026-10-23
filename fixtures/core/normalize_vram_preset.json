@@ -1,0 +1,50 @@
+{
+ "cases": [
+  {
+   "input": {
+    "value": null
+   },
+   "output": "16gb"
+  },
+  {
+   "input": {
+    "value": ""
+   },
+   "output": "16gb"
+  },
+  {
+   "input": {
+    "value": "8GB"
+   },
+   "output": "8gb"
+  },
+  {
+   "input": {
+    "value": "16gb"
+   },
+   "output": "16gb"
+  },
+  {
+   "input": {
+    "value": "32gb"
+   },
+   "output": "24gb"
+  },
+  {
+   "input": {
+    "value": "custom"
+   },
+   "output": "24gb"
+  },
+  {
+   "error": {
+    "message": "Unknown VRAM preset '99gb'. 2 Pass Advanced supports: 8gb, 12gb, 16gb, 24gb.",
+    "type": "ValueError"
+   },
+   "input": {
+    "value": "99gb"
+   }
+  }
+ ],
+ "function": "normalize_vram_preset"
+}

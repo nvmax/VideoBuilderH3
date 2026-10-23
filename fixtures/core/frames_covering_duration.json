@@ -1,0 +1,82 @@
+{
+ "cases": [
+  {
+   "input": {
+    "duration": 0,
+    "fps": 24
+   },
+   "output": 0
+  },
+  {
+   "input": {
+    "duration": 0.01,
+    "fps": 24
+   },
+   "output": 1
+  },
+  {
+   "input": {
+    "duration": 0.04,
+    "fps": 24
+   },
+   "output": 1
+  },
+  {
+   "input": {
+    "duration": 0.0417,
+    "fps": 24
+   },
+   "output": 2
+  },
+  {
+   "input": {
+    "duration": 1,
+    "fps": 24
+   },
+   "output": 24
+  },
+  {
+   "input": {
+    "duration": 3.5,
+    "fps": 24
+   },
+   "output": 84
+  },
+  {
+   "input": {
+    "duration": 6.0,
+    "fps": 24
+   },
+   "output": 144
+  },
+  {
+   "input": {
+    "duration": 6.04,
+    "fps": 24
+   },
+   "output": 145
+  },
+  {
+   "input": {
+    "duration": 14.999,
+    "fps": 24
+   },
+   "output": 360
+  },
+  {
+   "input": {
+    "duration": 15.0,
+    "fps": 24
+   },
+   "output": 360
+  },
+  {
+   "input": {
+    "duration": 15.1,
+    "fps": 24
+   },
+   "output": 363
+  }
+ ],
+ "function": "frames_covering_duration"
+}

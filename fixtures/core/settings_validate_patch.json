@@ -1,0 +1,204 @@
+{
+ "cases": [
+  {
+   "input": {
+    "patch": {}
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "steps": 12
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "steps": "x"
+    }
+   },
+   "output": {
+    "steps": "must be a whole number"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "steps": 9999
+    }
+   },
+   "output": {
+    "steps": "must be between 1 and 1000"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "unknown": 1
+    }
+   },
+   "output": {
+    "unknown": "unknown MiniMax H3 setting"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "render_pass": "bogus"
+    }
+   },
+   "output": {
+    "render_pass": "must be one of: single, two_pass, three_pass"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "loras": [
+      {
+       "name": "a"
+      }
+     ]
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "loras": [
+      {
+       "name": ""
+      }
+     ]
+    }
+   },
+   "output": {
+    "loras": "item 1 needs a 'name'"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "loras": [
+      {
+       "apply_to": "bogus",
+       "name": "a"
+      }
+     ]
+    }
+   },
+   "output": {
+    "loras": "item 1 apply_to must be one of: both, pass1, pass2"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "loras": [
+      {
+       "name": "a"
+      },
+      {
+       "name": "a"
+      },
+      {
+       "name": "a"
+      },
+      {
+       "name": "a"
+      },
+      {
+       "name": "a"
+      }
+     ]
+    }
+   },
+   "output": {
+    "loras": "supports at most 4 LoRAs"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "latent_context_frames": 77
+    }
+   },
+   "output": {
+    "latent_context_frames": "must be one of: 16, 22, 39, 56, 90, 141, 192"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "latent_context_frames": 90
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "continuity_mode": "latent_continuation_masked"
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "seed": -1
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "megapixels": 0
+    }
+   },
+   "output": {
+    "megapixels": "must be between 0.1 and 16"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "aspect_ratio": "7:5 (Odd)"
+    }
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "patch": {
+     "advanced_two_pass_pass2_megapixels": 2.0
+    }
+   },
+   "output": {
+    "advanced_two_pass_pass2_megapixels": "retired MiniMax H3 setting: use resolution_preset / megapixels (the Pass 2 size is the output resolution)"
+   }
+  },
+  {
+   "input": {
+    "patch": {
+     "advanced_two_pass_pass1_steps": 4
+    }
+   },
+   "output": {}
+  }
+ ],
+ "function": "validate_minimax_h3_patch"
+}

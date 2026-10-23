@@ -1,0 +1,560 @@
+{
+ "cases": [
+  {
+   "input": {
+    "raw": {},
+    "render_pass": "single"
+   },
+   "output": [
+    "1k",
+    0.5625
+   ]
+  },
+  {
+   "input": {
+    "raw": {},
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "1k",
+    0.5625
+   ]
+  },
+  {
+   "input": {
+    "raw": {},
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "1k",
+    0.5625
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "resolution_preset": "2k"
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "resolution_preset": "2k"
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "resolution_preset": "2k"
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 1.5,
+     "resolution_preset": "custom"
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    1.5
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 1.5,
+     "resolution_preset": "custom"
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    1.5
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 1.5,
+     "resolution_preset": "custom"
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "custom",
+    1.5
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 0.9
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 0.9
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 0.9
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 2.2
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    2.2
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 2.2
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    2.2
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 2.2
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": "0.5"
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.5
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": "0.5"
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.5
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": "0.5"
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 99
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    16.0
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 99
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    16.0
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 99
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 0.01
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.1
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 0.01
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.1
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "megapixels": 0.01
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "two_pass_final_height": 1088,
+     "two_pass_final_width": 1920
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "two_pass_final_height": 1088,
+     "two_pass_final_width": 1920
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "two_pass_final_height": 1088,
+     "two_pass_final_width": 1920
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "16:9 (Widescreen)",
+     "two_pass_final_height": 720,
+     "two_pass_final_width": 1280
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "16:9 (Widescreen)",
+     "two_pass_final_height": 720,
+     "two_pass_final_width": 1280
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.8789
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "16:9 (Widescreen)",
+     "two_pass_final_height": 720,
+     "two_pass_final_width": 1280
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_megapixels": 2.07
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_megapixels": 2.07
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_megapixels": 2.07
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "custom",
+    2.07
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_resolution_preset": "2k"
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_resolution_preset": "2k"
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_resolution_preset": "2k"
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "2k",
+    1.9922
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_megapixels": 3.0,
+     "advanced_two_pass_pass2_resolution_preset": "bogus"
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_megapixels": 3.0,
+     "advanced_two_pass_pass2_resolution_preset": "bogus"
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    0.9
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "advanced_two_pass_pass2_megapixels": 3.0,
+     "advanced_two_pass_pass2_resolution_preset": "bogus"
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "custom",
+    3.0
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "9:16 (Portrait Widescreen)",
+     "resolution_preset": "1k"
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "1k",
+    0.5625
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "9:16 (Portrait Widescreen)",
+     "resolution_preset": "1k"
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "1k",
+    0.5625
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "9:16 (Portrait Widescreen)",
+     "resolution_preset": "1k"
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "1k",
+    0.5625
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "21:9 (Ultrawide)",
+     "megapixels": 1.0
+    },
+    "render_pass": "single"
+   },
+   "output": [
+    "custom",
+    1.0
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "21:9 (Ultrawide)",
+     "megapixels": 1.0
+    },
+    "render_pass": "two_pass"
+   },
+   "output": [
+    "custom",
+    1.0
+   ]
+  },
+  {
+   "input": {
+    "raw": {
+     "aspect_ratio": "21:9 (Ultrawide)",
+     "megapixels": 1.0
+    },
+    "render_pass": "three_pass"
+   },
+   "output": [
+    "custom",
+    2.0
+   ]
+  }
+ ],
+ "function": "migrate_resolution"
+}

@@ -1,0 +1,849 @@
+{
+ "cases": [
+  {
+   "input": {
+    "height": 448,
+    "vram_preset": "8gb",
+    "width": 768
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 1,
+    "height": 448,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 448,
+    "tile_width": 448,
+    "vram_preset": "8gb",
+    "width": 768
+   }
+  },
+  {
+   "input": {
+    "height": 448,
+    "vram_preset": "12gb",
+    "width": 768
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 1,
+    "grid_rows": 1,
+    "height": 448,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 0,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 448,
+    "tile_width": 768,
+    "vram_preset": "12gb",
+    "width": 768
+   }
+  },
+  {
+   "input": {
+    "height": 448,
+    "vram_preset": "16gb",
+    "width": 768
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 1,
+    "grid_rows": 1,
+    "height": 448,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 0,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 448,
+    "tile_width": 768,
+    "vram_preset": "16gb",
+    "width": 768
+   }
+  },
+  {
+   "input": {
+    "height": 448,
+    "vram_preset": "24gb",
+    "width": 768
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 1,
+    "grid_rows": 1,
+    "height": 448,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 0,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 448,
+    "tile_width": 768,
+    "vram_preset": "24gb",
+    "width": 768
+   }
+  },
+  {
+   "input": {
+    "height": 1024,
+    "vram_preset": "8gb",
+    "width": 1024
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 2,
+    "height": 1024,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 160,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 448,
+    "vram_preset": "8gb",
+    "width": 1024
+   }
+  },
+  {
+   "input": {
+    "height": 1024,
+    "vram_preset": "12gb",
+    "width": 1024
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 1024,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 576,
+    "vram_preset": "12gb",
+    "width": 1024
+   }
+  },
+  {
+   "input": {
+    "height": 1024,
+    "vram_preset": "16gb",
+    "width": 1024
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 1024,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 576,
+    "vram_preset": "16gb",
+    "width": 1024
+   }
+  },
+  {
+   "input": {
+    "height": 1024,
+    "vram_preset": "24gb",
+    "width": 1024
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 1,
+    "height": 1024,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 192,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 1024,
+    "tile_width": 608,
+    "vram_preset": "24gb",
+    "width": 1024
+   }
+  },
+  {
+   "input": {
+    "height": 704,
+    "vram_preset": "8gb",
+    "width": 1280
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 704,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 416,
+    "tile_width": 704,
+    "vram_preset": "8gb",
+    "width": 1280
+   }
+  },
+  {
+   "input": {
+    "height": 704,
+    "vram_preset": "12gb",
+    "width": 1280
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 704,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 416,
+    "tile_width": 704,
+    "vram_preset": "12gb",
+    "width": 1280
+   }
+  },
+  {
+   "input": {
+    "height": 704,
+    "vram_preset": "16gb",
+    "width": 1280
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 1,
+    "height": 704,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 704,
+    "tile_width": 704,
+    "vram_preset": "16gb",
+    "width": 1280
+   }
+  },
+  {
+   "input": {
+    "height": 704,
+    "vram_preset": "24gb",
+    "width": 1280
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 1,
+    "grid_rows": 1,
+    "height": 704,
+    "min_tile_size": 256,
+    "solved_overlap_h": 0,
+    "solved_overlap_w": 0,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 704,
+    "tile_width": 1280,
+    "vram_preset": "24gb",
+    "width": 1280
+   }
+  },
+  {
+   "input": {
+    "height": 1920,
+    "vram_preset": "8gb",
+    "width": 1088
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 3,
+    "height": 1920,
+    "min_tile_size": 256,
+    "solved_overlap_h": 144,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 736,
+    "tile_width": 448,
+    "vram_preset": "8gb",
+    "width": 1088
+   }
+  },
+  {
+   "input": {
+    "height": 1920,
+    "vram_preset": "12gb",
+    "width": 1088
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 3,
+    "height": 1920,
+    "min_tile_size": 256,
+    "solved_overlap_h": 144,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 736,
+    "tile_width": 448,
+    "vram_preset": "12gb",
+    "width": 1088
+   }
+  },
+  {
+   "input": {
+    "height": 1920,
+    "vram_preset": "16gb",
+    "width": 1088
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 1920,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 1024,
+    "tile_width": 608,
+    "vram_preset": "16gb",
+    "width": 1088
+   }
+  },
+  {
+   "input": {
+    "height": 1920,
+    "vram_preset": "24gb",
+    "width": 1088
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 1920,
+    "min_tile_size": 256,
+    "solved_overlap_h": 192,
+    "solved_overlap_w": 192,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 1056,
+    "tile_width": 640,
+    "vram_preset": "24gb",
+    "width": 1088
+   }
+  },
+  {
+   "input": {
+    "height": 1088,
+    "vram_preset": "8gb",
+    "width": 1920
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 3,
+    "height": 1088,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 144,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 448,
+    "tile_width": 736,
+    "vram_preset": "8gb",
+    "width": 1920
+   }
+  },
+  {
+   "input": {
+    "height": 1088,
+    "vram_preset": "12gb",
+    "width": 1920
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 3,
+    "height": 1088,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 144,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 448,
+    "tile_width": 736,
+    "vram_preset": "12gb",
+    "width": 1920
+   }
+  },
+  {
+   "input": {
+    "height": 1088,
+    "vram_preset": "16gb",
+    "width": 1920
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 1088,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 608,
+    "tile_width": 1024,
+    "vram_preset": "16gb",
+    "width": 1920
+   }
+  },
+  {
+   "input": {
+    "height": 1088,
+    "vram_preset": "24gb",
+    "width": 1920
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 1088,
+    "min_tile_size": 256,
+    "solved_overlap_h": 192,
+    "solved_overlap_w": 192,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 640,
+    "tile_width": 1056,
+    "vram_preset": "24gb",
+    "width": 1920
+   }
+  },
+  {
+   "input": {
+    "height": 1440,
+    "vram_preset": "8gb",
+    "width": 2560
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 4,
+    "grid_rows": 4,
+    "height": 1440,
+    "min_tile_size": 256,
+    "solved_overlap_h": 160,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 480,
+    "tile_width": 736,
+    "vram_preset": "8gb",
+    "width": 2560
+   }
+  },
+  {
+   "input": {
+    "height": 1440,
+    "vram_preset": "12gb",
+    "width": 2560
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 4,
+    "grid_rows": 3,
+    "height": 1440,
+    "min_tile_size": 256,
+    "solved_overlap_h": 144,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 736,
+    "vram_preset": "12gb",
+    "width": 2560
+   }
+  },
+  {
+   "input": {
+    "height": 1440,
+    "vram_preset": "16gb",
+    "width": 2560
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 3,
+    "height": 1440,
+    "min_tile_size": 256,
+    "solved_overlap_h": 144,
+    "solved_overlap_w": 160,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 960,
+    "vram_preset": "16gb",
+    "width": 2560
+   }
+  },
+  {
+   "input": {
+    "height": 1440,
+    "vram_preset": "24gb",
+    "width": 2560
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 2,
+    "height": 1440,
+    "min_tile_size": 256,
+    "solved_overlap_h": 160,
+    "solved_overlap_w": 160,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 800,
+    "tile_width": 960,
+    "vram_preset": "24gb",
+    "width": 2560
+   }
+  },
+  {
+   "input": {
+    "height": 864,
+    "vram_preset": "8gb",
+    "width": 2048
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 3,
+    "height": 864,
+    "min_tile_size": 256,
+    "solved_overlap_h": 144,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 384,
+    "tile_width": 768,
+    "vram_preset": "8gb",
+    "width": 2048
+   }
+  },
+  {
+   "input": {
+    "height": 864,
+    "vram_preset": "12gb",
+    "width": 2048
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 3,
+    "grid_rows": 2,
+    "height": 864,
+    "min_tile_size": 256,
+    "solved_overlap_h": 160,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 512,
+    "tile_width": 768,
+    "vram_preset": "12gb",
+    "width": 2048
+   }
+  },
+  {
+   "input": {
+    "height": 864,
+    "vram_preset": "16gb",
+    "width": 2048
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 864,
+    "min_tile_size": 256,
+    "solved_overlap_h": 160,
+    "solved_overlap_w": 128,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 512,
+    "tile_width": 1088,
+    "vram_preset": "16gb",
+    "width": 2048
+   }
+  },
+  {
+   "input": {
+    "height": 864,
+    "vram_preset": "24gb",
+    "width": 2048
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 2,
+    "grid_rows": 2,
+    "height": 864,
+    "min_tile_size": 256,
+    "solved_overlap_h": 160,
+    "solved_overlap_w": 192,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 512,
+    "tile_width": 1120,
+    "vram_preset": "24gb",
+    "width": 2048
+   }
+  },
+  {
+   "input": {
+    "height": 2176,
+    "vram_preset": "8gb",
+    "width": 3840
+   },
+   "output": {
+    "chunk_length": 51,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 7,
+    "grid_rows": 6,
+    "height": 2176,
+    "min_tile_size": 256,
+    "solved_overlap_h": 256,
+    "solved_overlap_w": 144,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 672,
+    "vram_preset": "8gb",
+    "width": 3840
+   }
+  },
+  {
+   "input": {
+    "height": 2176,
+    "vram_preset": "12gb",
+    "width": 3840
+   },
+   "output": {
+    "chunk_length": 85,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 5,
+    "grid_rows": 5,
+    "height": 2176,
+    "min_tile_size": 256,
+    "solved_overlap_h": 176,
+    "solved_overlap_w": 160,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 576,
+    "tile_width": 896,
+    "vram_preset": "12gb",
+    "width": 3840
+   }
+  },
+  {
+   "input": {
+    "height": 2176,
+    "vram_preset": "16gb",
+    "width": 3840
+   },
+   "output": {
+    "chunk_length": 119,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 5,
+    "grid_rows": 4,
+    "height": 2176,
+    "min_tile_size": 256,
+    "solved_overlap_h": 128,
+    "solved_overlap_w": 160,
+    "spatial_h_overlap": 128,
+    "spatial_w_overlap": 128,
+    "temporal_overlap": 17,
+    "tile_height": 640,
+    "tile_width": 896,
+    "vram_preset": "16gb",
+    "width": 3840
+   }
+  },
+  {
+   "input": {
+    "height": 2176,
+    "vram_preset": "24gb",
+    "width": 3840
+   },
+   "output": {
+    "chunk_length": 153,
+    "fade_height": 64,
+    "fade_width": 64,
+    "grid_cols": 4,
+    "grid_rows": 3,
+    "height": 2176,
+    "min_tile_size": 256,
+    "solved_overlap_h": 160,
+    "solved_overlap_w": 256,
+    "spatial_h_overlap": 160,
+    "spatial_w_overlap": 160,
+    "temporal_overlap": 17,
+    "tile_height": 832,
+    "tile_width": 1152,
+    "vram_preset": "24gb",
+    "width": 3840
+   }
+  },
+  {
+   "error": {
+    "message": "Unknown VRAM preset '32gb'. 2 Pass Advanced supports: 8gb, 12gb, 16gb, 24gb.",
+    "type": "ValueError"
+   },
+   "input": {
+    "height": 1088,
+    "vram_preset": "32gb",
+    "width": 1920
+   }
+  },
+  {
+   "error": {
+    "message": "Unknown VRAM preset 'custom'. 2 Pass Advanced supports: 8gb, 12gb, 16gb, 24gb.",
+    "type": "ValueError"
+   },
+   "input": {
+    "height": 1088,
+    "vram_preset": "custom",
+    "width": 1920
+   }
+  },
+  {
+   "error": {
+    "message": "Unknown VRAM preset ''. 2 Pass Advanced supports: 8gb, 12gb, 16gb, 24gb.",
+    "type": "ValueError"
+   },
+   "input": {
+    "height": 1088,
+    "vram_preset": "",
+    "width": 1920
+   }
+  },
+  {
+   "error": {
+    "message": "Unknown VRAM preset 'bogus'. 2 Pass Advanced supports: 8gb, 12gb, 16gb, 24gb.",
+    "type": "ValueError"
+   },
+   "input": {
+    "height": 1088,
+    "vram_preset": "bogus",
+    "width": 1920
+   }
+  }
+ ],
+ "function": "plan_spatial_tiles"
+}

@@ -1,0 +1,104 @@
+{
+ "cases": [
+  {
+   "input": {
+    "frame_count": 0
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "frame_count": 1
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "frame_count": 4
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "frame_count": 5
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "frame_count": 6
+   },
+   "output": 22
+  },
+  {
+   "input": {
+    "frame_count": 21
+   },
+   "output": 22
+  },
+  {
+   "input": {
+    "frame_count": 22
+   },
+   "output": 22
+  },
+  {
+   "input": {
+    "frame_count": 38
+   },
+   "output": 39
+  },
+  {
+   "input": {
+    "frame_count": 39
+   },
+   "output": 39
+  },
+  {
+   "input": {
+    "frame_count": 100
+   },
+   "output": 107
+  },
+  {
+   "input": {
+    "frame_count": 144
+   },
+   "output": 158
+  },
+  {
+   "input": {
+    "frame_count": 145
+   },
+   "output": 158
+  },
+  {
+   "input": {
+    "frame_count": 361
+   },
+   "output": 362
+  },
+  {
+   "input": {
+    "frame_count": 362
+   },
+   "output": 362
+  },
+  {
+   "input": {
+    "frame_count": 363
+   },
+   "output": 379
+  },
+  {
+   "error": {
+    "message": "frame_count must be a non-negative whole number.",
+    "type": "ValueError"
+   },
+   "input": {
+    "frame_count": -1
+   }
+  }
+ ],
+ "function": "align_h3_frame_count"
+}

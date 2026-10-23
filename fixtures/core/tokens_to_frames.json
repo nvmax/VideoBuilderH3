@@ -1,0 +1,221 @@
+{
+ "cases": [
+  {
+   "input": {
+    "tokens": 0
+   },
+   "output": 0
+  },
+  {
+   "input": {
+    "tokens": 1
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "tokens": 2
+   },
+   "output": 5
+  },
+  {
+   "input": {
+    "tokens": 3
+   },
+   "output": 9
+  },
+  {
+   "input": {
+    "tokens": 4
+   },
+   "output": 13
+  },
+  {
+   "input": {
+    "tokens": 5
+   },
+   "output": 17
+  },
+  {
+   "input": {
+    "tokens": 6
+   },
+   "output": 18
+  },
+  {
+   "input": {
+    "tokens": 7
+   },
+   "output": 22
+  },
+  {
+   "input": {
+    "tokens": 8
+   },
+   "output": 26
+  },
+  {
+   "input": {
+    "tokens": 9
+   },
+   "output": 30
+  },
+  {
+   "input": {
+    "tokens": 10
+   },
+   "output": 34
+  },
+  {
+   "input": {
+    "tokens": 11
+   },
+   "output": 35
+  },
+  {
+   "input": {
+    "tokens": 12
+   },
+   "output": 39
+  },
+  {
+   "input": {
+    "tokens": 13
+   },
+   "output": 43
+  },
+  {
+   "input": {
+    "tokens": 14
+   },
+   "output": 47
+  },
+  {
+   "input": {
+    "tokens": 15
+   },
+   "output": 51
+  },
+  {
+   "input": {
+    "tokens": 16
+   },
+   "output": 52
+  },
+  {
+   "input": {
+    "tokens": 17
+   },
+   "output": 56
+  },
+  {
+   "input": {
+    "tokens": 18
+   },
+   "output": 60
+  },
+  {
+   "input": {
+    "tokens": 19
+   },
+   "output": 64
+  },
+  {
+   "input": {
+    "tokens": 20
+   },
+   "output": 68
+  },
+  {
+   "input": {
+    "tokens": 21
+   },
+   "output": 69
+  },
+  {
+   "input": {
+    "tokens": 22
+   },
+   "output": 73
+  },
+  {
+   "input": {
+    "tokens": 23
+   },
+   "output": 77
+  },
+  {
+   "input": {
+    "tokens": 24
+   },
+   "output": 81
+  },
+  {
+   "input": {
+    "tokens": 25
+   },
+   "output": 85
+  },
+  {
+   "input": {
+    "tokens": 26
+   },
+   "output": 86
+  },
+  {
+   "input": {
+    "tokens": 27
+   },
+   "output": 90
+  },
+  {
+   "input": {
+    "tokens": 28
+   },
+   "output": 94
+  },
+  {
+   "input": {
+    "tokens": 29
+   },
+   "output": 98
+  },
+  {
+   "input": {
+    "tokens": 30
+   },
+   "output": 102
+  },
+  {
+   "input": {
+    "tokens": 49
+   },
+   "output": 166
+  },
+  {
+   "input": {
+    "tokens": 62
+   },
+   "output": 209
+  },
+  {
+   "input": {
+    "tokens": 97
+   },
+   "output": 328
+  },
+  {
+   "input": {
+    "tokens": 100
+   },
+   "output": 340
+  },
+  {
+   "input": {
+    "tokens": 200
+   },
+   "output": 680
+  }
+ ],
+ "function": "_tokens_to_frames"
+}

@@ -1,0 +1,341 @@
+{
+ "cases": [
+  {
+   "input": {
+    "aspect_ratio": "1:1 (Square)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "1:1 (Square)",
+    "preset": "1k"
+   },
+   "output": 1.0
+  },
+  {
+   "input": {
+    "aspect_ratio": "1:1 (Square)",
+    "preset": "2k"
+   },
+   "output": 3.5156
+  },
+  {
+   "input": {
+    "aspect_ratio": "1:1 (Square)",
+    "preset": "1440p"
+   },
+   "output": 6.25
+  },
+  {
+   "input": {
+    "aspect_ratio": "1:1 (Square)",
+    "preset": "4k"
+   },
+   "output": 14.0625
+  },
+  {
+   "input": {
+    "aspect_ratio": "1:1 (Square)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "2:3 (Portrait Photo)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "2:3 (Portrait Photo)",
+    "preset": "1k"
+   },
+   "output": 0.6562
+  },
+  {
+   "input": {
+    "aspect_ratio": "2:3 (Portrait Photo)",
+    "preset": "2k"
+   },
+   "output": 2.3438
+  },
+  {
+   "input": {
+    "aspect_ratio": "2:3 (Portrait Photo)",
+    "preset": "1440p"
+   },
+   "output": 4.1406
+  },
+  {
+   "input": {
+    "aspect_ratio": "2:3 (Portrait Photo)",
+    "preset": "4k"
+   },
+   "output": 9.375
+  },
+  {
+   "input": {
+    "aspect_ratio": "2:3 (Portrait Photo)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:2 (Photo)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:2 (Photo)",
+    "preset": "1k"
+   },
+   "output": 0.6562
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:2 (Photo)",
+    "preset": "2k"
+   },
+   "output": 2.3438
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:2 (Photo)",
+    "preset": "1440p"
+   },
+   "output": 4.1406
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:2 (Photo)",
+    "preset": "4k"
+   },
+   "output": 9.375
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:2 (Photo)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:4 (Portrait Standard)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:4 (Portrait Standard)",
+    "preset": "1k"
+   },
+   "output": 0.75
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:4 (Portrait Standard)",
+    "preset": "2k"
+   },
+   "output": 2.6367
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:4 (Portrait Standard)",
+    "preset": "1440p"
+   },
+   "output": 4.6875
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:4 (Portrait Standard)",
+    "preset": "4k"
+   },
+   "output": 10.5469
+  },
+  {
+   "input": {
+    "aspect_ratio": "3:4 (Portrait Standard)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "4:3 (Standard)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "4:3 (Standard)",
+    "preset": "1k"
+   },
+   "output": 0.75
+  },
+  {
+   "input": {
+    "aspect_ratio": "4:3 (Standard)",
+    "preset": "2k"
+   },
+   "output": 2.6367
+  },
+  {
+   "input": {
+    "aspect_ratio": "4:3 (Standard)",
+    "preset": "1440p"
+   },
+   "output": 4.6875
+  },
+  {
+   "input": {
+    "aspect_ratio": "4:3 (Standard)",
+    "preset": "4k"
+   },
+   "output": 10.5469
+  },
+  {
+   "input": {
+    "aspect_ratio": "4:3 (Standard)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "preset": "1k"
+   },
+   "output": 0.5625
+  },
+  {
+   "input": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "preset": "2k"
+   },
+   "output": 1.9922
+  },
+  {
+   "input": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "preset": "1440p"
+   },
+   "output": 3.5156
+  },
+  {
+   "input": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "preset": "4k"
+   },
+   "output": 7.9688
+  },
+  {
+   "input": {
+    "aspect_ratio": "9:16 (Portrait Widescreen)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "preset": "1k"
+   },
+   "output": 0.5625
+  },
+  {
+   "input": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "preset": "2k"
+   },
+   "output": 1.9922
+  },
+  {
+   "input": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "preset": "1440p"
+   },
+   "output": 3.5156
+  },
+  {
+   "input": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "preset": "4k"
+   },
+   "output": 7.9688
+  },
+  {
+   "input": {
+    "aspect_ratio": "16:9 (Widescreen)",
+    "preset": "bogus"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "21:9 (Ultrawide)",
+    "preset": "custom"
+   },
+   "output": null
+  },
+  {
+   "input": {
+    "aspect_ratio": "21:9 (Ultrawide)",
+    "preset": "1k"
+   },
+   "output": 0.4375
+  },
+  {
+   "input": {
+    "aspect_ratio": "21:9 (Ultrawide)",
+    "preset": "2k"
+   },
+   "output": 1.5234
+  },
+  {
+   "input": {
+    "aspect_ratio": "21:9 (Ultrawide)",
+    "preset": "1440p"
+   },
+   "output": 2.6562
+  },
+  {
+   "input": {
+    "aspect_ratio": "21:9 (Ultrawide)",
+    "preset": "4k"
+   },
+   "output": 5.9766
+  },
+  {
+   "input": {
+    "aspect_ratio": "21:9 (Ultrawide)",
+    "preset": "bogus"
+   },
+   "output": null
+  }
+ ],
+ "function": "preset_megapixels"
+}

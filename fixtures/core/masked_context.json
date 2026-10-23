@@ -1,0 +1,3051 @@
+{
+ "cases": [
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": null,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": null,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": null,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 94
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 94 visible frames) is too short for a 141-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": null,
+    "total_tokens": 28
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 94 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": null,
+    "total_tokens": 28
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 0,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 0,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 0,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 94
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 94 visible frames) is too short for a 141-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 0,
+    "total_tokens": 28
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 94 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 0,
+    "total_tokens": 28
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 9,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 9,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 9,
+    "tokens": 27,
+    "warmup_frames": 85
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 85 visible frames) is too short for a 141-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 9,
+    "total_tokens": 28
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 85 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 9,
+    "total_tokens": 28
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 13,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 30
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 13,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 30
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 13,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 13,
+    "tokens": 27,
+    "warmup_frames": 81
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 81 visible frames) is too short for a 141-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 13,
+    "total_tokens": 28
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 81 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 13,
+    "total_tokens": 28
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 16,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 27
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 16,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 27
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 16,
+    "total_tokens": 28
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 150,
+    "end_frame": 90,
+    "end_token": 27,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 16,
+    "tokens": 27,
+    "warmup_frames": 78
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 78 visible frames) is too short for a 141-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 16,
+    "total_tokens": 28
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (28 tokens, 78 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 16,
+    "total_tokens": 28
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": null,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": null,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": null,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 94
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": null,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 145
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (43 tokens, 145 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": null,
+    "total_tokens": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 0,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 0,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 0,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 94
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 0,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 145
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (43 tokens, 145 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 0,
+    "total_tokens": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 9,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 9,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 9,
+    "tokens": 27,
+    "warmup_frames": 85
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 9,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 9,
+    "tokens": 42,
+    "warmup_frames": 136
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (43 tokens, 136 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 9,
+    "total_tokens": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 13,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 30
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 13,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 30
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 13,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 13,
+    "tokens": 27,
+    "warmup_frames": 81
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 13,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 13,
+    "tokens": 42,
+    "warmup_frames": 132
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (43 tokens, 132 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 13,
+    "total_tokens": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 16,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 27
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 16,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 170,
+    "start_frame": 102,
+    "start_token": 30,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 27
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 16,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 85,
+    "start_frame": 51,
+    "start_token": 15,
+    "tail_padding_frames": 16,
+    "tokens": 27,
+    "warmup_frames": 78
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 16,
+    "total_tokens": 43
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 235,
+    "end_frame": 141,
+    "end_token": 42,
+    "head_tail_frames": 12,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 16,
+    "tokens": 42,
+    "warmup_frames": 129
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (43 tokens, 129 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 16,
+    "total_tokens": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": null,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": null,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": null,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 113,
+    "start_frame": 68,
+    "start_token": 20,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 98
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": null,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 28,
+    "start_frame": 17,
+    "start_token": 5,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 149
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (49 tokens, 166 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": null,
+    "total_tokens": 49
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 0,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 0,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 0,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 113,
+    "start_frame": 68,
+    "start_token": 20,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 98
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 0,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 28,
+    "start_frame": 17,
+    "start_token": 5,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 149
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (49 tokens, 166 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 0,
+    "total_tokens": 49
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 38
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 9,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 38
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 9,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 113,
+    "start_frame": 68,
+    "start_token": 20,
+    "tail_padding_frames": 9,
+    "tokens": 27,
+    "warmup_frames": 89
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 9,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 28,
+    "start_frame": 17,
+    "start_token": 5,
+    "tail_padding_frames": 9,
+    "tokens": 42,
+    "warmup_frames": 140
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (49 tokens, 157 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 9,
+    "total_tokens": 49
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 13,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 13,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 13,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 113,
+    "start_frame": 68,
+    "start_token": 20,
+    "tail_padding_frames": 13,
+    "tokens": 27,
+    "warmup_frames": 85
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 13,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 28,
+    "start_frame": 17,
+    "start_token": 5,
+    "tail_padding_frames": 13,
+    "tokens": 42,
+    "warmup_frames": 136
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (49 tokens, 153 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 13,
+    "total_tokens": 49
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 16,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 31
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 16,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 198,
+    "start_frame": 119,
+    "start_token": 35,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 31
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 16,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 113,
+    "start_frame": 68,
+    "start_token": 20,
+    "tail_padding_frames": 16,
+    "tokens": 27,
+    "warmup_frames": 82
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 16,
+    "total_tokens": 49
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 263,
+    "end_frame": 158,
+    "end_token": 47,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 28,
+    "start_frame": 17,
+    "start_token": 5,
+    "tail_padding_frames": 16,
+    "tokens": 42,
+    "warmup_frames": 133
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (49 tokens, 150 visible frames) is too short for a 192-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 16,
+    "total_tokens": 49
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": null,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": null,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": null,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 103
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": null,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 142,
+    "start_frame": 85,
+    "start_token": 25,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 154
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": null,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 57,
+    "start_frame": 34,
+    "start_token": 10,
+    "tail_padding_frames": 0,
+    "tokens": 57,
+    "warmup_frames": 205
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 0,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 0,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 0,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 103
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 0,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 142,
+    "start_frame": 85,
+    "start_token": 25,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 154
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 0,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 57,
+    "start_frame": 34,
+    "start_token": 10,
+    "tail_padding_frames": 0,
+    "tokens": 57,
+    "warmup_frames": 205
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 9,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 9,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 9,
+    "tokens": 27,
+    "warmup_frames": 94
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 9,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 142,
+    "start_frame": 85,
+    "start_token": 25,
+    "tail_padding_frames": 9,
+    "tokens": 42,
+    "warmup_frames": 145
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 9,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 57,
+    "start_frame": 34,
+    "start_token": 10,
+    "tail_padding_frames": 9,
+    "tokens": 57,
+    "warmup_frames": 196
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 13,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 39
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 13,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 39
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 13,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 13,
+    "tokens": 27,
+    "warmup_frames": 90
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 13,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 142,
+    "start_frame": 85,
+    "start_token": 25,
+    "tail_padding_frames": 13,
+    "tokens": 42,
+    "warmup_frames": 141
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 13,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 57,
+    "start_frame": 34,
+    "start_token": 10,
+    "tail_padding_frames": 13,
+    "tokens": 57,
+    "warmup_frames": 192
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 16,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 36
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 16,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 36
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 16,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 16,
+    "tokens": 27,
+    "warmup_frames": 87
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 16,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 142,
+    "start_frame": 85,
+    "start_token": 25,
+    "tail_padding_frames": 16,
+    "tokens": 42,
+    "warmup_frames": 138
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 16,
+    "total_tokens": 71
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 377,
+    "end_frame": 226,
+    "end_token": 67,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 57,
+    "start_frame": 34,
+    "start_token": 10,
+    "tail_padding_frames": 16,
+    "tokens": 57,
+    "warmup_frames": 189
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": null,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": null,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": null,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 397,
+    "start_frame": 238,
+    "start_token": 70,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 98
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": null,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 149
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": null,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 0,
+    "tokens": 57,
+    "warmup_frames": 200
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 0,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 0,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 47
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 0,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 397,
+    "start_frame": 238,
+    "start_token": 70,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 98
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 0,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 149
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 0,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 8,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 0,
+    "tokens": 57,
+    "warmup_frames": 200
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 38
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 9,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 38
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 9,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 397,
+    "start_frame": 238,
+    "start_token": 70,
+    "tail_padding_frames": 9,
+    "tokens": 27,
+    "warmup_frames": 89
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 9,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 9,
+    "tokens": 42,
+    "warmup_frames": 140
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 9,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 9,
+    "tokens": 57,
+    "warmup_frames": 191
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 13,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 13,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 13,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 397,
+    "start_frame": 238,
+    "start_token": 70,
+    "tail_padding_frames": 13,
+    "tokens": 27,
+    "warmup_frames": 85
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 13,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 13,
+    "tokens": 42,
+    "warmup_frames": 136
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 13,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 13,
+    "tokens": 57,
+    "warmup_frames": 187
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 16,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 31
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 16,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 482,
+    "start_frame": 289,
+    "start_token": 85,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 31
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 16,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 397,
+    "start_frame": 238,
+    "start_token": 70,
+    "tail_padding_frames": 16,
+    "tokens": 27,
+    "warmup_frames": 82
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 16,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 312,
+    "start_frame": 187,
+    "start_token": 55,
+    "tail_padding_frames": 16,
+    "tokens": 42,
+    "warmup_frames": 133
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 16,
+    "total_tokens": 99
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 547,
+    "end_frame": 328,
+    "end_token": 97,
+    "head_tail_frames": 8,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 227,
+    "start_frame": 136,
+    "start_token": 40,
+    "tail_padding_frames": 16,
+    "tokens": 57,
+    "warmup_frames": 184
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": null,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": null,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": null,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 425,
+    "start_frame": 255,
+    "start_token": 75,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 103
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": null,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 340,
+    "start_frame": 204,
+    "start_token": 60,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 154
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": null,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 255,
+    "start_frame": 153,
+    "start_token": 45,
+    "tail_padding_frames": 0,
+    "tokens": 57,
+    "warmup_frames": 205
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 0,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 0,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 0,
+    "tokens": 12,
+    "warmup_frames": 52
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 0,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 425,
+    "start_frame": 255,
+    "start_token": 75,
+    "tail_padding_frames": 0,
+    "tokens": 27,
+    "warmup_frames": 103
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 0,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 340,
+    "start_frame": 204,
+    "start_token": 60,
+    "tail_padding_frames": 0,
+    "tokens": 42,
+    "warmup_frames": 154
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 0,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 13,
+    "start_audio_tick": 255,
+    "start_frame": 153,
+    "start_token": 45,
+    "tail_padding_frames": 0,
+    "tokens": 57,
+    "warmup_frames": 205
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 9,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 43
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 9,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 425,
+    "start_frame": 255,
+    "start_token": 75,
+    "tail_padding_frames": 9,
+    "tokens": 27,
+    "warmup_frames": 94
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 9,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 340,
+    "start_frame": 204,
+    "start_token": 60,
+    "tail_padding_frames": 9,
+    "tokens": 42,
+    "warmup_frames": 145
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 9,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 4,
+    "start_audio_tick": 255,
+    "start_frame": 153,
+    "start_token": 45,
+    "tail_padding_frames": 9,
+    "tokens": 57,
+    "warmup_frames": 196
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 13,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 39
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 13,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 13,
+    "tokens": 12,
+    "warmup_frames": 39
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 13,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 425,
+    "start_frame": 255,
+    "start_token": 75,
+    "tail_padding_frames": 13,
+    "tokens": 27,
+    "warmup_frames": 90
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 13,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 340,
+    "start_frame": 204,
+    "start_token": 60,
+    "tail_padding_frames": 13,
+    "tokens": 42,
+    "warmup_frames": 141
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 13,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 0,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 255,
+    "start_frame": 153,
+    "start_token": 45,
+    "tail_padding_frames": 13,
+    "tokens": 57,
+    "warmup_frames": 192
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 16,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 36
+   }
+  },
+  {
+   "input": {
+    "context_frames": 50,
+    "tail_padding_frames": 16,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 510,
+    "start_frame": 306,
+    "start_token": 90,
+    "tail_padding_frames": 16,
+    "tokens": 12,
+    "warmup_frames": 36
+   }
+  },
+  {
+   "input": {
+    "context_frames": 90,
+    "tail_padding_frames": 16,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 90,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 425,
+    "start_frame": 255,
+    "start_token": 75,
+    "tail_padding_frames": 16,
+    "tokens": 27,
+    "warmup_frames": 87
+   }
+  },
+  {
+   "input": {
+    "context_frames": 141,
+    "tail_padding_frames": 16,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 141,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 340,
+    "start_frame": 204,
+    "start_token": 60,
+    "tail_padding_frames": 16,
+    "tokens": 42,
+    "warmup_frames": 138
+   }
+  },
+  {
+   "input": {
+    "context_frames": 192,
+    "tail_padding_frames": 16,
+    "total_tokens": 106
+   },
+   "output": {
+    "context_frames": 192,
+    "end_audio_tick": 575,
+    "end_frame": 345,
+    "end_token": 102,
+    "head_tail_frames": 3,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 255,
+    "start_frame": 153,
+    "start_token": 45,
+    "tail_padding_frames": 16,
+    "tokens": 57,
+    "warmup_frames": 189
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (0 tokens, 0 visible frames) is too short for a 39-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 0
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (1 tokens, 0 visible frames) is too short for a 39-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 1
+   }
+  },
+  {
+   "error": {
+    "message": "The predecessor latent (5 tokens, 8 visible frames) is too short for a 39-frame masked context. Pick a smaller context size or re-render the predecessor longer.",
+    "type": "ValueError"
+   },
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 5
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 12
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 65,
+    "end_frame": 39,
+    "end_token": 12,
+    "head_tail_frames": 9,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 30
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 13
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 65,
+    "end_frame": 39,
+    "end_token": 12,
+    "head_tail_frames": 5,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 34
+   }
+  },
+  {
+   "input": {
+    "context_frames": 39,
+    "tail_padding_frames": 9,
+    "total_tokens": 14
+   },
+   "output": {
+    "context_frames": 39,
+    "end_audio_tick": 65,
+    "end_frame": 39,
+    "end_token": 12,
+    "head_tail_frames": 1,
+    "lost_tail_frames": 0,
+    "start_audio_tick": 0,
+    "start_frame": 0,
+    "start_token": 0,
+    "tail_padding_frames": 9,
+    "tokens": 12,
+    "warmup_frames": 38
+   }
+  }
+ ],
+ "function": "plan_masked_context"
+}
