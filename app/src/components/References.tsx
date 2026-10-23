@@ -113,10 +113,41 @@ export default function References() {
     void refetch();
   };
   const sceneCount = () => project()?.scenes.length ?? 0;
+  const [characterPattern, setCharacterPattern] = createSignal("rotate");
+  const [locationPattern, setLocationPattern] = createSignal("rotate");
+  const [replace, setReplace] = createSignal(false);
+  const assign = async () => {
+    await edit(
+      "POST",
+      "/references/assign-scenes",
+      { character_pattern: characterPattern(), location_pattern: locationPattern(), replace_existing: replace() },
+      "Characters and locations assigned to the scenes.",
+    );
+  };
+  const patterns = ["rotate", "blocks", "random", "unchanged"];
 
   return (
     <div class="refs">
       <p class="muted">Characters and locations give the model faces and places to keep consistent. Give each a picture, then choose which scenes use it.</p>
+      <div class="row wrap">
+        <span>Assign to scenes</span>
+        <label>
+          Characters
+          <select value={characterPattern()} onChange={(e) => setCharacterPattern(e.currentTarget.value)}>
+            <For each={patterns}>{(p) => <option value={p}>{p}</option>}</For>
+          </select>
+        </label>
+        <label>
+          Locations
+          <select value={locationPattern()} onChange={(e) => setLocationPattern(e.currentTarget.value)}>
+            <For each={patterns}>{(p) => <option value={p}>{p}</option>}</For>
+          </select>
+        </label>
+        <label>
+          <input type="checkbox" checked={replace()} onChange={(e) => setReplace(e.currentTarget.checked)} /> Replace existing
+        </label>
+        <button class="small" onClick={() => void assign()}>Assign</button>
+      </div>
       <For each={["subjects", "locations"] as const}>
         {(kind) => (
           <section>

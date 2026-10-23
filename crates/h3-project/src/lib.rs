@@ -4,6 +4,7 @@
 //! project opens in both apps.
 
 pub mod assets;
+pub mod assignment;
 pub mod atomic;
 pub mod backups;
 pub mod config;

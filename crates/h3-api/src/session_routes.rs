@@ -174,6 +174,30 @@ pub async fn put_scene_mapping(State(state): Shared, Path(pid): Path<String>, he
     edit(&state, &pid, move |folder, now| session_ops::update_scene_mapping(folder, &mapping, expected, now)).await
 }
 
+/// Assign characters and locations to scenes by pattern. `dry_run` returns the plan and saves nothing.
+pub async fn assign_scenes(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let expected = if_match(&headers)?;
+    let text = |k: &str, default: &str| body.get(k).and_then(Value::as_str).filter(|s| !s.is_empty()).unwrap_or(default).to_string();
+    let int = |k: &str, default: i64| body.get(k).and_then(h3_core::pyval::to_int).filter(|n| *n != 0).unwrap_or(default);
+    let flag = |k: &str, default: bool| body.get(k).map_or(default, h3_core::pyval::truthy);
+    let params = h3_project::assignment::AssignParams {
+        scope: text("scope", "all"),
+        range_start: int("range_start", 1),
+        range_end: body.get("range_end").and_then(h3_core::pyval::to_int),
+        scene_ids: body.get("scene_ids").and_then(Value::as_array).map(|a| a.iter().map(|v| h3_core::pyval::py_str(Some(v))).collect()).unwrap_or_default(),
+        character_pattern: text("character_pattern", "unchanged"),
+        character_block_size: int("character_block_size", 10),
+        location_pattern: text("location_pattern", "unchanged"),
+        location_block_size: int("location_block_size", 4),
+        replace_existing: flag("replace_existing", false),
+        avoid_location_repeat: flag("avoid_location_repeat", true),
+        seed: body.get("seed").and_then(Value::as_u64),
+    };
+    let dry_run = flag("dry_run", false);
+    edit(&state, &pid, move |folder, now| h3_project::assignment::assign_scenes(folder, &params, dry_run, expected, now)).await
+}
+
 // -- audio ------------------------------------------------------------------------------------------------------------------
 
 fn tools(state: &crate::app::AppState) -> Result<Tools, ApiError> {

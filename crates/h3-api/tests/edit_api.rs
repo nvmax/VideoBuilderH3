@@ -129,6 +129,19 @@ async fn a_project_is_built_edited_and_deleted_through_the_api() {
     s.ok(Method::PUT, &format!("{p}/references/scene-mapping"), json!({"subjects": {"1": ["subj1"]}})).await;
     let (_, mapping) = s.get(&format!("{p}/references/scene-mapping")).await;
     assert_eq!(mapping["data"]["scene_mapping"]["subjects"]["1"], json!(["subj1"]));
+    // Assign Scenes: a dry run saves nothing, the real run fills both maps.
+    s.ok(Method::PUT, &format!("{p}/references/locations/loc1"), json!({"name": "Roof"})).await;
+    let rotate = json!({"character_pattern": "rotate", "location_pattern": "rotate", "replace_existing": true});
+    let preview = s.ok(Method::POST, &format!("{p}/references/assign-scenes"), json!({"character_pattern": "rotate", "location_pattern": "rotate", "replace_existing": true, "dry_run": true})).await;
+    assert!(preview["dry_run"].as_bool().unwrap() && preview["revision"].is_null() && preview["scenes_assigned"].as_u64().unwrap() > 0);
+    let before = s.get(&format!("{p}/references/scene-mapping")).await.1["data"]["scene_mapping"]["locations"].clone();
+    assert_eq!(before, json!({}));
+    let done = s.ok(Method::POST, &format!("{p}/references/assign-scenes"), rotate).await;
+    assert!(done["revision"].as_i64().is_some() && done["location_use"]["Roof"].as_u64().unwrap() > 0);
+    let after = s.get(&format!("{p}/references/scene-mapping")).await.1["data"]["scene_mapping"]["locations"].clone();
+    assert_eq!(after.as_object().unwrap().len() as u64, done["scenes_assigned"].as_u64().unwrap());
+    let (code, _) = s.call(Method::POST, &format!("{p}/references/assign-scenes"), &[], Some(json!({"character_pattern": "shuffle"}))).await;
+    assert_eq!(code, 400);
     s.ok(Method::DELETE, &format!("{p}/references/subjects/subj1"), json!(null)).await;
 
     // Deleting needs the id typed back.
