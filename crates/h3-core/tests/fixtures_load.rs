@@ -19,7 +19,7 @@ fn manifest_counts_match_files() {
 fn table_fixtures_have_cases_with_an_output_or_error() {
     for folder in ["core", "scene", "prompt"] {
         for name in files_in(folder) {
-            if matches!(name.as_str(), "session.json" | "segments.json") {
+            if matches!(name.as_str(), "session.json" | "segments.json" | "named_inputs.json") {
                 continue;
             }
             let relative = format!("{folder}/{name}");

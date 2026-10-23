@@ -10,3 +10,4 @@ serde.workspace = true
 serde_json.workspace = true
 rust_decimal.workspace = true
 thiserror.workspace = true
+fancy-regex.workspace = true

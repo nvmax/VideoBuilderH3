@@ -2,6 +2,7 @@
 
 pub mod continuity;
 pub mod error;
+pub mod prompt;
 pub mod pyval;
 pub mod resolution;
 pub mod scene;

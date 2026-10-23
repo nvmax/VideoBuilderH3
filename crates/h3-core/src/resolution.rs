@@ -136,20 +136,19 @@ pub fn migrate_resolution(raw: &Obj, render_pass: &str) -> (String, f64) {
         let mp = preset_megapixels(DEFAULT_RESOLUTION_PRESET, &aspect).unwrap_or(0.5625);
         return (DEFAULT_RESOLUTION_PRESET.to_string(), mp);
     }
-    let mut preset = "custom".to_string();
-    let megapixels;
-    if render_pass == "three_pass" {
+    let (preset, megapixels) = if render_pass == "three_pass" {
         let legacy = text_or_empty(raw.get("advanced_two_pass_pass2_resolution_preset")).trim().to_lowercase();
-        preset = if RESOLUTION_PRESETS.contains(&legacy.as_str()) { legacy } else { "custom".into() };
-        megapixels = preset_megapixels(&preset, &aspect)
+        let preset = if RESOLUTION_PRESETS.contains(&legacy.as_str()) { legacy } else { "custom".to_string() };
+        let megapixels = preset_megapixels(&preset, &aspect)
             .unwrap_or_else(|| clamp_megapixels(raw.get("advanced_two_pass_pass2_megapixels"), 2.0));
+        (preset, megapixels)
     } else if render_pass == "two_pass" && has_final_size {
         let w = final_w.and_then(to_float).unwrap_or(0.0);
         let h = final_h.and_then(to_float).unwrap_or(0.0);
-        megapixels = clamp_megapixels(Some(&Value::from(w * h / 1048576.0)), 0.9);
+        ("custom".to_string(), clamp_megapixels(Some(&Value::from(w * h / 1048576.0)), 0.9))
     } else {
-        megapixels = clamp_megapixels(raw.get("megapixels"), 0.9);
-    }
+        ("custom".to_string(), clamp_megapixels(raw.get("megapixels"), 0.9))
+    };
     if preset == "custom" {
         let size = frame_size(megapixels, &aspect);
         for key in RESOLUTION_PRESETS {

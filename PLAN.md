@@ -1,6 +1,6 @@
 # VRGDG H3 Studio (Rust): Implementation Plan
 
-Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. Next: P2. Everything stays local: no remote, no push.
+Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. Next: P3. Everything stays local: no remote, no push.
 Reference pack commit: `14421d2` (branch `newbuilder`).
 Location: `rustapp/` inside the pack folder, excluded from git through `.git/info/exclude` (no tracked file changed).
 
@@ -194,3 +194,11 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - **F7. Real project round-trip test stays local.** P3 reads real sessions from a path given by the `H3_REAL_PROJECTS` environment variable, never from committed files, because the repo will become public.
 - **F8. Masked continuation inputs.** The graph needs the predecessor latent header (`token_count`, `tail_padding_frames` from `scene_NNN.latent.json`). The limits are real: a 192 frame context needs a predecessor of about 241 frames or more, and the mode is refused in 2 Pass Advanced, I2V and Image + Reference.
 
+
+## 12. P2 findings
+
+- **F9.** Python's decimal context keeps 28 significant digits and rounds after every operation. The pack depends on it: a context of 4.0416..67 s times 24 comes out a hair above 97, so its ceiling is 98 frames. `timing.rs` repeats that rounding after each step and matches all 233 timing cases.
+- **F10.** Fixture inputs that name a plan, item list or scene (`plans`, `items`, `places`, `cue_segments`) now come with `fixtures/prompt/named_inputs.json`, written by the generator, so the Rust tests build the same objects.
+- **F11.** Prompt patterns use lookahead and lookbehind, so `h3-core` uses `fancy-regex`. Python slices strings by character and Rust by byte, so every cut in the port goes through characters.
+- **F12.** Deferred from P2 to the phase that needs them: `minimax/prompt_assembly.py` (the agent API's cut plan from duration and frequency, and its context builder) goes to P6 and P8. `schema`, `attention summary` and seed randomizing in `settings_payload.py` go to P10.
+- Test count after P2: 39 fixture tests in `h3-core`, covering 233 timing, 156 masked context, 360 scene input and 1,038 prompt cases. A deliberate typo in one pack sentence made the prompt test fail, so the string checks are real.

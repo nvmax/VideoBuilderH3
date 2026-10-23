@@ -96,7 +96,7 @@ fn extra_target_id(subject: &Obj) -> String {
     text(first_truthy(subject, &["extra_reference_for", "extraReferenceFor", "same_subject_as", "sameSubjectAs"]))
 }
 
-fn logical_subjects<'a>(refs: &'a Obj) -> Vec<&'a Obj> {
+fn logical_subjects(refs: &Obj) -> Vec<&Obj> {
     objs(refs.get("subjects")).into_iter().filter(|s| extra_target_id(s).is_empty()).collect()
 }
 

@@ -1,0 +1,309 @@
+{
+ "build_shot_task_base": {
+  "aspect_ratio": "16:9 (Widescreen)",
+  "audio_mode": "input_audio",
+  "camera_speed": 6,
+  "character_speed": 4,
+  "cut_plan": {
+   "cut_times_seconds": [
+    2.5,
+    5.125
+   ],
+   "exact_duration_seconds": 8.25,
+   "frequency": 5
+  },
+  "duration": 8.25,
+  "labels": [
+   {
+    "kind": "subject",
+    "label": "<Subject 1>",
+    "name": "Mara",
+    "picture": "<Picture 1>"
+   },
+   {
+    "kind": "subject",
+    "label": "<Subject 2>",
+    "name": "the Joe",
+    "picture": "<Picture 2>"
+   },
+   {
+    "kind": "extra",
+    "label": "<Subject 3>",
+    "name": "Dancer",
+    "picture": "<Picture 3>"
+   },
+   {
+    "kind": "location",
+    "label": "<Subject 4>",
+    "name": "Neon street",
+    "picture": "<Picture 4>"
+   },
+   {
+    "kind": "subject",
+    "label": "<Subject 5>",
+    "name": "Props",
+    "picture": "<Picture 5>"
+   }
+  ],
+  "mode_label": "Reference to Video",
+  "seed": "scene-3",
+  "style": "cinematic realism"
+ },
+ "continuations": {
+  "basic": {
+   "hold_seconds": 1.5,
+   "scene_seconds": 6.0
+  },
+  "direction": {
+   "direction": "The singer walks toward the stage lights.",
+   "hold_seconds": 1.5,
+   "scene_seconds": 6.0
+  },
+  "empty": {},
+  "left": {
+   "hold_seconds": 2.0,
+   "scene_seconds": 9.0,
+   "seconds_left": 7.25
+  },
+  "zero_hold": {
+   "hold_seconds": 0,
+   "scene_seconds": 4.0
+  }
+ },
+ "cue_segments": {
+  "cue_map": {
+   "lyric_cue_map": [
+    {
+     "singer_id": "s1",
+     "singer_name": "Mara",
+     "start": 0,
+     "text": "hold on tight",
+     "type": "vocal",
+     "vocal_end": 2.25,
+     "vocal_start": 0.5
+    },
+    {
+     "action_note": "camera cranes up over the crowd",
+     "start": 2.5,
+     "type": "instrumental"
+    },
+    {
+     "singer_id": "s2",
+     "singer_name": "Joe",
+     "start": 4.0,
+     "text": "don't let go",
+     "type": "vocal",
+     "vocal_end": 6.0,
+     "vocal_start": 4.1
+    }
+   ],
+   "lyric_performance_mode": "cue_map"
+  },
+  "cue_map_blank_vocal": {
+   "lyric_cue_map": [
+    {
+     "start": 0,
+     "text": "  ",
+     "type": "vocal"
+    }
+   ],
+   "lyric_performance_mode": "cue_map"
+  },
+  "cue_map_missing_start": {
+   "lyric_cue_map": [
+    {
+     "text": "a",
+     "type": "vocal"
+    },
+    {
+     "start": 2,
+     "text": "b",
+     "type": "vocal"
+    }
+   ],
+   "lyric_performance_mode": "cue_map"
+  },
+  "empty": {},
+  "together": {
+   "lyric_cue_map": [
+    {
+     "start": 0,
+     "text": "a"
+    }
+   ],
+   "lyric_performance_mode": "together"
+  }
+ },
+ "descriptions": {
+  "no_punctuation": [
+   "A wide shot of the street at night with rain",
+   "A close-up of her face as she sings the final line with feeling"
+  ],
+  "ok_one": [
+   "<Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1> and the camera drifts closer in a slow push."
+  ],
+  "ok_three": [
+   "A wide shot of <Subject 1> on the curb, singing in sync with <Audio 1> as neon light flickers over the wet street.",
+   "Continuing directly from the previous shot's final moment, <Subject 1> keeps singing as the camera cuts to a low angle close-up.",
+   "<Subject 1> finishes the line and holds a quiet, steady gaze at the camera, ending on a clear held pose."
+  ],
+  "picture_leak": [
+   "Starting from <Picture 1>, the camera follows her down the street and she sings the first line.",
+   "A close-up."
+  ],
+  "short_final": [
+   "A wide shot of the street.",
+   "Short."
+  ]
+ },
+ "items": {
+  "custom_purpose": [
+   {
+    "kind": "subject",
+    "label": "Mara",
+    "purpose": "voice and face reference; keep the scar"
+   }
+  ],
+  "full_cast": [
+   {
+    "description": "lead singer, red jacket, short dark hair",
+    "kind": "subject",
+    "label": "Mara"
+   },
+   {
+    "description": "drummer with a beard, grey hoodie and a wide silver ring on each hand, always sweating through the set",
+    "kind": "subject",
+    "label": "the Joe"
+   },
+   {
+    "description": "backup dancer",
+    "kind": "extra",
+    "label": "Dancer"
+   },
+   {
+    "description": "wet street at night, signs reflecting in puddles",
+    "kind": "location",
+    "label": "Neon street"
+   },
+   {
+    "description": "guitar and mic",
+    "kind": "ingredients",
+    "label": "Props"
+   }
+  ],
+  "location_only": [
+   {
+    "description": "a long empty hall",
+    "kind": "location",
+    "label": "Empty hall"
+   }
+  ],
+  "none": [],
+  "singer_only": [
+   {
+    "description": "lead singer, red jacket, short dark hair",
+    "kind": "subject",
+    "label": "Mara"
+   }
+  ],
+  "start_and_end": [
+   {
+    "kind": "start_frame"
+   },
+   {
+    "kind": "subject",
+    "label": "Mara"
+   },
+   {
+    "kind": "end_frame"
+   }
+  ],
+  "start_frame": [
+   {
+    "kind": "start_frame",
+    "label": "Scene start frame"
+   },
+   {
+    "description": "lead singer",
+    "kind": "subject",
+    "label": "Mara"
+   },
+   {
+    "description": "",
+    "kind": "location",
+    "label": "Rooftop"
+   }
+  ]
+ },
+ "places": {
+  "bare": {
+   "name": "Hall"
+  },
+  "long": {
+   "description": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+   "id": "l3",
+   "name": "Warehouse"
+  },
+  "none": null,
+  "roof": {
+   "description": "rooftop lounge with string lights",
+   "id": "l2",
+   "name": "Rooftop"
+  },
+  "street": {
+   "description": "A wet street at night. Signs reflect in puddles.",
+   "id": "l1",
+   "name": "Neon street"
+  }
+ },
+ "plans": {
+  "continuous_two": {
+   "continuous": true,
+   "cut_times_seconds": [
+    2.5,
+    5.125
+   ],
+   "exact_duration_seconds": 8.25,
+   "frequency": 5
+  },
+  "long_minute": {
+   "cut_times_seconds": [
+    61.234
+   ],
+   "exact_duration_seconds": 75.0,
+   "frequency": 2
+  },
+  "many_cuts": {
+   "cut_times_seconds": [
+    1.5,
+    3.0,
+    4.5,
+    7.25,
+    9.0,
+    10.5
+   ],
+   "exact_duration_seconds": 12.0,
+   "frequency": 9
+  },
+  "one_cut": {
+   "cut_times_seconds": [
+    2.0
+   ],
+   "exact_duration_seconds": 4.0,
+   "frequency": 3
+  },
+  "one_shot": {
+   "cut_times_seconds": [],
+   "exact_duration_seconds": 5.0,
+   "frequency": 0
+  },
+  "two_cuts": {
+   "cut_times_seconds": [
+    2.5,
+    5.125
+   ],
+   "exact_duration_seconds": 8.25,
+   "frequency": 5
+  }
+ }
+}

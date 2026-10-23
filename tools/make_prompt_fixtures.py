@@ -290,6 +290,11 @@ def main() -> int:
     }
     write(out, "build_shot_task", "build_shot_task", [
         {"input": {"variant": name, "kwargs_extra": extra}, **call(sp.build_shot_task, **{**base, **extra})} for name, extra in variants.items()])
+    # The named inputs the cases above refer to, so the Rust tests build the same objects.
+    (out / "named_inputs.json").write_text(json.dumps({
+        "plans": PLANS, "items": ITEMS, "descriptions": DESCRIPTIONS, "cue_segments": cue_segments, "places": places,
+        "continuations": continuations, "build_shot_task_base": base,
+    }, indent=1, sort_keys=True, ensure_ascii=False), encoding="utf-8")
     return 0
 
 
