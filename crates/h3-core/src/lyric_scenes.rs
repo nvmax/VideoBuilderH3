@@ -35,10 +35,15 @@ pub fn is_instrumental_lyric_text(value: &str) -> bool {
 
 /// Join two scenes' lyrics, ignoring instrumental markers.
 pub fn merge_lyric_text(a: &str, b: &str) -> String {
+    merge_lyric_text_with(a, b, DEFAULT_INSTRUMENTAL_TEXT)
+}
+
+/// Like [`merge_lyric_text`] with the text that stands for "instrumental" chosen by the caller.
+pub fn merge_lyric_text_with(a: &str, b: &str, instrumental_text: &str) -> String {
     let values: Vec<String> = [a, b].iter().map(|v| v.trim().to_string()).filter(|v| !v.is_empty()).collect();
     let vocal: Vec<&String> = values.iter().filter(|v| !is_instrumental_lyric_text(v)).collect();
     if vocal.is_empty() {
-        return values.first().cloned().unwrap_or_else(|| DEFAULT_INSTRUMENTAL_TEXT.to_string());
+        return values.first().cloned().unwrap_or_else(|| instrumental_text.to_string());
     }
     let mut seen: Vec<&String> = Vec::new();
     for v in vocal {

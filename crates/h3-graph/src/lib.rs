@@ -7,6 +7,7 @@ pub mod api;
 pub mod env;
 pub mod inputs;
 pub mod patches;
+pub mod timestamp;
 pub mod workflows;
 
 pub use env::{GraphEnv, GraphError, LatentFacts, Result};

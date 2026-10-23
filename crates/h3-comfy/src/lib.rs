@@ -9,5 +9,5 @@ pub mod preflight;
 pub mod queue;
 
 pub use client::{ComfyClient, ComfyError, SystemStats};
-pub use queue::{extract_images, extract_videos, prompt_error, prompt_finished, ComfyDirs, Queued};
+pub use queue::{extract_images, extract_texts, extract_videos, prompt_error, prompt_finished, ComfyDirs, Queued};
 pub use preflight::{check_nodes, Feature, NodeReport, REQUIRED_NODES};

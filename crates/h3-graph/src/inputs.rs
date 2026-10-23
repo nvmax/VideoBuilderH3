@@ -36,6 +36,7 @@ pub fn template(name: &str) -> Result<(String, Obj)> {
             include_str!("../templates/minimax_i2v_audio_driven_builder_latent_upscale_2pass_api.json")
         }
         "minimax_built_in_audio_builder_api.json" => include_str!("../templates/minimax_built_in_audio_builder_api.json"),
+        "lyrics_timestamp_api.json" => include_str!("../templates/lyrics_timestamp_api.json"),
         other => return Err(GraphError::new(format!("Workflow API template was not found: {other}"))),
     };
     match serde_json::from_str::<Value>(text) {

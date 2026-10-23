@@ -53,6 +53,7 @@ pub fn router(state: Arc<AppState>) -> Router {
     job_handlers::register(&state);
     crate::image_jobs::register(&state);
     crate::llm_jobs::register(&state);
+    crate::lyric_jobs::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -93,6 +94,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/resize", post(er::resize_scene))
         .route("/projects/{pid}/timeline/bulk", post(er::timeline_bulk))
         .route("/projects/{pid}/timeline/close-gaps", post(er::close_gaps))
+        .route("/projects/{pid}/lyrics/align", post(crate::lyric_jobs::align_route))
+        .route("/projects/{pid}/timeline/from-lines", post(crate::lyric_jobs::from_lines_route))
         .route("/projects/{pid}/timeline/snap", post(er::snap))
         .route("/projects/{pid}/validate", post(er::validate))
         .route("/projects/{pid}/scenes/{sid}/video/render", post(render_scene))

@@ -8,6 +8,7 @@ pub mod image_jobs;
 pub mod image_routes;
 pub mod job_handlers;
 pub mod llm_jobs;
+pub mod lyric_jobs;
 pub mod llm_routes;
 pub mod session_routes;
 pub mod views;

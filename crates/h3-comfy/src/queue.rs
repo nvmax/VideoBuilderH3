@@ -99,6 +99,26 @@ impl ComfyClient {
     }
 }
 
+/// Text that nodes such as Show Text put in the prompt's outputs.
+pub fn extract_texts(history: &Value, prompt_id: &str) -> Vec<String> {
+    let mut texts = Vec::new();
+    let Some(outputs) = entry(history, prompt_id).get("outputs").and_then(Value::as_object) else { return texts };
+    for out in outputs.values().filter(|o| o.is_object()) {
+        let direct = out.get("text").filter(|t| !t.is_null() && !t.as_str().is_some_and(str::is_empty) && !t.as_array().is_some_and(Vec::is_empty));
+        let value = direct.or_else(|| out.get("ui").and_then(|u| u.get("text")));
+        match value {
+            Some(Value::Array(items)) => texts.extend(items.iter().filter_map(|i| match i {
+                Value::String(s) if !s.is_empty() => Some(s.clone()),
+                Value::Null | Value::Bool(false) | Value::String(_) => None,
+                other => Some(other.to_string()),
+            })),
+            Some(Value::String(s)) if !s.trim().is_empty() => texts.push(s.clone()),
+            _ => {}
+        }
+    }
+    texts
+}
+
 /// ComfyUI's per node errors as readable lines under the headline.
 fn describe_node_errors(message: &str, node_errors: &Value) -> String {
     let Some(map) = node_errors.as_object().filter(|m| !m.is_empty()) else { return message.to_string() };

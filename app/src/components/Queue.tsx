@@ -65,6 +65,15 @@ export default function Queue() {
           <h3>Render</h3>
           <span class="muted">{withPrompt()} of {scenes().length} scenes have a prompt, {withVideo()} have a video.</span>
           <span class="spacer" />
+          <button
+            title="Times the song's lyrics with ComfyUI and builds the scenes from them"
+            onClick={() => {
+              if (scenes().length > 0 && !window.confirm("Replace the current scenes with scenes made from the lyrics?")) return;
+              void submit("/timeline/from-lines", { replace_existing: scenes().length > 0 }, "Timing the lyrics and making scenes. This can take a few minutes.");
+            }}
+          >
+            Make scenes from lyrics
+          </button>
           <button disabled={withPrompt() === scenes().length} onClick={() => void submit("/minimax-prompts", {}, "Writing prompts for the scenes that have none.")}>
             Write missing prompts
           </button>
