@@ -96,6 +96,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/validate", post(er::validate))
         .route("/projects/{pid}/scenes/{sid}/video/render", post(render_scene))
         .route("/projects/{pid}/minimax-prompts", post(lr::write_prompts))
+        .route("/projects/{pid}/references/{kind}/{rid}/describe", post(lr::describe_reference))
         .route("/projects/{pid}/video/render", post(render_batch))
         .route("/projects/{pid}/video/graph", post(video_graph))
         .route("/projects/{pid}/stitch", post(stitch))

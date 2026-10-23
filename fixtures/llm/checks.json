@@ -1,0 +1,222 @@
+{
+ "checks": [
+  {
+   "text": "",
+   "repeat": false,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "A woman with long dark hair, a red leather jacket, black boots and silver rings stands tall.",
+   "repeat": false,
+   "template": false,
+   "bad_reference": false
+  },
+  {
+   "text": "thought thought thought thought thought thought",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "model_model_model things",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "abcabcabcabcabcabcabc",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "hair hair hair hair hair hair hair hair hair hair hair hair hair hair hair hair hair hair",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "a b c d a b c d a b c d a b c d a b c d a b c d a b c d",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "[subject] wearing [clothing] in [setting]",
+   "repeat": false,
+   "template": true,
+   "bad_reference": true
+  },
+  {
+   "text": "Wearing [clothing] today.",
+   "repeat": false,
+   "template": true,
+   "bad_reference": true
+  },
+  {
+   "text": "the dog the dog the dog",
+   "repeat": false,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "red red red",
+   "repeat": false,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "ok ok ok ok ok ok ok ok",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "short",
+   "repeat": false,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "short words only here",
+   "repeat": false,
+   "template": false,
+   "bad_reference": false
+  },
+  {
+   "text": "One two three four five six seven eight nine ten eleven twelve thirteen fourteen",
+   "repeat": false,
+   "template": false,
+   "bad_reference": false
+  },
+  {
+   "text": "walks into the room and then walks into the room and then walks into the room and then sits down quietly",
+   "repeat": false,
+   "template": false,
+   "bad_reference": false
+  },
+  {
+   "text": "<|channel>thought: nothing",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "A tall man in a long grey coat with a scarf and brown leather gloves, looking calm.",
+   "repeat": false,
+   "template": false,
+   "bad_reference": false
+  },
+  {
+   "text": "word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word ",
+   "repeat": true,
+   "template": false,
+   "bad_reference": true
+  },
+  {
+   "text": "alpha beta gamma delta alpha beta gamma delta alpha beta gamma delta alpha beta",
+   "repeat": false,
+   "template": false,
+   "bad_reference": false
+  }
+ ],
+ "visual": [
+  {
+   "input": "plain answer",
+   "return": "plain answer"
+  },
+  {
+   "input": "  spaced \r\n answer \r ",
+   "return": "spaced \r\n answer"
+  },
+  {
+   "input": "<think>hidden</think>The answer.",
+   "return": "The answer."
+  },
+  {
+   "input": "<thought>one</thought> A <think>two</think> B",
+   "return": "<thought>one</thought> A  B"
+  },
+  {
+   "input": "reasoning without opener</think>Real answer",
+   "return": "without opener</think>Real answer"
+  },
+  {
+   "input": "Thinking: step one\nstep two\nFinal answer: Done.",
+   "return": "Thinking: step one\nstep two\nFinal answer: Done."
+  },
+  {
+   "input": "Thought process: stuff\nAnswer: 42",
+   "return": "process: stuff\nAnswer: 42"
+  },
+  {
+   "input": "Analysis: just a label then text",
+   "return": "just a label then text"
+  },
+  {
+   "input": "<|channel|>thought: tail",
+   "return": ": tail"
+  },
+  {
+   "input": "```json\n{\"a\": 1}\n```",
+   "return": "```json\n{\"a\": 1}\n```"
+  },
+  {
+   "input": "```text\nhello\n```",
+   "return": "```text\nhello\n```"
+  },
+  {
+   "input": "Assistant: hi there",
+   "return": "hi there"
+  },
+  {
+   "input": "Final answer: yes",
+   "return": "Final answer: yes"
+  },
+  {
+   "input": "Answer:   spaced",
+   "return": "spaced"
+  },
+  {
+   "input": "<think>unclosed",
+   "return": "<think>unclosed"
+  },
+  {
+   "input": "",
+   "return": ""
+  },
+  {
+   "input": "Reasoning: x\n\nresponse: y\nsecond line",
+   "return": "x"
+  },
+  {
+   "input": "<think>x</think>\n\nFirst paragraph.\n\nSecond paragraph.",
+   "return": "First paragraph."
+  },
+  {
+   "input": "model thought: thinking\nreal text",
+   "return": "thinking\nreal text"
+  },
+  {
+   "input": "<start_of_turn>model\nHello<end_of_turn>",
+   "return": "Hello"
+  },
+  {
+   "input": "name: Ava is a singer",
+   "return": "Ava is a singer"
+  },
+  {
+   "input": "1 thought: x then answer",
+   "return": "x then answer"
+  },
+  {
+   "input": "_user_thought = hmm",
+   "return": "hmm"
+  },
+  {
+   "input": "Final prompt: A shot.\n  \nMore",
+   "return": "A shot."
+  }
+ ]
+}

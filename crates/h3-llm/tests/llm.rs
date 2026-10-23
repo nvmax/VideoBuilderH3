@@ -21,6 +21,22 @@ fn cleaning_matches_the_pack() {
     }
 }
 
+#[test]
+fn output_checks_match_the_pack() {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/llm/checks.json");
+    let data: Value = serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
+    for case in data["checks"].as_array().unwrap() {
+        let text = case["text"].as_str().unwrap();
+        assert_eq!(h3_llm::checks::looks_like_repeat_failure(text), case["repeat"].as_bool().unwrap(), "repeat {text:?}");
+        assert_eq!(h3_llm::checks::looks_like_unfilled_template(text), case["template"].as_bool().unwrap(), "template {text:?}");
+        assert_eq!(h3_llm::checks::looks_like_bad_reference_description(text), case["bad_reference"].as_bool().unwrap(), "bad reference {text:?}");
+    }
+    for case in data["visual"].as_array().unwrap() {
+        let input = case["input"].as_str().unwrap();
+        assert_eq!(h3_llm::checks::clean_visual_text(input), case["return"].as_str().unwrap(), "visual {input:?}");
+    }
+}
+
 #[derive(Default)]
 struct Mock {
     models: Mutex<Vec<Value>>,
@@ -105,7 +121,7 @@ async fn a_long_prompt_shrinks_the_reply_or_is_refused() {
     let config = cfg(&base);
     chat(&config, &ChatRequest::text(&"word ".repeat(900), 0.5, 0.9, 100)).await.unwrap();
     let sent = mock.chats.lock().unwrap()[0]["max_output_tokens"].as_i64().unwrap();
-    assert!(sent < 8192 && sent >= 256, "{sent}");
+    assert!((256..8192).contains(&sent), "{sent}");
     let err = chat(&config, &ChatRequest::text(&"word ".repeat(4000), 0.5, 0.9, 100)).await.unwrap_err();
     assert!(matches!(err, LlmError::Context(_)), "{err}");
 }
@@ -133,4 +149,36 @@ fn keys_are_hidden_in_the_settings_view() {
     let view = config.redacted();
     assert_eq!((view["api_key"].as_str(), view["api_key_set"].as_bool()), (Some(""), Some(true)));
     assert_eq!(view["own_server_api_key_set"], false);
+}
+
+#[test]
+fn reference_descriptions_are_cleaned_like_the_builder_does() {
+    use h3_llm::describe::{clean_reference_description as clean, instruction};
+    let out = clean("Character: The character has pale skin tone, wears a red leather jacket, black boots and silver rings, with short dark hair.", "subject", "Ava").unwrap();
+    assert!(out.contains("Ava") && !out.to_lowercase().contains("skin") && !out.to_lowercase().contains("the character"), "{out}");
+    let long = (1..=130).map(|i| format!("zq{}{}", (b'a' + (i % 26) as u8) as char, (b'a' + (i / 26) as u8) as char)).collect::<Vec<_>>().join(" ");
+    let capped = clean(&long, "location", "").unwrap();
+    assert_eq!(capped.split_whitespace().count(), 100);
+    assert!(capped.ends_with('.'));
+    assert!(clean("hair hair hair hair hair hair hair hair", "subject", "").is_err(), "repeated text is refused");
+    assert!(clean("", "subject", "").is_err());
+    assert_eq!(clean("Sure. a photo of me thoughta photo of a woman with green eyes and a round face and straight dark hair.", "face", "").unwrap(), "a photo of a woman with green eyes and a round face and straight dark hair.");
+    assert!(instruction("subject", "Ava", 1, "").ends_with("Do not call them the character or the subject in the final description."));
+    assert!(instruction("extra", "", 500, "gothic").contains("one of a group of 100 background performers in a gothic-appropriate wardrobe."));
+    assert!(instruction("vehicle", "Truck", 1, "").contains("concise vehicle reference description") && instruction("vehicle", "Truck", 1, "").ends_with("Truck"));
+    assert_eq!(h3_llm::describe::normalize_reference_type(" Weird "), "subject");
+}
+
+#[tokio::test]
+async fn a_picture_is_sent_to_lm_studio_as_an_image_block_with_reasoning_off() {
+    let (base, mock) = start(vec![model("vision-model", "loaded", "vlm", 8192)]).await;
+    // The stand-in answers "Hello there.", which is too short to be a description, so it asks twice and then refuses.
+    let err = h3_llm::describe::describe_reference(&cfg(&base), "character", "Ava", "data:image/png;base64,AAAA", 1, "").await.unwrap_err();
+    assert!(err.to_string().contains("unusable"), "{err}");
+    assert_eq!(mock.chats.lock().unwrap().len(), 2, "one calmer second try");
+    assert!(mock.chats.lock().unwrap()[1]["input"][0]["content"].as_str().unwrap().contains("Previous output was rejected"));
+    let body = mock.chats.lock().unwrap()[0].clone();
+    assert_eq!(body["input"][0]["type"], "text");
+    assert_eq!(body["input"][1], json!({"type": "image", "data_url": "data:image/png;base64,AAAA"}));
+    assert_eq!(body["reasoning"], "off");
 }

@@ -94,6 +94,20 @@ pub async fn write_prompts(State(state): Shared, axum::extract::Path(pid): axum:
     Ok(crate::app::job_response(&job))
 }
 
+/// Describe a character or location picture with the LLM and save the description on the card, as a job.
+pub async fn describe_reference(State(state): Shared, axum::extract::Path((pid, kind, rid)): axum::extract::Path<(String, String, String)>) -> ApiResult {
+    if kind != "subjects" && kind != "locations" {
+        return Err(ApiError::validation("kind must be 'subjects' or 'locations'."));
+    }
+    let loaded = crate::app::load(&state, &pid).await?;
+    if h3_project::images::reference_card(&loaded.session, &kind, &rid).is_none() {
+        return Err(ApiError::validation(format!("Reference '{rid}' was not found in the Reference Builder.")));
+    }
+    let params = json!({"kind": kind, "ref_id": rid});
+    let job = state.jobs.submit(crate::llm_jobs::REFERENCE_DESCRIBE, Some(&pid), params, false)?;
+    Ok(crate::app::job_response(&job))
+}
+
 /// Send one short request and report whether the model answers.
 pub async fn test(State(state): Shared) -> ApiResult {
     let cfg = current(&state);

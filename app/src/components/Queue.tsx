@@ -65,6 +65,9 @@ export default function Queue() {
           <h3>Render</h3>
           <span class="muted">{withPrompt()} of {scenes().length} scenes have a prompt, {withVideo()} have a video.</span>
           <span class="spacer" />
+          <button disabled={withPrompt() === scenes().length} onClick={() => void submit("/minimax-prompts", {}, "Writing prompts for the scenes that have none.")}>
+            Write missing prompts
+          </button>
           <button class="primary" disabled={!withPrompt()} onClick={() => void submit("/video/render", { scope: "missing", skip_final_stitch: true }, "Rendering the scenes without a video.")}>
             Render scenes without a video
           </button>

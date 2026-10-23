@@ -17,11 +17,12 @@ use crate::llm_routes::current;
 use crate::views::resolve_project;
 
 pub const MINIMAX_PROMPTS: &str = "minimax.prompts";
+pub const REFERENCE_DESCRIBE: &str = "reference.describe";
 
 type Run = fn(Arc<AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
 pub fn register(state: &Arc<AppState>) {
-    let table: [(&str, Run); 1] = [(MINIMAX_PROMPTS, |s, c| Box::pin(minimax_prompts(s, c)))];
+    let table: [(&str, Run); 2] = [(MINIMAX_PROMPTS, |s, c| Box::pin(minimax_prompts(s, c))), (REFERENCE_DESCRIBE, |s, c| Box::pin(describe_reference(s, c)))];
     for (kind, run) in table {
         let owned = Arc::clone(state);
         let handler: Handler = Arc::new(move |ctx| run(Arc::clone(&owned), ctx));
@@ -120,3 +121,35 @@ async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
     }
     Ok(json!({"created": created.len(), "failed": failures.len(), "skipped": segments.len() - total, "prompts": created, "failures": failures, "revision": revision}))
 }
+
+/// Describe a character or location picture with the LLM and save the text on the card.
+async fn describe_reference(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let kind = ctx.params.get("kind").and_then(Value::as_str).unwrap_or("").to_string();
+    let card_id = ctx.params.get("ref_id").and_then(Value::as_str).unwrap_or("").to_string();
+    let loaded = read_session(&folder).await?;
+    let (name, image_path) = h3_project::images::reference_card(&loaded.session, &kind, &card_id)
+        .ok_or_else(|| fail(ApiError::validation(format!("Reference '{card_id}' was not found in the Reference Builder."))))?;
+    let image = std::path::PathBuf::from(&image_path);
+    if image_path.is_empty() || !image.is_file() {
+        return Err(fail(ApiError::validation(format!("{} has no image file to describe. Add a picture first.", if name.is_empty() { &card_id } else { &name }))));
+    }
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "describing".into(), message: format!("Describing {name}..."), stage_count: 1, ..Default::default() });
+    let data_url = tokio::task::spawn_blocking(move || h3_project::images::preview_data_url(&image, 512, 88)).await.map_err(internal)?.map_err(internal)?;
+    let reference_type = if kind == "locations" { "location".to_string() } else { Some(field_text(&loaded.session, &kind, &card_id, "reference_type")).filter(|t| !t.is_empty()).unwrap_or_else(|| "character".into()) };
+    let (description, model) = h3_llm::describe::describe_reference(&current(&state), &reference_type, &name, &data_url, 1, "").await.map_err(|e| fail(ApiError::from(e)))?;
+    let payload: Obj = [("description".to_string(), json!(description))].into_iter().collect();
+    let saved = {
+        let _guard = state.edit_lock.lock().await;
+        let (folder, kind, card_id) = (folder.clone(), kind.clone(), card_id.clone());
+        tokio::task::spawn_blocking(move || session_ops::upsert_reference(&folder, &kind, &card_id, &payload, None, &Stamp::now())).await
+    };
+    let saved = saved.map_err(internal)?.map_err(internal)?;
+    Ok(json!({"id": card_id, "kind": kind, "name": name, "description": description, "model": model, "revision": saved["revision"]}))
+}
+
+fn field_text(session: &Obj, kind: &str, card_id: &str, key: &str) -> String {
+    session.get("flux_reference_builder").and_then(|r| r.get(kind)).and_then(Value::as_array).and_then(|a| a.iter().find(|c| c["id"] == card_id)).map(|c| text_or_empty(c.get(key))).unwrap_or_default()
+}
+

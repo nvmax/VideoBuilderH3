@@ -42,6 +42,15 @@ function CardView(props: { kind: "subjects" | "locations"; card: Card; presets: 
     });
   };
 
+  const describe = async () => {
+    const pid = projectId()!;
+    await act(async () => {
+      const r = await call("POST", `/projects/${encodePid(pid)}${base()}/describe`, {});
+      setJobs((list) => [r.data.job, ...list]);
+      say("Describing the picture. The text appears here when the LLM is done.");
+    });
+  };
+
   const remove = async () => {
     if (!window.confirm(`Delete ${props.card.name}? It is taken off every scene.`)) return;
     await edit("DELETE", base());
@@ -71,6 +80,7 @@ function CardView(props: { kind: "subjects" | "locations"; card: Card; presets: 
             Choose picture
             <input type="file" accept="image/*" onChange={(e) => void upload(e.currentTarget.files?.[0])} />
           </label>
+          <button class="small" disabled={!image()} title={image() ? "Write the description from the picture with the LLM" : "Add a picture first"} onClick={() => void describe()}>Describe with LLM</button>
           <button class="small" onClick={() => void useEverywhere()}>Use in every scene</button>
           <button class="small danger" onClick={() => void remove()}>Delete</button>
         </div>

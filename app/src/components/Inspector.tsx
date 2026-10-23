@@ -85,6 +85,14 @@ export default function Inspector() {
     const r = await call("POST", `/projects/${encodePid(pid)}/scenes/${encodeURIComponent(scene()!.id)}/prompts/minimax/validate`, { prompt: prompt() });
     setCheck(r.data);
   };
+  const writePrompt = async () => {
+    const pid = projectId()!;
+    await act(async () => {
+      const r = await call("POST", `/projects/${encodePid(pid)}/minimax-prompts`, { scene_ids: [scene()!.id] });
+      setJobs((list) => [r.data.job, ...list]);
+      say("Writing the prompt. It appears here when the LLM is done.");
+    });
+  };
   const render = async () => {
     const pid = projectId()!;
     await act(async () => {
@@ -121,6 +129,7 @@ export default function Inspector() {
             <div class="row">
               <button class="primary" disabled={prompt() === (s().minimax_h3_prompt ?? "")} onClick={() => void savePrompt()}>Save prompt</button>
               <button onClick={() => void validate()}>Check prompt</button>
+              <button onClick={() => void writePrompt()} title="Write this scene's prompt with the LLM from its lyrics, story beat and references">Write with LLM</button>
               <span class="spacer" />
               <button class="primary" disabled={!(s().minimax_h3_prompt ?? "").trim()} title={(s().minimax_h3_prompt ?? "").trim() ? "" : "Save a prompt first"} onClick={() => void render()}>
                 Render this scene

@@ -37,7 +37,15 @@ async fn start() -> Server {
     // The stand-in LLM always answers one shot.
     let llm = Router::new().route(
         "/v1/chat/completions",
-        post(|Json(_): Json<Value>| async { Json(json!({"choices": [{"message": {"content": "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on a roof as wind lifts her jacket, the camera drifting in.\"}]}"}}]})) }),
+        post(|Json(body): Json<Value>| async move {
+            // A picture request gets a description, anything else gets one shot.
+            let text = if body["messages"][0]["content"].is_array() {
+                "A young woman with short dark hair wears a red leather jacket, black boots and silver rings."
+            } else {
+                "{\"shots\": [{\"description\": \"<Subject 1> (Ava) stands on a roof as wind lifts her jacket, the camera drifting in.\"}]}"
+            };
+            Json(json!({"choices": [{"message": {"content": text}}]}))
+        }),
     );
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let mock = format!("http://{}/v1", listener.local_addr().unwrap());
@@ -135,4 +143,29 @@ async fn prompts_are_written_for_scenes_without_one_and_saved_on_the_scene() {
     assert_eq!(job["result"]["created"], 1, "{job}");
     let (_, scenes) = s.call(Method::GET, "/projects/Demo/scenes/2", None).await;
     assert_ne!(scenes["data"]["minimax_h3_prompt"], "keep this one");
+}
+
+#[tokio::test]
+async fn a_reference_picture_is_described_and_the_text_saved_on_the_card() {
+    let s = start().await;
+    s.call(Method::PUT, "/llm/settings", Some(json!({"runner": "own_server", "own_server_url": s.mock, "own_server_model": "m"}))).await;
+    // The card in the project points at a file that is not there.
+    let (code, body) = s.call(Method::POST, "/projects/Demo/references/subjects/s/describe", None).await;
+    assert_eq!(code, 202, "{body}");
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!((job["status"].as_str(), job["error"]["code"].as_str()), (Some("failed"), Some("VALIDATION_ERROR")));
+    assert!(job["error"]["message"].as_str().unwrap().contains("no image file"), "{job}");
+
+    let picture = s.dir.path().join("projects/Demo/ava.png");
+    image::RgbImage::from_pixel(16, 16, image::Rgb([200, 40, 40])).save(&picture).unwrap();
+    s.call(Method::PUT, "/projects/Demo/references/subjects/s", Some(json!({"image": {"path": picture.display().to_string()}}))).await;
+    let (_, body) = s.call(Method::POST, "/projects/Demo/references/subjects/s/describe", None).await;
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!(job["status"], "succeeded", "{job}");
+    let (_, refs) = s.call(Method::GET, "/projects/Demo/references", None).await;
+    let saved = refs["data"]["subjects"][0]["description"].as_str().unwrap();
+    assert_ne!(saved, "dark hair", "the description was replaced");
+    assert_eq!(saved, job["result"]["description"].as_str().unwrap());
+    let (code, _) = s.call(Method::POST, "/projects/Demo/references/things/s/describe", None).await;
+    assert_eq!(code, 400);
 }

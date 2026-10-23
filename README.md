@@ -66,3 +66,12 @@ cd app; npm install; npm run tauri dev
 ```
 
 The window starts the API itself (`api_bind` in the config, default `127.0.0.1:8190`). For the UI alone in a browser, run `cargo run -p h3-cli -- serve` and `npm run dev` in `app`, then open http://localhost:1420. Add `?api=http://host:port/api/v1` to use another address.
+
+## LLM
+
+The app writes MiniMax prompts and describes reference pictures with an LLM. In the app, Settings has an LLM section. The default is LM Studio: start its local server and load a model. The app uses that model and never loads or switches one. An own OpenAI compatible server, OpenAI, Anthropic and Google can be used instead.
+
+```powershell
+curl http://127.0.0.1:8190/api/v1/llm/active                                  # which model would be used
+curl -X POST http://127.0.0.1:8190/api/v1/projects/MySong/minimax-prompts -d "{}"   # prompts for scenes that have none
+```

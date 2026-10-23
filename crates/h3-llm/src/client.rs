@@ -52,11 +52,18 @@ pub struct ChatRequest {
     /// Ask for JSON that fits this schema (`lm_studio` and `own_server` only).
     pub json_schema: Option<Value>,
     pub seed: Option<i64>,
+    /// Pictures the model looks at, as `data:image/...;base64,...` URLs (`lm_studio` and `own_server` only).
+    pub images: Vec<String>,
 }
 
 impl ChatRequest {
+    pub fn with_images(mut self, images: Vec<String>) -> Self {
+        self.images = images;
+        self
+    }
+
     pub fn text(instruction: &str, temperature: f64, top_p: f64, max_new_tokens: u32) -> Self {
-        Self { instruction: instruction.to_string(), temperature, top_p, max_new_tokens, json_schema: None, seed: None }
+        Self { instruction: instruction.to_string(), temperature, top_p, max_new_tokens, json_schema: None, seed: None, images: vec![] }
     }
 }
 
@@ -222,8 +229,8 @@ async fn lm_studio_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply,
     let context = i64::from(if model.context_length > 0 { cfg.lm_studio_context_limit.min(model.context_length) } else { cfg.lm_studio_context_limit });
     // The saved output limit wins over the size the caller asks for, as in the pack.
     let configured = i64::from(cfg.lm_studio_output_limit).clamp(64, 262_144);
-    let output = fit_output(configured, estimate_tokens(&req.instruction), context)?;
-    let client = http(cfg.lm_studio_timeout);
+    let output = if req.images.is_empty() { fit_output(configured, estimate_tokens(&req.instruction), context)? } else { configured };
+    let client = http(if req.images.is_empty() { cfg.lm_studio_timeout } else { cfg.lm_studio_timeout.max(300) });
     if let Some(schema) = &req.json_schema {
         // The native chat endpoint rejects response_format, so schema calls use the OpenAI compatible one.
         let mut body = json!({
@@ -245,9 +252,16 @@ async fn lm_studio_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply,
         }
         return Ok(ChatReply { text, model: model.id, runner: "lm_studio".into() });
     }
+    let input = if req.images.is_empty() {
+        json!(req.instruction)
+    } else {
+        let mut blocks = vec![json!({"type": "text", "content": req.instruction})];
+        blocks.extend(req.images.iter().map(|url| json!({"type": "image", "data_url": url})));
+        Value::Array(blocks)
+    };
     let mut body = json!({
         "model": model.id,
-        "input": req.instruction,
+        "input": input,
         "temperature": req.temperature,
         "top_p": req.top_p,
         "context_length": context,
@@ -255,7 +269,7 @@ async fn lm_studio_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply,
         "store": false,
         "stream": false,
     });
-    let reasoning = cfg.lm_studio_reasoning.trim().to_lowercase();
+    let reasoning = Some(cfg.lm_studio_reasoning.trim().to_lowercase()).filter(|r| !r.is_empty()).unwrap_or_else(|| if req.images.is_empty() { String::new() } else { "off".into() });
     if matches!(reasoning.as_str(), "off" | "low" | "medium" | "high" | "on") {
         body["reasoning"] = json!(reasoning);
     }
@@ -282,6 +296,16 @@ async fn lm_studio_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply,
     Ok(ChatReply { text, model: model.id, runner: "lm_studio".into() })
 }
 
+/// The user message: plain text, or text and pictures as content parts.
+fn user_content(req: &ChatRequest) -> Value {
+    if req.images.is_empty() {
+        return json!(req.instruction);
+    }
+    let mut parts = vec![json!({"type": "text", "text": req.instruction})];
+    parts.extend(req.images.iter().map(|url| json!({"type": "image_url", "image_url": {"url": url}})));
+    Value::Array(parts)
+}
+
 async fn openai_compatible_chat(base: &str, model: &str, key: &str, timeout: u32, output_limit: u32, req: &ChatRequest, label: &str) -> Result<ChatReply, LlmError> {
     let base = base.trim().trim_end_matches('/');
     if base.is_empty() {
@@ -293,7 +317,7 @@ async fn openai_compatible_chat(base: &str, model: &str, key: &str, timeout: u32
     let max_tokens = i64::from(output_limit.min(req.max_new_tokens.max(output_limit))).clamp(64, 262_144);
     let mut body = json!({
         "model": model.trim(),
-        "messages": [{"role": "user", "content": req.instruction}],
+        "messages": [{"role": "user", "content": user_content(req)}],
         "temperature": req.temperature,
         "top_p": req.top_p,
         "max_tokens": max_tokens,
@@ -311,6 +335,9 @@ async fn openai_compatible_chat(base: &str, model: &str, key: &str, timeout: u32
 }
 
 async fn anthropic_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmError> {
+    if !req.images.is_empty() {
+        return Err(LlmError::Unavailable("Picture input is not available for Anthropic in this app yet. Use LM Studio, an own server or OpenAI.".into()));
+    }
     if cfg.api_key.trim().is_empty() || cfg.api_model.trim().is_empty() {
         return Err(LlmError::Unavailable("Enter the Anthropic API key and model name in the LLM settings.".into()));
     }
@@ -325,6 +352,9 @@ async fn anthropic_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply,
 }
 
 async fn google_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmError> {
+    if !req.images.is_empty() {
+        return Err(LlmError::Unavailable("Picture input is not available for Google in this app yet. Use LM Studio, an own server or OpenAI.".into()));
+    }
     if cfg.api_key.trim().is_empty() || cfg.api_model.trim().is_empty() {
         return Err(LlmError::Unavailable("Enter the Google API key and model name in the LLM settings.".into()));
     }

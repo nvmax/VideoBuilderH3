@@ -1,6 +1,7 @@
 import { createResource, createSignal, For, Show } from "solid-js";
 import { get } from "../api";
 import { edit, project } from "../store";
+import LlmSettings from "./LlmSettings";
 
 interface Setting {
   key: string;
@@ -99,6 +100,7 @@ export default function SettingsPanel() {
       <Show when={!models()?.diffusion_models?.length && !models.loading}>
         <p class="bad">ComfyUI did not list any models, so model names cannot be chosen. Start ComfyUI and reopen this tab.</p>
       </Show>
+      <LlmSettings />
       <div class="groups">
         <For each={GROUPS}>
           {(g) => (
