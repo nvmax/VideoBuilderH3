@@ -10,6 +10,7 @@ pub mod minimax_prompts;
 pub mod render;
 pub mod scene_video;
 pub mod stitch_plan;
+pub mod video_ops;
 
 pub use context::connect;
 pub use env::LiveEnv;

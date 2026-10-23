@@ -211,6 +211,15 @@ fn normcase(path: &str) -> String {
 /// The scene's scratch folder under ComfyUI's output folder and the filename prefix of its renders. The folder name holds
 /// a hash of the project path, so two projects with the same name never share a folder.
 pub fn output_location(env: &dyn GraphEnv, project_folder: &str, scene: u32, create: bool) -> (String, String) {
+    let (folder, prefix) = output_location_in(&env.output_dir(), project_folder, scene);
+    if create {
+        env.ensure_dir(&folder);
+    }
+    (folder, prefix)
+}
+
+/// [`output_location`] from ComfyUI's output folder alone, without creating anything.
+pub fn output_location_in(output_dir: &str, project_folder: &str, scene: u32) -> (String, String) {
     let base = Path::new(project_folder).file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default();
     let mut name = String::new();
     let mut in_run = false;
@@ -228,10 +237,7 @@ pub fn output_location(env: &dyn GraphEnv, project_folder: &str, scene: u32, cre
     let digest = Sha1::digest(normcase(project_folder).as_bytes());
     let key: String = digest.iter().take(4).map(|b| format!("{b:02x}")).collect();
     let relative: PathBuf = ["VRGDG_MiniMaxH3".to_string(), format!("{name}_{key}"), format!("scene_{scene:04}")].iter().collect();
-    let folder = PathBuf::from(env.output_dir()).join(&relative);
-    if create {
-        env.ensure_dir(&folder.display().to_string());
-    }
+    let folder = PathBuf::from(output_dir).join(&relative);
     let prefix = relative.join(format!("MiniMaxH3_scene_{scene:04}")).display().to_string().replace('\\', "/");
     (folder.display().to_string(), prefix)
 }

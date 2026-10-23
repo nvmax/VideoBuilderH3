@@ -266,6 +266,88 @@ pub fn trim_scene_video(tools: &Tools, req: &TrimRequest, stamp: &str) -> Result
     Ok(TrimResult { video_path: target, thumbnail_path })
 }
 
+/// The container duration of a media file in seconds. Zero when ffprobe cannot read it.
+pub fn probe_format_duration(tools: &Tools, path: &Path) -> f64 {
+    let Ok(out) = tools.ffprobe_checked(&args(&["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", &path.display().to_string()]), "ffprobe failed") else {
+        return 0.0;
+    };
+    String::from_utf8_lossy(&out.stdout).lines().next().and_then(|l| l.trim().parse::<f64>().ok()).filter(|d| d.is_finite()).map_or(0.0, |d| d.max(0.0))
+}
+
+/// What choosing a clip for a scene did.
+#[derive(Debug, Clone)]
+pub enum Restored {
+    /// The clip's length differs from the scene's by more than the tolerance and nobody confirmed it.
+    NeedsConfirmation { duration: f64, expected_duration: f64, duration_delta: f64, tolerance: f64 },
+    Done { video_path: PathBuf, thumbnail_path: Option<PathBuf>, duration: f64, backup_path: Option<PathBuf>, backup_thumbnail_path: Option<PathBuf> },
+}
+
+fn move_file(from: &Path, to: &Path) -> std::io::Result<()> {
+    if fs::rename(from, to).is_ok() {
+        return Ok(());
+    }
+    fs::copy(from, to)?;
+    fs::remove_file(from)
+}
+
+fn same_path(a: &Path, b: &Path) -> bool {
+    let norm = |p: &Path| {
+        let abs = std::path::absolute(p).unwrap_or_else(|_| p.to_path_buf()).display().to_string();
+        if cfg!(windows) { abs.replace('/', "\\").to_lowercase() } else { abs }
+    };
+    norm(a) == norm(b)
+}
+
+/// Make `source` the scene's clip `rendered_scene_videos/video_NNNN-audio.mp4`. A clip that was there is moved to
+/// `rendered_scene_videos_backup/scene_NNNN`. `stamp` is `%Y%m%d-%H%M%S`.
+#[allow(clippy::too_many_arguments)]
+pub fn restore_scene_video(tools: &Tools, project: &Path, source: &Path, scene: u32, expected_duration: f64, tolerance: f64, confirm_mismatch: bool, stamp: &str) -> Result<Restored, MediaError> {
+    if !source.is_file() {
+        return Err(MediaError::Failed(format!("Video file was not found: {}", source.display())));
+    }
+    let extension = source.extension().map(|e| format!(".{}", e.to_string_lossy().to_lowercase())).unwrap_or_default();
+    if ![".mp4", ".mov", ".mkv", ".webm", ".avi"].contains(&extension.as_str()) {
+        return Err(MediaError::Failed("Choose a supported video file: .mp4, .mov, .mkv, .webm, or .avi".into()));
+    }
+    let scene = scene.max(1);
+    let duration = probe_format_duration(tools, source);
+    let expected = expected_duration.max(0.0);
+    let tolerance = tolerance.max(0.1);
+    let delta = if duration > 0.0 && expected > 0.0 { (duration - expected).abs() } else { 0.0 };
+    if delta > tolerance && !confirm_mismatch {
+        return Ok(Restored::NeedsConfirmation { duration, expected_duration: expected, duration_delta: delta, tolerance });
+    }
+    let target_dir = project.join("rendered_scene_videos");
+    fs::create_dir_all(&target_dir)?;
+    let target = target_dir.join(format!("video_{scene:04}-audio.mp4"));
+    let thumbnail = thumbnail_path_for(&target);
+    let legacy_thumbnail = legacy_thumbnail_path(&target);
+    let (mut backup_path, mut backup_thumbnail_path) = (None, None);
+    if target.is_file() && !same_path(source, &target) {
+        let backup_dir = project.join("rendered_scene_videos_backup").join(format!("scene_{scene:04}"));
+        fs::create_dir_all(&backup_dir)?;
+        let backup = backup_dir.join(format!("video_{scene:04}-audio_manual_restore_{stamp}.mp4"));
+        move_file(&target, &backup)?;
+        if thumbnail.is_file() {
+            let backup_thumbnail = thumbnail_path_for(&backup);
+            if let Some(parent) = backup_thumbnail.parent() {
+                fs::create_dir_all(parent)?;
+            }
+            move_file(&thumbnail, &backup_thumbnail)?;
+            backup_thumbnail_path = Some(backup_thumbnail);
+        }
+        backup_path = Some(backup);
+    }
+    if !same_path(source, &target) {
+        fs::copy(source, &target).map_err(|_| MediaError::Failed("Could not copy the selected video into the project.".into()))?;
+    }
+    for stale in [&thumbnail, &legacy_thumbnail] {
+        let _ = fs::remove_file(stale);
+    }
+    let thumbnail_path = create_thumbnail(tools, &target, None);
+    Ok(Restored::Done { video_path: target, thumbnail_path, duration, backup_path, backup_thumbnail_path })
+}
+
 /// Save the last frame of a clip as a PNG in the scene's preview folder. Returns its path.
 pub fn extract_final_frame(tools: &Tools, project: &Path, source: &Path, scene: u32, stamp: &str) -> Result<PathBuf, MediaError> {
     let source_abs = std::path::absolute(source).unwrap_or_else(|_| source.to_path_buf());

@@ -54,6 +54,7 @@ pub fn router(state: Arc<AppState>) -> Router {
     crate::image_jobs::register(&state);
     crate::llm_jobs::register(&state);
     crate::lyric_jobs::register(&state);
+    crate::video_routes::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -96,6 +97,12 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/resize", post(er::resize_scene))
         .route("/projects/{pid}/timeline/bulk", post(er::timeline_bulk))
         .route("/projects/{pid}/timeline/close-gaps", post(er::close_gaps))
+        .route("/projects/{pid}/scenes/{sid}/video/takes", get(crate::video_routes::takes_route))
+        .route("/projects/{pid}/scenes/{sid}/video/trim", post(crate::video_routes::trim_route))
+        .route("/projects/{pid}/scenes/{sid}/video/match-start-color", post(crate::video_routes::match_color_route))
+        .route("/projects/{pid}/scenes/{sid}/video/select", post(crate::video_routes::select_route))
+        .route("/projects/{pid}/scenes/{sid}/video/recover", post(crate::video_routes::recover_route))
+        .route("/projects/{pid}/scenes/{sid}/video", axum::routing::delete(crate::video_routes::delete_route))
         .route("/projects/{pid}/lyrics/align", post(crate::lyric_jobs::align_route))
         .route("/projects/{pid}/timeline/from-lines", post(crate::lyric_jobs::from_lines_route))
         .route("/projects/{pid}/timeline/snap", post(er::snap))
