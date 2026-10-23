@@ -28,3 +28,13 @@ cargo run -p h3-cli -- render --project "D:\Projects\My Song" --scene 4 --set se
 ```
 
 `--dry-run` builds the graph and the scene audio without queueing anything. `--set KEY=VALUE` overrides one render setting for that run. ComfyUI must be running with the VRGDG and MiniMax nodes.
+
+## Render a whole project
+
+```powershell
+cargo run -p h3-cli -- render-all --project "D:\Projects\My Song"
+cargo run -p h3-cli -- render-all --project "D:\Projects\My Song" --scope missing
+cargo run -p h3-cli -- stitch --project "D:\Projects\My Song" --scene 3 --scene 4
+```
+
+`render` and `render-all` cut each clip to its exact length, collect it into `rendered_scene_videos`, record it on the scene and keep a replaced clip as a backup. `render --raw-only` stops after ComfyUI. The media tests need ffmpeg and ffprobe on PATH.

@@ -108,3 +108,18 @@ def install(pack_dir: Path):
         sys.modules["vrgdg_pack"] = package
         _installed = True
     return importlib.import_module("vrgdg_pack")
+
+
+def install_server_stub():
+    """Stub ComfyUI's ``server`` module (``PromptServer`` whose route decorators do nothing) for pack modules that import it."""
+
+    class _Routes:
+        def __getattr__(self, name):
+            return lambda *a, **k: (lambda f: f)
+
+    class _PromptServer:
+        instance = types.SimpleNamespace(routes=_Routes(), send_sync=lambda *a, **k: None, app=None)
+
+    module = types.ModuleType("server")
+    module.PromptServer = _PromptServer
+    sys.modules["server"] = module

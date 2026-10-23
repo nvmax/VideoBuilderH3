@@ -1,0 +1,589 @@
+{
+ "function": "scene_video.apply_scene_video",
+ "cases": [
+  {
+   "input": {
+    "start": "empty",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "Z:\\h3\\new.jpg",
+    "segment": {}
+   },
+   "output": {
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_history": [
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\new.jpg"
+    ],
+    "video_history_index": 0,
+    "video_thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "empty",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "",
+    "segment": {}
+   },
+   "output": {
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "video_history": [
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_thumbnail_history": [
+     ""
+    ],
+    "video_history_index": 0,
+    "video_thumbnail_path": "",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "empty",
+    "video": "z:/h3/new.mp4",
+    "thumbnail": "Z:\\h3\\t.jpg",
+    "segment": {}
+   },
+   "output": {
+    "video_path": "z:/h3/new.mp4",
+    "rendered_video_path": "z:/h3/new.mp4",
+    "video_folder": "z:/h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_history": [
+     "z:/h3/new.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\t.jpg"
+    ],
+    "video_history_index": 0,
+    "video_thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "empty",
+    "video": "",
+    "thumbnail": "x.jpg",
+    "segment": {}
+   },
+   "output": {}
+  },
+  {
+   "input": {
+    "start": "has_history",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "Z:\\h3\\new.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\old.jpg"
+     ],
+     "video_history_index": 0
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\old.jpg",
+     "Z:\\h3\\new.jpg"
+    ],
+    "video_history_index": 1,
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "has_history",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\old.jpg"
+     ],
+     "video_history_index": 0
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\old.jpg",
+     ""
+    ],
+    "video_history_index": 1,
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "video_thumbnail_path": "",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "has_history",
+    "video": "z:/h3/new.mp4",
+    "thumbnail": "Z:\\h3\\t.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\old.jpg"
+     ],
+     "video_history_index": 0
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "z:/h3/new.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\old.jpg",
+     "Z:\\h3\\t.jpg"
+    ],
+    "video_history_index": 1,
+    "video_path": "z:/h3/new.mp4",
+    "rendered_video_path": "z:/h3/new.mp4",
+    "video_folder": "z:/h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "has_history",
+    "video": "",
+    "thumbnail": "x.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\old.jpg"
+     ],
+     "video_history_index": 0
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\old.jpg"
+    ],
+    "video_history_index": 0
+   }
+  },
+  {
+   "input": {
+    "start": "history_without_thumbnails",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "Z:\\h3\\new.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4",
+      "Z:\\h3\\older.mp4"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "Z:\\h3\\older.mp4",
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_thumbnail_history": [
+     "",
+     "",
+     "Z:\\h3\\new.jpg"
+    ],
+    "video_history_index": 2,
+    "video_thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "history_without_thumbnails",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4",
+      "Z:\\h3\\older.mp4"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "Z:\\h3\\older.mp4",
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "video_thumbnail_history": [
+     "",
+     "",
+     ""
+    ],
+    "video_history_index": 2,
+    "video_thumbnail_path": "",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "history_without_thumbnails",
+    "video": "z:/h3/new.mp4",
+    "thumbnail": "Z:\\h3\\t.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4",
+      "Z:\\h3\\older.mp4"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "Z:\\h3\\older.mp4",
+     "z:/h3/new.mp4"
+    ],
+    "video_path": "z:/h3/new.mp4",
+    "rendered_video_path": "z:/h3/new.mp4",
+    "video_folder": "z:/h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_thumbnail_history": [
+     "",
+     "",
+     "Z:\\h3\\t.jpg"
+    ],
+    "video_history_index": 2,
+    "video_thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "history_without_thumbnails",
+    "video": "",
+    "thumbnail": "x.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\h3\\old.mp4",
+      "Z:\\h3\\older.mp4"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\old.mp4",
+     "Z:\\h3\\older.mp4"
+    ]
+   }
+  },
+  {
+   "input": {
+    "start": "already_listed",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "Z:\\h3\\new.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\H3\\NEW.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\keep.jpg"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\H3\\NEW.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\new.jpg"
+    ],
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_history_index": 0,
+    "video_thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "already_listed",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "",
+    "segment": {
+     "video_history": [
+      "Z:\\H3\\NEW.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\keep.jpg"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\H3\\NEW.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\keep.jpg"
+    ],
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "video_history_index": 0,
+    "video_thumbnail_path": "Z:\\h3\\keep.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "already_listed",
+    "video": "z:/h3/new.mp4",
+    "thumbnail": "Z:\\h3\\t.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\H3\\NEW.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\keep.jpg"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\H3\\NEW.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\t.jpg"
+    ],
+    "video_path": "z:/h3/new.mp4",
+    "rendered_video_path": "z:/h3/new.mp4",
+    "video_folder": "z:/h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_history_index": 0,
+    "video_thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "already_listed",
+    "video": "",
+    "thumbnail": "x.jpg",
+    "segment": {
+     "video_history": [
+      "Z:\\H3\\NEW.mp4"
+     ],
+     "video_thumbnail_history": [
+      "Z:\\h3\\keep.jpg"
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\H3\\NEW.mp4"
+    ],
+    "video_thumbnail_history": [
+     "Z:\\h3\\keep.jpg"
+    ]
+   }
+  },
+  {
+   "input": {
+    "start": "blank_entries",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "Z:\\h3\\new.jpg",
+    "segment": {
+     "video_history": [
+      "",
+      "Z:\\h3\\a.mp4",
+      "  "
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\a.mp4",
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_thumbnail_history": [
+     "",
+     "Z:\\h3\\new.jpg"
+    ],
+    "video_history_index": 1,
+    "video_thumbnail_path": "Z:\\h3\\new.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "blank_entries",
+    "video": "Z:\\h3\\new.mp4",
+    "thumbnail": "",
+    "segment": {
+     "video_history": [
+      "",
+      "Z:\\h3\\a.mp4",
+      "  "
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\a.mp4",
+     "Z:\\h3\\new.mp4"
+    ],
+    "video_path": "Z:\\h3\\new.mp4",
+    "rendered_video_path": "Z:\\h3\\new.mp4",
+    "video_folder": "Z:\\h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "video_thumbnail_history": [
+     "",
+     ""
+    ],
+    "video_history_index": 1,
+    "video_thumbnail_path": "",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "blank_entries",
+    "video": "z:/h3/new.mp4",
+    "thumbnail": "Z:\\h3\\t.jpg",
+    "segment": {
+     "video_history": [
+      "",
+      "Z:\\h3\\a.mp4",
+      "  "
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "Z:\\h3\\a.mp4",
+     "z:/h3/new.mp4"
+    ],
+    "video_path": "z:/h3/new.mp4",
+    "rendered_video_path": "z:/h3/new.mp4",
+    "video_folder": "z:/h3",
+    "video_status": "done",
+    "scene_audio_render_dirty": false,
+    "preview_mode": "video",
+    "thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_thumbnail_history": [
+     "",
+     "Z:\\h3\\t.jpg"
+    ],
+    "video_history_index": 1,
+    "video_thumbnail_path": "Z:\\h3\\t.jpg",
+    "video_cache_bust": 1700000005123
+   }
+  },
+  {
+   "input": {
+    "start": "blank_entries",
+    "video": "",
+    "thumbnail": "x.jpg",
+    "segment": {
+     "video_history": [
+      "",
+      "Z:\\h3\\a.mp4",
+      "  "
+     ]
+    }
+   },
+   "output": {
+    "video_history": [
+     "",
+     "Z:\\h3\\a.mp4",
+     "  "
+    ]
+   }
+  }
+ ]
+}

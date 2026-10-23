@@ -136,9 +136,14 @@ fn assign_overlay_slots(overlay: &mut [Value]) {
     }
 }
 
+/// Saves from this process run one at a time, like the pack's save lock, so two renders finishing together cannot
+/// interleave their file replacements into a mixed project.
+static SAVE_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
 /// Save the session and its derived files. The session file is written last, so a failed save never advertises a
 /// half written project.
 pub fn save_session(project: &Path, input: SaveInput) -> io::Result<SaveOutcome> {
+    let _guard = SAVE_LOCK.lock().unwrap_or_else(|e| e.into_inner());
     let folder = absolute(project);
     for dir in [folder.clone(), images_folder(&folder), prompts_folder(&folder), context_folder(&folder)] {
         fs::create_dir_all(dir)?;
@@ -204,4 +209,24 @@ pub fn save_session(project: &Path, input: SaveInput) -> io::Result<SaveOutcome>
     // The session is the commit marker: every derived file is replaced first, the session last.
     atomic_write_json(&path, &Value::Object(session.clone()))?;
     Ok(SaveOutcome { stale: false, revision, project_folder: folder, session_path: path, session })
+}
+
+/// Save an edited session the way the pack's API does: the revision goes one above both counters (the UI counts saves in
+/// `builder_save_revision`, the server in `revision`, and they can drift apart), so the save is never mistaken for a
+/// stale snapshot. A save the server discarded is an error, never reported as success.
+pub fn persist_session(project: &Path, mut session: Obj, now: Stamp) -> io::Result<SaveOutcome> {
+    let next = int_of(session.get("revision")).max(int_of(session.get("builder_save_revision"))) + 1;
+    session.insert("revision".into(), json!(next));
+    session.insert("builder_save_revision".into(), json!(next));
+    let folder = absolute(project);
+    session.insert("project_folder".into(), json!(folder.display().to_string()));
+    let audio_path = h3_core::pyval::text_or_empty(session.get("audio_path"));
+    let outcome = save_session(project, SaveInput { session, audio_path, now })?;
+    if outcome.stale {
+        return Err(io::Error::other(format!(
+            "The project changed while this was running (saved revision {}, this save {next}). Nothing was written.",
+            outcome.revision
+        )));
+    }
+    Ok(outcome)
 }

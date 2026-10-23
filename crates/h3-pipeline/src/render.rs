@@ -62,7 +62,11 @@ pub struct Prepared {
 /// What a render produced.
 #[derive(Debug, Clone)]
 pub struct RenderOutcome {
+    pub scene_index: usize,
     pub scene_number: u32,
+    pub scene_id: String,
+    /// The continuity mode the payload asked for (`off` or `latent_continuation_masked`).
+    pub continuity_mode: String,
     pub prompt_id: String,
     /// The raw clip ComfyUI saved. It is longer than the scene (warm-up, alignment padding) until it is trimmed.
     pub raw_video_path: String,
@@ -293,8 +297,12 @@ pub async fn render_scene(
         ))));
     }
     emit(100.0, "rendered", format!("Rendered {raw}"));
+    let continuity_mode = text_or_empty(prepared.payload.get("continuity_mode")).trim().to_string();
     Ok(RenderOutcome {
+        scene_index: prepared.scene_index,
         scene_number: prepared.scene_number,
+        scene_id: prepared.scene_id.clone(),
+        continuity_mode,
         prompt_id: queued.prompt_id,
         raw_video_path: raw,
         output_folder,

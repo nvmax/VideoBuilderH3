@@ -51,10 +51,21 @@ impl Tools {
         };
         Ok(Self { ffmpeg: ffmpeg_path, ffprobe: ffprobe_path.ok_or(MediaError::NotFound)? })
     }
+
+    /// Run ffmpeg and fail with its own message when it exits with an error.
+    pub fn ffmpeg_checked(&self, args: &[String], what: &str) -> Result<Output, MediaError> {
+        let output = run(&self.ffmpeg, args)?;
+        if output.status.success() { Ok(output) } else { Err(MediaError::Failed(failure_text(&output, what))) }
+    }
+
+    /// Run ffprobe and fail with its own message when it exits with an error.
+    pub fn ffprobe_checked(&self, args: &[String], what: &str) -> Result<Output, MediaError> {
+        let output = run(&self.ffprobe, args)?;
+        if output.status.success() { Ok(output) } else { Err(MediaError::Failed(failure_text(&output, what))) }
+    }
 }
 
-/// Run a program to completion with its window hidden.
-pub fn run(program: &Path, args: &[String]) -> std::io::Result<Output> {
+fn command(program: &Path, args: &[String]) -> Command {
     let mut command = Command::new(program);
     command.args(args);
     #[cfg(windows)]
@@ -62,7 +73,17 @@ pub fn run(program: &Path, args: &[String]) -> std::io::Result<Output> {
         use std::os::windows::process::CommandExt;
         command.creation_flags(0x0800_0000); // CREATE_NO_WINDOW
     }
-    command.output()
+    command
+}
+
+/// Run a program to completion with its window hidden.
+pub fn run(program: &Path, args: &[String]) -> std::io::Result<Output> {
+    command(program, args).output()
+}
+
+/// Like [`run`], from a given working folder.
+pub fn run_in(program: &Path, args: &[String], cwd: &Path) -> std::io::Result<Output> {
+    command(program, args).current_dir(cwd).output()
 }
 
 /// The text a failed run printed: stderr, else stdout, else `fallback`.
@@ -73,4 +94,9 @@ pub fn failure_text(output: &Output, fallback: &str) -> String {
     }
     let stdout = String::from_utf8_lossy(&output.stdout).trim().to_string();
     if stdout.is_empty() { fallback.to_string() } else { stdout }
+}
+
+/// Command line arguments from string slices.
+pub fn args(items: &[&str]) -> Vec<String> {
+    items.iter().map(|s| s.to_string()).collect()
 }

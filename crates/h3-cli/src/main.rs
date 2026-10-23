@@ -48,12 +48,59 @@ enum Commands {
         /// Build the graph and report it without sending it to ComfyUI.
         #[arg(long)]
         dry_run: bool,
+        /// Stop after ComfyUI renders: do not trim, collect or record the clip.
+        #[arg(long)]
+        raw_only: bool,
+        /// Match the clip's opening color to the previous scene's clip.
+        #[arg(long)]
+        match_start_color: bool,
         /// Write the ComfyUI graph to this file.
         #[arg(long)]
         graph_out: Option<PathBuf>,
         /// Give up waiting after this many hours.
         #[arg(long)]
         timeout_hours: Option<f64>,
+    },
+    /// Render several scenes in order, then stitch the project.
+    RenderAll {
+        #[arg(long)]
+        project: PathBuf,
+        /// `all`, `missing` (scenes without a clip) or `selected`.
+        #[arg(long, default_value = "all")]
+        scope: String,
+        /// Only these scenes (numbers or ids).
+        #[arg(long = "scene")]
+        scenes: Vec<String>,
+        /// Only scenes FIRST-LAST, for example 3-8.
+        #[arg(long)]
+        range: Option<String>,
+        #[arg(long)]
+        force: bool,
+        /// Do not stitch the final video afterwards.
+        #[arg(long)]
+        skip_stitch: bool,
+        #[arg(long = "set", value_name = "KEY=VALUE")]
+        set: Vec<String>,
+        #[arg(long)]
+        match_start_color: bool,
+        #[arg(long)]
+        timeout_hours: Option<f64>,
+    },
+    /// Join the project's scene clips with the song into one video.
+    Stitch {
+        #[arg(long)]
+        project: PathBuf,
+        /// Only these scenes (numbers or ids), for a preview.
+        #[arg(long = "scene")]
+        scenes: Vec<String>,
+        /// `auto`, `embedded` (the scenes' own audio) or `project` (the song).
+        #[arg(long, default_value = "auto")]
+        audio: String,
+        #[arg(long)]
+        audio_path: Option<PathBuf>,
+        /// File name prefix of the result.
+        #[arg(long)]
+        prefix: Option<String>,
     },
 }
 
@@ -159,8 +206,14 @@ async fn main() -> ExitCode {
             ExitCode::SUCCESS
         }
         Commands::Scenes { project } => finish(render_cmd::scenes(&project)),
-        Commands::Render { project, scene, set, dry_run, graph_out, timeout_hours } => {
-            finish(render_cmd::render(&cfg, render_cmd::RenderArgs { project, scene, set, dry_run, graph_out, timeout_hours }).await)
+        Commands::Render { project, scene, set, dry_run, raw_only, match_start_color, graph_out, timeout_hours } => finish(
+            render_cmd::render(&cfg, render_cmd::RenderArgs { project, scene, set, dry_run, raw_only, match_start_color, graph_out, timeout_hours }).await,
+        ),
+        Commands::RenderAll { project, scope, scenes, range, force, skip_stitch, set, match_start_color, timeout_hours } => finish(
+            render_cmd::render_all_cmd(&cfg, render_cmd::BatchArgs { project, scope, scenes, range, force, skip_stitch, set, match_start_color, timeout_hours }).await,
+        ),
+        Commands::Stitch { project, scenes, audio, audio_path, prefix } => {
+            finish(render_cmd::stitch(&cfg, render_cmd::StitchArgs { project, scenes, audio, audio_path, prefix }).await)
         }
     }
 }

@@ -19,4 +19,4 @@ pub mod takes;
 pub use atomic::{atomic_write_json, atomic_write_text};
 pub use config::AppConfig;
 pub use layout::Stamp;
-pub use session::{load_session, save_session, LoadedSession, SaveInput, SaveOutcome};
+pub use session::{load_session, persist_session, save_session, LoadedSession, SaveInput, SaveOutcome};

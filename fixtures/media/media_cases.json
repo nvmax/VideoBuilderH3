@@ -1,0 +1,2914 @@
+{
+ "ffmpeg_version": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+ "cases": [
+  {
+   "name": "trim_exact_frames",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "raw.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.0",
+      "-ss",
+      "2.0",
+      "-t",
+      "3.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 2,
+     "start": 0.25,
+     "duration": 2.0,
+     "frames": 48,
+     "label": "minimax_exact",
+     "mark_audio": true,
+     "t": 5
+    }
+   ],
+   "results": [
+    {
+     "video": "proj/rendered_scene_videos/video_0002-minimax_exact_20260101_000005-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0002-minimax_exact_20260101_000005-audio.jpg",
+     "probe": {
+      "frames": 48,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 2.0,
+      "has_audio": true,
+      "audio_duration": 2.0,
+      "format_duration": 2.0
+     },
+     "audio_hash": "41b0e9d8e75a11e66302c466398388a39ce004fd"
+    }
+   ],
+   "tree": [
+    "proj/rendered_scene_videos/video_0002-minimax_exact_20260101_000005-audio.mp4",
+    "proj/scene_video_thumbnails/video_0002-minimax_exact_20260101_000005-audio.jpg"
+   ]
+  },
+  {
+   "name": "trim_without_frame_count",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "raw.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.0",
+      "-ss",
+      "2.0",
+      "-t",
+      "3.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 3,
+     "start": 0.0,
+     "duration": 1.5,
+     "label": "Odd Label!",
+     "t": 6
+    }
+   ],
+   "results": [
+    {
+     "video": "proj/rendered_scene_videos/video_0003-odd_label_20260101_000006.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0003-odd_label_20260101_000006.jpg",
+     "probe": {
+      "frames": 36,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.5,
+      "has_audio": true,
+      "audio_duration": 1.51,
+      "format_duration": 1.51
+     },
+     "audio_hash": "8df02bead0c3291a6343fae0487ccf50169ebdc9"
+    }
+   ],
+   "tree": [
+    "proj/rendered_scene_videos/video_0003-odd_label_20260101_000006.mp4",
+    "proj/scene_video_thumbnails/video_0003-odd_label_20260101_000006.jpg"
+   ]
+  },
+  {
+   "name": "trim_twice_same_second",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "raw.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.0",
+      "-ss",
+      "2.0",
+      "-t",
+      "3.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 1,
+     "start": 0.0,
+     "duration": 1.0,
+     "frames": 24,
+     "label": "minimax_exact",
+     "mark_audio": true,
+     "t": 7
+    },
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 1,
+     "start": 0.5,
+     "duration": 1.0,
+     "frames": 24,
+     "label": "minimax_exact",
+     "mark_audio": true,
+     "t": 7
+    }
+   ],
+   "results": [
+    {
+     "video": "proj/rendered_scene_videos/video_0001-minimax_exact_20260101_000007-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0001-minimax_exact_20260101_000007-audio.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     },
+     "audio_hash": "290622df31001a2545009e96a7b656371f3b520e"
+    },
+    {
+     "video": "proj/rendered_scene_videos/video_0001-minimax_exact_20260101_000007_02-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0001-minimax_exact_20260101_000007_02-audio.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     },
+     "audio_hash": "022d1933abc39afd12abded589893d8cfeaabba1"
+    }
+   ],
+   "tree": [
+    "proj/rendered_scene_videos/video_0001-minimax_exact_20260101_000007-audio.mp4",
+    "proj/rendered_scene_videos/video_0001-minimax_exact_20260101_000007_02-audio.mp4",
+    "proj/scene_video_thumbnails/video_0001-minimax_exact_20260101_000007-audio.jpg",
+    "proj/scene_video_thumbnails/video_0001-minimax_exact_20260101_000007_02-audio.jpg"
+   ]
+  },
+  {
+   "name": "collect_replace_with_backup",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "raw.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.0",
+      "-ss",
+      "2.0",
+      "-t",
+      "3.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 4,
+     "start": 0.0,
+     "duration": 1.0,
+     "frames": 24,
+     "label": "minimax_exact",
+     "mark_audio": true,
+     "t": 1
+    },
+    {
+     "op": "collect",
+     "scene": 4,
+     "source": "proj/rendered_scene_videos/video_0004-minimax_exact_20260101_000001-audio.mp4",
+     "t": 2
+    },
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 4,
+     "start": 1.0,
+     "duration": 1.0,
+     "frames": 24,
+     "label": "minimax_exact",
+     "mark_audio": true,
+     "t": 3
+    },
+    {
+     "op": "collect",
+     "scene": 4,
+     "source": "proj/rendered_scene_videos/video_0004-minimax_exact_20260101_000003-audio.mp4",
+     "t": 4
+    },
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 4,
+     "start": 1.5,
+     "duration": 1.0,
+     "frames": 24,
+     "label": "minimax_exact",
+     "mark_audio": true,
+     "t": 5
+    },
+    {
+     "op": "collect",
+     "scene": 4,
+     "source": "proj/rendered_scene_videos/video_0004-minimax_exact_20260101_000005-audio.mp4",
+     "existing_action": "overwrite",
+     "t": 6
+    }
+   ],
+   "results": [
+    {
+     "video": "proj/rendered_scene_videos/video_0004-minimax_exact_20260101_000001-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0004-minimax_exact_20260101_000001-audio.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     },
+     "audio_hash": "290622df31001a2545009e96a7b656371f3b520e"
+    },
+    {
+     "video": "proj/rendered_scene_videos/video_0004-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0004-audio.jpg",
+     "backup": "",
+     "backup_thumbnail": "",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     }
+    },
+    {
+     "video": "proj/rendered_scene_videos/video_0004-minimax_exact_20260101_000003-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0004-minimax_exact_20260101_000003-audio.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     },
+     "audio_hash": "7a2d296513c9f7e45deeee099782b110892ea36a"
+    },
+    {
+     "video": "proj/rendered_scene_videos/video_0004-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0004-audio.jpg",
+     "backup": "proj/rendered_scene_videos_backup/scene_0004/video_0004-audio_20260101_000004.mp4",
+     "backup_thumbnail": "proj/scene_video_thumbnails/video_0004-audio_20260101_000004.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     }
+    },
+    {
+     "video": "proj/rendered_scene_videos/video_0004-minimax_exact_20260101_000005-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0004-minimax_exact_20260101_000005-audio.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     },
+     "audio_hash": "657ed96507801efc92c7eb6ba39b3442c167cecf"
+    },
+    {
+     "video": "proj/rendered_scene_videos/video_0004-audio.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0004-audio.jpg",
+     "backup": "",
+     "backup_thumbnail": "",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     }
+    }
+   ],
+   "tree": [
+    "proj/rendered_scene_videos/video_0004-audio.mp4",
+    "proj/rendered_scene_videos_backup/scene_0004/video_0004-audio_20260101_000004.mp4",
+    "proj/scene_video_thumbnails/video_0004-audio.jpg",
+    "proj/scene_video_thumbnails/video_0004-audio_20260101_000004.jpg",
+    "proj/scene_video_thumbnails/video_0004-minimax_exact_20260101_000001-audio.jpg",
+    "proj/scene_video_thumbnails/video_0004-minimax_exact_20260101_000003-audio.jpg",
+    "proj/scene_video_thumbnails/video_0004-minimax_exact_20260101_000005-audio.jpg"
+   ]
+  },
+  {
+   "name": "final_frame",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "raw.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.0",
+      "-ss",
+      "2.0",
+      "-t",
+      "3.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "trim",
+     "source": "raw.mp4",
+     "scene": 1,
+     "start": 0.0,
+     "duration": 1.0,
+     "frames": 24,
+     "label": "x",
+     "t": 1
+    },
+    {
+     "op": "final_frame",
+     "source": "proj/rendered_scene_videos/video_0001-x_20260101_000001.mp4",
+     "scene": 2,
+     "t": 2
+    },
+    {
+     "op": "final_frame",
+     "source": "proj/rendered_scene_videos/video_0001-x_20260101_000001.mp4",
+     "scene": 2,
+     "t": 2
+    }
+   ],
+   "results": [
+    {
+     "video": "proj/rendered_scene_videos/video_0001-x_20260101_000001.mp4",
+     "thumbnail": "proj/scene_video_thumbnails/video_0001-x_20260101_000001.jpg",
+     "probe": {
+      "frames": 24,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 1.0,
+      "has_audio": true,
+      "audio_duration": 1.0,
+      "format_duration": 1.0
+     },
+     "audio_hash": "290622df31001a2545009e96a7b656371f3b520e"
+    },
+    {
+     "image": "proj/scene_image_previews/scene_0002/preview_20260101_000002.png",
+     "exists": true
+    },
+    {
+     "image": "proj/scene_image_previews/scene_0002/preview_20260101_000002_02.png",
+     "exists": true
+    }
+   ],
+   "tree": [
+    "proj/rendered_scene_videos/video_0001-x_20260101_000001.mp4",
+    "proj/scene_image_previews/scene_0002/preview_20260101_000002.png",
+    "proj/scene_image_previews/scene_0002/preview_20260101_000002_02.png",
+    "proj/scene_video_thumbnails/video_0001-x_20260101_000001.jpg"
+   ]
+  },
+  {
+   "name": "color_match_opening",
+   "assets": [
+    {
+     "out": "proj/scene_a.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=2",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=500:duration=2",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "proj/scene_b.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "smptebars=size=320x180:rate=24:duration=2",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=700:duration=2",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "color_match",
+     "video": "proj/scene_b.mp4",
+     "reference": "proj/scene_a.mp4",
+     "fade": 1.0,
+     "strength": 0.85,
+     "t": 1
+    }
+   ],
+   "results": [
+    {
+     "applied": true,
+     "video": "proj/scene_b.mp4",
+     "probe": {
+      "frames": 48,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 2.0,
+      "has_audio": true,
+      "audio_duration": 2.0,
+      "format_duration": 2.0
+     },
+     "audio_hash": "d152793f5244d5e5d583499766641a153599e7ab",
+     "thumbnail": "proj/scene_b.jpg"
+    }
+   ],
+   "tree": [
+    "proj/scene_a.mp4",
+    "proj/scene_b.jpg",
+    "proj/scene_b.mp4"
+   ]
+  },
+  {
+   "name": "stitch_project_song_plain",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 0,
+      "scene_timing_items": [],
+      "use_embedded_scene_audio": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 9.5,
+      "format_duration": 9.5
+     },
+     "audio_hash": "724a888a04ff0c49071ffcd4b6e9ccdb8e516a7f",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": false,
+     "timeline_frame_count": 0,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_project_song_timeline",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       },
+       {
+        "start": 5.5,
+        "end": 9.5
+       }
+      ],
+      "use_embedded_scene_audio": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 14.0,
+      "format_duration": 14.0
+     },
+     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 228,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_timeline_uneven_frames",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.02
+       },
+       {
+        "start": 3.02,
+        "end": 5.49
+       },
+       {
+        "start": 5.49,
+        "end": 9.51
+       }
+      ],
+      "use_embedded_scene_audio": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 14.0,
+      "format_duration": 14.0
+     },
+     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 228,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_preview_window",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 3.0,
+      "audio_duration": 6.5,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       }
+      ],
+      "use_embedded_scene_audio": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 132,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 5.5,
+      "has_audio": true,
+      "audio_duration": 6.5,
+      "format_duration": 6.5
+     },
+     "audio_hash": "4feca39d66117d1b44c232a0af4844b8251f9285",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 132,
+     "scene_count": 2,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_embedded_continuous_song",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "",
+      "song_path": "song.wav",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       },
+       {
+        "start": 5.5,
+        "end": 9.5
+       }
+      ],
+      "use_embedded_scene_audio": true
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 9.5,
+      "format_duration": 9.5
+     },
+     "audio_hash": "89d190616fd556430a0b0f95939d22f81e12603b",
+     "embedded_audio_mode": "continuous_song",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 228,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": true,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_embedded_continuous_song_no_timing",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "",
+      "song_path": "song.wav",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 0,
+      "scene_timing_items": [],
+      "use_embedded_scene_audio": true
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 9.5,
+      "format_duration": 9.5
+     },
+     "audio_hash": "89d190616fd556430a0b0f95939d22f81e12603b",
+     "embedded_audio_mode": "continuous_song",
+     "normalized_canvas": false,
+     "timeline_frame_sync": false,
+     "timeline_frame_count": 0,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": true,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_embedded_per_scene_own_audio",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=600:duration=3.0",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=2.5",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=900:duration=2.5",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4"
+      ],
+      "audio_path": "",
+      "song_path": "song.wav",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       }
+      ],
+      "use_embedded_scene_audio": true
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 132,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 5.5,
+      "has_audio": true,
+      "audio_duration": 5.5,
+      "format_duration": 5.5
+     },
+     "audio_hash": "5522798375c654461cf5039dfa44c48e9dae8eea",
+     "embedded_audio_mode": "per_scene",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 132,
+     "scene_count": 2,
+     "insert_count": 0,
+     "used_scene_audio": true,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_embedded_audio_runs_short",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=600:duration=3.0",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=1.2",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=900:duration=1.2",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4"
+      ],
+      "audio_path": "",
+      "song_path": "song.wav",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       }
+      ],
+      "use_embedded_scene_audio": true
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 124,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 5.167,
+      "has_audio": true,
+      "audio_duration": 5.5,
+      "format_duration": 5.5
+     },
+     "audio_hash": "a2e45dce6267b8070492558aca2416a8b354d36e",
+     "embedded_audio_mode": "per_scene",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 132,
+     "scene_count": 2,
+     "insert_count": 0,
+     "used_scene_audio": true,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_embedded_silent_clip_uses_song",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=600:duration=3.0",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=2.5",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4"
+      ],
+      "audio_path": "",
+      "song_path": "song.wav",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       }
+      ],
+      "use_embedded_scene_audio": true
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 132,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 5.5,
+      "has_audio": true,
+      "audio_duration": 5.5,
+      "format_duration": 5.5
+     },
+     "audio_hash": "626b1064eb88e797621ab90cafe4ce93da37de12",
+     "embedded_audio_mode": "per_scene",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 132,
+     "scene_count": 2,
+     "insert_count": 0,
+     "used_scene_audio": true,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_embedded_no_song",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=600:duration=3.0",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=2.5",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=900:duration=2.5",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4"
+      ],
+      "audio_path": "",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       }
+      ],
+      "use_embedded_scene_audio": true
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 132,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 5.5,
+      "has_audio": true,
+      "audio_duration": 5.5,
+      "format_duration": 5.5
+     },
+     "audio_hash": "dc833cf8153ca382fcbbcd36b90e47cf4fa85a8b",
+     "embedded_audio_mode": "per_scene",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 132,
+     "scene_count": 2,
+     "insert_count": 0,
+     "used_scene_audio": true,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_with_insert",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "insert1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=2.0",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=300:duration=2.0",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [
+       {
+        "path": "insert1.mp4",
+        "start": 4.0,
+        "end": 5.0,
+        "source_start": 0.5
+       }
+      ],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       },
+       {
+        "start": 5.5,
+        "end": 9.5
+       }
+      ],
+      "use_embedded_scene_audio": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 14.0,
+      "format_duration": 14.0
+     },
+     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 228,
+     "scene_count": 3,
+     "insert_count": 1,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_canvas_normalized",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=400x300:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 320,
+      "height": 180,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       }
+      ],
+      "use_embedded_scene_audio": false
+     }
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 132,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 5.5,
+      "has_audio": true,
+      "audio_duration": 14.0,
+      "format_duration": 14.0
+     },
+     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "embedded_audio_mode": "",
+     "normalized_canvas": true,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 132,
+     "scene_count": 2,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4"
+   ]
+  },
+  {
+   "name": "stitch_second_output_gets_a_free_name",
+   "assets": [
+    {
+     "out": "song.wav",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=330:duration=14",
+      "-f",
+      "lavfi",
+      "-i",
+      "sine=frequency=550:duration=14",
+      "-filter_complex",
+      "[0][1]amix=inputs=2:duration=first,volume=1.5",
+      "-ar",
+      "44100",
+      "-ac",
+      "2"
+     ]
+    },
+    {
+     "out": "scene1.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.5",
+      "-ss",
+      "0.0",
+      "-t",
+      "3.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene2.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=3.0",
+      "-ss",
+      "3.0",
+      "-t",
+      "2.5",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    },
+    {
+     "out": "scene3.mp4",
+     "args": [
+      "-f",
+      "lavfi",
+      "-i",
+      "testsrc2=size=320x180:rate=24:duration=4.5",
+      "-ss",
+      "5.5",
+      "-t",
+      "4.0",
+      "-i",
+      "song.wav",
+      "-map",
+      "0:v",
+      "-map",
+      "1:a",
+      "-c:v",
+      "libx264",
+      "-pix_fmt",
+      "yuv420p",
+      "-preset",
+      "ultrafast",
+      "-c:a",
+      "aac",
+      "-shortest",
+      "-threads",
+      "1"
+     ]
+    }
+   ],
+   "steps": [
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       },
+       {
+        "start": 5.5,
+        "end": 9.5
+       }
+      ],
+      "use_embedded_scene_audio": false
+     },
+     "t": 1
+    },
+    {
+     "op": "stitch",
+     "payload": {
+      "scene_paths": [
+       "scene1.mp4",
+       "scene2.mp4",
+       "scene3.mp4"
+      ],
+      "audio_path": "song.wav",
+      "song_path": "",
+      "scene_audio_paths": [],
+      "scene_audio_items": [],
+      "overlay_items": [],
+      "width": 0,
+      "height": 0,
+      "audio_start": 0,
+      "audio_duration": 0,
+      "output_prefix": "FINAL_VIDEO",
+      "timeline_fps": 24,
+      "scene_timing_items": [
+       {
+        "start": 0.0,
+        "end": 3.0
+       },
+       {
+        "start": 3.0,
+        "end": 5.5
+       },
+       {
+        "start": 5.5,
+        "end": 9.5
+       }
+      ],
+      "use_embedded_scene_audio": false
+     },
+     "t": 2
+    }
+   ],
+   "results": [
+    {
+     "final": "proj/FINAL_VIDEO.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 14.0,
+      "format_duration": 14.0
+     },
+     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 228,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    },
+    {
+     "final": "proj/FINAL_VIDEO_2.mp4",
+     "probe": {
+      "frames": 228,
+      "fps": "24/1",
+      "width": 320,
+      "height": 180,
+      "video_duration": 9.5,
+      "has_audio": true,
+      "audio_duration": 14.0,
+      "format_duration": 14.0
+     },
+     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "embedded_audio_mode": "",
+     "normalized_canvas": false,
+     "timeline_frame_sync": true,
+     "timeline_frame_count": 228,
+     "scene_count": 3,
+     "insert_count": 0,
+     "used_scene_audio": false,
+     "output_width": 320,
+     "output_height": 180
+    }
+   ],
+   "tree": [
+    "proj/FINAL_VIDEO.mp4",
+    "proj/FINAL_VIDEO_2.mp4"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1484 @@
+{
+ "function": "build_stitch_payload",
+ "cases": [
+  {
+   "name": "all_scenes_one_missing_strict",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     },
+     {
+      "id": "seg4",
+      "start": 10.0,
+      "end": 14.0
+     },
+     {
+      "id": "seg5",
+      "start": 14.0,
+      "end": 18.25,
+      "video_path": "clips/video_0005-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {},
+   "strict": true,
+   "error": "Scene(s) without a rendered video: seg4. Render them or leave them out of scene_ids."
+  },
+  {
+   "name": "all_scenes_one_missing_lenient",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     },
+     {
+      "id": "seg4",
+      "start": 10.0,
+      "end": 14.0
+     },
+     {
+      "id": "seg5",
+      "start": 14.0,
+      "end": 18.25,
+      "video_path": "clips/video_0005-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {},
+   "strict": false,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4",
+     "clips/video_0005-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     },
+     {
+      "start": 14.0,
+      "end": 18.25
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3",
+     "seg5"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3,
+     5
+    ],
+    "skipped_scene_ids": [
+     "seg4"
+    ],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 342
+   }
+  },
+  {
+   "name": "contiguous_selection",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     2,
+     3
+    ]
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5199999999999996
+     },
+     {
+      "start": 3.5199999999999996,
+      "end": 6.5
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 3.5,
+    "audio_duration": 6.5,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 3.5,
+    "audio_duration": 6.5,
+    "expected_frame_count": 156
+   }
+  },
+  {
+   "name": "selection_by_id_in_wrong_order",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     "seg3",
+     "seg1",
+     "seg2"
+    ]
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 10.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 10.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "selection_not_contiguous_project_song",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     1,
+     3
+    ]
+   },
+   "strict": true,
+   "error": "A stitch with the project song needs contiguous scenes, so one window of the song fits them. Pick one continuous scene range, or use audio: embedded."
+  },
+  {
+   "name": "selection_not_contiguous_embedded",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     1,
+     3
+    ],
+    "audio": "embedded"
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "",
+    "song_path": "song.wav",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": true,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 10.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "embedded",
+    "audio_start": 0.0,
+    "audio_duration": 10.0,
+    "expected_frame_count": 156
+   }
+  },
+  {
+   "name": "built_in_audio_is_embedded_by_auto",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "built_in_audio"
+    }
+   },
+   "params": {},
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "",
+    "song_path": "song.wav",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": true,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "embedded",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "built_in_audio_forced_to_project_song",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "built_in_audio"
+    }
+   },
+   "params": {
+    "audio": "project"
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "mixed_audio_modes_use_the_song",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4",
+      "use_scene_minimax_h3_settings": true,
+      "minimax_h3_settings": {
+       "audio_mode": "input_audio"
+      }
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "built_in_audio"
+    }
+   },
+   "params": {},
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "embedded_forced",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "audio": "embedded"
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "",
+    "song_path": "song.wav",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": true,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "embedded",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "audio_path_override",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "audio_path": "other.wav"
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "other.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "no_audio_anywhere",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {},
+   "strict": true,
+   "error": "The project has no audio file to stitch with. Attach the song, pass audio_path, or use audio: embedded."
+  },
+  {
+   "name": "bad_audio_value",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "audio": "loud"
+   },
+   "strict": true,
+   "error": "audio must be one of auto, embedded, project (got 'loud')."
+  },
+  {
+   "name": "bad_audio_value_none_text",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "audio": 5
+   },
+   "strict": true,
+   "error": "audio must be one of auto, embedded, project (got 5)."
+  },
+  {
+   "name": "unknown_scene",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     9,
+     "nope"
+    ]
+   },
+   "strict": true,
+   "error": "Unknown scene(s) for stitch: 9, nope. Use a scene number (1 = first scene, 3 scenes) or a scene id."
+  },
+  {
+   "name": "bool_scene_id",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     true
+    ]
+   },
+   "strict": true,
+   "error": "scene_ids must be a list of scene numbers (1 = first scene) or scene ids."
+  },
+  {
+   "name": "scene_ids_not_a_list",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": "1"
+   },
+   "strict": true,
+   "error": "scene_ids must be a list of scene numbers (1 = first scene) or scene ids."
+  },
+  {
+   "name": "overlays_not_a_list",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "overlays": "x"
+   },
+   "strict": true,
+   "error": "overlays must be a list of {path, start, end, source_start} items."
+  },
+  {
+   "name": "overlays_listed",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "overlays": [
+     {
+      "path": "a.mp4",
+      "start": 1,
+      "end": 2,
+      "source_start": 0
+     }
+    ]
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [
+     {
+      "path": "a.mp4",
+      "start": 1,
+      "end": 2,
+      "source_start": 0
+     }
+    ],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "prefix_not_text",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "output_prefix": 7
+   },
+   "strict": true,
+   "error": "output_prefix must be a string."
+  },
+  {
+   "name": "custom_prefix",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "output_prefix": "MyCut"
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4",
+     "clips/video_0002-audio.mp4",
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 3.5
+     },
+     {
+      "start": 3.5,
+      "end": 7.02
+     },
+     {
+      "start": 7.02,
+      "end": 10.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "MyCut"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg1",
+     "seg2",
+     "seg3"
+    ],
+    "scene_numbers": [
+     1,
+     2,
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 240
+   }
+  },
+  {
+   "name": "no_video_at_all",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.0
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {},
+   "strict": false,
+   "error": "No scene video files available to stitch."
+  },
+  {
+   "name": "single_scene_preview",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "seg1",
+      "start": 0.0,
+      "end": 3.5,
+      "video_path": "clips/video_0001-audio.mp4"
+     },
+     {
+      "id": "seg2",
+      "start": 3.5,
+      "end": 7.02,
+      "video_path": "clips/video_0002-audio.mp4"
+     },
+     {
+      "id": "seg3",
+      "start": 7.02,
+      "end": 10.0,
+      "video_path": "clips/video_0003-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {
+    "scene_ids": [
+     3
+    ]
+   },
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0003-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.019999999999999574,
+      "end": 3.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 7.02,
+    "audio_duration": 2.9800000000000004,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "seg3"
+    ],
+    "scene_numbers": [
+     3
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 7.02,
+    "audio_duration": 2.9800000000000004,
+    "expected_frame_count": 72
+   }
+  },
+  {
+   "name": "scene_with_rendered_video_path_key",
+   "session": {
+    "video_engine": "minimax_h3",
+    "audio_path": "song.wav",
+    "segments": [
+     {
+      "id": "x",
+      "start": 0,
+      "end": 2,
+      "rendered_video_path": "clips/video_0001-audio.mp4"
+     }
+    ],
+    "minimax_h3_settings": {
+     "audio_mode": "input_audio"
+    }
+   },
+   "params": {},
+   "strict": true,
+   "payload": {
+    "project_folder": "<project>",
+    "scene_paths": [
+     "clips/video_0001-audio.mp4"
+    ],
+    "audio_path": "song.wav",
+    "song_path": "",
+    "scene_audio_paths": [],
+    "scene_audio_items": [],
+    "scene_timing_items": [
+     {
+      "start": 0.0,
+      "end": 2.0
+     }
+    ],
+    "timeline_fps": 24,
+    "use_embedded_scene_audio": false,
+    "overlay_items": [],
+    "width": 0,
+    "height": 0,
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "output_prefix": "FINAL_VIDEO"
+   },
+   "summary": {
+    "scene_ids": [
+     "x"
+    ],
+    "scene_numbers": [
+     1
+    ],
+    "skipped_scene_ids": [],
+    "audio": "project",
+    "audio_start": 0.0,
+    "audio_duration": 0.0,
+    "expected_frame_count": 48
+   }
+  }
+ ]
+}
