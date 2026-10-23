@@ -1,4 +1,5 @@
 //! Helpers shared by the fixture tests. Fixtures are generated from the pack by `tools/make_all.py`.
+#![allow(dead_code)]
 
 use std::path::PathBuf;
 
