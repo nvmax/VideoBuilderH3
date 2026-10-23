@@ -4,6 +4,7 @@
 use serde::Serialize;
 
 use crate::error::CoreError;
+use crate::pyval::round_half_even;
 
 const FRAME_PER_TOKEN: [i64; 5] = [1, 4, 4, 4, 4];
 
@@ -71,16 +72,6 @@ pub struct MaskedContext {
     pub lost_tail_frames: i64,
     pub head_tail_frames: i64,
     pub tail_padding_frames: i64,
-}
-
-/// Python `round()`: ties go to the even integer.
-fn round_half_even(x: f64) -> i64 {
-    let r = x.round();
-    if (x - x.trunc()).abs() == 0.5 && r % 2.0 != 0.0 {
-        (r - x.signum()) as i64
-    } else {
-        r as i64
-    }
 }
 
 /// Pick the predecessor window. Fails when the predecessor is too short for `context_frames`.
