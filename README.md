@@ -18,3 +18,13 @@ cd app; npm install; npm run tauri dev # desktop app in dev mode
 ```
 
 Config: `%APPDATA%\VRGDG-H3\config.json`. Missing keys use defaults (`comfy_url` is `http://127.0.0.1:8188`).
+
+## Render a scene from the command line
+
+```powershell
+cargo run -p h3-cli -- scenes --project "D:\Projects\My Song"
+cargo run -p h3-cli -- render --project "D:\Projects\My Song" --scene 4 --dry-run --graph-out graph.json
+cargo run -p h3-cli -- render --project "D:\Projects\My Song" --scene 4 --set seed=7
+```
+
+`--dry-run` builds the graph and the scene audio without queueing anything. `--set KEY=VALUE` overrides one render setting for that run. ComfyUI must be running with the VRGDG and MiniMax nodes.

@@ -327,3 +327,30 @@ pub fn latent_info(project: &Path, scene: u32) -> io::Result<LatentInfo> {
         dirty,
     })
 }
+
+/// Whether the scene's first pass latent was saved by the same render as its final latent. Selecting an older take, a
+/// single pass re-render or a scene move leaves a first pass file that no longer belongs to the final latent, and it
+/// must then be ignored.
+pub fn pass1_latent_matches(project: &Path, scene: u32) -> bool {
+    let Ok(info) = latent_info(project, scene) else { return false };
+    let pass1 = pass1_path(project, scene);
+    let side = sidecar(&pass1);
+    if !info.exists || !pass1.is_file() || !side.is_file() {
+        return false;
+    }
+    let Some(meta) = fs::read_to_string(&side).ok().and_then(|t| pyjson::parse(&t).ok()) else { return false };
+    let (Some(pass1_time), Some(tokens)) = (meta_float_value(&meta, "timestamp"), meta_float_value(&meta, "token_count")) else {
+        return false;
+    };
+    let gap = info.timestamp.unwrap_or(0.0) - pass1_time;
+    // The first pass is saved during the render, the final latent at its end.
+    tokens as i64 == info.token_count && (0.0..4.0 * 3600.0).contains(&gap)
+}
+
+fn meta_float_value(meta: &Value, key: &str) -> Option<f64> {
+    match meta.get(key)? {
+        Value::Number(n) => n.as_f64(),
+        Value::String(s) => s.trim().parse().ok(),
+        _ => None,
+    }
+}

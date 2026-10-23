@@ -1,5 +1,7 @@
 //! `h3` command line.
 
+mod render_cmd;
+
 use std::path::PathBuf;
 use std::process::{Command, ExitCode};
 
@@ -27,6 +29,32 @@ enum Commands {
     Doctor,
     /// Print the config in use and where it is stored.
     Config,
+    /// List the scenes of a project.
+    Scenes {
+        /// Project folder (the one with vrgdg_builder_session.json).
+        #[arg(long)]
+        project: PathBuf,
+    },
+    /// Render one scene in ComfyUI and find the clip it made.
+    Render {
+        #[arg(long)]
+        project: PathBuf,
+        /// Scene number (1 based) or scene id.
+        #[arg(long)]
+        scene: String,
+        /// Override a render setting for this run, for example `--set seed=7` or `--set prompt="..."`.
+        #[arg(long = "set", value_name = "KEY=VALUE")]
+        set: Vec<String>,
+        /// Build the graph and report it without sending it to ComfyUI.
+        #[arg(long)]
+        dry_run: bool,
+        /// Write the ComfyUI graph to this file.
+        #[arg(long)]
+        graph_out: Option<PathBuf>,
+        /// Give up waiting after this many hours.
+        #[arg(long)]
+        timeout_hours: Option<f64>,
+    },
 }
 
 fn load_config(cli: &Cli) -> Result<(PathBuf, AppConfig)> {
@@ -94,6 +122,16 @@ async fn doctor(cfg: &AppConfig) -> bool {
     ok
 }
 
+fn finish(result: Result<()>) -> ExitCode {
+    match result {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(e) => {
+            eprintln!("[VRGDG-RS] {e:#}");
+            ExitCode::FAILURE
+        }
+    }
+}
+
 #[tokio::main]
 async fn main() -> ExitCode {
     tracing_subscriber::fmt()
@@ -119,6 +157,10 @@ async fn main() -> ExitCode {
             println!("{}", path.display());
             println!("{cfg:#?}");
             ExitCode::SUCCESS
+        }
+        Commands::Scenes { project } => finish(render_cmd::scenes(&project)),
+        Commands::Render { project, scene, set, dry_run, graph_out, timeout_hours } => {
+            finish(render_cmd::render(&cfg, render_cmd::RenderArgs { project, scene, set, dry_run, graph_out, timeout_hours }).await)
         }
     }
 }

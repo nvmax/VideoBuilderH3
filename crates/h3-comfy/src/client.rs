@@ -14,6 +14,16 @@ pub enum ComfyError {
     Status { status: u16, path: String, body: String },
     #[error("ComfyUI sent a response that could not be read for {path}: {source}")]
     Decode { path: String, source: reqwest::Error },
+    /// ComfyUI refused the graph. `node_errors` holds its per node explanation.
+    #[error("ComfyUI refused the workflow: {message}")]
+    Queue { message: String, node_errors: Value },
+    #[error("Workflow execution failed:
+{0}")]
+    Execution(String),
+    #[error("The render was cancelled.")]
+    Cancelled,
+    #[error("Prompt {prompt_id} did not finish within {seconds:.0} seconds.")]
+    Timeout { prompt_id: String, seconds: f64 },
 }
 
 /// Subset of `GET /system_stats`.
@@ -32,6 +42,9 @@ pub struct SystemInfo {
     pub comfyui_version: String,
     #[serde(default)]
     pub python_version: String,
+    /// The command line ComfyUI was started with. Its first item is `main.py`.
+    #[serde(default)]
+    pub argv: Vec<String>,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -86,6 +99,30 @@ impl ComfyClient {
         resp.json::<T>()
             .await
             .map_err(|source| ComfyError::Decode { path: path.to_string(), source })
+    }
+
+    /// `GET path` as loose JSON.
+    pub(crate) async fn get_value(&self, path: &str) -> Result<Value, ComfyError> {
+        self.get_json(path).await
+    }
+
+    /// `POST path` with a JSON body (`Value::Null` sends no body). Returns the status and the response text, so the
+    /// caller can read ComfyUI's own error explanation from a 400.
+    pub(crate) async fn post_text(&self, path: &str, body: &Value) -> Result<(u16, String), ComfyError> {
+        let url = format!("{}{}", self.base, path);
+        let mut request = self.http.post(&url);
+        if !body.is_null() {
+            request = request.json(body);
+        }
+        let resp = request.send().await.map_err(|source| ComfyError::Unreachable { url: self.base.clone(), source })?;
+        let status = resp.status().as_u16();
+        let text = resp.text().await.unwrap_or_default();
+        Ok((status, text))
+    }
+
+    /// `GET /internal/folder_paths`: absolute model and node folders. `None` on a ComfyUI that does not have it.
+    pub async fn folder_paths(&self) -> Option<Value> {
+        self.get_json::<Value>("/internal/folder_paths").await.ok()
     }
 
     /// `GET /system_stats`: health check, versions and GPU memory.

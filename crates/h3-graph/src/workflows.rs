@@ -3,9 +3,8 @@
 //! optional patches and returns the graph with a summary of what it did. The older fixed 3 pass builder is not ported:
 //! the Video Builder never reaches it.
 
-use h3_core::pyjson;
 use h3_core::pyval::{
-    bool_payload, first_value, float_payload, int_payload, text_or_empty, to_float, to_int, truthy, Obj,
+    bool_payload, first_value, float_payload, int_payload, text_or_empty, to_float, truthy, Obj,
 };
 use h3_core::resolution::frame_size;
 use h3_core::tiles::{normalize_vram_preset, plan_spatial_tiles};
@@ -13,7 +12,7 @@ use h3_core::timing::{calculate_timing, TimingInput, TimingPlan};
 use serde_json::{json, Value};
 
 use crate::api::{
-    as_link, class_of, compat_node_inputs, inputs, link, node_id_by_class, replace_input_refs, set_input,
+    as_link, compat_node_inputs, inputs, link, node_id_by_class, set_input,
 };
 use crate::env::{GraphEnv, GraphError, Result};
 use crate::inputs::{
@@ -25,8 +24,6 @@ use crate::patches::{
     patch_advanced_settings, patch_fast_decode, patch_latent_continuation, patch_loras, patch_memory_efficient_sage_attention,
     patch_optional_model_paths, patch_save_latent, patch_te_speed, patch_turbo, require_model_choice, text_or, NONE_LORA,
 };
-
-const MAX_SEED: u64 = u64::MAX;
 
 // -- shared pieces ------------------------------------------------------------------------------------------------------
 
@@ -58,7 +55,6 @@ fn pyrepr_list(items: &[String]) -> String {
 /// The scene's audio file, project folder, scene number and timing plan.
 struct SceneContext {
     audio_mode: &'static str,
-    audio_path: String,
     project: String,
     scene: u32,
     timing: TimingPlan,
@@ -133,16 +129,23 @@ fn scene_context(env: &dyn GraphEnv, payload: &Obj, label: &str, tolerate_bad_en
     } else {
         None
     };
-    Ok(SceneContext { audio_mode, audio_path, project, scene, timing, prepared_audio })
+    Ok(SceneContext { audio_mode, project, scene, timing, prepared_audio })
 }
 
-/// A seed setting: negative means random, and the value is capped to 64 bits.
+/// A seed setting: negative means random, and the value is capped to 64 bits. Seeds can be larger than an `i64`.
 fn seed_value(env: &dyn GraphEnv, payload: &Obj, key: &str, default: i64) -> u64 {
-    let value = payload.get(key).map_or(Some(default), to_int).unwrap_or(default);
+    let parsed: Option<i128> = match payload.get(key) {
+        None => Some(i128::from(default)),
+        Some(Value::Number(n)) => n.as_i64().map(i128::from).or_else(|| n.as_u64().map(i128::from)).or_else(|| n.as_f64().map(|f| f.trunc() as i128)),
+        Some(Value::String(s)) => s.trim().parse::<i128>().ok(),
+        Some(Value::Bool(b)) => Some(i128::from(*b)),
+        Some(_) => None,
+    };
+    let value = parsed.unwrap_or(i128::from(default));
     if value < 0 {
         return env.random_seed();
     }
-    (value as u64).min(MAX_SEED)
+    u64::try_from(value).unwrap_or(u64::MAX)
 }
 
 fn video_prompt(payload: &Obj, keys: &[&str], empty_message: &str) -> Result<String> {
@@ -1018,9 +1021,4 @@ pub fn build(env: &dyn GraphEnv, workflow_key: &str, payload: &Obj) -> Result<Ob
         "minimax_h3" => build_single(env, payload),
         other => Err(GraphError::new(format!("Unknown MiniMax H3 workflow: {other}"))),
     }
-}
-
-#[allow(dead_code)]
-fn unused() {
-    let _ = (replace_input_refs, class_of, pyjson::dumps_inline);
 }

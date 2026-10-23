@@ -21,6 +21,8 @@ pub struct AppConfig {
     pub ffprobe_path: String,
     /// Address for the local agent API.
     pub api_bind: String,
+    /// ComfyUI's output folder. Empty means work it out from the running ComfyUI.
+    pub comfy_output_dir: String,
 }
 
 impl Default for AppConfig {
@@ -32,6 +34,7 @@ impl Default for AppConfig {
             ffmpeg_path: "ffmpeg".into(),
             ffprobe_path: "ffprobe".into(),
             api_bind: "127.0.0.1:8190".into(),
+            comfy_output_dir: String::new(),
         }
     }
 }

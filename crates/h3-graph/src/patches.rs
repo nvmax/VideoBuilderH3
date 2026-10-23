@@ -74,7 +74,7 @@ pub fn clean_lora_name(env: &dyn GraphEnv, value: Option<&Value>) -> String {
         Some(v) if truthy(v) => text_or_empty(Some(v)).trim().to_string(),
         _ => NONE_LORA.to_string(),
     };
-    if text == NONE_LORA || env.model_choices("loras").iter().any(|c| *c == text) { text } else { NONE_LORA.to_string() }
+    if text == NONE_LORA || env.model_choices("loras").contains(&text) { text } else { NONE_LORA.to_string() }
 }
 
 /// `str(payload.get(key) or default).strip()`, or the default when that is empty.
@@ -652,7 +652,7 @@ pub fn patch_loras(env: &dyn GraphEnv, prompt: &mut Obj, payload: &Obj) -> Resul
 pub fn patch_optional_model_paths(
     env: &dyn GraphEnv,
     prompt: &mut Obj,
-    branches: &mut Vec<(String, Value)>,
+    branches: &mut [(String, Value)],
     use_feedforward: bool,
     use_block_sparse_attention: bool,
 ) -> Result<Vec<Value>> {

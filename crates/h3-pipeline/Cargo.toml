@@ -6,3 +6,14 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
+h3-comfy.workspace = true
+h3-core.workspace = true
+h3-graph.workspace = true
+h3-media.workspace = true
+h3-project.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

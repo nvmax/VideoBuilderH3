@@ -1,6 +1,6 @@
 # VRGDG H3 Studio (Rust): Implementation Plan
 
-Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. P3 done 2026-10-23. Next: P4. Everything stays local: no remote, no push.
+Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. P3 done 2026-10-23. P4 done 2026-10-23 (M1 reached, see Section 14). Next: P5. Everything stays local: no remote, no push.
 Reference pack commit: `14421d2` (branch `newbuilder`).
 Location: `rustapp/` inside the pack folder, excluded from git through `.git/info/exclude` (no tracked file changed).
 
@@ -212,3 +212,12 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - **F17.** Left to later phases: copying the audio into `project_audio/` on first save (the caller passes the audio path), `project_context_files`, the global model defaults file, moving a project folder (`_rehydrate_builder_session`), and `_save_builder_project_as`.
 - **F18.** The pack has no project level undo. The Rust app uses the pack's own `session_backups/` (newest 25) as the history. `restore_backup` backs up the current session first and raises the revision.
 - **F19.** One pack bug is not ported: a non-object entry in `overlay_segments` makes the pack's save raise. The Rust save skips such an entry.
+
+## 14. P4 findings
+
+- **F20.** The graph builders in `h3-graph` reproduce all 82 golden graphs and errors exactly, number kinds included (`1` is not `1.0`). They reach the outside world only through the `GraphEnv` trait: files, the node list and model lists from ComfyUI, ffprobe and ffmpeg, the saved latents. The app implements it with `LiveEnv`, the tests with the fixtures' fake ComfyUI. Changing one value in the builder (`multiple` 32 to 33) made 28 of 82 cases fail, so the comparison is real.
+- **F21.** ComfyUI reports `main.py` as a relative path (`ComfyUI\main.py` in the portable build), so its output folder cannot come from the command line alone. `ComfyDirs::detect` anchors it with the absolute `custom_nodes` folder from `/internal/folder_paths`, and `comfy_output_dir` in the config overrides it.
+- **F22.** ComfyUI history carries `[name, data]` event pairs in `status.messages`, also on success. The pack ignores them. A failed node only appears there (`execution_error`), so the Rust client reads that one pair and reports the node, its type and the first 600 characters of the reason.
+- **F23.** Live check on a scratch copy of one of your projects (only its session file; nothing in your projects was touched): scene 4, 2.46 s, 2 Pass, seed 69. `h3 render` built a 40 node graph, cut the scene audio, ComfyUI rendered it in 110 s (48 cached nodes on the second run), and the clip was found. The clip has 73 frames at 24 fps (17 n + 5), 1920x1088. The pack's save latent nodes wrote the final latent, the first pass latent and the take archive into the scratch project, with `tail_padding_frames` 14 = 73 - 59 as the plan says. The first attempt failed in the sampler because that project still names an old T5 text encoder, which does not fit the MiniMax model. A per run `--set clip_name=...` fixed it. The Builder would fail the same way.
+- **F24.** M1 is reached for the render itself. What is not done: cutting the clip to the exact 59 frames (`minimax_exact`), collecting it as `video_NNNN-audio.mp4` with backup and thumbnail, recording it on the scene, and marking the next scene dirty. They are the first items of P5, so the "same clip the Builder makes" comparison happens there.
+- **F25.** Left out on purpose: the RefMod pipeline (clear error), the final frame prompt writer (needs the LLM, P8), the Audio Mask override, speaking clips, WebSocket step progress (the client polls `/history` once a second like the pack; the job system adds live steps).
