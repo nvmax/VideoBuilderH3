@@ -33,3 +33,31 @@ pub fn files_in(folder: &str) -> Vec<String> {
     names.sort();
     names
 }
+
+/// Equality where `1` and `1.0` match, since Python writes whole floats either way.
+pub fn json_eq(a: &Value, b: &Value) -> bool {
+    match (a, b) {
+        (Value::Number(x), Value::Number(y)) => x.as_f64() == y.as_f64(),
+        (Value::Array(x), Value::Array(y)) => x.len() == y.len() && x.iter().zip(y).all(|(p, q)| json_eq(p, q)),
+        (Value::Object(x), Value::Object(y)) => {
+            x.len() == y.len() && x.iter().all(|(k, v)| y.get(k).is_some_and(|w| json_eq(v, w)))
+        }
+        _ => a == b,
+    }
+}
+
+/// Like `assert_eq!` on two JSON values, with number tolerance and a readable diff of the differing keys.
+pub fn assert_json(got: &Value, want: &Value, context: &Value) {
+    if json_eq(got, want) {
+        return;
+    }
+    if let (Value::Object(g), Value::Object(w)) = (got, want) {
+        for key in g.keys().chain(w.keys()) {
+            let (a, b) = (g.get(key).unwrap_or(&Value::Null), w.get(key).unwrap_or(&Value::Null));
+            if !json_eq(a, b) {
+                eprintln!("key {key}: got {a} want {b}");
+            }
+        }
+    }
+    panic!("mismatch for {}", serde_json::to_string(context).unwrap_or_default().chars().take(600).collect::<String>());
+}
