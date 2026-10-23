@@ -90,20 +90,29 @@ export function closeProject() {
   setJobs([]);
 }
 
-/** Run a change, then read the project again. A failure is shown and the project is read again as well. */
-export async function act<T>(work: () => Promise<T>, done?: string): Promise<T | undefined> {
-  setBusy(true);
-  try {
-    const result = await work();
-    if (done) say(done);
-    return result;
-  } catch (e) {
-    say(e instanceof ApiError ? e.message : String(e), true);
-  } finally {
-    await loadProject().catch(() => undefined);
-    setBusy(false);
-  }
-  return undefined;
+let chain: Promise<unknown> = Promise.resolve();
+
+/**
+ * Run a change, then read the project again. Changes run one after another, so each one is sent with the revision the
+ * one before it produced. A failure is shown and the project is read again as well.
+ */
+export function act<T>(work: () => Promise<T>, done?: string): Promise<T | undefined> {
+  const run = chain.then(async () => {
+    setBusy(true);
+    try {
+      const result = await work();
+      if (done) say(done);
+      return result;
+    } catch (e) {
+      say(e instanceof ApiError ? e.message : String(e), true);
+    } finally {
+      await loadProject().catch(() => undefined);
+      setBusy(false);
+    }
+    return undefined;
+  });
+  chain = run.catch(() => undefined);
+  return run;
 }
 
 /** `POST`, `PUT`, `PATCH` or `DELETE` on a project path, with the revision we last read. */

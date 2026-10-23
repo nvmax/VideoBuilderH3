@@ -87,7 +87,8 @@ legend { color: var(--muted); padding: 0 6px; }
 .settings .groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; margin-bottom: 12px; }
 .setting { flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; }
 .setting > span { color: var(--muted); }
-.setting select, .setting input:not([type="checkbox"]) { max-width: 60%; }
+.settings .groups > fieldset { min-width: 0; margin: 0; }
+.setting select, .setting input:not([type="checkbox"]) { width: 58%; min-width: 0; text-overflow: ellipsis; }
 .all { margin-top: 12px; }
 
 .card { display: grid; grid-template-columns: 160px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }

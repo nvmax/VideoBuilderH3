@@ -156,6 +156,7 @@ pub fn scene_view(project: &Path, segment: &Obj, index: usize, locked_settings: 
     let prompt = seg_text(segment, "minimax_h3_prompt");
     let lyric = seg_text(segment, "lyric_text");
     let notes = seg_text(segment, "notes");
+    let notes_text = notes.clone();
     let image = first_asset(project, &image_paths(segment), "image", &format!("img_{number:04}"));
     let video = first_asset(project, &[seg_text(segment, "video_path"), seg_text(segment, "rendered_video_path")], "video", &format!("vid_{number:04}"));
     let thumbnail = first_asset(project, &[seg_text(segment, "video_thumbnail_path"), seg_text(segment, "thumbnail_path")], "image", &format!("thumb_{number:04}"));
@@ -176,6 +177,9 @@ pub fn scene_view(project: &Path, segment: &Obj, index: usize, locked_settings: 
         "end": round3(end),
         "duration": round3((end - start).max(0.0)),
         "status": status,
+        "label": seg_text(segment, "label"),
+        "notes": notes_text,
+        "timeline_note": seg_text(segment, "timeline_note"),
         "lyrics": if lyric.is_empty() { notes } else { lyric },
         "story_beat": seg_text(segment, "story_beat"),
         "t2i_prompt": t2i,

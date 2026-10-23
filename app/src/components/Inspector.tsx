@@ -1,4 +1,4 @@
-import { createEffect, createResource, createSignal, For, Show } from "solid-js";
+import { createEffect, createMemo, createResource, createSignal, For, on, Show } from "solid-js";
 import { call, encodePid, fileUrl, get } from "../api";
 import { act, edit, projectId, say, selectedScene, setJobs } from "../store";
 
@@ -57,16 +57,26 @@ export default function Inspector() {
   const [prompt, setPrompt] = createSignal("");
   const [check, setCheck] = createSignal<{ valid: boolean; errors: { message: string }[] } | null>(null);
 
-  // Start the form from the saved scene whenever another scene is chosen or the scene is saved elsewhere.
-  createEffect(() => {
+  // Start each part of the form from the saved scene when another scene is chosen or that saved value changes. A reload
+  // that changes nothing leaves what is typed, and the prompt check, alone.
+  const id = createMemo(() => scene()?.id);
+  const savedFields = createMemo(() => JSON.stringify([scene()?.label ?? "", scene()?.lyrics ?? "", scene()?.story_beat ?? ""]));
+  const savedPrompt = createMemo(() => scene()?.minimax_h3_prompt ?? "");
+  createEffect(on([id, savedFields], () => {
     const s = scene();
     if (!s) return;
     setLabel(s.label ?? "");
     setLyrics(s.lyrics ?? "");
     setBeat(s.story_beat ?? "");
-    setPrompt(s.minimax_h3_prompt ?? "");
-    setCheck(null);
-  });
+  }));
+  createEffect(on([id, savedPrompt], () => {
+    // Saving what is typed changes nothing on screen, so its check result stays.
+    if (prompt() !== savedPrompt()) {
+      setPrompt(savedPrompt());
+      setCheck(null);
+    }
+  }));
+  createEffect(on(id, () => setCheck(null)));
 
   const saveFields = () => edit("PATCH", `/scenes/${encodeURIComponent(scene()!.id)}`, { label: label(), lyric_text: lyrics(), story_beat: beat() }, "Scene saved.");
   const savePrompt = () => edit("PUT", `/scenes/${encodeURIComponent(scene()!.id)}/prompts/minimax_h3_prompt`, { prompt: prompt(), origin: "manual" }, "Prompt saved.");

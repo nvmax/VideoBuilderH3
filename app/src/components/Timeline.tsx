@@ -5,6 +5,7 @@ import { act, edit, playhead, project, projectId, say, selectedId, setPlayhead, 
 const HEIGHT = 84;
 
 function Waveform(props: { width: number }) {
+  // `width` is the length of the song in pixels, so the peaks line up with the scene blocks.
   let canvas: HTMLCanvasElement | undefined;
   const [wave] = createResource(
     () => (project()?.audio.attached ? [projectId(), project()!.audio.path] : null),
@@ -134,7 +135,7 @@ export default function Timeline() {
 
       <div class="scroll">
         <div class="track" style={{ width: `${width()}px`, height: `${HEIGHT + 40}px` }} onClick={seek}>
-          <Waveform width={width()} />
+          <Waveform width={(project()?.audio.duration ?? 0) * zoom()} />
           <For each={project()?.scenes ?? []}>
             {(scene) => {
               const end = () => (drag()?.id === scene.id ? drag()!.end : scene.end);
