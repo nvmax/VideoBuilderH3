@@ -7,6 +7,8 @@ pub mod error;
 pub mod image_jobs;
 pub mod image_routes;
 pub mod job_handlers;
+pub mod llm_jobs;
+pub mod llm_routes;
 pub mod session_routes;
 pub mod views;
 
@@ -34,7 +36,9 @@ pub fn build_state(cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, Stri
     }
     let roots = views::project_roots(&cfg.project_root);
     let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
-    Ok(Arc::new(AppState { cfg, roots, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()) }))
+    let config_path = db_path.parent().unwrap_or_else(|| Path::new(".")).join("config.json");
+    let llm = std::sync::RwLock::new(cfg.llm.clone());
+    Ok(Arc::new(AppState { llm, config_path, cfg, roots, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()) }))
 }
 
 /// Serve the API until the process stops.

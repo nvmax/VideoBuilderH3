@@ -1,0 +1,2298 @@
+{
+ "cases": [
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 0.05,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 0.1,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 1.0,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 1.0,
+    "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     1.25
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     1.25
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     1.25
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     1.25
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     1.0,
+     2.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     1.0,
+     2.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 2.5,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 2.5,
+    "maximum_one_per_second_cuts": 2,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     2.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     2.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     1.333,
+     2.667
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     1.333,
+     2.667
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 3,
+    "shot_count": 4,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 3,
+    "shot_count": 4,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 4.0,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 4.0,
+    "maximum_one_per_second_cuts": 3,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     3.1
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.067,
+     4.133
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 3,
+    "shot_count": 4,
+    "cut_times_seconds": [
+     1.55,
+     3.1,
+     4.65
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 4,
+    "shot_count": 5,
+    "cut_times_seconds": [
+     1.24,
+     2.48,
+     3.72,
+     4.96
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 6,
+    "shot_count": 7,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 6,
+    "shot_count": 7,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 6.2,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.2,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     4.95
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 3,
+    "shot_count": 4,
+    "cut_times_seconds": [
+     2.475,
+     4.95,
+     7.425
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 4,
+    "shot_count": 5,
+    "cut_times_seconds": [
+     1.98,
+     3.96,
+     5.94,
+     7.92
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 6,
+    "shot_count": 7,
+    "cut_times_seconds": [
+     1.414,
+     2.829,
+     4.243,
+     5.657,
+     7.071,
+     8.486
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 9,
+    "shot_count": 10,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 9,
+    "shot_count": 10,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 9.9,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 9.9,
+    "maximum_one_per_second_cuts": 9,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 0,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 1,
+   "return": {
+    "frequency": 1,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 1,
+    "shot_count": 2,
+    "cut_times_seconds": [
+     7.5
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 3,
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 4,
+    "shot_count": 5,
+    "cut_times_seconds": [
+     3.0,
+     6.0,
+     9.0,
+     12.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 5,
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 7,
+    "shot_count": 8,
+    "cut_times_seconds": [
+     1.875,
+     3.75,
+     5.625,
+     7.5,
+     9.375,
+     11.25,
+     13.125
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 7,
+   "return": {
+    "frequency": 7,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 10,
+    "shot_count": 11,
+    "cut_times_seconds": [
+     1.364,
+     2.727,
+     4.091,
+     5.455,
+     6.818,
+     8.182,
+     9.545,
+     10.909,
+     12.273,
+     13.636
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 10,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 14,
+    "shot_count": 15,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": 99,
+   "return": {
+    "frequency": 10,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 14,
+    "shot_count": 15,
+    "cut_times_seconds": [
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0
+    ],
+    "continuous_shot": false
+   }
+  },
+  {
+   "op": "cut_plan",
+   "duration": 15.0,
+   "frequency": -2,
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 15.0,
+    "maximum_one_per_second_cuts": 14,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true
+   }
+  },
+  {
+   "op": "style",
+   "card": {},
+   "defaults": {},
+   "label": "",
+   "guidance": "",
+   "verbiage": ""
+  },
+  {
+   "op": "style",
+   "card": {
+    "video_style": "cinematic_realism"
+   },
+   "defaults": {},
+   "label": "Cinematic realism",
+   "guidance": "Naturalistic practical lighting, restrained color grading, balanced contrast, subtle film grain, realistic skin texture, neutral tones, believable materials, and polished cinematic clarity throughout.",
+   "verbiage": "Cinematic realism: Naturalistic practical lighting, restrained color grading, balanced contrast, subtle film grain, realistic skin texture, neutral tones, believable materials, and polished cinematic clarity throughout."
+  },
+  {
+   "op": "style",
+   "card": {},
+   "defaults": {
+    "video_style": "gothic_romance"
+   },
+   "label": "Gothic romance",
+   "guidance": "Deep burgundy, black, and ivory tones, soft shadows, luminous highlights, ornate details, rich velvet and lace textures, candlelit atmosphere, and melancholic visual softness throughout.",
+   "verbiage": "Gothic romance: Deep burgundy, black, and ivory tones, soft shadows, luminous highlights, ornate details, rich velvet and lace textures, candlelit atmosphere, and melancholic visual softness throughout."
+  },
+  {
+   "op": "style",
+   "card": {
+    "video_style": "custom",
+    "video_style_custom": " Neon noir "
+   },
+   "defaults": {},
+   "label": "Neon noir",
+   "guidance": "",
+   "verbiage": "Neon noir"
+  },
+  {
+   "op": "style",
+   "card": {},
+   "defaults": {
+    "video_style": "custom",
+    "video_style_custom": "Dusty film"
+   },
+   "label": "Dusty film",
+   "guidance": "",
+   "verbiage": "Dusty film"
+  },
+  {
+   "op": "style",
+   "card": {
+    "video_style": "unknown style"
+   },
+   "defaults": {},
+   "label": "unknown style",
+   "guidance": "",
+   "verbiage": ""
+  },
+  {
+   "op": "style",
+   "card": {
+    "video_style": "dark_fantasy"
+   },
+   "defaults": {
+    "video_style": "ethereal_dreamscape"
+   },
+   "label": "Dark fantasy",
+   "guidance": "Shadow-heavy lighting, desaturated earth tones, metallic accents, dramatic contrast, weathered textures, monumental fantasy production design, atmospheric haze, and richly cinematic grading throughout.",
+   "verbiage": "Dark fantasy: Shadow-heavy lighting, desaturated earth tones, metallic accents, dramatic contrast, weathered textures, monumental fantasy production design, atmospheric haze, and richly cinematic grading throughout."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "realtime_subjects_timelapse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "frozen_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "frozen_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "frozen_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "frozen_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters move / world frozen — Mandatory:\n\nProtected characters move naturally through a world frozen at one instant. Unprotected people, particles, vehicles, liquids, smoke, weather, and environmental motion remain suspended unless the scene explicitly releases one element.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "reverse_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "reverse_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "reverse_world",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "reverse_world",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Characters forward / world reverses — Mandatory:\n\nProtected characters move and perform forward in natural time while unprotected background people and environmental events visibly run in reverse, including recoverable spills, retracing traffic, returning debris, and reversed weather or smoke.\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\ndefault custom\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\ndefault custom\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\ndefault custom\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\ndefault custom\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\ndefault custom\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\ndefault custom\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "custom",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\nown card effect\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "custom",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\nown card effect\n\nProtect only the first mapped/reference character at natural 1x real-time speed; other mapped characters may receive the selected temporal effect.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "custom",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "custom",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": "Temporal / World Effect — Custom temporal effect — Mandatory:\n\nown card effect\n\nProtect only these named mapped/reference characters at natural 1x real-time speed: Ava.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "global",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "off",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "nonsense",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "nonsense",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "lead_only",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal",
+   "card": {
+    "temporal_world_effect_override": "nonsense",
+    "temporal_world_effect_custom": "own card effect"
+   },
+   "defaults": {
+    "temporal_world_effect": "nonsense",
+    "temporal_world_effect_custom": "default custom",
+    "temporal_protected_characters": "custom",
+    "temporal_protected_custom": "Ava"
+   },
+   "return": ""
+  },
+  {
+   "op": "temporal_append",
+   "prompt": "",
+   "verbiage": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices.",
+   "return": ""
+  },
+  {
+   "op": "temporal_append",
+   "prompt": "",
+   "verbiage": "",
+   "return": ""
+  },
+  {
+   "op": "temporal_append",
+   "prompt": "[Shot 1] a\n\n[Shot 2] b",
+   "verbiage": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices.",
+   "return": "[Shot 1] a\n\n[Shot 2] b\n\nTemporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal_append",
+   "prompt": "[Shot 1] a\n\n[Shot 2] b",
+   "verbiage": "",
+   "return": "[Shot 1] a\n\n[Shot 2] b"
+  },
+  {
+   "op": "temporal_append",
+   "prompt": "[Shot 1] a Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices. b",
+   "verbiage": "Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices.",
+   "return": "[Shot 1] a  b\n\nTemporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices."
+  },
+  {
+   "op": "temporal_append",
+   "prompt": "[Shot 1] a Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices. b",
+   "verbiage": "",
+   "return": "[Shot 1] a Temporal / World Effect — Real-time characters / time-lapse world — Mandatory:\n\nCreate a clearly separated two-speed reality: protected characters remain in natural real time while only the unprotected background world moves in smooth accelerated time-lapse.\n\nProtect every mapped/reference character in the scene at natural 1x real-time speed, including secondary referenced characters. Never accelerate, freeze, reverse, echo, duplicate, or temporally distort any protected character.\n\nOnly the unprotected background/world may receive this effect, including location-appropriate environmental motion or anonymous extras when permitted. Keep the effect secondary; never alter, duplicate, replace, or obscure a mapped/reference character.\n\nTimestamp staging requirement: every shot must visibly show at least one concrete, readable effect affecting only the unprotected background/world while protected characters continue moving naturally at normal 1x speed.\n\nTemporal speed separation is visual only. Keep supplied or generated dialogue, singing, lip sync, facial timing, and primary audio at normal speed; never time-stretch, reverse, or accelerate protected voices. b"
+  },
+  {
+   "op": "fx",
+   "defaults": {},
+   "accents": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "reserve": 0,
+   "apply": "[Shot 1] At 00:00.000, one.\n\n[Shot 2] At 00:01.500, two.\n\n[Shot 3] At 00:03.000, three."
+  },
+  {
+   "op": "fx",
+   "defaults": {
+    "fx_preset": "lighting"
+   },
+   "accents": [
+    "FX accent: A brief practical-light flicker cascade sweeps through the environment and resolves into clean subject light. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.",
+    "FX accent: A controlled red-to-blue light sweep travels across the set, creating a readable cinematic exposure pulse. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.",
+    "FX accent: Neon reflections pulse once across the surfaces on the musical accent, without obscuring the subject's face. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.",
+    "FX accent: A brief practical-light flicker cascade sweeps through the environment and resolves into clean subject light. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable."
+   ],
+   "reserve": 722,
+   "apply": "[Shot 1] At 00:00.000, one. FX accent: A brief practical-light flicker cascade sweeps through the environment and resolves into clean subject light. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.\n\n[Shot 2] At 00:01.500, two. FX accent: A controlled red-to-blue light sweep travels across the set, creating a readable cinematic exposure pulse. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.\n\n[Shot 3] At 00:03.000, three. FX accent: Neon reflections pulse once across the surfaces on the musical accent, without obscuring the subject's face. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable."
+  },
+  {
+   "op": "fx",
+   "defaults": {
+    "fx_preset": "camera_lens"
+   },
+   "accents": [
+    "FX accent: A restrained lens flare and foreground-parallax accent passes through the frame as the camera moves. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.",
+    "FX accent: A subtle lens-bloom pulse and focus-breathing shift accent the camera move while the subject remains sharp. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.",
+    "FX accent: A controlled motion-blur streak catches the edge of the frame during the camera movement, preserving subject readability. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.",
+    "FX accent: A restrained lens flare and foreground-parallax accent passes through the frame as the camera moves. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable."
+   ],
+   "reserve": 727,
+   "apply": "[Shot 1] At 00:00.000, one. FX accent: A restrained lens flare and foreground-parallax accent passes through the frame as the camera moves. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.\n\n[Shot 2] At 00:01.500, two. FX accent: A subtle lens-bloom pulse and focus-breathing shift accent the camera move while the subject remains sharp. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable.\n\n[Shot 3] At 00:03.000, three. FX accent: A controlled motion-blur streak catches the edge of the frame during the camera movement, preserving subject readability. Timing: on a readable musical, lyric, or action accent when one is present. Keep the mapped subject stable and readable."
+  },
+  {
+   "op": "fx",
+   "defaults": {
+    "fx_preset": "custom",
+    "fx_custom_json": "{\"cues\": [\"spark\", {\"text\": \"flash\"}], \"primary\": \"burst\", \"timing\": \"on the drop\"}"
+   },
+   "accents": [
+    "FX accent: burst Timing: on the drop. Keep the mapped subject stable and readable.",
+    "FX accent: spark Timing: on the drop. Keep the mapped subject stable and readable.",
+    "FX accent: flash Timing: on the drop. Keep the mapped subject stable and readable.",
+    "FX accent: burst Timing: on the drop. Keep the mapped subject stable and readable."
+   ],
+   "reserve": 249,
+   "apply": "[Shot 1] At 00:00.000, one. FX accent: burst Timing: on the drop. Keep the mapped subject stable and readable.\n\n[Shot 2] At 00:01.500, two. FX accent: spark Timing: on the drop. Keep the mapped subject stable and readable.\n\n[Shot 3] At 00:03.000, three. FX accent: flash Timing: on the drop. Keep the mapped subject stable and readable."
+  },
+  {
+   "op": "fx",
+   "defaults": {
+    "fx_preset": "custom",
+    "fx_custom_json": "not json"
+   },
+   "accents": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "reserve": 0,
+   "apply": "[Shot 1] At 00:00.000, one.\n\n[Shot 2] At 00:01.500, two.\n\n[Shot 3] At 00:03.000, three."
+  },
+  {
+   "op": "fx",
+   "defaults": {
+    "fx_preset": "ghost"
+   },
+   "accents": [
+    "",
+    "",
+    "",
+    ""
+   ],
+   "reserve": 0,
+   "apply": "[Shot 1] At 00:00.000, one.\n\n[Shot 2] At 00:01.500, two.\n\n[Shot 3] At 00:03.000, three."
+  },
+  {
+   "op": "articulation",
+   "text": "",
+   "return": ""
+  },
+  {
+   "op": "articulation",
+   "text": "Ava sings with her mouth open wide, and the camera pushes in.",
+   "return": "Ava sings, and the camera pushes in."
+  },
+  {
+   "op": "articulation",
+   "text": "<Subject 1> sings <d>[English] la la la.</d> with her lips parted, eyes bright, as the camera tilts up.",
+   "return": "<Subject 1> sings <d>[English] la la la.</d>, eyes bright, as the camera tilts up."
+  },
+  {
+   "op": "articulation",
+   "text": "He keeps his lips pressed together and watches. She belts the chorus with a trembling jaw.",
+   "return": "He keeps his lips pressed together and watches."
+  },
+  {
+   "op": "articulation",
+   "text": "Her mouth forms the words; she walks forward, then turns. The jaw tightens, and she looks up!",
+   "return": "she walks forward, then turns. and she looks up!"
+  },
+  {
+   "op": "articulation",
+   "text": "Rate 2.5 per second, with natural lips moving, the singer steps. \"Quoted lips stay.\" Final.",
+   "return": "Rate 2.5 per second, with the singer steps. \"Quoted lips stay.\" Final."
+  },
+  {
+   "op": "articulation",
+   "text": "A [Image 1] wide shot with natural mouth, then and while lips quiver; hair blows in wind...",
+   "return": "A [Image 1] wide shot with then and; hair blows in wind..."
+  },
+  {
+   "op": "articulation",
+   "text": "No articulation here at all. Just a wide shot, slow dolly, warm light.",
+   "return": "No articulation here at all. Just a wide shot, slow dolly, warm light."
+  },
+  {
+   "op": "emotion",
+   "payload": {},
+   "return": ""
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "facial_performance": "off"
+   },
+   "return": ""
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "facial_performance": "natural"
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: natural\nCustom facial direction: (none)\nScene emotion/expression input: (inherit facial direction)\nLyrics available for interpretation:\n(no vocal line assigned)\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "facial_performance": "custom",
+    "facial_performance_custom": "bitter"
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: custom\nCustom facial direction: bitter\nScene emotion/expression input: (inherit facial direction)\nLyrics available for interpretation:\n(no vocal line assigned)\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "facial_performance_custom": "wistful"
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: natural\nCustom facial direction: wistful\nScene emotion/expression input: (inherit facial direction)\nLyrics available for interpretation:\n(no vocal line assigned)\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "emotion_expression_tags": "start happy, then end sad",
+    "lyric_text": "hold me close"
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: natural\nCustom facial direction: (none)\nScene emotion/expression input: start happy, then end sad\nLyrics available for interpretation:\nhold me close\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "emotion_expression_tags": "angry",
+    "facial_performance": "off",
+    "lyric_text": ""
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: off\nCustom facial direction: (none)\nScene emotion/expression input: angry\nLyrics available for interpretation:\n(no vocal line assigned)\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "performance_mode": "speaking",
+    "audio_mode": "built_in_audio"
+   },
+   "return": "\n\nBUILT-IN H3 SPEECH DELIVERY:\nUse the scene beat, storyboard, spoken words and requested facial/emotion direction to stage the speaker's visible acting and generated vocal delivery. Put language and fitting emotion descriptors in the dialogue header, for example <d>[English, curious] exact dialogue.</d> The says/speaks verb establishes speech; do not substitute a generic speaking descriptor for the actual emotion. INLINE DELIVERY TAGS ARE REQUIRED: An emotion header alone is incomplete. In every shot with spoken dialogue, include at least one suitable inline delivery cue inside <d>, chosen from the scene, dialogue meaning and requested emotion. For several sentences, stage the delivery across relevant phrase boundaries and emphasized words rather than tagging only the header. Use pauses for changes of thought, breath cues for a motivated breath, and <i>...</i> for the existing words the speaker stresses. Place each cue at the phrase it affects. Choose from: <pause>, <long pause>, <breath>, <inhale>, <exhale>, <catches breath>, <deep breath>, <laughs>, <chuckle>, <sighs>, <uh>, <stutter>, <gasp>, <coughs>, <clears throat>, <sniff>, <pant>, <pants>, <softer>, <mhm>, <phew>, and <smacks lips></smacks lips>. For emphasis wrap only 1–4 existing words in <i>...</i>; use <whisper>...</whisper> or <humming>...</humming> for an explicitly requested delivery. Preserve the supplied spoken words and their order; tags guide performance without adding, repeating or rewriting dialogue. Preserve existing delivery tags. Keep pauses and breathing within the scene's available duration. Describe the matching expression and acting in the shot prose, with clear subject ownership. This inline vocal-delivery policy applies only to generated built-in speech; supplied audio keeps its existing vocal delivery unchanged."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "performance_mode": "speaking",
+    "audio_mode": "built_in_audio",
+    "emotion_expression_tags": "calm",
+    "lyric_text": "Hello"
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: natural\nCustom facial direction: (none)\nScene emotion/expression input: calm\nLyrics available for interpretation:\nHello\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block.\n\nBUILT-IN H3 SPEECH DELIVERY:\nUse the scene beat, storyboard, spoken words and requested facial/emotion direction to stage the speaker's visible acting and generated vocal delivery. Put language and fitting emotion descriptors in the dialogue header, for example <d>[English, curious] exact dialogue.</d> The says/speaks verb establishes speech; do not substitute a generic speaking descriptor for the actual emotion. INLINE DELIVERY TAGS ARE REQUIRED: An emotion header alone is incomplete. In every shot with spoken dialogue, include at least one suitable inline delivery cue inside <d>, chosen from the scene, dialogue meaning and requested emotion. For several sentences, stage the delivery across relevant phrase boundaries and emphasized words rather than tagging only the header. Use pauses for changes of thought, breath cues for a motivated breath, and <i>...</i> for the existing words the speaker stresses. Place each cue at the phrase it affects. Choose from: <pause>, <long pause>, <breath>, <inhale>, <exhale>, <catches breath>, <deep breath>, <laughs>, <chuckle>, <sighs>, <uh>, <stutter>, <gasp>, <coughs>, <clears throat>, <sniff>, <pant>, <pants>, <softer>, <mhm>, <phew>, and <smacks lips></smacks lips>. For emphasis wrap only 1–4 existing words in <i>...</i>; use <whisper>...</whisper> or <humming>...</humming> for an explicitly requested delivery. Preserve the supplied spoken words and their order; tags guide performance without adding, repeating or rewriting dialogue. Preserve existing delivery tags. Keep pauses and breathing within the scene's available duration. Describe the matching expression and acting in the shot prose, with clear subject ownership. This inline vocal-delivery policy applies only to generated built-in speech; supplied audio keeps its existing vocal delivery unchanged."
+  },
+  {
+   "op": "emotion",
+   "payload": {
+    "video_type": "speaking",
+    "audio_mode": "input_audio",
+    "facial_performance": "joyful"
+   },
+   "return": "EMOTION / EXPRESSION — AUTHOR'S ACTING DIRECTION:\nFacial preset: joyful\nCustom facial direction: (none)\nScene emotion/expression input: (inherit facial direction)\nLyrics available for interpretation:\n(no vocal line assigned)\n\nInterpret the lyric's meaning, scene action, and the requested emotion together. Explicit scene emotion input takes priority over the preset; Custom facial text such as Angry is also an emotion request. Choose fitting bracket descriptors such as [angry, singing] and write specific visible expressions and acting that suit THIS lyric, rather than copying a stock phrase or the raw input. The requested emotion remains authoritative: a sad lyric with Angry can be bitter or confrontational. For 'start happy, then end sad', stage a readable progression with the appropriate tags at each phase; never flatten the request into one simultaneous [happy, sad] state. Keep each singer's expressions attached to their assigned cue and subject. Instrumental/B-roll shots may have visual emotion but never singing tags or vocal performance. Scenes without people use atmosphere and physical visuals rather than inventing a face. For speaking scenes use speech emotion descriptors instead of singing descriptors. For supplied audio, describe visible acting and preserve the existing vocals; do not request changes to the vocal delivery. For supplied-audio singing, never describe mouth, lip, or jaw movement, even for one continuous shot. Use the assigned singing cue once and only during audible vocals. When lyric omission is enabled, keep the lyrics as interpretation context only: use [emotion, singing] next to performance synchronized with <Audio 1>, without lyric quotations or <d> tags. When lyrics are included in a single H3 shot, retain the exact words and language descriptor and add emotion descriptors inside its cue, for example <d>[English, angry, singing] exact supplied words.</d>. Choose the actual lyric language. Write the emotion tags and acting inside the shot prose; never output this instruction block."
+  },
+  {
+   "op": "emotion_input",
+   "segment": {},
+   "session": {},
+   "return": {
+    "emotion_expression_tags": "",
+    "facial_performance": "",
+    "facial_performance_custom": ""
+   }
+  },
+  {
+   "op": "emotion_input",
+   "segment": {
+    "emotion_expression_tags": " sad ",
+    "facial_performance": "soft"
+   },
+   "session": {
+    "default_facial_performance": "x"
+   },
+   "return": {
+    "emotion_expression_tags": "sad",
+    "facial_performance": "soft",
+    "facial_performance_custom": ""
+   }
+  },
+  {
+   "op": "emotion_input",
+   "segment": {},
+   "session": {
+    "default_facial_performance": "calm",
+    "default_facial_performance_custom": "tender"
+   },
+   "return": {
+    "emotion_expression_tags": "",
+    "facial_performance": "calm",
+    "facial_performance_custom": "tender"
+   }
+  }
+ ]
+}

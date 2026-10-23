@@ -1698,6 +1698,7 @@ dependencies = [
  "h3-graph",
  "h3-image",
  "h3-jobs",
+ "h3-llm",
  "h3-media",
  "h3-pipeline",
  "h3-project",
@@ -1822,9 +1823,11 @@ dependencies = [
 name = "h3-pipeline"
 version = "0.1.0"
 dependencies = [
+ "axum",
  "h3-comfy",
  "h3-core",
  "h3-graph",
+ "h3-llm",
  "h3-media",
  "h3-project",
  "serde_json",
@@ -1842,6 +1845,7 @@ dependencies = [
  "dirs 6.0.0",
  "filetime",
  "h3-core",
+ "h3-llm",
  "image",
  "serde",
  "serde_json",

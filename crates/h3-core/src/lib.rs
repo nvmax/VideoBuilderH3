@@ -9,6 +9,7 @@ pub mod resolution;
 pub mod scene;
 pub mod scene_card;
 pub mod settings;
+pub mod style;
 pub mod tiles;
 pub mod lyric_scenes;
 pub mod timeline;

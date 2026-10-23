@@ -6,6 +6,7 @@
 pub mod context;
 pub mod env;
 pub mod finish;
+pub mod minimax_prompts;
 pub mod render;
 pub mod scene_video;
 pub mod stitch_plan;

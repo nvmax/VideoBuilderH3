@@ -29,11 +29,15 @@ use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
 use crate::edit_routes as er;
 use crate::image_routes as ir;
+use crate::llm_routes as lr;
 use crate::session_routes as sr;
 use crate::views::{self, SceneFilter};
 
 pub struct AppState {
     pub cfg: AppConfig,
+    /// The LLM settings in use. They change at run time and are saved to `config_path`.
+    pub llm: std::sync::RwLock<h3_llm::LlmConfig>,
+    pub config_path: PathBuf,
     pub roots: Vec<PathBuf>,
     pub jobs: JobManager,
     pub presets: h3_image::PresetStore,
@@ -48,11 +52,16 @@ pub type Shared = State<Arc<AppState>>;
 pub fn router(state: Arc<AppState>) -> Router {
     job_handlers::register(&state);
     crate::image_jobs::register(&state);
+    crate::llm_jobs::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
         .route("/models", get(models))
         .route("/queue", get(queue))
+        .route("/llm/settings", get(lr::get_settings).put(lr::put_settings))
+        .route("/llm/active", get(lr::active))
+        .route("/llm/models", get(lr::models))
+        .route("/llm/test", post(lr::test))
         .route("/settings/minimax-h3/schema", get(settings_schema))
         .route("/events", get(events))
         .route("/jobs", get(list_jobs))
@@ -86,6 +95,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/timeline/snap", post(er::snap))
         .route("/projects/{pid}/validate", post(er::validate))
         .route("/projects/{pid}/scenes/{sid}/video/render", post(render_scene))
+        .route("/projects/{pid}/minimax-prompts", post(lr::write_prompts))
         .route("/projects/{pid}/video/render", post(render_batch))
         .route("/projects/{pid}/video/graph", post(video_graph))
         .route("/projects/{pid}/stitch", post(stitch))

@@ -23,6 +23,8 @@ pub struct AppConfig {
     pub api_bind: String,
     /// ComfyUI's output folder. Empty means work it out from the running ComfyUI.
     pub comfy_output_dir: String,
+    /// The LLM runner settings, saved for every project.
+    pub llm: h3_llm::LlmConfig,
 }
 
 impl Default for AppConfig {
@@ -35,6 +37,7 @@ impl Default for AppConfig {
             ffprobe_path: "ffprobe".into(),
             api_bind: "127.0.0.1:8190".into(),
             comfy_output_dir: String::new(),
+            llm: h3_llm::LlmConfig::default(),
         }
     }
 }

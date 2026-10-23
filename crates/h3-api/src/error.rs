@@ -87,6 +87,19 @@ impl From<ManagerError> for ApiError {
     }
 }
 
+impl From<h3_llm::LlmError> for ApiError {
+    fn from(e: h3_llm::LlmError) -> Self {
+        use h3_llm::LlmError as E;
+        let message = e.to_string();
+        match e {
+            E::Unavailable(_) => Self::new(StatusCode::SERVICE_UNAVAILABLE, "LLM_UNAVAILABLE", message).retryable(),
+            E::Request(_) => Self::new(StatusCode::BAD_GATEWAY, "LLM_RECOVERABLE", message).retryable(),
+            E::Empty(_) => Self::new(StatusCode::BAD_GATEWAY, "LLM_BAD_OUTPUT", message).retryable(),
+            E::Context(_) => Self::validation(message),
+        }
+    }
+}
+
 impl From<h3_image::ImageError> for ApiError {
     fn from(e: h3_image::ImageError) -> Self {
         use h3_image::ImageError as E;

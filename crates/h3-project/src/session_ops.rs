@@ -484,3 +484,16 @@ pub fn calibrate_beats(project: &Path, offset: f64, if_match: Option<i64>, now: 
     let revision = edit.save(now)?;
     Ok(json!({"calibrated": true, "offset_seconds": offset, "beat_count": count, "revision": revision}))
 }
+
+/// Merge fields into one scene and save. Used by writers (prompts, descriptions) that produce several keys at once.
+pub fn set_scene_fields(project: &Path, scene_id: &str, fields: &Obj, now: &Stamp) -> OpResult {
+    let mut edit = open(project, None)?;
+    let mut segs = edit.segments();
+    let idx = find_scene(&segs, scene_id).ok_or_else(|| OpError::SceneNotFound(scene_id.to_string()))?;
+    for (key, value) in fields {
+        set(&mut segs[idx], key, value.clone());
+    }
+    edit.put_segments(segs);
+    let revision = edit.save(now)?;
+    Ok(json!({"scene_id": scene_id, "revision": revision}))
+}
