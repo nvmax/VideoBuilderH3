@@ -14,9 +14,7 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-h3-comfy.workspace = true
+h3-api.workspace = true
 h3-project.workspace = true
-serde.workspace = true
-serde_json.workspace = true
 tauri = { version = "2", features = [] }
 tauri-plugin-opener = "2"

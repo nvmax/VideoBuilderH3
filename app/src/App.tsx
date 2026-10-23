@@ -1,80 +1,118 @@
-import { createResource, For, Show } from "solid-js";
-import { invoke } from "@tauri-apps/api/core";
+import { createResource, createSignal, For, onCleanup, onMount, Show } from "solid-js";
+import { apiBase, call, get, initApi } from "./api";
+import { closeProject, notice, openProject, project, projectId, say, startEvents } from "./store";
+import Editor from "./components/Editor";
 import "./App.css";
 
-type MissingNode = { class_type: string; provider: string; feature: string };
-type ComfyStatus = {
-  url: string;
-  reachable: boolean;
-  error: string | null;
-  comfyui_version: string;
-  gpus: string[];
-  core_ready: boolean;
-  missing: MissingNode[];
-};
+interface ProjectRow {
+  id: string;
+  name: string;
+  scene_count: number;
+  has_audio: boolean;
+  revision: number;
+  updated: number;
+}
 
-function App() {
-  const [status, { refetch }] = createResource(() => invoke<ComfyStatus>("comfy_status"));
-
+function Health() {
+  const [health, { refetch }] = createResource(() => get<any>("/health").catch(() => null));
+  const timer = window.setInterval(() => void refetch(), 15000);
+  onCleanup(() => window.clearInterval(timer));
   return (
-    <main class="container">
-      <h1>VRGDG H3 Studio</h1>
-      <section class="panel">
-        <div class="row-between">
-          <h2>ComfyUI</h2>
-          <button onClick={() => refetch()} disabled={status.loading}>
-            {status.loading ? "Checking..." : "Check again"}
-          </button>
-        </div>
-        <Show when={status.error}>
-          <p class="bad">{String(status.error)}</p>
-        </Show>
-        <Show when={status()}>
-          {(s) => (
-            <>
-              <p>
-                {s().url}: {" "}
-                <span class={s().reachable ? "good" : "bad"}>
-                  {s().reachable ? `connected, version ${s().comfyui_version}` : "not reachable"}
-                </span>
-              </p>
-              <Show when={s().error}>
-                <p class="bad">{s().error}</p>
-              </Show>
-              <For each={s().gpus}>{(g) => <p class="muted">{g}</p>}</For>
-              <Show when={s().reachable}>
-                <p class={s().core_ready ? "good" : "bad"}>
-                  {s().core_ready ? "All core H3 nodes are installed." : "Core H3 nodes are missing."}
-                </p>
-                <Show when={s().missing.length > 0}>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Missing node</th>
-                        <th>Install</th>
-                        <th>Needed for</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <For each={s().missing}>
-                        {(m) => (
-                          <tr>
-                            <td>{m.class_type}</td>
-                            <td>{m.provider}</td>
-                            <td>{m.feature}</td>
-                          </tr>
-                        )}
-                      </For>
-                    </tbody>
-                  </table>
-                </Show>
-              </Show>
-            </>
-          )}
-        </Show>
-      </section>
-    </main>
+    <span class="health" title={apiBase()}>
+      <span class={health()?.comfy_up ? "dot ok" : "dot bad"} /> ComfyUI {health()?.comfy_up ? "connected" : "not reachable"}
+      <Show when={health() && !health().ffmpeg_available}>
+        <span class="bad"> · ffmpeg not found</span>
+      </Show>
+    </span>
   );
 }
 
-export default App;
+function ProjectList() {
+  const [rows, { refetch }] = createResource(() => get<ProjectRow[]>("/projects"));
+  const [name, setName] = createSignal("");
+
+  const create = async () => {
+    try {
+      const made = await call<any>("POST", "/projects", { name: name() });
+      await openProject(made.data.project_id);
+    } catch (e) {
+      say(String((e as Error).message), true);
+    }
+  };
+
+  const remove = async (row: ProjectRow) => {
+    if (!window.confirm(`Delete "${row.name}" and all its files? This cannot be undone.`)) return;
+    try {
+      await call("DELETE", `/projects/${encodeURIComponent(row.id)}?confirm=${encodeURIComponent(row.id)}`);
+      void refetch();
+    } catch (e) {
+      say(String((e as Error).message), true);
+    }
+  };
+
+  return (
+    <section class="panel narrow">
+      <h2>Projects</h2>
+      <div class="row">
+        <input placeholder="New project name" value={name()} onInput={(e) => setName(e.currentTarget.value)} onKeyDown={(e) => e.key === "Enter" && name().trim() && void create()} />
+        <button class="primary" disabled={!name().trim()} onClick={create}>
+          Create
+        </button>
+      </div>
+      <Show when={rows.error}>
+        <p class="bad">{String(rows.error?.message ?? rows.error)}. Start the app or run `h3 serve`.</p>
+      </Show>
+      <ul class="list">
+        <For each={rows() ?? []} fallback={<li class="muted">No projects yet.</li>}>
+          {(row) => (
+            <li>
+              <button class="link" onClick={() => void openProject(row.id)}>
+                {row.name}
+              </button>
+              <span class="muted">
+                {row.scene_count} scenes{row.has_audio ? "" : ", no song"}
+              </span>
+              <button class="small danger" onClick={() => void remove(row)}>
+                Delete
+              </button>
+            </li>
+          )}
+        </For>
+      </ul>
+    </section>
+  );
+}
+
+export default function App() {
+  const [ready, setReady] = createSignal(false);
+  onMount(async () => {
+    await initApi();
+    startEvents();
+    setReady(true);
+  });
+  return (
+    <div class="app">
+      <header class="top">
+        <h1>VRGDG H3 Studio</h1>
+        <Show when={project()}>
+          <span class="muted">{project()!.name}</span>
+          <button class="small" onClick={closeProject}>
+            All projects
+          </button>
+        </Show>
+        <span class="spacer" />
+        <Health />
+      </header>
+      <Show when={notice()}>
+        <div class={notice()!.bad ? "toast bad" : "toast"}>{notice()!.text}</div>
+      </Show>
+      <Show when={ready()}>
+        <Show when={projectId()} fallback={<ProjectList />}>
+          <Show when={project()} fallback={<p class="muted pad">Opening...</p>}>
+            <Editor />
+          </Show>
+        </Show>
+      </Show>
+    </div>
+  );
+}

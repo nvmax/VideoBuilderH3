@@ -53,6 +53,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/meta", get(meta))
         .route("/models", get(models))
         .route("/queue", get(queue))
+        .route("/settings/minimax-h3/schema", get(settings_schema))
         .route("/events", get(events))
         .route("/jobs", get(list_jobs))
         .route("/jobs/{id}", get(get_job))
@@ -191,6 +192,10 @@ async fn models(State(state): Shared) -> ApiResult {
         groups.insert(category.to_string(), json!(model_choices(&info, category)));
     }
     Ok(success(Value::Object(groups), None))
+}
+
+async fn settings_schema() -> ApiResult {
+    Ok(success(json!({"settings": h3_core::settings::schema()}), None))
 }
 
 async fn queue(State(state): Shared) -> ApiResult {

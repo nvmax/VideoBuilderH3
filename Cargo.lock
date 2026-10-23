@@ -1846,10 +1846,8 @@ dependencies = [
 name = "h3-studio"
 version = "0.1.0"
 dependencies = [
- "h3-comfy",
+ "h3-api",
  "h3-project",
- "serde",
- "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-opener",

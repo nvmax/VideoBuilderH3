@@ -111,6 +111,38 @@ fn enum_values(key: &str) -> Option<Vec<String>> {
     }
 }
 
+/// Every setting with its type, default and limits, for the settings panel and `GET /settings/minimax-h3/schema`.
+pub fn schema() -> Vec<Value> {
+    let mut all = defaults();
+    for key in OPTIONAL_KEYS {
+        if let Some(default) = optional_default(key) {
+            all.insert(key.to_string(), default);
+        }
+    }
+    all.iter()
+        .map(|(key, default)| {
+            let kind = match default {
+                Value::Bool(_) => "boolean",
+                Value::Number(n) if n.is_f64() && !(n.as_f64().unwrap_or(0.0).fract() == 0.0 && !is_decimal_setting(key, default)) => "number",
+                Value::Number(_) => "integer",
+                Value::String(_) => "string",
+                Value::Array(_) => "array",
+                Value::Object(_) => "object",
+                Value::Null => "null",
+            };
+            let mut entry = serde_json::json!({"key": key, "type": kind, "default": default});
+            if let Some(choices) = enum_values(key) {
+                entry["choices"] = serde_json::json!(choices);
+            }
+            if let Some((low, high)) = numeric_range(key) {
+                entry["minimum"] = serde_json::json!(low);
+                entry["maximum"] = serde_json::json!(high);
+            }
+            entry
+        })
+        .collect()
+}
+
 fn numeric_range(key: &str) -> Option<(f64, f64)> {
     if key == "megapixels" || key.ends_with("_megapixels") {
         return Some((0.1, 16.0));

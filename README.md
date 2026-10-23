@@ -58,3 +58,11 @@ curl -X POST http://127.0.0.1:8190/api/v1/projects/MySong/scenes/3/image/generat
 ```
 
 The import guesses which node inputs are the prompt, size, seed and models. `PUT /image-presets/{id}` changes the bindings.
+
+## Desktop app
+
+```powershell
+cd app; npm install; npm run tauri dev
+```
+
+The window starts the API itself (`api_bind` in the config, default `127.0.0.1:8190`). For the UI alone in a browser, run `cargo run -p h3-cli -- serve` and `npm run dev` in `app`, then open http://localhost:1420. Add `?api=http://host:port/api/v1` to use another address.
