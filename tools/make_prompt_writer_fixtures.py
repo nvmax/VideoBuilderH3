@@ -179,6 +179,35 @@ def main() -> int:
     add("continued_cut_frequency", continued("masked", location_for_s2="l2", builder_storyboard_defaults={"minimax_h3_cut_frequency": 5}), 1)
     add("continued_first_scene_is_standalone", continued(), 0)
     add("frame_given_but_not_continued", base_session(), 1, previous_frame=True)
+    # Lyric-free prompts ("omit lyrics from video prompts") for singing scenes with the song supplied.
+    def omit_session(**extra):
+        session = base_session(omit_lyrics_from_video_prompts=True, **extra)
+        session["flux_reference_builder"]["subjects"].append({"id": "b", "name": "Ben", "description": "grey beard", "image": {"path": ROOT + "\\subject_location\\subject\\Ben.png"}})
+        session["flux_reference_builder"]["subject_scene_map"] = {"s1": ["a"], "s2": ["a"], "s3": ["a", "b"]}
+        return session
+
+    add("omit_plain_scene1", omit_session(), 0)
+    add("omit_instrumental_scene2", omit_session(), 1)
+    add("omit_two_singers_scene3", omit_session(), 2)
+    add("omit_structured", omit_session(use_structured_outputs=True), 2)
+    add("omit_cuts", omit_session(builder_storyboard_defaults={"minimax_h3_cut_frequency": 5, "video_style": "cinematic_realism"}), 2)
+    add("omit_facial_preset", {**omit_session(), "segments": [dict(s, facial_performance="pop_polished") for s in omit_session()["segments"]]}, 0)
+    add("omit_facial_off", {**omit_session(), "segments": [dict(s, facial_performance="off") for s in omit_session()["segments"]]}, 0)
+    add("omit_custom_facial", {**omit_session(), "segments": [dict(s, facial_performance="custom", facial_performance_custom="soft eyes, parted lips and a tender glance") for s in omit_session()["segments"]]}, 2)
+    with_cues = omit_session()
+    with_cues["segments"][2].update(lyric_performance_mode="cue_map", lyric_singers=["Ava", "Ben"], lyric_cue_map=[
+        {"type": "vocal", "text": "we run through the night", "singer_name": "Ava", "singer_id": "a", "start": 0.0, "vocal_start": 0.3, "vocal_end": 2.8, "end": 3.0},
+        {"type": "instrumental", "start": 3.0, "end": 3.6},
+        {"type": "vocal", "text": "and never look back", "singer_name": "Ben", "singer_id": "b", "start": 3.6, "vocal_start": 3.8, "vocal_end": 6.4, "end": 6.5},
+    ])
+    add("omit_cue_map", with_cues, 2, shots=3)
+    add("omit_cue_map_together_mode", {**with_cues, "segments": [dict(s, lyric_performance_mode="together") for s in with_cues["segments"]]}, 2)
+    add("omit_built_in_audio_is_off", omit_session(minimax_h3_settings={"audio_mode": "built_in_audio", "aspect_ratio": "16:9"}), 0)
+    add("omit_speaking_is_off", omit_session(video_type="speaking"), 0)
+    add("omit_continuous_location_shot", {**omit_session(builder_storyboard_defaults={"minimax_h3_cut_frequency": 5}), "segments": [dict(s, location_continuous_shot=True) for s in omit_session()["segments"]]}, 2, shots=1)
+    add("omit_with_emotion_tags", {**omit_session(), "segments": [dict(s, emotion_expression_tags="longing, hope") for s in omit_session()["segments"]]}, 0)
+    omit_continued = continued("masked", location_for_s2="l2", omit_lyrics_from_video_prompts=True)
+    add("omit_continued_scene2", omit_continued, 1)
     (out / "writer.json").write_text(json.dumps({"cases": cases}, indent=1, ensure_ascii=False), encoding="utf-8")
     print("writer cases:", len(cases), "errors:", sum(1 for c in cases if "error" in c))
     for c in cases:

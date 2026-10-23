@@ -23,7 +23,7 @@ CASE_FILES = [
     "story_mode_cases.json", "temporal_effect_cases.json", "video_style_cases.json",
 ]
 
-GENERATORS = ["make_graph_fixtures.py", "make_core_fixtures.py", "make_scene_fixtures.py", "make_prompt_fixtures.py", "make_project_fixtures.py", "make_media_fixtures.py", "make_pipeline_fixtures.py", "make_image_fixtures.py", "make_timeline_fixtures.py", "make_scene_ops_fixtures.py", "make_assign_fixtures.py", "make_timed_lines_fixtures.py", "make_timestamp_graph_fixtures.py", "make_llm_fixtures.py", "make_style_fixtures.py", "make_prompt_writer_fixtures.py", "make_location_fixtures.py", "make_story_settings_fixtures.py", "make_masked_fixtures.py"]
+GENERATORS = ["make_graph_fixtures.py", "make_core_fixtures.py", "make_scene_fixtures.py", "make_prompt_fixtures.py", "make_project_fixtures.py", "make_media_fixtures.py", "make_pipeline_fixtures.py", "make_image_fixtures.py", "make_timeline_fixtures.py", "make_scene_ops_fixtures.py", "make_assign_fixtures.py", "make_timed_lines_fixtures.py", "make_timestamp_graph_fixtures.py", "make_llm_fixtures.py", "make_style_fixtures.py", "make_prompt_writer_fixtures.py", "make_location_fixtures.py", "make_story_settings_fixtures.py", "make_masked_fixtures.py", "make_lyric_free_fixtures.py"]
 
 
 def run(*args) -> None:

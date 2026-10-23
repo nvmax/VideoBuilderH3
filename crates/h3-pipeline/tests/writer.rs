@@ -62,7 +62,7 @@ async fn prompts_match_the_pack() {
             (other, want) => panic!("{name}: {other:?} vs {want:?}"),
         }
     }
-    assert_eq!(compared, 49);
+    assert_eq!(compared, 64);
     assert_eq!(with_frame, 2, "two cases show the previous frame to the LLM");
     // The request carries the pack's instructions, the shot task and the default notes.
     let sent = shared.lock().unwrap().1[0].clone();

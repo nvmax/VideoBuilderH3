@@ -8,12 +8,14 @@
 //! moment of the previous take, from the previous scene's final frame when one is given (the LLM looks at it) and from
 //! that scene's last shot as text when not.
 //!
-//! Not in this app yet, and said so as an error: the "omit lyrics" mode.
+//! With the project option "omit lyrics from video prompts" and the song supplied, the shots describe singing in sync
+//! with the audio and never quote the words.
 
 use h3_core::prompt::continuation::location_continuity_contract;
 use h3_core::prompt::cues::{cue_cut_plan, enforce_cue_shot, timed_cue_rows};
 use h3_core::prompt::emotion::{emotion_expression_input, emotion_expression_instruction};
 use h3_core::prompt::frame::{character_budget, compact_reference_prompt, reference_frame, reference_labels, validate_prompt, wrap_reference_prompt};
+use h3_core::prompt::lyric_free::{apply_shots, prompt_context, scene_cut_plan, scene_enabled, scene_performers, Labels};
 use h3_core::prompt::lyrics::{ensure_quoted_lyrics, last_shot_text};
 use h3_core::prompt::masked::masked_continuation_context;
 use h3_core::prompt::performance::strip_singing_articulation;
@@ -123,6 +125,28 @@ pub fn compose_request(task: &str, notes: &str, emotion: &str) -> String {
     format!("{INSTRUCTIONS}\n\nScene concept:\n{task}\n\nUser motion/camera notes:\n{notes}\n\n{emotion}")
 }
 
+/// The scene's timed cue map as notes for the LLM when lyric-free prompts are on, one line per cue.
+fn cue_notes(segment: &Obj) -> String {
+    let mut lines = Vec::new();
+    for (i, cue) in segment.get("lyric_cue_map").and_then(Value::as_array).into_iter().flatten().enumerate() {
+        let Some(cue) = cue.as_object() else { continue };
+        let first = |keys: &[&str]| keys.iter().filter_map(|k| cue.get(*k)).find(|v| truthy(v)).map(|v| text_or_empty(Some(v)).trim().to_string());
+        let singer = first(&["singer_name", "speaker_name"]).unwrap_or_else(|| "the assigned singer".into());
+        let shown = |key: &str| cue.get(key).filter(|v| !v.is_null()).map(|v| h3_core::pyval::py_str(Some(v)));
+        let timing = match (shown("start"), shown("end")) {
+            (Some(a), Some(b)) => format!(" [{a}s-{b}s]"),
+            _ => String::new(),
+        };
+        let number = i + 1;
+        if text_or_empty(cue.get("type")).trim().to_lowercase() == "instrumental" {
+            lines.push(format!("Cue {number}{timing}: INSTRUMENTAL — no subject sings, speaks, or lip-syncs."));
+        } else {
+            lines.push(format!("Cue {number}{timing}: {singer} sings with passion in sync with <Audio 1> only during this vocal interval; omit lyric words."));
+        }
+    }
+    if lines.is_empty() { String::new() } else { format!("AUTHORITATIVE SINGER CUE MAP — follow exactly:\n{}", lines.join("\n")) }
+}
+
 /// The request for a scene written from the previous scene's final frame (Attached Picture 1).
 pub fn compose_frame_request(task: &str, notes: &str, emotion: &str) -> String {
     let notes = if notes.trim().is_empty() { DEFAULT_NOTES } else { notes };
@@ -164,15 +188,21 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
     let audio_mode = Some(field(&settings, "audio_mode")).filter(|s| !s.is_empty()).unwrap_or_else(|| "input_audio".into());
     let performance = Some(field(&segment, "performance_mode")).filter(|s| !s.is_empty()).or_else(|| Some(field(session, "video_type")).filter(|s| !s.is_empty())).unwrap_or_else(|| "singing".into());
     let singing = performance == "singing" && audio_mode != "built_in_audio";
-    if session.get("omit_lyrics_from_video_prompts").is_some_and(truthy) && singing {
-        return Err(PromptError::Invalid("The project option 'Omit lyrics from video prompts' is not supported in this app yet. Turn it off to write prompts.".into()));
-    }
+    let omit = scene_enabled(session, &segment);
     let scene_settings = h3_core::settings::settings_for_scene(&session_value, Some(&Value::Object(segment.clone())));
     let continued = index > 0 && scene_settings.get("continuity_mode").and_then(Value::as_str) == Some("latent_continuation_masked");
 
     let (start, end) = (number(segment.get("start"), 0.0), number(segment.get("end"), 0.0));
     let duration = (end - start).max(0.1);
     let mut plan = apply_cut_style(&storyboard_cut_plan_for_duration(duration, number(defaults.get("minimax_h3_cut_frequency"), 0.0) as i64), defaults.get("minimax_h3_cut_style"));
+    let (mut performer, mut performer_labels) = (String::new(), Labels::default());
+    if omit {
+        plan = scene_cut_plan(&segment, session);
+        if continued {
+            plan = storyboard_cut_plan_for_duration(duration, 0);
+        }
+        (performer, performer_labels) = scene_performers(session, &segment, MODE);
+    }
     let mut card = Obj::new();
     for (key, from) in [("video_style", "minimax_h3_video_style"), ("video_style_custom", "minimax_h3_video_style_custom"), ("temporal_world_effect_override", "temporal_world_effect_override"), ("temporal_world_effect_custom", "temporal_world_effect_custom")] {
         card.insert(key.into(), json!(field(&segment, from)));
@@ -203,7 +233,7 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
     // A timed cue map ("Match exact sung words to each shot") cuts at each cue and gives every shot its own words. A
     // continued scene stays one take.
     let mut cues = Vec::new();
-    if !continued && !lyric.is_empty() && audio_mode != "built_in_audio" && performance == "singing" {
+    if !omit && !continued && !lyric.is_empty() && audio_mode != "built_in_audio" && performance == "singing" {
         let rows = timed_cue_rows(&segment);
         if !rows.is_empty() {
             let cue_plan = apply_cut_style(&cue_cut_plan(&plan, &rows), defaults.get("minimax_h3_cut_style"));
@@ -245,6 +275,17 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
     emotion_payload.insert("audio_mode".into(), json!(audio_mode));
     let emotion = emotion_expression_instruction(&emotion_payload);
 
+    // With lyric-free prompts the cue map goes to the LLM as notes, and a few rules follow the notes.
+    let notes = if omit { cue_notes(&segment) } else { String::new() };
+    let extra = if omit {
+        let mut text = String::from("LYRIC-FREE CUSTOM AUDIO: Follow the scene shot contract. Omit all lyric quotations and <d> tags. Use passionate singing in sync with <Audio 1> only for assigned vocal intervals. Instrumental shots describe only visual action. For multiple shots, never describe mouth, lip or jaw movement anywhere. For a single shot, articulation may follow audible vocals only. Use expressive eyes and brows and the selected facial acting direction. Preserve supplied audio unchanged.");
+        if !lyric.is_empty() {
+            text.push_str(&format!("\n\nLYRIC CONTEXT FOR INTERPRETATION ONLY (omit these words from the final prompt):\n{lyric}"));
+        }
+        format!("{text}\n\n{emotion}")
+    } else {
+        emotion.clone()
+    };
     let mut last_length = 0usize;
     // The previous scene's final frame, shown to the LLM as Attached Picture 1 for a continued scene.
     let mut use_picture = false;
@@ -301,8 +342,11 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
         };
         let max_new = params.max_new_tokens.min(((budget.shot_chars as f64 / 2.5) as u32 + 250).max(600));
         let ask = |with_picture: bool| {
-            let task = build_shot_task(&make_args(with_picture));
-            let text = if with_picture { compose_frame_request(&task, "", &emotion) } else { compose_request(&task, "", &emotion) };
+            let mut task = build_shot_task(&make_args(with_picture));
+            if omit {
+                task = prompt_context(&task, &segment, &plan, &performer, &performer_labels, session);
+            }
+            let text = if with_picture { compose_frame_request(&task, &notes, &extra) } else { compose_request(&task, &notes, &extra) };
             let mut request = ChatRequest::text(&text, params.temperature, params.top_p, max_new);
             if with_picture {
                 request = request.with_images(vec![frame_url.clone()]);
@@ -321,7 +365,9 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
         };
         let raw = h3_llm::clean::clean_plain_text(&reply.text);
         let mut descriptions = parse_shot_descriptions(&raw, budget.shot_count as usize).map_err(PromptError::Shot)?;
-        if !cues.is_empty() {
+        if omit {
+            descriptions = apply_shots(&descriptions, &segment, &plan, &performer, &performer_labels, session);
+        } else if !cues.is_empty() {
             descriptions = descriptions.iter().zip(cues.iter()).map(|(text, cue)| enforce_cue_shot(text, cue)).collect();
         } else if !lyric.is_empty() && audio_mode != "built_in_audio" && !labels.is_empty() {
             let cast: Vec<_> = labels.iter().filter(|l| l.kind == "subject").collect();

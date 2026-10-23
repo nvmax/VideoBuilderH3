@@ -7,6 +7,7 @@ pub mod continuation;
 pub mod cues;
 pub mod emotion;
 pub mod frame;
+pub mod lyric_free;
 pub mod lyrics;
 pub mod masked;
 pub mod performance;
