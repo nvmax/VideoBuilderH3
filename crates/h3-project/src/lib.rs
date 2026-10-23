@@ -9,6 +9,7 @@ pub mod atomic;
 pub mod backups;
 pub mod config;
 pub mod derived;
+pub mod duplicate;
 pub mod images;
 pub mod journal;
 pub mod latents;

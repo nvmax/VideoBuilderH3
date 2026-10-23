@@ -54,6 +54,16 @@ pub async fn create_project(State(state): Shared, body: Option<Json<Value>>) -> 
     ))
 }
 
+/// `POST /projects/{pid}/duplicate`: branch the project under `new_name`.
+pub async fn duplicate_project(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let name = body.get("new_name").and_then(Value::as_str).unwrap_or("").to_string();
+    let source = views::resolve_project(&state.roots, &pid)?;
+    let root = state.cfg.project_root.clone();
+    let target = blocking(move || h3_project::duplicate::duplicate_project(&root, &source, &name, &Stamp::now())).await?.map_err(|e| op_error(e, &pid))?;
+    Ok(respond(StatusCode::CREATED, json!({"project_id": views::project_id(&target), "project_folder": target.display().to_string(), "revision": 1}), Some(1)))
+}
+
 pub async fn delete_project(State(state): Shared, Path(pid): Path<String>, Query(q): Query<HashMap<String, String>>) -> ApiResult {
     if q.get("confirm").map(|c| c.trim()) != Some(pid.trim()) {
         return Err(ApiError::validation(format!("Confirm parameter must match project_id '{pid}'.")));
@@ -281,6 +291,67 @@ pub async fn put_audio(State(state): Shared, Path(pid): Path<String>, headers: H
     let analysed = blocking({
         let folder = folder.clone();
         move || save_project_audio(&tools, &folder, source, data, &name)
+    })
+    .await??;
+    let result = blocking(move || session_ops::attach_audio(&folder, &analysed, expected, &Stamp::now())).await?.map_err(|e| op_error(e, &pid))?;
+    let revision = result.get("revision").and_then(Value::as_i64);
+    Ok(respond(StatusCode::OK, result, revision))
+}
+
+/// A silent 16 bit stereo WAV of `duration` seconds at 44.1 kHz.
+fn write_silent_wav(path: &std::path::Path, duration: f64) -> std::io::Result<()> {
+    use std::io::Write;
+    const RATE: u32 = 44100;
+    const CHANNELS: u16 = 2;
+    let frames = (duration * f64::from(RATE)).round_ties_even() as u64;
+    let data_bytes = (frames * u64::from(CHANNELS) * 2) as u32;
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    let mut file = std::io::BufWriter::new(std::fs::File::create(path)?);
+    file.write_all(b"RIFF")?;
+    file.write_all(&(36 + data_bytes).to_le_bytes())?;
+    file.write_all(b"WAVEfmt ")?;
+    file.write_all(&16u32.to_le_bytes())?;
+    file.write_all(&1u16.to_le_bytes())?;
+    file.write_all(&CHANNELS.to_le_bytes())?;
+    file.write_all(&RATE.to_le_bytes())?;
+    file.write_all(&(RATE * u32::from(CHANNELS) * 2).to_le_bytes())?;
+    file.write_all(&(CHANNELS * 2).to_le_bytes())?;
+    file.write_all(&16u16.to_le_bytes())?;
+    file.write_all(b"data")?;
+    file.write_all(&data_bytes.to_le_bytes())?;
+    let second = vec![0u8; (RATE as usize) * usize::from(CHANNELS) * 2];
+    let mut remaining = u64::from(data_bytes);
+    while remaining > 0 {
+        let count = remaining.min(second.len() as u64) as usize;
+        file.write_all(&second[..count])?;
+        remaining -= count as u64;
+    }
+    file.flush()
+}
+
+/// `POST .../audio/silent`: use a silent track of `duration` seconds as the project's audio, for a project without a song.
+pub async fn silent_audio(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let expected = if_match(&headers)?;
+    let duration = body.get("duration").filter(|v| !v.is_null()).map_or(Some(10.0), h3_core::pyval::to_float).filter(|d| d.is_finite() && *d > 0.0).ok_or_else(|| ApiError::validation("Silence duration must be greater than 0 seconds."))?.clamp(0.1, 86400.0);
+    let scope = body.get("scope").and_then(Value::as_str).unwrap_or("project").trim().to_lowercase();
+    if scope == "scene" {
+        return Err(ApiError::validation("Silence for a single scene is only used by Speaking scenes, which this app does not have. Use scope 'project'."));
+    }
+    let folder = views::resolve_project(&state.roots, &pid)?;
+    let tools = tools(&state)?;
+    let label = format!("{duration:.2}").trim_end_matches('0').trim_end_matches('.').replace('.', "_");
+    let _guard = state.edit_lock.lock().await;
+    let analysed = blocking({
+        let folder = folder.clone();
+        move || -> Result<AudioInfo, ApiError> {
+            let target = folder.join("project_audio").join(format!("project_silence_{label}s.wav"));
+            write_silent_wav(&target, duration).map_err(|e| ApiError::internal(e.to_string()))?;
+            let info = read_audio_peaks(&tools, &target, 1600).map_err(|e| ApiError::new(StatusCode::INTERNAL_SERVER_ERROR, "FFMPEG_FAILED", e.to_string()))?;
+            Ok(AudioInfo { saved_path: target.display().to_string(), duration: info.duration, peaks: info.peaks, beats: vec![], tempo_bpm: 0.0 })
+        }
     })
     .await??;
     let result = blocking(move || session_ops::attach_audio(&folder, &analysed, expected, &Stamp::now())).await?.map_err(|e| op_error(e, &pid))?;

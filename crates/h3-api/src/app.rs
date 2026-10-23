@@ -85,6 +85,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/references/assign-scenes", post(sr::assign_scenes))
         .route("/projects/{pid}/story/settings", axum::routing::put(sr::story_settings))
         .route("/projects/{pid}/story", get(sr::get_story).put(sr::put_story))
+        .route("/projects/{pid}/audio/silent", post(sr::silent_audio))
+        .route("/projects/{pid}/duplicate", post(sr::duplicate_project))
         .route("/projects/{pid}/settings/preflight", post(preflight_settings))
         .route("/projects/{pid}/story/{step}", post(sr::story_step))
         .route("/projects/{pid}/references/{kind}/{rid}", axum::routing::put(sr::put_reference).delete(sr::delete_reference))

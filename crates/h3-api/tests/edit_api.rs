@@ -185,6 +185,24 @@ async fn a_project_is_built_edited_and_deleted_through_the_api() {
     assert_eq!(code, 200, "{check}");
     assert!(check["data"]["valid"].is_boolean() && check["data"]["effective_settings"].is_object());
 
+    // A silent track as the project's audio, and a copy of the whole project.
+    let silent = s.ok(Method::POST, &format!("{p}/audio/silent"), json!({"duration": 2.5})).await;
+    assert!((silent["duration"].as_f64().unwrap() - 2.5).abs() < 0.05, "{silent}");
+    assert!(silent["audio_path"].as_str().unwrap().ends_with("project_silence_2_5s.wav"), "{silent}");
+    let (code, _) = s.call(Method::POST, &format!("{p}/audio/silent"), &[], Some(json!({"duration": 0}))).await;
+    assert_eq!(code, 400);
+    let (code, _) = s.call(Method::POST, &format!("{p}/audio/silent"), &[], Some(json!({"duration": 3, "scope": "scene"}))).await;
+    assert_eq!(code, 400);
+    let (code, copy) = s.call(Method::POST, &format!("{p}/duplicate"), &[], Some(json!({"new_name": "Copy Of It"}))).await;
+    assert_eq!(code, 201, "{copy}");
+    let copy_id = copy["data"]["project_id"].as_str().unwrap().replace(' ', "%20");
+    let (code, copied) = s.get(&format!("/projects/{copy_id}")).await;
+    assert_eq!(code, 200, "{copied}");
+    let copied_audio = copied["data"]["audio_path"].as_str().or_else(|| copied["data"]["session"]["audio_path"].as_str()).unwrap_or("");
+    assert!(copied_audio.is_empty() || copied_audio.contains("Copy Of It"), "the copy points at its own audio: {copied_audio}");
+    let (code, _) = s.call(Method::POST, &format!("{p}/duplicate"), &[], Some(json!({"new_name": " "}))).await;
+    assert_eq!(code, 400);
+
     // Story settings are saved, a bad value is refused, and the Storyboard-only steps say so.
     let saved = s.ok(Method::PUT, &format!("{p}/story/settings"), json!({"defaults": {"camera_motion_speed": 6}, "story": {"overall_story_idea": "A fox"}})).await;
     assert_eq!((saved["defaults"]["camera_motion_speed"].as_f64(), saved["story"]["overall_story_idea"].as_str()), (Some(6.0), Some("A fox")));
