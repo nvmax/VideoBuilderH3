@@ -3,6 +3,7 @@
 pub mod audio;
 pub mod collect;
 pub mod peaks;
+pub mod post;
 pub mod stitch;
 pub mod tools;
 pub mod video;

@@ -55,6 +55,7 @@ pub fn router(state: Arc<AppState>) -> Router {
     crate::llm_jobs::register(&state);
     crate::lyric_jobs::register(&state);
     crate::video_routes::register(&state);
+    crate::post_routes::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -103,6 +104,10 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/video/select", post(crate::video_routes::select_route))
         .route("/projects/{pid}/scenes/{sid}/video/recover", post(crate::video_routes::recover_route))
         .route("/projects/{pid}/scenes/{sid}/video", axum::routing::delete(crate::video_routes::delete_route))
+        .route("/post/luts", get(crate::post_routes::list_luts))
+        .route("/post/luts/upload", post(crate::post_routes::upload_lut))
+        .route("/projects/{pid}/scenes/{sid}/post/lut", post(crate::post_routes::lut_route))
+        .route("/projects/{pid}/post/apply-all", post(crate::post_routes::apply_all_route))
         .route("/projects/{pid}/lyrics/align", post(crate::lyric_jobs::align_route))
         .route("/projects/{pid}/timeline/from-lines", post(crate::lyric_jobs::from_lines_route))
         .route("/projects/{pid}/timeline/snap", post(er::snap))
