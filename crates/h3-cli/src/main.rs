@@ -29,6 +29,15 @@ enum Commands {
     Doctor,
     /// Print the config in use and where it is stored.
     Config,
+    /// Serve the local /api/v1 for agents and the MCP server.
+    Serve {
+        /// Address to listen on. Defaults to api_bind in the config.
+        #[arg(long)]
+        bind: Option<String>,
+        /// Folder that holds the projects. Defaults to project_root in the config.
+        #[arg(long)]
+        project_root: Option<PathBuf>,
+    },
     /// List the scenes of a project.
     Scenes {
         /// Project folder (the one with vrgdg_builder_session.json).
@@ -169,6 +178,12 @@ async fn doctor(cfg: &AppConfig) -> bool {
     ok
 }
 
+async fn serve(cfg: AppConfig, config_path: &std::path::Path) -> Result<()> {
+    let state = h3_api::build_state(cfg, &h3_api::jobs_db_path(config_path)).map_err(|e| anyhow::anyhow!(e))?;
+    h3_api::serve(state).await?;
+    Ok(())
+}
+
 fn finish(result: Result<()>) -> ExitCode {
     match result {
         Ok(()) => ExitCode::SUCCESS,
@@ -204,6 +219,16 @@ async fn main() -> ExitCode {
             println!("{}", path.display());
             println!("{cfg:#?}");
             ExitCode::SUCCESS
+        }
+        Commands::Serve { bind, project_root } => {
+            let mut cfg = cfg;
+            if let Some(bind) = bind {
+                cfg.api_bind = bind;
+            }
+            if let Some(root) = project_root {
+                cfg.project_root = root;
+            }
+            finish(serve(cfg, &path).await)
         }
         Commands::Scenes { project } => finish(render_cmd::scenes(&project)),
         Commands::Render { project, scene, set, dry_run, raw_only, match_start_color, graph_out, timeout_hours } => finish(

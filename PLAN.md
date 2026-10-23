@@ -1,6 +1,6 @@
 # VRGDG H3 Studio (Rust): Implementation Plan
 
-Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. P3 done 2026-10-23. P4 done 2026-10-23 (M1 reached, see Section 14). P5 done 2026-10-23 (M2 reached, see Section 15). Next: P6. Everything stays local: no remote, no push.
+Status: approved 2026-10-22 (answers in Section 10). P0 and P1 done 2026-10-22. P2 done 2026-10-23. P3 done 2026-10-23. P4 done 2026-10-23 (M1 reached, see Section 14). P5 done 2026-10-23 (M2 reached, see Section 15). P6 done 2026-10-23 (see Section 16). Next: P6b. Everything stays local: no remote, no push.
 Reference pack commit: `14421d2` (branch `newbuilder`).
 Location: `rustapp/` inside the pack folder, excluded from git through `.git/info/exclude` (no tracked file changed).
 
@@ -230,3 +230,14 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - **F29.** Live M2 on a scratch project of three consecutive scenes from one of your projects (single pass, 287 s): `h3 render-all` rendered, trimmed to exactly 91, 59 and 71 frames, collected as `video_NNNN-audio.mp4`, recorded the clips and their history on the scenes (revision 1 to 4), wrote the take archive, and stitched `FINAL_VIDEO.mp4` with 221 frames, the timeline's total. Saves keep the project openable in the Python Builder.
 - **F30.** A stitch of part of the song without `--scene` muxes the whole song, as the pack does. Use `--scene` for a preview, which cuts the song to the selection.
 - **F31.** Left for P7 and P9, where the UI needs them: waveform peaks, beat estimation, scene audio mixes and silent audio (`builder/audio.py`), speaking clips, the Audio Mask override, and the LTX paths.
+
+## 16. P6 findings
+
+- **F32.** `h3-jobs` keeps jobs and their logs in SQLite (`jobs.db` next to the config file). One GPU job runs at a time, other jobs run beside it. Statuses, progress fields, ids (`job_YYYYMMDD_HHMMSS_xxxx`) and log numbering match the pack's job model. A job a stopped app left `queued` or `running` comes back as `interrupted` with code `JOB_INTERRUPTED`. Retry makes a new job with the same parameters, and `resume: true` adds `run_mode: resume_missing`, which renders only the scenes without a clip.
+- **F33.** Cancel needs no hook into ComfyUI. The job's cancel flag is the render's flag, and the render's wait loop already interrupts ComfyUI and removes its queue item. A queued job is cancelled at once. After a hard kill of the app ComfyUI keeps rendering the orphaned prompt, since the app is gone. The job record does not hold the prompt id yet, so the restarted app cannot interrupt it. Interrupt it in ComfyUI or add the id to the render events later.
+- **F34.** `h3-api` serves `/api/v1` on `127.0.0.1:8190` with the pack's envelopes, error codes and SSE format. Routes so far: health, meta, models, queue, events, jobs (list, get, log, cancel, retry), projects (list, get, summary, settings get and patch with `If-Match`), scenes (list, get), scene render, batch render, video graph, stitch, latents (list, dirty, one, delete). The pack's `mcp_server` works against it with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`. The rest of the contract is P10.
+- **F35.** Live check, scratch copy of a 3 scene project: the real `mcp_server` listed projects and scenes and started a batch render over stdio. The app was killed while scene 2 rendered. After a restart the job was `interrupted`, scene 1 kept its clip, and a retry with `resume` rendered scenes 2 and 3 only, then stitched. Clips are 91, 59 and 71 frames, the exact timeline lengths. The test renders in ComfyUI's output folder were deleted.
+- **F36.** Two bugs found by that run. A bare `ffmpeg` in the config counted as a found program and failed mid-render with "program not found", now `Tools::find` looks bare names up on PATH and checks paths, so health and `doctor` fail early. And the pack ends a batch job as `succeeded` even when every scene failed. The app fails it with `BATCH_FAILED` (retryable) and the per scene errors in `details`.
+- **F37.** `randomize_seed` is implemented for single and batch renders: fresh values for the five seed settings, saved to the project (or to the scene when its settings are locked) before the render, so it can be repeated.
+- **F38.** The latent predecessor checks report `PREDECESSOR_MISSING` and `LATENT_STALE` (HTTP 409) as in the pack. `render_all` still runs scenes in timeline order, which is the latent continuation order.
+

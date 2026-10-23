@@ -71,27 +71,17 @@ pub fn scenes(project: &Path) -> Result<()> {
     Ok(())
 }
 
-/// ComfyUI, ffmpeg and the folders, ready to run a render.
+/// ComfyUI, ffmpeg and the folders, ready to run a render. Ctrl+C cancels the run.
 async fn make_context(cfg: &AppConfig) -> Result<RunContext> {
-    let tools = Tools::find(&cfg.ffmpeg_path, &cfg.ffprobe_path).map_err(|e| anyhow!("{e}"))?;
-    let client = ComfyClient::new(cfg.comfy_base());
-    let stats = client.system_stats().await.map_err(|e| anyhow!("{e}"))?;
-    let folder_paths = client.folder_paths().await;
-    let mut dirs = ComfyDirs::detect(&stats.system.argv, folder_paths.as_ref())
-        .ok_or_else(|| anyhow!("ComfyUI did not say where it keeps its files. Set comfy_output_dir in the config."))?;
-    if !cfg.comfy_output_dir.trim().is_empty() {
-        dirs.output = cfg.comfy_output_dir.trim().to_string();
-    }
-    let object_info = client.object_info().await.map_err(|e| anyhow!("{e}"))?;
-    let cancel = Arc::new(AtomicBool::new(false));
-    let watcher = Arc::clone(&cancel);
+    let ctx = h3_pipeline::connect(cfg).await.map_err(|e| anyhow!("{e}"))?;
+    let watcher = Arc::clone(&ctx.cancel);
     tokio::spawn(async move {
         if tokio::signal::ctrl_c().await.is_ok() {
             eprintln!("[VRGDG-RS] Cancelling...");
             watcher.store(true, Ordering::Relaxed);
         }
     });
-    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools)), cancel })
+    Ok(ctx)
 }
 
 fn print_event(event: RenderEvent) {
@@ -173,6 +163,7 @@ pub async fn render_all_cmd(cfg: &AppConfig, args: BatchArgs) -> Result<()> {
         scene_ids: args.scenes.clone(),
         range,
         force: args.force,
+        skip_existing: false,
         skip_final_stitch: args.skip_stitch,
         params: RenderParams { overrides: parse_overrides(&args.set)?, timeout_hours: args.timeout_hours },
         finish: FinishOptions { match_start_color: args.match_start_color, ..FinishOptions::default() },

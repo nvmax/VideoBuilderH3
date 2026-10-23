@@ -38,3 +38,12 @@ cargo run -p h3-cli -- stitch --project "D:\Projects\My Song" --scene 3 --scene 
 ```
 
 `render` and `render-all` cut each clip to its exact length, collect it into `rendered_scene_videos`, record it on the scene and keep a replaced clip as a backup. `render --raw-only` stops after ComfyUI. The media tests need ffmpeg and ffprobe on PATH.
+
+## Agent API
+
+```powershell
+cargo run -p h3-cli -- serve                                  # http://127.0.0.1:8190/api/v1
+cargo run -p h3-cli -- serve --project-root "D:\Projects"     # projects are the folders in it
+```
+
+Same paths, envelopes and error codes as the pack's agent API. The pack's MCP server connects with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`. Jobs are saved in `jobs.db` next to the config file. A job a stopped app left unfinished shows as `interrupted`, and `POST /jobs/{id}/retry` with `{"resume": true}` renders only the scenes without a clip.

@@ -187,6 +187,37 @@ pub struct RunContext {
     pub cancel: Arc<AtomicBool>,
 }
 
+/// The MiniMax seed settings. Same list as `SEED_FIELDS` in the pack's `settings_payload.py`.
+pub const SEED_FIELDS: [&str; 5] = ["seed", "two_pass_pass1_seed", "two_pass_pass2_seed", "advanced_two_pass_pass1_seed", "advanced_two_pass_pass2_seed"];
+
+/// Give every seed setting of a scene a fresh value in 1..=2147483647 and save it, like the Render All "new seeds"
+/// option: into the scene's own settings when they are locked, else into the project's. The render then reads the new
+/// seeds from the saved project, so it can be repeated.
+pub fn randomize_seeds(env: &LiveEnv, project: &Path, scene_ref: &str) -> Result<(), RenderError> {
+    use h3_graph::GraphEnv;
+    let loaded = load_session(project).map_err(other)?;
+    let mut session = loaded.session;
+    let segments = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    let index = segments
+        .iter()
+        .position(|s| s.get("id").and_then(Value::as_str) == Some(scene_ref))
+        .or_else(|| scene_ref.parse::<usize>().ok().filter(|n| *n >= 1 && *n <= segments.len()).map(|n| n - 1))
+        .ok_or_else(|| RenderError::SceneNotFound(scene_ref.to_string()))?;
+    let fresh: Obj = SEED_FIELDS.iter().map(|f| (f.to_string(), json!(env.random_seed() % 2_147_483_647 + 1))).collect();
+    let locked = segments[index].get("use_scene_minimax_h3_settings").is_some_and(truthy) && segments[index].get("minimax_h3_settings").is_some_and(Value::is_object);
+    let target = if locked {
+        session.get_mut("segments").and_then(Value::as_array_mut).and_then(|a| a.get_mut(index)).and_then(Value::as_object_mut).and_then(|s| s.get_mut("minimax_h3_settings"))
+    } else {
+        Some(session.entry("minimax_h3_settings").or_insert_with(|| json!({})))
+    };
+    match target.and_then(Value::as_object_mut) {
+        Some(settings) => settings.extend(fresh),
+        None => return Err(other("The project's MiniMax settings are not an object.")),
+    }
+    persist_session(project, session, Stamp::now()).map_err(other)?;
+    Ok(())
+}
+
 /// Render one scene and finish it: the whole of "Render" for a scene.
 pub async fn render_scene_full(
     ctx: &RunContext,
@@ -197,6 +228,11 @@ pub async fn render_scene_full(
     mut on_event: impl FnMut(RenderEvent),
 ) -> Result<SceneResult, RenderError> {
     let project_path = project.to_path_buf();
+    let mut params = params;
+    if params.overrides.remove("randomize_seed").is_some_and(|v| truthy(&v)) {
+        let (env, path, scene) = (Arc::clone(&ctx.env), project_path.clone(), scene_ref.to_string());
+        tokio::task::spawn_blocking(move || randomize_seeds(&env, &path, &scene)).await.map_err(other)??;
+    }
     let loaded = {
         let path = project_path.clone();
         tokio::task::spawn_blocking(move || load_session(&path)).await.map_err(other)?.map_err(other)?
@@ -217,6 +253,8 @@ pub struct BatchOptions {
     pub scene_ids: Vec<String>,
     pub range: Option<(usize, usize)>,
     pub force: bool,
+    /// Skip scenes that already have a clip (a resumed run).
+    pub skip_existing: bool,
     pub skip_final_stitch: bool,
     pub params: RenderParams,
     pub finish: FinishOptions,
@@ -253,7 +291,7 @@ pub fn batch_targets(segments: &[Value], options: &BatchOptions) -> Vec<(String,
             }
         }
         let has_video = ["video_path", "rendered_video_path"].iter().any(|k| segment.get(*k).is_some_and(truthy));
-        if scope == "missing" && has_video {
+        if (scope == "missing" || (options.skip_existing && !options.force)) && has_video {
             continue;
         }
         targets.push((id, number));

@@ -26,6 +26,10 @@ pub enum RenderError {
     /// A problem with the scene's inputs or settings that the user can fix.
     #[error("{0}")]
     Invalid(String),
+    #[error("Latent continuation for Scene {scene:03} requires Scene {predecessor:03} latent, but it was not found. Render Scene {predecessor:03} first.")]
+    PredecessorMissing { scene: u32, predecessor: u32 },
+    #[error("Latent for Scene {stale:03} is stale (dirty) and must be re-rendered before Scene {scene:03}.")]
+    LatentStale { scene: u32, stale: u32 },
     #[error(transparent)]
     Graph(#[from] h3_graph::GraphError),
     #[error(transparent)]
@@ -179,14 +183,10 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
         let pred = scene_number - 1;
         let project = loaded.project_folder.as_path();
         if !env.latent_exists(&folder, pred) {
-            return Err(RenderError::Invalid(format!(
-                "Latent continuation for Scene {scene_number:03} requires Scene {pred:03} latent, but it was not found. Render Scene {pred:03} first."
-            )));
+            return Err(RenderError::PredecessorMissing { scene: scene_number, predecessor: pred });
         }
         if latents::is_dirty(project, pred) {
-            return Err(RenderError::Invalid(format!(
-                "Latent for Scene {pred:03} is stale (dirty) and must be re-rendered before Scene {scene_number:03}."
-            )));
+            return Err(RenderError::LatentStale { scene: scene_number, stale: pred });
         }
     }
     if let Some(raw) = payload.get("aspect_ratio").and_then(Value::as_str).map(|s| s.trim().to_string()).filter(|s| !s.is_empty()) {

@@ -12,6 +12,7 @@ path = "src/main.rs"
 [dependencies]
 anyhow.workspace = true
 clap.workspace = true
+h3-api.workspace = true
 h3-comfy.workspace = true
 h3-core.workspace = true
 h3-graph.workspace = true

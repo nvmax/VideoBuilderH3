@@ -38,13 +38,13 @@ fn on_path(name: &str) -> Option<PathBuf> {
 }
 
 impl Tools {
-    /// Use the configured paths when they are set, else look on `PATH`. A configured ffmpeg without a configured
-    /// ffprobe uses the ffprobe next to it.
+    /// Use the configured programs when they are set, else look on `PATH`. A bare name such as `ffmpeg` is looked up on
+    /// `PATH` and a path must point at a file, so a missing program fails here with a clear message instead of when the
+    /// first clip is cut. A configured ffmpeg without a configured ffprobe uses the ffprobe next to it.
     pub fn find(ffmpeg: &str, ffprobe: &str) -> Result<Self, MediaError> {
-        let ffmpeg_path = if ffmpeg.trim().is_empty() { on_path("ffmpeg") } else { Some(PathBuf::from(ffmpeg.trim())) };
-        let ffmpeg_path = ffmpeg_path.ok_or(MediaError::NotFound)?;
+        let ffmpeg_path = resolve(ffmpeg, "ffmpeg").ok_or(MediaError::NotFound)?;
         let ffprobe_path = if !ffprobe.trim().is_empty() {
-            Some(PathBuf::from(ffprobe.trim()))
+            resolve(ffprobe, "ffprobe")
         } else {
             let sibling = exe_names("ffprobe").into_iter().map(|n| ffmpeg_path.with_file_name(n)).find(|p| p.is_file());
             sibling.or_else(|| on_path("ffprobe"))
@@ -77,6 +77,23 @@ fn command(program: &Path, args: &[String]) -> Command {
 }
 
 /// Run a program to completion with its window hidden.
+/// A configured program: empty means `default_name` on `PATH`, a bare name is looked up on `PATH`, anything with a
+/// folder in it must be an existing file.
+fn resolve(configured: &str, default_name: &str) -> Option<PathBuf> {
+    let text = configured.trim();
+    if text.is_empty() {
+        return on_path(default_name);
+    }
+    if !text.contains(['/', '\\']) {
+        return on_path(text.strip_suffix(".exe").unwrap_or(text));
+    }
+    let path = PathBuf::from(text);
+    if path.is_file() {
+        return Some(path);
+    }
+    exe_names(text).into_iter().map(PathBuf::from).find(|p| p.is_file())
+}
+
 pub fn run(program: &Path, args: &[String]) -> std::io::Result<Output> {
     command(program, args).output()
 }
@@ -99,4 +116,15 @@ pub fn failure_text(output: &Output, fallback: &str) -> String {
 /// Command line arguments from string slices.
 pub fn args(items: &[&str]) -> Vec<String> {
     items.iter().map(|s| s.to_string()).collect()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn a_configured_program_that_does_not_exist_is_an_error_now() {
+        assert!(matches!(Tools::find("no-such-program-here", ""), Err(MediaError::NotFound)));
+        assert!(matches!(Tools::find(r"C:\nowhere\ffmpeg.exe", ""), Err(MediaError::NotFound)));
+    }
 }

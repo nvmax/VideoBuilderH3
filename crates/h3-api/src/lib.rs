@@ -1,1 +1,41 @@
-//! Local /api/v1 server for agents and the MCP server.
+//! Local `/api/v1` server for agents and the MCP server. Same paths, envelopes and error codes as the pack's agent API,
+//! so `mcp_server` works against it with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`.
+
+pub mod app;
+pub mod error;
+pub mod job_handlers;
+pub mod views;
+
+use std::path::Path;
+use std::sync::Arc;
+
+use h3_jobs::{JobManager, JobStore};
+use h3_project::AppConfig;
+
+pub use app::{router, AppState};
+
+/// Where the job database lives, next to the config file.
+pub fn jobs_db_path(config_path: &Path) -> std::path::PathBuf {
+    config_path.parent().unwrap_or_else(|| Path::new(".")).join("jobs.db")
+}
+
+/// Open the job database, mark jobs a stopped app left unfinished as interrupted and build the shared state.
+pub fn build_state(cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, String> {
+    let store = JobStore::open(db_path).map_err(|e| e.to_string())?;
+    let jobs = JobManager::new(store);
+    match jobs.recover_on_startup() {
+        Ok(0) => {}
+        Ok(n) => eprintln!("[VRGDG-RS API] {n} unfinished job(s) from the last run are marked interrupted."),
+        Err(e) => eprintln!("[VRGDG-RS API] Could not check for interrupted jobs: {e}"),
+    }
+    let roots = views::project_roots(&cfg.project_root);
+    Ok(Arc::new(AppState { cfg, roots, jobs }))
+}
+
+/// Serve the API until the process stops.
+pub async fn serve(state: Arc<AppState>) -> std::io::Result<()> {
+    let bind = state.cfg.api_bind.clone();
+    let listener = tokio::net::TcpListener::bind(&bind).await?;
+    eprintln!("[VRGDG-RS API] Listening on http://{bind}/api/v1");
+    axum::serve(listener, router(state)).await
+}
