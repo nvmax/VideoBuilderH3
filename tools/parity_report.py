@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # Routes this app does not need. The first matching rule wins.
 EXCLUDED = [
-    (r"build_(i2v|t2v|rtv|ingredients|flf|id_lora)_prompt$|generate_(i2v|t2v|chained_i2v)$|(enhance|edit)_video_prompt$|id_lora_dialogue_scenes$|face_fix/", "LTX only"),
+    (r"build_(i2v|t2v|rtv|ingredients|flf|id_lora)_prompt$|generate_(i2v|t2v|chained_i2v)$|(enhance|edit)_video_prompt$|id_lora_dialogue_scenes$|face_fix/|storyboard/gemma_video_prompt$", "LTX only (MiniMax H3 scenes use the Builder's own prompt writers)"),
     (r"browser_image/|flow_gpt", "Browser automation of other sites"),
     (r"wizard_draft$|import_latest_prompt_creator_outputs$|copy_prompt_creator_outputs$|music_prompt_creator/(?!build_whisper_prompt)", "Wizard and Prompt Creator panel (not on the screens this app keeps)"),
     (r"build_minimax_h3_3pass_prompt$|build_transcribe_prompt$|luts/example$|luts/apply_image$|film_grain/apply_image$|latent_status$|list_scene_latent_takes$", "Nothing in the front end calls it"),
@@ -42,7 +42,7 @@ UI_ITEMS = [
     ("5", "Timeline tools and buttons", "Timeline Tools bar, Bulk, notes, Segment, Audio Mask, Hear and Show Stems", "timeline, audio and mask routes (mask served)"),
     ("6", "Audio Mask (Hear Stems, Show Stems)", "Stem lanes, regions, masked mix", "mask routes (served, checked against the pack)"),
     ("7", "Stop, Models and Clear RAM", "Right side utility buttons and the VRAM and RAM meters", "system routes (served), Models dialog"),
-    ("8", "Image, Video and Audio tabs", "Right panel tabs and their settings", "image graph routes (not built), H3 graph routes (served)"),
+    ("8", "Image, Video and Audio tabs", "Right panel tabs and their settings", "image and H3 graph routes (served)"),
     ("9", "Ref Builder, RefMods Studio and Viewer, Line Mapping, LLM Runner, Prompt Options", "Header buttons and their dialogs", "reference, RefMod, LLM and lyric routes"),
     ("10", "Ctrl and shift in the timeline, scroll to zoom", "Timeline mouse handling", "front end only"),
     ("11", "Hold ctrl to select several scenes", "Timeline selection", "front end only"),
