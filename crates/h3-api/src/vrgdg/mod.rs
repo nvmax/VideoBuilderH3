@@ -14,6 +14,7 @@ mod post_process;
 mod projects;
 mod runner;
 mod settings;
+mod story;
 mod storyboard;
 mod system;
 
@@ -48,6 +49,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = post_process::routes(router);
     let router = runner::routes(router);
     let router = settings::routes(router);
+    let router = story::routes(router);
     let router = storyboard::routes(router);
     let router = system::routes(router);
     choices::routes(router)
