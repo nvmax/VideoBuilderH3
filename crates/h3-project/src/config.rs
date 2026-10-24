@@ -54,12 +54,9 @@ impl AppConfig {
     /// Load the config at `path`, or defaults when the file does not exist yet.
     pub fn load(path: &Path) -> io::Result<Self> {
         match std::fs::read_to_string(path) {
-            Ok(text) => serde_json::from_str::<Self>(&text)
-                .map(|mut cfg| {
-                    cfg.llm.comfy_url = cfg.comfy_url.clone();
-                    cfg
-                })
-                .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, format!("{}: {e}", path.display()))),
+            Ok(text) => serde_json::from_str(&text).map_err(|e| {
+                io::Error::new(io::ErrorKind::InvalidData, format!("{}: {e}", path.display()))
+            }),
             Err(e) if e.kind() == io::ErrorKind::NotFound => Ok(Self::default()),
             Err(e) => Err(e),
         }
