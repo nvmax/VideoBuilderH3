@@ -11,6 +11,7 @@ pub mod minimax_prompts;
 pub mod refmod_library;
 pub mod render;
 pub mod scene_video;
+pub mod scratch_ops;
 pub mod stitch_plan;
 pub mod video_ops;
 

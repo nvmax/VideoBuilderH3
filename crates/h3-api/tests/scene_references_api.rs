@@ -184,3 +184,30 @@ async fn agents_get_a_brief_assemble_a_prompt_and_validate_it() {
     let (code, _) = s.call(Method::GET, &format!("{p}/scenes/99/prompts/context"), None).await;
     assert_eq!(code, 404);
 }
+
+#[tokio::test]
+async fn scan_recovers_clips_from_old_scratch_folders_and_index_is_written() {
+    let s = start().await;
+    s.call(Method::POST, "/projects", Some(json!({"name": "Scan"}))).await;
+    let p = "/projects/Scan";
+    let project = s.dir.path().join("projects").join("Scan");
+    let old = project.join("image_to_video_clips").join("scene_0002");
+    std::fs::create_dir_all(&old).unwrap();
+    std::fs::write(old.join("video_0001-audio.mp4"), b"not really a video").unwrap();
+    let backups = project.join("rendered_scene_videos_backup").join("scene_0003");
+    std::fs::create_dir_all(&backups).unwrap();
+    std::fs::write(backups.join("video_0003-audio_20250101_000000.mp4"), b"x").unwrap();
+
+    let (code, scan) = s.call(Method::POST, &format!("{p}/video/scan"), None).await;
+    assert_eq!(code, 200, "{scan}");
+    assert!(scan["data"]["videos"]["2"].as_str().unwrap().ends_with("video_0002-audio.mp4"), "{scan}");
+    assert!(project.join("rendered_scene_videos").join("video_0002-audio.mp4").is_file());
+    assert!(scan["data"]["recovered_from_scratch"]["2"].as_str().unwrap().contains("scene_0002"));
+    assert_eq!(scan["data"]["video_backups"]["3"].as_array().unwrap().len(), 1);
+
+    let (code, index) = s.call(Method::GET, &format!("{p}/minimax/index"), None).await;
+    assert_eq!(code, 200);
+    assert!(index["data"]["content"].as_str().unwrap().starts_with("# MiniMax H3 project files"));
+    assert!(project.join("MINIMAX_PROJECT_FILES.md").is_file());
+}
+

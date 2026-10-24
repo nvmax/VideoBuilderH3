@@ -314,3 +314,99 @@ async fn match_color_job(state: Arc<crate::app::AppState>, ctx: JobCtx) -> Resul
     ctx.progress(ProgressUpdate { percent: 100.0, stage: "completed".into(), message: "Color match applied.".into(), scene_id: Some(scene.clone()), stage_count: 1, ..Default::default() });
     Ok(json!({"scene_id": scene, "video_path": video, "thumbnail_path": thumbnail, "revision": revision}))
 }
+
+
+/// The scene's scratch folder: the one named in the body, else the one this project's renders use.
+async fn scratch_for(state: &crate::app::AppState, folder: &FsPath, scene: u32, body: &Obj) -> Result<String, ApiError> {
+    let given = text_or_empty(body.get("output_folder")).trim().to_string();
+    if !given.is_empty() {
+        return Ok(given);
+    }
+    let dir = output_dir(state).await?;
+    Ok(h3_graph::inputs::output_location_in(&dir, &folder.display().to_string(), scene).0)
+}
+
+/// `POST .../video/minimax-stage-recover`: find the stage clips a render left in the scratch folder and back them up.
+pub async fn stage_recover_route(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let loaded = load(&state, &pid).await?;
+    let folder = resolve_project(&state.roots, &pid)?;
+    let segments = segments_of(&loaded.session);
+    let index = scene_index(&segments, &sid).ok_or_else(|| ApiError::scene_not_found(&sid, &pid))?;
+    let scene = index as u32 + 1;
+    let output_folder = scratch_for(&state, &folder, scene, &body).await?;
+    let min_mtime = body.get("min_mtime").filter(|v| truthy(v)).and_then(to_float).unwrap_or(0.0);
+    let tools = tools(&state)?;
+    let out = output_folder.clone();
+    let result = blocking(move || {
+        let found = h3_pipeline::scratch_ops::find_stage_outputs(FsPath::new(&out), min_mtime);
+        let mut backups = serde_json::Map::new();
+        let stamp = Stamp::now().compact;
+        for stage in ["stage1", "stage2"] {
+            let path = text_or_empty(found.get(format!("{stage}_path")));
+            if !path.is_empty() && FsPath::new(&path).is_file() {
+                match h3_pipeline::scratch_ops::backup_stage(&tools, &folder, FsPath::new(&path), stage, scene, &stamp) {
+                    Ok(done) => {
+                        backups.insert(stage.into(), done);
+                    }
+                    Err(e) => eprintln!("[VRGDG-RS Video] Could not back up {stage} for scene {scene}: {e}"),
+                }
+            }
+        }
+        (found, Value::Object(backups))
+    })
+    .await?;
+    Ok(success(
+        json!({"project_id": pid, "scene_id": sid, "scene_number": scene, "output_folder": output_folder, "stage_outputs": result.0, "backups": result.1}),
+        None,
+    ))
+}
+
+/// `POST /projects/{pid}/minimax/cleanup`: remove a scene's scratch folder.
+pub async fn cleanup_route(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let loaded = load(&state, &pid).await?;
+    let folder = resolve_project(&state.roots, &pid)?;
+    let mut scene = body.get("scene_number").and_then(h3_core::pyval::to_int).unwrap_or(0);
+    if scene <= 0 {
+        if let Some(sid) = body.get("scene_id").filter(|v| truthy(v)).map(|v| text_or_empty(Some(v))) {
+            if let Some(index) = scene_index(&segments_of(&loaded.session), &sid) {
+                scene = index as i64 + 1;
+            }
+        }
+    }
+    if scene <= 0 {
+        scene = 1;
+    }
+    let output_folder = scratch_for(&state, &folder, scene as u32, &body).await?;
+    let dir = output_dir(&state).await?;
+    let result = blocking(move || h3_pipeline::scratch_ops::cleanup_scratch(&dir, &folder, &output_folder, scene as u32)).await?.map_err(|e| op_error(e, &pid))?;
+    let mut data = serde_json::Map::new();
+    data.insert("project_id".into(), json!(pid));
+    data.insert("scene_number".into(), json!(scene));
+    if let Value::Object(extra) = result {
+        data.extend(extra);
+    }
+    Ok(success(Value::Object(data), None))
+}
+
+
+/// `POST /projects/{pid}/video/scan`: index the scene clips and backups, recovering clips left in old scratch folders.
+pub async fn scan_route(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
+    let folder = resolve_project(&state.roots, &pid)?;
+    let tools = tools(&state)?;
+    let result = blocking(move || h3_pipeline::scratch_ops::scan_scene_videos(&tools, &folder)).await?.map_err(|e| op_error(e, &pid))?;
+    Ok(success(result, None))
+}
+
+/// `GET /projects/{pid}/minimax/index`: write and return the MiniMax project file map.
+pub async fn index_route(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
+    let loaded = load(&state, &pid).await?;
+    let folder = resolve_project(&state.roots, &pid)?;
+    let mut session = loaded.session.clone();
+    session.insert("video_engine".into(), json!("minimax_h3"));
+    let written = blocking(move || h3_project::derived::write_minimax_index(&folder, &session)).await?.map_err(|e| ApiError::internal(e.to_string()))?;
+    let path = written.map(|p| p.display().to_string()).unwrap_or_default();
+    let content = if path.is_empty() { String::new() } else { std::fs::read_to_string(&path).unwrap_or_default() };
+    Ok(success(json!({"project_id": pid, "path": path, "content": content}), None))
+}
