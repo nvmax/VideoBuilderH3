@@ -44,7 +44,7 @@ pub fn run() {
         .setup(|app| {
             let config_path = AppConfig::default_path();
             let cfg = AppConfig::load(&config_path).map_err(|e| format!("The config file could not be read: {e}"))?;
-            let state = h3_api::build_state(cfg, &h3_api::jobs_db_path(&config_path))?;
+            let state = h3_api::build_state_for(cfg, &config_path)?;
             // The address is taken before the window opens, so the window finds the server there. The window shows the Builder from the server's own
             // address: the page, its media and the API share one origin, like the Builder inside ComfyUI.
             let listener = tauri::async_runtime::block_on(h3_api::bind(&state)).map_err(|e| format!("The address {} could not be used: {e}", state.cfg.api_bind))?;

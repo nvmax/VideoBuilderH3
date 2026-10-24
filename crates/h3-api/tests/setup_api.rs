@@ -175,3 +175,11 @@ async fn projects_in_comfyuis_output_folder_are_listed_and_open() {
     assert!(after.contains("\"revision\":3") || after.contains("\"revision\": 3"));
 }
 
+#[test]
+fn the_state_keeps_the_config_file_the_program_was_started_with() {
+    let dir = tempfile::tempdir().unwrap();
+    let path = dir.path().join("second_copy.json");
+    let state = h3_api::build_state_for(AppConfig::default(), &path).unwrap();
+    assert_eq!(state.config_path, path);
+    assert!(dir.path().join("jobs.db").is_file());
+}

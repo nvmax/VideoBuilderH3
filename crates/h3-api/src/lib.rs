@@ -53,8 +53,20 @@ fn detect_output_dir(cfg: &AppConfig) -> Option<std::path::PathBuf> {
     .flatten()
 }
 
+/// Build the shared state for the config file the program was started with (`H3_CONFIG` can name a file that is not `config.json`).
+/// The job database and the saved settings sit next to it.
+pub fn build_state_for(cfg: AppConfig, config_path: &Path) -> Result<Arc<AppState>, String> {
+    build_state_at(cfg, &jobs_db_path(config_path), config_path)
+}
+
+/// Like [`build_state_for`] for a folder that holds `jobs.db` and `config.json`, which is how the tests lay theirs out.
+pub fn build_state(cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, String> {
+    let config_path = db_path.parent().unwrap_or_else(|| Path::new(".")).join("config.json");
+    build_state_at(cfg, db_path, &config_path)
+}
+
 /// Open the job database, mark jobs a stopped app left unfinished as interrupted and build the shared state.
-pub fn build_state(mut cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, String> {
+fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Result<Arc<AppState>, String> {
     cfg.llm.comfy_url = cfg.comfy_url.clone();
     let store = JobStore::open(db_path).map_err(|e| e.to_string())?;
     let jobs = JobManager::new(store);
@@ -66,9 +78,8 @@ pub fn build_state(mut cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, 
     let output = detect_output_dir(&cfg);
     let roots = views::project_roots(&cfg.project_root, output.as_deref());
     let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
-    let config_path = db_path.parent().unwrap_or_else(|| Path::new(".")).join("config.json");
     let llm = std::sync::RwLock::new(cfg.llm.clone());
-    Ok(Arc::new(AppState { llm, config_path, cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(64).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()) }))
+    Ok(Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(64).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()) }))
 }
 
 /// Take the API's address. The desktop app does this before it opens its window, so the window finds the server there.

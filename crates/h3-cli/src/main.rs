@@ -182,7 +182,7 @@ async fn doctor(cfg: &AppConfig) -> bool {
 }
 
 async fn serve(cfg: AppConfig, config_path: &std::path::Path) -> Result<()> {
-    let state = h3_api::build_state(cfg, &h3_api::jobs_db_path(config_path)).map_err(|e| anyhow::anyhow!(e))?;
+    let state = h3_api::build_state_for(cfg, config_path).map_err(|e| anyhow::anyhow!(e))?;
     h3_api::serve(state).await?;
     Ok(())
 }
