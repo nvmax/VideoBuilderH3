@@ -54,7 +54,7 @@ UI_ITEMS = [
 
 def served_paths():
     text = "".join(p.read_text(encoding="utf-8") for p in (ROOT / "crates" / "h3-api" / "src" / "vrgdg").glob("*.rs"))
-    paths = set(re.findall(r'"(/vrgdg/[A-Za-z0-9_/\-.]+)"', text))
+    paths = set(re.findall(r'"(/vrgdg/[A-Za-z0-9_/\-.{}]+)"', text))
     for base in re.findall(r'let base = "(/vrgdg/[A-Za-z0-9_/\-.]+)"', text):
         paths |= {f"{base}/{name}" for name in re.findall(r'\{base\}/([A-Za-z0-9_/\-.]+)', text)}
     return paths

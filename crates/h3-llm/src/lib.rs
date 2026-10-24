@@ -9,6 +9,7 @@ pub mod comfy_gemma;
 pub mod client;
 pub mod config;
 pub mod describe;
+pub mod dialogue_prompts;
 pub mod instructions;
 pub mod location_cards;
 pub mod locations;

@@ -28,6 +28,32 @@ pub fn truthy(value: &Value) -> bool {
     }
 }
 
+/// Python's `repr()` of a string: single quotes unless the text has a single and no double quote, with escapes for control and other unprintable characters.
+pub fn repr_text(text: &str) -> String {
+    let quote = if text.contains('\'') && !text.contains('"') { '"' } else { '\'' };
+    let mut out = String::from(quote);
+    for c in text.chars() {
+        let code = c as u32;
+        let unprintable = c.is_control() || (c != ' ' && c.is_whitespace()) || matches!(code, 0xAD | 0x200B..=0x200F | 0x2028..=0x202E | 0x2060..=0x2064 | 0x2066..=0x206F | 0xFEFF | 0xFFF9..=0xFFFB | 0xE000..=0xF8FF);
+        match c {
+            '\\' => out.push_str("\\\\"),
+            '\n' => out.push_str("\\n"),
+            '\r' => out.push_str("\\r"),
+            '\t' => out.push_str("\\t"),
+            c if c == quote => {
+                out.push('\\');
+                out.push(c);
+            }
+            _ if unprintable && code < 0x100 => out.push_str(&format!("\\x{code:02x}")),
+            _ if unprintable && code < 0x10000 => out.push_str(&format!("\\u{code:04x}")),
+            _ if unprintable => out.push_str(&format!("\\U{code:08x}")),
+            c => out.push(c),
+        }
+    }
+    out.push(quote);
+    out
+}
+
 /// The name Python gives the type of a parsed JSON value, as in `'list' object has no attribute 'get'`.
 pub fn py_type_name(value: &Value) -> &'static str {
     match value {

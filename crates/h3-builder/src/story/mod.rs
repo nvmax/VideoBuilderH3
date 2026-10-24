@@ -4,6 +4,7 @@ pub mod arc;
 pub mod beat;
 pub mod book;
 pub mod context;
+pub mod dialogue_scenes;
 pub mod places;
 pub mod plan;
 pub mod revise;

@@ -11,7 +11,7 @@ use axum::routing::post as axum_post;
 use axum::Router;
 use h3_builder::prompt_writers::RunnerLlm;
 use h3_builder::story::arc::{self, ArcError};
-use h3_builder::story::{beat, book, places, plan, revise, scene_prompts};
+use h3_builder::story::{beat, book, dialogue_scenes, places, plan, revise, scene_prompts};
 use h3_core::pyval::Obj;
 use serde_json::{json, Value};
 
@@ -109,11 +109,22 @@ async fn story_arc(State(state): State<Arc<AppState>>, body: Bytes) -> Response 
     }
 }
 
+async fn minimax_dialogue_scenes(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match body_object(&body) {
+        Ok(payload) => payload,
+        Err(fail) => return into_response(Err(fail)),
+    };
+    let base = base_config(&state);
+    let llm = RunnerLlm { payload: &payload, base: &base };
+    finish(dialogue_scenes::build_minimax_dialogue_scenes(&llm, &payload).await)
+}
+
 pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
     router
         .route("/vrgdg/storyboard/story_mode/{action}", axum_post(story_mode))
         .route("/vrgdg/storyboard/story_brief", axum_post(story_brief))
         .route("/vrgdg/storyboard/story_arc", axum_post(story_arc))
+        .route("/vrgdg/storyboard/minimax_dialogue_scenes", axum_post(minimax_dialogue_scenes))
         .route("/vrgdg/storyboard/scene_story_beat", axum_post(scene_story_beat))
         .route("/vrgdg/storyboard/gemma_image_prompt", axum_post(gemma_image_prompt))
 }

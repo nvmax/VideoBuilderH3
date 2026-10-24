@@ -6,6 +6,7 @@ use serde_json::json;
 
 use super::arc::{build_story_layer_arc, build_story_layer_brief, ArcError};
 use super::beat::build_scene_beat;
+use super::dialogue_scenes::build_minimax_dialogue_scenes;
 use super::book::{convert_story_arc, draft_story_book, remove_story_people, rewrite_story_chapter, scan_story_cast, split_pasted_story};
 use super::places::build_story_locations;
 use super::plan::{build_story_acts, build_story_scene_plan, rewrite_act_summary};
@@ -31,6 +32,7 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "beat" => build_scene_beat(llm, payload).await,
             "image" => build_storyboard_image_prompt(llm, payload).await,
             "brief" => build_story_layer_brief(llm, payload).await,
+            "dialogue" => build_minimax_dialogue_scenes(llm, payload).await,
             "arc" => match build_story_layer_arc(llm, payload).await {
                 Ok(value) => Ok(value),
                 Err(ArcError::Failed(message)) => Err(message),
@@ -76,4 +78,9 @@ async fn the_story_brief_and_the_story_arc_match_the_pack() {
     let lyrics = "\u{feff}[Intro]\n\n[Verse 1]\nwalking home alone\nthe street is empty\nI count the lights\n\n[Chorus]\noh oh oh\nnever going back\n\n[Verse 2]\nmorning comes\n\n[Chorus]\noh oh oh\n\n[Outro]\n";
     std::fs::write(context.join("full_lyrics.txt"), lyrics).unwrap();
     check_cases("story/arc_steps.json", 60, &dir.path().display().to_string(), dispatch).await;
+}
+
+#[tokio::test]
+async fn the_short_film_scene_planner_matches_the_pack() {
+    check_cases("story/dialogue_steps.json", 30, "", dispatch).await;
 }
