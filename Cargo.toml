@@ -34,7 +34,7 @@ sha1 = "0.10"
 sha2 = "0.10"
 filetime = "0.2"
 rustfft = "6"
-image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp", "bmp"] }
 thiserror = "2"
 base64 = "0.22"
 zip = { version = "2", default-features = false, features = ["deflate"] }
@@ -43,6 +43,13 @@ hound = "3.5"
 sysinfo = { version = "0.33", default-features = false, features = ["system"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Picture and frame work is far too slow unoptimized, so these crates are optimized in debug builds too.
+[profile.dev.package.h3-media]
+opt-level = 3
+
+[profile.dev.package.image]
+opt-level = 3
 
 [profile.release]
 # A smaller, faster app for the installer. Debug builds are unchanged.

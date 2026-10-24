@@ -75,7 +75,13 @@ impl AppState {
             roots: self.roots.clone(),
             ffmpeg: self.cfg.ffmpeg_path.clone(),
             ffprobe: self.cfg.ffprobe_path.clone(),
+            luts: self.luts_dir(),
         }
+    }
+
+    /// Where `.cube` LUT files are kept: a `luts` folder next to the config file.
+    pub fn luts_dir(&self) -> PathBuf {
+        self.config_path.parent().map(std::path::Path::to_path_buf).unwrap_or_default().join("luts")
     }
 }
 

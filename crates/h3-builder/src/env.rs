@@ -14,6 +14,8 @@ pub struct Env {
     pub roots: Vec<PathBuf>,
     pub ffmpeg: String,
     pub ffprobe: String,
+    /// The folder of `.cube` LUT files the Post Process tab lists.
+    pub luts: PathBuf,
 }
 
 impl Env {

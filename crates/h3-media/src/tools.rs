@@ -101,7 +101,8 @@ impl Tools {
     }
 }
 
-fn command(program: &Path, args: &[String]) -> Command {
+/// A program with its arguments and no console window, for callers that wire up the pipes themselves.
+pub fn command(program: &Path, args: &[String]) -> Command {
     let mut command = Command::new(program);
     command.args(args);
     #[cfg(windows)]

@@ -41,10 +41,6 @@ pub fn register(state: &Arc<AppState>) {
     }
 }
 
-fn luts_dir(state: &AppState) -> PathBuf {
-    state.config_path.parent().map(FsPath::to_path_buf).unwrap_or_default().join("luts")
-}
-
 fn tools(state: &AppState) -> Result<Tools, ApiError> {
     Tools::find(&state.cfg.ffmpeg_path, &state.cfg.ffprobe_path).map_err(|e| ApiError::new(axum::http::StatusCode::SERVICE_UNAVAILABLE, "FFMPEG_FAILED", e.to_string()))
 }
@@ -67,7 +63,7 @@ fn lut_file(dir: &FsPath, name: &str) -> Result<PathBuf, ApiError> {
 
 /// `GET /post/luts`: the `.cube` files in the LUT folder.
 pub async fn list_luts(State(state): Shared) -> ApiResult {
-    let dir = luts_dir(&state);
+    let dir = state.luts_dir();
     let listing = blocking(move || {
         let mut items: Vec<(String, Value)> = Vec::new();
         for entry in std::fs::read_dir(&dir).into_iter().flatten().flatten() {
@@ -113,7 +109,7 @@ pub async fn upload_lut(State(state): Shared, Query(query): Query<HashMap<String
     if !clean.to_lowercase().ends_with(".cube") {
         return Err(ApiError::validation(format!("LUT file must end with .cube, got: {clean}")));
     }
-    let dir = luts_dir(&state);
+    let dir = state.luts_dir();
     let target = dir.join(&clean);
     let size = content.len();
     let written = target.clone();
@@ -264,7 +260,7 @@ async fn lut_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let index = scene_index(&segments, &scene).ok_or_else(|| fail(ApiError::scene_not_found(&scene, &pid)))?;
     let clip = scene_clip(&folder, &segments[index], &scene)?;
     let lut = text_or_empty(ctx.params.get("lut_name"));
-    let cube = lut_file(&luts_dir(&state), &lut).map_err(fail)?;
+    let cube = lut_file(&state.luts_dir(), &lut).map_err(fail)?;
     ctx.progress(ProgressUpdate { percent: 10.0, stage: "processing".into(), message: "Applying LUT to media...".into(), scene_id: Some(scene.clone()), stage_count: 1, ..Default::default() });
     let params = &ctx.params;
     let result = grade(
@@ -322,7 +318,7 @@ async fn apply_all_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobEr
     if targets.is_empty() {
         return Ok(json!({"project_id": pid, "processed_scenes": [], "count": 0}));
     }
-    let cube = if lut.is_empty() { None } else { Some(lut_file(&luts_dir(&state), &lut).map_err(fail)?) };
+    let cube = if lut.is_empty() { None } else { Some(lut_file(&state.luts_dir(), &lut).map_err(fail)?) };
     let total = targets.len();
     let mut results = Vec::new();
     for (n, (index, id, clip)) in targets.into_iter().enumerate() {

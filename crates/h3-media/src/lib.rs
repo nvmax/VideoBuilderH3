@@ -2,6 +2,8 @@
 
 pub mod audio;
 pub mod collect;
+pub mod effect;
+pub mod grade;
 pub mod peaks;
 pub mod post;
 pub mod slideshow;

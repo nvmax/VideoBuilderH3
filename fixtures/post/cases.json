@@ -1,0 +1,223 @@
+{
+ "width": 53,
+ "height": 41,
+ "cases": [
+  {
+   "kind": "adjust",
+   "name": "adjust_warm_contrast",
+   "settings": {
+    "temperature": 40,
+    "tint": -15,
+    "contrast": 25,
+    "saturation": 20,
+    "exposure": 10
+   },
+   "output": "adjust_warm_contrast.png",
+   "normalized": {
+    "enabled": true,
+    "temperature": 40.0,
+    "tint": -15.0,
+    "saturation": 20.0,
+    "exposure": 10.0,
+    "contrast": 25.0,
+    "highlights": 0.0,
+    "shadows": 0.0,
+    "whites": 0.0,
+    "blacks": 0.0,
+    "sharpen": 0.0,
+    "clarity": 0.0,
+    "vignette": 0.0,
+    "fade": 0.0
+   }
+  },
+  {
+   "kind": "adjust",
+   "name": "adjust_lifts",
+   "settings": {
+    "highlights": -40,
+    "shadows": 55,
+    "whites": 30,
+    "blacks": -25,
+    "fade": 20
+   },
+   "output": "adjust_lifts.png",
+   "normalized": {
+    "enabled": true,
+    "temperature": 0.0,
+    "tint": 0.0,
+    "saturation": 0.0,
+    "exposure": 0.0,
+    "contrast": 0.0,
+    "highlights": -40.0,
+    "shadows": 55.0,
+    "whites": 30.0,
+    "blacks": -25.0,
+    "sharpen": 0.0,
+    "clarity": 0.0,
+    "vignette": 0.0,
+    "fade": 20.0
+   }
+  },
+  {
+   "kind": "adjust",
+   "name": "adjust_detail",
+   "settings": {
+    "clarity": 60,
+    "sharpen": 45
+   },
+   "output": "adjust_detail.png",
+   "normalized": {
+    "enabled": true,
+    "temperature": 0.0,
+    "tint": 0.0,
+    "saturation": 0.0,
+    "exposure": 0.0,
+    "contrast": 0.0,
+    "highlights": 0.0,
+    "shadows": 0.0,
+    "whites": 0.0,
+    "blacks": 0.0,
+    "sharpen": 45.0,
+    "clarity": 60.0,
+    "vignette": 0.0,
+    "fade": 0.0
+   }
+  },
+  {
+   "kind": "adjust",
+   "name": "adjust_negative_clarity",
+   "settings": {
+    "clarity": -70,
+    "vignette": 55
+   },
+   "output": "adjust_negative_clarity.png",
+   "normalized": {
+    "enabled": true,
+    "temperature": 0.0,
+    "tint": 0.0,
+    "saturation": 0.0,
+    "exposure": 0.0,
+    "contrast": 0.0,
+    "highlights": 0.0,
+    "shadows": 0.0,
+    "whites": 0.0,
+    "blacks": 0.0,
+    "sharpen": 0.0,
+    "clarity": -70.0,
+    "vignette": 55.0,
+    "fade": 0.0
+   }
+  },
+  {
+   "kind": "adjust",
+   "name": "adjust_everything",
+   "settings": {
+    "temperature": -30,
+    "tint": 20,
+    "saturation": -35,
+    "exposure": -12,
+    "contrast": 18,
+    "highlights": 20,
+    "shadows": -10,
+    "whites": 12,
+    "blacks": 8,
+    "sharpen": 20,
+    "clarity": 25,
+    "vignette": 30,
+    "fade": 10
+   },
+   "output": "adjust_everything.png",
+   "normalized": {
+    "enabled": true,
+    "temperature": -30.0,
+    "tint": 20.0,
+    "saturation": -35.0,
+    "exposure": -12.0,
+    "contrast": 18.0,
+    "highlights": 20.0,
+    "shadows": -10.0,
+    "whites": 12.0,
+    "blacks": 8.0,
+    "sharpen": 20.0,
+    "clarity": 25.0,
+    "vignette": 30.0,
+    "fade": 10.0
+   }
+  },
+  {
+   "kind": "adjust",
+   "name": "adjust_disabled",
+   "settings": {
+    "enabled": false,
+    "contrast": 50
+   },
+   "output": "adjust_disabled.png",
+   "normalized": {
+    "enabled": false,
+    "temperature": 0.0,
+    "tint": 0.0,
+    "saturation": 0.0,
+    "exposure": 0.0,
+    "contrast": 50.0,
+    "highlights": 0.0,
+    "shadows": 0.0,
+    "whites": 0.0,
+    "blacks": 0.0,
+    "sharpen": 0.0,
+    "clarity": 0.0,
+    "vignette": 0.0,
+    "fade": 0.0
+   }
+  },
+  {
+   "kind": "adjust",
+   "name": "adjust_defaults",
+   "settings": {},
+   "output": "adjust_defaults.png",
+   "normalized": {
+    "enabled": true,
+    "temperature": 0.0,
+    "tint": 0.0,
+    "saturation": 0.0,
+    "exposure": 0.0,
+    "contrast": 0.0,
+    "highlights": 0.0,
+    "shadows": 0.0,
+    "whites": 0.0,
+    "blacks": 0.0,
+    "sharpen": 0.0,
+    "clarity": 0.0,
+    "vignette": 0.0,
+    "fade": 0.0
+   }
+  },
+  {
+   "kind": "lut",
+   "name": "lut_mix_10",
+   "cube": "lut_mix.cube",
+   "strength": 10.0,
+   "output": "lut_lut_mix_10.png"
+  },
+  {
+   "kind": "lut",
+   "name": "lut_mix_4",
+   "cube": "lut_mix.cube",
+   "strength": 4.0,
+   "output": "lut_lut_mix_4.png"
+  },
+  {
+   "kind": "lut",
+   "name": "lut_domain_10",
+   "cube": "lut_domain.cube",
+   "strength": 10.0,
+   "output": "lut_lut_domain_10.png"
+  },
+  {
+   "kind": "lut",
+   "name": "lut_domain_0",
+   "cube": "lut_domain.cube",
+   "strength": 0.0,
+   "output": "lut_lut_domain_0.png"
+  }
+ ]
+}

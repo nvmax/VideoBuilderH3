@@ -36,7 +36,7 @@ pub fn lut_filter(strength: f64) -> String {
     }
 }
 
-fn has_audio(tools: &Tools, path: &Path) -> Result<bool, MediaError> {
+pub(crate) fn has_audio(tools: &Tools, path: &Path) -> Result<bool, MediaError> {
     Ok(!probe_stream_fields(tools, path, "a:0", &["codec_type"], false)?.is_empty())
 }
 

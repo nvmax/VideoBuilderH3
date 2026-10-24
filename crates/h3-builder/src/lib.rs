@@ -11,6 +11,7 @@ pub mod error_log;
 pub mod files;
 pub mod media;
 pub mod payload;
+pub mod post_process;
 pub mod projects;
 pub mod runner;
 pub mod system;

@@ -647,7 +647,7 @@ mod tests {
 
     #[test]
     fn separation_cuts_the_scene_and_saves_the_stems() {
-        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into() };
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
         if env.tools().is_err() {
             return; // ffmpeg is not installed here
         }
