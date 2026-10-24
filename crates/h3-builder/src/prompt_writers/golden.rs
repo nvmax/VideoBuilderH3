@@ -3,6 +3,7 @@
 
 use serde_json::json;
 
+use super::agent::builder_agent_reply;
 use super::concepts::generate_concept_prompts;
 use super::enhance::enhance_minimax_h3_prompt;
 use super::gemma4::generate as generate_gemma4;
@@ -35,6 +36,7 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "enhance" => enhance_minimax_h3_prompt(llm, payload).await,
             "motion" => generate_motion_notes(llm, payload).await,
             "gemma4" => generate_gemma4(llm, payload).await,
+            "agent" => builder_agent_reply(llm, payload).await,
             other => panic!("unknown function {other}"),
         }
     })
@@ -75,4 +77,9 @@ async fn the_gemma4_drafts_match_the_pack() {
         std::fs::write(custom.join(name), body).unwrap();
     }
     check_cases("llm/gemma4.json", 40, &dir.path().display().to_string(), dispatch).await;
+}
+
+#[tokio::test]
+async fn the_builder_agent_matches_the_pack() {
+    check_cases("llm/agent.json", 150, "", dispatch).await;
 }

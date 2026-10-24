@@ -5,6 +5,7 @@
 //! The runner is a trait so the writers can be tested against canned replies. In the app it is [`RunnerLlm`]: the runner the
 //! request's own settings select (`text_runner`, `lmstudio_*`, `own_server_*`, ...).
 
+pub mod agent;
 pub mod concepts;
 pub mod enhance;
 pub mod gemma4;
