@@ -10,6 +10,7 @@ pub mod finish;
 pub mod minimax_prompts;
 pub mod refmod_library;
 pub mod render;
+pub mod image_prompts;
 pub mod pipeline_plan;
 pub mod scene_video;
 pub mod scratch_ops;

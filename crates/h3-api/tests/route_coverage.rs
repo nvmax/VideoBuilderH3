@@ -37,12 +37,9 @@ const LEFT_OUT: &[(&str, &str, &str)] = &[
     // Planned: still to port.
     ("POST", "/projects/{pid}/prompts/concepts", "llm prompt routes"),
     ("POST", "/projects/{pid}/prompts/motion-notes", "llm prompt routes"),
-    ("POST", "/projects/{pid}/scenes/{sid}/prompts/image", "llm prompt routes"),
-    ("POST", "/projects/{pid}/scenes/{sid}/prompts/video", "llm prompt routes"),
-    ("POST", "/projects/{pid}/scenes/{sid}/prompts/video-chained", "llm prompt routes"),
+    ("POST", "/projects/{pid}/scenes/{sid}/prompts/video-chained", "ltx"),
     ("POST", "/projects/{pid}/scenes/{sid}/prompts/enhance", "llm prompt routes"),
     ("POST", "/projects/{pid}/scenes/{sid}/prompts/edit", "llm prompt routes"),
-    ("POST", "/projects/{pid}/prompts/batch", "llm prompt routes"),
     ("GET", "/instructions", "instruction presets"),
     ("GET", "/instructions/{key}", "instruction presets"),
     ("PUT", "/instructions/{key}", "instruction presets"),

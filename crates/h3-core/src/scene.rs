@@ -624,3 +624,21 @@ pub fn validate_reference_keys(choices: &Value, keys: &Value) -> Result<Vec<Stri
     }
     Ok(cleaned)
 }
+
+/// The characters and the location mapped to a scene, as cards. Unlike the reference lists, a card without a picture is
+/// still returned.
+pub fn scene_cast_and_location(session: &Value, segment: &Obj, index: usize) -> (Vec<Obj>, Option<Obj>) {
+    let refs = builder(session);
+    let cast = subject_items_for_segment(&refs, segment, index);
+    let location = if refs.get("locations_cleared").is_some_and(truthy) {
+        None
+    } else {
+        let wanted = scene_map_value(refs.get("scene_map"), segment, index).map(|v| text(Some(&v))).unwrap_or_default();
+        if wanted.is_empty() {
+            None
+        } else {
+            objs(refs.get("locations")).into_iter().find(|l| text(l.get("id")) == wanted).cloned()
+        }
+    };
+    (cast, location)
+}

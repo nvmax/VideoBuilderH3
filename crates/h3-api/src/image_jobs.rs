@@ -23,8 +23,8 @@ pub const IMAGES_GENERATE_BATCH: &str = "images.generate_batch";
 pub const REFERENCE_IMAGE_GENERATE: &str = "reference.image.generate";
 
 /// Params that steer the job. Every other key is a value for a preset binding.
-const CONTROL_KEYS: [&str; 12] =
-    ["scene_id", "mode", "preset_id", "timeout_seconds", "from_previous_final_frame", "scope", "scene_ids", "run_mode", "resume", "kind", "ref_id", "image_ingredients"];
+const CONTROL_KEYS: [&str; 17] =
+    ["scene_id", "mode", "preset_id", "timeout_seconds", "from_previous_final_frame", "scope", "scene_ids", "run_mode", "resume", "kind", "ref_id", "image_ingredients", "write_prompt", "user_notes", "temperature", "top_p", "max_new_tokens"];
 
 type Run = fn(Arc<AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
@@ -120,9 +120,20 @@ pub(crate) async fn generate_for_scene(state: &AppState, ctx: &JobCtx, run: &Run
 
     let mut values = binding_values(params);
     if values.get("prompt").is_none_or(|v| !truthy(v)) {
-        let prompt = text_or_empty(segment.get("t2i_prompt")).trim().to_string();
+        let mut prompt = text_or_empty(segment.get("t2i_prompt")).trim().to_string();
+        // `write_prompt` has the LLM write the prompt first, from the scene and its mapped characters and location.
+        if prompt.is_empty() && params.get("write_prompt").is_some_and(truthy) {
+            let mut writer = crate::llm_jobs::image_prompt_params(params);
+            if writer.model.is_empty() {
+                writer.model = preset.id.clone();
+            }
+            let index = h3_pipeline::image_prompts::sorted_index_of(&loaded.session, scene_ref).ok_or_else(|| fail(ApiError::scene_not_found(scene_ref, "")))?;
+            let written = h3_pipeline::image_prompts::write_scene_image_prompt(&crate::llm_routes::current(state), &loaded.session, index, &writer).await.map_err(crate::llm_jobs::prompt_failure)?;
+            crate::llm_jobs::save_scene_image_prompt(state, folder, &text_or_empty(segment.get("id")), &written.prompt).await?;
+            prompt = written.prompt;
+        }
         if prompt.is_empty() {
-            return Err(fail(ApiError::validation(format!("Scene '{scene_ref}' has no prompt specified and t2i_prompt is empty."))));
+            return Err(fail(ApiError::validation(format!("Scene '{scene_ref}' has no prompt specified and t2i_prompt is empty. Send write_prompt: true to have the LLM write one."))));
         }
         values.insert("prompt".into(), json!(prompt));
     }
@@ -260,10 +271,19 @@ async fn reference_image(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
     if values.get("prompt").is_none_or(|v| !truthy(v)) {
         let card = loaded.session["flux_reference_builder"][&kind].as_array().and_then(|a| a.iter().find(|c| c["id"] == card_id.as_str())).cloned().unwrap_or(Value::Null);
         let description = text_or_empty(card.get("description")).trim().to_string();
-        if description.is_empty() {
-            return Err(fail(ApiError::validation("Send a prompt, or give the reference a description to use as the prompt.")));
+        if ctx.params.get("write_prompt").is_some_and(truthy) {
+            // The LLM turns the card into a prompt for a character sheet or a location image.
+            let mut writer = crate::llm_jobs::image_prompt_params(&ctx.params);
+            if writer.model.is_empty() {
+                writer.model = preset.id.clone();
+            }
+            let written = h3_pipeline::image_prompts::write_reference_image_prompt(&crate::llm_routes::current(&state), &loaded.session, &kind, &card_id, &writer).await.map_err(crate::llm_jobs::prompt_failure)?;
+            values.insert("prompt".into(), json!(written.prompt));
+        } else if description.is_empty() {
+            return Err(fail(ApiError::validation("Send a prompt, or give the reference a description to use as the prompt, or send write_prompt: true.")));
+        } else {
+            values.insert("prompt".into(), json!(description));
         }
-        values.insert("prompt".into(), json!(description));
     }
     let made = generate(&run.client, &run.env.dirs, &run.env.object_info, &preset, &values, timeout(&ctx.params), &ctx.cancel, reporter(&ctx, None, 0.0, 85.0)).await.map_err(fail)?;
     let image = made.images.last().cloned().ok_or_else(|| fail(h3_image::ImageError::NoImage(made.prompt_id.clone())))?;

@@ -122,3 +122,60 @@ pub async fn test(State(state): Shared) -> ApiResult {
     let reply = chat(&cfg, &ChatRequest::text("Reply with the single word OK.", 0.0, 1.0, 16)).await?;
     Ok(success(json!({"ok": true, "model": reply.model, "runner": reply.runner, "reply": h3_llm::clean::clean_plain_text(&reply.text)}), None))
 }
+
+/// `POST /projects/{pid}/scenes/{sid}/prompts/image`: write the scene's image prompt and save it as `t2i_prompt`, as a job.
+pub async fn scene_image_prompt(State(state): Shared, axum::extract::Path((pid, sid)): axum::extract::Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    let loaded = crate::app::load(&state, &pid).await?;
+    crate::views::find_scene(&loaded, &sid)?;
+    params.insert("scene_id".into(), json!(sid));
+    let job = state.jobs.submit(crate::llm_jobs::SCENE_IMAGE_PROMPT, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
+/// `POST /projects/{pid}/scenes/{sid}/prompts/video`: write the scene's MiniMax H3 prompt again, as a job.
+pub async fn scene_video_prompt(State(state): Shared, axum::extract::Path((pid, sid)): axum::extract::Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    let loaded = crate::app::load(&state, &pid).await?;
+    crate::views::find_scene(&loaded, &sid)?;
+    params.insert("scene_ids".into(), json!([sid]));
+    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
+/// `POST /projects/{pid}/prompts/batch`: write prompts for many scenes. `kind: image` writes `t2i_prompt`, `kind: video`
+/// (the default) writes the MiniMax H3 prompt.
+pub async fn batch_prompts(State(state): Shared, axum::extract::Path(pid): axum::extract::Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    crate::app::load(&state, &pid).await?;
+    let kind = h3_core::pyval::text_or_empty(params.get("kind")).trim().to_lowercase();
+    if kind == "image" {
+        let job = state.jobs.submit(crate::llm_jobs::BATCH_PROMPTS, Some(&pid), Value::Object(params), false)?;
+        return Ok(crate::app::job_response(&job));
+    }
+    if !kind.is_empty() && kind != "video" {
+        return Err(ApiError::validation("kind must be 'image' or 'video'."));
+    }
+    // Video prompts are the MiniMax H3 prompts. Without `resume_missing` every scene is written again.
+    let resume = h3_core::pyval::text_or_empty(params.get("run_mode")).trim().to_lowercase() == "resume_missing";
+    params.insert("replace_existing".into(), json!(!resume));
+    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
+/// `POST /projects/{pid}/references/{kind}/{rid}/prompt`: write the prompt for a character reference sheet or a location
+/// image, as a job. The prompt comes back in the job result.
+pub async fn reference_image_prompt(State(state): Shared, axum::extract::Path((pid, kind, rid)): axum::extract::Path<(String, String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    if kind != "subjects" && kind != "locations" {
+        return Err(ApiError::validation("kind must be 'subjects' or 'locations'."));
+    }
+    let loaded = crate::app::load(&state, &pid).await?;
+    if h3_project::images::reference_card(&loaded.session, &kind, &rid).is_none() {
+        return Err(ApiError::validation(format!("Reference '{rid}' was not found in the Reference Builder.")));
+    }
+    params.insert("kind".into(), json!(kind));
+    params.insert("ref_id".into(), json!(rid));
+    let job = state.jobs.submit(crate::llm_jobs::REFERENCE_IMAGE_PROMPT, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}

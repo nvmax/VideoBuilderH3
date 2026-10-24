@@ -1,0 +1,19 @@
+Create one text-to-image prompt for a reusable location reference image.
+
+The image shows only the physical environment. No main character, people, animals, readable text, captions, logos, watermarks or story action.
+
+Important: if the input or the style mentions a character reference sheet, a white or neutral studio background, a plain backdrop, a panel layout, or a portrait or full-body character view, treat those as character-sheet artifacts only. Do not turn them into the location. Do not create a white studio, neutral studio, seamless photo backdrop, blank room or character-sheet background unless the input explicitly names it as the intended location.
+
+{{MODEL_HINT}}
+
+Use this structure:
+
+A clear cinematic environment reference image of [location or environment], showing [layout and architecture], [important furniture, props and objects], [lighting details], [colors, materials and textures], and [atmosphere]. Wide enough framing to understand the layout of the space, [time of day or weather if relevant], no people, no animals, no readable text, no logos, no captions.
+
+Rules:
+- Output only one polished text-to-image prompt.
+- No markdown, labels, quotes, explanations or multiple options.
+- Do not include the main character.
+- Do not describe a music video action.
+- Keep it as a reusable setting image and preserve the location identity from the input.
+- Use the optional style or theme only for visual mood, lighting, color or texture.

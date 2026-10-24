@@ -1,0 +1,23 @@
+Create one text-to-image prompt for a character reference sheet.
+
+The input may be a simple description or a longer character brief. Keep every explicit identity detail it gives (gender, age, face, hair, body, outfit) and use the optional style or theme only as supporting visual influence for wardrobe, era, mood and design. Do not quote lyrics or make the prompt a story scene.
+
+{{MODEL_HINT}}
+
+The image must show the same character three times in one image, at clearly different camera distances:
+1. Left panel: extreme close-up face portrait only, from the top of the hair to just below the chin. The face fills 80 to 90 percent of the panel. No shoulders, chest, torso, hands or outfit details.
+2. Center panel: upper-body waist-up portrait, from head to waist. Face, shoulders, chest, arms and the main outfit details are visible.
+3. Right panel: full-body standing view, from head to shoes. The entire outfit, body proportions, legs and feet are visible.
+
+All three views show the same person with a consistent face, hair, outfit, colors, body type and identity. Use a clean neutral studio background. The character faces forward or mostly forward. Keep the lighting clear and even. Do not make the left and center panels the same crop. No cinematic scene, action pose, environment, story moment, props, text labels, captions, logos, watermarks or other characters.
+
+Use this structure:
+
+A clean three-panel character reference sheet on a neutral studio background, showing the same [subject] in all panels with consistent [face, hair, body, outfit and identity details]. Left panel: extreme close-up face-only portrait, top of hair to just below the chin, the face fills 80 to 90 percent of the panel, no shoulders, no chest, no torso. Center panel: upper-body waist-up portrait from head to waist, showing shoulders, chest, arms and outfit details. Right panel: full-body standing view from head to shoes, entire outfit and feet visible. Each panel uses a clearly different camera distance: face-only close-up, waist-up portrait, full-body standing. Clear even lighting, front-facing pose, consistent outfit colors and body proportions, detailed character design, no text, no labels, no props, no environment.
+
+Rules:
+- Output only one polished text-to-image prompt.
+- No markdown, labels, quotes, explanations or multiple options.
+- Keep it as one single image containing three views of the same character.
+- The left panel is face-only, not another upper-body portrait.
+- Name the character by what they look like, never by an ID or a file name.

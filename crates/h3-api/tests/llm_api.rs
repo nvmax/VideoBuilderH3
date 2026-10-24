@@ -42,6 +42,8 @@ async fn start() -> Server {
             let asks_for_locations = body["messages"][0]["content"].as_str().is_some_and(|c| c.contains("location scout"));
             let text = if asks_for_locations {
                 "{\"locations\": [{\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof under a string of warm bulbs.\"}, {\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow over wet asphalt.\"}]}"
+            } else if body["messages"][0]["content"].as_str().is_some_and(|c| c.contains("text-to-image prompt")) {
+                "A woman with short dark hair in a denim jacket stands on a rooftop at dusk under warm string lights, wide shot, soft golden light and a gentle breeze."
             } else if body["messages"][0]["content"].is_array() {
                 "A young woman with short dark hair wears a red leather jacket, black boots and silver rings."
             } else {
@@ -190,3 +192,53 @@ async fn a_reference_picture_is_described_and_the_text_saved_on_the_card() {
     let (code, _) = s.call(Method::POST, "/projects/Demo/references/things/s/describe", None).await;
     assert_eq!(code, 400);
 }
+
+#[tokio::test]
+async fn image_prompts_are_written_for_scenes_and_reference_cards() {
+    let s = start().await;
+    s.call(Method::PUT, "/llm/settings", Some(json!({"runner": "own_server", "own_server_url": s.mock, "own_server_model": "m"}))).await;
+    s.call(Method::PUT, "/projects/Demo/references/locations/roof", Some(json!({"name": "Roof", "description": "a rooftop at dusk"}))).await;
+
+    // One scene: the prompt is returned and saved as t2i_prompt.
+    let (code, body) = s.call(Method::POST, "/projects/Demo/scenes/a/prompts/image", Some(json!({"mode": "flux_klein", "user_notes": "low angle"}))).await;
+    assert_eq!(code, 202, "{body}");
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!(job["status"], "succeeded", "{job}");
+    let prompt = job["result"]["prompt"].as_str().unwrap().to_string();
+    assert!(prompt.contains("rooftop at dusk"), "{prompt}");
+    let (_, scene) = s.call(Method::GET, "/projects/Demo/scenes/a", None).await;
+    assert_eq!(scene["data"]["t2i_prompt"], prompt);
+
+    // A batch skips scenes that have one when asked to resume.
+    let (_, body) = s.call(Method::POST, "/projects/Demo/prompts/batch", Some(json!({"kind": "image", "run_mode": "resume_missing"}))).await;
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!((job["status"].as_str(), job["result"]["processed"].as_i64()), (Some("succeeded"), Some(1)), "{job}");
+    let (_, scenes) = s.call(Method::GET, "/projects/Demo/scenes", None).await;
+    assert!(scenes["data"][1]["t2i_prompt"].as_str().unwrap().contains("rooftop"));
+    let (code, _) = s.call(Method::POST, "/projects/Demo/prompts/batch", Some(json!({"kind": "sound"}))).await;
+    assert_eq!(code, 400);
+
+    // A character sheet and a location image: the prompt comes back, nothing is saved.
+    for (kind, id) in [("subjects", "s"), ("locations", "roof")] {
+        let (code, body) = s.call(Method::POST, &format!("/projects/Demo/references/{kind}/{id}/prompt"), Some(json!({"mode": "zimage"}))).await;
+        assert_eq!(code, 202, "{body}");
+        let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+        assert_eq!(job["status"], "succeeded", "{job}");
+        assert!(job["result"]["prompt"].as_str().unwrap().len() > 40, "{job}");
+    }
+    let (code, _) = s.call(Method::POST, "/projects/Demo/references/things/s/prompt", None).await;
+    assert_eq!(code, 400);
+    let (code, _) = s.call(Method::POST, "/projects/Demo/references/subjects/nope/prompt", None).await;
+    assert_eq!(code, 400);
+    let (code, _) = s.call(Method::POST, "/projects/Demo/scenes/99/prompts/image", None).await;
+    assert_eq!(code, 404);
+}
+
+#[tokio::test]
+async fn image_prompts_need_the_llm() {
+    let s = start().await;
+    let (_, body) = s.call(Method::POST, "/projects/Demo/scenes/a/prompts/image", None).await;
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!((job["status"].as_str(), job["error"]["code"].as_str()), (Some("failed"), Some("LLM_UNAVAILABLE")), "{job}");
+}
+

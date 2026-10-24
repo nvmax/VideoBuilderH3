@@ -19,11 +19,17 @@ use crate::views::resolve_project;
 pub const MINIMAX_PROMPTS: &str = "minimax.prompts";
 pub const REFERENCE_DESCRIBE: &str = "reference.describe";
 pub const EXTRACT_LOCATIONS: &str = "reference.extract_locations";
+pub const SCENE_IMAGE_PROMPT: &str = "llm.scene_image_prompt";
+pub const REFERENCE_IMAGE_PROMPT: &str = "reference.image_prompt";
+pub const BATCH_PROMPTS: &str = "llm.batch_prompts";
 
 type Run = fn(Arc<AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
 pub fn register(state: &Arc<AppState>) {
-    let table: [(&str, Run); 3] = [
+    let table: [(&str, Run); 6] = [
+        (SCENE_IMAGE_PROMPT, |s, c| Box::pin(scene_image_prompt(s, c))),
+        (REFERENCE_IMAGE_PROMPT, |s, c| Box::pin(reference_image_prompt(s, c))),
+        (BATCH_PROMPTS, |s, c| Box::pin(batch_prompts(s, c))),
         (MINIMAX_PROMPTS, |s, c| Box::pin(minimax_prompts(s, c))),
         (REFERENCE_DESCRIBE, |s, c| Box::pin(describe_reference(s, c))),
         (EXTRACT_LOCATIONS, |s, c| Box::pin(extract_locations(s, c))),
@@ -236,3 +242,119 @@ fn field_text(session: &Obj, kind: &str, card_id: &str, key: &str) -> String {
     session.get("flux_reference_builder").and_then(|r| r.get(kind)).and_then(Value::as_array).and_then(|a| a.iter().find(|c| c["id"] == card_id)).map(|c| text_or_empty(c.get(key))).unwrap_or_default()
 }
 
+// -- image prompts ----------------------------------------------------------------------------------------------------------
+
+/// The writer settings from job params. `mode` or `preset_id` names the image model, `user_notes` adds direction.
+pub(crate) fn image_prompt_params(params: &Value) -> h3_pipeline::image_prompts::ImagePromptParams {
+    let text = |key: &str| text_or_empty(params.get(key)).trim().to_string();
+    let model = [text("mode"), text("preset_id")].into_iter().find(|m| !m.is_empty()).unwrap_or_default();
+    h3_pipeline::image_prompts::ImagePromptParams {
+        temperature: num(params, "temperature", 0.6),
+        top_p: num(params, "top_p", 0.95),
+        max_new_tokens: num(params, "max_new_tokens", 1200.0) as u32,
+        model,
+        extra_notes: text("user_notes"),
+    }
+}
+
+/// Failures of the writer as job errors. The LLM being down is the usual one.
+pub(crate) fn prompt_failure(e: PromptError) -> JobError {
+    match e {
+        PromptError::Llm(llm) => fail(ApiError::from(llm)),
+        other => fail(ApiError::validation(other.to_string())),
+    }
+}
+
+/// Write a scene's still image prompt and save it as the scene's `t2i_prompt`.
+async fn scene_image_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let scene = text_or_empty(ctx.params.get("scene_id")).trim().to_string();
+    if scene.is_empty() {
+        return Err(fail(ApiError::validation("scene_id is required.")));
+    }
+    let session = read_session(&folder).await?.session;
+    let index = h3_pipeline::image_prompts::sorted_index_of(&session, &scene).ok_or_else(|| fail(ApiError::scene_not_found(&scene, &pid)))?;
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "generating".into(), message: "Writing the image prompt...".into(), scene_id: Some(scene.clone()), stage_count: 1, ..Default::default() });
+    let written = h3_pipeline::image_prompts::write_scene_image_prompt(&current(&state), &session, index, &image_prompt_params(&ctx.params)).await.map_err(prompt_failure)?;
+    let saved = save_scene_image_prompt(&state, &folder, &scene, &written.prompt).await?;
+    Ok(json!({"scene_id": scene, "prompt": written.prompt, "model": written.model, "attempts": written.attempts, "revision": saved["revision"]}))
+}
+
+pub(crate) async fn save_scene_image_prompt(state: &AppState, folder: &std::path::Path, scene: &str, prompt: &str) -> Result<Value, JobError> {
+    let _guard = state.edit_lock.lock().await;
+    let (folder, scene, prompt) = (folder.to_path_buf(), scene.to_string(), prompt.to_string());
+    tokio::task::spawn_blocking(move || session_ops::set_scene_prompt(&folder, &scene, "t2i_prompt", &prompt, "llm", None, &Stamp::now())).await.map_err(internal)?.map_err(internal)
+}
+
+/// Write the prompt for a character reference sheet or a location image. The prompt is returned and not saved.
+async fn reference_image_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let kind = text_or_empty(ctx.params.get("kind")).trim().to_string();
+    let card = text_or_empty(ctx.params.get("ref_id")).trim().to_string();
+    let session = read_session(&folder).await?.session;
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "generating".into(), message: "Writing the reference image prompt...".into(), stage_count: 1, ..Default::default() });
+    let written = h3_pipeline::image_prompts::write_reference_image_prompt(&current(&state), &session, &kind, &card, &image_prompt_params(&ctx.params)).await.map_err(prompt_failure)?;
+    Ok(json!({"kind": kind, "ref_id": card, "prompt": written.prompt, "model": written.model, "attempts": written.attempts}))
+}
+
+/// Write image prompts for many scenes. Scenes that already have one are skipped with `run_mode: resume_missing`.
+async fn batch_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let session = read_session(&folder).await?.session;
+    let mut segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    sort_segments(&mut segments);
+    let wanted: Vec<String> = ctx.params.get("scene_ids").and_then(Value::as_array).map(|a| a.iter().map(|v| text_or_empty(Some(v))).collect()).unwrap_or_default();
+    let skip_existing = text_or_empty(ctx.params.get("run_mode")).trim().to_lowercase() == "resume_missing";
+    let params = image_prompt_params(&ctx.params);
+    let targets: Vec<(usize, String)> = segments
+        .iter()
+        .enumerate()
+        .filter_map(|(i, seg)| {
+            let id = text_or_empty(seg.get("id"));
+            let id = if id.is_empty() { (i + 1).to_string() } else { id };
+            let named = wanted.is_empty() || wanted.contains(&id) || wanted.contains(&(i + 1).to_string());
+            (named && !(skip_existing && !text_or_empty(seg.get("t2i_prompt")).trim().is_empty())).then_some((i, id))
+        })
+        .collect();
+    let total = targets.len();
+    if total == 0 {
+        return Ok(json!({"processed": 0, "message": "No scenes matched batch prompt criteria."}));
+    }
+    let mut results: Vec<Value> = Vec::new();
+    for (n, (index, id)) in targets.iter().enumerate() {
+        if ctx.is_cancelled() {
+            return Err(JobError::cancelled());
+        }
+        ctx.progress(ProgressUpdate {
+            percent: n as f64 / total as f64 * 100.0,
+            stage: "batch_prompts".into(),
+            message: format!("Generating image prompt for scene {} of {total} ({id})...", n + 1),
+            scene_id: Some(id.clone()),
+            scene_index: Some(n as i64 + 1),
+            scene_count: Some(total as i64),
+            stage_index: n as i64 + 1,
+            stage_count: total as i64,
+        });
+        // The project is read again for each scene, because the scenes written before it changed it.
+        let fresh = read_session(&folder).await?.session;
+        match h3_pipeline::image_prompts::write_scene_image_prompt(&current(&state), &fresh, *index, &params).await {
+            Ok(written) => {
+                save_scene_image_prompt(&state, &folder, id, &written.prompt).await?;
+                results.push(json!({"scene_id": id, "status": "success", "field": "t2i_prompt"}));
+            }
+            Err(PromptError::Llm(e @ h3_llm::LlmError::Unavailable(_))) => return Err(fail(ApiError::from(e))),
+            Err(e) => results.push(json!({"scene_id": id, "status": "error", "error": e.to_string()})),
+        }
+    }
+    let failed = results.iter().filter(|r| r["status"] == "error").count();
+    if failed == results.len() {
+        let first = results.iter().find_map(|r| r["error"].as_str()).unwrap_or("").to_string();
+        let mut error = JobError::new("BATCH_FAILED", format!("No prompt could be written. First error: {first}"));
+        error.details = json!({"results": results});
+        return Err(error);
+    }
+    Ok(json!({"processed": results.len(), "total_targets": total, "failed": failed, "results": results}))
+}
