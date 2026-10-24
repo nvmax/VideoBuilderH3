@@ -296,9 +296,7 @@ pub fn apply_authoritative_script_plan(raw_scenes: Option<&Value>, script_import
         let continuation = plan.get("continuation_of_previous").is_some_and(truthy);
         if continuation && !previous_location_id.is_empty() {
             scene.insert("location_id".into(), json!(previous_location_id));
-        } else if !continuation {
-            previous_location_id = current_location_id;
-        } else if !current_location_id.is_empty() {
+        } else if !continuation || !current_location_id.is_empty() {
             previous_location_id = current_location_id;
         }
         let seconds = |key: &str| plan.get(key).filter(|v| truthy(v)).and_then(crate::pyval::to_float).unwrap_or(0.0);
