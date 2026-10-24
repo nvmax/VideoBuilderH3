@@ -321,6 +321,30 @@ impl ComfyDirs {
     }
 }
 
+impl ComfyClient {
+    /// `POST /upload/image`: put a picture in ComfyUI's input (or temp) folder. Returns the name to give a Load Image node. A picture in the temp
+    /// folder is named `name [temp]` there, and ComfyUI clears the folder when it restarts.
+    pub async fn upload_image(&self, filename: &str, bytes: Vec<u8>, temp: bool) -> Result<String, ComfyError> {
+        let part = reqwest::multipart::Part::bytes(bytes).file_name(filename.to_string()).mime_str("image/png").map_err(|e| ComfyError::Execution(e.to_string()))?;
+        let form = reqwest::multipart::Form::new().part("image", part).text("type", if temp { "temp" } else { "input" }).text("overwrite", "true");
+        let response = reqwest::Client::new()
+            .post(format!("{}/upload/image", self.base_url()))
+            .multipart(form)
+            .timeout(Duration::from_secs(120))
+            .send()
+            .await
+            .map_err(|source| ComfyError::Unreachable { url: self.base_url().to_string(), source })?;
+        let status = response.status();
+        let body = response.text().await.unwrap_or_default();
+        if !status.is_success() {
+            return Err(ComfyError::Status { status: status.as_u16(), path: "/upload/image".into(), body: body.chars().take(500).collect() });
+        }
+        let parsed: Value = serde_json::from_str(&body).unwrap_or(Value::Null);
+        let name = parsed.get("name").and_then(Value::as_str).unwrap_or(filename).to_string();
+        Ok(if temp { format!("{name} [temp]") } else { name })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -391,29 +415,5 @@ mod tests {
         let errors = json!({"9": {"class_type": "VAELoader", "errors": [{"message": "Value not in list", "details": "vae_name: 'x'"}]}});
         let text = describe_node_errors("Prompt outputs failed validation", &errors);
         assert!(text.contains("node 9 (VAELoader): Value not in list vae_name: 'x'"));
-    }
-}
-
-impl ComfyClient {
-    /// `POST /upload/image`: put a picture in ComfyUI's input (or temp) folder. Returns the name to give a Load Image node. A picture in the temp
-    /// folder is named `name [temp]` there, and ComfyUI clears the folder when it restarts.
-    pub async fn upload_image(&self, filename: &str, bytes: Vec<u8>, temp: bool) -> Result<String, ComfyError> {
-        let part = reqwest::multipart::Part::bytes(bytes).file_name(filename.to_string()).mime_str("image/png").map_err(|e| ComfyError::Execution(e.to_string()))?;
-        let form = reqwest::multipart::Form::new().part("image", part).text("type", if temp { "temp" } else { "input" }).text("overwrite", "true");
-        let response = reqwest::Client::new()
-            .post(format!("{}/upload/image", self.base_url()))
-            .multipart(form)
-            .timeout(Duration::from_secs(120))
-            .send()
-            .await
-            .map_err(|source| ComfyError::Unreachable { url: self.base_url().to_string(), source })?;
-        let status = response.status();
-        let body = response.text().await.unwrap_or_default();
-        if !status.is_success() {
-            return Err(ComfyError::Status { status: status.as_u16(), path: "/upload/image".into(), body: body.chars().take(500).collect() });
-        }
-        let parsed: Value = serde_json::from_str(&body).unwrap_or(Value::Null);
-        let name = parsed.get("name").and_then(Value::as_str).unwrap_or(filename).to_string();
-        Ok(if temp { format!("{name} [temp]") } else { name })
     }
 }

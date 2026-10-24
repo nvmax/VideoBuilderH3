@@ -265,7 +265,7 @@ fn thousands(n: i64) -> String {
     let digits = n.to_string();
     let mut out = String::new();
     for (i, c) in digits.chars().enumerate() {
-        if i > 0 && (digits.len() - i) % 3 == 0 {
+        if i > 0 && (digits.len() - i).is_multiple_of(3) {
             out.push(',');
         }
         out.push(c);
@@ -318,8 +318,8 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/refmod/library", get(library))
         .route("/vrgdg/refmod/delete", axum_post(delete))
         .route("/vrgdg/refmod/preview", get(preview))
-        .route("/vrgdg/refmod/pick_images", axum_post(|| pick_images()))
-        .route("/vrgdg/refmod/describe_prompts", get(|| describe_prompts()))
+        .route("/vrgdg/refmod/pick_images", axum_post(pick_images))
+        .route("/vrgdg/refmod/describe_prompts", get(describe_prompts))
         .route("/vrgdg/refmod/upload_image", axum_post(upload_image))
         .route("/vrgdg/refmod/describe", axum_post(describe))
         .route("/vrgdg/refmod/from_image", axum_post(from_image))
