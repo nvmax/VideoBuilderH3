@@ -7,6 +7,7 @@
 pub mod assets;
 pub mod audio_mask;
 pub mod capcut;
+pub mod drafts;
 pub mod env;
 pub mod error_log;
 pub mod files;
@@ -17,5 +18,6 @@ pub mod projects;
 pub mod render_log;
 pub mod runner;
 pub mod system;
+pub mod transcribe;
 
 pub use env::Env;

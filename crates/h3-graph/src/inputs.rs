@@ -37,6 +37,8 @@ pub fn template(name: &str) -> Result<(String, Obj)> {
         }
         "minimax_built_in_audio_builder_api.json" => include_str!("../templates/minimax_built_in_audio_builder_api.json"),
         "lyrics_timestamp_api.json" => include_str!("../templates/lyrics_timestamp_api.json"),
+        "clear_memory_api.json" => include_str!("../templates/clear_memory_api.json"),
+        "beat_srt_api.json" => include_str!("../templates/beat_srt_api.json"),
         "text2image_zimage_API.json" => include_str!("../templates/text2image_zimage_API.json"),
         "Krea2_TextToImage_API.json" => include_str!("../templates/Krea2_TextToImage_API.json"),
         "Krea2_API_2Pass.json" => include_str!("../templates/Krea2_API_2Pass.json"),

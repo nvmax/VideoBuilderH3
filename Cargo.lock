@@ -1764,6 +1764,7 @@ dependencies = [
  "chrono",
  "fancy-regex",
  "h3-core",
+ "h3-graph",
  "h3-media",
  "h3-pipeline",
  "h3-project",

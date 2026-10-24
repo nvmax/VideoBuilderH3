@@ -4,6 +4,7 @@
 //! API graph and a summary. They reach the outside world only through [`GraphEnv`].
 
 pub mod api;
+pub mod drafts;
 pub mod env;
 pub mod image;
 pub mod images;
@@ -11,6 +12,7 @@ pub mod inputs;
 pub mod patches;
 pub mod refmod;
 pub mod timestamp;
+pub mod utility;
 pub mod workflows;
 
 pub use env::{GraphEnv, GraphError, LatentFacts, Result};

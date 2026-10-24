@@ -7,6 +7,7 @@ license.workspace = true
 
 [dependencies]
 h3-core.workspace = true
+h3-graph.workspace = true
 h3-media.workspace = true
 h3-pipeline.workspace = true
 h3-project.workspace = true

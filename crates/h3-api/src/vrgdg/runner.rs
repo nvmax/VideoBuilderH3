@@ -41,6 +41,11 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/build_minimax_h3_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3"), false)))
         .route(&format!("{base}/build_minimax_h3_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_2pass"), false)))
         .route(&format!("{base}/build_minimax_h3_advanced_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_advanced_2pass"), true)))
+        .route(&format!("{base}/build_minimax_h3_draft_prompt"), axum_post(|state, body| build(state, body, Builder::Draft, false)))
+        .route(&format!("{base}/build_minimax_h3_finalize_prompt"), post(|_, p| fields(h3_builder::drafts::build_finalize(&p))))
+        .route(&format!("{base}/build_clear_memory_prompt"), post(|_, _| fields(clear_memory())))
+        .route(&format!("{base}/build_timestamped_transcribe_prompt"), post(|_, p| fields(timestamp_prompt(&p))))
+        .route("/vrgdg/music_prompt_creator/build_whisper_prompt", axum_post(build_whisper))
         .route(&format!("{base}/build_zimage_prompt"), axum_post(|state, body| build(state, body, Builder::Image("zimage"), false)))
         .route(&format!("{base}/build_krea2_prompt"), axum_post(|state, body| build(state, body, Builder::Image("krea2"), false)))
         .route(&format!("{base}/build_krea2_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::Image("krea2_2pass"), false)))
@@ -56,6 +61,8 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
 enum Builder {
     /// A MiniMax H3 video pass, by workflow key.
     H3(&'static str),
+    /// The first pass of a two pass render alone, saved as a draft.
+    Draft,
     /// A still image model, by key.
     Image(&'static str),
 }
@@ -90,6 +97,11 @@ async fn build(State(state): State<Arc<AppState>>, body: Bytes, builder: Builder
     let built = tokio::task::spawn_blocking(move || -> Result<Obj, String> {
         let mut result = match builder {
             Builder::H3(key) => h3_graph::build(&env, key, &payload),
+            Builder::Draft => {
+                let key = if payload.get("draft_advanced").is_some_and(h3_core::pyval::truthy) { "minimax_h3_advanced_2pass" } else { "minimax_h3_2pass" };
+                let full = h3_graph::build(&env, key, &payload).map_err(|e| e.to_string())?;
+                return h3_builder::drafts::build_draft(&full, &payload).map(|v| v.as_object().cloned().unwrap_or_default());
+            }
             Builder::Image(key) => h3_graph::image::build_image(&env, key, &payload),
         }
         .map_err(|e| e.to_string())?;
@@ -103,6 +115,35 @@ async fn build(State(state): State<Arc<AppState>>, body: Bytes, builder: Builder
     match built {
         Ok(Ok(result)) => (StatusCode::OK, axum::Json(super::envelope(Value::Object(result)))).into_response(),
         Ok(Err(message)) => super::failure(StatusCode::BAD_REQUEST, message),
+        Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}")),
+    }
+}
+
+/// `POST /vrgdg/workflow_runner/build_clear_memory_prompt`.
+fn clear_memory() -> Result<Value, String> {
+    let (name, prompt) = h3_graph::utility::clear_memory_graph().map_err(|e| e.to_string())?;
+    Ok(serde_json::json!({"workflow_path": name, "prompt": Value::Object(prompt)}))
+}
+
+/// `POST /vrgdg/workflow_runner/build_timestamped_transcribe_prompt`.
+fn timestamp_prompt(payload: &Obj) -> Result<Value, String> {
+    let prompt = h3_graph::timestamp::timestamp_graph(payload).map_err(|e| e.to_string())?;
+    Ok(serde_json::json!({"workflow_path": "lyrics_timestamp_api.json", "prompt": Value::Object(prompt)}))
+}
+
+/// `POST /vrgdg/music_prompt_creator/build_whisper_prompt`: needs ComfyUI's input folder to put the song in.
+async fn build_whisper(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match payload_of(&body) {
+        Ok(payload) => payload,
+        Err(response) => return *response,
+    };
+    let input = match h3_pipeline::context::comfy_dirs(&state.cfg).await {
+        Ok(dirs) => std::path::PathBuf::from(dirs.input),
+        Err(message) => return super::failure(StatusCode::BAD_REQUEST, message),
+    };
+    let env = state.builder_env();
+    match tokio::task::spawn_blocking(move || h3_builder::transcribe::build_whisper_prompt(&env, &input, &payload, &Stamp::now())).await {
+        Ok(result) => super::into_response(result.map(Out::from).map_err(Fail::from)),
         Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}")),
     }
 }

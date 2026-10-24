@@ -1,0 +1,548 @@
+{
+  "804": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText -Fixed Lyrics"
+    }
+  },
+  "911": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText - Concept Prompt for image to video or text to video"
+    }
+  },
+  "917": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "first gemma 4 node status"
+    }
+  },
+  "918": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "2nd gemma 4 node status"
+    }
+  },
+  "954": {
+    "inputs": {
+      "audio": "Punkgirl_step_250_00001-audio.mp4",
+      "start_time": 0,
+      "duration": 0
+    },
+    "class_type": "VHS_LoadAudioUpload",
+    "_meta": {
+      "title": "Load Audio (Upload)🎥🅥🅗🅢"
+    }
+  },
+  "955": {
+    "inputs": {
+      "text": "",
+      "output_mode": "string"
+    },
+    "class_type": "VRGDG_TextBox",
+    "_meta": {
+      "title": "VRGDG_TextBox - full lyrics"
+    }
+  },
+  "957": {
+    "inputs": {
+      "text": "",
+      "output_mode": "string"
+    },
+    "class_type": "VRGDG_TextBox",
+    "_meta": {
+      "title": "VRGDG_TextBox - story concept"
+    }
+  },
+  "958": {
+    "inputs": {
+      "text": "",
+      "output_mode": "string"
+    },
+    "class_type": "VRGDG_TextBox",
+    "_meta": {
+      "title": "VRGDG_TextBox - style/theme"
+    }
+  },
+  "959": {
+    "inputs": {
+      "text": "",
+      "output_mode": "string"
+    },
+    "class_type": "VRGDG_TextBox",
+    "_meta": {
+      "title": "VRGDG_TextBox - subject and scenes"
+    }
+  },
+  "960": {
+    "inputs": {
+      "scene_duration_seconds": 4,
+      "fps": 24,
+      "srt_path": [
+        "28:933",
+        0
+      ],
+      "reference_lyrics": "",
+      "strict_reference_text": true,
+      "fill_aggressiveness": 1,
+      "preserve_nonvocal_segments": true,
+      "alignment_min_words": 1,
+      "model_name": "large-v3",
+      "language": "english",
+      "audio": [
+        "28:114",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ManualLyricsExtractor_SRT_Advanced",
+    "_meta": {
+      "title": "Manual Lyrics Extractor (SRT Advanced - stable-ts)"
+    }
+  },
+  "28:934": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "String"
+    }
+  },
+  "28:114": {
+    "inputs": {
+      "model_name": "htdemucs_ft",
+      "device": "auto",
+      "audio_file_path": "",
+      "audio": [
+        "954",
+        0
+      ]
+    },
+    "class_type": "VRGDG_GetStems",
+    "_meta": {
+      "title": "VRGDG_GetStems"
+    }
+  },
+  "28:818": {
+    "inputs": {
+      "text": [
+        "958",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText - preview style/theme"
+    }
+  },
+  "28:927": {
+    "inputs": {
+      "text": [
+        "959",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText - Preview subject"
+    }
+  },
+  "28:946": {
+    "inputs": {
+      "text": [
+        "959",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:817": {
+    "inputs": {
+      "text": [
+        "955",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText - Preview full lyrics"
+    }
+  },
+  "28:816": {
+    "inputs": {
+      "text": [
+        "957",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText - Preview story Idea"
+    }
+  },
+  "28:82": {
+    "inputs": {
+      "final_mix": [
+        "954",
+        0
+      ],
+      "drums": [
+        "28:114",
+        1
+      ],
+      "bass": [
+        "28:114",
+        2
+      ],
+      "vocals": [
+        "28:114",
+        0
+      ],
+      "other": [
+        "28:114",
+        3
+      ]
+    },
+    "class_type": "BeatImpactAnalysisNode",
+    "_meta": {
+      "title": "BeatImpactAnalysisNode"
+    }
+  },
+  "28:80": {
+    "inputs": {
+      "beat_data": [
+        "28:82",
+        0
+      ],
+      "min_duration": 4,
+      "max_duration": 10,
+      "bias": 0.7,
+      "duration_preset": "varied_no_repeat",
+      "seed": 9,
+      "output_filename": "filenamegoeshere"
+    },
+    "class_type": "BeatSceneDurationNode",
+    "_meta": {
+      "title": "Beat-Aligned Scene Durations"
+    }
+  },
+  "28:869": {
+    "inputs": {
+      "text": [
+        "28:80",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText -SRT"
+    }
+  },
+  "28:933": {
+    "inputs": {
+      "switch": true,
+      "on_false": [
+        "28:934",
+        0
+      ],
+      "on_true": [
+        "28:80",
+        1
+      ]
+    },
+    "class_type": "ComfySwitchNode",
+    "_meta": {
+      "title": "use SRT duration file"
+    }
+  },
+  "28:949": {
+    "inputs": {
+      "lyrics_text": [
+        "960",
+        0
+      ],
+      "repeat_output_count": 3,
+      "min_repeats_to_collapse": 4,
+      "bridge_single_word_segments": true,
+      "fill_empty_segments": true,
+      "empty_segment_text": "Instrumental section."
+    },
+    "class_type": "VRGDG_LyricSegmentTextCleaner",
+    "_meta": {
+      "title": "VRGDG Lyric Segment Text Cleaner"
+    }
+  },
+  "28:849": {
+    "inputs": {
+      "section_1_type": "Instructions",
+      "section_1_text": "Whisper Segment Repair Prompt\n\nINPUTS\nYou will receive exactly:\n1. WHISPER_TRANSCRIPTION: numbered Whisper segments.\n2. MAIN_LYRICS: the correct full lyrics.\n3. STYLE_THEME: style/theme for filler replacements only.\n\nTASK\nRepair each Whisper segment in place.\n\nMOST IMPORTANT RULE\nDo not create a clean lyric sheet.\nDo not copy MAIN_LYRICS line by line into the JSON.\nDo not make segment1 the first lyric line, segment2 the second lyric line, segment3 the third lyric line, etc.\n\nHOW TO WORK\nFor each input segment number:\n1. Start with the text from that exact same Whisper segment.\n2. Find the matching words in MAIN_LYRICS.\n3. Fix only misheard words inside that same segment.\n4. Write the fixed text to the same output number.\n\nThe output for segmentN must be a corrected version of lyricSegmentN.\nsegmentN must not be based on lyricSegmentN+1.\nsegmentN must not be based on lyricSegmentN-1.\nsegmentN must not be based on the next clean line in MAIN_LYRICS.\n\nKEEP WHISPER CHUNKS\nIf lyricSegmentN contains parts of two or three lyric lines, segmentN must also contain those parts.\nIf lyricSegmentN starts in the middle of a lyric line, segmentN should also start in the middle.\nIf lyricSegmentN ends before the lyric line is finished, segmentN should also end before that lyric line is finished.\nDo not move leftover words to the next segment unless Whisper already put them there.\n\nFILLER SEGMENTS\nWhisper often writes \"Thank you.\" when it detects silence or non-lyric audio.\nIf lyricSegmentN is filler such as \"Thank you.\" and does not match sung lyrics at that time, replace it with a short new lyric phrase.\nThe phrase should feel like it happens right after the nearest previous real lyric segment.\nUse STYLE_THEME for the phrase.\nUse 3 to 8 words.\nDo not use an empty string.\nDo not use the next real lyric line from MAIN_LYRICS.\n\nKEY CHECK\nReturn exactly one key for every input segment.\nKeys must be exactly \"segment1\", \"segment2\", \"segment3\", and so on.\nNever write \"segments14\".\nNever write \"lyricSegment14\".\nNever skip a number.\n\nFINAL SELF-CHECK BEFORE ANSWERING\nCheck segment2 against lyricSegment2.\nCheck segment11 against lyricSegment11.\nCheck segment16 against lyricSegment16.\nIf any output is just the next clean lyric line instead of the same Whisper chunk, fix it before answering.\n\nOUTPUT\nReturn JSON only.\nNo markdown.\nNo explanation.\nUse double quotes.\nNo trailing commas.\nNo line breaks inside string values.\n\nFORMAT\n{\n  \"segment1\": \"corrected version of lyricSegment1\",\n  \"segment2\": \"corrected version of lyricSegment2\",\n  \"segment3\": \"corrected version of lyricSegment3\"\n}\n",
+      "section_2_type": "Other Notes",
+      "section_2_text": [
+        "955",
+        0
+      ],
+      "section_3_type": "Lyric Segment",
+      "section_3_text": [
+        "28:949",
+        0
+      ],
+      "section_4_type": "Other Notes",
+      "section_4_text": "",
+      "section_5_type": "Theme / Style",
+      "section_5_text": [
+        "958",
+        0
+      ]
+    },
+    "class_type": "VRGDG_PromptTemplateBuilder",
+    "_meta": {
+      "title": "VRGDG_PromptTemplateBuilder"
+    }
+  },
+  "28:870": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText(whisper transcription)"
+    }
+  },
+  "28:915": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:886": {
+    "inputs": {
+      "value": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowAny",
+    "_meta": {
+      "title": "VRGDG_ShowAny"
+    }
+  },
+  "28:885": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:888": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:910": {
+    "inputs": {
+      "section_1_type": "Lyric Segment",
+      "section_1_text": [
+        "28:949",
+        0
+      ],
+      "section_2_type": "Story",
+      "section_2_text": [
+        "957",
+        0
+      ],
+      "section_3_type": "Theme / Style",
+      "section_3_text": [
+        "958",
+        0
+      ],
+      "section_4_type": "Other Notes",
+      "section_4_text": [
+        "959",
+        0
+      ],
+      "section_5_type": "Other Notes",
+      "section_5_text": ""
+    },
+    "class_type": "VRGDG_PromptTemplateBuilder",
+    "_meta": {
+      "title": "VRGDG_PromptTemplateBuilder"
+    }
+  },
+  "28:948": {
+    "inputs": {
+      "text": [
+        "28:949",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:854": {
+    "inputs": {
+      "text": [
+        "28:849",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:940": {
+    "inputs": {
+      "string_count": 2,
+      "delimiter": "\\n\\n",
+      "string_1": "You are a lyric-to-visual-concept converter.\n\nINPUTS\nYou will receive:\n1. LYRIC_SEGMENT_JSON: corrected lyric segments in order.\n2. STORY: the overall story arc.\n3. THEME_STYLE: visual style, mood, genre, world, and atmosphere.\n4. SUBJECT: the main subject details, provided for downstream use only.\n5. LOCATIONS: an optional list of locations or settings that should be used for the visual concepts.\n\nTASK\nCreate one visual concept for each lyric segment.\nThese concepts will be sent to another LLM that writes the final text-to-image prompt.\nDo not write the final image prompt here.\n\nIMPORTANT\nDo not describe the main subject.\nDo not include character gender, hair, clothing, face, body, age, identity, or repeated subject details.\nThe SUBJECT input is provided for downstream use only and must be ignored when writing the concepts.\nIf a LOCATIONS list is provided, each concept must use one location from that list as its primary setting.\nDo not invent a different primary location when LOCATIONS is provided.\n\nSTORY FLOW\nMake the concepts feel like one continuous story sequence.\nEach concept should feel like the next small beat after the previous one.\nShow progression in action, location, emotion, stakes, or visual transformation.\nWhen a LOCATIONS list is provided, build the story using locations from that list.\nPrefer moving through the listed locations across the sequence in a way that feels like a journey or evolving story.\nAvoid making every segment a disconnected literal illustration.\nDo not repeat the same scene idea unless the lyrics repeat and the story beat needs to echo.\n\nCONCEPT RULES\nUse the matching lyric segment as the main source for the moment.\nUse STORY to keep the scene connected across segments.\nUse THEME_STYLE for mood, lighting, setting, color, genre, and surreal details.\nEach concept must be one sentence.\nEach concept must include a clear setting.\nIf LOCATIONS is provided, that setting must be one of the locations from the LOCATIONS list.\nFocus on visible action, environment, emotional tone, props, symbols, and motion.\nMake each concept useful for both image generation and later image-to-video motion.\nDo not mention camera moves unless the lyric clearly needs motion.\nDo not quote the lyric directly unless it is necessary.\nDo not explain anything.\n\nLOCATION RULES\nIf LOCATIONS is provided, every prompt must use one location from that list as the primary setting.\nUse the location wording exactly or nearly exactly as provided.\nYou may reuse a location only when the story beat clearly continues there or intentionally echoes an earlier moment.\nYou may add environmental details around the selected location, but do not replace it with a different setting.\nIf LOCATIONS is not provided, create a location from STORY and THEME_STYLE.\n\nOUTPUT KEYS\nReturn one key for every input segment.\nUse keys named \"Prompt1\", \"Prompt2\", \"Prompt3\", etc.\nNever use \"lyricSegment\" keys.\nNever skip, merge, split, or reorder prompts.\n\nOUTPUT\nReturn valid JSON only.\nNo markdown.\nNo explanation.\nUse double quotes.\nNo trailing commas.\nNo line breaks inside string values.\n\nFORMAT\n{\n  \"Prompt1\": \"A short visual story beat using one provided location as the setting, with action, mood, and image-to-video friendly motion, without describing the subject.\",\n  \"Prompt2\": \"The next connected visual story beat using one provided location as the setting, continuing the previous moment without repeating subject details.\"\n}\n\n",
+      "string_2": [
+        "28:910",
+        0
+      ],
+      "string_3": "",
+      "string_4": "",
+      "string_5": "",
+      "string_6": "",
+      "string_7": "",
+      "string_8": "",
+      "string_9": "",
+      "string_10": "",
+      "string_11": "",
+      "string_12": "",
+      "string_13": "",
+      "string_14": "",
+      "string_15": "",
+      "string_16": "",
+      "string_17": "",
+      "string_18": "",
+      "string_19": "",
+      "string_20": ""
+    },
+    "class_type": "VRGDG_MultiStringConcat",
+    "_meta": {
+      "title": "VRGDG_MultiStringConcat"
+    }
+  },
+  "28:890": {
+    "inputs": {
+      "text": [
+        "28:849",
+        0
+      ]
+    },
+    "class_type": "VRGDG_LyricSegmentJsonFixer",
+    "_meta": {
+      "title": "VRGDG_LyricSegmentJsonFixer"
+    }
+  },
+  "28:923": {
+    "inputs": {
+      "text": [
+        "28:940",
+        0
+      ]
+    },
+    "class_type": "VRGDG_ShowText",
+    "_meta": {
+      "title": "VRGDG_ShowText"
+    }
+  },
+  "28:920": {
+    "inputs": {
+      "text": "",
+      "use_srt_file": true,
+      "srt_file": [
+        "28:80",
+        1
+      ]
+    },
+    "class_type": "VRGDG_PromptMapJsonFixer",
+    "_meta": {
+      "title": "VRGDG_PromptMapJsonFixer"
+    }
+  },
+  "28:887": {
+    "inputs": {
+      "srt_text": [
+        "28:80",
+        0
+      ],
+      "segments_json": [
+        "28:890",
+        0
+      ],
+      "strict_count_match": true,
+      "decimal_places": 3,
+      "use_srt_durations": true
+    },
+    "class_type": "VRGDG_LyricSegmentDurationMerger",
+    "_meta": {
+      "title": "VRGDG_LyricSegmentDurationMerger"
+    }
+  },
+  "28:947": {
+    "inputs": {
+      "subject": "",
+      "separator": " ",
+      "skip_if_already_starts_with_subject": "",
+      "prompt_json": [
+        "28:920",
+        0
+      ]
+    },
+    "class_type": "VRGDG_PromptJsonSubjectPrepender",
+    "_meta": {
+      "title": "VRGDG Prompt JSON Subject Prepender"
+    }
+  }
+}
