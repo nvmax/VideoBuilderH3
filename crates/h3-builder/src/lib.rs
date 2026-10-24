@@ -11,6 +11,8 @@ pub mod drafts;
 pub mod env;
 pub mod error_log;
 pub mod files;
+#[cfg(test)]
+mod golden_support;
 pub mod instructions;
 pub mod media;
 pub mod payload;
@@ -19,6 +21,7 @@ pub mod projects;
 pub mod prompt_writers;
 pub mod render_log;
 pub mod runner;
+pub mod story;
 pub mod system;
 pub mod transcribe;
 

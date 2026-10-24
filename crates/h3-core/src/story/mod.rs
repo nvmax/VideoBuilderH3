@@ -3,5 +3,6 @@
 pub mod acts;
 pub mod helpers;
 pub mod mode;
+pub mod notes;
 pub mod scene;
 pub mod scene_text;

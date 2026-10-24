@@ -34,7 +34,14 @@ fn is_match(pattern: &str, text: &str) -> bool {
 }
 
 fn squeeze(text: &str) -> String {
-    rx(r"\s+").replace_all(text, " ").into_owned()
+    static WHITESPACE: std::sync::OnceLock<Regex> = std::sync::OnceLock::new();
+    WHITESPACE.get_or_init(|| rx(r"\s+")).replace_all(text, " ").into_owned()
+}
+
+/// Runs of white space and dashes as one underscore: `Story Only` and `story-only` become `story_only`.
+fn underscored(text: &str) -> String {
+    static RUNS: std::sync::OnceLock<Regex> = std::sync::OnceLock::new();
+    RUNS.get_or_init(|| rx(r"[\s-]+")).replace_all(text, "_").into_owned()
 }
 
 /// `_text`: the value as trimmed text with `\n` line ends, cut at `limit` characters.
@@ -264,7 +271,7 @@ pub fn act_user_text(act: &Act) -> String {
 }
 
 pub fn normalize_plan_performance(value: Option<&Value>) -> String {
-    let text = rx(r"[\s-]+").replace_all(&lower_line(value, 200), "_").into_owned();
+    let text = underscored(&lower_line(value, 200));
     match text.as_str() {
         "speaking" | "short_film" | "dialogue" | "dialog" | "spoken" => "speaking",
         "no_lip_sync" | "nolipsync" | "no_lipsync" | "story" | "story_only" | "visual_only" | "silent" => "no_lip_sync",
@@ -535,13 +542,13 @@ pub fn normalize_story_stamps(value: Option<&Value>) -> Value {
 
 /// `off`, `location` or `llm`. Anything else is `off`.
 pub fn normalize_story_continuation_mode(value: Option<&Value>) -> String {
-    let text = rx(r"[\s-]+").replace_all(&lower_line(value, 200), "_").into_owned();
+    let text = underscored(&lower_line(value, 200));
     if STORY_CONTINUATION_MODES.contains(&text.as_str()) { text } else { "off".into() }
 }
 
 /// `music_video`, `spoken` or `story_only`. Anything else is `music_video`.
 pub fn normalize_story_video_style(value: Option<&Value>) -> String {
-    let text = rx(r"[\s-]+").replace_all(&lower_line(value, 200), "_").into_owned();
+    let text = underscored(&lower_line(value, 200));
     if STORY_VIDEO_STYLES.contains(&text.as_str()) { text } else { "music_video".into() }
 }
 
@@ -622,6 +629,11 @@ pub fn resolve_story_continuations(plan: Option<&Value>, scenes: &[Value], acts:
 }
 
 // -- the book text ---------------------------------------------------------------------------------------------------------
+
+/// True when the line is a book section heading (`Act 1: title`, `Chapter 2 - title`).
+pub fn is_chapter_heading(line: &str) -> bool {
+    is_match(r"(?i)^\s*(?:#+\s*)?(?:chapter|act)\s+([0-9]+|[a-z]+(?:[\s-][a-z]+)?)\s*(?:[:.\-\x{2013}\x{2014}]\s*(.*?))?\s*$", line)
+}
 
 /// Paragraphs of a story. Blank lines separate paragraphs. Text without blank lines is one paragraph per line.
 pub fn split_paragraphs(value: &str) -> Vec<String> {
