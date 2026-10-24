@@ -58,6 +58,7 @@ pub fn run() {
             WebviewWindowBuilder::new(app, "main", WebviewUrl::External(address))
                 .title("VRGDG H3 Studio")
                 .inner_size(1400.0, 900.0)
+                .maximized(true)
                 .on_new_window(move |url, features| open_popup(&handle, url, features))
                 .build()?;
             Ok(())

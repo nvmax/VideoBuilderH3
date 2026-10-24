@@ -65,7 +65,16 @@ The import guesses which node inputs are the prompt, size, seed and models. `PUT
 cd app; npm install; npm run tauri dev
 ```
 
-The window starts the API itself (`api_bind` in the config, default `127.0.0.1:8190`). For the UI alone in a browser, run `cargo run -p h3-cli -- serve` and `npm run dev` in `app`, then open http://localhost:1420. Add `?api=http://host:port/api/v1` to use another address.
+The screen is the Video Builder of the ComfyUI pack, the pack's own front end copied into `app/web/extensions` by `tools/sync_builder_ui.ps1` (run it after the pack's front end changes). The window starts the API itself (`api_bind` in the config, default `127.0.0.1:8190`) and shows the Builder from that address: the server answers the pack's `/vrgdg` routes and the agent API `/api/v1`, and passes the few ComfyUI routes the Builder uses on to ComfyUI.
+
+- The screens are embedded in the program. To work on them, run `cargo run -p h3-cli -- serve --web app\web` and open http://127.0.0.1:8190/ in a browser, the folder is then served from disk.
+- Pop-outs (the player, LLM Prompting, the Builder Agent) open as windows of their own that can go to another screen.
+- Menu > App Settings holds what ComfyUI keeps in the pack: the ComfyUI address and output folder, the project folder and the ffmpeg paths. They open on their own the first time the app starts.
+- `docs/BUILDER_PARITY.md` lists every route the Builder calls and whether the app serves it. Changes to the Builder's own code are the entries of `tools/builder_ui_patches.json` and the files in `app/web/host`.
+
+## Tests against the pack
+
+The ported functions are checked against what the pack's own code returns for the same input. `python tools/make_all.py --pack <pack folder>` makes the cases (`fixtures/`) by running the pack's code with the LLM replaced by a recorder and ElevenLabs by a script of replies, then `cargo test` compares. The cases are made once and kept in the repository.
 
 ## LLM
 

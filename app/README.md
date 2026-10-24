@@ -1,7 +1,3 @@
-# Tauri + Solid + Typescript
+# VRGDG H3 Studio (desktop shell)
 
-This template should help get you started developing with Tauri, Solid and Typescript in Vite.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+The Tauri shell of the app. See ../README.md.
