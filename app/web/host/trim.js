@@ -3,7 +3,7 @@
 
 // Buttons by their label with the spaces taken out.
 const HIDE_BUTTON_LABELS = new Set([
-  "WizardLegacy", "WizardBeta", "AutoBuild", "UpdatetoLatest", "BuildFullFLFVideo", "What'sNew",
+  "WizardLegacy", "WizardBeta", "UpdatetoLatest", "BuildFullVideo", "BuildFullFLFVideo", "What'sNew",
   "PromptCreator(Legacy)", "SendToPromptCreator", "ImportDataFromPromptCreator", "ConvertLTXVideoPromptstoMiniMaxH3",
 ]);
 // Labels that start the same way. A button in a Tools pane row hides with its row.
@@ -11,6 +11,7 @@ const HIDE_CARD_LABEL_STARTS = ["FaceFix"];
 // Buttons by their accessible name or hint.
 const HIDE_BY_ATTRIBUTE = [
   'button[aria-label="Close Video Builder"]', // the window closes the app
+  'button[aria-label="Refresh Builder UI"]', // the app has no page to reload
   'button[title="What does the updater do?"]',
   'a[href*="buymeacoffee.com"]',
 ];

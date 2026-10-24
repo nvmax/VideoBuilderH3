@@ -194,5 +194,12 @@
     "find": "      previewVideo.src = makeEditorVideoUrl(videoPath, segment?.video_cache_bust);\n      previewVideo.dataset.path = videoPath;\n      previewVideo.dataset.cacheKey = cacheKey;",
     "replace": "      previewVideo.dataset.path = videoPath;\n      previewVideo.dataset.cacheKey = cacheKey;\n      previewVideo.src = makeEditorVideoUrl(videoPath, segment?.video_cache_bust);",
     "expect": 1
+  },
+  {
+    "why": "The scene cards in the left pane (and the insert cards) are sized with width:100% plus padding and a border, so they stick out of the pane and make it scroll sideways. Border-box sizing keeps them inside, as they are in ComfyUI.",
+    "file": "music_video_builder/timeline_view.mjs",
+    "find": "padding:8px;margin-bottom:8px;cursor:pointer;box-shadow:${isActive",
+    "replace": "padding:8px;margin-bottom:8px;cursor:pointer;box-sizing:border-box;box-shadow:${isActive",
+    "expect": 2
   }
 ]

@@ -30,3 +30,4 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/timeline_events.mjs: Smooth player: playing a scene's own audio starts the per-frame loop.
   music_video_builder/timeline_events.mjs: Smooth player: a scene's own audio ticks keep the per-frame loop alive.
   music_video_builder/selection_preview.mjs: Smooth player: the clip's key is set before its address, so the player can tell it is the clip it loaded ahead. The address cannot say: a scene without a cache bust gets a new time stamp in it each time.
+  music_video_builder/timeline_view.mjs: The scene cards in the left pane (and the insert cards) are sized with width:100% plus padding and a border, so they stick out of the pane and make it scroll sideways. Border-box sizing keeps them inside, as they are in ComfyUI.

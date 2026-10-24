@@ -12,6 +12,30 @@
   color-scheme: dark;
 }
 
+/* Chrome on Windows 11 draws thin, rounded scrollbars with no arrows, and the Builder's panels were laid out with those. The
+   window's own scrollbars are the classic wide ones, which push a panel's contents sideways, so this draws the thin ones. */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: #71717a;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
 html,
 body {
   margin: 0;
