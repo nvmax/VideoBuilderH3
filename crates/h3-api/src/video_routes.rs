@@ -26,12 +26,17 @@ use crate::views::resolve_project;
 
 pub const VIDEO_TRIM: &str = "video.trim";
 pub const VIDEO_MATCH_START_COLOR: &str = "video.match_start_color";
+pub const VIDEO_SLIDESHOW: &str = "video.slideshow";
 const TAKE_FPS: f64 = 24.0;
 
 type Run = fn(Arc<crate::app::AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
 pub fn register(state: &Arc<crate::app::AppState>) {
-    let table: [(&str, Run); 2] = [(VIDEO_TRIM, |s, c| Box::pin(trim_job(s, c))), (VIDEO_MATCH_START_COLOR, |s, c| Box::pin(match_color_job(s, c)))];
+    let table: [(&str, Run); 3] = [
+        (VIDEO_TRIM, |s, c| Box::pin(trim_job(s, c))),
+        (VIDEO_MATCH_START_COLOR, |s, c| Box::pin(match_color_job(s, c))),
+        (VIDEO_SLIDESHOW, |s, c| Box::pin(slideshow_job(s, c))),
+    ];
     for (kind, run) in table {
         let owned = Arc::clone(state);
         let handler: Handler = Arc::new(move |ctx| run(Arc::clone(&owned), ctx));
@@ -450,4 +455,60 @@ pub async fn from_video_frame_route(State(state): Shared, Path((pid, sid)): Path
     data.insert("source_video_path".into(), json!(video));
     data.insert("revision".into(), result["revision"].clone());
     Ok(success(Value::Object(data), None))
+}
+
+fn clamp_int(params: &Value, key: &str, default: i64, low: i64, high: i64) -> i64 {
+    params.get(key).filter(|v| truthy(v)).and_then(h3_core::pyval::to_int).unwrap_or(default).clamp(low, high)
+}
+
+fn slideshow_request(project: &FsPath, session: &Obj, params: &Value) -> Result<h3_media::slideshow::SlideshowRequest, ApiError> {
+    use h3_media::slideshow::{SlideItem, SlideshowRequest};
+    let raw = params.get("image_items").and_then(Value::as_array).cloned().unwrap_or_default();
+    if raw.is_empty() {
+        return Err(ApiError::validation("No scene images were provided for the slideshow preview."));
+    }
+    let mut items = Vec::new();
+    for (i, item) in raw.iter().enumerate() {
+        let Some(map) = item.as_object() else {
+            return Err(ApiError::validation(format!("Scene {} slideshow item is invalid.", i + 1)));
+        };
+        let seconds = map.get("duration").filter(|v| truthy(v)).and_then(to_float).unwrap_or(0.0).max(0.05);
+        items.push(SlideItem { path: PathBuf::from(text_or_empty(map.get("path")).trim().trim_matches('"')), seconds });
+    }
+    let given = text_or_empty(params.get("audio_path")).trim().trim_matches('"').to_string();
+    let audio = if given.is_empty() { h3_pipeline::stitch_plan::session_audio_path(session) } else { given };
+    let prefix = text_or_empty(params.get("output_prefix").filter(|v| truthy(v))).trim().to_string();
+    Ok(SlideshowRequest {
+        project: project.to_path_buf(),
+        items,
+        audio: PathBuf::from(audio),
+        audio_start: params.get("audio_start").filter(|v| truthy(v)).and_then(to_float).unwrap_or(0.0).max(0.0),
+        width: clamp_int(params, "width", 1920, 64, 8192) as u32,
+        height: clamp_int(params, "height", 1080, 64, 8192) as u32,
+        fps: clamp_int(params, "fps", 24, 1, 120) as u32,
+        output_prefix: if prefix.is_empty() { "IMAGE_SLIDESHOW_PREVIEW".into() } else { prefix },
+    })
+}
+
+async fn slideshow_job(state: Arc<crate::app::AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| invalid("project_id is required."))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let session = session_of(&folder).await?;
+    let request = slideshow_request(&folder, &session, &ctx.params).map_err(fail)?;
+    let tools = job_tools(&state)?;
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "rendering_slideshow".into(), message: "Rendering image slideshow...".into(), stage_count: 1, ..Default::default() });
+    let result = tokio::task::spawn_blocking(move || h3_media::slideshow::render_slideshow(&tools, &request)).await.map_err(internal)?.map_err(internal)?;
+    Ok(result)
+}
+
+/// `POST /projects/{pid}/slideshow`: a preview video of still images over the song, as a job.
+pub async fn slideshow_route(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let params = body_object(body)?;
+    let loaded = load(&state, &pid).await?;
+    let value = Value::Object(params);
+    let request = slideshow_request(&loaded.project_folder, &loaded.session, &value)?;
+    // Check the files now so a bad request is a 400 instead of a failed job.
+    h3_media::slideshow::check_request(&request).map_err(|e| ApiError::validation(e.to_string()))?;
+    let job = state.jobs.submit(VIDEO_SLIDESHOW, Some(&pid), value, false)?;
+    Ok(crate::app::job_response(&job))
 }

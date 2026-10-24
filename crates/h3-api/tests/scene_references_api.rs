@@ -242,3 +242,49 @@ async fn a_scenes_start_image_can_come_from_the_previous_clips_last_frame() {
     assert_eq!(scene["data"]["approved_image"]["path"].as_str().map(|p| p.replace('\\', "/")), Some(saved.replace('\\', "/")), "{scene}");
 }
 
+#[tokio::test]
+async fn a_slideshow_preview_is_rendered_from_stills_and_the_song() {
+    let s = start().await;
+    s.call(Method::POST, "/projects", Some(json!({"name": "Slides"}))).await;
+    let p = "/projects/Slides";
+    let dir = s.dir.path().to_path_buf();
+    let image = |name: &str, color: &str, size: &str| {
+        let path = dir.join(name);
+        let source = format!("color=c={color}:s={size}:d=1");
+        let made = std::process::Command::new("ffmpeg").args(["-y", "-f", "lavfi", "-i", &source, "-frames:v", "1"]).arg(&path).output().expect("ffmpeg is on the PATH");
+        assert!(made.status.success());
+        path.display().to_string()
+    };
+    let (red, green) = (image("red.png", "red", "64x48"), image("green.png", "green", "32x32"));
+    let song = dir.join("song.wav");
+    let made = std::process::Command::new("ffmpeg").args(["-y", "-f", "lavfi", "-i", "sine=frequency=440:duration=6"]).arg(&song).output().expect("ffmpeg is on the PATH");
+    assert!(made.status.success());
+
+    let (code, bad) = s.call(Method::POST, &format!("{p}/slideshow"), Some(json!({"image_items": []}))).await;
+    assert_eq!((code, bad["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
+    let (code, bad) = s.call(Method::POST, &format!("{p}/slideshow"), Some(json!({"image_items": [{"path": red, "duration": 1}], "audio_path": dir.join("none.wav").display().to_string()}))).await;
+    assert_eq!(code, 400, "{bad}");
+
+    let body = json!({"image_items": [{"path": red, "duration": 1.5}, {"path": green, "duration": 2.0}], "audio_path": song.display().to_string(), "width": 128, "height": 72, "fps": 12});
+    let (code, queued) = s.call(Method::POST, &format!("{p}/slideshow"), Some(body)).await;
+    assert_eq!(code, 202, "{queued}");
+    let id = queued["data"]["job_id"].as_str().unwrap().to_string();
+    let mut done = Value::Null;
+    for _ in 0..300 {
+        let (_, job) = s.call(Method::GET, &format!("/jobs/{id}"), None).await;
+        if ["succeeded", "failed", "cancelled"].contains(&job["data"]["status"].as_str().unwrap_or("")) {
+            done = job["data"].clone();
+            break;
+        }
+        tokio::time::sleep(Duration::from_millis(100)).await;
+    }
+    assert_eq!(done["status"], "succeeded", "{done}");
+    let result = &done["result"];
+    assert_eq!((result["scene_count"].as_i64(), result["output_width"].as_i64(), result["fps"].as_i64()), (Some(2), Some(128), Some(12)));
+    let video = result["final_video_path"].as_str().unwrap();
+    assert!(std::path::Path::new(video).is_file() && video.contains("IMAGE_SLIDESHOW_PREVIEW"), "{video}");
+    let probe = std::process::Command::new("ffprobe").args(["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", video]).output().unwrap();
+    let seconds: f64 = String::from_utf8_lossy(&probe.stdout).trim().parse().unwrap();
+    assert!((seconds - 3.5).abs() < 0.2, "{seconds}");
+}
+

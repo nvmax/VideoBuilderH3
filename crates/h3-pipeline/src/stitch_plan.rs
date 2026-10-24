@@ -105,7 +105,7 @@ fn select_segments(segments: &[Obj], scene_ids: Option<&Value>) -> Result<Vec<us
     Ok(indexes)
 }
 
-fn session_audio_path(session: &Obj) -> String {
+pub fn session_audio_path(session: &Obj) -> String {
     let candidates: Vec<String> =
         ["audio_path", "audio_file"].iter().map(|k| text_or_empty(session.get(*k)).trim().to_string()).filter(|p| !p.is_empty()).collect();
     candidates.iter().find(|p| Path::new(p).is_file()).or(candidates.first()).cloned().unwrap_or_default()

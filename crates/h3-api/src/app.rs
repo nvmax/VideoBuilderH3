@@ -118,6 +118,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/video/minimax-stage-recover", post(crate::video_routes::stage_recover_route))
         .route("/projects/{pid}/minimax/cleanup", post(crate::video_routes::cleanup_route))
         .route("/projects/{pid}/video/scan", post(crate::video_routes::scan_route))
+        .route("/projects/{pid}/slideshow", post(crate::video_routes::slideshow_route))
         .route("/projects/{pid}/scenes/{sid}/image/from-video-frame", post(crate::video_routes::from_video_frame_route))
         .route("/projects/{pid}/minimax/index", get(crate::video_routes::index_route))
         .route("/projects/{pid}/timeline/notes", get(crate::notes_routes::list_notes).post(crate::notes_routes::create_note))
