@@ -11,6 +11,7 @@ pub mod enhance;
 mod golden;
 pub mod image_prompts;
 pub mod images;
+pub mod motion_notes;
 pub mod references;
 pub mod repair;
 
