@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#09090b" />
+    <title>VRGDG H3 Studio</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #09090b; color: #fafafa; }
+    </style>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script type="module">
+      // The Builder is the pack's own front end. host/boot.js starts it. (The path is a variable so the build tool
+      // leaves the file alone: it is copied as it is.)
+      const boot = "/host/boot.js";
+      import(/* @vite-ignore */ boot);
+    </script>
+  </body>
+</html>

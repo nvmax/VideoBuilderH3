@@ -1,0 +1,3 @@
+﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
+Pack commit: 070003f
+Do not edit these files. Change app\public\host\* (the ComfyUI stand-in) or rerun the script.

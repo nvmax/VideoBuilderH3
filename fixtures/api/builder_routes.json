@@ -1,0 +1,2607 @@
+{
+ "routes": [
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/craft_scene_dialogue",
+   "handler": "vrgdg_craft_scene_dialogue",
+   "file": "builder/routes.py",
+   "line": 61,
+   "doc": "Prepare reviewed dialogue with the selected runner and instruction preset.",
+   "callers": [
+    "scene_dialogue.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_scene_speech",
+   "handler": "vrgdg_generate_scene_speech",
+   "file": "builder/routes.py",
+   "line": 86,
+   "doc": "Generate a transient MP3 preview, without importing or saving the project.",
+   "callers": [
+    "scene_dialogue.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/elevenlabs_voices",
+   "handler": "vrgdg_elevenlabs_voices",
+   "file": "builder/routes.py",
+   "line": 101,
+   "doc": "List account voices or test a transient key; no credential is saved here.",
+   "callers": [
+    "elevenlabs.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/elevenlabs_voice_description",
+   "handler": "vrgdg_elevenlabs_voice_description",
+   "file": "builder/routes.py",
+   "line": 116,
+   "doc": "Write an editable voice description using the selected Builder LLM.",
+   "callers": [
+    "elevenlabs_voice_design.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/elevenlabs_voice_design",
+   "handler": "vrgdg_elevenlabs_voice_design",
+   "file": "builder/routes.py",
+   "line": 142,
+   "doc": "Generate Voice Design previews; do not save any voice to the account.",
+   "callers": [
+    "elevenlabs_voice_design.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/elevenlabs_voice_create",
+   "handler": "vrgdg_elevenlabs_voice_create",
+   "file": "builder/routes.py",
+   "line": 155,
+   "doc": "Explicitly save a chosen generated voice to the ElevenLabs account.",
+   "callers": [
+    "elevenlabs_voice_design.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/analyze_audio",
+   "handler": "vrgdg_music_builder_analyze_audio",
+   "file": "builder/routes.py",
+   "line": 168,
+   "doc": "",
+   "callers": [
+    "beat_calibration.mjs",
+    "project_setup.mjs",
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/import_capcut_beats",
+   "handler": "vrgdg_music_builder_import_capcut_beats",
+   "file": "builder/routes.py",
+   "line": 193,
+   "doc": "",
+   "callers": [
+    "beat_calibration.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_session",
+   "handler": "vrgdg_music_builder_save_session",
+   "file": "builder/routes.py",
+   "line": 202,
+   "doc": "",
+   "callers": [
+    "comfy_api.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_render_log",
+   "handler": "vrgdg_music_builder_save_render_log",
+   "file": "builder/routes.py",
+   "line": 211,
+   "doc": "",
+   "callers": [
+    "render_log.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_wizard_draft",
+   "handler": "vrgdg_music_builder_save_wizard_draft",
+   "file": "builder/routes.py",
+   "line": 220,
+   "doc": "",
+   "callers": [
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_wizard_draft",
+   "handler": "vrgdg_music_builder_load_wizard_draft",
+   "file": "builder/routes.py",
+   "line": 229,
+   "doc": "",
+   "callers": [
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/model_defaults",
+   "handler": "vrgdg_music_builder_model_defaults",
+   "file": "builder/routes.py",
+   "line": 238,
+   "doc": "",
+   "callers": [
+    "builder.mjs",
+    "model_settings.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/llm_runner",
+   "handler": "vrgdg_music_builder_save_llm_runner",
+   "file": "builder/routes.py",
+   "line": 246,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/new_project",
+   "handler": "vrgdg_music_builder_new_project",
+   "file": "builder/routes.py",
+   "line": 255,
+   "doc": "",
+   "callers": [
+    "project_actions.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_project_as",
+   "handler": "vrgdg_music_builder_save_project_as",
+   "file": "builder/routes.py",
+   "line": 264,
+   "doc": "",
+   "callers": [
+    "batch_actions.mjs",
+    "project_actions.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/export_project",
+   "handler": "vrgdg_music_builder_export_project",
+   "file": "builder/routes.py",
+   "line": 273,
+   "doc": "",
+   "callers": [
+    "project_actions.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/import_project",
+   "handler": "vrgdg_music_builder_import_project",
+   "file": "builder/routes.py",
+   "line": 308,
+   "doc": "",
+   "callers": [
+    "project_actions.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_scene_image",
+   "handler": "vrgdg_music_builder_save_scene_image",
+   "file": "builder/routes.py",
+   "line": 346,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/delete_project_media",
+   "handler": "vrgdg_music_builder_delete_project_media",
+   "file": "builder/routes.py",
+   "line": 355,
+   "doc": "",
+   "callers": [
+    "batch_actions.mjs",
+    "timeline_actions.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/archive_scene_image",
+   "handler": "vrgdg_music_builder_archive_scene_image",
+   "file": "builder/routes.py",
+   "line": 364,
+   "doc": "",
+   "callers": [
+    "image_prompts.mjs",
+    "image_references.mjs",
+    "media_import.mjs",
+    "minimax_keyframes.mjs",
+    "timeline_actions.mjs",
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/extract_video_final_frame",
+   "handler": "vrgdg_music_builder_extract_video_final_frame",
+   "file": "builder/routes.py",
+   "line": 373,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs",
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_flux_reference_image",
+   "handler": "vrgdg_music_builder_save_flux_reference_image",
+   "file": "builder/routes.py",
+   "line": 382,
+   "doc": "",
+   "callers": [
+    "reference_generation.mjs",
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/own_server_reference_image",
+   "handler": "vrgdg_music_builder_own_server_reference_image",
+   "file": "builder/routes.py",
+   "line": 391,
+   "doc": "",
+   "callers": [
+    "reference_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/import_reference_subjects",
+   "handler": "vrgdg_music_builder_import_reference_subjects",
+   "file": "builder/routes.py",
+   "line": 405,
+   "doc": "",
+   "callers": [
+    "reference_builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/import_reference_locations",
+   "handler": "vrgdg_music_builder_import_reference_locations",
+   "file": "builder/routes.py",
+   "line": 414,
+   "doc": "",
+   "callers": [
+    "reference_locations.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_scene_audio",
+   "handler": "vrgdg_music_builder_save_scene_audio",
+   "file": "builder/routes.py",
+   "line": 423,
+   "doc": "",
+   "callers": [
+    "audio_clip_editor.mjs",
+    "scene_audio_settings.mjs",
+    "scene_dialogue.mjs",
+    "timeline_edit.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_project_audio",
+   "handler": "vrgdg_music_builder_save_project_audio",
+   "file": "builder/routes.py",
+   "line": 432,
+   "doc": "",
+   "callers": [
+    "project_setup.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_project_srt",
+   "handler": "vrgdg_music_builder_save_project_srt",
+   "file": "builder/routes.py",
+   "line": 441,
+   "doc": "",
+   "callers": [
+    "project_setup.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_single_scene_srt",
+   "handler": "vrgdg_music_builder_save_single_scene_srt",
+   "file": "builder/routes.py",
+   "line": 450,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/trim_scene_audio",
+   "handler": "vrgdg_music_builder_trim_scene_audio",
+   "file": "builder/routes.py",
+   "line": 459,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/create_silent_audio",
+   "handler": "vrgdg_music_builder_create_silent_audio",
+   "file": "builder/routes.py",
+   "line": 468,
+   "doc": "",
+   "callers": [
+    "project_setup.mjs",
+    "timeline_edit.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/prepare_scene_audio_mix",
+   "handler": "vrgdg_music_builder_prepare_scene_audio_mix",
+   "file": "builder/routes.py",
+   "line": 477,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/prepare_audio_clip_mix",
+   "handler": "vrgdg_music_builder_prepare_audio_clip_mix",
+   "file": "builder/routes.py",
+   "line": 486,
+   "doc": "Prepare the audio clip arrangement for playback and rendering.",
+   "callers": [
+    "audio_clip_editor.mjs",
+    "scene_audio_settings.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/preview_scene_audio_settings",
+   "handler": "vrgdg_preview_scene_audio_settings",
+   "file": "builder/routes.py",
+   "line": 498,
+   "doc": "Calculate Speaking audio edits without writing the browser's project snapshot.",
+   "callers": [
+    "scene_audio_settings.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/audio_mask/state",
+   "handler": "vrgdg_music_builder_audio_mask_state",
+   "file": "builder/routes.py",
+   "line": 514,
+   "doc": "",
+   "callers": [
+    "audio_mask.mjs",
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/audio_mask/states",
+   "handler": "vrgdg_music_builder_audio_mask_states",
+   "file": "builder/routes.py",
+   "line": 523,
+   "doc": "",
+   "callers": [
+    "audio_mask.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/audio_mask/separate",
+   "handler": "vrgdg_music_builder_audio_mask_separate",
+   "file": "builder/routes.py",
+   "line": 532,
+   "doc": "",
+   "callers": [
+    "audio_mask.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/audio_mask/render",
+   "handler": "vrgdg_music_builder_audio_mask_render",
+   "file": "builder/routes.py",
+   "line": 541,
+   "doc": "",
+   "callers": [
+    "audio_mask.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/audio_mask/list",
+   "handler": "vrgdg_music_builder_audio_mask_list",
+   "file": "builder/routes.py",
+   "line": 550,
+   "doc": "",
+   "callers": [
+    "audio_mask.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/audio_mask/delete",
+   "handler": "vrgdg_music_builder_audio_mask_delete",
+   "file": "builder/routes.py",
+   "line": 559,
+   "doc": "",
+   "callers": [
+    "audio_mask.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_session",
+   "handler": "vrgdg_music_builder_load_session",
+   "file": "builder/routes.py",
+   "line": 568,
+   "doc": "",
+   "callers": [
+    "external_changes.mjs",
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/list_projects",
+   "handler": "vrgdg_music_builder_list_projects",
+   "file": "builder/routes.py",
+   "line": 577,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/delete_project",
+   "handler": "vrgdg_music_builder_delete_project",
+   "file": "builder/routes.py",
+   "line": 585,
+   "doc": "",
+   "callers": [
+    "dialogs.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/latent_status",
+   "handler": "vrgdg_music_builder_latent_status",
+   "file": "builder/routes.py",
+   "line": 594,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/list_scene_latent_takes",
+   "handler": "vrgdg_music_builder_list_scene_latent_takes",
+   "file": "builder/routes.py",
+   "line": 605,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/check_latent_predecessor",
+   "handler": "vrgdg_music_builder_check_latent_predecessor",
+   "file": "builder/routes.py",
+   "line": 616,
+   "doc": "",
+   "callers": [
+    "minimax_panel.mjs",
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/delete_scene_latent",
+   "handler": "vrgdg_music_builder_delete_scene_latent",
+   "file": "builder/routes.py",
+   "line": 658,
+   "doc": "",
+   "callers": [
+    "timeline_actions.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/renumber_scenes_after_removal",
+   "handler": "vrgdg_music_builder_renumber_scenes_after_removal",
+   "file": "builder/routes.py",
+   "line": 678,
+   "doc": "",
+   "callers": [
+    "timeline_actions.mjs",
+    "timeline_edit.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/renumber_scenes_after_insert",
+   "handler": "vrgdg_music_builder_renumber_scenes_after_insert",
+   "file": "builder/routes.py",
+   "line": 691,
+   "doc": "",
+   "callers": [
+    "timeline_actions.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/list_dirty_latents",
+   "handler": "vrgdg_music_builder_list_dirty_latents",
+   "file": "builder/routes.py",
+   "line": 704,
+   "doc": "",
+   "callers": [
+    "timeline_edit.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/scan_scene_videos",
+   "handler": "vrgdg_music_builder_scan_scene_videos",
+   "file": "builder/routes.py",
+   "line": 714,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/restore_scene_video",
+   "handler": "vrgdg_music_builder_restore_scene_video",
+   "file": "builder/routes.py",
+   "line": 723,
+   "doc": "",
+   "callers": [
+    "timeline_edit.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_srt",
+   "handler": "vrgdg_music_builder_load_srt",
+   "file": "builder/routes.py",
+   "line": 732,
+   "doc": "",
+   "callers": [
+    "project_setup.mjs",
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_prompt_json",
+   "handler": "vrgdg_music_builder_load_prompt_json",
+   "file": "builder/routes.py",
+   "line": 741,
+   "doc": "",
+   "callers": [
+    "prompt_text.mjs",
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_text_file",
+   "handler": "vrgdg_music_builder_load_text_file",
+   "file": "builder/routes.py",
+   "line": 750,
+   "doc": "",
+   "callers": [
+    "project_files.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_text_file",
+   "handler": "vrgdg_music_builder_save_text_file",
+   "file": "builder/routes.py",
+   "line": 759,
+   "doc": "",
+   "callers": [
+    "builder_agent.mjs",
+    "project_files.mjs",
+    "reference_data.mjs",
+    "reference_locations.mjs",
+    "reference_scene_mapping.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/open_local_file",
+   "handler": "vrgdg_music_builder_open_local_file",
+   "file": "builder/routes.py",
+   "line": 768,
+   "doc": "",
+   "callers": [
+    "dialogs.mjs",
+    "render_log.mjs",
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/default_context_paths",
+   "handler": "vrgdg_music_builder_default_context_paths",
+   "file": "builder/routes.py",
+   "line": 777,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/project_prompt_creator_paths",
+   "handler": "vrgdg_music_builder_project_prompt_creator_paths",
+   "file": "builder/routes.py",
+   "line": 785,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/import_latest_prompt_creator_outputs",
+   "handler": "vrgdg_music_builder_import_latest_prompt_creator_outputs",
+   "file": "builder/routes.py",
+   "line": 794,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/copy_prompt_creator_outputs",
+   "handler": "vrgdg_music_builder_copy_prompt_creator_outputs",
+   "file": "builder/routes.py",
+   "line": 803,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/default_audio_srt_paths",
+   "handler": "vrgdg_music_builder_default_audio_srt_paths",
+   "file": "builder/routes.py",
+   "line": 816,
+   "doc": "",
+   "callers": [
+    "project_setup.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/pick_path",
+   "handler": "vrgdg_music_builder_pick_path",
+   "file": "builder/routes.py",
+   "line": 824,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs",
+    "project_setup.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/audio",
+   "handler": "vrgdg_music_builder_audio",
+   "file": "builder/routes.py",
+   "line": 835,
+   "doc": "",
+   "callers": [
+    "comfy_api.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/gemma_choices",
+   "handler": "vrgdg_music_builder_gemma_choices",
+   "file": "builder/routes.py",
+   "line": 843,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs",
+    "model_pickers.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/llm_api_choices",
+   "handler": "vrgdg_music_builder_llm_api_choices",
+   "file": "builder/routes.py",
+   "line": 851,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/test_llm_api",
+   "handler": "vrgdg_music_builder_test_llm_api",
+   "file": "builder/routes.py",
+   "line": 859,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/test_own_server",
+   "handler": "vrgdg_music_builder_test_own_server",
+   "file": "builder/routes.py",
+   "line": 868,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/own_server_models",
+   "handler": "vrgdg_music_builder_own_server_models",
+   "file": "builder/routes.py",
+   "line": 877,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/lm_studio_models",
+   "handler": "vrgdg_music_builder_lm_studio_models",
+   "file": "builder/routes.py",
+   "line": 886,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/get_instruction",
+   "handler": "vrgdg_music_builder_get_instruction",
+   "file": "builder/routes.py",
+   "line": 895,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_instruction",
+   "handler": "vrgdg_music_builder_save_instruction",
+   "file": "builder/routes.py",
+   "line": 904,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/reset_instruction",
+   "handler": "vrgdg_music_builder_reset_instruction",
+   "file": "builder/routes.py",
+   "line": 913,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/list_instruction_presets",
+   "handler": "vrgdg_music_builder_list_instruction_presets",
+   "file": "builder/routes.py",
+   "line": 922,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_instruction_preset",
+   "handler": "vrgdg_music_builder_save_instruction_preset",
+   "file": "builder/routes.py",
+   "line": 931,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_instruction_preset",
+   "handler": "vrgdg_music_builder_load_instruction_preset",
+   "file": "builder/routes.py",
+   "line": 940,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/list_scene_defaults_presets",
+   "handler": "vrgdg_list_scene_defaults_presets",
+   "file": "builder/routes.py",
+   "line": 949,
+   "doc": "List global named Scene Defaults presets shared by projects.",
+   "callers": [
+    "defaults_presets.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_scene_defaults_preset",
+   "handler": "vrgdg_load_scene_defaults_preset",
+   "file": "builder/routes.py",
+   "line": 958,
+   "doc": "Load a named defaults snapshot; does not mutate a project.",
+   "callers": [
+    "defaults_presets.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_scene_defaults_preset",
+   "handler": "vrgdg_save_scene_defaults_preset",
+   "file": "builder/routes.py",
+   "line": 970,
+   "doc": "Save defaults atomically; replacing a preset requires overwrite=true.",
+   "callers": [
+    "defaults_presets.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/list_video_profiles",
+   "handler": "vrgdg_music_builder_list_video_profiles",
+   "file": "builder/routes.py",
+   "line": 983,
+   "doc": "",
+   "callers": [
+    "video_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_video_profile",
+   "handler": "vrgdg_music_builder_load_video_profile",
+   "file": "builder/routes.py",
+   "line": 992,
+   "doc": "",
+   "callers": [
+    "video_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/set_last_video_profile",
+   "handler": "vrgdg_music_builder_set_last_video_profile",
+   "file": "builder/routes.py",
+   "line": 1004,
+   "doc": "",
+   "callers": [
+    "video_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_video_profile",
+   "handler": "vrgdg_music_builder_save_video_profile",
+   "file": "builder/routes.py",
+   "line": 1015,
+   "doc": "",
+   "callers": [
+    "video_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/delete_video_profile",
+   "handler": "vrgdg_music_builder_delete_video_profile",
+   "file": "builder/routes.py",
+   "line": 1028,
+   "doc": "",
+   "callers": [
+    "video_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/list_ui_profiles",
+   "handler": "vrgdg_music_builder_list_ui_profiles",
+   "file": "builder/routes.py",
+   "line": 1039,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_default_ui_layout",
+   "handler": "vrgdg_music_builder_load_default_ui_layout",
+   "file": "builder/routes.py",
+   "line": 1048,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_default_ui_layout",
+   "handler": "vrgdg_music_builder_save_default_ui_layout",
+   "file": "builder/routes.py",
+   "line": 1056,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/load_ui_profile",
+   "handler": "vrgdg_music_builder_load_ui_profile",
+   "file": "builder/routes.py",
+   "line": 1065,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/set_last_ui_profile",
+   "handler": "vrgdg_music_builder_set_last_ui_profile",
+   "file": "builder/routes.py",
+   "line": 1077,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/save_ui_profile",
+   "handler": "vrgdg_music_builder_save_ui_profile",
+   "file": "builder/routes.py",
+   "line": 1088,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/update_ui_profile_layout",
+   "handler": "vrgdg_music_builder_update_ui_profile_layout",
+   "file": "builder/routes.py",
+   "line": 1101,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/delete_ui_profile",
+   "handler": "vrgdg_music_builder_delete_ui_profile",
+   "file": "builder/routes.py",
+   "line": 1112,
+   "doc": "",
+   "callers": [
+    "ui_profiles.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/clear_memory_direct",
+   "handler": "vrgdg_music_builder_clear_memory_direct",
+   "file": "builder/routes.py",
+   "line": 1123,
+   "doc": "",
+   "callers": [
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_t2i",
+   "handler": "vrgdg_music_builder_generate_t2i",
+   "file": "builder/routes.py",
+   "line": 1131,
+   "doc": "",
+   "callers": [
+    "image_prompts.mjs",
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/agent_chat",
+   "handler": "vrgdg_music_builder_agent_chat",
+   "file": "builder/routes.py",
+   "line": 1140,
+   "doc": "",
+   "callers": [
+    "builder_agent.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_concept_prompts",
+   "handler": "vrgdg_music_builder_generate_concept_prompts",
+   "file": "builder/routes.py",
+   "line": 1149,
+   "doc": "",
+   "callers": [
+    "prompt_creators.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_motion_notes",
+   "handler": "vrgdg_music_builder_generate_motion_notes",
+   "file": "builder/routes.py",
+   "line": 1158,
+   "doc": "",
+   "callers": [
+    "prompt_creators.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_i2v",
+   "handler": "vrgdg_music_builder_generate_i2v",
+   "file": "builder/routes.py",
+   "line": 1167,
+   "doc": "",
+   "callers": [
+    "batch_prompts.mjs",
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_chained_i2v",
+   "handler": "vrgdg_music_builder_generate_chained_i2v",
+   "file": "builder/routes.py",
+   "line": 1176,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_t2v",
+   "handler": "vrgdg_music_builder_generate_t2v",
+   "file": "builder/routes.py",
+   "line": 1185,
+   "doc": "",
+   "callers": [
+    "batch_prompts.mjs",
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/enhance_video_prompt",
+   "handler": "vrgdg_music_builder_enhance_video_prompt",
+   "file": "builder/routes.py",
+   "line": 1194,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/edit_video_prompt",
+   "handler": "vrgdg_music_builder_edit_video_prompt",
+   "file": "builder/routes.py",
+   "line": 1203,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/enhance_minimax_h3_prompt",
+   "handler": "vrgdg_music_builder_enhance_minimax_h3_prompt",
+   "file": "builder/routes.py",
+   "line": 1212,
+   "doc": "",
+   "callers": [
+    "minimax_prompt_enhance.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/edit_image_prompt",
+   "handler": "vrgdg_music_builder_edit_image_prompt",
+   "file": "builder/routes.py",
+   "line": 1221,
+   "doc": "",
+   "callers": [
+    "prompt_editing.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_flux_klein_prompt",
+   "handler": "vrgdg_music_builder_generate_flux_klein_prompt",
+   "file": "builder/routes.py",
+   "line": 1230,
+   "doc": "",
+   "callers": [
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/describe_reference_image",
+   "handler": "vrgdg_music_builder_describe_reference_image",
+   "file": "builder/routes.py",
+   "line": 1239,
+   "doc": "",
+   "callers": [
+    "builder.mjs",
+    "llm_runner.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/analyze_story_references",
+   "handler": "vrgdg_music_builder_analyze_story_references",
+   "file": "builder/routes.py",
+   "line": 1248,
+   "doc": "",
+   "callers": [
+    "builder_agent.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/generate_nb_image_prompt",
+   "handler": "vrgdg_music_builder_generate_nb_image_prompt",
+   "file": "builder/routes.py",
+   "line": 1257,
+   "doc": "",
+   "callers": [
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/flux_reference_location_map",
+   "handler": "vrgdg_music_builder_flux_reference_location_map",
+   "file": "builder/routes.py",
+   "line": 1266,
+   "doc": "",
+   "callers": [
+    "reference_locations.mjs",
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/flux_reference_extract_locations",
+   "handler": "vrgdg_music_builder_flux_reference_extract_locations",
+   "file": "builder/routes.py",
+   "line": 1275,
+   "doc": "",
+   "callers": [
+    "ingredients_builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/lm_scout_locations",
+   "handler": "vrgdg_music_builder_lm_scout_locations",
+   "file": "builder/routes.py",
+   "line": 1284,
+   "doc": "",
+   "callers": [
+    "reference_locations.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/wizard_locations_from_lyrics",
+   "handler": "vrgdg_music_builder_wizard_locations_from_lyrics",
+   "file": "builder/routes.py",
+   "line": 1293,
+   "doc": "",
+   "callers": [
+    "ingredients_builder.mjs",
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/flux_reference_extract_subjects",
+   "handler": "vrgdg_music_builder_flux_reference_extract_subjects",
+   "file": "builder/routes.py",
+   "line": 1302,
+   "doc": "",
+   "callers": [
+    "reference_subjects.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/flux_reference_zimage_prompt",
+   "handler": "vrgdg_music_builder_flux_reference_zimage_prompt",
+   "file": "builder/routes.py",
+   "line": 1311,
+   "doc": "",
+   "callers": [
+    "gemma_runner.mjs",
+    "reference_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/gemma4/generate",
+   "handler": "vrgdg_gemma4_generate",
+   "file": "builder/routes.py",
+   "line": 1320,
+   "doc": "",
+   "callers": [
+    "llm_runner.mjs",
+    "project_files.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/video_editor/video",
+   "handler": "vrgdg_video_editor_video",
+   "file": "builder/video_editor.py",
+   "line": 34,
+   "doc": "",
+   "callers": [
+    "comfy_api.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/video_editor/image",
+   "handler": "vrgdg_video_editor_image",
+   "file": "builder/video_editor.py",
+   "line": 55,
+   "doc": "",
+   "callers": [
+    "comfy_api.mjs",
+    "minimax_keyframes.mjs",
+    "references.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/workflow_runner/lora_list",
+   "handler": "vrgdg_workflow_runner_lora_list",
+   "file": "runner/routes.py",
+   "line": 35,
+   "doc": "",
+   "callers": [
+    "VRGDG_WorkflowRunnerUI.js",
+    "minimax_panel_events.mjs",
+    "model_pickers.mjs",
+    "reference_generation.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/workflow_runner/i2v_choices",
+   "handler": "vrgdg_workflow_runner_i2v_choices",
+   "file": "runner/routes.py",
+   "line": 40,
+   "doc": "",
+   "callers": [
+    "model_pickers.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/workflow_runner/model_root",
+   "handler": "vrgdg_workflow_runner_model_root",
+   "file": "runner/routes.py",
+   "line": 55,
+   "doc": "",
+   "callers": [
+    "model_pickers.mjs",
+    "project_setup.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/model_root",
+   "handler": "vrgdg_workflow_runner_save_model_root",
+   "file": "runner/routes.py",
+   "line": 64,
+   "doc": "",
+   "callers": [
+    "model_pickers.mjs",
+    "project_setup.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_zimage_prompt",
+   "handler": "vrgdg_workflow_runner_build_zimage_prompt",
+   "file": "runner/routes.py",
+   "line": 76,
+   "doc": "",
+   "callers": [
+    "VRGDG_WorkflowRunnerUI.js",
+    "image_generation.mjs",
+    "reference_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_krea2_prompt",
+   "handler": "vrgdg_workflow_runner_build_krea2_prompt",
+   "file": "runner/routes.py",
+   "line": 88,
+   "doc": "",
+   "callers": [
+    "reference_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_moss_image_prompt",
+   "handler": "vrgdg_workflow_runner_build_moss_image_prompt",
+   "file": "runner/routes.py",
+   "line": 100,
+   "doc": "",
+   "callers": [
+    "reference_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_krea2_2pass_prompt",
+   "handler": "vrgdg_workflow_runner_build_krea2_2pass_prompt",
+   "file": "runner/routes.py",
+   "line": 112,
+   "doc": "",
+   "callers": [
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_ernie_image_prompt",
+   "handler": "vrgdg_workflow_runner_build_ernie_image_prompt",
+   "file": "runner/routes.py",
+   "line": 124,
+   "doc": "",
+   "callers": [
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_i2v_prompt",
+   "handler": "vrgdg_workflow_runner_build_i2v_prompt",
+   "file": "runner/routes.py",
+   "line": 136,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_t2v_prompt",
+   "handler": "vrgdg_workflow_runner_build_t2v_prompt",
+   "file": "runner/routes.py",
+   "line": 148,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_minimax_h3_prompt",
+   "handler": "vrgdg_workflow_runner_build_minimax_h3_prompt",
+   "file": "runner/routes.py",
+   "line": 160,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_minimax_h3_2pass_prompt",
+   "handler": "vrgdg_workflow_runner_build_minimax_h3_2pass_prompt",
+   "file": "runner/routes.py",
+   "line": 172,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_minimax_h3_advanced_2pass_prompt",
+   "handler": "vrgdg_workflow_runner_build_minimax_h3_advanced_2pass_prompt",
+   "file": "runner/routes.py",
+   "line": 184,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_minimax_h3_draft_prompt",
+   "handler": "vrgdg_workflow_runner_build_minimax_h3_draft_prompt",
+   "file": "runner/routes.py",
+   "line": 200,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_minimax_h3_finalize_prompt",
+   "handler": "vrgdg_workflow_runner_build_minimax_h3_finalize_prompt",
+   "file": "runner/routes.py",
+   "line": 212,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_minimax_h3_3pass_prompt",
+   "handler": "vrgdg_workflow_runner_build_minimax_h3_3pass_prompt",
+   "file": "runner/routes.py",
+   "line": 221,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_rtv_prompt",
+   "handler": "vrgdg_workflow_runner_build_rtv_prompt",
+   "file": "runner/routes.py",
+   "line": 233,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_ingredients_prompt",
+   "handler": "vrgdg_workflow_runner_build_ingredients_prompt",
+   "file": "runner/routes.py",
+   "line": 245,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_flf_prompt",
+   "handler": "vrgdg_workflow_runner_build_flf_prompt",
+   "file": "runner/routes.py",
+   "line": 257,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_id_lora_prompt",
+   "handler": "vrgdg_workflow_runner_build_id_lora_prompt",
+   "file": "runner/routes.py",
+   "line": 266,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_flux_klein_prompt",
+   "handler": "vrgdg_workflow_runner_build_flux_klein_prompt",
+   "file": "runner/routes.py",
+   "line": 278,
+   "doc": "",
+   "callers": [
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_nb_image_prompt",
+   "handler": "vrgdg_workflow_runner_build_nb_image_prompt",
+   "file": "runner/routes.py",
+   "line": 290,
+   "doc": "",
+   "callers": [
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_z_upscale_enhance_prompt",
+   "handler": "vrgdg_workflow_runner_build_z_upscale_enhance_prompt",
+   "file": "runner/routes.py",
+   "line": 302,
+   "doc": "",
+   "callers": [
+    "builder.mjs",
+    "image_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_clear_memory_prompt",
+   "handler": "vrgdg_workflow_runner_build_clear_memory_prompt",
+   "file": "runner/routes.py",
+   "line": 314,
+   "doc": "",
+   "callers": [
+    "VRGDG_WorkflowRunnerUI.js",
+    "session.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_transcribe_prompt",
+   "handler": "vrgdg_workflow_runner_build_transcribe_prompt",
+   "file": "runner/routes.py",
+   "line": 322,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_timestamped_transcribe_prompt",
+   "handler": "vrgdg_workflow_runner_build_timestamped_transcribe_prompt",
+   "file": "runner/routes.py",
+   "line": 334,
+   "doc": "",
+   "callers": [
+    "lyric_transcription.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/prepare_scene_audio_clip",
+   "handler": "vrgdg_workflow_runner_prepare_scene_audio_clip",
+   "file": "runner/routes.py",
+   "line": 346,
+   "doc": "",
+   "callers": [
+    "lyric_transcription.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/save_image",
+   "handler": "vrgdg_workflow_runner_save_image",
+   "file": "runner/routes.py",
+   "line": 358,
+   "doc": "",
+   "callers": [
+    "VRGDG_WorkflowRunnerUI.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/collect_scene_video",
+   "handler": "vrgdg_workflow_runner_collect_scene_video",
+   "file": "runner/routes.py",
+   "line": 370,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/match_scene_video_start_color",
+   "handler": "vrgdg_workflow_runner_match_scene_video_start_color",
+   "file": "runner/routes.py",
+   "line": 382,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/trim_scene_video",
+   "handler": "vrgdg_workflow_runner_trim_scene_video",
+   "file": "runner/routes.py",
+   "line": 394,
+   "doc": "",
+   "callers": [
+    "timeline_edit.mjs",
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/find_scene_video_output",
+   "handler": "vrgdg_workflow_runner_find_scene_video_output",
+   "file": "runner/routes.py",
+   "line": 409,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/collect_minimax_h3_stage_backup",
+   "handler": "vrgdg_workflow_runner_collect_minimax_h3_stage_backup",
+   "file": "runner/routes.py",
+   "line": 421,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/find_minimax_h3_stage_outputs",
+   "handler": "vrgdg_workflow_runner_find_minimax_h3_stage_outputs",
+   "file": "runner/routes.py",
+   "line": 433,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/cleanup_minimax_h3_output",
+   "handler": "vrgdg_workflow_runner_cleanup_minimax_h3_output",
+   "file": "runner/routes.py",
+   "line": 445,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/stitch_scene_videos",
+   "handler": "vrgdg_workflow_runner_stitch_scene_videos",
+   "file": "runner/routes.py",
+   "line": 457,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/render_image_slideshow",
+   "handler": "vrgdg_workflow_runner_render_image_slideshow",
+   "file": "runner/routes.py",
+   "line": 472,
+   "doc": "",
+   "callers": [
+    "video_render.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/resource-monitor",
+   "handler": "resource_monitor",
+   "file": "core/system_routes.py",
+   "line": 75,
+   "doc": "",
+   "callers": [
+    "VRGDG_ResourceMonitor.js",
+    "toolbar.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/resource-monitor/clear-memory",
+   "handler": "clear_memory",
+   "file": "core/system_routes.py",
+   "line": 151,
+   "doc": "",
+   "callers": [
+    "VRGDG_ResourceMonitor.js"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/update/v10/status",
+   "handler": "vrgdg_update_v10_status",
+   "file": "core/system_routes.py",
+   "line": 402,
+   "doc": "",
+   "callers": [
+    "update_banner.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/update/v10",
+   "handler": "vrgdg_update_v10",
+   "file": "core/system_routes.py",
+   "line": 410,
+   "doc": "",
+   "callers": [
+    "toolbar.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/video_builder/custom_nodes/status",
+   "handler": "custom_nodes_status",
+   "file": "core/system_routes.py",
+   "line": 499,
+   "doc": "",
+   "callers": [
+    "dialogs.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/video_builder/custom_nodes/install",
+   "handler": "custom_nodes_install",
+   "file": "core/system_routes.py",
+   "line": 504,
+   "doc": "",
+   "callers": [
+    "dialogs.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/refmod/library",
+   "handler": "vrgdg_refmod_library",
+   "file": "minimax/refmod_library.py",
+   "line": 144,
+   "doc": "",
+   "callers": [
+    "refmod_card.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/refmod/delete",
+   "handler": "vrgdg_refmod_delete",
+   "file": "minimax/refmod_library.py",
+   "line": 153,
+   "doc": "",
+   "callers": [
+    "refmods_viewer.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/refmod/preview",
+   "handler": "vrgdg_refmod_preview",
+   "file": "minimax/refmod_library.py",
+   "line": 164,
+   "doc": "",
+   "callers": [
+    "refmod_card.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/refmod/pick_images",
+   "handler": "vrgdg_refmod_pick_images",
+   "file": "minimax/refmod_picker.py",
+   "line": 258,
+   "doc": "",
+   "callers": [
+    "VRGDG_RefModImagePicker.js",
+    "refmods_studio.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/refmod/describe_prompts",
+   "handler": "vrgdg_refmod_describe_prompts",
+   "file": "minimax/refmod_picker.py",
+   "line": 267,
+   "doc": "",
+   "callers": [
+    "refmods_studio.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/refmod/upload_image",
+   "handler": "vrgdg_refmod_upload_image",
+   "file": "minimax/refmod_picker.py",
+   "line": 271,
+   "doc": "",
+   "callers": [
+    "refmod_card.mjs",
+    "refmods_studio.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/refmod/describe",
+   "handler": "vrgdg_refmod_describe",
+   "file": "minimax/refmod_picker.py",
+   "line": 286,
+   "doc": "",
+   "callers": [
+    "refmods_studio.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/refmod/from_image",
+   "handler": "vrgdg_refmod_from_image",
+   "file": "minimax/refmod_studio.py",
+   "line": 327,
+   "doc": "Save one Reference Builder image as a RefMod in models/refmods/<type>/<name>.",
+   "callers": [
+    "refmod_card.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/refmod/create",
+   "handler": "vrgdg_refmod_create",
+   "file": "minimax/refmod_studio.py",
+   "line": 341,
+   "doc": "",
+   "callers": [
+    "refmods_studio.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/luts",
+   "handler": "vrgdg_music_builder_luts",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1081,
+   "doc": "",
+   "callers": [
+    "VRGDG_MusicVideoBuilderLUTs.js"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/luts/example",
+   "handler": "vrgdg_music_builder_lut_example",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1089,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/luts/apply_image",
+   "handler": "vrgdg_music_builder_apply_lut_image",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1097,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/luts/apply_video",
+   "handler": "vrgdg_music_builder_apply_lut_video",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1114,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/luts/preview",
+   "handler": "vrgdg_music_builder_preview_lut",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1134,
+   "doc": "",
+   "callers": [
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/film_grain/apply_image",
+   "handler": "vrgdg_music_builder_apply_film_grain_image",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1152,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/film_grain/apply_video",
+   "handler": "vrgdg_music_builder_apply_film_grain_video",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1170,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/film_grain/preview",
+   "handler": "vrgdg_music_builder_preview_film_grain",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1193,
+   "doc": "",
+   "callers": [
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/adjust/preview",
+   "handler": "vrgdg_music_builder_preview_adjust",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1212,
+   "doc": "",
+   "callers": [
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/adjust/apply_video",
+   "handler": "vrgdg_music_builder_apply_adjust_video",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1229,
+   "doc": "",
+   "callers": [
+    "scene_render_prep.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_builder/post_process/adjust/presets",
+   "handler": "vrgdg_music_builder_list_adjust_presets",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1250,
+   "doc": "",
+   "callers": [
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/adjust/presets/save",
+   "handler": "vrgdg_music_builder_save_adjust_preset",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1258,
+   "doc": "",
+   "callers": [
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/post_process/adjust/presets/import",
+   "handler": "vrgdg_music_builder_import_adjust_preset",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1270,
+   "doc": "",
+   "callers": [
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/luts/delete_preview",
+   "handler": "vrgdg_music_builder_delete_lut_preview",
+   "file": "post_process/lut_video_tools.py",
+   "line": 1282,
+   "doc": "",
+   "callers": [
+    "builder.mjs",
+    "post_process.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/prepare",
+   "handler": "vrgdg_face_fix_prepare",
+   "file": "post_process/face_fix.py",
+   "line": 1034,
+   "doc": "",
+   "callers": [
+    "builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/estimate_anchors",
+   "handler": "vrgdg_face_fix_estimate_anchors",
+   "file": "post_process/face_fix.py",
+   "line": 1044,
+   "doc": "",
+   "callers": [
+    "builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/accept_enhanced",
+   "handler": "vrgdg_face_fix_accept_enhanced",
+   "file": "post_process/face_fix.py",
+   "line": 1054,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/accept_enhanced_anchor",
+   "handler": "vrgdg_face_fix_accept_enhanced_anchor",
+   "file": "post_process/face_fix.py",
+   "line": 1064,
+   "doc": "",
+   "callers": [
+    "builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/build_ltx_prompt",
+   "handler": "vrgdg_face_fix_build_ltx_prompt",
+   "file": "post_process/face_fix.py",
+   "line": 1074,
+   "doc": "",
+   "callers": [
+    "builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/accept_ltx_frames",
+   "handler": "vrgdg_face_fix_accept_ltx_frames",
+   "file": "post_process/face_fix.py",
+   "line": 1084,
+   "doc": "",
+   "callers": [
+    "builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/face_fix/finalize",
+   "handler": "vrgdg_face_fix_finalize",
+   "file": "post_process/face_fix.py",
+   "line": 1094,
+   "doc": "",
+   "callers": [
+    "builder.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_prompt_creator/config",
+   "handler": "vrgdg_music_prompt_creator_config",
+   "file": "prompt_creator/nodes.py",
+   "line": 1679,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/repair_segments",
+   "handler": "vrgdg_music_prompt_creator_repair_segments",
+   "file": "prompt_creator/nodes.py",
+   "line": 1689,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/create_concepts",
+   "handler": "vrgdg_music_prompt_creator_create_concepts",
+   "file": "prompt_creator/nodes.py",
+   "line": 1698,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/extract_subject",
+   "handler": "vrgdg_music_prompt_creator_extract_subject",
+   "file": "prompt_creator/nodes.py",
+   "line": 1707,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/create_i2v_motion_notes",
+   "handler": "vrgdg_music_prompt_creator_create_i2v_motion_notes",
+   "file": "prompt_creator/nodes.py",
+   "line": 1716,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/save_outputs",
+   "handler": "vrgdg_music_prompt_creator_save_outputs",
+   "file": "prompt_creator/nodes.py",
+   "line": 1725,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/save_draft",
+   "handler": "vrgdg_music_prompt_creator_save_draft",
+   "file": "prompt_creator/nodes.py",
+   "line": 1734,
+   "doc": "",
+   "callers": [
+    "project_actions.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/load_draft",
+   "handler": "vrgdg_music_prompt_creator_load_draft",
+   "file": "prompt_creator/nodes.py",
+   "line": 1743,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/music_prompt_creator/list_drafts",
+   "handler": "vrgdg_music_prompt_creator_list_drafts",
+   "file": "prompt_creator/nodes.py",
+   "line": 1752,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/get_instruction",
+   "handler": "vrgdg_music_prompt_creator_get_instruction",
+   "file": "prompt_creator/nodes.py",
+   "line": 1760,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/save_instruction",
+   "handler": "vrgdg_music_prompt_creator_save_instruction",
+   "file": "prompt_creator/nodes.py",
+   "line": 1769,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/reset_instruction",
+   "handler": "vrgdg_music_prompt_creator_reset_instruction",
+   "file": "prompt_creator/nodes.py",
+   "line": 1778,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/list_instruction_presets",
+   "handler": "vrgdg_music_prompt_creator_list_instruction_presets",
+   "file": "prompt_creator/nodes.py",
+   "line": 1787,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/save_instruction_preset",
+   "handler": "vrgdg_music_prompt_creator_save_instruction_preset",
+   "file": "prompt_creator/nodes.py",
+   "line": 1796,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/load_instruction_preset",
+   "handler": "vrgdg_music_prompt_creator_load_instruction_preset",
+   "file": "prompt_creator/nodes.py",
+   "line": 1805,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/build_whisper_prompt",
+   "handler": "vrgdg_music_prompt_creator_build_whisper_prompt",
+   "file": "prompt_creator/nodes.py",
+   "line": 1814,
+   "doc": "",
+   "callers": [
+    "lyric_transcription.mjs",
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_prompt_creator/import_audio",
+   "handler": "vrgdg_music_prompt_creator_import_audio",
+   "file": "prompt_creator/nodes.py",
+   "line": 1823,
+   "doc": "",
+   "callers": [
+    "prompt_creator.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/load",
+   "handler": "vrgdg_storyboard_load",
+   "file": "storyboard/nodes.py",
+   "line": 61,
+   "doc": "",
+   "callers": [
+    "external_changes.mjs",
+    "persistence.mjs",
+    "scene_output.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/save",
+   "handler": "vrgdg_storyboard_save",
+   "file": "storyboard/nodes.py",
+   "line": 70,
+   "doc": "",
+   "callers": [
+    "api.mjs",
+    "scene_output.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/import_reference_image",
+   "handler": "vrgdg_storyboard_import_reference_image",
+   "file": "storyboard/nodes.py",
+   "line": 89,
+   "doc": "",
+   "callers": [
+    "references.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/export_prompts",
+   "handler": "vrgdg_storyboard_export_prompts",
+   "file": "storyboard/nodes.py",
+   "line": 98,
+   "doc": "",
+   "callers": [
+    "persistence.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/gemma_video_prompt",
+   "handler": "vrgdg_storyboard_gemma_video_prompt",
+   "file": "storyboard/nodes.py",
+   "line": 116,
+   "doc": "",
+   "callers": [
+    "prompt_generation.mjs",
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/gemma_image_prompt",
+   "handler": "vrgdg_storyboard_gemma_image_prompt",
+   "file": "storyboard/nodes.py",
+   "line": 125,
+   "doc": "",
+   "callers": [
+    "image_prompts.mjs",
+    "prompt_generation.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/story_brief",
+   "handler": "vrgdg_storyboard_story_brief",
+   "file": "storyboard/nodes.py",
+   "line": 134,
+   "doc": "",
+   "callers": [
+    "story_layer.mjs",
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/story_arc",
+   "handler": "vrgdg_storyboard_story_arc",
+   "file": "storyboard/nodes.py",
+   "line": 143,
+   "doc": "",
+   "callers": [
+    "story_layer.mjs",
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/story_mode/{action}",
+   "handler": "vrgdg_storyboard_story_mode",
+   "file": "storyboard/nodes.py",
+   "line": 164,
+   "doc": "",
+   "callers": [
+    "story_builder.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/scene_story_beat",
+   "handler": "vrgdg_storyboard_scene_story_beat",
+   "file": "storyboard/nodes.py",
+   "line": 177,
+   "doc": "",
+   "callers": [
+    "batch_render.mjs",
+    "scene_beats.mjs",
+    "wizard_bridge.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/id_lora_dialogue_scenes",
+   "handler": "vrgdg_storyboard_id_lora_dialogue_scenes",
+   "file": "storyboard/nodes.py",
+   "line": 186,
+   "doc": "",
+   "callers": [
+    "script_mapper.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/storyboard/minimax_dialogue_scenes",
+   "handler": "vrgdg_storyboard_minimax_dialogue_scenes",
+   "file": "storyboard/nodes.py",
+   "line": 195,
+   "doc": "",
+   "callers": [
+    "script_mapper.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/browser_image/status",
+   "handler": "vrgdg_browser_image_status",
+   "file": "browser/nodes.py",
+   "line": 1681,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/setup",
+   "handler": "vrgdg_browser_image_setup",
+   "file": "browser/nodes.py",
+   "line": 1685,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/open_login",
+   "handler": "vrgdg_browser_image_open_login",
+   "file": "browser/nodes.py",
+   "line": 1697,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/manual_open",
+   "handler": "vrgdg_browser_image_manual_open",
+   "file": "browser/nodes.py",
+   "line": 1715,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/manual_upload",
+   "handler": "vrgdg_browser_image_manual_upload",
+   "file": "browser/nodes.py",
+   "line": 1733,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/manual_submit",
+   "handler": "vrgdg_browser_image_manual_submit",
+   "file": "browser/nodes.py",
+   "line": 1745,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/manual_finish",
+   "handler": "vrgdg_browser_image_manual_finish",
+   "file": "browser/nodes.py",
+   "line": 1757,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/store_reference",
+   "handler": "vrgdg_browser_image_store_reference",
+   "file": "browser/nodes.py",
+   "line": 1769,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/manual_wait_download",
+   "handler": "vrgdg_browser_image_manual_wait_download",
+   "file": "browser/nodes.py",
+   "line": 1781,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/browser_image/manual_import_latest",
+   "handler": "vrgdg_browser_image_manual_import_latest",
+   "file": "browser/nodes.py",
+   "line": 1793,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_flow_gpt_image_prompt",
+   "handler": "vrgdg_workflow_runner_build_flow_gpt_image_prompt",
+   "file": "browser/nodes.py",
+   "line": 1805,
+   "doc": "",
+   "callers": [
+    "VRGDG_BrowserImageBridge.js"
+   ]
+  }
+ ]
+}

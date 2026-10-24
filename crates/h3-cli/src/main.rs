@@ -37,6 +37,9 @@ enum Commands {
         /// Folder that holds the projects. Defaults to project_root in the config.
         #[arg(long)]
         project_root: Option<PathBuf>,
+        /// Also serve the app's screens from this folder (app/web), so a browser can open the Builder at the same address.
+        #[arg(long)]
+        web: Option<PathBuf>,
     },
     /// List the scenes of a project.
     Scenes {
@@ -220,8 +223,11 @@ async fn main() -> ExitCode {
             println!("{cfg:#?}");
             ExitCode::SUCCESS
         }
-        Commands::Serve { bind, project_root } => {
+        Commands::Serve { bind, project_root, web } => {
             let mut cfg = cfg;
+            if let Some(web) = web {
+                std::env::set_var("H3_WEB", web);
+            }
             if let Some(bind) = bind {
                 cfg.api_bind = bind;
             }

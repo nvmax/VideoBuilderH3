@@ -44,6 +44,10 @@ pub struct AppState {
     pub presets_dir: PathBuf,
     /// Edits of a project run one at a time, so two requests cannot overwrite each other's changes.
     pub edit_lock: tokio::sync::Mutex<()>,
+    /// Messages for the Builder's event stream (`/vrgdg/events`), as JSON text.
+    pub builder_events: tokio::sync::broadcast::Sender<String>,
+    /// The app's screens, served beside the API when set (`h3 serve --web`). The desktop app embeds them instead.
+    pub web_dir: Option<PathBuf>,
 }
 
 pub type Shared = State<Arc<AppState>>;
@@ -170,7 +174,14 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/latents/dirty", get(latent_dirty))
         .route("/projects/{pid}/scenes/{sid}/latent", get(latent_one).delete(latent_delete));
     let cors = CorsLayer::new().allow_origin(Any).allow_methods(Any).allow_headers(Any);
-    Router::new().nest("/api/v1", v1).layer(cors).with_state(state)
+    Router::new()
+        .nest("/api/v1", v1.clone())
+        // The pack's front end reaches the agent API under /vrgdg/api/v1.
+        .nest("/vrgdg/api/v1", v1)
+        .merge(crate::vrgdg::router())
+        .fallback(crate::vrgdg::fallback)
+        .layer(cors)
+        .with_state(state)
 }
 
 // -- helpers ----------------------------------------------------------------------------------------------------------------

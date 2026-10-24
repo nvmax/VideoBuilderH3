@@ -296,3 +296,24 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - F75: Existing Video Builder projects. The Builder keeps its projects directly in ComfyUI's output folder. The app now reads projects from its own project folder and from ComfyUI's output folder (the configured comfy_output_dir, else the one the running ComfyUI reports at start). New projects are still made in the project folder. On the first run the setup suggests the output folder as the project folder. Checked read-only against this machine: all 20 projects listed with their scene counts. UI: the app's screens are the thin D2 UI, not a copy of the Builder's look.
 
 - F76: UI in the Builder's layout, from the user's builder.png (Pictures folder). Header bar (Menu, project, Auto Build, Ref Builder, LLM Runner, Render Queue, All Settings, health, MiniMax H3, Stop, Setup), scene cards on the left (Scenes, Tools, Post Process), a large preview with the song scrub in the middle, Image, Video and Audio tabs on the right (pipeline, mode and pass buttons, Models, Video Settings, Scene, Prompt, and the cyan Create MiniMax H3 Scene Video button), and the timeline along the bottom (ruler, thumbnail clips, waveform, button column). Colors from the picture: zinc 950 background, panels 202024, cyan 06b6d4, amber 451a03 scene cards. Same API as before, no logic moved. Not checked in a browser yet.
+
+## 21. P11: the Builder's own front end (decision F77, replaces the thin UI of F76)
+
+The user wants the app to look and work like the Video Builder in the ComfyUI pack, button for button. A hand made UI can
+not get there, so the app now runs the pack's own front end: `web/music_video_builder`, `web/storyboard_builder` and the
+top level scripts it imports, copied unchanged by `tools/sync_builder_ui.ps1` into `app/web/extensions/comfyui-vrgamedevgirl`.
+
+- **Host.** `app/web/scripts/api.js` and `app.js` stand in for ComfyUI's (the Builder uses `api.fetchApi`, a client id, one
+  server event and `app.registerExtension`). `app/web/host/boot.js` starts `openBuilder` with a stand-in node that keeps its
+  four widget values in browser storage. The old SolidJS screens, Vite and the Node build are gone. Tauri embeds `app/web`.
+- **Server.** `h3-api` answers the pack's `/vrgdg/...` routes (`crates/h3-api/src/vrgdg`) with the pack's request and reply
+  shapes. A route not built yet answers 501 naming itself and is logged (`[VRGDG-RS Builder] Not built yet`). Paths that are
+  not `/vrgdg` go to ComfyUI (the Builder uses `/prompt`, `/history`, `/queue`, `/view`, `/interrupt`). The agent API is also
+  served at `/vrgdg/api/v1`. `h3 serve --web app/web` serves the screens too, so a browser can open the Builder.
+- **Inventory.** `tools/inventory_builder_routes.py` lists the 232 pack routes, their handlers and which front end modules
+  call them (`fixtures/api/builder_routes.json`, `docs/BUILDER_ROUTES.md`). LTX, face fix, Speaking mode and the browser
+  automation routes are out. Everything H3 uses stays.
+- **Order.** M1 start up and open a project, M2 timeline editing, M3 render path, M4 LLM and prompts, M5 reference builder
+  and RefMods, M6 audio mask and lyrics, M7 Story Mode, M8 post process, M9 pop out windows and the desktop shell.
+- **Proof.** Each route is checked against the live pack (ComfyUI at 8188 answers the same request on a scratch copy) and in
+  Chrome next to the real Builder.

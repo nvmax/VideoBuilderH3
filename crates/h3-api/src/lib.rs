@@ -20,6 +20,7 @@ pub mod llm_routes;
 pub mod session_routes;
 pub mod setup_routes;
 pub mod views;
+pub mod vrgdg;
 
 use std::path::Path;
 use std::sync::Arc;
@@ -66,7 +67,7 @@ pub fn build_state(mut cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, 
     let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
     let config_path = db_path.parent().unwrap_or_else(|| Path::new(".")).join("config.json");
     let llm = std::sync::RwLock::new(cfg.llm.clone());
-    Ok(Arc::new(AppState { llm, config_path, cfg, roots, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()) }))
+    Ok(Arc::new(AppState { llm, config_path, cfg, roots, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(64).0, web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()) }))
 }
 
 /// Serve the API until the process stops.

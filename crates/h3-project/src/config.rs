@@ -45,6 +45,10 @@ impl Default for AppConfig {
 impl AppConfig {
     /// Default config file location.
     pub fn default_path() -> PathBuf {
+        // `H3_CONFIG` points at another config file, for tests and for running two copies side by side.
+        if let Some(path) = std::env::var_os("H3_CONFIG").filter(|p| !p.is_empty()) {
+            return PathBuf::from(path);
+        }
         dirs::config_dir()
             .unwrap_or_else(|| PathBuf::from("."))
             .join("VRGDG-H3")
