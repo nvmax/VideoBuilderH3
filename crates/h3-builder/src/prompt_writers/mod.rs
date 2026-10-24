@@ -7,6 +7,7 @@
 
 pub mod concepts;
 pub mod enhance;
+pub mod gemma4;
 #[cfg(test)]
 mod golden;
 pub mod image_prompts;

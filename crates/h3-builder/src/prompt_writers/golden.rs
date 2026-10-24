@@ -5,6 +5,7 @@ use serde_json::json;
 
 use super::concepts::generate_concept_prompts;
 use super::enhance::enhance_minimax_h3_prompt;
+use super::gemma4::generate as generate_gemma4;
 use super::image_prompts::{analyze_story_references, edit_image_prompt, generate_flux_klein_prompt, generate_nb_image_prompt, generate_t2i};
 use super::motion_notes::generate_motion_notes;
 use super::references::{
@@ -33,6 +34,7 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "zimage" => flux_reference_zimage_prompt(llm, payload).await,
             "enhance" => enhance_minimax_h3_prompt(llm, payload).await,
             "motion" => generate_motion_notes(llm, payload).await,
+            "gemma4" => generate_gemma4(llm, payload).await,
             other => panic!("unknown function {other}"),
         }
     })
@@ -62,4 +64,15 @@ async fn the_prompt_enhancer_matches_the_pack() {
 #[tokio::test]
 async fn the_motion_note_writer_matches_the_pack() {
     check_cases("llm/motion_notes.json", 20, "", dispatch).await;
+}
+
+#[tokio::test]
+async fn the_gemma4_drafts_match_the_pack() {
+    let dir = tempfile::tempdir().unwrap();
+    let custom = dir.path().join("project_context").join("custom_llm_instructions");
+    std::fs::create_dir_all(&custom).unwrap();
+    for (name, body) in [("style_theme.txt", "\u{feff}Custom style instructions.\n"), ("story_idea.txt", "   \n"), ("location_description_detail.txt", "Custom location detail instructions.")] {
+        std::fs::write(custom.join(name), body).unwrap();
+    }
+    check_cases("llm/gemma4.json", 40, &dir.path().display().to_string(), dispatch).await;
 }

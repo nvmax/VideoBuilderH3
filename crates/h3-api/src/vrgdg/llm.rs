@@ -9,7 +9,7 @@ use axum::http::StatusCode;
 use axum::routing::{get, post as axum_post, MethodRouter};
 use axum::Router;
 use h3_builder::instructions;
-use h3_builder::prompt_writers::{concepts, enhance, image_prompts, motion_notes, references, RunnerLlm};
+use h3_builder::prompt_writers::{concepts, enhance, gemma4, image_prompts, motion_notes, references, RunnerLlm};
 use h3_core::pyval::{text_or_empty, to_int, truthy, Obj};
 use h3_llm::runner::runner_config;
 use h3_llm::{own_server, providers, ChatRequest, LlmConfig};
@@ -56,6 +56,21 @@ macro_rules! writer {
     };
 }
 
+/// `POST /vrgdg/gemma4/generate`: a writer that, unlike the others, answers 400 when the body is not a JSON object.
+fn gemma4_generate() -> MethodRouter<Arc<AppState>> {
+    axum_post(|State(state): State<Arc<AppState>>, body: Bytes| async move {
+        let payload = match serde_json::from_slice::<Value>(&body) {
+            Ok(Value::Object(map)) => map,
+            Ok(_) => return super::into_response(Err(Fail::new(StatusCode::BAD_REQUEST, "JSON body must be an object."))),
+            Err(_) => return super::into_response(Err(Fail::new(StatusCode::BAD_REQUEST, "Invalid JSON body."))),
+        };
+        let base = base_config(&state);
+        let llm = RunnerLlm { payload: &payload, base: &base };
+        let reply = gemma4::generate(&llm, &payload).await.map(Out::from).map_err(|message| Fail::new(StatusCode::INTERNAL_SERVER_ERROR, message));
+        super::into_response(reply)
+    })
+}
+
 pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
     let base = "/vrgdg/music_builder";
     router
@@ -80,6 +95,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/flux_reference_zimage_prompt"), writer!(references::flux_reference_zimage_prompt))
         .route(&format!("{base}/lm_scout_locations"), writer!(references::lm_scout_locations))
         .route(&format!("{base}/wizard_locations_from_lyrics"), writer!(references::wizard_locations_from_lyrics))
+        .route("/vrgdg/gemma4/generate", gemma4_generate())
         .route(&format!("{base}/clear_memory_direct"), work(|state, _| async move { clear_memory_direct(&state).await }))
         .route(&format!("{base}/get_instruction"), post(|_, p| fields(instructions::get_instruction(&p))))
         .route(&format!("{base}/save_instruction"), post(|_, p| fields(instructions::save_instruction(&p))))

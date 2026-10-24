@@ -155,6 +155,29 @@ pub fn effective_instruction(payload: &Obj, key: &str, default_text: &str) -> St
     }
 }
 
+/// `_prompt_creator_custom_instruction`: a project's own text for a Gemma4 draft step (`project_context/custom_llm_instructions/<key>.txt`), or the default.
+pub fn prompt_creator_instruction(payload: &Obj, key: &str, default_text: &str) -> String {
+    let mut safe_key = String::new();
+    let mut pending = false;
+    for c in key.trim().to_lowercase().chars() {
+        if c.is_ascii_lowercase() || c.is_ascii_digit() || c == '_' {
+            safe_key.push(c);
+            pending = false;
+        } else if !pending {
+            safe_key.push('_');
+            pending = true;
+        }
+    }
+    let safe_key = safe_key.trim_matches('_');
+    if safe_key.is_empty() {
+        return default_text.to_string();
+    }
+    let project = absolute(Path::new(&path_text(payload, "project_folder")));
+    let path = context_folder(&project).join("custom_llm_instructions").join(format!("{safe_key}.txt"));
+    let found = fs::read(&path).ok().and_then(|bytes| String::from_utf8(bytes).ok()).map(|body| body.trim_start_matches('\u{feff}').trim().to_string());
+    found.filter(|body| !body.is_empty()).unwrap_or_else(|| default_text.to_string())
+}
+
 fn merged(project: &Path, state: Value) -> Value {
     let mut map = serde_json::Map::new();
     map.insert("project_folder".into(), json!(text(project)));
