@@ -263,3 +263,39 @@ pub async fn reference_image_prompt(State(state): Shared, axum::extract::Path((p
     let job = state.jobs.submit(crate::llm_jobs::REFERENCE_IMAGE_PROMPT, Some(&pid), Value::Object(params), false)?;
     Ok(crate::app::job_response(&job))
 }
+
+/// `POST /projects/{pid}/prompts/concepts`: concept prompts for the scenes sent, as a job.
+pub async fn concept_prompts(State(state): Shared, axum::extract::Path(pid): axum::extract::Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let params = body_object(body)?;
+    crate::app::load(&state, &pid).await?;
+    let job = state.jobs.submit(crate::llm_jobs::CONCEPTS, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
+/// `POST /projects/{pid}/prompts/motion-notes`: motion notes for the scenes sent, as a job.
+pub async fn motion_notes(State(state): Shared, axum::extract::Path(pid): axum::extract::Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let params = body_object(body)?;
+    crate::app::load(&state, &pid).await?;
+    let job = state.jobs.submit(crate::llm_jobs::MOTION_NOTES, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
+/// `POST /projects/{pid}/scenes/{sid}/prompts/enhance`: improve the scene's MiniMax H3 prompt, as a job.
+pub async fn enhance_scene_prompt(State(state): Shared, axum::extract::Path((pid, sid)): axum::extract::Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    let loaded = crate::app::load(&state, &pid).await?;
+    crate::views::find_scene(&loaded, &sid)?;
+    params.insert("scene_id".into(), json!(sid));
+    let job = state.jobs.submit(crate::llm_jobs::ENHANCE_PROMPT, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}
+
+/// `POST /projects/{pid}/scenes/{sid}/prompts/edit`: rewrite the scene's image prompt following an instruction, as a job.
+pub async fn edit_scene_prompt(State(state): Shared, axum::extract::Path((pid, sid)): axum::extract::Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    let loaded = crate::app::load(&state, &pid).await?;
+    crate::views::find_scene(&loaded, &sid)?;
+    params.insert("scene_id".into(), json!(sid));
+    let job = state.jobs.submit(crate::llm_jobs::EDIT_PROMPT, Some(&pid), Value::Object(params), false)?;
+    Ok(crate::app::job_response(&job))
+}

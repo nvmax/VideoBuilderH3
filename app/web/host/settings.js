@@ -25,14 +25,14 @@ async function call(path, options = {}) {
   return body.data;
 }
 
-function element(tag, css, text) {
+export function element(tag, css, text) {
   const node = document.createElement(tag);
   if (css) node.style.cssText = css;
   if (text !== undefined) node.textContent = text;
   return node;
 }
 
-function button(label, primary = false) {
+export function button(label, primary = false) {
   const node = element("button", `border:1px solid ${primary ? "#0891b2" : "#3f3f46"};border-radius:6px;background:${primary ? "#0e7490" : "#27272a"};color:#f4f4f5;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;`, label);
   node.type = "button";
   return node;
@@ -43,6 +43,66 @@ function restartApp() {
   if (!internals?.invoke) return false;
   internals.invoke("restart_app").catch(() => {});
   return true;
+}
+
+// The ElevenLabs key is kept for every project, in the same place as the Builder's own settings, and used by any project that has no key of its own. It
+// saves at once, with no restart. An agent can make speech with it through the app and never sees it.
+function elevenLabsBlock() {
+  const wrap = element("div", "margin:14px 0 10px;border-top:1px solid #1e293b;padding-top:12px;");
+  wrap.append(element("div", "font-weight:800;color:#cbd5e1;", "ElevenLabs API key"));
+  const row = element("div", "display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;");
+  const input = element("input", "flex:1;min-width:200px;box-sizing:border-box;border:1px solid #3f3f46;border-radius:6px;background:#18181b;color:#f4f4f5;padding:7px 9px;font-size:12px;");
+  input.type = "password";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+  const save = button("Save key");
+  const check = button("Test");
+  const remove = button("Remove");
+  row.append(input, save, check, remove);
+  const hint = element("div", "color:#71717a;font-size:11px;margin-top:3px;", "For Speaking projects: voices and speech. It is saved at once and used by every project without a key of its own. AI agents can make speech with it through the app and never see it.");
+  const state = element("div", "min-height:16px;margin-top:4px;font-size:12px;color:#94a3b8;");
+  wrap.append(row, hint, state);
+  const say = (text, color = "#94a3b8") => {
+    state.textContent = text;
+    state.style.color = color;
+  };
+  const show = (configured) => {
+    input.placeholder = configured ? "A key is saved. Paste a new one to replace it." : "Paste your ElevenLabs API key";
+    remove.style.display = configured ? "" : "none";
+    say(configured ? "A key is saved." : "No key is saved.", configured ? "#86efac" : "#94a3b8");
+  };
+  show(false);
+  call("/setup/elevenlabs").then((found) => show(Boolean(found.configured))).catch((error) => say(String(error?.message || error), "#fca5a5"));
+  save.onclick = async () => {
+    const key = input.value.trim();
+    if (!key) return say("Paste a key first.", "#fbbf24");
+    try {
+      const found = await call("/setup/elevenlabs", { method: "PUT", body: JSON.stringify({ api_key: key }) });
+      input.value = "";
+      show(Boolean(found.configured));
+    } catch (error) {
+      say(String(error?.message || error), "#fca5a5");
+    }
+  };
+  check.onclick = async () => {
+    say("Testing...");
+    try {
+      await call("/setup/elevenlabs/test", { method: "POST", body: JSON.stringify({ api_key: input.value.trim() }) });
+      say("Connected: ElevenLabs accepted the key.", "#86efac");
+    } catch (error) {
+      say(String(error?.message || error), "#fca5a5");
+    }
+  };
+  remove.onclick = async () => {
+    try {
+      const found = await call("/setup/elevenlabs", { method: "PUT", body: JSON.stringify({ api_key: "" }) });
+      input.value = "";
+      show(Boolean(found.configured));
+    } catch (error) {
+      say(String(error?.message || error), "#fca5a5");
+    }
+  };
+  return wrap;
 }
 
 export function openAppSettings({ welcome = false } = {}) {
@@ -80,6 +140,7 @@ export function openAppSettings({ welcome = false } = {}) {
     wrap.append(row, element("span", "color:#71717a;font-size:11px;", field.hint));
     panel.append(wrap);
   }
+  panel.append(elevenLabsBlock());
   const suggestion = element("div", "display:none;margin:-2px 0 10px;color:#94a3b8;font-size:12px;");
   panel.append(suggestion);
 
@@ -175,6 +236,13 @@ function addMenuEntry(root) {
     entry.onclick = () => openAppSettings();
     found.dataset.h3AppSettings = "1";
     menu.insertBefore(entry, found);
+    // MCP Setup sits right under it: how to connect an AI agent to this app.
+    const mcp = found.cloneNode(true);
+    mcp.textContent = "MCP Setup";
+    mcp.dataset.h3AppSettings = "1";
+    mcp.title = "Connect an AI agent (Claude, Codex, Cursor, LM Studio and others) to the MCP server built into this app.";
+    mcp.onclick = () => import("/host/mcp_setup.js").then((module) => module.openMcpSetup());
+    menu.insertBefore(mcp, found);
   }
 }
 

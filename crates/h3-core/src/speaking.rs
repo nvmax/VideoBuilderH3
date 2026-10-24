@@ -639,3 +639,45 @@ pub fn update_audio_settings(session: &Value, settings: &Value, scene_id: Option
     result.insert("audio_clips".into(), Value::Array(clips));
     Ok(Value::Object(result))
 }
+
+/// `audio_settings_view`: a scene's own settings, the settings that apply to it, and the timing of the dialogue it owns, as the agent API shows them.
+pub fn audio_settings_view(session: &Value, scene: &Value) -> Result<Value, String> {
+    require_speaking(session)?;
+    let mut copy = session.as_object().cloned().unwrap_or_default();
+    materialize_scene_clips(&mut copy)?;
+    let all: Vec<Value> = copy.get("audio_clips").and_then(Value::as_array).cloned().unwrap_or_default();
+    let scene_id = required(scene, "id")?.clone();
+    let owned: Vec<Value> = owned_clips(&all, &scene_id).iter().map(|index| all[*index].clone()).collect();
+    let mut span = 0.0;
+    if !owned.is_empty() {
+        let (mut first, mut last) = (f64::INFINITY, f64::NEG_INFINITY);
+        for clip in &owned {
+            first = first.min(number_at(clip, "start")?);
+            last = last.max(number_at(clip, "start")? + number_at(clip, "duration")?);
+        }
+        span = last - first;
+    }
+    let effective = effective_settings(copy.get("speaking_audio_defaults"), scene)?;
+    let own = scene.get("scene_audio_settings").filter(|v| truthy(v)).and_then(Value::as_object).cloned().unwrap_or_default();
+    let defaults = copy.get("speaking_audio_defaults").filter(|v| truthy(v)).and_then(Value::as_object).cloned().unwrap_or_default();
+    let project_defaults = merged(json!({"silence_before": 0.0, "silence_after": 0.0, "fit_duration": true}), &defaults);
+    Ok(json!({
+        "dialogue": normalize_dialogue(scene.get("scene_dialogue").unwrap_or(&Value::Null)),
+        "scene_id": scene_id,
+        "settings": merged(Value::Object(scene_default_settings()), &own),
+        "effective_settings": {"silence_before": effective.silence_before, "silence_after": effective.silence_after, "fit_duration": effective.fit_duration},
+        "project_defaults": project_defaults,
+        "clips": owned,
+        "audio_duration": round_to(span, 4),
+        "total_duration": round_to(span + effective.silence_before + effective.silence_after, 4),
+        "scene_duration": round_to(number_at(scene, "end")? - number_at(scene, "start")?, 4),
+        "needs_render": scene.get("scene_audio_render_dirty").is_some_and(truthy),
+    }))
+}
+
+/// The project's Speaking defaults as the agent API shows them.
+pub fn project_audio_defaults(session: &Value) -> Result<Value, String> {
+    require_speaking(session)?;
+    let defaults = session.get("speaking_audio_defaults").filter(|v| truthy(v)).and_then(Value::as_object).cloned().unwrap_or_default();
+    Ok(merged(json!({"silence_before": 0.0, "silence_after": 0.0, "fit_duration": true}), &defaults))
+}

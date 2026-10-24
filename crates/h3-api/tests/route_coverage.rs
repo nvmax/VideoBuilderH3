@@ -10,20 +10,6 @@ use serde_json::Value;
 
 /// Endpoints this app does not serve, with why.
 const LEFT_OUT: &[(&str, &str, &str)] = &[
-    // Speaking videos and voices are not music video features.
-    ("GET", "/projects/{pid}/speaking-audio/defaults", "speaking"),
-    ("PATCH", "/projects/{pid}/speaking-audio/defaults", "speaking"),
-    ("GET", "/projects/{pid}/scenes/{sid}/audio-settings", "speaking"),
-    ("PATCH", "/projects/{pid}/scenes/{sid}/audio-settings", "speaking"),
-    ("POST", "/projects/{pid}/scenes/{sid}/dialogue/craft", "speaking"),
-    ("POST", "/projects/{pid}/scenes/{sid}/dialogue/generate", "speaking"),
-    ("GET", "/projects/{pid}/elevenlabs", "elevenlabs"),
-    ("PUT", "/projects/{pid}/elevenlabs", "elevenlabs"),
-    ("GET", "/projects/{pid}/elevenlabs/voices", "elevenlabs"),
-    ("POST", "/projects/{pid}/elevenlabs/test", "elevenlabs"),
-    ("POST", "/projects/{pid}/references/subjects/{rid}/voice-design/description", "elevenlabs"),
-    ("POST", "/projects/{pid}/elevenlabs/voice-design/previews", "elevenlabs"),
-    ("POST", "/projects/{pid}/elevenlabs/voice-design/create", "elevenlabs"),
     // The app never loads, unloads or switches the LLM model.
     ("POST", "/llm/unload", "model policy"),
     // LTX only.
@@ -34,18 +20,8 @@ const LEFT_OUT: &[(&str, &str, &str)] = &[
     ("POST", "/projects/{project_id}/scenes/{scene_id}/face-fix/runs/{n}/ltx", "face fix (ltx)"),
     ("POST", "/projects/{project_id}/scenes/{scene_id}/face-fix/finalize", "face fix (ltx)"),
     ("POST", "/projects/{project_id}/scenes/{scene_id}/face-fix/auto", "face fix (ltx)"),
-    // Planned: still to port.
-    ("POST", "/projects/{pid}/prompts/concepts", "llm prompt routes"),
-    ("POST", "/projects/{pid}/prompts/motion-notes", "llm prompt routes"),
+    // Not built.
     ("POST", "/projects/{pid}/scenes/{sid}/prompts/video-chained", "ltx"),
-    ("POST", "/projects/{pid}/scenes/{sid}/prompts/enhance", "llm prompt routes"),
-    ("POST", "/projects/{pid}/scenes/{sid}/prompts/edit", "llm prompt routes"),
-    ("GET", "/instructions", "instruction presets"),
-    ("GET", "/instructions/{key}", "instruction presets"),
-    ("PUT", "/instructions/{key}", "instruction presets"),
-    ("DELETE", "/instructions/{key}/override", "instruction presets"),
-    ("PUT", "/instructions/presets/{name}", "instruction presets"),
-    ("POST", "/instructions/presets/{name}/load", "instruction presets"),
     ("DELETE", "/post/luts/previews/{id}", "post previews"),
     ("POST", "/projects/{project_id}/scenes/{scene_id}/post/lut/preview", "post previews"),
     ("POST", "/projects/{project_id}/scenes/{scene_id}/post/film-grain", "film grain"),

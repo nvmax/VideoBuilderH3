@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 use h3_core::lyric_scenes::is_instrumental_lyric_text;
 use h3_core::pyval::{text_or_empty, to_float, truthy, Obj};
 use h3_core::scene_card::{apply_to_segment, card_only_names, field_names, parse_scene_card_patch};
+use h3_core::speaking::{normalize_design_draft, normalize_voice, require_speaking, validate_design_draft, validate_voice};
 use h3_core::timeline::{normalize_segments, sort_segments};
 use serde_json::{json, Value};
 
@@ -261,14 +262,40 @@ fn card_list<'a>(session: &'a mut Obj, kind: &str) -> Result<&'a mut Vec<Value>,
     list.as_array_mut().ok_or_else(|| OpError::Validation(format!("{key} is not a list.")))
 }
 
+/// The ElevenLabs voice and the Voice Design draft of a character after `payload` is applied. Both belong to Speaking mode, and only to a primary character.
+fn subject_voice(speaking: &Value, old: &Value, payload: &Obj) -> Result<(Value, Value), OpError> {
+    let mut voice = normalize_voice(old.get("elevenlabs_voice").unwrap_or(&Value::Null));
+    let mut draft = normalize_design_draft(old.get("elevenlabs_voice_design").unwrap_or(&Value::Null));
+    let reference_type = payload.get("reference_type").or_else(|| old.get("reference_type")).map_or("character".to_string(), |v| text_or_empty(Some(v)));
+    let extra = payload.get("extra_reference_for").or_else(|| old.get("extra_reference_for")).is_some_and(truthy);
+    if let Some(value) = payload.get("elevenlabs_voice_design") {
+        require_speaking(speaking).map_err(OpError::Validation)?;
+        if reference_type != "character" || extra {
+            return Err(OpError::Validation("Voice Design requires a primary character reference.".into()));
+        }
+        draft = validate_design_draft(value).map_err(OpError::Validation)?;
+    }
+    if let Some(value) = payload.get("elevenlabs_voice") {
+        require_speaking(speaking).map_err(OpError::Validation)?;
+        voice = validate_voice(value).map_err(OpError::Validation)?;
+        if voice["enabled"] == Value::Bool(true) && (reference_type != "character" || extra) {
+            return Err(OpError::Validation("ElevenLabs voices can only be assigned to primary characters.".into()));
+        }
+    }
+    Ok((voice, draft))
+}
+
 /// Create or update a character or location card. Only the fields sent change. Existing cards keep their other keys.
 pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj, if_match: Option<i64>, now: &Stamp) -> OpResult {
     let mut edit = open(project, if_match)?;
     let is_subject = matches!(kind, "subjects" | "subject");
+    let speaking = json!({"video_type": edit.session.get("video_type").cloned().unwrap_or(Value::Null)});
     let list = card_list(&mut edit.session, kind)?;
     let existing = list.iter().position(|c| c.get("id").and_then(Value::as_str) == Some(card_id));
     let old = existing.map(|i| list[i].clone()).unwrap_or(Value::Null);
     let pick = |key: &str, default: Value| -> Value { payload.get(key).cloned().or_else(|| old.get(key).cloned()).unwrap_or(default) };
+    let (voice, draft) = if is_subject { subject_voice(&speaking, &old, payload)? } else { (Value::Null, Value::Null) };
+    let first = existing.unwrap_or(list.len()) == 0;
     let card = if is_subject {
         json!({
             "id": card_id,
@@ -277,6 +304,8 @@ pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj
             "face_description": pick("face_description", json!("")),
             "reference_type": pick("reference_type", json!("character")),
             "minimax_voice": pick("minimax_voice", json!("none")),
+            "elevenlabs_voice": voice,
+            "elevenlabs_voice_design": draft,
             "trigger_phrase": pick("trigger_phrase", json!("")),
             "trigger_position": pick("trigger_position", json!("start")),
             "extra_reference_for": pick("extra_reference_for", json!("")),
@@ -307,6 +336,15 @@ pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj
             card
         }
     };
+    // The first character is also kept as the Builder's single `subject`, with its voice.
+    if is_subject && first {
+        if let Some(builder) = edit.session.get_mut("flux_reference_builder").and_then(Value::as_object_mut) {
+            if let Some(single) = builder.entry("subject").or_insert_with(|| json!({})).as_object_mut() {
+                single.insert("elevenlabs_voice".into(), saved["elevenlabs_voice"].clone());
+                single.insert("elevenlabs_voice_design".into(), saved["elevenlabs_voice_design"].clone());
+            }
+        }
+    }
     let revision = edit.save(now)?;
     Ok(json!({if is_subject { "subject" } else { "location" }: saved, "revision": revision}))
 }

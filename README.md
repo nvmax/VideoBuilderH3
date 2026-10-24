@@ -46,7 +46,7 @@ cargo run -p h3-cli -- serve                                  # http://127.0.0.1
 cargo run -p h3-cli -- serve --project-root "D:\Projects"     # projects are the folders in it
 ```
 
-Same paths, envelopes and error codes as the pack's agent API. The pack's MCP server connects with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`. Jobs are saved in `jobs.db` next to the config file. A job a stopped app left unfinished shows as `interrupted`, and `POST /jobs/{id}/retry` with `{"resume": true}` renders only the scenes without a clip.
+Same paths, envelopes and error codes as the pack's agent API. The app also has an MCP server of its own at `http://127.0.0.1:8190/mcp` (and `h3-studio --mcp-stdio` for agents that start a program), so an agent needs nothing else: see `docs/MCP.md`, or Menu > MCP Setup in the app. The pack's MCP server still works with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`. Jobs are saved in `jobs.db` next to the config file. A job a stopped app left unfinished shows as `interrupted`, and `POST /jobs/{id}/retry` with `{"resume": true}` renders only the scenes without a clip.
 
 ## Image presets
 

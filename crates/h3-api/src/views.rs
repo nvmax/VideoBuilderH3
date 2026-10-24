@@ -257,6 +257,7 @@ pub fn settings_view(session: &Obj) -> Value {
     json!({
         "project": {
             "video_engine": non_empty(session.get("video_engine")).unwrap_or_else(|| "minimax_h3".into()),
+            "video_type": non_empty(session.get("video_type")).unwrap_or_else(|| "singing".into()),
             "timing_frozen": flag("timing_frozen", false),
             "auto_save_enabled": flag("auto_save_enabled", true),
             "omit_lyrics_from_video_prompts": flag("omit_lyrics_from_video_prompts", false),
@@ -331,11 +332,17 @@ pub fn apply_settings_patch(session: &mut Obj, patch: &Obj) -> Result<(), ApiErr
                 session.insert("minimax_h3_settings".into(), Value::Object(current));
             }
             "project" => {
-                const ALLOWED: [&str; 6] =
-                    ["video_engine", "timing_frozen", "auto_save_enabled", "omit_lyrics_from_video_prompts", "automatic_memory_cleanup", "scene_render_wait_hours"];
+                const ALLOWED: [&str; 7] =
+                    ["video_engine", "video_type", "timing_frozen", "auto_save_enabled", "omit_lyrics_from_video_prompts", "automatic_memory_cleanup", "scene_render_wait_hours"];
                 let unknown: Vec<&String> = fields.keys().filter(|k| !ALLOWED.contains(&k.as_str())).collect();
                 if !unknown.is_empty() {
                     return Err(ApiError::new(axum::http::StatusCode::BAD_REQUEST, "SETTINGS_INVALID", "Unknown project settings.").details(json!({"invalid_fields": unknown.iter().map(|k| (k.to_string(), json!("unknown project setting"))).collect::<Map<_, _>>()})));
+                }
+                if let Some(kind) = fields.get("video_type") {
+                    let known = ["singing", "speaking", "no_lip_sync", "story"];
+                    if !kind.as_str().is_some_and(|k| known.contains(&k)) {
+                        return Err(ApiError::new(axum::http::StatusCode::BAD_REQUEST, "SETTINGS_INVALID", "video_type must be singing, speaking, no_lip_sync or story.").details(json!({"invalid_fields": {"video_type": "must be singing, speaking, no_lip_sync or story"}})));
+                    }
                 }
                 for (k, v) in fields {
                     session.insert(k.clone(), v.clone());

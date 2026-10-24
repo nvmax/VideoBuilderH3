@@ -1,0 +1,5845 @@
+{
+ "version": 1,
+ "tools": [
+  {
+   "name": "system_health",
+   "description": "Check health of ComfyUI, GPU, queue, and FFmpeg.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "list_modes",
+   "description": "List supported image and video modes, requirements, and capabilities.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "list_models",
+   "description": "List installed models, checkpoints, and LoRAs available in ComfyUI.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_list",
+   "description": "List all available Music Video projects.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_create",
+   "description": "Create a new music video builder project.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_name": {
+      "type": "string",
+      "description": "Name for the project"
+     },
+     "audio_file": {
+      "type": "string",
+      "description": "Optional path to audio track"
+     },
+     "duration": {
+      "type": "number",
+      "description": "Optional silent timeline duration"
+     }
+    },
+    "required": [
+     "project_name"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_get",
+   "description": "Get complete project session details, optionally filtering fields.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "include": {
+      "type": "string",
+      "description": "Comma-separated keys to include"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_summary",
+   "description": "Get compact project summary with scene counts, rendered progress, and duration.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_update_settings",
+   "description": "Update project-level video, image, or engine settings. `settings` is grouped: {\"minimax_h3\": {...}, \"project\": {...}}. `project` holds video_engine, video_type (singing, speaking, no_lip_sync or story), timing_frozen, auto_save_enabled, omit_lyrics_from_video_prompts, automatic_memory_cleanup and scene_render_wait_hours. Only the keys you send change. Call minimax_settings_schema for every MiniMax H3 key (render passes, 2 Pass Advanced tiles, seam controls, LoRAs) with types, allowed values and limits. Invalid values are rejected with SETTINGS_INVALID.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "settings": {
+      "type": "object",
+      "description": "Grouped settings to update, e.g. {\"minimax_h3\": {\"render_pass\": \"three_pass\"}}"
+     },
+     "if_match_revision": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "settings"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_get_settings",
+   "description": "Get a project's effective settings in every group, including all MiniMax H3 options.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "minimax_settings_schema",
+   "description": "List every MiniMax H3 video setting with type, default, allowed values and limits. Use it to build a valid `minimax_h3` patch for project_update_settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_duplicate",
+   "description": "Duplicate an existing project into a new one.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "new_project_name": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_validate",
+   "description": "Preflight check project settings and dependencies.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "settings": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_export",
+   "description": "Export project bundle archive.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "export_type": {
+      "type": "string",
+      "default": "zip"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "project_delete",
+   "description": "Delete a project from disk. Requires confirm=true.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "confirm": {
+      "type": "boolean",
+      "description": "Must be true to proceed"
+     }
+    },
+    "required": [
+     "project_id",
+     "confirm"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "audio_attach",
+   "description": "Attach an audio track to the project.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "audio_file": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id",
+     "audio_file"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "audio_analyze",
+   "description": "Read the project's beat markers and tempo. They were found by the app's own beat tracker when the song was added.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "method": {
+      "type": "string",
+      "default": "librosa"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "lyrics_set",
+   "description": "Set raw lyric text or timed lyric lines for the project.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "lyrics": {
+      "description": "String or list of timed lyric objects"
+     }
+    },
+    "required": [
+     "project_id",
+     "lyrics"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "lyrics_transcribe",
+   "description": "Time the project's lyrics against its song (same as lyrics_align). Runs as a job: use job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "language": {
+      "type": "string",
+      "default": "en"
+     },
+     "model": {
+      "type": "string",
+      "default": "base"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_build",
+   "description": "Build scene segments from text durations, beats, or lyrics.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "text": {
+      "type": "string"
+     },
+     "mode": {
+      "type": "string",
+      "default": "durations"
+     },
+     "action": {
+      "type": "string",
+      "default": "replace"
+     },
+     "append_start": {
+      "type": "number",
+      "default": 0.0
+     },
+     "clear_media": {
+      "type": "boolean",
+      "default": false
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scene_list",
+   "description": "List all scene segments in the project timeline.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scene_get",
+   "description": "Get single scene details including prompts, images, takes, and timing.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scene_update",
+   "description": "Edit a scene card. The change is saved on the timeline scene and appears in the open Video Builder. Only the keys sent change; an empty string, false or [] clears or disables a field. Read the current card with scene_get (scene_card). Notes: timeline_note (Director Notes), i2v_notes (Video Notes), notes (Planning Notes), prompt_summary. Lyrics: lyric_text, lyric_section, lyric_singers, lyric_cue_map, lyric_no_lip_sync, lyric_instrumental, lyric_performance_mode, lyric_shot_word_timing_enabled, speaker_assignments. Camera and character: shot_type, camera_motion, character_motion, no_character_present. Performance: performance_mode (singing|speaking|no_lip_sync), performance_style, facial_performance, facial_performance_custom, include_microphone. Audio and continuity: audio_direction, continuity, flf_start_state, flf_transformation, flf_end_state, flf_carry_forward. Look: video_style, video_style_custom, temporal_world_effect_override, temporal_world_effect_custom, trigger_phrase, trigger_position. References: subject_ids (list of character ids), location_id. Prompts: image_prompt, video_prompt, video_prompt_origin, minimax_h3_pass2_prompt, plus the single prompt fields and timing. Timed Timeline Notes are separate: use timeline_note_create.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "patch": {
+      "type": "object",
+      "description": "Scene-card fields to set, for example {\"timeline_note\": \"...\", \"include_microphone\": false}."
+     },
+     "if_match_revision": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id",
+     "patch"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scene_insert",
+   "description": "Insert a new scene segment into the timeline.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scene_delete",
+   "description": "Delete a scene segment from the timeline.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "ripple": {
+      "type": "boolean",
+      "default": false
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scene_split_merge_move_resize",
+   "description": "Perform split, merge, move, or resize operations on scenes.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "op": {
+      "type": "string",
+      "enum": [
+       "split",
+       "merge",
+       "move",
+       "resize"
+      ]
+     },
+     "split_time": {
+      "type": "number"
+     },
+     "direction": {
+      "type": "string",
+      "default": "next"
+     },
+     "start_time": {
+      "type": "number"
+     },
+     "duration": {
+      "type": "number"
+     },
+     "end_time": {
+      "type": "number"
+     },
+     "ripple": {
+      "type": "boolean",
+      "default": false
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id",
+     "op"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "scenes_bulk_edit",
+   "description": "Execute multiple scene operations atomically.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "operations": {
+      "type": "array",
+      "items": {
+       "type": "object"
+      }
+     }
+    },
+    "required": [
+     "project_id",
+     "operations"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "story_generate",
+   "description": "Write the story arc, the story brief or the scene beats with the project's LLM, or concept prompts or motion notes. For the full story steps use story_create.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "what": {
+      "type": "string",
+      "enum": [
+       "arc",
+       "brief",
+       "beats",
+       "concepts",
+       "motion_notes"
+      ]
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id",
+     "what"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "story_get_set",
+   "description": "Get or update project story data (concept, arc, characters).",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "story": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "references_get",
+   "description": "Get project reference cast and locations.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "reference_upsert",
+   "description": "Add or update a reference subject or location.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "subjects",
+       "locations"
+      ]
+     },
+     "reference_id": {
+      "type": "string"
+     },
+     "payload": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id",
+     "kind",
+     "reference_id",
+     "payload"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "references_extract",
+   "description": "Extract characters and settings from lyrics or story using LLM.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "reference_scene_mapping_set",
+   "description": "Bind reference subjects and locations to scenes.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "mapping": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id",
+     "mapping"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "prompts_generate",
+   "description": "Generate image or video prompts for scenes using LLM.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "image",
+       "video",
+       "chained",
+       "enhance",
+       "edit"
+      ]
+     },
+     "scope": {
+      "type": "string",
+      "enum": [
+       "one",
+       "all",
+       "selected"
+      ]
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "instructions_get_set",
+   "description": "Read, save or reset a prompt-writing instruction (the system prompt an LLM step uses). `key` names it, `project_id` limits it to one project, `scope` is all or scene.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "key": {
+      "type": "string"
+     },
+     "action": {
+      "type": "string",
+      "enum": [
+       "get",
+       "save",
+       "reset"
+      ]
+     },
+     "project_id": {
+      "type": "string"
+     },
+     "prompt": {
+      "type": "string"
+     },
+     "negative_prompt": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "key"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "image_generate",
+   "description": "Submit an image generation job for a scene or batch.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "image_set_from_upload",
+   "description": "Set a scene's starting image from base64 data or existing file path.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "image_data": {
+      "type": "string"
+     },
+     "source_path": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "image_approve_revert",
+   "description": "Approve, revert, or delete scene image preview.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "action": {
+      "type": "string",
+      "enum": [
+       "approve",
+       "revert",
+       "delete"
+      ]
+     },
+     "image_path": {
+      "type": "string"
+     },
+     "delta": {
+      "type": "integer"
+     },
+     "index": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id",
+     "action"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "video_render",
+   "description": "Submit a video render job for a scene or batch.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "video_recover",
+   "description": "Recover scene video from rendered backup takes.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "video_select_take",
+   "description": "Select active take from scene video history.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "source_path": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id",
+     "source_path"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "latents_status_rebuild",
+   "description": "Check the latent status of the scenes, list the dirty ones, rebuild the dirty chain, or delete a scene's latent.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "action": {
+      "type": "string",
+      "enum": [
+       "status",
+       "dirty",
+       "rebuild",
+       "delete"
+      ]
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "all": {
+      "type": "boolean"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "post_apply",
+   "description": "Apply a LUT to one scene (op `lut`, with scene_id) or to every scene (op `apply_all`). The LUT goes in `settings`.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "op": {
+      "type": "string",
+      "enum": [
+       "lut",
+       "apply_all"
+      ]
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "settings": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id",
+     "op"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "stitch_final",
+   "description": "Stitch rendered scene videos into FINAL_VIDEO.mp4.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "params": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "pipeline_build_full_video",
+   "description": "Run the whole build for a project as one background job: prompts, images where needed, videos, and the stitch. Returns a job id for job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "pipeline": {
+      "type": "string",
+      "enum": [
+       "full_video"
+      ]
+     },
+     "build_mode": {
+      "type": "string",
+      "enum": [
+       "resume_missing",
+       "fresh_rebuild",
+       "redo_videos",
+       "redo_i2v_prompts_videos"
+      ]
+     },
+     "scope": {
+      "type": "string",
+      "enum": [
+       "all",
+       "selected",
+       "from_selected"
+      ]
+     },
+     "scene_ids": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "stitch": {
+      "type": "boolean",
+      "default": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "lyrics_align",
+   "description": "Time the project's lyrics against its song with the Builder's Stable-ts workflow. Runs as a job (use job_wait). Needs project audio and lyrics. Saves the timed lines in the project.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "segment_mode": {
+      "type": "string",
+      "enum": [
+       "reference_lines",
+       "exact_reference_lines",
+       "reference_stanzas",
+       "whisper_chunks"
+      ],
+      "default": "reference_lines"
+     },
+     "language": {
+      "type": "string",
+      "default": "english"
+     },
+     "include_instrumental_gaps": {
+      "type": "boolean",
+      "default": true
+     },
+     "min_gap_seconds": {
+      "type": "number",
+      "default": 2.0
+     },
+     "vocal_tail_padding_seconds": {
+      "type": "number",
+      "default": 0.6
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_from_lines",
+   "description": "Create the timeline scenes from the project's lyrics, like Line Mapping in the Builder. Times the lyrics (or reuses a saved timing), makes one scene per lyric line, fills instrumental gaps, then merges scenes shorter than min_scene_seconds and cuts scenes longer than max_scene_seconds. Runs as a job (use job_wait). Refuses to replace existing scenes unless replace_existing is true, and never replaces scenes that already have images or videos.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "min_scene_seconds": {
+      "type": "number",
+      "default": 3.5
+     },
+     "max_scene_seconds": {
+      "type": "number",
+      "default": 10.0
+     },
+     "segment_mode": {
+      "type": "string",
+      "enum": [
+       "reference_lines",
+       "exact_reference_lines",
+       "reference_stanzas",
+       "whisper_chunks"
+      ],
+      "default": "reference_lines"
+     },
+     "enforce_lengths": {
+      "type": "boolean",
+      "default": true,
+      "description": "False keeps one scene per lyric line whatever its length"
+     },
+     "replace_existing": {
+      "type": "boolean",
+      "default": false
+     },
+     "use_saved_alignment": {
+      "type": "boolean",
+      "default": false,
+      "description": "Reuse the timing from lyrics_align instead of running it again"
+     },
+     "reference_lyrics": {
+      "type": "string",
+      "description": "Defaults to the project lyrics"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_enforce_length",
+   "description": "Merge scenes shorter than min_scene_seconds and cut scenes longer than max_scene_seconds. A 12 s scene becomes two 6 s scenes with its lyrics divided; short scenes merge into the neighbor that gives the shorter result. Uses the safe merge/split edits that keep image and video numbering correct. Scenes with rendered video are left alone and listed. Use dry_run to preview.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "min_scene_seconds": {
+      "type": "number"
+     },
+     "max_scene_seconds": {
+      "type": "number"
+     },
+     "dry_run": {
+      "type": "boolean",
+      "default": false
+     }
+    },
+    "required": [
+     "project_id",
+     "min_scene_seconds",
+     "max_scene_seconds"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_notes_list",
+   "description": "List the project's timed Timeline Notes (the Builder's + Timeline Note markers, T64): id, start and end seconds (end is null for a point note), type, label, note text and the scene_ids each note overlaps. Story Arc generation (story_create step arc) uses them as timed story events.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_note_create",
+   "description": "Add a timed Timeline Note. start is seconds on the project timeline. Give end for a range note or leave it out for a point note (an event at start). The open Video Builder shows it right away.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "start": {
+      "type": "number",
+      "minimum": 0
+     },
+     "end": {
+      "type": [
+       "number",
+       "null"
+      ],
+      "description": "Later than start; omit or null for a point note."
+     },
+     "type": {
+      "type": "string",
+      "description": "Free text, for example note, chorus, verse, beat, female vocal."
+     },
+     "label": {
+      "type": "string"
+     },
+     "note": {
+      "type": "string",
+      "description": "The story direction for this moment."
+     },
+     "id": {
+      "type": "string",
+      "description": "Optional id; one is made when omitted."
+     },
+     "if_match_revision": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "start"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_note_update",
+   "description": "Change a timed Timeline Note. Only the fields sent change; the id never changes. Send end: null to turn a range note into a point note.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "note_id": {
+      "type": "string"
+     },
+     "start": {
+      "type": "number",
+      "minimum": 0
+     },
+     "end": {
+      "type": [
+       "number",
+       "null"
+      ]
+     },
+     "type": {
+      "type": "string"
+     },
+     "label": {
+      "type": "string"
+     },
+     "note": {
+      "type": "string"
+     },
+     "if_match_revision": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "note_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "timeline_note_delete",
+   "description": "Delete a timed Timeline Note.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "note_id": {
+      "type": "string"
+     },
+     "if_match_revision": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "note_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "reference_describe",
+   "description": "Describe a character or location reference image with the project's LLM, like Gemma Describe. Saves the description on the reference. Runs as a job (use job_wait). With LM Studio it uses the model that is already loaded and never changes it.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "subjects",
+       "locations"
+      ],
+      "default": "subjects"
+     },
+     "ref_id": {
+      "type": "string",
+      "description": "Id of the subject or location"
+     }
+    },
+    "required": [
+     "project_id",
+     "ref_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "reference_extract_locations",
+   "description": "Ask the project's LLM for 18-22 filming locations from the lyrics and style notes, like LM Extract, and add them to the Reference Builder. Needs scenes with lyrics. Runs as a job (use job_wait).",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "style_theme": {
+      "type": "string",
+      "description": "Overall look of the scenes, e.g. 'Los Angeles nightlife, neon, night time'"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "reference_assign_scenes",
+   "description": "Assign saved characters and locations to scenes with a pattern, like Assign Scenes. location_pattern 'blocks' repeats each location for location_block_size scenes, then moves to the next. Existing mappings are only replaced when replace_existing is true. Use dry_run to preview.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "character_pattern": {
+      "type": "string",
+      "enum": [
+       "random",
+       "rotate",
+       "blocks",
+       "unchanged"
+      ],
+      "default": "unchanged"
+     },
+     "character_block_size": {
+      "type": "integer",
+      "default": 10
+     },
+     "location_pattern": {
+      "type": "string",
+      "enum": [
+       "random",
+       "rotate",
+       "blocks",
+       "unchanged"
+      ],
+      "default": "unchanged"
+     },
+     "location_block_size": {
+      "type": "integer",
+      "default": 4
+     },
+     "replace_existing": {
+      "type": "boolean",
+      "default": false
+     },
+     "avoid_location_repeat": {
+      "type": "boolean",
+      "default": true
+     },
+     "scope": {
+      "type": "string",
+      "enum": [
+       "all",
+       "range",
+       "selected"
+      ],
+      "default": "all"
+     },
+     "range_start": {
+      "type": "integer"
+     },
+     "range_end": {
+      "type": "integer"
+     },
+     "scene_ids": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "seed": {
+      "type": "integer"
+     },
+     "dry_run": {
+      "type": "boolean",
+      "default": false
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "llm_active",
+   "description": "Show which LLM the API will use. For LM Studio this is the model currently loaded; the API never loads or switches models.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     }
+    }
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "story_settings",
+   "description": "Save the Storyboard scene defaults and the story idea. defaults: video_style (e.g. 'Cinematic realism'), camera_flow (e.g. 'intimate_closeups'), camera_motion_speed 0-10, character_motion_speed 0-10, minimax_h3_cut_frequency, performance_style, story_arc_detail. story: overall_story_idea (written by the agent), lyric_story_strength 0-10, image_world_style.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "defaults": {
+      "type": "object"
+     },
+     "story": {
+      "type": "object"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "story_create",
+   "description": "Write a story layer step with the project's LLM, as a background job. step 'arc' writes the story arc from the story idea, 'brief' writes the song story brief, 'beats' writes a beat per scene (only scenes without one unless replace_existing; limit caps the count). Returns a job id for job_wait. Order: arc, brief, beats. Story Mode (video_type 'story') uses its own steps: 'book' writes the story book from story_idea, 'split' turns a story you pass as text into chapters without changing a word, 'convert' does the same with an older project's story arc, 'chapter' rewrites chapter_id following direction, 'cast' lists story characters that have no card (nothing saved), 'remove_people' rewrites the book without the people in names, 'acts' splits every chapter (or chapter_id) into acts, 'plan' gives every scene (or act_id's scenes) a story slice, spot, mood and performance, 'locations' makes a location card per spot (from the story, never the lyrics) and maps the scenes. For LM Studio the loaded model is used and never changed.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "step": {
+      "type": "string",
+      "enum": [
+       "arc",
+       "brief",
+       "beats",
+       "book",
+       "split",
+       "convert",
+       "chapter",
+       "cast",
+       "remove_people",
+       "acts",
+       "plan",
+       "locations"
+      ]
+     },
+     "style_theme": {
+      "type": "string",
+      "description": "locations only: look and banned places."
+     },
+     "act_id": {
+      "type": "string",
+      "description": "plan only: rebuild one act's scenes."
+     },
+     "spot_min_scenes": {
+      "type": "integer",
+      "description": "plan only: fewest scenes in a row at one spot."
+     },
+     "story_idea": {
+      "type": "string",
+      "description": "arc and book; defaults to the saved idea."
+     },
+     "tone_notes": {
+      "type": "string",
+      "description": "book only: tone, genre and world notes."
+     },
+     "text": {
+      "type": "string",
+      "description": "split only: the full story to divide into chapters."
+     },
+     "chapter_id": {
+      "type": "string",
+      "description": "chapter and acts: story_book.chapters[].id."
+     },
+     "direction": {
+      "type": "string",
+      "description": "chapter only: what to change."
+     },
+     "names": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "remove_people only: who to write out."
+     },
+     "story_arc_detail": {
+      "type": "string",
+      "enum": [
+       "compact",
+       "standard",
+       "detailed",
+       "rich"
+      ]
+     },
+     "scene_ids": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "replace_existing": {
+      "type": "boolean",
+      "default": false
+     },
+     "limit": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id",
+     "step"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "minimax_prompts",
+   "description": "Write MiniMax H3 reference-to-video prompts with the project's LLM, as a background job. Only scenes without a prompt are written unless replace_existing; limit caps the count. Every scene needs a mapped character with an image. Run after story_create beats. Returns a job id for job_wait. For LM Studio the loaded model is used and never changed.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_ids": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      }
+     },
+     "replace_existing": {
+      "type": "boolean",
+      "default": false
+     },
+     "limit": {
+      "type": "integer"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "pipeline_from_song",
+   "description": "Turn a song into a finished video in one background job: create the project if needed, attach audio and lyrics, cut scenes, then run the full build. Returns a job id for job_wait. A project that already has scenes keeps them.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_name": {
+      "type": "string",
+      "description": "Creates a new project with this name"
+     },
+     "project_id": {
+      "type": "string",
+      "description": "Use an existing project instead"
+     },
+     "audio_path": {
+      "type": "string",
+      "description": "Song file; optional if the project already has audio"
+     },
+     "lyrics_text": {
+      "type": "string"
+     },
+     "scene_seconds": {
+      "type": "number",
+      "default": 4.0
+     },
+     "snap_to_beats": {
+      "type": "boolean",
+      "default": true
+     },
+     "build_mode": {
+      "type": "string",
+      "enum": [
+       "resume_missing",
+       "fresh_rebuild",
+       "redo_videos",
+       "redo_i2v_prompts_videos"
+      ]
+     },
+     "max_auto_retries": {
+      "type": "integer",
+      "default": 3
+     },
+     "stitch": {
+      "type": "boolean",
+      "default": true
+     }
+    }
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "pipeline_plan",
+   "description": "Dry-run plan calculating steps, GPU minutes, and missing prerequisites.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "pipeline": {
+      "type": "string",
+      "enum": [
+       "full_video"
+      ]
+     },
+     "build_mode": {
+      "type": "string"
+     },
+     "scope": {
+      "type": "string"
+     },
+     "scene_ids": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "job_get",
+   "description": "Check status, progress percentage, and results of a background job.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "job_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "job_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "job_wait",
+   "description": "Block up to timeout_seconds waiting for job completion without client timeout.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "job_id": {
+      "type": "string"
+     },
+     "timeout_seconds": {
+      "type": "number",
+      "default": 60.0
+     }
+    },
+    "required": [
+     "job_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "job_cancel",
+   "description": "Cancel a running or queued background job.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "job_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "job_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "job_retry",
+   "description": "Retry a failed background job.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "job_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "job_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "asset_view",
+   "description": "View thumbnail or contact sheet as an MCP image content block.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "scene_id": {
+      "type": "string"
+     },
+     "asset_id": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "thumbnail",
+       "contact_sheet"
+      ],
+      "default": "thumbnail"
+     }
+    }
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "asset_download_url",
+   "description": "Get streaming / download URL for an asset.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "asset_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "asset_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "upload_file",
+   "description": "Upload an audio, image, or LUT file.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "filename": {
+      "type": "string"
+     },
+     "content": {
+      "type": "string",
+      "description": "Base64 encoded file content"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "general",
+       "lut"
+      ]
+     },
+     "project_id": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "filename"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "api_get_instructions",
+   "description": "List the prompt-writing instructions (system prompts) the LLM steps use, with their override state. (GET /instructions)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/instructions",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_instructions_presets",
+   "description": "Save the current text of an instruction as a named preset. (PUT /instructions/presets/{name})",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "The name from the path (a preset or file name)."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: key.",
+      "properties": {
+       "key": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "name"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/instructions/presets/{name}",
+    "args": {
+     "name": "name"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_instructions_presets_load",
+   "description": "Load a named preset into an instruction. (POST /instructions/presets/{name}/load)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "The name from the path (a preset or file name)."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: key.",
+      "properties": {
+       "key": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "name"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/instructions/presets/{name}/load",
+    "args": {
+     "name": "name"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_jobs",
+   "description": "List jobs, newest first. Filter with `project_id`, `status` and `type`. (GET /jobs)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "object",
+      "description": "Query parameters: project_id, status, type.",
+      "properties": {
+       "project_id": {
+        "description": "Only this project."
+       },
+       "status": {
+        "description": "Only jobs in this status, e.g. running, queued, done, error."
+       },
+       "type": {
+        "description": "Only jobs of this type."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/jobs",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_jobs_log",
+   "description": "The job's progress log. Pass `since` (a sequence number) to read only new lines. (GET /jobs/{id}/log)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "job_id": {
+      "type": "string",
+      "description": "A job id returned by a call that runs as a job."
+     },
+     "query": {
+      "type": "object",
+      "description": "Query parameters: since.",
+      "properties": {
+       "since": {
+        "description": "Return log lines after this position."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "job_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/jobs/{id}/log",
+    "args": {
+     "id": "job_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_llm_models",
+   "description": "Models the configured LLM provider offers. `provider` selects LM Studio, an own server or an API provider. (GET /llm/models)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "object",
+      "description": "Query parameters: provider.",
+      "properties": {
+       "provider": {
+        "description": "The LLM provider name."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/llm/models",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_llm_test",
+   "description": "Send a short test request to the configured LLM runner and report whether it answers. (POST /llm/test)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: provider, text_runner.",
+      "properties": {
+       "provider": {
+        "description": "The LLM provider name."
+       },
+       "text_runner": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/llm/test",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_meta",
+   "description": "API version (`v1`), the app's name and version, and the capabilities this app serves.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/meta",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_post_luts",
+   "description": "List the available LUT (color look-up table) files. (GET /post/luts)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/post/luts",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_assets",
+   "description": "Files in the project folder: images, videos, thumbnails, audio and final videos. (GET /projects/{pid}/assets)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/assets",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_audio_beats",
+   "description": "Replace the beat markers (`beats`) and tempo (`tempo_bpm`). (PUT /projects/{pid}/audio/beats)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: beats, tempo_bpm.",
+      "properties": {
+       "beats": {
+        "description": "Beat times in seconds, ascending."
+       },
+       "tempo_bpm": {
+        "description": "Tempo in beats per minute."
+       }
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/projects/{pid}/audio/beats",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_get_audio_waveform",
+   "description": "Waveform peaks for drawing the audio. `peaks` sets how many. (GET /projects/{pid}/audio/waveform)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "query": {
+      "type": "object",
+      "description": "Query parameters: peaks.",
+      "properties": {
+       "peaks": {
+        "description": "How many waveform points to return."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/audio/waveform",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_elevenlabs",
+   "description": "Speaking mode only: read whether an ElevenLabs API key is saved to this project, plus revision. Never returns the key. (GET /projects/{pid}/elevenlabs) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/elevenlabs",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_elevenlabs",
+   "description": "Speaking mode only: explicitly save `api_key` to `elevenlabs_api_key_project`, like the Builder's LLM runner key. An empty string clears it. Stored in the project session; existing export credential handling applies. Supports If-Match. Never echoes the key. (PUT /projects/{pid}/elevenlabs) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: api_key.",
+      "properties": {
+       "api_key": {}
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/projects/{pid}/elevenlabs",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_elevenlabs_test",
+   "description": "Speaking mode only: test the saved API key's Voices read access. Returns connected: true on success. Does not save a key or generate speech. (POST /projects/{pid}/elevenlabs/test) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/elevenlabs/test",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_elevenlabs_voice_design_create",
+   "description": "Speaking mode only: explicitly create an account voice from a chosen preview. Accepts voice_name (1–256), voice_description (20–1000) and generated_voice_id. Returns permanent voice_id and name. Does not assign it or mutate the project. Assign with PUT references/subjects/{rid} elevenlabs_voice and If-Match. Never retries account creation automatically; after an ambiguous failure refresh voices before retrying. (POST /projects/{pid}/elevenlabs/voice-design/create) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: generated_voice_id, voice_description, voice_name.",
+      "properties": {
+       "generated_voice_id": {},
+       "voice_description": {},
+       "voice_name": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/elevenlabs/voice-design/create",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_elevenlabs_voice_design_previews",
+   "description": "Speaking mode only: generate ElevenLabs Voice Design previews using the saved project key. Accepts voice_description (20–1000 characters), model_id (eleven_ttv_v3 default or eleven_multilingual_ttv_v2), and optional text (100–1000 characters; blank generates sample dialogue). Returns temporary generated_voice_id and base64 MP3 candidates. Uses account credits; does not save a voice or project state. (POST /projects/{pid}/elevenlabs/voice-design/previews) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: model_id, text, voice_description.",
+      "properties": {
+       "model_id": {},
+       "text": {},
+       "voice_description": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/elevenlabs/voice-design/previews",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_elevenlabs_voices",
+   "description": "Speaking mode only: list one page of account voices using the saved project key. Returns voice_id, name, category, public HTTPS preview_url, has_more and next_page_token. Pass next_page_token for another page. Does not generate speech. (GET /projects/{pid}/elevenlabs/voices) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "query": {
+      "type": "object",
+      "description": "Query parameters: next_page_token.",
+      "properties": {
+       "next_page_token": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/elevenlabs/voices",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_lyrics",
+   "description": "The project's lyrics text and the lyric text on each scene. (GET /projects/{pid}/lyrics)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/lyrics",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_references_locations",
+   "description": "Create or update a location (name, description, optional image). (PUT /projects/{pid}/references/locations/{rid})",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "reference_id": {
+      "type": "string",
+      "description": "The reference card's id. Get it from references_get."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id",
+     "reference_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/projects/{pid}/references/locations/{rid}",
+    "args": {
+     "pid": "project_id",
+     "rid": "reference_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_get_references_scene_mapping",
+   "description": "Read which characters, locations, ingredients and extras each scene uses. A scene maps to one location here. To see every reference a MiniMax scene can pick from, and the order it sends, use `GET /projects/{pid}/scenes/{sid}/minimax-references`. Add `?include=scenes` (every scene) or `?scene_id=<id or number>` (one scene) to also get `pipeline` and `scenes`: each scene's `scene_id`, `scene_number`, `label`, `no_character_present` and `cards` (subjects, extras, location, ingredients in that order, as mapped), each with `map`, `card_id`, `name`, `reference_type`, `source` (`refmod` or `image`), `refmod` (`name`, `found`, `kind`, `tokens`, `strength`, read from the RefMod file like the render, or `null`) and `picture` (`path`, `exists`, or `null`). Read-only. An unknown include returns 400. (GET /projects/{pid}/references/scene-mapping)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "query": {
+      "type": "object",
+      "description": "Query parameters: include, scene_id.",
+      "properties": {
+       "include": {
+        "description": "Comma-separated groups and/or top-level session keys."
+       },
+       "scene_id": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/references/scene-mapping",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_references_subjects",
+   "description": "Create or update a character (name, description, `reference_type`, voice, trigger phrase, `image`). In Speaking mode also accepts `elevenlabs_voice`: {enabled: boolean, voice_id: string, name: string}. Enabled assignments require a voice ID and a primary character reference. Also accepts elevenlabs_voice_design editing fields: user_input, voice_description, preview_text, voice_name, model_id. Only durable draft fields are stored; preview audio and temporary IDs are discarded. Preserves existing voice and design fields when omitted; supports If-Match. (PUT /projects/{pid}/references/subjects/{rid})",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "reference_id": {
+      "type": "string",
+      "description": "The reference card's id. Get it from references_get."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id",
+     "reference_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/projects/{pid}/references/subjects/{rid}",
+    "args": {
+     "pid": "project_id",
+     "rid": "reference_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_references_subjects_voice_design_description",
+   "description": "Speaking mode only: submit an LLM job to turn user_input (1–4000 characters) and an existing primary character into a reviewable voice_description. Uses the project's saved LLM Runner, and only an already loaded LM Studio model. Does not call ElevenLabs or persist the result. Wait for the returned job ID. (POST /projects/{pid}/references/subjects/{rid}/voice-design/description) Runs as a background job: returns a job id, then call job_wait. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "reference_id": {
+      "type": "string",
+      "description": "The reference card's id. Get it from references_get."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: user_input.",
+      "properties": {
+       "user_input": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id",
+     "reference_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/references/subjects/{rid}/voice-design/description",
+    "args": {
+     "pid": "project_id",
+     "rid": "reference_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_delete_references",
+   "description": "Delete a character or location (`kind` is `subjects` or `locations`) and its scene mappings. (DELETE /projects/{pid}/references/{kind}/{rid})",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "kind": {
+      "type": "string",
+      "description": "The reference group named in the path, e.g. subjects or locations."
+     },
+     "reference_id": {
+      "type": "string",
+      "description": "The reference card's id. Get it from references_get."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id",
+     "kind",
+     "reference_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "DELETE",
+    "path": "/projects/{pid}/references/{kind}/{rid}",
+    "args": {
+     "pid": "project_id",
+     "kind": "kind",
+     "rid": "reference_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_get_scenes_audio_settings",
+   "description": "Speaking mode only: read scene overrides, effective/project settings, scene-owned dialogue clips, audio span, padded total duration, current scene duration, needs_render and the scene_dialogue editor draft. Uses the scene ID, not its position. (GET /projects/{pid}/scenes/{sid}/audio-settings)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/scenes/{sid}/audio-settings",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_patch_scenes_audio_settings",
+   "description": "Speaking mode only: patch `settings` (`use_project_defaults`, `fit_duration`: booleans; `silence_before`, `silence_after`: 0–60 seconds). Optionally import base64/data-URL `audio_data` with `audio_name`, or remove owned dialogue with `clear_audio: true`. Also accepts a `dialogue` draft (speaker_id, text, delivery, allow_rewrite, model_id) saved on that scene as scene_dialogue. Generated audio and API keys are never stored in the draft. Fits duration to dialogue plus silence and ripples later scenes and attached audio; independent tracks stay fixed. Originals are preserved. Supports If-Match; frozen timelines and running scene renders reject edits. (PATCH /projects/{pid}/scenes/{sid}/audio-settings)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: audio_data, audio_name, clear_audio, dialogue, settings.",
+      "properties": {
+       "audio_data": {},
+       "audio_name": {},
+       "clear_audio": {},
+       "dialogue": {},
+       "settings": {
+        "description": "The settings object to save."
+       }
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PATCH",
+    "path": "/projects/{pid}/scenes/{sid}/audio-settings",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_scenes_dialogue_craft",
+   "description": "Speaking only: create an LLM job using the saved runner, assigned character voice and elevenlabs_dialogue instruction preset. Optional dialogue object overrides the saved scene draft: speaker_id, text, delivery, allow_rewrite (default false), model_id (eleven_v4 default or eleven_v3). Returns editable tagged text; preserves spoken words unless rewriting is explicitly allowed. Does not call ElevenLabs or save the draft. Wait for the returned job ID. (POST /projects/{pid}/scenes/{sid}/dialogue/craft) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: dialogue.",
+      "properties": {
+       "dialogue": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/dialogue/craft",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_dialogue_generate",
+   "description": "Speaking only: explicitly generate one MP3 take with the saved ElevenLabs key and the chosen character's enabled voice. Optional dialogue overrides the saved scene_dialogue draft. Returns audio_data (MP3 data URL), audio_name, voice_id and dialogue. Uses credits; never retries automatically and does not write project state. Preview, then import via PATCH audio-settings with audio_data, audio_name, dialogue and If-Match to fit/ripple the scene. (POST /projects/{pid}/scenes/{sid}/dialogue/generate) The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: dialogue.",
+      "properties": {
+       "dialogue": {}
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/dialogue/generate",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_scenes_minimax_references",
+   "description": "What the Video Builder's Choose MiniMax References button shows for a scene: `available` (every character, extra, location and ingredients sheet with an image, each with its `key`, whether the scene mapping already picks it, and its `image_number` when selected), `selected` (the order sent to MiniMax), `custom` (chosen by hand or following the scene mappings), `automatic_keys` and the `limits` (9 images, 8 choices when the scene image is Image 1). `pipeline` says which view you got: `standard` (the view above) or, when the MiniMax H3 project renders with RefMods, `refmod`: `items` in render order, each with its prompt `label` (`<Video N>`, `<Picture N>`, `<Audio N>`), card, `category`, `reference_type` (props included), `strength`, `tokens` and `source` (`refmod` name, `found`, `kind`, `frames`, `canvas`, read from the RefMod file like the render), `labels`, `tokens` (`total`, `limit`, `over_limit`, `imbalance`), `warnings` and `editable: false`. (GET /projects/{pid}/scenes/{sid}/minimax-references)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/scenes/{sid}/minimax-references",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_scenes_minimax_references",
+   "description": "Choose the ordered MiniMax references for a scene: `keys` is the list from `available` (for example `[\"subject:ava\", \"location:roof\", \"location:alley\"]`, several locations are allowed), or `automatic: true` to follow the scene mappings again. Unknown or repeated keys and too many keys are refused with the allowed keys listed. In a RefMod project the render ignores this order, so the call returns 422 NOT_SUPPORTED_FOR_MODE and saves nothing; change the scene's references with PUT /references/scene-mapping instead. _(If-Match)_ (PUT /projects/{pid}/scenes/{sid}/minimax-references)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: automatic, keys.",
+      "properties": {
+       "automatic": {
+        "description": "true lets the Builder choose the references itself; false uses `keys`."
+       },
+       "keys": {
+        "description": "Reference keys to use, as listed by the matching GET (`available` / `selected`)."
+       }
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/projects/{pid}/scenes/{sid}/minimax-references",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_get_scenes_prompts_context",
+   "description": "The context brief an outside agent needs to write a prompt itself: cast, cut plan and character budget (`kind`). A scene continued with `latent_continuation_masked` also gets a `continuation` block: `hold_seconds`, the scene's `direction` and the `rules` for writing it as the next moment of the previous scene's take. (GET /projects/{pid}/scenes/{sid}/prompts/context)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "query": {
+      "type": "object",
+      "description": "Query parameters: kind.",
+      "properties": {
+       "kind": {
+        "description": "Which prompt context to return."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/context",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_prompts_edit",
+   "description": "Rewrite an existing scene prompt following an instruction. (POST /projects/{pid}/scenes/{sid}/prompts/edit) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/edit",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_prompts_enhance",
+   "description": "Improve an existing scene prompt with the LLM. (POST /projects/{pid}/scenes/{sid}/prompts/enhance) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/enhance",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_prompts_image",
+   "description": "Write one scene's image prompt with the LLM, from the scene's notes, lyric and references (`user_notes` overrides them). (POST /projects/{pid}/scenes/{sid}/prompts/image) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/image",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_prompts_minimax_assemble",
+   "description": "Build a MiniMax prompt from shot descriptions you provide (`shots`, `mode`). `save` stores it. A reference-to-video prompt gets the same subject definitions and soundscape as `minimax-prompts`. (POST /projects/{pid}/scenes/{sid}/prompts/minimax/assemble)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: mode, save, shots.",
+      "properties": {
+       "mode": {
+        "description": "The MiniMax H3 mode, e.g. text_to_video, image_to_video, reference_to_video."
+       },
+       "save": {
+        "description": "true stores the result on the scene; false only returns it."
+       },
+       "shots": {
+        "description": "The shot list to assemble, in order."
+       }
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/minimax/assemble",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_scenes_prompts_minimax_validate",
+   "description": "Check a MiniMax prompt against the length and format rules. (POST /projects/{pid}/scenes/{sid}/prompts/minimax/validate)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: mode, prompt.",
+      "properties": {
+       "mode": {
+        "description": "The MiniMax H3 mode, e.g. text_to_video, image_to_video, reference_to_video."
+       },
+       "prompt": {
+        "description": "The prompt text."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/minimax/validate",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_prompts_video",
+   "description": "Write one scene's video prompt with the LLM (`mode`), from its image prompt, motion notes and references. (POST /projects/{pid}/scenes/{sid}/prompts/video) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/scenes/{sid}/prompts/video",
+    "args": {
+     "pid": "project_id",
+     "sid": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_speaking_audio_defaults",
+   "description": "Speaking mode only: read project defaults for `silence_before`, `silence_after` (seconds, initially 0) and `fit_duration` (initially true). (GET /projects/{pid}/speaking-audio/defaults)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/speaking-audio/defaults",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_patch_speaking_audio_defaults",
+   "description": "Speaking mode only: patch `settings` (`silence_before`, `silence_after`: 0–60 seconds; `fit_duration`: boolean). Reposition scene-owned dialogue and resize/ripple scenes inheriting defaults. Independent music/effect tracks stay fixed. Source files and scene numbering are preserved. Supports If-Match; frozen timelines and running scene renders reject edits. (PATCH /projects/{pid}/speaking-audio/defaults)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: settings.",
+      "properties": {
+       "settings": {
+        "description": "The settings object to save."
+       }
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PATCH",
+    "path": "/projects/{pid}/speaking-audio/defaults",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_timeline_calibrate",
+   "description": "Shift all beat markers by `offset_seconds`. (POST /projects/{pid}/timeline/calibrate)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: offset_seconds.",
+      "properties": {
+       "offset_seconds": {
+        "description": "Seconds to shift the beat grid by."
+       }
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/timeline/calibrate",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_timeline_close_gaps",
+   "description": "Remove gaps between scenes by moving later scenes earlier. (POST /projects/{pid}/timeline/close-gaps)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/timeline/close-gaps",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_timeline_snap",
+   "description": "Snap a scene edge to the nearest beat (`scene_id`, `edge`, `scope`). (POST /projects/{pid}/timeline/snap)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: edge, scene_id, scope.",
+      "properties": {
+       "edge": {
+        "description": "Which scene edge to snap, start or end."
+       },
+       "scene_id": {},
+       "scope": {
+        "description": "Which scenes to touch, e.g. selected or all."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/timeline/snap",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_validate",
+   "description": "Check the project is consistent: files exist, scene timing, references, settings. (POST /projects/{pid}/validate)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/validate",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_finals",
+   "description": "List the project's final videos. (GET /projects/{project_id}/finals)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{project_id}/finals",
+    "args": {
+     "project_id": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_minimax_cleanup",
+   "description": "Delete MiniMax scratch outputs that are no longer needed. (POST /projects/{project_id}/minimax/cleanup)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/minimax/cleanup",
+    "args": {
+     "project_id": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_minimax_index",
+   "description": "Index of the MiniMax scratch outputs per scene. (GET /projects/{project_id}/minimax/index)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{project_id}/minimax/index",
+    "args": {
+     "project_id": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_image_from_video_frame",
+   "description": "Take the scene image from a frame of a video (`source_video_path`). (POST /projects/{project_id}/scenes/{scene_id}/image/from-video-frame)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: source_video_path.",
+      "properties": {
+       "source_video_path": {
+        "description": "Path of the rendered video to take the frame from."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/scenes/{scene_id}/image/from-video-frame",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_scenes_latent",
+   "description": "One scene's latent file and status. (GET /projects/{project_id}/scenes/{scene_id}/latent)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{project_id}/scenes/{scene_id}/latent",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_delete_scenes_video",
+   "description": "Clear the scene's active video. Files stay on disk. (DELETE /projects/{project_id}/scenes/{scene_id}/video)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "DELETE",
+    "path": "/projects/{project_id}/scenes/{scene_id}/video",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_video_match_start_color",
+   "description": "Match the opening colors of a scene video to the previous scene's last frame. (POST /projects/{project_id}/scenes/{scene_id}/video/match-start-color) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/scenes/{scene_id}/video/match-start-color",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_video_minimax_stage_recover",
+   "description": "Recover a MiniMax pass-1 or pass-2 clip from the scratch folder. (POST /projects/{project_id}/scenes/{scene_id}/video/minimax-stage-recover)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/scenes/{scene_id}/video/minimax-stage-recover",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_scenes_video_takes",
+   "description": "List the scene's raw (untrimmed) renders, newest first, with length, frame count and whether the file still exists. Takes in a sibling scratch folder with the same project name are marked `other_folder`. Only renders made through the API are always kept: the Video Builder deletes its scratch renders after each render. Use `take` on the trim call. (GET /projects/{project_id}/scenes/{scene_id}/video/takes)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{project_id}/scenes/{scene_id}/video/takes",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_scenes_video_trim",
+   "description": "Trim a scene video as a job. Name the source with `source_path` (default: the scene's current video) or with `take` (`latest` or an index from `video/takes`, the raw render, so the clip can start earlier or end later than the current one). `start` is seconds into the source; give `duration` (and `frames`), or `to_end: true` to end on the source's last frame. Records the new clip on the scene and keeps the old one in its video history. (POST /projects/{project_id}/scenes/{scene_id}/video/trim) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "scene_id": {
+      "type": "string",
+      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id",
+     "scene_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": true,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/scenes/{scene_id}/video/trim",
+    "args": {
+     "project_id": "project_id",
+     "scene_id": "scene_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_slideshow",
+   "description": "Make a video from the scene images instead of rendered clips. (POST /projects/{project_id}/slideshow) Runs as a background job: returns a job id, then call job_wait.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/slideshow",
+    "args": {
+     "project_id": "project_id"
+    },
+    "job": true,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_video_graph",
+   "description": "Build the ComfyUI graph for a video `mode` and the given parameters without running it, to inspect what would be sent. (POST /projects/{project_id}/video/graph)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/video/graph",
+    "args": {
+     "project_id": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_post_video_scan",
+   "description": "Scan the project folder for rendered scene videos and thumbnails and re-link them to scenes. (POST /projects/{project_id}/video/scan)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. This endpoint's fields are not listed here: see its entry in resource vrgdg://docs/endpoints."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{project_id}/video/scan",
+    "args": {
+     "project_id": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_queue",
+   "description": "Summary of the API job queue: running, queued and finished jobs. (GET /queue)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/queue",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_refmods",
+   "description": "Saved RefMods in models/refmods with their type (folder), kind, frame count, tokens and description. Filter with `folder` (for example `identity`). A project switched to the RefMod pipeline (`pipeline: refmod` in the MiniMax H3 settings) renders from these. (GET /refmods)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "query": {
+      "type": "object",
+      "description": "Query parameters: folder.",
+      "properties": {
+       "folder": {
+        "description": "RefMod folder to list."
+       }
+      },
+      "additionalProperties": true
+     }
+    },
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/refmods",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  }
+ ],
+ "endpoints": [
+  {
+   "method": "GET",
+   "path": "/health",
+   "description": "Health check: `healthy` or `degraded`, whether ComfyUI is up, its queue depth, whether FFmpeg is found and whether a GPU is available.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/instructions",
+   "description": "List the prompt-writing instructions (system prompts) the LLM steps use, with their override state.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/instructions/presets/{name}",
+   "description": "Save the current text of an instruction as a named preset.",
+   "job": false,
+   "body_keys": [
+    "key",
+    "name"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/instructions/presets/{name}/load",
+   "description": "Load a named preset into an instruction.",
+   "job": false,
+   "body_keys": [
+    "key",
+    "name"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/instructions/{key}",
+   "description": "One instruction's current text, its default and whether a project override is set.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/instructions/{key}",
+   "description": "Save an instruction override for a project or for all projects.",
+   "job": false,
+   "body_keys": [
+    "key",
+    "project_folder",
+    "project_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "DELETE",
+   "path": "/instructions/{key}/override",
+   "description": "Remove an override and return to the built-in instruction.",
+   "job": false,
+   "body_keys": [
+    "key",
+    "project_folder",
+    "project_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/jobs",
+   "description": "List jobs, newest first. Filter with `project_id`, `status` and `type`.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "project_id",
+    "status",
+    "type"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/jobs/{id}",
+   "description": "One job: status (`queued`, `running`, `succeeded`, `failed`, `cancelled`, `interrupted`), progress, result and error.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/jobs/{id}/cancel",
+   "description": "Cancel a queued or running job. A running ComfyUI render is interrupted.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/jobs/{id}/log",
+   "description": "The job's progress log. Pass `since` (a sequence number) to read only new lines.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "since"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/jobs/{id}/retry",
+   "description": "Start a failed or interrupted job again. `resume: true` skips work that already finished.",
+   "job": true,
+   "body_keys": [
+    "resume"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/llm/active",
+   "description": "Which LLM the API would use right now, for a project (`project_id`) or, with none, for a new project (your saved model defaults). For LM Studio this is the model that is loaded. The API never loads or switches a model.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "project_id"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/llm/models",
+   "description": "Models the configured LLM provider offers. `provider` selects LM Studio, an own server or an API provider.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "provider"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/llm/test",
+   "description": "Send a short test request to the configured LLM runner and report whether it answers.",
+   "job": false,
+   "body_keys": [
+    "provider",
+    "text_runner"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/meta",
+   "description": "API version (`v1`), the app's name and version, and the capabilities this app serves.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/models",
+   "description": "Models, checkpoints and LoRAs installed in ComfyUI, grouped by type.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/modes",
+   "description": "Supported image and video modes with their requirements and capabilities.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/pipelines/from-song",
+   "description": "Song to final video in one job: create the project if needed, attach audio and lyrics, make the scenes, then run the full build.",
+   "job": true,
+   "body_keys": [
+    "project_id",
+    "project_name"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/post/luts",
+   "description": "List the available LUT (color look-up table) files.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/post/luts/upload",
+   "description": "Upload a LUT file (base64 `content` and `filename`).",
+   "job": false,
+   "body_keys": [
+    "content",
+    "data",
+    "filename"
+   ],
+   "query": [
+    "filename"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects",
+   "description": "List projects found in the allowed project roots. `root` limits the search to one root.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "root"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects",
+   "description": "Create a project: folder, empty session seeded with your saved model defaults. Body: `name`, optional `template_from`.",
+   "job": false,
+   "body_keys": [
+    "name",
+    "template_from"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{pid}",
+   "description": "Delete a project folder from disk. Needs `confirm` equal to the project id.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "confirm"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}",
+   "description": "The project with its settings, scenes, audio, story and references. `include` picks some of those groups and/or top-level session keys by name (e.g. `audio_path`, `detected_tempo_bpm`, `flux_reference_builder`; API keys come back blank). A Builder session key the project has not saved yet comes back empty (`{}` for `flux_reference_builder`, `builder_story_layer` and `builder_storyboard_defaults`, otherwise `null`). A name that is not a Builder session key is a 400 that lists it.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "include"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/assets",
+   "description": "Files in the project folder: images, videos, thumbnails, audio and final videos.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/audio",
+   "description": "Attach the song: a file path (`audio_path`) or uploaded data (`audio_data`, `audio_name`). Saves the waveform peaks, beats and tempo.",
+   "job": false,
+   "body_keys": [
+    "audio_data",
+    "audio_name",
+    "audio_path"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/audio/beats",
+   "description": "Beat markers and detected tempo.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/audio/beats",
+   "description": "Replace the beat markers (`beats`) and tempo (`tempo_bpm`).",
+   "job": false,
+   "body_keys": [
+    "beats",
+    "tempo_bpm"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/audio/silent",
+   "description": "Create a silent audio track of a given `duration` instead of a song.",
+   "job": false,
+   "body_keys": [
+    "duration",
+    "scope"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/audio/waveform",
+   "description": "Waveform peaks for drawing the audio. `peaks` sets how many.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "peaks"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/duplicate",
+   "description": "Copy a project to `new_name`. `options` chooses what to keep (scenes, mappings, notes, prompts, media).",
+   "job": false,
+   "body_keys": [
+    "new_name",
+    "options"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/elevenlabs",
+   "description": "Speaking mode only: read whether an ElevenLabs API key is saved to this project, plus revision. Never returns the key. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/elevenlabs",
+   "description": "Speaking mode only: explicitly save `api_key` to `elevenlabs_api_key_project`, like the Builder's LLM runner key. An empty string clears it. Stored in the project session; existing export credential handling applies. Supports If-Match. Never echoes the key. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [
+    "api_key"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/elevenlabs/test",
+   "description": "Speaking mode only: test the saved API key's Voices read access. Returns connected: true on success. Does not save a key or generate speech. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/elevenlabs/voice-design/create",
+   "description": "Speaking mode only: explicitly create an account voice from a chosen preview. Accepts voice_name (1–256), voice_description (20–1000) and generated_voice_id. Returns permanent voice_id and name. Does not assign it or mutate the project. Assign with PUT references/subjects/{rid} elevenlabs_voice and If-Match. Never retries account creation automatically; after an ambiguous failure refresh voices before retrying. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [
+    "generated_voice_id",
+    "voice_description",
+    "voice_name"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/elevenlabs/voice-design/previews",
+   "description": "Speaking mode only: generate ElevenLabs Voice Design previews using the saved project key. Accepts voice_description (20–1000 characters), model_id (eleven_ttv_v3 default or eleven_multilingual_ttv_v2), and optional text (100–1000 characters; blank generates sample dialogue). Returns temporary generated_voice_id and base64 MP3 candidates. Uses account credits; does not save a voice or project state. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [
+    "model_id",
+    "text",
+    "voice_description"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/elevenlabs/voices",
+   "description": "Speaking mode only: list one page of account voices using the saved project key. Returns voice_id, name, category, public HTTPS preview_url, has_more and next_page_token. Pass next_page_token for another page. Does not generate speech. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "next_page_token"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/export",
+   "description": "Build a zip of the project for backup or sharing.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/lyrics",
+   "description": "The project's lyrics text and the lyric text on each scene.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/lyrics",
+   "description": "Set the lyrics (`lyrics_text`) or an SRT (`srt_text`). The text is the reference Line Mapping works from.",
+   "job": false,
+   "body_keys": [
+    "lyrics_text",
+    "srt_text"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/lyrics/align",
+   "description": "Time the lyrics against the song with the Stable-ts workflow in ComfyUI and save the timed lines.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/minimax-prompts",
+   "description": "Write MiniMax H3 reference-to-video prompts with the project's LLM for scenes that have none (`replace_existing`, `scene_ids`, `limit`). Each singing scene's prompt has its lyric in double quotes after 'sings the lyric line,'. Saves them on the scenes and in the Storyboard Builder's copy (`storyboard/storyboard.json` and the `prompts/` files). Needs a mapped character with an image on each scene. Each prompt is the Builder's full format: subject definitions tying `<Subject N>` to `<Picture N>`, summary, retention analysis, the shots, and the soundscape.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/prompts/batch",
+   "description": "Write image or video prompts for many scenes (`kind`, `scope`, `run_mode`, `scene_ids`). Image prompts use each scene's notes, lyric and references.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/prompts/concepts",
+   "description": "Write scene concept prompts for the whole project with the LLM.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/prompts/motion-notes",
+   "description": "Write motion and camera notes for scenes with the LLM.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/references",
+   "description": "Characters, locations and the scene mappings.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/references/assign-scenes",
+   "description": "Assign characters and locations to scenes by pattern (`random`, `rotate`, `blocks`, `unchanged`). `dry_run` previews.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/references/locations/extract",
+   "description": "Ask the project's LLM for filming locations from the lyrics and `style_theme` (LM Extract) and add them.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/references/locations/{rid}",
+   "description": "Create or update a location (name, description, optional image).",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/references/scene-mapping",
+   "description": "Read which characters, locations, ingredients and extras each scene uses. A scene maps to one location here. To see every reference a MiniMax scene can pick from, and the order it sends, use `GET /projects/{pid}/scenes/{sid}/minimax-references`. Add `?include=scenes` (every scene) or `?scene_id=<id or number>` (one scene) to also get `pipeline` and `scenes`: each scene's `scene_id`, `scene_number`, `label`, `no_character_present` and `cards` (subjects, extras, location, ingredients in that order, as mapped), each with `map`, `card_id`, `name`, `reference_type`, `source` (`refmod` or `image`), `refmod` (`name`, `found`, `kind`, `tokens`, `strength`, read from the RefMod file like the render, or `null`) and `picture` (`path`, `exists`, or `null`). Read-only. An unknown include returns 400.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "include",
+    "scene_id"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/references/scene-mapping",
+   "description": "Set which characters, locations, ingredients and extras each scene uses. Sending `subjects` or `locations` also turns on that \"use reference\" switch, as the Builder does.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/references/subjects/{rid}",
+   "description": "Create or update a character (name, description, `reference_type`, voice, trigger phrase, `image`). In Speaking mode also accepts `elevenlabs_voice`: {enabled: boolean, voice_id: string, name: string}. Enabled assignments require a voice ID and a primary character reference. Also accepts elevenlabs_voice_design editing fields: user_input, voice_description, preview_text, voice_name, model_id. Only durable draft fields are stored; preview audio and temporary IDs are discarded. Preserves existing voice and design fields when omitted; supports If-Match.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/references/subjects/{rid}/voice-design/description",
+   "description": "Speaking mode only: submit an LLM job to turn user_input (1–4000 characters) and an existing primary character into a reviewable voice_description. Uses the project's saved LLM Runner, and only an already loaded LM Studio model. Does not call ElevenLabs or persist the result. Wait for the returned job ID. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": true,
+   "body_keys": [
+    "user_input"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{pid}/references/{kind}/{rid}",
+   "description": "Delete a character or location (`kind` is `subjects` or `locations`) and its scene mappings.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/references/{kind}/{rid}/describe",
+   "description": "Describe a character or location image with the project's LLM (Gemma Describe) and save the description.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/scenes",
+   "description": "List scenes. Filter with `has_image`, `has_prompt`, `has_video` and `status`.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "has_image",
+    "has_prompt",
+    "has_video",
+    "status"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes",
+   "description": "Insert a scene (`position`, `ref_scene_id`, `duration`, `label`, `notes`, prompts). Later scene files are renumbered.",
+   "job": false,
+   "body_keys": [
+    "duration",
+    "i2v_prompt",
+    "label",
+    "notes",
+    "position",
+    "ref_scene_id",
+    "t2i_prompt"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/bulk",
+   "description": "Apply several scene operations in one atomic change (`operations`).",
+   "job": false,
+   "body_keys": [
+    "operations"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{pid}/scenes/{sid}",
+   "description": "Delete a scene. `ripple` closes the gap. Later scene files are renumbered.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "ripple"
+   ],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/scenes/{sid}",
+   "description": "One scene: timing, lyrics, story beat, prompts (including `minimax_h3_prompt`), approved image, rendered video with its thumbnail, and scene audio. Each file is `null` when it does not exist. `scene_card` is the complete Storyboard scene card with every field PATCH can edit (Director Notes `timeline_note`, Video Notes `motion_summary`, Planning Notes `notes`, camera, performance, references, triggers and prompts). Read-only, under the Builder's own names: `audio_mask` (the scene's Audio Mask stems, or `null`), `use_scene_minimax_h3_settings` and the scene's own `minimax_h3_settings` (its locked MiniMax H3 settings such as `continuity_mode`, or `null`), and the continuity its last render used, `minimax_h3_continuity_mode_used` and `minimax_h3_continuity_source_scene_id`. `minimax_h3_attention` is the attention the scene renders with, resolved like the render (scene settings when locked, else the project's): `source` (`scene` or `project`), `render_pass`, `sage_attention`, `use_memory_efficient_sage_attention`, `block_sparse_attention` and `block_sparse_attention_by_pass`. The scene list leaves these out.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PATCH",
+   "path": "/projects/{pid}/scenes/{sid}",
+   "description": "Edit a scene card. Fields are saved on the timeline scene with the Builder's keys, and the open Video Builder shows the change (fields marked card only belong to a Storyboard card, which this app does not have): `timeline_note` (Director Notes; alias `director_note`), `i2v_notes` (Video Notes; saved as `motion_summary` on the card; aliases `video_notes`, `motion_summary`), `notes` (Planning Notes), `prompt_summary` (card only), `label`, `lyric_text` (alias `lyrics`; sets `lyric_no_lip_sync` from the text unless you send it), `lyric_section`, `story_beat`, `lyric_singers`, `lyric_cue_map`, `lyric_no_lip_sync`, `lyric_instrumental`, `lyric_performance_mode`, `lyric_shot_word_timing_enabled`, `speaker_assignments`, `shot_type`, `camera_motion`, `character_motion`, `no_character_present`, `performance_mode` (`singing`, `speaking`, `no_lip_sync`), `performance_style`, `facial_performance`, `facial_performance_custom`, `emotion_expression_tags` (up to 1200 characters; scene mood/expression direction interpreted by the LLM), `include_microphone`, `audio_direction`, `continuity`, `flf_start_state`, `flf_transformation`, `flf_end_state`, `flf_carry_forward`, `video_style`, `video_style_custom`, `temporal_world_effect_override`, `temporal_world_effect_custom`, `trigger_phrase`, `trigger_position` (card only), `video_prompt_type`, `subject_ids` (the scene's characters) and `location_id` (the Reference Builder scene maps), `image_prompt` and `video_prompt` (written like a Builder prompt edit for the project's image model and video engine; `video_prompt_origin`), `minimax_h3_pass2_prompt`. Also the single fields `t2i_prompt`, `i2v_prompt`, `enhance_prompt`, `minimax_h3_prompt`, `flux_prompt`, `nb_prompt`, `flow_gpt_prompt`, `ernie_t2i_prompt`, `minimax_h3_i2v_frame_mode` (`normal` or `flf`, per scene), `first_last_frame_end_image_path` (explicit last image for I2V FLF), `minimax_h3_continuation_direction` (what a scene continued with `latent_continuation_masked` does after its first moments, one smooth movement, no cut), `minimax_h3_continuation_start_seconds` (second of that scene where the direction starts: 0.5 by default, at most half the scene, `null` resets), `start`, `end`, or per-scene `use_scene_*` / `*_settings`. `use_scene_minimax_h3_settings` must be a boolean, and `minimax_h3_settings` is checked against GET /settings/minimax-h3/schema (for example `sage_attention`, `use_memory_efficient_sage_attention`, `use_block_sparse_attention`, `two_pass_use_block_sparse_attention`, `pass1_use_block_sparse_attention`, `pass2_use_block_sparse_attention`) and merged into the scene's saved settings; an invalid value returns 400 and nothing is saved. Only the keys sent change; an empty string, `false`, `0` or `[]` is saved as sent, so a field can be cleared or turned off. A field that cannot be patched returns a validation error that lists the supported fields, and nothing is saved. `storyboard_card` in the reply lists the Storyboard card fields that changed.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/scenes/{sid}/audio-settings",
+   "description": "Speaking mode only: read scene overrides, effective/project settings, scene-owned dialogue clips, audio span, padded total duration, current scene duration, needs_render and the scene_dialogue editor draft. Uses the scene ID, not its position.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PATCH",
+   "path": "/projects/{pid}/scenes/{sid}/audio-settings",
+   "description": "Speaking mode only: patch `settings` (`use_project_defaults`, `fit_duration`: booleans; `silence_before`, `silence_after`: 0–60 seconds). Optionally import base64/data-URL `audio_data` with `audio_name`, or remove owned dialogue with `clear_audio: true`. Also accepts a `dialogue` draft (speaker_id, text, delivery, allow_rewrite, model_id) saved on that scene as scene_dialogue. Generated audio and API keys are never stored in the draft. Fits duration to dialogue plus silence and ripples later scenes and attached audio; independent tracks stay fixed. Originals are preserved. Supports If-Match; frozen timelines and running scene renders reject edits.",
+   "job": false,
+   "body_keys": [
+    "audio_data",
+    "audio_name",
+    "clear_audio",
+    "dialogue",
+    "settings"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/dialogue/craft",
+   "description": "Speaking only: create an LLM job using the saved runner, assigned character voice and elevenlabs_dialogue instruction preset. Optional dialogue object overrides the saved scene draft: speaker_id, text, delivery, allow_rewrite (default false), model_id (eleven_v4 default or eleven_v3). Returns editable tagged text; preserves spoken words unless rewriting is explicitly allowed. Does not call ElevenLabs or save the draft. Wait for the returned job ID.",
+   "job": true,
+   "body_keys": [
+    "dialogue"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/dialogue/generate",
+   "description": "Speaking only: explicitly generate one MP3 take with the saved ElevenLabs key and the chosen character's enabled voice. Optional dialogue overrides the saved scene_dialogue draft. Returns audio_data (MP3 data URL), audio_name, voice_id and dialogue. Uses credits; never retries automatically and does not write project state. Preview, then import via PATCH audio-settings with audio_data, audio_name, dialogue and If-Match to fit/ripple the scene. The project's own key is used; without one, the key saved in H3 Studio's App Settings.",
+   "job": false,
+   "body_keys": [
+    "dialogue"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/merge",
+   "description": "Merge a scene with its neighbour (`with_direction`: previous or next). Lyrics are joined.",
+   "job": false,
+   "body_keys": [
+    "with_direction"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/scenes/{sid}/minimax-references",
+   "description": "What the Video Builder's Choose MiniMax References button shows for a scene: `available` (every character, extra, location and ingredients sheet with an image, each with its `key`, whether the scene mapping already picks it, and its `image_number` when selected), `selected` (the order sent to MiniMax), `custom` (chosen by hand or following the scene mappings), `automatic_keys` and the `limits` (9 images, 8 choices when the scene image is Image 1). `pipeline` says which view you got: `standard` (the view above) or, when the MiniMax H3 project renders with RefMods, `refmod`: `items` in render order, each with its prompt `label` (`<Video N>`, `<Picture N>`, `<Audio N>`), card, `category`, `reference_type` (props included), `strength`, `tokens` and `source` (`refmod` name, `found`, `kind`, `frames`, `canvas`, read from the RefMod file like the render), `labels`, `tokens` (`total`, `limit`, `over_limit`, `imbalance`), `warnings` and `editable: false`.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/scenes/{sid}/minimax-references",
+   "description": "Choose the ordered MiniMax references for a scene: `keys` is the list from `available` (for example `[\"subject:ava\", \"location:roof\", \"location:alley\"]`, several locations are allowed), or `automatic: true` to follow the scene mappings again. Unknown or repeated keys and too many keys are refused with the allowed keys listed. In a RefMod project the render ignores this order, so the call returns 422 NOT_SUPPORTED_FOR_MODE and saves nothing; change the scene's references with PUT /references/scene-mapping instead. _(If-Match)_",
+   "job": false,
+   "body_keys": [
+    "automatic",
+    "keys"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/move",
+   "description": "Move a scene to `start_time`. `ripple` shifts the others.",
+   "job": false,
+   "body_keys": [
+    "ripple",
+    "start_time"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/context",
+   "description": "The context brief an outside agent needs to write a prompt itself: cast, cut plan and character budget (`kind`). A scene continued with `latent_continuation_masked` also gets a `continuation` block: `hold_seconds`, the scene's `direction` and the `rules` for writing it as the next moment of the previous scene's take.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "kind"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/edit",
+   "description": "Rewrite an existing scene prompt following an instruction.",
+   "job": true,
+   "body_keys": [
+    "scene_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/enhance",
+   "description": "Improve an existing scene prompt with the LLM.",
+   "job": true,
+   "body_keys": [
+    "scene_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/image",
+   "description": "Write one scene's image prompt with the LLM, from the scene's notes, lyric and references (`user_notes` overrides them).",
+   "job": true,
+   "body_keys": [
+    "scene_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/minimax/assemble",
+   "description": "Build a MiniMax prompt from shot descriptions you provide (`shots`, `mode`). `save` stores it. A reference-to-video prompt gets the same subject definitions and soundscape as `minimax-prompts`.",
+   "job": false,
+   "body_keys": [
+    "mode",
+    "save",
+    "shots"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/minimax/validate",
+   "description": "Check a MiniMax prompt against the length and format rules.",
+   "job": false,
+   "body_keys": [
+    "mode",
+    "prompt"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/video",
+   "description": "Write one scene's video prompt with the LLM (`mode`), from its image prompt, motion notes and references.",
+   "job": true,
+   "body_keys": [
+    "scene_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/scenes/{sid}/prompts/{field}",
+   "description": "Set a prompt field directly (`t2i_prompt`, `i2v_prompt`, `minimax_h3_prompt`, ...). Body: `prompt`, `origin`.",
+   "job": false,
+   "body_keys": [
+    "origin",
+    "prompt"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/resize",
+   "description": "Change a scene's length (`duration` or `end_time`). `ripple` shifts the others.",
+   "job": false,
+   "body_keys": [
+    "duration",
+    "end_time",
+    "ripple"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/scenes/{sid}/split",
+   "description": "Split a scene at `at_time`. `clear_right_media` drops the media on the new right half. Lyrics follow their words.",
+   "job": false,
+   "body_keys": [
+    "at_time",
+    "clear_right_media"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/settings",
+   "description": "Effective settings in every group, including all MiniMax H3 options.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PATCH",
+   "path": "/projects/{pid}/settings",
+   "description": "Change settings by group, for example `{\"minimax_h3\": {\"render_pass\": \"two_pass\"}}` or the attention options `{\"minimax_h3\": {\"two_pass_use_block_sparse_attention\": false, \"sage_attention\": \"auto\", \"use_memory_efficient_sage_attention\": true}}`. Honors If-Match (409 on a stale revision); an invalid value returns 400 SETTINGS_INVALID. Saved under the same keys the Video Builder uses. The project group accepts `use_structured_outputs` and `omit_lyrics_from_video_prompts` (both default false); lyric omission applies to singing with supplied audio only.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/settings/preflight",
+   "description": "Check the saved settings against the chosen video and image modes and report problems before rendering.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/speaking-audio/defaults",
+   "description": "Speaking mode only: read project defaults for `silence_before`, `silence_after` (seconds, initially 0) and `fit_duration` (initially true).",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PATCH",
+   "path": "/projects/{pid}/speaking-audio/defaults",
+   "description": "Speaking mode only: patch `settings` (`silence_before`, `silence_after`: 0–60 seconds; `fit_duration`: boolean). Reposition scene-owned dialogue and resize/ripple scenes inheriting defaults. Independent music/effect tracks stay fixed. Source files and scene numbering are preserved. Supports If-Match; frozen timelines and running scene renders reject edits.",
+   "job": false,
+   "body_keys": [
+    "settings"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/story",
+   "description": "The saved story layer: idea, arc, brief.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/story",
+   "description": "Replace the saved story layer.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/story/settings",
+   "description": "Save the Storyboard scene defaults (`defaults`: every key the Builder saves in `builder_storyboard_defaults`, e.g. video style, camera flow, motion speeds, cut frequency, short film planning, temporal and FX settings, plus `story_arc_detail`) and the story fields (`story`: every key of `builder_story_layer`, e.g. `enabled`, idea, strength, world style). Story Mode fields: `story_book_text` replaces the book (parsed into chapters and settings: `Chapter N: title`, then `Setting: name`), `story_settings` (setting looks), `story_acts` (refused unless every scene is in exactly one act, in order), `story_scene_plan` (also sets each scene's performance) `story_spot_min_scenes` (1-20), `story_cast_ids` (subject ids the story is about; empty means every card) `story_allow_new_cast` (true lets the story add people with no card) and `story_video_style` (`music_video`, `spoken` or `story_only`: how the story is told on screen).",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/story/{step}",
+   "description": "Write a story step with the project's LLM. `step` is `arc` (from the story idea, lyrics and saved timed Timeline Notes), `brief` or `beats` (a beat per scene without one; `replace_existing`, `scene_ids`, `limit`). Story Mode steps: `book` (the story book from `story_idea` and `tone_notes`; lyrics set mood only), `split` (a story you wrote, sent as `text`, divided into chapters with a setting each, every word kept), `convert` (an older project's song-section story arc becomes the book the same way; the arc is kept), `remove_people` (rewrite the book without the people in `names`, so only the story cast is left; acts and plan are cleared), `chapter` (rewrite `chapter_id` following `direction`), `cast` (story characters with no card yet; nothing saved), `acts` (each chapter gets a run of scenes and is split into acts; `chapter_id` rebuilds one chapter; timed Timeline Notes stay inside one act) and `plan` (each scene of each act gets `story_slice`, `spot` inside the chapter's setting, `mood` and `performance_mode`; `act_id` rebuilds one act; `spot_min_scenes` overrides the saved scenes-per-spot). The plan also writes each scene's performance to the timeline (`performance_mode`, `lyric_no_lip_sync`). `locations` gives each chapter setting a look and each planned spot a location card named `Setting - Spot`, and maps every scene to its spot (`flux_reference_builder.scene_map`); it uses the story and `style_theme` only, never the lyrics. `regenerate_looks` rewrites setting looks, `replace_descriptions` rewrites card text (images are never touched). Director, Video and Planning Notes and timed notes win over the story. The book is saved in the story layer as `story_book`, `story_book_text` and `story_settings`; edit the text with PUT /story/settings `story.story_book_text`. Each step also updates the Storyboard Builder's saved copy.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/summary",
+   "description": "Compact status: scene counts, how many have images, prompts and videos, total duration.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/bulk",
+   "description": "Rebuild or extend the whole timeline from text. `mode` is `durations`, `ranges` or `markers`; `action` is `replace` or `append` (`append_start` sets where appended scenes begin). A line can end with the words for its scene, for example `12.5 --> 16.0 Hello darkness`. On `replace`, when no line carries words, the lyrics of the scenes being replaced move onto the new scenes by time, so they are not lost. Returns `scene_count`, `scenes_with_lyrics` and `lyrics` (`from_text`, `carried_over` or `none`).",
+   "job": false,
+   "body_keys": [
+    "action",
+    "append_start",
+    "clear_media",
+    "mode",
+    "text"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/calibrate",
+   "description": "Shift all beat markers by `offset_seconds`.",
+   "job": false,
+   "body_keys": [
+    "offset_seconds"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/close-gaps",
+   "description": "Remove gaps between scenes by moving later scenes earlier.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/enforce-length",
+   "description": "Merge scenes shorter than `min_scene_seconds` and cut scenes longer than `max_scene_seconds`. `dry_run` shows the plan only. Scenes with rendered video are left alone.",
+   "job": false,
+   "body_keys": [
+    "dry_run",
+    "max_scene_seconds",
+    "min_scene_seconds"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/from-lines",
+   "description": "Make the timeline scenes from the lyrics, like Line Mapping: one scene per lyric line, short scenes merged and long ones split to fit `min_scene_seconds` and `max_scene_seconds`. Turns on the lyric lane.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/timeline/notes",
+   "description": "The timed Timeline Notes (the Builder's `+ Timeline Note` markers, saved as `timeline_markers`): `id`, `start` and `end` seconds (`end` is `null` for a point note), `type`, `label`, `note`, and `scene_ids`, the scenes each note overlaps. Story Arc generation uses them as timed story events.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/notes",
+   "description": "Add a timed Timeline Note. `start` (seconds, required), `end` (later than `start`; leave out or `null` for a point note), `type`, `label`, `note`, optional `id`. The open Video Builder shows it.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{pid}/timeline/notes/{nid}",
+   "description": "Delete a timed Timeline Note.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "PATCH",
+   "path": "/projects/{pid}/timeline/notes/{nid}",
+   "description": "Change the sent fields of a timed Timeline Note (`start`, `end`, `type`, `label`, `note`). The id never changes; `end: null` makes it a point note.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/timeline/snap",
+   "description": "Snap a scene edge to the nearest beat (`scene_id`, `edge`, `scope`).",
+   "job": false,
+   "body_keys": [
+    "edge",
+    "scene_id",
+    "scope"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/validate",
+   "description": "Check the project is consistent: files exist, scene timing, references, settings.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/finals",
+   "description": "List the project's final videos.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/images/generate",
+   "description": "Generate images for many scenes.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/latents",
+   "description": "Latent chain status for every scene (MiniMax continuity).",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/latents/dirty",
+   "description": "Scenes whose latent is out of date because an earlier scene changed.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/latents/rebuild",
+   "description": "Rebuild out-of-date latents in order.",
+   "job": true,
+   "body_keys": [
+    "project_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/minimax/cleanup",
+   "description": "Delete MiniMax scratch outputs that are no longer needed.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/minimax/index",
+   "description": "Index of the MiniMax scratch outputs per scene.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/pipelines/build-full-video",
+   "description": "Run the whole build for an existing project (prompts, images, videos, stitch) as one job.",
+   "job": true,
+   "body_keys": [
+    "project_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/pipelines/plan",
+   "description": "Dry-run plan for the full build: steps, estimated GPU minutes and missing prerequisites.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/post/apply-all",
+   "description": "Apply the project's post-processing settings to every scene video.",
+   "job": true,
+   "body_keys": [
+    "project_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{project_id}/scenes/{scene_id}/image",
+   "description": "Remove the scene's image.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{project_id}/scenes/{scene_id}/image",
+   "description": "Set the scene image from a file (`source_path`) or upload (`image_data`).",
+   "job": false,
+   "body_keys": [
+    "image_data",
+    "source_path"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/image/approve",
+   "description": "Approve one generated image as the scene's image (`image_path`).",
+   "job": false,
+   "body_keys": [
+    "image_path"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/image/from-video-frame",
+   "description": "Take the scene image from a frame of a video (`source_video_path`).",
+   "job": false,
+   "body_keys": [
+    "source_video_path"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/image/generate",
+   "description": "Generate a scene image with ComfyUI.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/image/revert",
+   "description": "Step through the scene's image history (`index` or `delta`).",
+   "job": false,
+   "body_keys": [
+    "delta",
+    "index"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{project_id}/scenes/{scene_id}/latent",
+   "description": "Delete a scene's latent (`all`, `reindex`).",
+   "job": false,
+   "body_keys": [
+    "all",
+    "reindex"
+   ],
+   "query": [
+    "all",
+    "reindex"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/scenes/{scene_id}/latent",
+   "description": "One scene's latent file and status.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/post/lut",
+   "description": "Apply a LUT to a scene video.",
+   "job": true,
+   "body_keys": [
+    "project_id",
+    "scene_id"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "DELETE",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video",
+   "description": "Clear the scene's active video. Files stay on disk.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/match-start-color",
+   "description": "Match the opening colors of a scene video to the previous scene's last frame.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/minimax-stage-recover",
+   "description": "Recover a MiniMax pass-1 or pass-2 clip from the scratch folder.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/recover",
+   "description": "Bring back a scene video from a backup or file (`source_path`).",
+   "job": false,
+   "body_keys": [
+    "source_path"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/render",
+   "description": "Render one scene's video with ComfyUI (`mode`, e.g. `minimax_h3`). Trims to the exact timeline length and saves it as `video_NNNN-audio.mp4`. Set `audio_mode: built_in_audio` in the MiniMax settings for H3 voices and sound (Single or 2 Pass; 2 Pass Advanced needs input audio). With `continuity_mode: latent_continuation_masked` the previous scene must be rendered first (`PREDECESSOR_MISSING` otherwise); it works in Single and 2 Pass. When `continuity_prompt_from_last_frame` is also true, the scene's prompt is first written by the LLM from the previous scene's rendered final frame (the Video Builder's automatic prompt), saved on the scene, and then rendered. A `prompt` in `params` skips that.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/select",
+   "description": "Choose which take is the scene's active video (`source_path`).",
+   "job": false,
+   "body_keys": [
+    "source_path"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/takes",
+   "description": "List the scene's raw (untrimmed) renders, newest first, with length, frame count and whether the file still exists. Takes in a sibling scratch folder with the same project name are marked `other_folder`. Only renders made through the API are always kept: the Video Builder deletes its scratch renders after each render. Use `take` on the trim call.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/scenes/{scene_id}/video/trim",
+   "description": "Trim a scene video as a job. Name the source with `source_path` (default: the scene's current video) or with `take` (`latest` or an index from `video/takes`, the raw render, so the clip can start earlier or end later than the current one). `start` is seconds into the source; give `duration` (and `frames`), or `to_end: true` to end on the source's last frame. Records the new clip on the scene and keeps the old one in its video history.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/slideshow",
+   "description": "Make a video from the scene images instead of rendered clips.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/stitch",
+   "description": "Join the scenes' videos into one video (`output_prefix`, default `FINAL_VIDEO`), frame-accurate to the timeline like the Builder's stitch: in a MiniMax H3 project every clip is synced to its scene's frames at 24 fps, so the output has exactly the timeline's frames. `scene_ids` picks scenes by number (1 = first scene) or id and stitches them in timeline order (default: every scene); an unknown scene or a selected scene without a video is a 400. `audio`: `auto` (default) uses the scenes' own audio when every selected MiniMax scene renders with built-in audio, the project song otherwise; `embedded` or `project` forces one. With the project song (or `audio_path`) a selection is cut to its window of the song, so it must be contiguous. `overlays` adds insert clips (`path`, `start`, `end`, `source_start`). The job result lists the stitched `scene_ids`, `audio`, the requested song window (`requested_audio_start`, `requested_audio_duration`; `audio_start` repeats the start) and `expected_frame_count`, and describes the written file from ffprobe: `output_width`, `output_height`, `output_duration` and `audio_duration` (= `output_audio_duration`, the audio actually in the file). An unknown body field is a 400.",
+   "job": true,
+   "body_keys": [
+    "audio",
+    "audio_path",
+    "output_prefix",
+    "overlays",
+    "scene_ids"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/video/graph",
+   "description": "Build the ComfyUI graph for a video `mode` and the given parameters without running it, to inspect what would be sent.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/video/render",
+   "description": "Render many scenes' videos one after another as a GPU job, and stitch them when asked.",
+   "job": true,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{project_id}/video/scan",
+   "description": "Scan the project folder for rendered scene videos and thumbnails and re-link them to scenes.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/queue",
+   "description": "Summary of the API job queue: running, queued and finished jobs.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/refmods",
+   "description": "Saved RefMods in models/refmods with their type (folder), kind, frame count, tokens and description. Filter with `folder` (for example `identity`). A project switched to the RefMod pipeline (`pipeline: refmod` in the MiniMax H3 settings) renders from these.",
+   "job": false,
+   "body_keys": [],
+   "query": [
+    "folder"
+   ],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/settings/minimax-h3/schema",
+   "description": "Every MiniMax H3 video setting that can be patched under the `minimax_h3` group: type, default, allowed values and limits. `continuity_mode` takes `latent_continuation_masked` (the previous scene's latent is protected at the start of the next, Single and 2 Pass), `latent_context_frames` takes 39, 90, 141 or 192 for it, and `location_transition_preset` takes `masked`.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  }
+ ]
+}

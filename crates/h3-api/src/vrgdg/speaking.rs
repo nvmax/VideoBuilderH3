@@ -22,7 +22,7 @@ use super::{body_object, into_response, Fail, Out};
 use crate::app::AppState;
 
 /// The real network, for the ElevenLabs calls.
-struct Network;
+pub(crate) struct Network;
 
 impl Transport for Network {
     fn send(&self, request: Request, limit: usize) -> SendFuture<'_> {

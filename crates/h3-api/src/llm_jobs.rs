@@ -22,17 +22,25 @@ pub const EXTRACT_LOCATIONS: &str = "reference.extract_locations";
 pub const SCENE_IMAGE_PROMPT: &str = "llm.scene_image_prompt";
 pub const REFERENCE_IMAGE_PROMPT: &str = "reference.image_prompt";
 pub const BATCH_PROMPTS: &str = "llm.batch_prompts";
+pub const CONCEPTS: &str = "llm.concepts";
+pub const MOTION_NOTES: &str = "llm.motion_notes";
+pub const ENHANCE_PROMPT: &str = "llm.enhance_prompt";
+pub const EDIT_PROMPT: &str = "llm.edit_prompt";
 
 type Run = fn(Arc<AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
 pub fn register(state: &Arc<AppState>) {
-    let table: [(&str, Run); 6] = [
+    let table: [(&str, Run); 10] = [
         (SCENE_IMAGE_PROMPT, |s, c| Box::pin(scene_image_prompt(s, c))),
         (REFERENCE_IMAGE_PROMPT, |s, c| Box::pin(reference_image_prompt(s, c))),
         (BATCH_PROMPTS, |s, c| Box::pin(batch_prompts(s, c))),
         (MINIMAX_PROMPTS, |s, c| Box::pin(minimax_prompts(s, c))),
         (REFERENCE_DESCRIBE, |s, c| Box::pin(describe_reference(s, c))),
         (EXTRACT_LOCATIONS, |s, c| Box::pin(extract_locations(s, c))),
+        (CONCEPTS, |s, c| Box::pin(concepts(s, c))),
+        (MOTION_NOTES, |s, c| Box::pin(motion_notes(s, c))),
+        (ENHANCE_PROMPT, |s, c| Box::pin(enhance_prompt(s, c))),
+        (EDIT_PROMPT, |s, c| Box::pin(edit_prompt(s, c))),
     ];
     for (kind, run) in table {
         let owned = Arc::clone(state);
@@ -357,4 +365,108 @@ async fn batch_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobEr
         return Err(error);
     }
     Ok(json!({"processed": results.len(), "total_targets": total, "failed": failed, "results": results}))
+}
+
+// -- concepts, motion notes, enhance and edit -------------------------------------------------------------------------------
+
+/// What a Builder writer reads: the request's own text and settings, and the project folder.
+fn writer_payload(folder: &std::path::Path, params: &Value) -> Obj {
+    let mut payload = params.as_object().cloned().unwrap_or_default();
+    payload.insert("project_folder".into(), json!(folder.display().to_string()));
+    payload
+}
+
+/// A writer's own error, which is almost always something wrong with what was asked (an empty prompt, a missing instruction).
+fn writer_failure(message: String) -> JobError {
+    fail(ApiError::validation(message))
+}
+
+fn first_non_empty(payload: &Obj, keys: &[&str]) -> String {
+    keys.iter().map(|k| text_or_empty(payload.get(*k)).trim().to_string()).find(|t| !t.is_empty()).unwrap_or_default()
+}
+
+fn scene_text(session: &Obj, scene: &str, key: &str) -> String {
+    session.get("segments").and_then(Value::as_array).and_then(|all| all.iter().find(|s| s.get("id").and_then(Value::as_str) == Some(scene))).map(|s| text_or_empty(s.get(key)).trim().to_string()).unwrap_or_default()
+}
+
+fn job_project(state: &AppState, ctx: &JobCtx) -> Result<std::path::PathBuf, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    resolve_project(&state.roots, &pid).map_err(fail)
+}
+
+/// Concept prompts for the scenes in the request, like the Builder's Concept Prompts button.
+async fn concepts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let folder = job_project(&state, &ctx)?;
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "generating".into(), message: "Writing concept prompts...".into(), stage_count: 1, ..Default::default() });
+    let payload = writer_payload(&folder, &ctx.params);
+    let base = crate::vrgdg::llm::base_config(&state);
+    let llm = h3_builder::prompt_writers::RunnerLlm { payload: &payload, base: &base };
+    h3_builder::prompt_writers::concepts::generate_concept_prompts(&llm, &payload).await.map_err(writer_failure)
+}
+
+/// Motion notes for the scenes in the request, like the Builder's Motion Note Creator.
+async fn motion_notes(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let folder = job_project(&state, &ctx)?;
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "generating".into(), message: "Writing motion notes...".into(), stage_count: 1, ..Default::default() });
+    let payload = writer_payload(&folder, &ctx.params);
+    let base = crate::vrgdg::llm::base_config(&state);
+    let llm = h3_builder::prompt_writers::RunnerLlm { payload: &payload, base: &base };
+    h3_builder::prompt_writers::motion_notes::generate_motion_notes(&llm, &payload).await.map_err(writer_failure)
+}
+
+/// Improve the scene's MiniMax H3 prompt (or the `current_prompt` sent) and save it on the scene unless `save` is false.
+async fn enhance_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let folder = job_project(&state, &ctx)?;
+    let scene = text_or_empty(ctx.params.get("scene_id")).trim().to_string();
+    let session = read_session(&folder).await?.session;
+    let mut payload = writer_payload(&folder, &ctx.params);
+    if first_non_empty(&payload, &["current_prompt"]).is_empty() {
+        let given = first_non_empty(&payload, &["prompt", "draft_prompt"]);
+        payload.insert("current_prompt".into(), json!(if given.is_empty() { scene_text(&session, &scene, "minimax_h3_prompt") } else { given }));
+    }
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "enhancing".into(), message: "Enhancing the prompt...".into(), scene_id: Some(scene.clone()), stage_count: 1, ..Default::default() });
+    let base = crate::vrgdg::llm::base_config(&state);
+    let llm = h3_builder::prompt_writers::RunnerLlm { payload: &payload, base: &base };
+    let raw = h3_builder::prompt_writers::enhance::enhance_minimax_h3_prompt(&llm, &payload).await.map_err(writer_failure)?;
+    let prompt = text_or_empty(raw.get("prompt")).trim().to_string();
+    let save = ctx.params.get("save").and_then(Value::as_bool).unwrap_or(true);
+    let mut saved = Value::Null;
+    if save && !prompt.is_empty() && !scene.is_empty() {
+        let _guard = state.edit_lock.lock().await;
+        let (folder, scene, prompt) = (folder.clone(), scene.clone(), prompt.clone());
+        saved = tokio::task::spawn_blocking(move || session_ops::set_scene_prompt(&folder, &scene, "minimax_h3_prompt", &prompt, "llm", None, &Stamp::now())).await.map_err(internal)?.map_err(internal)?;
+    }
+    Ok(json!({"scene_id": scene, "prompt": prompt, "saved": !saved.is_null(), "revision": saved["revision"], "raw": raw}))
+}
+
+/// Rewrite the scene's image prompt (or the `current_prompt` sent) following `edit_request`, and save it as `t2i_prompt` unless `save` is false.
+async fn edit_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let folder = job_project(&state, &ctx)?;
+    let scene = text_or_empty(ctx.params.get("scene_id")).trim().to_string();
+    let target = text_or_empty(ctx.params.get("target")).trim().to_lowercase();
+    if !(target.is_empty() || target == "image") {
+        return Err(fail(ApiError::validation(
+            "Only image prompts are edited with an instruction. Change a MiniMax H3 prompt with prompts/enhance, with prompts/minimax/assemble, or write it with PUT prompts/minimax_h3_prompt.",
+        )));
+    }
+    let session = read_session(&folder).await?.session;
+    let mut payload = writer_payload(&folder, &ctx.params);
+    if first_non_empty(&payload, &["current_prompt"]).is_empty() {
+        payload.insert("current_prompt".into(), json!(scene_text(&session, &scene, "t2i_prompt")));
+    }
+    if first_non_empty(&payload, &["edit_request"]).is_empty() {
+        let instruction = first_non_empty(&payload, &["instruction", "request"]);
+        payload.insert("edit_request".into(), json!(instruction));
+    }
+    ctx.progress(ProgressUpdate { percent: 20.0, stage: "editing".into(), message: "Editing the image prompt...".into(), scene_id: Some(scene.clone()), stage_count: 1, ..Default::default() });
+    let base = crate::vrgdg::llm::base_config(&state);
+    let llm = h3_builder::prompt_writers::RunnerLlm { payload: &payload, base: &base };
+    let raw = h3_builder::prompt_writers::image_prompts::edit_image_prompt(&llm, &payload).await.map_err(writer_failure)?;
+    let prompt = text_or_empty(raw.get("prompt")).trim().to_string();
+    let save = ctx.params.get("save").and_then(Value::as_bool).unwrap_or(true);
+    let mut saved = Value::Null;
+    if save && !prompt.is_empty() && !scene.is_empty() {
+        saved = save_scene_image_prompt(&state, &folder, &scene, &prompt).await?;
+    }
+    Ok(json!({"scene_id": scene, "prompt": prompt, "target": "image", "saved": !saved.is_null(), "revision": saved["revision"], "raw": raw}))
 }

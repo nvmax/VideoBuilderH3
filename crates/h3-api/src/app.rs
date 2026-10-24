@@ -29,8 +29,10 @@ use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
 use crate::edit_routes as er;
 use crate::image_routes as ir;
+use crate::instruction_routes as ins;
 use crate::llm_routes as lr;
 use crate::session_routes as sr;
+use crate::speaking_routes as sp;
 use crate::views::{self, SceneFilter};
 
 pub struct AppState {
@@ -96,6 +98,7 @@ pub fn router(state: Arc<AppState>) -> Router {
     crate::video_routes::register(&state);
     crate::post_routes::register(&state);
     crate::pipeline_jobs::register(&state);
+    crate::speaking_routes::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -104,6 +107,9 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/setup/status", get(crate::setup_routes::status))
         .route("/setup/check", post(crate::setup_routes::check_settings))
         .route("/setup/config", axum::routing::put(crate::setup_routes::save))
+        .route("/setup/mcp", get(crate::mcp::info))
+        .route("/openapi.json", get(crate::mcp::openapi))
+        .route("/endpoints.md", get(crate::mcp::endpoints))
         .route("/queue", get(queue))
         .route("/llm/settings", get(lr::get_settings).put(lr::put_settings))
         .route("/llm/active", get(lr::active))
@@ -185,6 +191,27 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/prompts/image", post(lr::scene_image_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/video", post(lr::scene_video_prompt))
         .route("/projects/{pid}/prompts/batch", post(lr::batch_prompts))
+        .route("/instructions", get(ins::list))
+        .route("/instructions/{key}", get(ins::get_one).put(ins::save_one))
+        .route("/instructions/{key}/override", axum::routing::delete(ins::reset_one))
+        .route("/instructions/presets/{name}", axum::routing::put(ins::save_preset))
+        .route("/instructions/presets/{name}/load", post(ins::load_preset))
+        .route("/projects/{pid}/prompts/concepts", post(lr::concept_prompts))
+        .route("/projects/{pid}/speaking-audio/defaults", get(sp::get_defaults).patch(sp::patch_defaults))
+        .route("/projects/{pid}/scenes/{sid}/audio-settings", get(sp::get_scene_settings).patch(sp::patch_scene_settings))
+        .route("/projects/{pid}/scenes/{sid}/dialogue/craft", post(sp::craft))
+        .route("/projects/{pid}/scenes/{sid}/dialogue/generate", post(sp::generate))
+        .route("/projects/{pid}/elevenlabs", get(sp::status).put(sp::save_key))
+        .route("/projects/{pid}/elevenlabs/voices", get(sp::voices))
+        .route("/projects/{pid}/elevenlabs/test", post(sp::test))
+        .route("/projects/{pid}/references/subjects/{rid}/voice-design/description", post(sp::voice_description))
+        .route("/projects/{pid}/elevenlabs/voice-design/previews", post(sp::voice_previews))
+        .route("/projects/{pid}/elevenlabs/voice-design/create", post(sp::voice_create))
+        .route("/setup/elevenlabs", get(sp::app_key_status).put(sp::app_key_save))
+        .route("/setup/elevenlabs/test", post(sp::app_key_test))
+        .route("/projects/{pid}/prompts/motion-notes", post(lr::motion_notes))
+        .route("/projects/{pid}/scenes/{sid}/prompts/enhance", post(lr::enhance_scene_prompt))
+        .route("/projects/{pid}/scenes/{sid}/prompts/edit", post(lr::edit_scene_prompt))
         .route("/projects/{pid}/references/{kind}/{rid}/prompt", post(lr::reference_image_prompt))
         .route("/projects/{pid}/references/locations/extract", post(lr::extract_locations))
         .route("/projects/{pid}/references/{kind}/{rid}/describe", post(lr::describe_reference))
@@ -209,6 +236,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/latents/dirty", get(latent_dirty))
         .route("/projects/{pid}/scenes/{sid}/latent", get(latent_one).delete(latent_delete));
     let cors = CorsLayer::new().allow_origin(Any).allow_methods(Any).allow_headers(Any);
+    // The built-in MCP server calls the API above inside this process. It is added last and has no CORS layer: a web page may not use it.
+    let mcp = crate::mcp::router(v1.clone().with_state(Arc::clone(&state)), &state);
     Router::new()
         .nest("/api/v1", v1.clone())
         // The pack's front end reaches the agent API under /vrgdg/api/v1.
@@ -217,6 +246,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .fallback(crate::vrgdg::fallback)
         .layer(cors)
         .with_state(state)
+        .merge(mcp)
 }
 
 // -- helpers ----------------------------------------------------------------------------------------------------------------
