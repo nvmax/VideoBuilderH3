@@ -1,7 +1,7 @@
 // Shared state of the editor. Everything the user sees comes from the API and is read again after each change.
 
 import { createSignal } from "solid-js";
-import { ApiError, call, encodePid, get, subscribe } from "./api";
+import { ApiError, call, encodePid, get, readFileAsBase64, subscribe } from "./api";
 
 export interface Asset {
   path: string;
@@ -54,6 +54,14 @@ export const [playhead, setPlayhead] = createSignal(0);
 export const [jobs, setJobs] = createSignal<Job[]>([]);
 export const [notice, setNotice] = createSignal<{ text: string; bad: boolean } | null>(null);
 export const [busy, setBusy] = createSignal(false);
+/** A full-size view over the editor: the Reference Builder, the render queue, the LLM and the settings. */
+export type Overlay = "refs" | "queue" | "llm" | "settings" | "setup";
+export const [overlay, setOverlay] = createSignal<Overlay | null>(null);
+export const FINISHED = ["succeeded", "failed", "cancelled", "interrupted"];
+export const fmtTime = (s: number) => {
+  const m = Math.floor(s / 60);
+  return `${String(m).padStart(2, "0")}:${(s - m * 60).toFixed(2).padStart(5, "0")}`;
+};
 
 let noticeTimer: number | undefined;
 export function say(text: string, bad = false) {
@@ -140,4 +148,45 @@ export function startEvents() {
       if (job.status === "failed") say(job.error?.message ?? "A job failed.", true);
     }
   });
+}
+
+/** Queue a job on a project path and show it in the job list. */
+export function submitJob(path: string, body: unknown, done: string) {
+  const pid = projectId();
+  if (!pid) return Promise.resolve(undefined);
+  return act(async () => {
+    const r = await call("POST", `/projects/${encodePid(pid)}${path}`, body);
+    setJobs((list) => [r.data.job, ...list]);
+    say(done);
+  });
+}
+
+/** Render the selected scene's MiniMax H3 video. */
+export function renderSelectedScene() {
+  const s = selectedScene();
+  if (!s) return say("Choose a scene first.", true);
+  return submitJob(`/scenes/${encodeURIComponent(s.id)}/video/render`, {}, "Render queued. Watch it in the render queue.");
+}
+
+/** Have the LLM write the selected scene's H3 prompt. */
+export function writeScenePrompt(id = selectedId()) {
+  if (!id) return say("Choose a scene first.", true);
+  return submitJob("/minimax-prompts", { scene_ids: [id] }, "Writing the prompt. It appears when the LLM is done.");
+}
+
+/** Stop every job of this project that has not finished. */
+export async function stopAll() {
+  const running = jobs().filter((j) => !FINISHED.includes(j.status));
+  if (!running.length) return say("Nothing is running.");
+  await Promise.all(running.map((j) => call("POST", `/jobs/${j.id}/cancel`).catch(() => undefined)));
+  await loadJobs();
+  say(`Stopping ${running.length} job${running.length === 1 ? "" : "s"}.`);
+}
+
+/** Put a song on the project, from a picked file. */
+export function attachSong(file: File | undefined) {
+  if (!file || !projectId()) return Promise.resolve(undefined);
+  return act(async () => {
+    await call("PUT", `/projects/${encodePid(projectId()!)}/audio`, { audio_data: await readFileAsBase64(file), audio_name: file.name });
+  }, "Song added.");
 }

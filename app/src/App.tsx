@@ -1,7 +1,8 @@
-import { createResource, createSignal, For, onCleanup, onMount, Show } from "solid-js";
+import { createResource, createSignal, For, onMount, Show } from "solid-js";
 import { apiBase, call, get, initApi } from "./api";
-import { closeProject, notice, openProject, project, projectId, say, startEvents } from "./store";
+import { notice, openProject, project, projectId, say, startEvents } from "./store";
 import Editor from "./components/Editor";
+import Health from "./components/Health";
 import Setup from "./components/Setup";
 import "./App.css";
 
@@ -14,21 +15,7 @@ interface ProjectRow {
   updated: number;
 }
 
-function Health() {
-  const [health, { refetch }] = createResource(() => get<any>("/health").catch(() => null));
-  const timer = window.setInterval(() => void refetch(), 15000);
-  onCleanup(() => window.clearInterval(timer));
-  return (
-    <span class="health" title={apiBase()}>
-      <span class={health()?.comfy_up ? "dot ok" : "dot bad"} /> ComfyUI {health()?.comfy_up ? "connected" : "not reachable"}
-      <Show when={health() && !health().ffmpeg_available}>
-        <span class="bad"> · ffmpeg not found</span>
-      </Show>
-    </span>
-  );
-}
-
-function ProjectList() {
+function ProjectList(props: { onSetup: () => void }) {
   const [rows, { refetch }] = createResource(() => get<ProjectRow[]>("/projects"));
   const [name, setName] = createSignal("");
 
@@ -52,41 +39,50 @@ function ProjectList() {
   };
 
   return (
-    <section class="panel narrow">
-      <h2>Projects</h2>
-      <div class="row">
-        <input placeholder="New project name" value={name()} onInput={(e) => setName(e.currentTarget.value)} onKeyDown={(e) => e.key === "Enter" && name().trim() && void create()} />
-        <button class="primary" disabled={!name().trim()} onClick={create}>
-          Create
-        </button>
-      </div>
-      <Show when={rows.error}>
-        <p class="bad">{String(rows.error?.message ?? rows.error)}. Start the app or run `h3 serve`.</p>
-      </Show>
-      <ul class="list">
-        <For each={rows() ?? []} fallback={<li class="muted">No projects yet.</li>}>
-          {(row) => (
-            <li>
-              <button class="link" onClick={() => void openProject(row.id)}>
-                {row.name}
-              </button>
-              <span class="muted">
-                {row.scene_count} scenes{row.has_audio ? "" : ", no song"}
-              </span>
-              <button class="small danger" onClick={() => void remove(row)}>
-                Delete
-              </button>
-            </li>
-          )}
-        </For>
-      </ul>
-    </section>
+    <>
+      <header class="top">
+        <h1>VRGDG H3 Studio</h1>
+        <span class="spacer" />
+        <button class="small" onClick={props.onSetup}>Setup</button>
+        <Health />
+      </header>
+      <section class="panel narrow">
+        <h2>Projects</h2>
+        <div class="row">
+          <input class="grow" placeholder="New project name" value={name()} onInput={(e) => setName(e.currentTarget.value)} onKeyDown={(e) => e.key === "Enter" && name().trim() && void create()} />
+          <button class="primary" disabled={!name().trim()} onClick={create}>
+            Create
+          </button>
+        </div>
+        <Show when={rows.error}>
+          <p class="bad">{String(rows.error?.message ?? rows.error)}. Start the app or run `h3 serve`.</p>
+        </Show>
+        <ul class="list">
+          <For each={(rows() ?? []).slice().sort((a, b) => (b.updated ?? 0) - (a.updated ?? 0))} fallback={<li class="muted">No projects yet.</li>}>
+            {(row) => (
+              <li>
+                <button class="link" onClick={() => void openProject(row.id)}>
+                  {row.name}
+                </button>
+                <span class="muted">
+                  {row.scene_count} scenes{row.has_audio ? "" : ", no song"}
+                </span>
+                <button class="small danger" onClick={() => void remove(row)}>
+                  Delete
+                </button>
+              </li>
+            )}
+          </For>
+        </ul>
+      </section>
+    </>
   );
 }
 
 export default function App() {
   const [ready, setReady] = createSignal(false);
   const [setup, setSetup] = createSignal(false);
+  const [version, setVersion] = createSignal("");
   onMount(async () => {
     await initApi();
     startEvents();
@@ -94,6 +90,7 @@ export default function App() {
     try {
       const status = await get<{ first_run: boolean; ready: boolean }>("/setup/status");
       if (status.first_run || !status.ready) setSetup(true);
+      setVersion((await get<{ app_version: string }>("/meta")).app_version);
     } catch {
       /* the project list shows that the API is not reachable */
     }
@@ -101,33 +98,26 @@ export default function App() {
   });
   return (
     <div class="app">
-      <header class="top">
-        <h1>VRGDG H3 Studio</h1>
-        <Show when={project()}>
-          <span class="muted">{project()!.name}</span>
-          <button class="small" onClick={closeProject}>
-            All projects
-          </button>
-        </Show>
-        <span class="spacer" />
-        <button class="small" onClick={() => setSetup(!setup())}>
-          Setup
-        </button>
-        <Health />
-      </header>
+      <div class="statusbar">
+        <span>VRGDG H3 Studio {version()} · MiniMax H3 only · {apiBase()}</span>
+      </div>
       <Show when={notice()}>
         <div class={notice()!.bad ? "toast bad" : "toast"}>{notice()!.text}</div>
       </Show>
-      <Show when={ready() && setup()}>
-        <Setup onClose={() => setSetup(false)} />
-      </Show>
-      <Show when={ready() && !setup()}>
-        <Show when={projectId()} fallback={<ProjectList />}>
-          <Show when={project()} fallback={<p class="muted pad">Opening...</p>}>
-            <Editor />
+      <div class="content">
+        <Show when={ready()}>
+          <Show when={setup() && !projectId()}>
+            <Setup onClose={() => setSetup(false)} />
+          </Show>
+          <Show when={!setup() || projectId()}>
+            <Show when={projectId()} fallback={<ProjectList onSetup={() => setSetup(true)} />}>
+              <Show when={project()} fallback={<p class="muted pad">Opening...</p>}>
+                <Editor />
+              </Show>
+            </Show>
           </Show>
         </Show>
-      </Show>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,13 @@
 import { createEffect, createResource, createSignal, For, onCleanup, Show } from "solid-js";
-import { call, encodePid, get, readFileAsBase64 } from "../api";
-import { act, edit, playhead, project, projectId, say, selectedId, setPlayhead, setSelectedId } from "../store";
+import { encodePid, fileUrl, get } from "../api";
+import { edit, fmtTime, playhead, project, projectId, say, selectedId, setPlayhead, setSelectedId } from "../store";
 
-const HEIGHT = 84;
+const WAVE_HEIGHT = 96;
+const CLIP_TOP = 30;
+const CLIP_HEIGHT = 66;
 
-function Waveform(props: { width: number }) {
-  // `width` is the length of the song in pixels, so the peaks line up with the scene blocks.
+function Waveform(props: { width: number; top: number }) {
+  // `width` is the length of the song in pixels, so the peaks line up with the scene clips.
   let canvas: HTMLCanvasElement | undefined;
   const [wave] = createResource(
     () => (project()?.audio.attached ? [projectId(), project()!.audio.path] : null),
@@ -16,36 +18,30 @@ function Waveform(props: { width: number }) {
     if (!canvas || !data || !data.peaks.length) return;
     const width = Math.max(1, Math.floor(props.width));
     canvas.width = width;
-    canvas.height = HEIGHT;
+    canvas.height = WAVE_HEIGHT;
     const g = canvas.getContext("2d")!;
-    g.clearRect(0, 0, width, HEIGHT);
-    g.fillStyle = "#4b5d7a";
+    g.clearRect(0, 0, width, WAVE_HEIGHT);
+    g.fillStyle = "#0e7490";
     const max = Math.max(...data.peaks, 0.001);
     for (let x = 0; x < width; x++) {
       const peak = data.peaks[Math.min(data.peaks.length - 1, Math.floor((x / width) * data.peaks.length))] / max;
-      const h = Math.max(1, peak * (HEIGHT - 8));
-      g.fillRect(x, (HEIGHT - h) / 2, 1, h);
+      const h = Math.max(1, peak * (WAVE_HEIGHT - 8));
+      g.fillRect(x, (WAVE_HEIGHT - h) / 2, 1, h);
     }
   });
-  return <canvas ref={canvas} class="wave" style={{ width: `${props.width}px`, height: `${HEIGHT}px` }} />;
+  return <canvas ref={canvas} class="wave" style={{ top: `${props.top}px`, width: `${props.width}px`, height: `${WAVE_HEIGHT}px` }} />;
 }
 
 export default function Timeline() {
-  const [zoom, setZoom] = createSignal(40); // pixels per second
+  const [zoom, setZoom] = createSignal(12); // pixels per second
   const [bulk, setBulk] = createSignal(false);
   const [bulkText, setBulkText] = createSignal("");
   const [drag, setDrag] = createSignal<{ id: string; end: number } | null>(null);
 
-  const total = () => Math.max(project()?.audio.duration ?? 0, ...(project()?.scenes.map((s) => s.end) ?? [0]), 10);
-  const width = () => Math.ceil(total() * zoom()) + 40;
-  const selected = () => project()?.scenes.find((s) => s.id === selectedId()) ?? null;
-
-  const attachSong = async (file: File | undefined, path?: string) => {
-    await act(async () => {
-      const body = file ? { audio_data: await readFileAsBase64(file), audio_name: file.name } : { audio_path: path };
-      await call("PUT", `/projects/${encodePid(projectId()!)}/audio`, body);
-    }, "Song added.");
-  };
+  const scenes = () => project()?.scenes ?? [];
+  const total = () => Math.max(project()?.audio.duration ?? 0, ...scenes().map((s) => s.end), 10);
+  const width = () => Math.ceil(total() * zoom()) + 60;
+  const selected = () => scenes().find((s) => s.id === selectedId()) ?? null;
 
   const startResize = (e: PointerEvent, id: string, end: number) => {
     e.stopPropagation();
@@ -73,7 +69,7 @@ export default function Timeline() {
   };
 
   const split = async () => {
-    const scene = project()?.scenes.find((s) => playhead() > s.start + 0.05 && playhead() < s.end - 0.05);
+    const scene = scenes().find((s) => playhead() > s.start + 0.05 && playhead() < s.end - 0.05);
     if (!scene) return say("Put the playhead inside a scene first: click the timeline.", true);
     await edit("POST", `/scenes/${encodeURIComponent(scene.id)}/split`, { at_time: Math.round(playhead() * 100) / 100 });
   };
@@ -84,43 +80,83 @@ export default function Timeline() {
     if (done) setBulk(false);
   };
 
-  return (
-    <section class="panel timeline">
-      <div class="row wrap">
-        <strong>Timeline</strong>
-        <Show
-          when={project()?.audio.attached}
-          fallback={
-            <label class="file">
-              Add song
-              <input type="file" accept="audio/*" onChange={(e) => void attachSong(e.currentTarget.files?.[0])} />
-            </label>
-          }
-        >
-          <span class="muted">{project()!.audio.path.split(/[\\/]/).pop()} · {project()!.audio.duration.toFixed(1)} s</span>
-          <label class="file small">
-            Replace song
-            <input type="file" accept="audio/*" onChange={(e) => void attachSong(e.currentTarget.files?.[0])} />
-          </label>
-        </Show>
-        <span class="spacer" />
-        <button class="small" onClick={() => void split()}>Split at playhead ({playhead().toFixed(2)} s)</button>
-        <button class="small" disabled={!selected()} onClick={() => selected() && void edit("POST", `/scenes/${encodeURIComponent(selected()!.id)}/merge`, { with_direction: "next" })}>Merge with next</button>
-        <button class="small" onClick={() => void edit("POST", "/scenes", { position: selected() ? "after" : "append", ref_scene_id: selected()?.id, duration: 4 })}>Add scene</button>
-        <button
-          class="small danger"
-          disabled={!selected()}
-          onClick={() => selected() && window.confirm(`Delete scene ${selected()!.number}? Its files move to the removed scenes folder.`) && void edit("DELETE", `/scenes/${encodeURIComponent(selected()!.id)}?ripple=true`)}
-        >
-          Delete
-        </button>
-        <button class="small" onClick={() => void edit("POST", "/timeline/close-gaps", {}, "Gaps closed.")}>Close gaps</button>
-        <button class="small" onClick={() => setBulk(!bulk())}>Bulk text</button>
-        <label class="muted">
-          Zoom <input type="range" min="10" max="200" value={zoom()} onInput={(e) => setZoom(Number(e.currentTarget.value))} />
-        </label>
-      </div>
+  // A mark every second, a label every ten (every thirty when zoomed far out).
+  const labelEvery = () => (zoom() < 6 ? 30 : 10);
+  const labels = () => Array.from({ length: Math.floor(total() / labelEvery()) + 1 }, (_, i) => i * labelEvery());
 
+  return (
+    <section class="timeline">
+      <div class="tltools">
+        <strong>Timeline Tools</strong>
+        <button class="small" onClick={() => void split()} title="Cut the scene under the playhead in two">Split at playhead</button>
+        <button class="small" onClick={() => void edit("POST", "/timeline/snap", { scope: "all" }, "Scenes snapped to the beats.")}>Snap to beats</button>
+        <span class="muted">Zoom</span>
+        <button class="small" onClick={() => setZoom(Math.max(3, zoom() / 1.4))}>-</button>
+        <input type="range" min="3" max="120" value={zoom()} onInput={(e) => setZoom(Number(e.currentTarget.value))} style={{ width: "110px", padding: 0 }} />
+        <button class="small" onClick={() => setZoom(Math.min(120, zoom() * 1.4))}>+</button>
+        <span class="stats">
+          {scenes().length} scenes | Timeline {fmtTime(total())} | Audio {fmtTime(project()?.audio.duration ?? 0)}
+        </span>
+        <span class="spacer" />
+        <span class="muted">Playhead {fmtTime(playhead())}</span>
+      </div>
+      <div class="tlbody">
+        <div class="tlbuttons">
+          <button onClick={() => setBulk(!bulk())}>Bulk</button>
+          <button class="cyan" onClick={() => void edit("POST", "/scenes", { position: selected() ? "after" : "append", ref_scene_id: selected()?.id, duration: 4 })}>+ Segment</button>
+          <button onClick={() => void split()}>Split</button>
+          <button disabled={!selected()} onClick={() => selected() && void edit("POST", `/scenes/${encodeURIComponent(selected()!.id)}/merge`, { with_direction: "next" })}>Merge next</button>
+          <button class="danger" disabled={!selected()} onClick={() => selected() && window.confirm(`Delete scene ${selected()!.number}? Its files move to the removed scenes folder.`) && void edit("DELETE", `/scenes/${encodeURIComponent(selected()!.id)}?ripple=true`)}>Delete</button>
+          <button onClick={() => void edit("POST", "/timeline/close-gaps", {}, "Gaps closed.")}>Close gaps</button>
+        </div>
+        <div class="tlscroll">
+          <div class="tltrack" style={{ width: `${width()}px`, height: `${CLIP_TOP + CLIP_HEIGHT + WAVE_HEIGHT + 8}px` }} onClick={seek}>
+            <div class="ruler" style={{ "background-image": `repeating-linear-gradient(to right, #52525b 0, #52525b 1px, transparent 1px, transparent ${zoom()}px)`, "background-size": "100% 8px", "background-repeat": "no-repeat", "background-position": "0 18px" }}>
+              <For each={labels()}>{(t) => <span style={{ left: `${t * zoom()}px` }}>{fmtTime(t)}</span>}</For>
+            </div>
+            <For each={scenes()}>
+              {(scene) => {
+                const end = () => (drag()?.id === scene.id ? drag()!.end : scene.end);
+                const w = () => Math.max(6, (end() - scene.start) * zoom());
+                const thumb = () => scene.video_thumbnail ?? scene.approved_image;
+                return (
+                  <div
+                    class={`clip ${scene.status}`}
+                    classList={{ selected: scene.id === selectedId() }}
+                    style={{
+                      left: `${scene.start * zoom()}px`,
+                      width: `${w()}px`,
+                      top: `${CLIP_TOP}px`,
+                      "background-image": thumb() ? `url("${fileUrl(thumb()!.path, thumb()!.mtime)}")` : undefined,
+                    }}
+                    title={`${scene.number}. ${scene.lyrics}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedId(scene.id);
+                      setPlayhead(scene.start);
+                    }}
+                  >
+                    <Show when={scene.rendered_video}>
+                      <span class="tag v">V</span>
+                    </Show>
+                    <Show when={w() > 56}>
+                      <span class="cap">
+                        <b>Scene {scene.number}</b>
+                        <Show when={w() > 120}>
+                          {fmtTime(scene.start)} - {fmtTime(end())} | {(end() - scene.start).toFixed(2)}s
+                        </Show>
+                      </span>
+                    </Show>
+                    <i class="handle" onPointerDown={(e) => startResize(e, scene.id, scene.end)} />
+                  </div>
+                );
+              }}
+            </For>
+            <Waveform width={(project()?.audio.duration ?? 0) * zoom()} top={CLIP_TOP + CLIP_HEIGHT + 4} />
+            <div class="playhead" style={{ left: `${playhead() * zoom()}px`, height: "100%" }} />
+          </div>
+        </div>
+      </div>
       <Show when={bulk()}>
         <div class="bulk">
           <p class="muted">One scene per line. Seconds each (`4 words for the scene`) or ranges (`0:10 to 0:18 words`). Words become the scene's lyrics.</p>
@@ -132,38 +168,6 @@ export default function Timeline() {
           </div>
         </div>
       </Show>
-
-      <div class="scroll">
-        <div class="track" style={{ width: `${width()}px`, height: `${HEIGHT + 40}px` }} onClick={seek}>
-          <Waveform width={(project()?.audio.duration ?? 0) * zoom()} />
-          <For each={project()?.scenes ?? []}>
-            {(scene) => {
-              const end = () => (drag()?.id === scene.id ? drag()!.end : scene.end);
-              return (
-                <div
-                  class={`block ${scene.status}`}
-                  classList={{ selected: scene.id === selectedId() }}
-                  style={{ left: `${scene.start * zoom()}px`, width: `${Math.max(6, (end() - scene.start) * zoom())}px`, top: `${HEIGHT + 4}px` }}
-                  title={`${scene.number}. ${scene.lyrics}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedId(scene.id);
-                    setPlayhead(scene.start);
-                  }}
-                >
-                  <span>{scene.number}</span>
-                  <small>{scene.lyrics.split("\n")[0]}</small>
-                  <i class="handle" onPointerDown={(e) => startResize(e, scene.id, scene.end)} />
-                </div>
-              );
-            }}
-          </For>
-          <div class="playhead" style={{ left: `${playhead() * zoom()}px`, height: `${HEIGHT + 40}px` }} />
-        </div>
-      </div>
-      <p class="muted legend">
-        <span class="swatch empty" /> empty <span class="swatch has_prompt" /> prompt <span class="swatch has_image" /> image <span class="swatch has_video" /> video. Drag a scene's right edge to resize it.
-      </p>
     </section>
   );
 }
