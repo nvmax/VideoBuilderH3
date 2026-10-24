@@ -18,6 +18,7 @@ pub mod reference_routes;
 pub mod video_routes;
 pub mod llm_routes;
 pub mod session_routes;
+pub mod setup_routes;
 pub mod views;
 
 use std::path::Path;

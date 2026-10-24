@@ -4,3 +4,5 @@ node_modules/
 /app/src-tauri/target/
 /app/src-tauri/gen/
 *.log
+/app/src-tauri/binaries/
+/app/src-tauri/licenses/ffmpeg-*

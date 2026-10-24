@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "publisher": "VRGDG",
+    "copyright": "Copyright (c) VRGDG",
+    "shortDescription": "Turn a song into a MiniMax H3 music video with ComfyUI.",
+    "externalBin": ["binaries/ffmpeg", "binaries/ffprobe"],
+    "resources": ["licenses/*"],
+    "windows": {
+      "webviewInstallMode": { "type": "downloadBootstrapper" },
+      "nsis": {
+        "installMode": "currentUser",
+        "displayLanguageSelector": false,
+        "languages": ["English"]
+      }
+    }
+  }
+}

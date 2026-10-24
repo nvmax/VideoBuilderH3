@@ -40,3 +40,9 @@ zip = { version = "2", default-features = false, features = ["deflate"] }
 tokio = { version = "1", features = ["full"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[profile.release]
+# A smaller, faster app for the installer. Debug builds are unchanged.
+lto = "thin"
+codegen-units = 4
+strip = "symbols"

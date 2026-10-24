@@ -10,6 +10,12 @@ fn api_base() -> String {
     format!("http://{}/api/v1", cfg.api_bind)
 }
 
+/// Start the app again so saved settings (ComfyUI address, folders, ffmpeg) take effect.
+#[tauri::command]
+fn restart_app(app: tauri::AppHandle) {
+    app.restart();
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -25,7 +31,7 @@ pub fn run() {
             });
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![api_base])
+        .invoke_handler(tauri::generate_handler![api_base, restart_app])
         .run(tauri::generate_context!())
         .expect("error while running the VRGDG H3 Studio app");
 }

@@ -2,6 +2,7 @@ import { createResource, createSignal, For, onCleanup, onMount, Show } from "sol
 import { apiBase, call, get, initApi } from "./api";
 import { closeProject, notice, openProject, project, projectId, say, startEvents } from "./store";
 import Editor from "./components/Editor";
+import Setup from "./components/Setup";
 import "./App.css";
 
 interface ProjectRow {
@@ -85,9 +86,17 @@ function ProjectList() {
 
 export default function App() {
   const [ready, setReady] = createSignal(false);
+  const [setup, setSetup] = createSignal(false);
   onMount(async () => {
     await initApi();
     startEvents();
+    // The first time the app runs, or while something it needs is not ready, it opens on the setup screen.
+    try {
+      const status = await get<{ first_run: boolean; ready: boolean }>("/setup/status");
+      if (status.first_run || !status.ready) setSetup(true);
+    } catch {
+      /* the project list shows that the API is not reachable */
+    }
     setReady(true);
   });
   return (
@@ -101,12 +110,18 @@ export default function App() {
           </button>
         </Show>
         <span class="spacer" />
+        <button class="small" onClick={() => setSetup(!setup())}>
+          Setup
+        </button>
         <Health />
       </header>
       <Show when={notice()}>
         <div class={notice()!.bad ? "toast bad" : "toast"}>{notice()!.text}</div>
       </Show>
-      <Show when={ready()}>
+      <Show when={ready() && setup()}>
+        <Setup onClose={() => setSetup(false)} />
+      </Show>
+      <Show when={ready() && !setup()}>
         <Show when={projectId()} fallback={<ProjectList />}>
           <Show when={project()} fallback={<p class="muted pad">Opening...</p>}>
             <Editor />

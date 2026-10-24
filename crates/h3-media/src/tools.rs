@@ -13,6 +13,15 @@ pub enum MediaError {
     Io(#[from] std::io::Error),
 }
 
+/// What [`Tools::describe`] found out about ffmpeg.
+#[derive(Debug, Clone)]
+pub struct ToolInfo {
+    pub version: String,
+    pub has_libx264: bool,
+    pub source: String,
+    pub path: String,
+}
+
 /// The two programs everything media related runs.
 #[derive(Debug, Clone)]
 pub struct Tools {
@@ -22,6 +31,21 @@ pub struct Tools {
 
 fn exe_names(name: &str) -> Vec<String> {
     if cfg!(windows) { vec![format!("{name}.exe")] } else { vec![name.to_string()] }
+}
+
+/// A program that ships with the app: next to the app's own executable, or in a `bin` folder there.
+pub fn bundled(name: &str) -> Option<PathBuf> {
+    let exe = std::env::current_exe().ok()?;
+    let dir = exe.parent()?;
+    for folder in [dir.to_path_buf(), dir.join("bin")] {
+        for file in exe_names(name) {
+            let candidate = folder.join(&file);
+            if candidate.is_file() {
+                return Some(candidate);
+            }
+        }
+    }
+    None
 }
 
 fn on_path(name: &str) -> Option<PathBuf> {
@@ -50,6 +74,18 @@ impl Tools {
             sibling.or_else(|| on_path("ffprobe"))
         };
         Ok(Self { ffmpeg: ffmpeg_path, ffprobe: ffprobe_path.ok_or(MediaError::NotFound)? })
+    }
+
+    /// Which ffmpeg this is: its version line, whether it has the libx264 encoder and where it was found.
+    pub fn describe(&self) -> ToolInfo {
+        let version = run(&self.ffmpeg, &args(&["-hide_banner", "-version"]))
+            .ok()
+            .map(|o| String::from_utf8_lossy(&o.stdout).lines().next().unwrap_or("").trim().to_string())
+            .filter(|v| !v.is_empty())
+            .unwrap_or_else(|| "ffmpeg".into());
+        let has_libx264 = run(&self.ffmpeg, &args(&["-hide_banner", "-encoders"])).ok().is_some_and(|o| String::from_utf8_lossy(&o.stdout).contains("libx264"));
+        let source = if bundled("ffmpeg").is_some_and(|b| b == self.ffmpeg) { "bundled with the app" } else { "installed on this computer" };
+        ToolInfo { version, has_libx264, source: source.into(), path: self.ffmpeg.display().to_string() }
     }
 
     /// Run ffmpeg and fail with its own message when it exits with an error.
@@ -82,10 +118,11 @@ fn command(program: &Path, args: &[String]) -> Command {
 fn resolve(configured: &str, default_name: &str) -> Option<PathBuf> {
     let text = configured.trim();
     if text.is_empty() {
-        return on_path(default_name);
+        return bundled(default_name).or_else(|| on_path(default_name));
     }
     if !text.contains(['/', '\\']) {
-        return on_path(text.strip_suffix(".exe").unwrap_or(text));
+        let name = text.strip_suffix(".exe").unwrap_or(text);
+        return bundled(name).or_else(|| on_path(name));
     }
     let path = PathBuf::from(text);
     if path.is_file() {
