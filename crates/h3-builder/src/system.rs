@@ -118,7 +118,8 @@ mod tests {
         let nodes = status["nodes"].as_array().unwrap();
         let kj = nodes.iter().find(|n| n["id"] == "kjnodes").unwrap();
         assert_eq!(kj["installed"], true);
-        assert_eq!(kj["folder"], "comfyui-kjnodes");
+        // Windows file names ignore case, so the first listed spelling is the one that matches.
+        assert!(kj["folder"].as_str().unwrap().eq_ignore_ascii_case("comfyui-kjnodes"));
         let gguf = nodes.iter().find(|n| n["id"] == "gguf").unwrap();
         assert_eq!(gguf["installed"], false);
         assert_eq!(gguf["folder"], "ComfyUI-GGUF");

@@ -1739,8 +1739,11 @@ dependencies = [
 name = "h3-builder"
 version = "0.1.0"
 dependencies = [
+ "chrono",
+ "fancy-regex",
  "h3-core",
  "h3-media",
+ "h3-pipeline",
  "h3-project",
  "serde_json",
  "sysinfo",

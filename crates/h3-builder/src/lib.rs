@@ -5,6 +5,9 @@
 //! them in the pack's `{"ok": true, ...}` and `{"ok": false, "error": ...}` envelopes.
 
 pub mod env;
+pub mod error_log;
+pub mod files;
+pub mod media;
 pub mod payload;
 pub mod projects;
 pub mod system;

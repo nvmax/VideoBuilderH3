@@ -65,6 +65,8 @@ async function start() {
       console.warn(`H3 Studio: ${file} did not load`, error);
     }
   }
+  const { startTrimming } = await import("/host/trim.js");
+  startTrimming();
   const { openBuilder } = await import(/* @vite-ignore */ `${EXT}/music_video_builder/builder.mjs`);
   openBuilder(standInNode(), {});
 }

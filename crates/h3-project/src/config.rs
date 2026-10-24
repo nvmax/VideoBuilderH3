@@ -58,7 +58,8 @@ impl AppConfig {
     /// Load the config at `path`, or defaults when the file does not exist yet.
     pub fn load(path: &Path) -> io::Result<Self> {
         match std::fs::read_to_string(path) {
-            Ok(text) => serde_json::from_str(&text).map_err(|e| {
+            // Windows editors save a byte order mark that JSON parsers refuse.
+            Ok(text) => serde_json::from_str(text.trim_start_matches('\u{feff}')).map_err(|e| {
                 io::Error::new(io::ErrorKind::InvalidData, format!("{}: {e}", path.display()))
             }),
             Err(e) if e.kind() == io::ErrorKind::NotFound => Ok(Self::default()),
@@ -93,6 +94,14 @@ mod tests {
         let back = AppConfig::load(&path).unwrap();
         assert_eq!(back, changed);
         assert_eq!(back.comfy_base(), "http://localhost:9000");
+    }
+
+    #[test]
+    fn file_with_a_byte_order_mark_loads() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("config.json");
+        std::fs::write(&path, "\u{feff}{\"comfy_url\": \"http://localhost:9000\"}").unwrap();
+        assert_eq!(AppConfig::load(&path).unwrap().comfy_url, "http://localhost:9000");
     }
 
     #[test]

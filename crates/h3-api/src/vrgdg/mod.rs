@@ -6,6 +6,7 @@
 //! `/interrupt` of ComfyUI itself.
 
 mod choices;
+mod files;
 mod projects;
 mod settings;
 mod system;
@@ -34,6 +35,7 @@ use crate::app::AppState;
 pub fn router() -> Router<Arc<AppState>> {
     let router = Router::new().route("/vrgdg/events", get(events));
     let router = projects::routes(router);
+    let router = files::routes(router);
     let router = settings::routes(router);
     let router = system::routes(router);
     choices::routes(router)
@@ -200,7 +202,11 @@ pub async fn fallback(State(state): State<Arc<AppState>>, request: Request) -> R
         *probe.headers_mut() = request.headers().clone();
         let Ok(reply) = tower_http::services::ServeDir::new(dir).append_index_html_on_directories(true).oneshot(probe).await;
         if reply.status() != StatusCode::NOT_FOUND {
-            return reply.map(Body::new);
+            // The screens are local files that change with the app. The browser checks them each time (a cheap local
+            // 304) instead of showing an older copy.
+            let mut reply = reply.map(Body::new);
+            reply.headers_mut().insert(header::CACHE_CONTROL, header::HeaderValue::from_static("no-cache"));
+            return reply;
         }
     }
     proxy_to_comfy(&state, request).await

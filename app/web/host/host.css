@@ -1,0 +1,26 @@
+/* The page the Builder runs in. ComfyUI gives the Builder its font and page colours, so this sets the same ones. */
+@font-face {
+  font-family: "Inter";
+  src: url("/host/fonts/inter-latin-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #202020;
+  color: #fff;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 16px;
+}
+
+/* Parts of the pack's Builder this app does not use. (host/trim.js hides the ones that can only be found by their text.) */
+button[aria-label="Close Video Builder"],
+button[title="What does the updater do?"],
+a[href*="buymeacoffee.com"],
+div:has(> a[href*="buymeacoffee.com"]) {
+  display: none !important;
+}

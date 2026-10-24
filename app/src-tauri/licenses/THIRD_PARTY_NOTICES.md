@@ -29,3 +29,9 @@ licenses.
 The application is built with Tauri (MIT or Apache-2.0), SolidJS (MIT), and Rust crates under MIT, Apache-2.0 or similar
 licenses, including tokio, axum, reqwest, serde, rusqlite (with bundled SQLite, public domain), image, symphonia and
 rustfft. The Microsoft Edge WebView2 runtime is installed by the installer when it is missing, under Microsoft's terms.
+
+## Inter font
+
+`app/web/host/fonts/inter-latin-normal.woff2` is the Inter typeface, copied from ComfyUI's frontend package, which ships
+it for the same reason: the Video Builder is drawn with it. Copyright 2016 The Inter Project Authors
+(https://github.com/rsms/inter). Licensed under the SIL Open Font License, Version 1.1 (https://openfontlicense.org).

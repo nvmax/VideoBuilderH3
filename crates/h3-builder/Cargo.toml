@@ -8,8 +8,11 @@ license.workspace = true
 [dependencies]
 h3-core.workspace = true
 h3-media.workspace = true
+h3-pipeline.workspace = true
 h3-project.workspace = true
 serde_json.workspace = true
+fancy-regex.workspace = true
+chrono.workspace = true
 sysinfo.workspace = true
 
 [dev-dependencies]
