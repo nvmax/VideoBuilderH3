@@ -13,7 +13,7 @@ use serde_json::Value;
 /// Answers the graph builders' questions from a live ComfyUI (its `/object_info` and folders), the project on disk and
 /// ffmpeg. Everything it needs from ComfyUI is read once up front, so the builders run without network calls.
 pub struct LiveEnv {
-    pub object_info: Value,
+    pub object_info: std::sync::Arc<Value>,
     pub dirs: ComfyDirs,
     pub tools: Tools,
     /// Folders the saved RefMods are read from.
@@ -21,8 +21,9 @@ pub struct LiveEnv {
 }
 
 impl LiveEnv {
-    pub fn new(object_info: Value, dirs: ComfyDirs, tools: Tools) -> Self {
-        Self { object_info, dirs, tools, refmod_dirs: Vec::new() }
+    /// `object_info` is shared, so many renders can read one copy of ComfyUI's node list.
+    pub fn new(object_info: impl Into<std::sync::Arc<Value>>, dirs: ComfyDirs, tools: Tools) -> Self {
+        Self { object_info: object_info.into(), dirs, tools, refmod_dirs: Vec::new() }
     }
 
     pub fn with_refmod_dirs(mut self, dirs: Vec<std::path::PathBuf>) -> Self {

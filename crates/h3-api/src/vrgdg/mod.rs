@@ -9,6 +9,7 @@ mod audio_mask;
 mod choices;
 mod files;
 mod projects;
+mod runner;
 mod settings;
 mod system;
 
@@ -38,6 +39,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = projects::routes(router);
     let router = files::routes(router);
     let router = audio_mask::routes(router);
+    let router = runner::routes(router);
     let router = settings::routes(router);
     let router = system::routes(router);
     choices::routes(router)
@@ -93,7 +95,7 @@ impl From<StoreError> for Fail {
 
 pub type Reply = Result<Out, Fail>;
 
-fn into_response(reply: Reply) -> Response {
+pub(super) fn into_response(reply: Reply) -> Response {
     match reply {
         Ok(Out::Raw(value)) => axum::Json(value).into_response(),
         Ok(Out::Fields(value)) => (StatusCode::OK, axum::Json(envelope(value))).into_response(),
@@ -102,7 +104,7 @@ fn into_response(reply: Reply) -> Response {
     }
 }
 
-fn envelope(value: Value) -> Value {
+pub(super) fn envelope(value: Value) -> Value {
     let mut out = serde_json::Map::new();
     out.insert("ok".into(), json!(true));
     if let Value::Object(map) = value {

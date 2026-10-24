@@ -48,11 +48,26 @@ pub struct AppState {
     pub edit_lock: tokio::sync::Mutex<()>,
     /// Messages for the Builder's event stream (`/vrgdg/events`), as JSON text.
     pub builder_events: tokio::sync::broadcast::Sender<String>,
+    /// ComfyUI's node list (`/object_info`, several MB), kept for a short while because the Builder asks for it often.
+    pub object_info_cache: tokio::sync::Mutex<Option<(std::time::Instant, Arc<Value>)>>,
     /// The app's screens, served beside the API when set (`h3 serve --web`). The desktop app embeds them instead.
     pub web_dir: Option<PathBuf>,
 }
 
 impl AppState {
+    /// ComfyUI's node list, at most 60 seconds old. `fresh` asks again.
+    pub async fn object_info(&self, fresh: bool) -> Result<Arc<Value>, String> {
+        let mut cache = self.object_info_cache.lock().await;
+        if let Some((at, info)) = cache.as_ref() {
+            if !fresh && at.elapsed() < std::time::Duration::from_secs(60) {
+                return Ok(Arc::clone(info));
+            }
+        }
+        let info = Arc::new(h3_comfy::ComfyClient::new(self.cfg.comfy_base()).object_info().await.map_err(|e| e.to_string())?);
+        *cache = Some((std::time::Instant::now(), Arc::clone(&info)));
+        Ok(info)
+    }
+
     /// The folders and tools a Builder call works with.
     pub fn builder_env(&self) -> h3_builder::Env {
         h3_builder::Env {
