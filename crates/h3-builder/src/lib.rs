@@ -4,6 +4,7 @@
 //! The functions take the request body as a JSON object and return the reply fields. The HTTP layer in `h3-api` wraps
 //! them in the pack's `{"ok": true, ...}` and `{"ok": false, "error": ...}` envelopes.
 
+pub mod audio_mask;
 pub mod env;
 pub mod error_log;
 pub mod files;
