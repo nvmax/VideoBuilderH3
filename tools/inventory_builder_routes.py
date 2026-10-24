@@ -47,6 +47,14 @@ def parse_routes(pack: Path):
     return found
 
 
+# Routes registered from a constant (`_LOG_ROUTE + "/append"`), which the decorator pattern above cannot see.
+EXTRA = [
+    ("POST", "/vrgdg/music_builder/error_log", "error_log", "builder/error_log_routes.py", "Read or create the project's error log."),
+    ("POST", "/vrgdg/music_builder/error_log/append", "append_error_log", "builder/error_log_routes.py", "Append a redacted browser error."),
+    ("POST", "/vrgdg/music_builder/error_log/clear", "clear_error_log", "builder/error_log_routes.py", "Clear the project's error report."),
+]
+
+
 def frontend_calls(pack: Path):
     """path pattern -> modules that mention it."""
     calls = {}
@@ -65,6 +73,7 @@ def main() -> int:
     parser.add_argument("--pack", required=True, type=Path)
     args = parser.parse_args()
     routes = parse_routes(args.pack)
+    routes += [{"method": m, "path": path, "handler": h, "file": f, "line": 0, "doc": d} for m, path, h, f, d in EXTRA]
     calls = frontend_calls(args.pack)
     for route in routes:
         route["callers"] = sorted(calls.get(route["path"].rstrip("/"), []))

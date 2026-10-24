@@ -2602,6 +2602,35 @@
    "callers": [
     "VRGDG_BrowserImageBridge.js"
    ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/error_log",
+   "handler": "error_log",
+   "file": "builder/error_log_routes.py",
+   "line": 0,
+   "doc": "Read or create the project's error log.",
+   "callers": [
+    "error_log.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/error_log/append",
+   "handler": "append_error_log",
+   "file": "builder/error_log_routes.py",
+   "line": 0,
+   "doc": "Append a redacted browser error.",
+   "callers": []
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/music_builder/error_log/clear",
+   "handler": "clear_error_log",
+   "file": "builder/error_log_routes.py",
+   "line": 0,
+   "doc": "Clear the project's error report.",
+   "callers": []
   }
  ]
 }
