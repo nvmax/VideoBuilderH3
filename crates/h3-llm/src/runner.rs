@@ -23,6 +23,8 @@ pub struct RunInfo {
     pub runner: String,
     pub used_model: String,
     pub used_provider: String,
+    /// The model left the GPU after the call (the Gemma in ComfyUI, unless it is kept loaded).
+    pub unloaded: bool,
 }
 
 fn text(payload: &Obj, key: &str) -> String {
@@ -165,7 +167,7 @@ fn info(cfg: &LlmConfig, kind: &str, reply_model: String, vision: bool) -> RunIn
         "own_server" => "own_server".to_string(),
         _ => String::new(),
     };
-    RunInfo { runner, used_model: reply_model, used_provider }
+    RunInfo { runner, used_model: reply_model, used_provider, unloaded: matches!(kind, "builtin" | "qwen_local") && !cfg.comfy_gemma_keep_loaded }
 }
 
 /// Run a text prompt on the runner the request selected and return the cleaned reply.

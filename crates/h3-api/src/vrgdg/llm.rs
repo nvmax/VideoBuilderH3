@@ -5,9 +5,11 @@ use std::sync::Arc;
 
 use axum::body::Bytes;
 use axum::extract::State;
+use axum::http::StatusCode;
 use axum::routing::{get, post as axum_post, MethodRouter};
 use axum::Router;
 use h3_builder::instructions;
+use h3_builder::prompt_writers::{concepts, image_prompts, RunnerLlm};
 use h3_core::pyval::{text_or_empty, to_int, truthy, Obj};
 use h3_llm::runner::runner_config;
 use h3_llm::{own_server, providers, ChatRequest, LlmConfig};
@@ -38,6 +40,22 @@ where
     })
 }
 
+/// A POST route of an LLM writer: it runs on the runner the request's own settings select and fails with 500 like the pack's.
+macro_rules! writer {
+    ($function:path) => {
+        axum_post(|State(state): State<Arc<AppState>>, body: Bytes| async move {
+            let payload = match super::body_object(&body) {
+                Ok(payload) => payload,
+                Err(fail) => return super::into_response(Err(fail)),
+            };
+            let base = base_config(&state);
+            let llm = RunnerLlm { payload: &payload, base: &base };
+            let reply = $function(&llm, &payload).await.map(Out::from).map_err(|message| Fail::new(StatusCode::INTERNAL_SERVER_ERROR, message));
+            super::into_response(reply)
+        })
+    };
+}
+
 pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
     let base = "/vrgdg/music_builder";
     router
@@ -47,6 +65,12 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/own_server_models"), work(|state, p| async move { own_server_models(&state, &p).await }))
         .route(&format!("{base}/lm_studio_models"), work(|state, p| async move { lm_studio_models(&state, &p).await }))
         .route(&format!("{base}/own_server_reference_image"), work(|state, p| async move { own_server_image(&state, &p).await }))
+        .route(&format!("{base}/generate_t2i"), writer!(image_prompts::generate_t2i))
+        .route(&format!("{base}/edit_image_prompt"), writer!(image_prompts::edit_image_prompt))
+        .route(&format!("{base}/generate_flux_klein_prompt"), writer!(image_prompts::generate_flux_klein_prompt))
+        .route(&format!("{base}/generate_nb_image_prompt"), writer!(image_prompts::generate_nb_image_prompt))
+        .route(&format!("{base}/analyze_story_references"), writer!(image_prompts::analyze_story_references))
+        .route(&format!("{base}/generate_concept_prompts"), writer!(concepts::generate_concept_prompts))
         .route(&format!("{base}/clear_memory_direct"), work(|state, _| async move { clear_memory_direct(&state).await }))
         .route(&format!("{base}/get_instruction"), post(|_, p| fields(instructions::get_instruction(&p))))
         .route(&format!("{base}/save_instruction"), post(|_, p| fields(instructions::save_instruction(&p))))

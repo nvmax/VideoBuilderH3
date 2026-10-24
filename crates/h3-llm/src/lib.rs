@@ -10,6 +10,8 @@ pub mod describe;
 pub mod instructions;
 pub mod locations;
 pub mod own_server;
+pub mod prompt_text;
+pub mod prompts;
 pub mod providers;
 pub mod runner;
 
