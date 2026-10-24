@@ -422,3 +422,28 @@ pub async fn serve_file(State(state): Shared, Query(q): Query<HashMap<String, St
         Err(e) => ApiError::internal(e.to_string()).into_response(),
     }
 }
+
+/// `GET /projects/{pid}/assets`: the media files of the project.
+pub async fn project_assets(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
+    let folder = views::resolve_project(&state.roots, &pid)?;
+    let items = blocking(move || views::project_assets(&folder)).await?;
+    Ok(success(json!({"items": items, "count": items.len()}), None))
+}
+
+/// `POST /projects/{pid}/export`: package the project as a portable zip next to the app's config.
+pub async fn export_project(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
+    let folder = views::resolve_project(&state.roots, &pid)?;
+    let out = state.config_path.parent().unwrap_or_else(|| std::path::Path::new(".")).join("exports");
+    let created = Stamp::now().epoch;
+    let (zip, name) = blocking(move || h3_project::export::export_project(&folder, &out, created)).await?.map_err(ApiError::internal)?;
+    let bytes = std::fs::metadata(&zip).map(|m| m.len()).unwrap_or(0);
+    Ok(success(json!({"zip_path": zip.display().to_string(), "filename": name, "bytes": bytes}), None))
+}
+
+/// `POST /projects/{pid}/scenes/bulk`: move, resize and patch several scenes in one save.
+pub async fn bulk_scenes(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let operations: Vec<Value> = body.get("operations").and_then(Value::as_array).cloned().unwrap_or_default();
+    let expected = if_match(&headers)?;
+    edit(&state, &pid, move |folder, now| session_ops::bulk_scene_ops(folder, &operations, expected, now)).await
+}

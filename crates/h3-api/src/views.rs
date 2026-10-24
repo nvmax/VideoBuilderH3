@@ -344,3 +344,22 @@ pub fn apply_settings_patch(session: &mut Obj, patch: &Obj) -> Result<(), ApiErr
     }
     Ok(())
 }
+
+/// Every media file in the project's media folders. Port of `get_project_assets`.
+pub fn project_assets(project: &Path) -> Vec<Value> {
+    let mut assets = Vec::new();
+    for (sub, kind) in [("images", "image"), ("scene_videos", "video"), ("final_videos", "video"), ("scene_audio", "audio"), ("project_audio", "audio"), ("latents", "latent")] {
+        let Ok(read) = std::fs::read_dir(project.join(sub)) else { continue };
+        let mut names: Vec<String> = read.flatten().map(|e| e.file_name().to_string_lossy().into_owned()).collect();
+        names.sort();
+        for name in names {
+            let path = project.join(sub).join(&name);
+            let stem = Path::new(&name).file_stem().map(|s| s.to_string_lossy().into_owned()).unwrap_or_default();
+            let item = asset(project, &path.to_string_lossy(), kind, &stem);
+            if !item.is_null() {
+                assets.push(item);
+            }
+        }
+    }
+    assets
+}

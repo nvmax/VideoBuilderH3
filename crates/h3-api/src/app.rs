@@ -60,6 +60,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/health", get(health))
         .route("/meta", get(meta))
         .route("/models", get(models))
+        .route("/modes", get(modes))
         .route("/queue", get(queue))
         .route("/llm/settings", get(lr::get_settings).put(lr::put_settings))
         .route("/llm/active", get(lr::active))
@@ -93,8 +94,11 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/prompts/{field}", axum::routing::put(sr::put_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/minimax/validate", post(sr::validate_prompt))
         .route("/projects/{pid}/summary", get(project_summary))
+        .route("/projects/{pid}/assets", get(sr::project_assets))
+        .route("/projects/{pid}/export", post(sr::export_project))
         .route("/projects/{pid}/settings", get(get_settings).patch(patch_settings))
         .route("/projects/{pid}/scenes", get(list_scenes).post(er::create_scene))
+        .route("/projects/{pid}/scenes/bulk", post(sr::bulk_scenes))
         .route("/projects/{pid}/scenes/{sid}", get(get_scene).delete(er::delete_scene).patch(sr::patch_scene))
         .route("/projects/{pid}/scenes/{sid}/split", post(er::split_scene))
         .route("/projects/{pid}/scenes/{sid}/merge", post(er::merge_scene))
@@ -235,6 +239,62 @@ async fn models(State(state): Shared) -> ApiResult {
 
 async fn settings_schema() -> ApiResult {
     Ok(success(json!({"settings": h3_core::settings::schema()}), None))
+}
+
+/// `GET /modes`: what this app can render. Port of `get_modes_catalog`, with only MiniMax H3 and the image presets.
+async fn modes() -> ApiResult {
+    let mut keys: Vec<String> = h3_core::settings::defaults().keys().cloned().collect();
+    keys.sort();
+    Ok(success(
+        json!({
+            "video_engines": {
+                "minimax_h3": {
+                    "name": "MiniMax Hailuo H3",
+                    "modes": {
+                        "image_to_video": {
+                            "name": "Image to Video",
+                            "scene_inputs": ["approved_image", "audio"],
+                            "prompt_fields": ["i2v_prompt"],
+                            "settings_group": "minimax_h3",
+                            "settings_keys": keys,
+                            "supports": {"scene_override": true, "post_process": true, "latent_continuation": true, "audio_drive": true, "continuity": ["off", "i2v_chain"]},
+                        },
+                        "refmod_pipeline": {
+                            "name": "RefMod pipeline",
+                            "description": "Set `pipeline` to `refmod` in the MiniMax H3 settings. The whole project then renders from saved RefMods (GET /refmods) picked on Reference Builder cards (`source: refmod`, `refmod: {name, strength}`): one mode (reference_to_video), single or 2 pass, no scene images.",
+                            "scene_inputs": ["refmods", "audio"],
+                            "render_pass": ["single", "two_pass"],
+                            "limits": {"refmods_per_scene": 24},
+                            "supports": {"audio_drive": true, "latent_continuation": true},
+                        },
+                        "reference_to_video": {
+                            "name": "Reference to Video",
+                            "scene_inputs": ["reference_images", "audio"],
+                            "limits": {"reference_images": 9, "video_references": 0},
+                            "render_pass": ["single", "two_pass", "three_pass"],
+                            "audio_mode": ["input_audio", "built_in_audio"],
+                            "supports": {"reference_images": true, "audio_drive": true},
+                        },
+                    },
+                },
+            },
+            "image_modes": {
+                "image_preset": {
+                    "name": "ComfyUI image preset",
+                    "description": "Scene and reference images are made by an API workflow preset (GET /image-presets) for any image model.",
+                    "prompt_fields": ["t2i_prompt"],
+                },
+            },
+            "enums": {
+                "continuity_mode": ["off", "i2v_chain", "img2img"],
+                "video_engines": ["minimax_h3"],
+                "render_passes": ["single", "two_pass", "three_pass"],
+                "audio_modes": ["input_audio", "built_in_audio"],
+                "seed_modes": ["randomize", "fixed"],
+            },
+        }),
+        None,
+    ))
 }
 
 async fn queue(State(state): Shared) -> ApiResult {

@@ -570,3 +570,50 @@ pub fn scene_reference_choices(session: &Value, segments: &[Value], index: usize
     let mode = settings.get("video_mode").and_then(Value::as_str).unwrap_or("");
     h3_core::scene::reference_choices(session, &segment, index, mode)
 }
+
+/// Several scene edits (`move`, `resize`, `patch`) in one write. Nothing is saved when one of them fails. Port of
+/// `bulk_scene_operations`.
+pub fn bulk_scene_ops(project: &Path, operations: &[Value], if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    let mut segs = edit.segments();
+    let mut applied = 0;
+    let missing = |op: &Value, key: &str| OpError::Validation(format!("Operation {} needs `{key}`.", op));
+    for op in operations {
+        let kind = ["op", "action"].iter().filter_map(|k| op.get(*k)).find(|v| truthy(v)).map(|v| text_or_empty(Some(v))).unwrap_or_default();
+        let scene_id = || op.get("scene_id").and_then(Value::as_str).map(str::to_string);
+        match kind.as_str() {
+            "move" => {
+                let id = scene_id().ok_or_else(|| missing(op, "scene_id"))?;
+                let start = op.get("start").and_then(to_float).ok_or_else(|| missing(op, "start"))?;
+                let ripple = op.get("ripple").is_some_and(truthy);
+                h3_core::timeline::move_scene_timing(&mut segs, &id, start, ripple).map_err(|_| OpError::SceneNotFound(id))?;
+                applied += 1;
+            }
+            "resize" => {
+                let id = scene_id().ok_or_else(|| missing(op, "scene_id"))?;
+                let ripple = op.get("ripple").is_some_and(truthy);
+                let duration = op.get("duration").and_then(to_float);
+                let end = op.get("end").and_then(to_float);
+                h3_core::timeline::resize_scene_timing(&mut segs, &id, duration, end, ripple).map_err(|_| OpError::SceneNotFound(id))?;
+                applied += 1;
+            }
+            "patch" => {
+                let id = scene_id().ok_or_else(|| missing(op, "scene_id"))?;
+                let Some(idx) = segs.iter().position(|s| s.get("id").and_then(Value::as_str) == Some(id.as_str())) else { continue };
+                let fields = op.get("fields").and_then(Value::as_object).cloned().unwrap_or_default();
+                for (k, v) in &fields {
+                    set(&mut segs[idx], k, v.clone());
+                }
+                if fields.contains_key("lyric_text") && !fields.contains_key("lyric_no_lip_sync") {
+                    let instrumental = is_instrumental_lyric_text(&text_or_empty(segs[idx].get("lyric_text")));
+                    set(&mut segs[idx], "lyric_no_lip_sync", json!(instrumental));
+                }
+                applied += 1;
+            }
+            _ => {}
+        }
+    }
+    edit.put_segments(segs);
+    let revision = edit.save(now)?;
+    Ok(json!({"applied_operations": applied, "revision": revision}))
+}
