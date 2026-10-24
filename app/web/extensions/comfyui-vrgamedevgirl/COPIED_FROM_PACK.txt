@@ -17,3 +17,16 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/llm_popout.mjs: The title bar of the panel moves it only inside the page.
   music_video_builder/llm_popout.mjs: The size of the page panel is only remembered while it is in the page.
   music_video_builder/llm_popout.mjs: Resizing the main window does not move a panel that is in a window of its own.
+  music_video_builder/builder.mjs: Smooth player: the pop-out is the app's own copy (host/video_popout.js), and the player is host/smooth_video.js.
+  music_video_builder/builder.mjs: Smooth player: two stacked videos and controls the app draws, instead of one video whose address changes at every cut. The controls play and pause the timeline like Space does.
+  music_video_builder/builder.mjs: Smooth player: the next clip is loaded into the player's spare video. Setting `src` on this stand-in does that.
+  music_video_builder/builder.mjs: Smooth player: the stage holds the player's own element, which already contains both videos.
+  music_video_builder/builder.mjs: Smooth player: a frame is drawn from the video that is on screen.
+  music_video_builder/timeline_actions.mjs: Smooth player: a frame is drawn from the video that is on screen.
+  music_video_builder/selection_preview.mjs: Smooth player: the next clip is loaded 3 seconds ahead, enough for a cold file, instead of 1.5.
+  music_video_builder/timeline_events.mjs: Smooth player: the timeline follows the audio on every display frame (host/frame_pump.js).
+  music_video_builder/timeline_events.mjs: Smooth player: the audio element's timeupdate comes about four times a second, which saw a scene cut up to 250 ms late and moved the playhead in steps. The update now runs every display frame, and timeupdate stays as the slow tick that restarts the loop.
+  music_video_builder/timeline_events.mjs: Smooth player: playing the project audio starts the per-frame loop.
+  music_video_builder/timeline_events.mjs: Smooth player: playing a scene's own audio starts the per-frame loop.
+  music_video_builder/timeline_events.mjs: Smooth player: a scene's own audio ticks keep the per-frame loop alive.
+  music_video_builder/selection_preview.mjs: Smooth player: the clip's key is set before its address, so the player can tell it is the clip it loaded ahead. The address cannot say: a scene without a cache bust gets a new time stamp in it each time.

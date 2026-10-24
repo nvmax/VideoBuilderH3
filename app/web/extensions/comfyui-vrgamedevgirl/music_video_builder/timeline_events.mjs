@@ -1,3 +1,4 @@
+import { createFramePump } from "../../../host/frame_pump.js";
 import { toast } from "./controls.mjs";
 import { localPlaybackTime, selectedSegmentVideoPath } from "./selection_preview.mjs";
 import { timelineAudioDurationForSegment, timelineAudioStartForSegment } from "./timeline_state.mjs";
@@ -303,7 +304,15 @@ export function wireTimelineControls({
   snapToBeatsControl.input.onchange = () => {
     state.snapToBeats = Boolean(snapToBeatsControl.input.checked);
   };
-  audio.addEventListener("timeupdate", updateAudioScrubbers);
+  const framePump = createFramePump({
+    isActive: () => isTimelinePlaying(),
+    step: updateAudioScrubbers,
+    windowOf: () => previewStage.ownerDocument.defaultView,
+  });
+  audio.addEventListener("timeupdate", () => {
+    updateAudioScrubbers();
+    framePump.ensure();
+  });
   audio.addEventListener("loadedmetadata", () => {
     const mediaDuration = Number(audio.duration);
     if (Number.isFinite(mediaDuration) && mediaDuration > 0) {
@@ -316,6 +325,7 @@ export function wireTimelineControls({
   audio.addEventListener("play", () => {
     stopSilentTimelinePlayback();
     updatePlayPauseButton();
+    framePump.ensure();
   });
   audio.addEventListener("pause", () => {
     updatePlayPauseButton();
@@ -329,9 +339,11 @@ export function wireTimelineControls({
   sceneAudio.addEventListener("play", () => {
     stopSilentTimelinePlayback();
     updatePlayPauseButton();
+    framePump.ensure();
   });
   sceneAudio.addEventListener("pause", updatePlayPauseButton);
   sceneAudio.addEventListener("timeupdate", () => {
+    framePump.ensure();
     const segment = state.segments.find((item) => item.id === state.sceneAudioSegmentId) || activeSegment();
     if (segment) {
       const sourceLocal = Math.max(0, Number(sceneAudio.currentTime || 0) - timelineAudioSourceStartForSegment(segment));

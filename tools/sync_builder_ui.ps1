@@ -27,10 +27,16 @@ $top = @(
     'VRGDG_FaceFixUI.js', 'VRGDG_WizardBeta.js'
 )
 
-if (Test-Path $target) { Remove-Item -Recurse -Force $target }
+# Empty the folders instead of deleting them. An editor that watches one, or a file explorer window that has one open,
+# stops Windows from deleting the folder itself.
 New-Item -ItemType Directory -Force $target | Out-Null
+Get-ChildItem $target -Force | ForEach-Object {
+    if ($_.PSIsContainer) { Get-ChildItem $_.FullName -Force | Remove-Item -Recurse -Force } else { Remove-Item $_.FullName -Force }
+}
 foreach ($folder in 'music_video_builder', 'storyboard_builder') {
-    Copy-Item (Join-Path $web $folder) (Join-Path $target $folder) -Recurse
+    $destination = Join-Path $target $folder
+    New-Item -ItemType Directory -Force $destination | Out-Null
+    Copy-Item (Join-Path (Join-Path $web $folder) '*') $destination -Recurse
 }
 foreach ($file in $top) {
     $source = Join-Path $web $file

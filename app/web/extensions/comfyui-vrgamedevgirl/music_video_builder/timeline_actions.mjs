@@ -252,7 +252,7 @@ export function createTimelineActions({
     let tempVideo = null;
     try {
       const previewHasVideo = previewVideo.dataset.path === videoPath && previewVideo.readyState >= 1;
-      const sourceVideo = previewHasVideo ? previewVideo : document.createElement("video");
+      const sourceVideo = previewHasVideo ? previewVideo.frameSource() : document.createElement("video");
       if (!previewHasVideo) {
         tempVideo = sourceVideo;
         sourceVideo.muted = true;

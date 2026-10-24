@@ -140,7 +140,8 @@ import { createMiniMaxPromptEnhance } from "./minimax_prompt_enhance.mjs";
 import { createProjectSetup } from "./project_setup.mjs";
 import { createBeatCalibration } from "./beat_calibration.mjs";
 import { createLlmPopout } from "./llm_popout.mjs";
-import { createVideoPopout } from "./video_popout.mjs";
+import { createVideoPopout } from "../../../host/video_popout.js";
+import { createSmoothVideo } from "../../../host/smooth_video.js";
 import { createTimelineState, normalizeTimelineMarkers } from "./timeline_state.mjs";
 import { createUiProfileActions } from "./ui_profiles.mjs";
 import { createMiniMaxReferences } from "./minimax_references.mjs";
@@ -306,11 +307,7 @@ export function openBuilder(node, options = {}) {
   previewImage.alt = "";
   previewImage.style.cssText = "display:none;max-width:100%;max-height:100%;object-fit:contain;background:#050505;";
   const postProcessComparePreview = createPostProcessComparePreview({ makeImageUrl: makeEditorImageUrl });
-  const previewVideo = document.createElement("video");
-  previewVideo.controls = true;
-  previewVideo.playsInline = true;
-  previewVideo.muted = false;
-  previewVideo.style.cssText = "display:none;max-width:100%;max-height:100%;object-fit:contain;background:#050505;";
+  const previewVideo = createSmoothVideo({ toggle: () => playButton.click(), isPlaying: () => isTimelinePlaying() });
   const previewDecodeHint = document.createElement("div");
   previewDecodeHint.style.cssText = "display:none;position:absolute;left:14px;right:14px;bottom:14px;z-index:2;padding:10px 12px;border:1px solid #ef4444;border-radius:6px;background:rgba(15,23,42,.92);color:#fee2e2;font-size:12px;line-height:1.35;box-shadow:0 12px 36px rgba(0,0,0,.45);";
   previewVideo.addEventListener("error", () => {
@@ -344,13 +341,9 @@ export function openBuilder(node, options = {}) {
       // Ignore; the next scrub/timeupdate tick will retry if still needed.
     }
   });
-  // Hidden element used only to warm the browser's cache for the next scene's
-  // clip a moment before the playhead reaches it, so the visible swap at the
-  // cut doesn't stall on a cold fetch from the local server. It never plays.
-  const preloadVideo = document.createElement("video");
-  preloadVideo.muted = true;
-  preloadVideo.preload = "auto";
-  preloadVideo.style.cssText = "display:none;width:0;height:0;";
+  // Stand-in for the next scene's clip: setting its src loads that clip into the player's spare video,
+  // so the cut only has to put it on top.
+  const preloadVideo = previewVideo.standby;
   const renderStatusButton = document.createElement("button");
   renderStatusButton.type = "button";
   renderStatusButton.textContent = "Render status";
@@ -361,7 +354,7 @@ export function openBuilder(node, options = {}) {
   renderStatusButton.onclick = () => {
     if (!showLastProgressWindow()) toast("No render status window is open. Start a render to see one.");
   };
-  previewStage.append(previewEmpty, previewImage, previewVideo, preloadVideo, postProcessComparePreview.element, previewDecodeHint, renderStatusButton);
+  previewStage.append(previewEmpty, previewImage, previewVideo.element, postProcessComparePreview.element, previewDecodeHint, renderStatusButton);
   previewStage.append(createVideoPopout({ previewStage, previewVideo, previewVideoState, toast }).button);
   const customImageFileInput = document.createElement("input");
   customImageFileInput.type = "file";
@@ -384,7 +377,7 @@ export function openBuilder(node, options = {}) {
         sceneLabel: segment ? sceneDisplayName(segment, segmentIndexInfo(segment).index) : "scene",
       };
     },
-    captureCurrentFrame: () => captureVideoFrameDataUrl(previewVideo),
+    captureCurrentFrame: () => captureVideoFrameDataUrl(previewVideo.frameSource()),
     generateFacePrompt: async ({ referenceImage }) => {
       const modelFile = referenceDescriptionVisionModel();
       const mmprojFile = referenceDescriptionMmproj();

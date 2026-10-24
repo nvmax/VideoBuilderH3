@@ -103,5 +103,96 @@
     "find": "    if (win.style.display !== \"none\") place();\n  };",
     "replace": "    if (win.style.display !== \"none\" && !external) place();\n  };",
     "expect": 1
+  },
+  {
+    "why": "Smooth player: the pop-out is the app's own copy (host/video_popout.js), and the player is host/smooth_video.js.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "import { createVideoPopout } from \"./video_popout.mjs\";",
+    "replace": "import { createVideoPopout } from \"../../../host/video_popout.js\";\nimport { createSmoothVideo } from \"../../../host/smooth_video.js\";",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: two stacked videos and controls the app draws, instead of one video whose address changes at every cut. The controls play and pause the timeline like Space does.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "  const previewVideo = document.createElement(\"video\");\n  previewVideo.controls = true;\n  previewVideo.playsInline = true;\n  previewVideo.muted = false;\n  previewVideo.style.cssText = \"display:none;max-width:100%;max-height:100%;object-fit:contain;background:#050505;\";",
+    "replace": "  const previewVideo = createSmoothVideo({ toggle: () => playButton.click(), isPlaying: () => isTimelinePlaying() });",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: the next clip is loaded into the player's spare video. Setting `src` on this stand-in does that.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "  // Hidden element used only to warm the browser's cache for the next scene's\n  // clip a moment before the playhead reaches it, so the visible swap at the\n  // cut doesn't stall on a cold fetch from the local server. It never plays.\n  const preloadVideo = document.createElement(\"video\");\n  preloadVideo.muted = true;\n  preloadVideo.preload = \"auto\";\n  preloadVideo.style.cssText = \"display:none;width:0;height:0;\";",
+    "replace": "  // Stand-in for the next scene's clip: setting its src loads that clip into the player's spare video,\n  // so the cut only has to put it on top.\n  const preloadVideo = previewVideo.standby;",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: the stage holds the player's own element, which already contains both videos.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "  previewStage.append(previewEmpty, previewImage, previewVideo, preloadVideo, postProcessComparePreview.element, previewDecodeHint, renderStatusButton);",
+    "replace": "  previewStage.append(previewEmpty, previewImage, previewVideo.element, postProcessComparePreview.element, previewDecodeHint, renderStatusButton);",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: a frame is drawn from the video that is on screen.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "    captureCurrentFrame: () => captureVideoFrameDataUrl(previewVideo),",
+    "replace": "    captureCurrentFrame: () => captureVideoFrameDataUrl(previewVideo.frameSource()),",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: a frame is drawn from the video that is on screen.",
+    "file": "music_video_builder/timeline_actions.mjs",
+    "find": "      const sourceVideo = previewHasVideo ? previewVideo : document.createElement(\"video\");",
+    "replace": "      const sourceVideo = previewHasVideo ? previewVideo.frameSource() : document.createElement(\"video\");",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: the next clip is loaded 3 seconds ahead, enough for a cold file, instead of 1.5.",
+    "file": "music_video_builder/selection_preview.mjs",
+    "find": "  const PRELOAD_NEXT_CLIP_LEAD_SECONDS = 1.5;",
+    "replace": "  const PRELOAD_NEXT_CLIP_LEAD_SECONDS = 3;",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: the timeline follows the audio on every display frame (host/frame_pump.js).",
+    "file": "music_video_builder/timeline_events.mjs",
+    "find": "import { toast } from \"./controls.mjs\";",
+    "replace": "import { createFramePump } from \"../../../host/frame_pump.js\";\nimport { toast } from \"./controls.mjs\";",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: the audio element's timeupdate comes about four times a second, which saw a scene cut up to 250 ms late and moved the playhead in steps. The update now runs every display frame, and timeupdate stays as the slow tick that restarts the loop.",
+    "file": "music_video_builder/timeline_events.mjs",
+    "find": "  audio.addEventListener(\"timeupdate\", updateAudioScrubbers);",
+    "replace": "  const framePump = createFramePump({\n    isActive: () => isTimelinePlaying(),\n    step: updateAudioScrubbers,\n    windowOf: () => previewStage.ownerDocument.defaultView,\n  });\n  audio.addEventListener(\"timeupdate\", () => {\n    updateAudioScrubbers();\n    framePump.ensure();\n  });",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: playing the project audio starts the per-frame loop.",
+    "file": "music_video_builder/timeline_events.mjs",
+    "find": "  audio.addEventListener(\"play\", () => {\n    stopSilentTimelinePlayback();\n    updatePlayPauseButton();\n  });",
+    "replace": "  audio.addEventListener(\"play\", () => {\n    stopSilentTimelinePlayback();\n    updatePlayPauseButton();\n    framePump.ensure();\n  });",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: playing a scene's own audio starts the per-frame loop.",
+    "file": "music_video_builder/timeline_events.mjs",
+    "find": "  sceneAudio.addEventListener(\"play\", () => {\n    stopSilentTimelinePlayback();\n    updatePlayPauseButton();\n  });",
+    "replace": "  sceneAudio.addEventListener(\"play\", () => {\n    stopSilentTimelinePlayback();\n    updatePlayPauseButton();\n    framePump.ensure();\n  });",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: a scene's own audio ticks keep the per-frame loop alive.",
+    "file": "music_video_builder/timeline_events.mjs",
+    "find": "  sceneAudio.addEventListener(\"timeupdate\", () => {\n    const segment = state.segments.find((item) => item.id === state.sceneAudioSegmentId) || activeSegment();",
+    "replace": "  sceneAudio.addEventListener(\"timeupdate\", () => {\n    framePump.ensure();\n    const segment = state.segments.find((item) => item.id === state.sceneAudioSegmentId) || activeSegment();",
+    "expect": 1
+  },
+  {
+    "why": "Smooth player: the clip's key is set before its address, so the player can tell it is the clip it loaded ahead. The address cannot say: a scene without a cache bust gets a new time stamp in it each time.",
+    "file": "music_video_builder/selection_preview.mjs",
+    "find": "      previewVideo.src = makeEditorVideoUrl(videoPath, segment?.video_cache_bust);\n      previewVideo.dataset.path = videoPath;\n      previewVideo.dataset.cacheKey = cacheKey;",
+    "replace": "      previewVideo.dataset.path = videoPath;\n      previewVideo.dataset.cacheKey = cacheKey;\n      previewVideo.src = makeEditorVideoUrl(videoPath, segment?.video_cache_bust);",
+    "expect": 1
   }
 ]

@@ -428,7 +428,7 @@ export function createSelectionPreview({
     return overlay || segmentAtTime(current);
   }
 
-  const PRELOAD_NEXT_CLIP_LEAD_SECONDS = 1.5;
+  const PRELOAD_NEXT_CLIP_LEAD_SECONDS = 3;
 
   // Warms the browser's HTTP cache for the upcoming scene's clip a little
   // before the playhead reaches it. Combined with the stable video_cache_bust
@@ -660,9 +660,9 @@ export function createSelectionPreview({
       previewDecodeHint.style.display = "none";
       previewVideo.pause();
       previewVideoState.pendingSeekTarget = null;
-      previewVideo.src = makeEditorVideoUrl(videoPath, segment?.video_cache_bust);
       previewVideo.dataset.path = videoPath;
       previewVideo.dataset.cacheKey = cacheKey;
+      previewVideo.src = makeEditorVideoUrl(videoPath, segment?.video_cache_bust);
       previewVideo.dataset.segmentId = String(segment?.id || "");
       previewVideo.dataset.failureKey = "";
       previewVideo.load();
