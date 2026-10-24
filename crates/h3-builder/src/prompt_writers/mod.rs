@@ -35,11 +35,13 @@ pub struct TextCall {
     pub label: String,
     pub preserve_paragraphs: bool,
     pub json_schema: Option<Value>,
+    /// A seed for this call in place of the request's own.
+    pub seed: Option<i64>,
 }
 
 impl TextCall {
     pub fn new(instruction: String, temperature: f64, top_p: f64, max_new_tokens: i64, label: &str) -> Self {
-        Self { instruction, temperature, top_p, max_new_tokens, label: label.to_string(), preserve_paragraphs: false, json_schema: None }
+        Self { instruction, temperature, top_p, max_new_tokens, label: label.to_string(), preserve_paragraphs: false, json_schema: None, seed: None }
     }
 
     pub fn paragraphs(mut self) -> Self {
@@ -88,7 +90,12 @@ impl Llm for RunnerLlm<'_> {
     fn text(&self, call: TextCall) -> LlmFuture<'_> {
         Box::pin(async move {
             let tokens = call.max_new_tokens.clamp(0, i64::from(u32::MAX)) as u32;
-            run_text(self.payload, self.base, &call.instruction, call.temperature, call.top_p, tokens, call.preserve_paragraphs, call.json_schema).await.map(|(text, info)| (text, describe(&info))).map_err(|e| e.to_string())
+            let reseeded = call.seed.map(|seed| {
+                let mut own = self.payload.clone();
+                own.insert("seed".into(), json!(seed));
+                own
+            });
+            run_text(reseeded.as_ref().unwrap_or(self.payload), self.base, &call.instruction, call.temperature, call.top_p, tokens, call.preserve_paragraphs, call.json_schema).await.map(|(text, info)| (text, describe(&info))).map_err(|e| e.to_string())
         })
     }
 

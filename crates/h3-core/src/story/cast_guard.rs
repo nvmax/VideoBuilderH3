@@ -5,7 +5,8 @@
 //! of a scene (names, generic nouns, and gendered pronouns when that cannot be confused with a cast member) plus a separate matcher for
 //! invented people, and remove or flag any sentence that refers to them.
 
-use std::collections::{BTreeSet, HashSet};
+use std::collections::{BTreeSet, HashMap, HashSet};
+use std::sync::{Mutex, OnceLock};
 
 use fancy_regex::Regex;
 use serde_json::Value;
@@ -93,7 +94,11 @@ fn compile(terms: &HashSet<String>) -> Option<Regex> {
     let mut ordered: Vec<&String> = terms.iter().collect();
     ordered.sort_by(|a, b| b.chars().count().cmp(&a.chars().count()).then_with(|| a.cmp(b)));
     let alternatives: Vec<String> = ordered.iter().map(|t| fancy_regex::escape(t).replace(' ', r"\s+")).collect();
-    Some(rx(&format!(r"(?i)(?<![A-Za-z'])(?:{})(?![A-Za-z])", alternatives.join("|"))))
+    let pattern = format!(r"(?i)(?<![A-Za-z'])(?:{})(?![A-Za-z])", alternatives.join("|"));
+    // Scenes with the same cast need the same matcher, and building one with lookaround is slow.
+    static COMPILED: OnceLock<Mutex<HashMap<String, Regex>>> = OnceLock::new();
+    let mut compiled = COMPILED.get_or_init(Default::default).lock().unwrap_or_else(|e| e.into_inner());
+    Some(compiled.entry(pattern.clone()).or_insert_with(|| rx(&pattern)).clone())
 }
 
 /// The matchers for the people who must not appear in a scene.
@@ -216,4 +221,24 @@ pub fn cast_wall_text(guard: &CastGuard) -> String {
         text.push_str(&format!(" Not in this scene: {banned}."));
     }
     text
+}
+
+/// `strip_story_arc_entry_leaks`: apply each scene's guard to the "Scene N (...) \u{2014} text" entries of a scene by scene story arc.
+pub fn strip_story_arc_entry_leaks(arc_text: &str, guards_by_scene: &HashMap<i64, CastGuard>, cast_names_by_scene: &HashMap<i64, Vec<String>>) -> String {
+    let entry = rx(r"^(\s*(?:[-*\x{2022}][ \t]*)?Scene[ \t]+(\d+)\b[^\n]*?)(?:[ \t]+[\x{2014}\x{2013}-][ \t]+)(.*)$");
+    let lines: Vec<String> = arc_text
+        .split('\n')
+        .map(|line| {
+            let Some(found) = entry.captures(line).ok().flatten() else { return line.to_string() };
+            let guard = found[2].parse::<i64>().ok().and_then(|number| guards_by_scene.get(&number).map(|guard| (number, guard)));
+            let Some((number, guard)) = guard else { return line.to_string() };
+            let mut body = strip_cast_leaks(&found[3], guard, true);
+            if body.is_empty() {
+                let names = cast_names_by_scene.get(&number).filter(|names| !names.is_empty()).unwrap_or(&guard.cast_names).join(", ");
+                body = format!("The scene stays focused on {}.", if names.is_empty() { "the scene" } else { &names });
+            }
+            format!("{} \u{2014} {body}", &found[1])
+        })
+        .collect();
+    lines.join("\n")
 }

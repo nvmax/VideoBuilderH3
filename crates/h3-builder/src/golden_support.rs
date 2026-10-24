@@ -35,7 +35,14 @@ pub fn asked_as_json(asked: &[Asked]) -> Value {
         asked
             .iter()
             .map(|call| match call {
-                Asked::Text(c) => json!({"kind": "text", "instruction": c.instruction, "temperature": c.temperature, "top_p": c.top_p, "max_new_tokens": c.max_new_tokens, "label": c.label, "preserve_paragraphs": c.preserve_paragraphs, "json_schema": c.json_schema.is_some()}),
+                Asked::Text(c) => {
+                    let mut call = json!({"kind": "text", "instruction": c.instruction, "temperature": c.temperature, "top_p": c.top_p, "max_new_tokens": c.max_new_tokens, "label": c.label, "preserve_paragraphs": c.preserve_paragraphs, "json_schema": c.json_schema.is_some()});
+                    // Only a seed that differs from the request's own is recorded (the story arc's format retry).
+                    if let Some(seed) = c.seed {
+                        call["seed"] = json!(seed);
+                    }
+                    call
+                }
                 Asked::Vision { instruction, sizes, temperature, top_p, max_new_tokens } => json!({"kind": "vision", "instruction": instruction, "temperature": temperature, "top_p": top_p, "max_new_tokens": max_new_tokens, "images": sizes.iter().map(|(w, h)| json!([w, h])).collect::<Vec<_>>()}),
             })
             .collect(),

@@ -7,7 +7,7 @@ use std::sync::{Mutex, OnceLock};
 
 use fancy_regex::Regex;
 use h3_core::pyjson::dumps;
-use h3_core::pyval::{text_or_empty, to_int, truthy, Obj};
+use h3_core::pyval::{py_type_name, text_or_empty, to_int, truthy, Obj};
 use h3_llm::clean::clean_plain_text;
 use h3_llm::locations::extract_json_object;
 use serde_json::{json, Value};
@@ -332,18 +332,6 @@ fn clean_action(action: &Obj) -> Option<Obj> {
     Some(cleaned)
 }
 
-fn type_name(value: &Value) -> &'static str {
-    match value {
-        Value::Null => "NoneType",
-        Value::Bool(_) => "bool",
-        Value::Number(n) if n.is_f64() => "float",
-        Value::Number(_) => "int",
-        Value::String(_) => "str",
-        Value::Array(_) => "list",
-        Value::Object(_) => "dict",
-    }
-}
-
 /// The map of a `json!({...})` literal.
 fn object(value: Value) -> Obj {
     match value {
@@ -415,7 +403,7 @@ pub async fn builder_agent_reply(llm: &dyn Llm, payload: &Obj) -> Reply {
     let (reply_text, info) = llm.text(call).await?;
     let raw = clean_plain_text(&reply_text);
     let parsed = extract_json_object(&raw).unwrap_or_else(|_| json!({"reply": raw, "actions": []}));
-    let Value::Object(parsed) = parsed else { return Err(format!("'{}' object has no attribute 'get'", type_name(&parsed))) };
+    let Value::Object(parsed) = parsed else { return Err(format!("'{}' object has no attribute 'get'", py_type_name(&parsed))) };
     let mut reply = clean_plain_text(&text_or_empty(parsed.get("reply")));
     let mut actions: Vec<Obj> = Vec::new();
     if let (Some(Value::Array(items)), true) = (parsed.get("actions"), auto_apply) {

@@ -28,6 +28,19 @@ pub fn truthy(value: &Value) -> bool {
     }
 }
 
+/// The name Python gives the type of a parsed JSON value, as in `'list' object has no attribute 'get'`.
+pub fn py_type_name(value: &Value) -> &'static str {
+    match value {
+        Value::Null => "NoneType",
+        Value::Bool(_) => "bool",
+        Value::Number(n) if n.is_f64() => "float",
+        Value::Number(_) => "int",
+        Value::String(_) => "str",
+        Value::Array(_) => "list",
+        Value::Object(_) => "dict",
+    }
+}
+
 /// Python `str(value or "")`.
 pub fn text_or_empty(value: Option<&Value>) -> String {
     match value {

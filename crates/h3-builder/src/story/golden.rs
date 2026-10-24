@@ -2,7 +2,9 @@
 //! place of the LLM).
 
 use h3_core::pyval::Obj;
+use serde_json::json;
 
+use super::arc::{build_story_layer_arc, build_story_layer_brief, ArcError};
 use super::beat::build_scene_beat;
 use super::book::{convert_story_arc, draft_story_book, remove_story_people, rewrite_story_chapter, scan_story_cast, split_pasted_story};
 use super::places::build_story_locations;
@@ -28,6 +30,14 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "revise" => revise_story_from_scene(llm, payload).await,
             "beat" => build_scene_beat(llm, payload).await,
             "image" => build_storyboard_image_prompt(llm, payload).await,
+            "brief" => build_story_layer_brief(llm, payload).await,
+            "arc" => match build_story_layer_arc(llm, payload).await {
+                Ok(value) => Ok(value),
+                Err(ArcError::Failed(message)) => Err(message),
+                Err(ArcError::Format(found)) => Ok(json!({"__format_error__": {
+                    "message": found.message, "runner": found.runner, "expected_sections": found.expected_sections, "raw_output": found.raw_output, "cleaned_output": found.cleaned_output,
+                }})),
+            },
             other => panic!("unknown step {other}"),
         }
     })
@@ -56,4 +66,14 @@ async fn the_scene_story_beat_matches_the_pack() {
 #[tokio::test]
 async fn the_storyboard_image_prompt_matches_the_pack() {
     check_cases("story/image_prompt.json", 15, "", dispatch).await;
+}
+
+#[tokio::test]
+async fn the_story_brief_and_the_story_arc_match_the_pack() {
+    let dir = tempfile::tempdir().unwrap();
+    let context = dir.path().join("project_context");
+    std::fs::create_dir_all(&context).unwrap();
+    let lyrics = "\u{feff}[Intro]\n\n[Verse 1]\nwalking home alone\nthe street is empty\nI count the lights\n\n[Chorus]\noh oh oh\nnever going back\n\n[Verse 2]\nmorning comes\n\n[Chorus]\noh oh oh\n\n[Outro]\n";
+    std::fs::write(context.join("full_lyrics.txt"), lyrics).unwrap();
+    check_cases("story/arc_steps.json", 60, &dir.path().display().to_string(), dispatch).await;
 }

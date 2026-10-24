@@ -1,6 +1,7 @@
 //! LLM providers. LM Studio is used through the model that is already loaded: this crate never loads, unloads or
 //! switches a model there. The built-in Gemma runs inside ComfyUI through the VRGDG Gemma node, which loads its own GGUF.
 
+pub mod arc_prompts;
 pub mod beat_prompts;
 pub mod checks;
 pub mod clean;
