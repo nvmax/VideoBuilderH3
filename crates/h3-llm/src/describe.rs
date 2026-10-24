@@ -3,9 +3,10 @@
 
 use fancy_regex::Regex;
 
-use crate::checks::{clean_visual_text, looks_like_bad_reference_description};
+use crate::checks::clean_visual_text;
 use crate::client::{chat, ChatRequest, LlmError};
 use crate::config::LlmConfig;
+use crate::prompt_text::validate_reference_description;
 
 fn rx(pattern: &str) -> Regex {
     Regex::new(pattern).expect("valid pattern")
@@ -159,11 +160,9 @@ pub fn clean_reference_description(raw: &str, reference_type: &str, name: &str) 
         text = format!("{}.", words[..100].join(" ").trim_end_matches([' ', ',', '.', ';', ':']));
     }
     if text.is_empty() {
-        return Err("The LLM returned an empty reference description.".into());
+        return Err("Gemma returned an empty reference description.".into());
     }
-    if looks_like_bad_reference_description(&text) {
-        return Err("The LLM returned unusable repeated text for the description. Try again, or use a clearer reference image.".into());
-    }
+    validate_reference_description(&text, reference_type)?;
     Ok(text)
 }
 

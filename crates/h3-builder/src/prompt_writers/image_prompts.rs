@@ -113,7 +113,7 @@ fn load_ingredients(items: &[Value], label: &str) -> Result<Vec<DynamicImage>, S
     Ok(images)
 }
 
-fn vision_runner(payload: &Obj) -> &'static str {
+pub(super) fn vision_runner(payload: &Obj) -> &'static str {
     match runner_kind(payload) {
         "llm_api" => "llm_api_vision",
         "own_server" => "own_server_vision",
@@ -122,7 +122,7 @@ fn vision_runner(payload: &Obj) -> &'static str {
     }
 }
 
-fn is_external(payload: &Obj) -> bool {
+pub(super) fn is_external(payload: &Obj) -> bool {
     matches!(runner_kind(payload), "llm_api" | "own_server" | "lm_studio")
 }
 

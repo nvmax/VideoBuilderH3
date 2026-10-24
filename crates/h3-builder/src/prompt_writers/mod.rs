@@ -10,6 +10,7 @@ pub mod concepts;
 mod golden;
 pub mod image_prompts;
 pub mod images;
+pub mod references;
 pub mod repair;
 
 use std::future::Future;
@@ -176,7 +177,7 @@ pub(crate) mod testing {
 
         fn next(&self) -> Result<String, String> {
             let mut replies = self.replies.lock().unwrap();
-            if replies.is_empty() { Err("The runner ran out of canned replies.".into()) } else { Ok(replies.remove(0)) }
+            if replies.is_empty() { Err("The recorder ran out of canned replies.".into()) } else { Ok(replies.remove(0)) }
         }
     }
 

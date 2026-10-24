@@ -8,6 +8,7 @@ pub mod client;
 pub mod config;
 pub mod describe;
 pub mod instructions;
+pub mod location_cards;
 pub mod locations;
 pub mod own_server;
 pub mod prompt_text;

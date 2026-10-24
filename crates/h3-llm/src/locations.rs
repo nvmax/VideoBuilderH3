@@ -209,7 +209,8 @@ pub struct Location {
     pub description: String,
 }
 
-fn preview(text: &str) -> String {
+/// The reply flattened to one line and cut at 700 characters, for an error message.
+pub fn preview(text: &str) -> String {
     let flat = collapse(text).trim().to_string();
     if flat.chars().count() > 700 {
         format!("{}...", flat.chars().take(697).collect::<String>().trim_end())
