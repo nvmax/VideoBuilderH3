@@ -18,6 +18,7 @@ pub mod media;
 pub mod payload;
 pub mod post_process;
 pub mod projects;
+pub mod refmod_studio;
 pub mod prompt_writers;
 pub mod render_log;
 pub mod runner;

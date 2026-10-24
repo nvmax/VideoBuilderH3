@@ -12,6 +12,7 @@ mod files;
 mod llm;
 mod post_process;
 mod projects;
+mod refmod;
 mod runner;
 mod settings;
 mod story;
@@ -47,6 +48,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = audio_mask::routes(router);
     let router = llm::routes(router);
     let router = post_process::routes(router);
+    let router = refmod::routes(router);
     let router = runner::routes(router);
     let router = settings::routes(router);
     let router = story::routes(router);
