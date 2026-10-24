@@ -12,7 +12,7 @@ use axum::http::StatusCode;
 use axum::response::{IntoResponse, Response};
 use axum::routing::post as axum_post;
 use axum::Router;
-use h3_builder::audio_mask::{self, Audio};
+use h3_builder::audio_mask::{self, Separated};
 use h3_builder::Env;
 use h3_comfy::ComfyClient;
 use serde_json::{json, Value};
@@ -58,10 +58,12 @@ async fn separate(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
 /// The names of the stems the Get Stems node returns, in the order of its outputs.
 const NODE_STEMS: [&str; 4] = ["vocals", "drums", "bass", "other"];
 
-/// Split the audio file with ComfyUI's Get Stems node and read the four stems back.
-async fn demucs_in_comfy(base: &str, env: &Env, context: &Path, model: &str, device: &str) -> Result<Vec<(String, Audio)>, String> {
-    if audio_mask::stems_for_model(model).len() != NODE_STEMS.len() {
-        return Err("The 6 stem split is not available here. Choose htdemucs, htdemucs_ft or mdx_extra.".into());
+/// Split the audio file with ComfyUI's Get Stems node and read the four stems back. The node has no 6 stem model, so that
+/// choice is split with `htdemucs`, which gives the same vocals. The result says which model was used.
+async fn demucs_in_comfy(base: &str, env: &Env, context: &Path, requested: &str, device: &str) -> Result<Separated, String> {
+    let model = if audio_mask::stems_for_model(requested).len() == NODE_STEMS.len() { requested } else { "htdemucs" };
+    if model != requested {
+        eprintln!("[VRGDG-RS Audio Mask] ComfyUI's Get Stems node has no {requested} model. Splitting with {model}, which gives the same vocals.");
     }
     let client = ComfyClient::new(base);
     for class in ["VRGDG_GetStems", "PreviewAudio"] {
@@ -108,5 +110,5 @@ async fn demucs_in_comfy(base: &str, env: &Env, context: &Path, model: &str, dev
         let _ = std::fs::remove_file(&temporary);
         stems.push(((*name).to_string(), decoded?));
     }
-    Ok(stems)
+    Ok(Separated { model: model.to_string(), stems })
 }

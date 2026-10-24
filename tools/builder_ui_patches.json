@@ -1,0 +1,23 @@
+[
+  {
+    "why": "A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "projectVideoEngine: \"ltx\",",
+    "replace": "projectVideoEngine: \"minimax_h3\",",
+    "expect": 1
+  },
+  {
+    "why": "A session with no engine is a MiniMax H3 project.",
+    "file": "music_video_builder/controls.mjs",
+    "find": "return String(value || \"\").trim().toLowerCase() === \"minimax_h3\" ? \"minimax_h3\" : \"ltx\";",
+    "replace": "return String(value || \"\").trim().toLowerCase() === \"ltx\" ? \"ltx\" : \"minimax_h3\";",
+    "expect": 1
+  },
+  {
+    "why": "The engine badge can move an old LTX project to MiniMax H3. It no longer moves a project back to LTX.",
+    "file": "music_video_builder/minimax_panel.mjs",
+    "find": "    state.projectVideoEngine = normalizeProjectVideoEngine(state.projectVideoEngine) === \"minimax_h3\"\n      ? \"ltx\"\n      : \"minimax_h3\";",
+    "replace": "    if (normalizeProjectVideoEngine(state.projectVideoEngine) === \"minimax_h3\") {\n      toast(\"H3 Studio makes MiniMax H3 videos.\");\n      return;\n    }\n    state.projectVideoEngine = \"minimax_h3\";",
+    "expect": 1
+  }
+]

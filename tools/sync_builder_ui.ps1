@@ -10,7 +10,8 @@
   Copied: web\music_video_builder, web\storyboard_builder and the top level web\VRGDG_*.js files the Builder imports or
   needs. Not copied: node widgets for ComfyUI graphs (LLM_Multi, Qwen, LoRA switch and the like) and LTX tools.
 
-  Run from the rustapp folder:  powershell -File tools\sync_builder_ui.ps1 [-Pack <pack folder>]
+  A short list of exact replacements in tools\builder_ui_patches.json is applied to the copies afterwards (the engine a new
+  project starts with, for one). Run from the rustapp folder:  powershell -File tools\sync_builder_ui.ps1 [-Pack <pack folder>]
 #>
 param([string]$Pack = (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)))
 
@@ -35,11 +36,32 @@ foreach ($file in $top) {
     if (Test-Path $source) { Copy-Item $source $target } else { Write-Warning "Missing in the pack: $file" }
 }
 
+# A few small, explicit changes to the copies (tools\builder_ui_patches.json). Each must match exactly as often as it says, so a
+# change in the pack's code that moves a line makes the sync fail instead of leaving a patch half applied.
+$patchFile = Join-Path $PSScriptRoot 'builder_ui_patches.json'
+$applied = @()
+if (Test-Path $patchFile) {
+    foreach ($patch in (Get-Content $patchFile -Raw | ConvertFrom-Json)) {
+        $path = Join-Path $target $patch.file
+        $text = [IO.File]::ReadAllText($path)
+        # The files use Windows line ends. The patch text is written with plain ones.
+        $newline = if ($text.Contains("`r`n")) { "`r`n" } else { "`n" }
+        $find = $patch.find.Replace("`r`n", "`n").Replace("`n", $newline)
+        $replace = $patch.replace.Replace("`r`n", "`n").Replace("`n", $newline)
+        $count = ([regex]::Matches($text, [regex]::Escape($find))).Count
+        if ($count -ne $patch.expect) { throw "Patch for $($patch.file) matched $count times, expected $($patch.expect): $($patch.find)" }
+        [IO.File]::WriteAllText($path, $text.Replace($find, $replace), (New-Object Text.UTF8Encoding $false))
+        $applied += "  $($patch.file): $($patch.why)"
+    }
+}
+
 $commit = (git -C $Pack rev-parse --short HEAD 2>$null)
 @"
 Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
 Pack commit: $commit
-Do not edit these files. Change app\web\host\* (the ComfyUI stand-in) or rerun the script.
+Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
+Changes made to the copies by tools\builder_ui_patches.json:
+$($applied -join "`n")
 "@ | Set-Content -Encoding utf8 (Join-Path $target 'COPIED_FROM_PACK.txt')
 
 $count = (Get-ChildItem $target -Recurse -File).Count

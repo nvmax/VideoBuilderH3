@@ -1,3 +1,7 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
 Pack commit: 070003f
-Do not edit these files. Change app\public\host\* (the ComfyUI stand-in) or rerun the script.
+Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
+Changes made to the copies by tools\builder_ui_patches.json:
+  music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
+  music_video_builder/controls.mjs: A session with no engine is a MiniMax H3 project.
+  music_video_builder/minimax_panel.mjs: The engine badge can move an old LTX project to MiniMax H3. It no longer moves a project back to LTX.

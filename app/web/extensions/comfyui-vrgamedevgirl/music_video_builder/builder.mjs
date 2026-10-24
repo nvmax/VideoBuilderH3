@@ -1055,7 +1055,7 @@ export function openBuilder(node, options = {}) {
     customModelsRoot: "",
     notificationSettings: defaultNotificationSettings(),
     videoType: "singing",
-    projectVideoEngine: "ltx",
+    projectVideoEngine: "minimax_h3",
     miniMaxH3Settings: cloneMiniMaxH3Settings(),
     autoTimeSingerCuesBeforePrompt: false,
     miniMaxH3TwoPassEnabled: false,

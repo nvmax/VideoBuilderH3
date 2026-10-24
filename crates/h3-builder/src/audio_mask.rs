@@ -46,8 +46,14 @@ pub fn stems_for_model(model: &str) -> &'static [&'static str] {
 /// Stereo audio as two channels of samples between -1 and 1.
 pub type Audio = [Vec<f32>; 2];
 
-/// What splits a cut of the song into stems: the context wav, the model and the device in, the named stems out.
-pub type Separator<'a> = &'a dyn Fn(&Path, &str, &str) -> Result<Vec<(String, Audio)>, String>;
+/// What a split gave: the stems and the model that made them. A separator may use another model than the one asked for.
+pub struct Separated {
+    pub model: String,
+    pub stems: Vec<(String, Audio)>,
+}
+
+/// What splits a cut of the song into stems: the context wav, the model and the device in, the stems out.
+pub type Separator<'a> = &'a dyn Fn(&Path, &str, &str) -> Result<Separated, String>;
 
 type Reply = Result<Value, String>;
 
@@ -464,9 +470,9 @@ pub fn separate_scene_stems(env: &Env, payload: &Obj, separator: Separator) -> R
     exact.extend(strings(&["-c:a", "pcm_s16le", &text(&original_path)]));
     ffmpeg_run(env, exact, "ffmpeg could not cut the scene audio.")?;
 
-    let stems = separator(&context_path, &model, &device);
+    let separated = separator(&context_path, &model, &device);
     let _ = fs::remove_file(&context_path);
-    let stems = stems?;
+    let Separated { model, stems } = separated?;
     let first = (lead * f64::from(SAMPLE_RATE)).round_ties_even() as usize;
     for name in SIX_STEMS {
         let path = folder.join(format!("{name}.wav"));
@@ -652,13 +658,13 @@ mod tests {
             "project_folder": dir.path().display().to_string(), "scene_id": "s1", "audio_path": text(&song),
             "start_seconds": 1.0, "duration_seconds": 2.0, "model_name": "htdemucs", "device": "cpu", "context_seconds": 1.0,
         }));
-        let separator = |context: &Path, model: &str, device: &str| -> Result<Vec<(String, Audio)>, String> {
+        let separator = |context: &Path, model: &str, device: &str| -> Result<Separated, String> {
             assert!(context.is_file());
             assert_eq!((model, device), ("htdemucs", "cpu"));
             let length = read_wav(context).unwrap()[0].len();
             // One second of lead, two of scene and one after.
             assert!((length as i64 - 44_100 * 4).abs() < 2000, "context was {length} samples");
-            Ok(FOUR_STEMS.iter().map(|n| (n.to_string(), tone(length, 0.1))).collect())
+            Ok(Separated { model: model.to_string(), stems: FOUR_STEMS.iter().map(|n| (n.to_string(), tone(length, 0.1))).collect() })
         };
         let state = separate_scene_stems(&env, &payload, &separator).unwrap();
         assert_eq!(state["exists"], true);
@@ -669,7 +675,7 @@ mod tests {
         assert!(!folder.join("_context.wav").exists());
         assert_eq!(wav_samples(&folder.join("vocals.wav")).unwrap(), 88_200);
         assert_eq!(wav_samples(&folder.join("original.wav")).unwrap(), 88_200);
-        let failing = |_: &Path, _: &str, _: &str| -> Result<Vec<(String, Audio)>, String> { Err("no GPU".into()) };
+        let failing = |_: &Path, _: &str, _: &str| -> Result<Separated, String> { Err("no GPU".into()) };
         assert_eq!(separate_scene_stems(&env, &payload, &failing).unwrap_err(), "no GPU");
         assert!(!folder.join("_context.wav").exists());
     }

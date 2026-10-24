@@ -114,9 +114,11 @@ export function createMiniMaxPanel({
   }
 
   async function toggleProjectVideoEngineFromBadge() {
-    state.projectVideoEngine = normalizeProjectVideoEngine(state.projectVideoEngine) === "minimax_h3"
-      ? "ltx"
-      : "minimax_h3";
+    if (normalizeProjectVideoEngine(state.projectVideoEngine) === "minimax_h3") {
+      toast("H3 Studio makes MiniMax H3 videos.");
+      return;
+    }
+    state.projectVideoEngine = "minimax_h3";
     syncProjectVideoEngineUI();
     await autoSaveSessionQuiet("project video engine badge toggle");
     toast(state.projectVideoEngine === "minimax_h3"
