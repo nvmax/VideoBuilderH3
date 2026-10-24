@@ -387,7 +387,7 @@ pub fn save_session(env: &Env, payload: &Obj, now: &Stamp) -> Reply {
         *model_defaults_path.borrow_mut() = save_model_defaults(&env.output, session, now)?;
         Ok(())
     };
-    let hooks = SaveHooks { prepare: Some(&prepare), before_commit: Some(&before_commit) };
+    let hooks = SaveHooks { prepare: Some(&prepare), before_commit: Some(&before_commit), quiet: true };
     let outcome = h3_project::save_session_with(&folder, SaveInput { session, audio_path, now: now.clone() }, &hooks).map_err(|e| e.to_string())?;
 
     let project = &outcome.project_folder;

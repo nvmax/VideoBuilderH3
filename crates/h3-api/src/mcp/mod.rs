@@ -38,12 +38,13 @@ const DESTRUCTIVE: [&str; 3] = ["project_delete", "scene_delete", "api_request"]
 #[derive(Clone)]
 struct McpState {
     api: Api,
+    app: Arc<AppState>,
 }
 
 /// The `/mcp` route, calling `api` (the `/api/v1` router with its state) for every tool.
 pub fn router(api: Router, app: &Arc<AppState>) -> Router {
     let port = app.cfg.api_bind.rsplit(':').next().unwrap_or("8190");
-    let state = McpState { api: Api::new(api, format!("http://127.0.0.1:{port}/api/v1")) };
+    let state = McpState { api: Api::new(api, format!("http://127.0.0.1:{port}/api/v1")), app: Arc::clone(app) };
     Router::new().route("/mcp", post(receive).get(refuse).delete(refuse)).with_state(state)
 }
 
@@ -177,10 +178,51 @@ fn tool_result(text: String, is_error: bool) -> Value {
     json!({"content": [{"type": "text", "text": text}], "isError": is_error})
 }
 
+/// Whether the Builder's activity feed lists this call: what changes something, and a look at a picture. Plain reads would only fill it.
+fn shown_in_feed(name: &str, args: &Map<String, Value>) -> bool {
+    if name == "asset_view" {
+        return true;
+    }
+    if READ_ONLY.contains(&name) {
+        return false;
+    }
+    match catalog().tool(name).and_then(|tool| tool.route.as_ref()) {
+        Some(route) => route.method != "GET",
+        None if name == "api_request" => !args.get("method").and_then(Value::as_str).unwrap_or("GET").eq_ignore_ascii_case("GET"),
+        None => true,
+    }
+}
+
 async fn call_tool(state: &McpState, params: &Value) -> Value {
     let name = params.get("name").and_then(Value::as_str).unwrap_or("");
     let args: Map<String, Value> = params.get("arguments").and_then(Value::as_object).cloned().unwrap_or_default();
-    match exec::run(&state.api, name, &args).await {
+    // The open Builder shows the call while it runs and how it ended.
+    let started = std::time::Instant::now();
+    let entry = shown_in_feed(name, &args).then(|| {
+        let (project, scene, detail) = crate::activity::summarize(&args);
+        state.app.activity(None, json!({"source": "mcp", "tool": name, "title": crate::activity::humanize(name), "detail": detail, "project_id": project, "scene_id": scene, "status": "running"}))
+    });
+    let outcome = exec::run(&state.api, name, &args).await;
+    if let Some(id) = entry {
+        let mut patch = json!({"duration_ms": started.elapsed().as_millis() as u64});
+        match &outcome {
+            Ok(Output::Data(data)) => {
+                patch["status"] = json!("done");
+                for field in ["job_id", "project_id"] {
+                    if let Some(value) = data.get(field).and_then(Value::as_str) {
+                        patch[field] = json!(value);
+                    }
+                }
+            }
+            Ok(Output::Image { .. }) => patch["status"] = json!("done"),
+            Err(error) => {
+                patch["status"] = json!("failed");
+                patch["message"] = json!(format!("{}: {}", error.code, error.message.lines().next().unwrap_or("")));
+            }
+        }
+        state.app.activity(Some(id), patch);
+    }
+    match outcome {
         Ok(Output::Data(data)) => tool_result(pretty(&data), false),
         Ok(Output::Image { data, mime, info }) => json!({"content": [{"type": "image", "data": data, "mimeType": mime}, {"type": "text", "text": pretty(&info)}], "isError": false}),
         Err(error) => tool_result(error.text(), true),
@@ -261,6 +303,13 @@ pub async fn info(State(app): Shared, headers: HeaderMap) -> ApiResult {
         }),
         None,
     ))
+}
+
+/// What an endpoint of the agent API does, in a sentence, for the Builder's activity feed.
+pub fn describe_endpoint(method: &str, path: &str) -> Option<String> {
+    let found = catalog().find(method, path)?;
+    let first = found.description.split(". ").next().unwrap_or(&found.description).trim_end_matches('.');
+    Some(if first.chars().count() > 90 { first.chars().take(87).collect::<String>() + "..." } else { first.to_string() })
 }
 
 /// `GET /openapi.json`: the contract of the endpoints this app serves.

@@ -1702,6 +1702,7 @@ export function createTimelineView({
       row.innerHTML = `<div style="font-weight:800;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${index + 1}. ${escapeHtml(segment.label || "Scene")}</div><div style="font-size:11px;color:#a1a1aa;margin-top:4px;">Duration in seconds: ${formatDurationSeconds(segment.start, segment.end)}</div><div style="font-size:11px;color:#71717a;margin-top:2px;">${formatTime(segment.start)} - ${formatTime(segment.end)}</div>${status}${thumb}`;
       row.style.position = "relative";
       appendMiniMaxDraftBadge(row, segment);
+      row.dataset.h3SceneId = String(segment.id || "");
       row.onclick = (event) => handleSegmentPick(segment, event);
       row.onkeydown = (event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -1750,6 +1751,7 @@ export function createTimelineView({
       row.innerHTML = `<div style="font-weight:800;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Insert ${index + 1}. ${escapeHtml(segment.label || "Insert")}</div><div style="font-size:11px;color:#fed7aa;margin-top:4px;">${formatTime(segment.start)} - ${formatTime(segment.end)} | ${formatDurationSeconds(segment.start, segment.end)}s</div>${thumb}`;
       row.style.position = "relative";
       appendMiniMaxDraftBadge(row, segment);
+      row.dataset.h3SceneId = String(segment.id || "");
       row.onclick = (event) => handleSegmentPick(segment, event);
       row.onkeydown = (event) => {
         if (event.key === "Enter" || event.key === " ") {

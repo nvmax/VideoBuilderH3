@@ -2740,6 +2740,17 @@ export function openBuilder(node, options = {}) {
     whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,
     syncInspector, render, toast,
   });
+  window.__h3Builder = {
+    state,
+    selectScene(sceneId) {
+      const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);
+      if (!found) return false;
+      setActiveSegment(found);
+      return true;
+    },
+    loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),
+    busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),
+  };
 
   function updateGlobalAudioMuteButton() {
     const muted = Boolean(audio.muted && sceneAudio.muted);

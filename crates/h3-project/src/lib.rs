@@ -7,6 +7,7 @@ pub mod assets;
 pub mod assignment;
 pub mod atomic;
 pub mod backups;
+pub mod changes;
 pub mod builder_store;
 pub mod config;
 pub mod derived;

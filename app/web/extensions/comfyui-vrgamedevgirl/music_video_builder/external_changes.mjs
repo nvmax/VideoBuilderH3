@@ -316,6 +316,7 @@ export function createExternalChangeSync({
   window.addEventListener("vrgdg:builder-session-loaded", onLoaded);
   window.addEventListener("vrgdg:builder-session-saved", onSaved);
   return {
+    busy: () => hasUnsavedEdits() || isEditing() || isRendering(),
     dispose() {
       clearTimeout(timer);
       api.removeEventListener(PROJECT_CHANGED_EVENT, onProjectChanged);

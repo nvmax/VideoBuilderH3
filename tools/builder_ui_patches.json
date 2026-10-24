@@ -229,5 +229,26 @@
     "find": "  function captureBeatCalibrationAnchor() {\n    const draft = beatCalibration.draft;",
     "replace": "  function captureBeatCalibrationAnchor() {\n    if (beatCalibrationGridType.value === \"internal\") {\n      applyInternalBeatCalibration().catch((error) => {\n        toast(`Could not detect beats:\\n${String(error?.message || error)}`, true);\n      });\n      return false;\n    }\n    const draft = beatCalibration.draft;",
     "expect": 1
+  },
+  {
+    "why": "Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on and opens the project it works in, through this small handle.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });",
+    "replace": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });\n  window.__h3Builder = {\n    state,\n    selectScene(sceneId) {\n      const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);\n      if (!found) return false;\n      setActiveSegment(found);\n      return true;\n    },\n    loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),\n    busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),\n  };",
+    "expect": 1
+  },
+  {
+    "why": "Follow the agent: tell the panel whether this window has unsaved edits, an open text field or a render running, so it does not switch projects under the user.",
+    "file": "music_video_builder/external_changes.mjs",
+    "find": "  return {\n    dispose() {\n      clearTimeout(timer);",
+    "replace": "  return {\n    busy: () => hasUnsavedEdits() || isEditing() || isRendering(),\n    dispose() {\n      clearTimeout(timer);",
+    "expect": 1
+  },
+  {
+    "why": "Follow the agent: each scene card in the left pane names its scene, so the panel can scroll to it and flash it.",
+    "file": "music_video_builder/timeline_view.mjs",
+    "find": "row.onclick = (event) => handleSegmentPick(segment, event);",
+    "replace": "row.dataset.h3SceneId = String(segment.id || \"\");\n      row.onclick = (event) => handleSegmentPick(segment, event);",
+    "expect": 2
   }
 ]

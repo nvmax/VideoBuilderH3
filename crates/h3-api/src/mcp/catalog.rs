@@ -35,6 +35,7 @@ pub struct Tool {
 pub struct Endpoint {
     pub method: String,
     pub path: String,
+    pub description: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -53,16 +54,21 @@ impl Catalog {
         self.tools.iter().find(|t| t.name == name)
     }
 
-    /// Whether `method path` is an endpoint of the API. A `{parameter}` matches any one segment.
-    pub fn serves(&self, method: &str, path: &str) -> bool {
+    /// The endpoint `method path` is a call of. A `{parameter}` matches any one segment.
+    pub fn find(&self, method: &str, path: &str) -> Option<&Endpoint> {
         let wanted: Vec<&str> = path.split('?').next().unwrap_or("").split('/').filter(|s| !s.is_empty()).collect();
-        self.endpoints.iter().any(|e| {
+        self.endpoints.iter().find(|e| {
             if !e.method.eq_ignore_ascii_case(method) {
                 return false;
             }
             let pattern: Vec<&str> = e.path.split('/').filter(|s| !s.is_empty()).collect();
             pattern.len() == wanted.len() && pattern.iter().zip(&wanted).all(|(p, w)| (p.starts_with('{') && p.ends_with('}')) || p == w)
         })
+    }
+
+    /// Whether `method path` is an endpoint of the API.
+    pub fn serves(&self, method: &str, path: &str) -> bool {
+        self.find(method, path).is_some()
     }
 }
 

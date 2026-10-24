@@ -32,6 +32,25 @@ Long operations return a job id. `job_wait` waits for it. An error says its code
 
 The LLM is whatever the app is set to use. No tool loads, unloads or switches a model.
 
+## Following the agent
+
+The open Builder shows what an agent does while it does it, so you can watch the work as it happens:
+
+- **The project changes live.** Every save an agent (or a job) makes is announced to the open Builder as `vrgdg.project_changed` with what changed: the scene fields
+  (merged in without touching what you have not saved), the character or location of a scene, Timeline Notes, or the project as a whole (the Builder reloads it when
+  nothing is unsaved, focused or rendering). Each save has its own event and the next revision, which the Builder's merge needs. The Builder's own saves are not announced
+  to itself (`SaveHooks.quiet`).
+- **The Agent activity panel** (bottom right, opens with the first activity) lists each MCP tool call as it starts and ends, each REST call a program makes
+  (a call with no `Origin`), and each job with its progress (`Writing MiniMax prompts: scene 3 of 12`, a render, the stitch). Reads such as `scene_list` are not listed.
+  Arguments are summarized (`patch: {label, minimax_h3_prompt}`, `lyrics: 640 characters`) and keys, tokens and file contents never appear. A window that opens later
+  asks for what it missed (`GET /api/v1/agent/activity?after=N`).
+- **Follow** (a checkbox on the panel, on by default, remembered) takes the Builder where the agent goes: it opens the project the agent works in (not while there are
+  unsaved edits, a text field in use or a render running) and selects the scene the agent edits, scrolls to it and flashes it. Clicking an entry goes to its scene.
+  With Follow off the data still updates, and the selection stays where you left it.
+
+The events travel over `/vrgdg/events` (`h3_project::changes` for the saves, `activity.rs` for the feed). The panel is `app/web/host/agent_follow.js`. The Builder gives it a
+small handle (`window.__h3Builder`: select a scene, load a project, whether it is busy) through three patches in `tools/builder_ui_patches.json`.
+
 ## ElevenLabs
 
 The key is saved once in Menu > App Settings > ElevenLabs API key, in the same place as Builder Settings. A Speaking project (`video_type: speaking`) uses its

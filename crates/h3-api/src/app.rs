@@ -54,6 +54,8 @@ pub struct AppState {
     pub object_info_cache: tokio::sync::Mutex<Option<(std::time::Instant, Arc<Value>)>>,
     /// The app's screens, served beside the API when set (`h3 serve --web`). The desktop app embeds them instead.
     pub web_dir: Option<PathBuf>,
+    /// What an agent is doing, for the open Builder (see `activity.rs`).
+    pub activity: crate::activity::Feed,
 }
 
 impl AppState {
@@ -99,6 +101,7 @@ pub fn router(state: Arc<AppState>) -> Router {
     crate::post_routes::register(&state);
     crate::pipeline_jobs::register(&state);
     crate::speaking_routes::register(&state);
+    crate::activity::follow_jobs(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -108,6 +111,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/setup/check", post(crate::setup_routes::check_settings))
         .route("/setup/config", axum::routing::put(crate::setup_routes::save))
         .route("/setup/mcp", get(crate::mcp::info))
+        .route("/agent/activity", get(crate::activity::recent))
         .route("/openapi.json", get(crate::mcp::openapi))
         .route("/endpoints.md", get(crate::mcp::endpoints))
         .route("/queue", get(queue))
@@ -246,6 +250,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .merge(crate::vrgdg::router())
         .fallback(crate::vrgdg::fallback)
         .layer(cors)
+        .layer(axum::middleware::from_fn_with_state(Arc::clone(&state), crate::activity::rest_activity))
         .with_state(state)
         .merge(mcp)
         // Outermost, so it covers every route, the ComfyUI pass-through and /mcp.

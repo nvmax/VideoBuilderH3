@@ -60,6 +60,8 @@ async function start() {
   openBuilder(standInNode(), {});
   const { startAppSettings } = await import("/host/settings.js");
   startAppSettings();
+  const { startAgentFollow } = await import("/host/agent_follow.js");
+  startAgentFollow();
 }
 
 start().catch(showFailure);

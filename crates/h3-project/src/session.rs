@@ -172,6 +172,8 @@ pub struct SaveHooks<'a> {
     pub prepare: Option<PrepareHook<'a>>,
     /// After the derived files, right before the session is committed (context files, model defaults).
     pub before_commit: Option<CommitHook<'a>>,
+    /// The Video Builder window made this save itself, so no other window needs telling (see `changes`).
+    pub quiet: bool,
 }
 
 /// Save the session and its derived files. The session file is written last, so a failed save never advertises a
@@ -191,6 +193,8 @@ pub fn save_session_with(project: &Path, input: SaveInput, hooks: &SaveHooks) ->
     let path = session_path(&folder);
     let incoming = int_of(session.get("builder_save_revision"));
     let mut server_revision = 0;
+    // The session as it was, kept to say what this save changed.
+    let mut previous: Option<Obj> = None;
     if path.is_file() {
         match read_session_file(&path) {
             Ok(existing) => {
@@ -205,6 +209,7 @@ pub fn save_session_with(project: &Path, input: SaveInput, hooks: &SaveHooks) ->
                     );
                     return Ok(SaveOutcome { stale: true, revision: server_revision, project_folder: folder, session_path: path, session: existing });
                 }
+                previous = Some(existing);
             }
             Err(e) => eprintln!("[VRGDG-RS Project] Save revision check skipped: {e}"),
         }
@@ -254,6 +259,9 @@ pub fn save_session_with(project: &Path, input: SaveInput, hooks: &SaveHooks) ->
     }
     // The session is the commit marker: every derived file is replaced first, the session last.
     atomic_write_json(&path, &Value::Object(session.clone()))?;
+    if !hooks.quiet && crate::changes::listening_to(&folder) {
+        crate::changes::announce(&folder, previous.as_ref(), &session);
+    }
     Ok(SaveOutcome { stale: false, revision, project_folder: folder, session_path: path, session })
 }
 

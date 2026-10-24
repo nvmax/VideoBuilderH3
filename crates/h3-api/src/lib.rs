@@ -1,6 +1,7 @@
 //! Local `/api/v1` server for agents and the MCP server. Same paths, envelopes and error codes as the pack's agent API,
 //! so `mcp_server` works against it with `VRGDG_API_URL=http://127.0.0.1:8190/api/v1`.
 
+pub mod activity;
 pub mod app;
 pub mod edit_routes;
 pub mod embedded;
@@ -83,7 +84,20 @@ fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Res
     let roots = views::project_roots(&cfg.project_root, output.as_deref());
     let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
     let llm = std::sync::RwLock::new(cfg.llm.clone());
-    Ok(Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(64).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()) }))
+    let state = Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(256).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()), activity: activity::Feed::default() });
+    // A save that the Video Builder did not make itself (an agent, a job) is announced to the open Builder windows, which show it. See `h3_project::changes`.
+    let sender = state.builder_events.clone();
+    h3_project::changes::on_saved(
+        &state.roots,
+        Arc::new(move |saved| {
+            let data = serde_json::json!({
+                "project_folder": saved.project_folder.display().to_string(), "revision": saved.revision, "builder_save_revision": saved.builder_save_revision,
+                "source": "agent_api", "change": saved.change,
+            });
+            let _ = sender.send(serde_json::json!({"type": "vrgdg.project_changed", "data": data}).to_string());
+        }),
+    );
+    Ok(state)
 }
 
 /// Take the API's address. The desktop app does this before it opens its window, so the window finds the server there.

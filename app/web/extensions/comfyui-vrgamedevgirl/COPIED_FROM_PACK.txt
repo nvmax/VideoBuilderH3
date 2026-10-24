@@ -35,3 +35,6 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/beat_calibration.mjs: Internal beat calibration: how the wizard looks for it (hint, instruction, button).
   music_video_builder/beat_calibration.mjs: Internal beat calibration: analyze the project audio and replace the beat markers.
   music_video_builder/beat_calibration.mjs: Internal beat calibration: the wizard's main button runs it.
+  music_video_builder/builder.mjs: Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on and opens the project it works in, through this small handle.
+  music_video_builder/external_changes.mjs: Follow the agent: tell the panel whether this window has unsaved edits, an open text field or a render running, so it does not switch projects under the user.
+  music_video_builder/timeline_view.mjs: Follow the agent: each scene card in the left pane names its scene, so the panel can scroll to it and flash it.
