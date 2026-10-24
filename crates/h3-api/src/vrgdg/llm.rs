@@ -9,7 +9,7 @@ use axum::http::StatusCode;
 use axum::routing::{get, post as axum_post, MethodRouter};
 use axum::Router;
 use h3_builder::instructions;
-use h3_builder::prompt_writers::{concepts, image_prompts, references, RunnerLlm};
+use h3_builder::prompt_writers::{concepts, enhance, image_prompts, references, RunnerLlm};
 use h3_core::pyval::{text_or_empty, to_int, truthy, Obj};
 use h3_llm::runner::runner_config;
 use h3_llm::{own_server, providers, ChatRequest, LlmConfig};
@@ -71,6 +71,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/generate_nb_image_prompt"), writer!(image_prompts::generate_nb_image_prompt))
         .route(&format!("{base}/analyze_story_references"), writer!(image_prompts::analyze_story_references))
         .route(&format!("{base}/generate_concept_prompts"), writer!(concepts::generate_concept_prompts))
+        .route(&format!("{base}/enhance_minimax_h3_prompt"), writer!(enhance::enhance_minimax_h3_prompt))
         .route(&format!("{base}/describe_reference_image"), writer!(references::describe_reference_image))
         .route(&format!("{base}/flux_reference_location_map"), writer!(references::flux_reference_location_map))
         .route(&format!("{base}/flux_reference_extract_locations"), writer!(references::flux_reference_extract_locations))

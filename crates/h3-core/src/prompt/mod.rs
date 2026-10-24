@@ -7,6 +7,7 @@ pub mod assembly;
 pub mod continuation;
 pub mod cues;
 pub mod emotion;
+pub mod enhance;
 pub mod frame;
 pub mod lyric_free;
 pub mod lyrics;

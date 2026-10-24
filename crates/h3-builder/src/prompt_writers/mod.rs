@@ -6,6 +6,7 @@
 //! request's own settings select (`text_runner`, `lmstudio_*`, `own_server_*`, ...).
 
 pub mod concepts;
+pub mod enhance;
 #[cfg(test)]
 mod golden;
 pub mod image_prompts;

@@ -4,6 +4,7 @@
 use serde_json::json;
 
 use super::concepts::generate_concept_prompts;
+use super::enhance::enhance_minimax_h3_prompt;
 use super::image_prompts::{analyze_story_references, edit_image_prompt, generate_flux_klein_prompt, generate_nb_image_prompt, generate_t2i};
 use super::references::{
     describe_reference_image, flux_reference_extract_locations, flux_reference_extract_subjects, flux_reference_location_map, flux_reference_zimage_prompt, lm_scout_locations, wizard_locations_from_lyrics,
@@ -29,6 +30,7 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "scout" => lm_scout_locations(llm, payload).await,
             "subjects" => flux_reference_extract_subjects(llm, payload).await,
             "zimage" => flux_reference_zimage_prompt(llm, payload).await,
+            "enhance" => enhance_minimax_h3_prompt(llm, payload).await,
             other => panic!("unknown function {other}"),
         }
     })
@@ -48,4 +50,9 @@ async fn the_reference_writers_match_the_pack() {
     let dir = tempfile::tempdir().unwrap();
     std::fs::write(dir.path().join("SceneNotes.json"), json!({"SceneNote1": " rain on the window ", "SceneNote3": "empty street", "Other": "x"}).to_string()).unwrap();
     check_cases("llm/reference_writers.json", 70, &dir.path().display().to_string(), dispatch).await;
+}
+
+#[tokio::test]
+async fn the_prompt_enhancer_matches_the_pack() {
+    check_cases("llm/enhance_writer.json", 20, "", dispatch).await;
 }
