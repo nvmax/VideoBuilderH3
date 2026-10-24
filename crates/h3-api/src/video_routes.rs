@@ -410,3 +410,44 @@ pub async fn index_route(State(state): Shared, Path(pid): Path<String>) -> ApiRe
     let content = if path.is_empty() { String::new() } else { std::fs::read_to_string(&path).unwrap_or_default() };
     Ok(success(json!({"project_id": pid, "path": path, "content": content}), None))
 }
+
+/// `POST .../image/from-video-frame`: use the last frame of a clip (by default the previous scene's) as the scene's start image.
+pub async fn from_video_frame_route(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let loaded = load(&state, &pid).await?;
+    let folder = resolve_project(&state.roots, &pid)?;
+    let segments = segments_of(&loaded.session);
+    let index = scene_index(&segments, &sid).ok_or_else(|| ApiError::scene_not_found(&sid, &pid))?;
+    let mut video = text_or_empty(body.get("source_video_path")).trim().to_string();
+    if video.is_empty() && index > 0 {
+        let previous = &segments[index - 1];
+        video = ["video_path", "rendered_video_path"].iter().filter_map(|k| previous.get(*k)).find(|v| truthy(v)).map(|v| text_or_empty(Some(v))).unwrap_or_default();
+        if video.is_empty() {
+            let candidate = folder.join("rendered_scene_videos").join(format!("scene_{index:04}.mp4"));
+            if candidate.is_file() {
+                video = candidate.display().to_string();
+            }
+        }
+    }
+    if video.is_empty() || !FsPath::new(&video).is_file() {
+        return Err(ApiError::validation(format!("No source video found to extract frame for scene '{sid}'.")));
+    }
+    let tools = tools(&state)?;
+    let scene = index as u32 + 1;
+    let (source, project) = (PathBuf::from(&video), folder.clone());
+    let saved = blocking(move || h3_media::video::extract_final_frame(&tools, &project, &source, scene, &Stamp::now().compact))
+        .await?
+        .map_err(|e| ApiError::validation(e.to_string()))?;
+    let saved_text = saved.display().to_string();
+    let id = text_or_empty(segments[index].get("id"));
+    let _guard = state.edit_lock.lock().await;
+    let result = blocking(move || h3_project::session_ops::set_scene_image_from_frame(&folder, &id, &saved_text, &Stamp::now()))
+        .await?
+        .map_err(|e| ApiError::internal(e.to_string()))?;
+    let mut data = serde_json::Map::new();
+    data.insert("scene_id".into(), json!(sid));
+    data.insert("saved_path".into(), result["saved_path"].clone());
+    data.insert("source_video_path".into(), json!(video));
+    data.insert("revision".into(), result["revision"].clone());
+    Ok(success(Value::Object(data), None))
+}

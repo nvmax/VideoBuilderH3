@@ -211,3 +211,34 @@ async fn scan_recovers_clips_from_old_scratch_folders_and_index_is_written() {
     assert!(project.join("MINIMAX_PROJECT_FILES.md").is_file());
 }
 
+#[tokio::test]
+async fn a_scenes_start_image_can_come_from_the_previous_clips_last_frame() {
+    let s = start().await;
+    s.call(Method::POST, "/projects", Some(json!({"name": "Frame"}))).await;
+    let p = "/projects/Frame";
+    s.call(Method::POST, &format!("{p}/timeline/bulk"), Some(json!({"text": "4 a
+4 b", "mode": "durations"}))).await;
+    let (code, none) = s.call(Method::POST, &format!("{p}/scenes/2/image/from-video-frame"), Some(json!({}))).await;
+    assert_eq!((code, none["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
+
+    let project = s.dir.path().join("projects").join("Frame");
+    let clip = project.join("rendered_scene_videos").join("video_0001-audio.mp4");
+    std::fs::create_dir_all(clip.parent().unwrap()).unwrap();
+    let made = std::process::Command::new("ffmpeg").args(["-y", "-f", "lavfi", "-i", "color=c=blue:s=64x64:d=1:r=24", "-pix_fmt", "yuv420p"]).arg(&clip).output().expect("ffmpeg is on the PATH");
+    assert!(made.status.success());
+    let (_, scenes) = s.call(Method::GET, &format!("{p}/scenes"), None).await;
+    let first = scenes["data"][0]["id"].as_str().unwrap().to_string();
+    let session_file = project.join("vrgdg_builder_session.json");
+    let mut session: Value = serde_json::from_str(&std::fs::read_to_string(&session_file).unwrap()).unwrap();
+    session["segments"][0]["video_path"] = json!(clip.display().to_string());
+    std::fs::write(&session_file, serde_json::to_string(&session).unwrap()).unwrap();
+    let _ = first;
+
+    let (code, done) = s.call(Method::POST, &format!("{p}/scenes/2/image/from-video-frame"), Some(json!({}))).await;
+    assert_eq!(code, 200, "{done}");
+    let saved = done["data"]["saved_path"].as_str().unwrap();
+    assert!(std::path::Path::new(saved).is_file() && saved.contains("scene_image_previews"), "{saved}");
+    let (_, scene) = s.call(Method::GET, &format!("{p}/scenes/2"), None).await;
+    assert_eq!(scene["data"]["approved_image"]["path"].as_str().map(|p| p.replace('\\', "/")), Some(saved.replace('\\', "/")), "{scene}");
+}
+

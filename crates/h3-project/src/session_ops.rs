@@ -647,3 +647,22 @@ pub fn assemble_scene_prompt(project: &Path, scene_id: &str, shots: &[String], m
         "saved": save, "revision": revision,
     }))
 }
+
+/// Make `saved_path` the scene's start image and the newest entry of its image history.
+pub fn set_scene_image_from_frame(project: &Path, scene_id: &str, saved_path: &str, now: &Stamp) -> OpResult {
+    let mut edit = open(project, None)?;
+    let mut segs = edit.segments();
+    let idx = find_scene(&segs, scene_id).ok_or_else(|| OpError::SceneNotFound(scene_id.to_string()))?;
+    set(&mut segs[idx], "custom_image_path", json!(saved_path));
+    let mut history: Vec<Value> = segs[idx].get("image_history").and_then(Value::as_array).cloned().unwrap_or_default();
+    if !history.iter().any(|h| h.as_str() == Some(saved_path)) {
+        history.push(json!(saved_path));
+    }
+    let last = history.len() - 1;
+    set(&mut segs[idx], "image_history", Value::Array(history));
+    set(&mut segs[idx], "image_history_index", json!(last));
+    set(&mut segs[idx], "preview_mode", json!("image"));
+    edit.put_segments(segs);
+    let revision = edit.save(now)?;
+    Ok(json!({"scene_id": scene_id, "saved_path": saved_path, "revision": revision}))
+}
