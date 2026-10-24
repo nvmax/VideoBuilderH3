@@ -14,6 +14,7 @@ interface Check {
 interface Report {
   first_run: boolean;
   ready: boolean;
+  suggested_project_root: string | null;
   config: Record<string, string>;
   config_path: string;
   checks: Check[];
@@ -40,6 +41,12 @@ export default function Setup(props: { onClose: () => void }) {
     const data = await get<Report>("/setup/status");
     setReport(data);
     setValues({ ...data.config });
+    // The Video Builder keeps its projects in ComfyUI's output folder. On the first run that folder is suggested, so
+    // the projects already made there show up.
+    if (data.first_run && data.suggested_project_root && data.config.project_root.includes("VRGDG-H3 Projects")) {
+      setValues({ ...data.config, project_root: data.suggested_project_root });
+      setDirty(true);
+    }
   };
   onMount(() => void load().catch((e) => say((e as Error).message, true)));
 

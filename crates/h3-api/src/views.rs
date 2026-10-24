@@ -10,9 +10,13 @@ use serde_json::{json, Map, Value};
 
 use crate::error::ApiError;
 
-/// Folders that may hold projects.
-pub fn project_roots(project_root: &Path) -> Vec<PathBuf> {
+/// Folders that may hold projects: the project folder, then ComfyUI's output folder (where the Video Builder keeps its
+/// projects, so they show up here too), then `H3_PROJECT_ROOTS`. A project is found in the first folder that has it.
+pub fn project_roots(project_root: &Path, comfy_output: Option<&Path>) -> Vec<PathBuf> {
     let mut roots = vec![project_root.to_path_buf()];
+    if let Some(output) = comfy_output.filter(|o| !o.as_os_str().is_empty() && o.is_dir() && !roots.contains(&o.to_path_buf())) {
+        roots.push(output.to_path_buf());
+    }
     if let Ok(extra) = std::env::var("H3_PROJECT_ROOTS") {
         for item in std::env::split_paths(&extra) {
             if !item.as_os_str().is_empty() && !roots.contains(&item) {

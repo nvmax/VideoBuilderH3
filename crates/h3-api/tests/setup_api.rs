@@ -148,3 +148,30 @@ async fn a_project_folder_that_is_a_file_is_refused() {
     let (_, report) = s.call(Method::POST, "/setup/check", Some(json!({"project_root": file.display().to_string()}))).await;
     assert_eq!(level(&report, "project_folder"), "fail");
 }
+
+#[tokio::test]
+async fn projects_in_comfyuis_output_folder_are_listed_and_open() {
+    // The Video Builder keeps its projects in ComfyUI's output folder, so they must show up beside the app's own.
+    let dir = tempfile::tempdir().unwrap();
+    let own = dir.path().join("projects");
+    let output = dir.path().join("comfy_output");
+    let old = output.join("Heat");
+    std::fs::create_dir_all(&old).unwrap();
+    std::fs::write(old.join("vrgdg_builder_session.json"), json!({"project_name": "Heat", "revision": 3, "video_engine": "minimax_h3", "segments": [{"id": "a", "start": 0.0, "end": 4.0}]}).to_string()).unwrap();
+    let cfg = AppConfig { comfy_url: "http://127.0.0.1:9".into(), project_root: own, comfy_output_dir: output.display().to_string(), ..AppConfig::default() };
+    let state = h3_api::build_state(cfg, &dir.path().join("jobs.db")).unwrap();
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+    let addr = listener.local_addr().unwrap();
+    tokio::spawn(async move { axum::serve(listener, h3_api::router(state)).await.unwrap() });
+    let base = format!("http://{addr}/api/v1");
+    let client = Client::new();
+    let listed: Value = client.get(format!("{base}/projects")).send().await.unwrap().json().await.unwrap();
+    let ids: Vec<&str> = listed["data"].as_array().unwrap().iter().map(|p| p["id"].as_str().unwrap()).collect();
+    assert_eq!(ids, ["Heat"], "{listed}");
+    let opened: Value = client.get(format!("{base}/projects/Heat")).send().await.unwrap().json().await.unwrap();
+    assert_eq!((opened["data"]["scenes"].as_array().map(Vec::len), opened["revision"].as_i64()), (Some(1), Some(3)), "{opened}");
+    // Reading changed nothing on disk.
+    let after = std::fs::read_to_string(old.join("vrgdg_builder_session.json")).unwrap();
+    assert!(after.contains("\"revision\":3") || after.contains("\"revision\": 3"));
+}
+

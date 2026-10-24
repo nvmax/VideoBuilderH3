@@ -180,7 +180,9 @@ async fn report(state: &crate::app::AppState, cfg: AppConfig) -> Value {
     checks.extend(blocking(move || ffmpeg_check(&c)).await.unwrap_or_default());
     checks.push(llm_check(&cfg).await);
     let ready = checks.iter().all(|c| c["level"] != "fail");
-    json!({"first_run": first_run, "config": config_view(&cfg), "config_path": state.config_path.display().to_string(), "checks": checks, "ready": ready})
+    // The Video Builder keeps its projects in ComfyUI's output folder. The setup suggests it as the project folder.
+    let suggested_root = checks.iter().find(|c| c["id"] == "output_folder" && c["level"] == "ok").and_then(|c| c["detail"].as_str()).map(str::to_string);
+    json!({"first_run": first_run, "suggested_project_root": suggested_root, "config": config_view(&cfg), "config_path": state.config_path.display().to_string(), "checks": checks, "ready": ready})
 }
 
 /// `GET /setup/status`: the saved settings, checked.
