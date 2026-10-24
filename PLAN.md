@@ -317,3 +317,11 @@ top level scripts it imports, copied unchanged by `tools/sync_builder_ui.ps1` in
   and RefMods, M6 audio mask and lyrics, M7 Story Mode, M8 post process, M9 pop out windows and the desktop shell.
 - **Proof.** Each route is checked against the live pack (ComfyUI at 8188 answers the same request on a scratch copy) and in
   Chrome next to the real Builder.
+
+### P11 status
+
+- **Routes.** Every route the Builder front end calls is served, or left out on purpose (LTX, the wizards, browser automation of other sites): 182 served, 53 left out, 0 to build (`docs/BUILDER_PARITY.md`, made by `tools/parity_report.py`). Speaking mode is in (ElevenLabs voices and speech, Voice Design, dialogue and voice description helpers, scene audio settings, Auto-Generate Scenes), so are the Story Layer (brief, arc), the Builder Agent, motion notes and the Gemma4 drafts.
+- **Proof.** Each ported function has golden cases made by running the pack's own code (`tools/make_*_fixtures.py`, listed in `tools/make_all.py`). The LLM is a recorder, ElevenLabs is a script of replies. The Rust code is compared with the instruction text it asked for, the sampling values, the reply and the error text. Known differences: error texts of Python's JSON parser (cases left out), the built-in runner is ComfyUI's Gemma (the pack loads a GGUF itself).
+- **Window.** The desktop window opens the API server's own address, which serves the embedded Builder (`crates/h3-api/src/embedded.rs`), so the page, its media and the API share one origin, like the Builder inside ComfyUI. `window.open` makes real windows (the player pop-out, the LLM Prompting pop-out, the Builder Agent), a link to another site opens in the system browser. App Settings (ComfyUI address, folders, ffmpeg) is in the Menu and opens on first start.
+- **Front end differences from the pack** are the entries of `tools/builder_ui_patches.json` and the files in `app/web/host`. The sync copies the Face Fix and Wizard Beta scripts too, because the Builder imports them and a missing import stops it.
+- **Still to do.** A release build and a test of the installer on a clean machine, code signing, a squashed git history without the author's address before the repository is public, the update channel, real GPU render tests per mode, librosa quality beats, native 6 stem Demucs.
