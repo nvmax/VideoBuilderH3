@@ -1,0 +1,16 @@
+[package]
+name = "h3-builder"
+description = "What the Video Builder front end asks the server to do: projects, sessions, settings and files. Ports of the pack's builder routes."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+h3-core.workspace = true
+h3-media.workspace = true
+h3-project.workspace = true
+serde_json.workspace = true
+sysinfo.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

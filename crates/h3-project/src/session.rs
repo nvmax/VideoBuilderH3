@@ -47,12 +47,25 @@ fn read_session_file(path: &Path) -> io::Result<Obj> {
 /// Load a project's session. A session saved before revisions existed gets `revision` from `builder_save_revision`.
 /// Timeline notes missing from the session are filled from `SceneNotes.json`, as the pack does.
 pub fn load_session(project: &Path) -> io::Result<LoadedSession> {
+    load_with(project, false)
+}
+
+/// The load the Video Builder does (`_load_builder_session`): the same, after the session's file paths are repaired
+/// for a moved or imported project (see `rehydrate`).
+pub fn load_builder_session(project: &Path) -> io::Result<LoadedSession> {
+    load_with(project, true)
+}
+
+fn load_with(project: &Path, rehydrate: bool) -> io::Result<LoadedSession> {
     let folder = absolute(project);
     let path = session_path(&folder);
     if !path.is_file() {
         return Err(io::Error::new(io::ErrorKind::NotFound, format!("Builder session was not found: {}", path.display())));
     }
     let mut session = read_session_file(&path)?;
+    if rehydrate {
+        session = crate::rehydrate::rehydrate_session(&folder, session);
+    }
     let fallbacks = derived::load_scene_notes(&folder);
     if !fallbacks.is_empty() {
         if let Some(Value::Array(segments)) = session.get_mut("segments") {
@@ -102,7 +115,7 @@ pub struct SaveOutcome {
 }
 
 /// Assign unique slot numbers (10001 and up) to overlay scenes.
-fn assign_overlay_slots(overlay: &mut [Value]) {
+pub(crate) fn assign_overlay_slots(overlay: &mut [Value]) {
     let slot_of = |segment: &Obj, fallback: i64| -> i64 {
         for key in ["overlay_slot_number", "scene_slot_number", "slot_number"] {
             let value = segment.get(key).filter(|v| truthy(v)).and_then(to_float).map_or(0, |f| f as i64);
@@ -140,9 +153,29 @@ fn assign_overlay_slots(overlay: &mut [Value]) {
 /// interleave their file replacements into a mixed project.
 static SAVE_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
+/// A save step that may change the session and the audio path that is stored.
+pub type PrepareHook<'a> = &'a dyn Fn(&Path, &mut Obj, &mut String) -> io::Result<()>;
+
+/// A save step that only reads the finished session.
+pub type CommitHook<'a> = &'a dyn Fn(&Path, &Obj) -> io::Result<()>;
+
+/// Extra steps of the Video Builder's own save, run inside the save at the points where the pack runs them.
+#[derive(Default)]
+pub struct SaveHooks<'a> {
+    /// After the revision checks, before anything is written: copy the song and context files into the project.
+    pub prepare: Option<PrepareHook<'a>>,
+    /// After the derived files, right before the session is committed (context files, model defaults).
+    pub before_commit: Option<CommitHook<'a>>,
+}
+
 /// Save the session and its derived files. The session file is written last, so a failed save never advertises a
 /// half written project.
 pub fn save_session(project: &Path, input: SaveInput) -> io::Result<SaveOutcome> {
+    save_session_with(project, input, &SaveHooks::default())
+}
+
+/// `save_session` with the Builder's extra steps.
+pub fn save_session_with(project: &Path, input: SaveInput, hooks: &SaveHooks) -> io::Result<SaveOutcome> {
     let _guard = SAVE_LOCK.lock().unwrap_or_else(|e| e.into_inner());
     let folder = absolute(project);
     for dir in [folder.clone(), images_folder(&folder), prompts_folder(&folder), context_folder(&folder)] {
@@ -189,8 +222,12 @@ pub fn save_session(project: &Path, input: SaveInput) -> io::Result<SaveOutcome>
     if let Some(Value::Array(overlay)) = session.get_mut("overlay_segments") {
         assign_overlay_slots(overlay);
     }
+    let mut audio_path = input.audio_path;
+    if let Some(prepare) = hooks.prepare {
+        prepare(&folder, &mut session, &mut audio_path)?;
+    }
     let segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
-    session.insert("audio_path".into(), json!(input.audio_path));
+    session.insert("audio_path".into(), json!(audio_path));
     session.insert("project_folder".into(), json!(folder.display().to_string()));
     session.insert("updated".into(), json!(input.now.epoch));
     session.insert("segments".into(), Value::Array(segments.clone()));
@@ -206,6 +243,9 @@ pub fn save_session(project: &Path, input: SaveInput) -> io::Result<SaveOutcome>
     derived::write_scene_notes(&folder, &segments)?;
     let overlay: Vec<Value> = session.get("overlay_segments").and_then(Value::as_array).cloned().unwrap_or_default();
     derived::write_prompt_files(&folder, &segments, &overlay)?;
+    if let Some(before_commit) = hooks.before_commit {
+        before_commit(&folder, &session)?;
+    }
     // The session is the commit marker: every derived file is replaced first, the session last.
     atomic_write_json(&path, &Value::Object(session.clone()))?;
     Ok(SaveOutcome { stale: false, revision, project_folder: folder, session_path: path, session })

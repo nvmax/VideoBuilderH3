@@ -39,6 +39,8 @@ pub struct AppState {
     pub llm: std::sync::RwLock<h3_llm::LlmConfig>,
     pub config_path: PathBuf,
     pub roots: Vec<PathBuf>,
+    /// ComfyUI's output folder, when known. The Builder keeps its profiles and defaults there, like the pack.
+    pub comfy_output: Option<PathBuf>,
     pub jobs: JobManager,
     pub presets: h3_image::PresetStore,
     pub presets_dir: PathBuf,
@@ -48,6 +50,18 @@ pub struct AppState {
     pub builder_events: tokio::sync::broadcast::Sender<String>,
     /// The app's screens, served beside the API when set (`h3 serve --web`). The desktop app embeds them instead.
     pub web_dir: Option<PathBuf>,
+}
+
+impl AppState {
+    /// The folders and tools a Builder call works with.
+    pub fn builder_env(&self) -> h3_builder::Env {
+        h3_builder::Env {
+            output: self.comfy_output.clone().unwrap_or_else(|| self.cfg.project_root.clone()),
+            roots: self.roots.clone(),
+            ffmpeg: self.cfg.ffmpeg_path.clone(),
+            ffprobe: self.cfg.ffprobe_path.clone(),
+        }
+    }
 }
 
 pub type Shared = State<Arc<AppState>>;
