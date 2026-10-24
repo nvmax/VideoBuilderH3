@@ -15,6 +15,7 @@ mod projects;
 mod refmod;
 mod runner;
 mod settings;
+mod speaking;
 mod story;
 mod storyboard;
 mod system;
@@ -51,6 +52,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = refmod::routes(router);
     let router = runner::routes(router);
     let router = settings::routes(router);
+    let router = speaking::routes(router);
     let router = story::routes(router);
     let router = storyboard::routes(router);
     let router = system::routes(router);

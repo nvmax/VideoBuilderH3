@@ -8,6 +8,7 @@ pub mod assets;
 pub mod audio_mask;
 pub mod capcut;
 pub mod drafts;
+pub mod elevenlabs;
 pub mod env;
 pub mod error_log;
 pub mod files;

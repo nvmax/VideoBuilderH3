@@ -16,6 +16,7 @@ pub mod images;
 pub mod motion_notes;
 pub mod references;
 pub mod repair;
+pub mod speech;
 
 use std::future::Future;
 use std::pin::Pin;

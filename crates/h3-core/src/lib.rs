@@ -10,6 +10,7 @@ pub mod resolution;
 pub mod scene;
 pub mod scene_card;
 pub mod settings;
+pub mod speaking;
 pub mod story;
 pub mod style;
 pub mod tiles;

@@ -9,6 +9,7 @@ use super::enhance::enhance_minimax_h3_prompt;
 use super::gemma4::generate as generate_gemma4;
 use super::image_prompts::{analyze_story_references, edit_image_prompt, generate_flux_klein_prompt, generate_nb_image_prompt, generate_t2i};
 use super::motion_notes::generate_motion_notes;
+use super::speech::{craft_dialogue, generate_voice_description};
 use super::references::{
     describe_reference_image, flux_reference_extract_locations, flux_reference_extract_subjects, flux_reference_location_map, flux_reference_zimage_prompt, lm_scout_locations, wizard_locations_from_lyrics,
 };
@@ -37,6 +38,8 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "motion" => generate_motion_notes(llm, payload).await,
             "gemma4" => generate_gemma4(llm, payload).await,
             "agent" => builder_agent_reply(llm, payload).await,
+            "voice" => generate_voice_description(llm, payload).await,
+            "craft" => craft_dialogue(llm, payload).await,
             other => panic!("unknown function {other}"),
         }
     })
@@ -82,4 +85,14 @@ async fn the_gemma4_drafts_match_the_pack() {
 #[tokio::test]
 async fn the_builder_agent_matches_the_pack() {
     check_cases("llm/agent.json", 150, "", dispatch).await;
+}
+
+#[tokio::test]
+async fn the_speaking_helpers_match_the_pack() {
+    let dir = tempfile::tempdir().unwrap();
+    let custom = dir.path().join("project_context").join("custom_builder_instructions");
+    std::fs::create_dir_all(custom.join("scenes").join("scene_2")).unwrap();
+    std::fs::write(custom.join("elevenlabs_dialogue.txt"), "Project dialogue instructions.\n").unwrap();
+    std::fs::write(custom.join("scenes").join("scene_2").join("elevenlabs_dialogue.txt"), "Scene dialogue instructions.\n").unwrap();
+    check_cases("speaking/writers.json", 30, &dir.path().display().to_string(), dispatch).await;
 }
