@@ -444,8 +444,8 @@ pub async fn project_assets(State(state): Shared, Path(pid): Path<String>) -> Ap
 pub async fn export_project(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
     let folder = views::resolve_project(&state.roots, &pid)?;
     let out = state.config_path.parent().unwrap_or_else(|| std::path::Path::new(".")).join("exports");
-    let created = Stamp::now().epoch;
-    let (zip, name) = blocking(move || h3_project::export::export_project(&folder, &out, created)).await?.map_err(ApiError::internal)?;
+    let now = Stamp::now();
+    let (zip, name) = blocking(move || h3_project::export::export_project(&folder, &out, &now)).await?.map_err(ApiError::internal)?;
     let bytes = std::fs::metadata(&zip).map(|m| m.len()).unwrap_or(0);
     Ok(success(json!({"zip_path": zip.display().to_string(), "filename": name, "bytes": bytes}), None))
 }

@@ -9,7 +9,7 @@ use std::path::{Path, PathBuf};
 use h3_core::pyval::{text_or_empty, to_float, truthy, Obj};
 use h3_project::builder_store::{load_global_llm_keys, load_global_llm_runner, save_global_llm_keys, save_global_llm_runner, save_model_defaults};
 use h3_project::layout::{context_folder, images_folder, prompts_folder, scene_notes_path, session_path, srt_path, Stamp};
-use h3_project::{atomic::atomic_write_text, derived, scaffold, SaveHooks, SaveInput};
+use h3_project::{atomic::atomic_write_json, atomic::atomic_write_text, derived, latents, project_copy, rehydrate, scaffold, SaveHooks, SaveInput};
 use serde_json::{json, Value};
 
 use crate::payload::{object, path_text};
@@ -178,13 +178,19 @@ fn copy_or_convert_audio(env: &Env, source: &str, target_folder: &Path, target_n
     Ok(text(&target))
 }
 
-/// `_snapshot_project_assets`: keep a copy of the song and the context files inside the project.
-fn snapshot_project_assets(env: &Env, project: &Path, session: &mut Obj, audio_path: &mut String) -> std::io::Result<()> {
+/// `_snapshot_project_assets`: keep a copy of the song and the context files inside the project. `old_project` is the
+/// folder a branched project came from: song and context paths that were in it are pointed at the same files here.
+fn snapshot_project_assets(env: &Env, project: &Path, session: &mut Obj, audio_path: &mut String, old_project: &str) -> std::io::Result<()> {
     if !audio_path.is_empty() && Path::new(audio_path.as_str()).is_file() {
         let ext = Path::new(audio_path.as_str()).extension().map(|e| format!(".{}", e.to_string_lossy())).unwrap_or_default();
         let copied = copy_or_convert_audio(env, audio_path, &project.join("project_audio"), &format!("project_audio{ext}"))?;
         if !copied.is_empty() {
             *audio_path = copied;
+        }
+    } else if !old_project.is_empty() {
+        let rebased = rehydrate::project_rebased_path(project, old_project, audio_path);
+        if !rebased.is_empty() {
+            *audio_path = rebased;
         }
     }
     for (key, file) in [("prompt_json_path", "ConceptPrompts.txt"), ("theme_style_path", "themestyle.txt"), ("story_idea_path", "storyconcept.txt"), ("subject_scene_path", "subjectsandscenes.txt")] {
@@ -193,6 +199,11 @@ fn snapshot_project_assets(env: &Env, project: &Path, session: &mut Obj, audio_p
             let copied = copy_file_into_folder(&raw, &context_folder(project), Some(file))?;
             if !copied.is_empty() {
                 session.insert(key.into(), json!(copied));
+            }
+        } else {
+            let rebased = rehydrate::project_rebased_path(project, old_project, &raw);
+            if !rebased.is_empty() {
+                session.insert(key.into(), json!(rebased));
             }
         }
     }
@@ -274,7 +285,7 @@ fn fallback_context_text(filename: &str, session: &Obj) -> String {
 
 /// `_save_project_context_files`: the three context files the render prompts read. A caller that could not read a file
 /// never erases an existing brief.
-fn save_project_context_files(project: &Path, session: &Obj) -> std::io::Result<Vec<PathBuf>> {
+pub(crate) fn save_project_context_files(project: &Path, session: &Obj) -> std::io::Result<Vec<PathBuf>> {
     let Some(files) = session.get("project_context_files").and_then(Value::as_object) else { return Ok(Vec::new()) };
     let mut saved = Vec::new();
     for filename in ["storyconcept.txt", "subjectsandscenes.txt", "themestyle.txt"] {
@@ -370,7 +381,7 @@ pub fn save_session(env: &Env, payload: &Obj, now: &Stamp) -> Reply {
 
     let model_defaults_path: RefCell<Option<PathBuf>> = RefCell::new(None);
     let context_paths: RefCell<Vec<PathBuf>> = RefCell::new(Vec::new());
-    let prepare = |project: &Path, session: &mut Obj, audio: &mut String| snapshot_project_assets(env, project, session, audio);
+    let prepare = |project: &Path, session: &mut Obj, audio: &mut String| snapshot_project_assets(env, project, session, audio, "");
     let before_commit = |project: &Path, session: &Obj| -> std::io::Result<()> {
         *context_paths.borrow_mut() = save_project_context_files(project, session)?;
         *model_defaults_path.borrow_mut() = save_model_defaults(&env.output, session, now)?;
@@ -460,6 +471,83 @@ pub fn new_project(env: &Env, payload: &Obj, now: &Stamp) -> Reply {
         "story_idea_path": text(&context.join("storyconcept.txt")),
         "subject_scene_path": text(&context.join("subjectsandscenes.txt")),
     }))
+}
+
+/// `POST /vrgdg/music_builder/save_project_as`: copy the project to a new folder and keep what the request says (Save
+/// Project As keeps everything, Branch Project lets the user leave out parts).
+pub fn save_project_as(env: &Env, payload: &Obj, now: &Stamp) -> Reply {
+    let source_raw = Some(path_text(payload, "source_project_folder")).filter(|p| !p.is_empty()).unwrap_or_else(|| path_text(payload, "project_folder"));
+    let source = Some(source_raw).filter(|p| !p.is_empty()).map(|p| absolute(Path::new(&p)));
+    let target = scaffold::unique_folder_path(&project_target(env, payload, "target_project_folder", now)?).map_err(|e| e.to_string())?;
+    let source_folder = source.as_ref().filter(|s| s.is_dir());
+    if source_folder.is_some_and(|s| is_inside(&target, s)) {
+        return Err("Save Project As target cannot be inside the current project folder.".into());
+    }
+    let keep = project_copy::Keep::from_payload(payload);
+    for folder in [target.clone(), images_folder(&target), prompts_folder(&target), context_folder(&target)] {
+        fs::create_dir_all(folder).map_err(|e| e.to_string())?;
+    }
+    if let Some(source) = source_folder {
+        project_copy::copy_project_tree(source, &target, &keep).map_err(|e| e.to_string())?;
+        latents::copy_latents_folder(source, &target);
+    }
+    let old_project = source.as_ref().map(|s| text(s)).unwrap_or_default();
+    let mut session = object(payload.get("session"));
+    project_copy::apply_branch_keep(&mut session, &keep);
+    project_copy::prune_unkept_project_folders(&target, &keep);
+    for key in ["segments", "overlay_segments"] {
+        if !session.get(key).is_some_and(Value::is_array) {
+            session.insert(key.into(), json!([]));
+        }
+    }
+    project_copy::assign_overlay_numbers(&mut session);
+    let audio_raw = path_text(payload, "audio_path");
+    let mut audio_path = if audio_raw.is_empty() { String::new() } else { text(&crate::files::resolve_existing_file(&audio_raw, "Audio file")?) };
+    snapshot_project_assets(env, &target, &mut session, &mut audio_path, &old_project).map_err(|e| e.to_string())?;
+    project_copy::copy_session_assets_to_project(&target, &mut session, now).map_err(|e| e.to_string())?;
+    let mut value = Value::Object(session);
+    project_copy::rebase_project_owned_paths(&target, &old_project, &mut value);
+    let mut session = value.as_object().cloned().unwrap_or_default();
+    if keep.videos {
+        project_copy::relocate_external_stage_media(&mut session, &target).map_err(|e| e.to_string())?;
+    }
+    session.insert("audio_path".into(), json!(audio_path));
+    session.insert("project_folder".into(), json!(text(&target)));
+    session.insert("updated".into(), json!(now.epoch));
+    session.insert("revision".into(), json!(1));
+    let segments = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    atomic_write_json(&session_path(&target), &Value::Object(session.clone())).map_err(|e| e.to_string())?;
+    atomic_write_text(&srt_path(&target), &derived::segments_to_srt(&segments)).map_err(|e| e.to_string())?;
+    let scene_notes = derived::write_scene_notes(&target, &segments).map_err(|e| e.to_string())?;
+    if keep.mappings {
+        if let Some(refs) = session.get("flux_reference_builder") {
+            derived::save_reference_descriptions(&target, refs).map_err(|e| e.to_string())?;
+        }
+    }
+    if keep.notes || keep.prompts {
+        save_project_context_files(&target, &session).map_err(|e| e.to_string())?;
+    }
+    Ok(json!({
+        "project_folder": text(&target),
+        "session_path": text(&session_path(&target)),
+        "srt_path": text(&srt_path(&target)),
+        "scene_notes_path": text(&scene_notes),
+        "images_folder": text(&images_folder(&target)),
+        "prompts_folder": text(&prompts_folder(&target)),
+        "context_folder": text(&context_folder(&target)),
+        "session": Value::Object(session),
+    }))
+}
+
+/// `POST /vrgdg/music_builder/import_project`: unpack a project package into the output folder and open it.
+pub fn import_project(env: &Env, zip_path: &Path, requested_name: &str, now: &Stamp) -> Reply {
+    let (target, name) = h3_project::export::import_project_zip(zip_path, &env.output, requested_name, now)?;
+    let request = json!({"project_folder": text(&target)}).as_object().cloned().unwrap_or_default();
+    let mut reply = load_session(env, &request)?;
+    if let Some(map) = reply.as_object_mut() {
+        map.insert("imported_project_name".into(), json!(name));
+    }
+    Ok(reply)
 }
 
 /// `POST /vrgdg/music_builder/delete_project`. Only projects in the output folder or the app's project folders can go.

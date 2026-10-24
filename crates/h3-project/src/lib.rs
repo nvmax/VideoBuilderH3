@@ -16,6 +16,7 @@ pub mod images;
 pub mod journal;
 pub mod latents;
 pub mod layout;
+pub mod project_copy;
 pub mod rehydrate;
 pub use h3_core::pyjson;
 pub mod scaffold;

@@ -36,7 +36,7 @@ fn absolute(path: &Path) -> PathBuf {
     std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf())
 }
 
-fn read_session_file(path: &Path) -> io::Result<Obj> {
+pub fn read_session_file(path: &Path) -> io::Result<Obj> {
     let text = fs::read_to_string(path)?;
     match pyjson::parse(&text).map_err(|e| io::Error::new(io::ErrorKind::InvalidData, format!("{}: {e}", path.display())))? {
         Value::Object(map) => Ok(map),

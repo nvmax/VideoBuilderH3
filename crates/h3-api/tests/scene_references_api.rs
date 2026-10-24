@@ -93,13 +93,17 @@ async fn assets_are_listed_and_a_project_is_exported_as_a_portable_zip() {
     assert_eq!(assets["data"]["items"][0]["kind"], "image");
     assert_eq!(assets["data"]["items"][0]["id"], "image_0001");
 
-    // A file outside the project and an API key in the session.
+    // Files outside the project and an API key in the session. A scene's own picture is pulled into the scene's context
+    // folder, a file named by some other setting goes to portable_assets.
     let outside = s.dir.path().join("elsewhere.png");
     std::fs::write(&outside, b"outside").unwrap();
+    let other = s.dir.path().join("other.png");
+    std::fs::write(&other, b"other").unwrap();
     let session_file = project.join("vrgdg_builder_session.json");
     let mut session: Value = serde_json::from_str(&std::fs::read_to_string(&session_file).unwrap()).unwrap();
     session["segments"][0]["custom_image_path"] = json!(outside.display().to_string());
     session["own_server_api_key"] = json!("sk-secret");
+    session["outside_reference"] = json!(other.display().to_string());
     std::fs::write(&session_file, serde_json::to_string(&session).unwrap()).unwrap();
     let before = std::fs::read_to_string(&session_file).unwrap();
 
@@ -115,7 +119,8 @@ async fn assets_are_listed_and_a_project_is_exported_as_a_portable_zip() {
     std::io::Read::read_to_string(&mut archive.by_name("vrgdg_builder_session.json").unwrap(), &mut text).unwrap();
     let packed: Value = serde_json::from_str(&text).unwrap();
     assert_eq!(packed["own_server_api_key"], "");
-    assert!(packed["segments"][0]["custom_image_path"].as_str().unwrap().replace('\\', "/").contains("/portable_assets/0001_"), "{}", packed["segments"][0]["custom_image_path"]);
+    assert!(packed["outside_reference"].as_str().unwrap().replace('\\', "/").contains("/portable_assets/0001_"), "{}", packed["outside_reference"]);
+    assert!(packed["segments"][0]["custom_image_path"].as_str().unwrap().replace('\\', "/").contains("/project_context/scene_0001/"), "{}", packed["segments"][0]["custom_image_path"]);
     // The session on disk is not touched.
     assert_eq!(std::fs::read_to_string(&session_file).unwrap(), before);
 }

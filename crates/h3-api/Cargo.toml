@@ -6,7 +6,7 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-axum = { version = "0.8", features = ["json", "query", "macros"] }
+axum = { version = "0.8", features = ["json", "query", "macros", "multipart"] }
 h3-builder.workspace = true
 h3-comfy.workspace = true
 h3-core.workspace = true

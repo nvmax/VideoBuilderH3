@@ -18,7 +18,7 @@ use crate::session::assign_overlay_slots;
 const IMAGE_EXTENSIONS: [&str; 4] = [".png", ".jpg", ".jpeg", ".webp"];
 
 /// `os.path.abspath`: a full path with `..` resolved and no trailing separator.
-fn absolute(path: &Path) -> PathBuf {
+pub fn absolute(path: &Path) -> PathBuf {
     let full = std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf());
     // `Path::components` drops a trailing separator and a `.` in the middle.
     full.components().collect()
@@ -40,7 +40,7 @@ pub fn is_inside_folder(path: &Path, folder: &Path) -> bool {
     path.starts_with(&folder)
 }
 
-fn relative_to(path: &Path, folder: &Path) -> PathBuf {
+pub fn relative_to(path: &Path, folder: &Path) -> PathBuf {
     let path = absolute(path);
     let folder = absolute(folder);
     let (p, f) = (path.components().collect::<Vec<_>>(), folder.components().collect::<Vec<_>>());
@@ -200,7 +200,7 @@ fn scene_preview_paths(project: &Path, scene: i64) -> Vec<String> {
     found.into_iter().map(|item| item.2).collect()
 }
 
-fn is_internal_approved_image(path: &str) -> bool {
+pub fn is_internal_approved_image(path: &str) -> bool {
     path.replace('/', "\\").split('\\').any(|part| part.eq_ignore_ascii_case("zimage_approved"))
 }
 
