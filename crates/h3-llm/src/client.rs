@@ -92,6 +92,26 @@ fn bearer(request: reqwest::RequestBuilder, key: &str) -> reqwest::RequestBuilde
     if key.trim().is_empty() { request } else { request.bearer_auth(key.trim()) }
 }
 
+/// `_list_lm_studio_models`: the model ids LM Studio lists (loaded or not) and its raw answer. Read only.
+pub async fn list_lm_studio_models(cfg: &LlmConfig) -> Result<(Vec<String>, Value), LlmError> {
+    let base = cfg.lm_studio_base_url.trim().trim_end_matches('/');
+    if base.is_empty() {
+        return Err(LlmError::Unavailable("LM Studio base URL is empty.".into()));
+    }
+    let response = bearer(http(cfg.lm_studio_timeout.clamp(5, 300)).get(format!("{base}/models")).header("Accept", "application/json"), &cfg.lm_studio_api_key)
+        .send()
+        .await
+        .map_err(|_| LlmError::Request(format!("Could not connect to LM Studio at {base}. Make sure LM Studio's local server is running.")))?;
+    let status = response.status();
+    let text = response.text().await.unwrap_or_default();
+    if !status.is_success() {
+        return Err(LlmError::Request(format!("LM Studio models request failed ({}): {}", status.as_u16(), if text.trim().is_empty() { status.canonical_reason().unwrap_or("") } else { &text })));
+    }
+    let data: Value = serde_json::from_str(&text).unwrap_or(Value::Null);
+    let models = data.get("data").and_then(Value::as_array).map(|items| items.iter().filter_map(|i| i.get("id").and_then(Value::as_str)).map(|id| id.trim().to_string()).filter(|id| !id.is_empty()).collect()).unwrap_or_default();
+    Ok((models, data))
+}
+
 /// Chat capable models LM Studio has loaded right now. Read-only: it cannot load or unload anything.
 pub async fn loaded_lm_studio_models(cfg: &LlmConfig) -> Result<Vec<LoadedModel>, LlmError> {
     let root = api_root(cfg);
@@ -380,12 +400,24 @@ async fn google_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, Ll
     Ok(ChatReply { text: text.trim().to_string(), model: cfg.api_model.clone(), runner: "google".into() })
 }
 
+/// One of the hosted APIs of the LLM Runner. Pictures are limited to four, like the pack.
+async fn llm_api_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmError> {
+    let provider = crate::providers::canonical(if cfg.api_provider.trim().is_empty() { "openai" } else { &cfg.api_provider });
+    if cfg.api_key.trim().is_empty() {
+        return Err(LlmError::Unavailable("LLM API key is missing. Open LLM Runner and paste your API key.".into()));
+    }
+    let images: Vec<String> = req.images.iter().take(4).cloned().collect();
+    let reply = crate::providers::generate(&provider, &cfg.api_model, &cfg.api_custom_model, &cfg.api_key, &req.instruction, &images).await.map_err(LlmError::Request)?;
+    Ok(ChatReply { text: reply.text, model: reply.model, runner: "llm_api".into() })
+}
+
 /// Ask the configured LLM one question and return its raw reply.
 pub async fn chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmError> {
     match cfg.runner.as_str() {
         "lm_studio" => lm_studio_chat(cfg, req).await,
-        "own_server" => openai_compatible_chat(&cfg.own_server_url, &cfg.own_server_model, &cfg.own_server_api_key, cfg.own_server_timeout, cfg.own_server_output_limit, req, "own server").await,
+        "own_server" => crate::own_server::chat(cfg, req).await,
         "comfyui_gemma" => crate::comfy_gemma::chat(cfg, req).await,
+        "llm_api" => llm_api_chat(cfg, req).await,
         "openai" => openai_compatible_chat("https://api.openai.com/v1", &cfg.api_model, &cfg.api_key, cfg.own_server_timeout, req.max_new_tokens, req, "OpenAI").await,
         "anthropic" => anthropic_chat(cfg, req).await,
         "google" => google_chat(cfg, req).await,

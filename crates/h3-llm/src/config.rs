@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 pub const LM_STUDIO_DEFAULT_BASE_URL: &str = "http://127.0.0.1:1234/v1";
 
-/// `runner` is `lm_studio`, `own_server` (any OpenAI compatible server), `openai`, `anthropic` or `google`.
+/// `runner` is `lm_studio`, `own_server` (any OpenAI compatible server), `comfyui_gemma`, `llm_api` (the provider is `api_provider`), `openai`, `anthropic` or `google`.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
 pub struct LlmConfig {
@@ -26,6 +26,10 @@ pub struct LlmConfig {
     pub own_server_output_limit: u32,
     pub api_model: String,
     pub api_key: String,
+    /// The hosted API of `llm_api`: `openai`, `anthropic`, `google`, `grok`, `deepseek`, `openrouter` or `apifreellm`.
+    pub api_provider: String,
+    /// A model name typed by hand. It wins over `api_model`.
+    pub api_custom_model: String,
     /// The Gemma GGUF model of `comfyui_gemma`. Empty uses the first one ComfyUI lists.
     pub comfy_gemma_model: String,
     /// The mmproj file that lets Gemma look at pictures. Empty uses the first one ComfyUI lists.
@@ -57,6 +61,8 @@ impl Default for LlmConfig {
             own_server_output_limit: 8192,
             api_model: String::new(),
             api_key: String::new(),
+            api_provider: "openai".into(),
+            api_custom_model: String::new(),
             comfy_gemma_model: String::new(),
             comfy_gemma_mmproj: String::new(),
             comfy_gemma_n_ctx: 32768,

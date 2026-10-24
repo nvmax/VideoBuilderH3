@@ -60,7 +60,7 @@ async fn start(models: Vec<Value>) -> (String, Arc<Mock>) {
             m.completions.lock().unwrap().push(body);
             Json(json!({"choices": [{"message": {"content": "{\"ok\": true}"}}]}))
         }))
-        .route("/own/chat/completions", post(|State(m): State<Arc<Mock>>, Json(body): Json<Value>| async move {
+        .route("/own/v1/chat/completions", post(|State(m): State<Arc<Mock>>, Json(body): Json<Value>| async move {
             m.completions.lock().unwrap().push(body);
             Json(json!({"choices": [{"message": {"content": [{"type": "text", "text": "from own server"}]}}]}))
         }))

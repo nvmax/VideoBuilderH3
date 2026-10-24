@@ -7,7 +7,11 @@ pub mod comfy_gemma;
 pub mod client;
 pub mod config;
 pub mod describe;
+pub mod instructions;
 pub mod locations;
+pub mod own_server;
+pub mod providers;
+pub mod runner;
 
-pub use client::{chat, describe_active, loaded_lm_studio_models, ActiveLlm, ChatReply, ChatRequest, LlmError, LoadedModel};
+pub use client::{chat, describe_active, list_lm_studio_models, loaded_lm_studio_models, ActiveLlm, ChatReply, ChatRequest, LlmError, LoadedModel};
 pub use config::LlmConfig;

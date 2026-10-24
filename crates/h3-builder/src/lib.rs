@@ -11,6 +11,7 @@ pub mod drafts;
 pub mod env;
 pub mod error_log;
 pub mod files;
+pub mod instructions;
 pub mod media;
 pub mod payload;
 pub mod post_process;
