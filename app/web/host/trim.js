@@ -3,7 +3,7 @@
 
 // Buttons by their label with the spaces taken out.
 const HIDE_BUTTON_LABELS = new Set([
-  "WizardLegacy", "WizardBeta", "UpdatetoLatest", "BuildFullVideo", "BuildFullFLFVideo", "What'sNew",
+  "WizardLegacy", "WizardBeta", "UpdatetoLatest", "BuildFullVideo", "BuildFullFLFVideo", "What'sNew", "LTX",
   "PromptCreator(Legacy)", "SendToPromptCreator", "ImportDataFromPromptCreator", "ConvertLTXVideoPromptstoMiniMaxH3",
 ]);
 // Labels that start the same way. A button in a Tools pane row hides with its row.

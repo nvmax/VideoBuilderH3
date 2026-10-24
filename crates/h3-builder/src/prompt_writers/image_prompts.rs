@@ -35,7 +35,7 @@ fn sub_once(pattern: &str, text: &str, with: &str) -> String {
 }
 
 /// `_read_text_file`: the trimmed text of a file the request names, "" when it names none.
-fn read_text_file(payload: &Obj, key: &str, label: &str) -> Result<String, String> {
+pub(super) fn read_text_file(payload: &Obj, key: &str, label: &str) -> Result<String, String> {
     let raw = text_or_empty(payload.get(key));
     if raw.trim().is_empty() {
         return Ok(String::new());

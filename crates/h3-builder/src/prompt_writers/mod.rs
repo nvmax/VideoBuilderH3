@@ -17,11 +17,12 @@ pub mod motion_notes;
 pub mod references;
 pub mod repair;
 pub mod speech;
+pub mod video_prompt;
 
 use std::future::Future;
 use std::pin::Pin;
 
-use h3_core::pyval::{text_or_empty, to_float, to_int, truthy, Obj};
+use h3_core::pyval::{py_type_name, text_or_empty, to_float, to_int, truthy, Obj};
 use h3_llm::runner::{run_text, run_vision, RunInfo};
 use h3_llm::LlmConfig;
 use serde_json::{json, Value};
@@ -136,7 +137,7 @@ pub fn number(payload: &Obj, key: &str, default: f64) -> Result<f64, String> {
         None => Ok(default),
         Some(value) => to_float(value).ok_or_else(|| match value {
             Value::String(s) => format!("could not convert string to float: '{s}'"),
-            _ => "float() argument must be a string or a real number".to_string(),
+            other => format!("float() argument must be a string or a real number, not '{}'", py_type_name(other)),
         }),
     }
 }
@@ -145,10 +146,11 @@ pub fn number(payload: &Obj, key: &str, default: f64) -> Result<f64, String> {
 pub fn whole(payload: &Obj, key: &str, default: i64) -> Result<i64, String> {
     match payload.get(key).filter(|v| truthy(v)) {
         None => Ok(default),
-        Some(value) => to_int(value).ok_or_else(|| format!("invalid literal for int() with base 10: {}", match value {
-            Value::String(s) => format!("'{s}'"),
-            other => other.to_string(),
-        })),
+        Some(value) => to_int(value).ok_or_else(|| match value {
+            Value::String(s) => format!("invalid literal for int() with base 10: '{s}'"),
+            Value::Array(_) | Value::Object(_) => format!("int() argument must be a string, a bytes-like object or a real number, not '{}'", py_type_name(value)),
+            other => format!("invalid literal for int() with base 10: {other}"),
+        }),
     }
 }
 
