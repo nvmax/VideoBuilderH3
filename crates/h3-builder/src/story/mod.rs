@@ -6,5 +6,6 @@ pub mod context;
 pub mod places;
 pub mod plan;
 pub mod revise;
+pub mod scene_prompts;
 #[cfg(test)]
 mod golden;

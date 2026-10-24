@@ -8,6 +8,7 @@ use super::book::{convert_story_arc, draft_story_book, remove_story_people, rewr
 use super::places::build_story_locations;
 use super::plan::{build_story_acts, build_story_scene_plan, rewrite_act_summary};
 use super::revise::revise_story_from_scene;
+use super::scene_prompts::build_storyboard_image_prompt;
 use crate::golden_support::{check_cases, Answer};
 use crate::prompt_writers::testing::Canned;
 
@@ -26,6 +27,7 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
             "places" => build_story_locations(llm, payload).await,
             "revise" => revise_story_from_scene(llm, payload).await,
             "beat" => build_scene_beat(llm, payload).await,
+            "image" => build_storyboard_image_prompt(llm, payload).await,
             other => panic!("unknown step {other}"),
         }
     })
@@ -49,4 +51,9 @@ async fn the_places_and_the_scene_revision_match_the_pack() {
 #[tokio::test]
 async fn the_scene_story_beat_matches_the_pack() {
     check_cases("story/beat_steps.json", 25, "", dispatch).await;
+}
+
+#[tokio::test]
+async fn the_storyboard_image_prompt_matches_the_pack() {
+    check_cases("story/image_prompt.json", 15, "", dispatch).await;
 }

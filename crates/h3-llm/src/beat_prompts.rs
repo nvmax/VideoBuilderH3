@@ -112,3 +112,29 @@ pub fn extra_mapping_repair_instruction(extra_subjects_json: &str, original_text
         "Rewrite this music-video scene beat so it includes every mapped extra by exact name and gives each the assigned action/blocking role.\n\nHard rules:\n- Preserve the original narrative purpose, mapped location, main subject action, and emotional progression.\n- Include every exact extra name from the mapping.\n- Apply each interaction role exactly. Group only extras sharing background or background_dancing.\n- Extras do not sing, speak, or receive speaker IDs.\n- Use identity details only when required to distinguish characters; do not copy wardrobe biographies.\n- Output one concise paragraph only, under 100 words, with no label or bullets.\n\nMapped extras:\n{extra_subjects_json}\n\nOriginal scene beat:\n{original_text}"
     )
 }
+
+/// `_storyboard_image_world_style_contract`: appended to the text-to-image instructions of every scene. It says which Image World Style governs
+/// the visual world of the still image.
+pub fn image_world_style_contract(image_world_style: &str, custom_direction: &str) -> String {
+    let presets = crate::prompts::constant("storyboard", "_STORYBOARD_IMAGE_WORLD_STYLE_PRESETS");
+    let pick = |key: &str| presets.get(key).and_then(serde_json::Value::as_str);
+    let style = pick(image_world_style).or_else(|| pick("natural")).unwrap_or("");
+    let custom = if custom_direction.is_empty() { String::new() } else { format!("- User's custom visual direction: {custom_direction}\n") };
+    format!(
+        "\n\nGLOBAL IMAGE WORLD STYLE CONTRACT:\n- {style}\n{custom}- Apply this contract to the complete frame, not only the main subject. Preserve required scene content and endpoint facts while expressing them through this style.\n- Do not mention this contract, preset names, or workflow settings in the final prompt."
+    )
+}
+
+/// `_storyboard_flf_endpoint_instruction`: appended when a First/Last Frame endpoint still image is written instead of a normal scene image.
+pub fn flf_endpoint_instruction(flf_image_target: &str, target_state: &str, transformation: &str, carry_forward: &str) -> String {
+    let context = if flf_image_target == "start" {
+        "- This is strictly the untouched opening condition before the scene action begins.\n- Do not include, foreshadow, partially reveal, or imply the later transformation, destination anatomy, destination objects, or completed action.\n- Ignore transformation, end-state, and carry-forward fields when writing this START image.\n- Lyrics and the general story beat may guide mood only; do not include any lyric/story action that is not already explicitly visible in the required opening state.\n".to_string()
+    } else {
+        format!("- Planned transformation context: {}\n- Carry-forward continuity: {}\n", or_none(transformation, "[none]"), or_none(carry_forward, "[none]"))
+    };
+    format!(
+        "\n\nFIRST / LAST FRAME STILL-IMAGE RULES:\n- You are writing the {} endpoint still image, not a video prompt.\n- Required visible endpoint state: {}\n{context}- Make the required endpoint state visually concrete in one frozen image.\n- Preserve mapped subject identity, wardrobe, environment, lighting, and established anatomy unless the required endpoint explicitly changes one of them.\n- Do not describe motion over time, a transition, morphing process, first/last frames, or workflow instructions in the final image prompt.\n- Output only the image prompt.",
+        flf_image_target.to_uppercase(),
+        or_none(target_state, "[use the scene card literally]"),
+    )
+}

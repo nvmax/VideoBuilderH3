@@ -10,7 +10,7 @@ use axum::response::Response;
 use axum::routing::post as axum_post;
 use axum::Router;
 use h3_builder::prompt_writers::RunnerLlm;
-use h3_builder::story::{beat, book, places, plan, revise};
+use h3_builder::story::{beat, book, places, plan, revise, scene_prompts};
 use h3_core::pyval::Obj;
 use serde_json::Value;
 
@@ -64,6 +64,19 @@ async fn scene_story_beat(State(state): State<Arc<AppState>>, body: Bytes) -> Re
     finish(beat::build_scene_beat(&llm, &payload).await)
 }
 
+async fn gemma_image_prompt(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match body_object(&body) {
+        Ok(payload) => payload,
+        Err(fail) => return into_response(Err(fail)),
+    };
+    let base = base_config(&state);
+    let llm = RunnerLlm { payload: &payload, base: &base };
+    finish(scene_prompts::build_storyboard_image_prompt(&llm, &payload).await)
+}
+
 pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
-    router.route("/vrgdg/storyboard/story_mode/{action}", axum_post(story_mode)).route("/vrgdg/storyboard/scene_story_beat", axum_post(scene_story_beat))
+    router
+        .route("/vrgdg/storyboard/story_mode/{action}", axum_post(story_mode))
+        .route("/vrgdg/storyboard/scene_story_beat", axum_post(scene_story_beat))
+        .route("/vrgdg/storyboard/gemma_image_prompt", axum_post(gemma_image_prompt))
 }
