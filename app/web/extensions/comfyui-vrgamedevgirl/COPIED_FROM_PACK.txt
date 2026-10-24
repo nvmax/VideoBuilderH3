@@ -10,3 +10,4 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/dialogs.mjs: The Download Models dialog has no LTX tab and opens on MiniMax H3.
   music_video_builder/dialogs.mjs: The Download Models dialog opens on MiniMax H3.
   music_video_builder/project_setup.mjs: Builder Settings has no Project Video Engine or LTX Version sections.
+  music_video_builder/toolbar.mjs: The Menu has no Buy me a coffee button. It also loaded a script from another site that the app's page does not allow.

@@ -669,7 +669,6 @@ export function buildTopbar({
     button.style.textAlign = "left";
     button.style.justifyContent = "flex-start";
   };
-  menuDropdown.append(buyMeACoffeeButton);
   for (const button of [newProjectButton, loadSessionButton, loadLastProjectButton, saveProjectAsButton, branchProjectButton, exportProjectButton, importProjectButton, settingsButton, reviewGuideButton, whatsNewMenuButton, gemmaT2IAllButton, gemmaVideoAllButton, zImageAllButton, zEnhanceAllButton, renderAllButton, renderLogButton, stitchPreviewButton, slideshowPreviewButton, fullBuildButton, fullFLFBuildButton]) {
     styleMenuItem(button);
     menuDropdown.append(button);

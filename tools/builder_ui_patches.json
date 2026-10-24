@@ -54,5 +54,12 @@
     "find": "projectStoragePanel, projectVideoEnginePanel, ltxVersionPanel, renderWaitingPanel,",
     "replace": "projectStoragePanel, renderWaitingPanel,",
     "expect": 1
+  },
+  {
+    "why": "The Menu has no Buy me a coffee button. It also loaded a script from another site that the app's page does not allow.",
+    "file": "music_video_builder/toolbar.mjs",
+    "find": "  menuDropdown.append(buyMeACoffeeButton);\n",
+    "replace": "",
+    "expect": 1
   }
 ]

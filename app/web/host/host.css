@@ -7,6 +7,11 @@
   font-display: swap;
 }
 
+/* ComfyUI draws every form control, scrollbar and unstyled button in its dark scheme. */
+:root {
+  color-scheme: dark;
+}
+
 html,
 body {
   margin: 0;
