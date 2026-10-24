@@ -8,7 +8,7 @@
   serves them from, so their relative imports work as they do there. Run it after the pack's front end changes.
 
   Copied: web\music_video_builder, web\storyboard_builder and the top level web\VRGDG_*.js files the Builder imports or
-  needs. Not copied: node widgets for ComfyUI graphs (LLM_Multi, Qwen, LoRA switch and the like) and LTX tools.
+  needs. Not copied: node widgets for ComfyUI graphs (LLM_Multi, Qwen, LoRA switch and the like) and LTX tools. Two that the Builder imports for buttons this app hides (Face Fix, Wizard Beta) are copied, because a missing import stops the whole Builder.
 
   A short list of exact replacements in tools\builder_ui_patches.json is applied to the copies afterwards (the engine a new
   project starts with, for one). Run from the rustapp folder:  powershell -File tools\sync_builder_ui.ps1 [-Pack <pack folder>]
@@ -23,7 +23,8 @@ if (-not (Test-Path (Join-Path $web 'music_video_builder'))) { throw "No Builder
 $top = @(
     'VRGDG_BrowserImageBridge.js', 'VRGDG_OverlayTrack.js', 'VRGDG_UIThemes.js', 'VRGDG_ResourceMonitor.js',
     'VRGDG_MusicVideoBuilderLUTs.js', 'VRGDG_PostProcessComparePreview.js', 'VRGDG_RenderETA.js',
-    'VRGDG_StoryboardBuilderUI.js', 'VRGDG_RefModImagePicker.js', 'VRGDG_ShowText.js'
+    'VRGDG_StoryboardBuilderUI.js', 'VRGDG_RefModImagePicker.js', 'VRGDG_ShowText.js',
+    'VRGDG_FaceFixUI.js', 'VRGDG_WizardBeta.js'
 )
 
 if (Test-Path $target) { Remove-Item -Recurse -Force $target }

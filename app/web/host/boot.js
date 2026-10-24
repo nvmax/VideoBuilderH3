@@ -5,15 +5,6 @@
 const EXT = "/extensions/comfyui-vrgamedevgirl";
 const STORE = "h3studio.node.";
 
-async function apiRoot() {
-  const tauri = window.__TAURI_INTERNALS__;
-  if (tauri?.invoke) {
-    const base = await tauri.invoke("api_base");
-    return String(base).replace(/\/api\/v1\/?$/, "");
-  }
-  return null; // api.js falls back to ?api= or the default address
-}
-
 function standInNode() {
   const widget = (name) => ({
     name,
@@ -55,8 +46,6 @@ function showFailure(error) {
 }
 
 async function start() {
-  const root = await apiRoot();
-  if (root) window.__H3_API_ROOT__ = root;
   // The pack's top level scripts the Builder talks to (themes, the Storyboard opener, comparison preview, LUT picker).
   for (const file of ["VRGDG_UIThemes.js", "VRGDG_StoryboardBuilderUI.js", "VRGDG_OverlayTrack.js", "VRGDG_PostProcessComparePreview.js", "VRGDG_MusicVideoBuilderLUTs.js"]) {
     try {

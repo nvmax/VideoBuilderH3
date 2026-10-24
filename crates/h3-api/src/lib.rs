@@ -3,6 +3,7 @@
 
 pub mod app;
 pub mod edit_routes;
+pub mod embedded;
 pub mod error;
 pub mod image_jobs;
 pub mod image_routes;
@@ -70,10 +71,21 @@ pub fn build_state(mut cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, 
     Ok(Arc::new(AppState { llm, config_path, cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(64).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()) }))
 }
 
+/// Take the API's address. The desktop app does this before it opens its window, so the window finds the server there.
+pub async fn bind(state: &AppState) -> std::io::Result<tokio::net::TcpListener> {
+    tokio::net::TcpListener::bind(&state.cfg.api_bind).await
+}
+
+/// Serve the API on an address taken with [`bind`] until the process stops.
+pub async fn serve_on(listener: tokio::net::TcpListener, state: Arc<AppState>) -> std::io::Result<()> {
+    if let Ok(address) = listener.local_addr() {
+        eprintln!("[VRGDG-RS API] Listening on http://{address}/api/v1");
+    }
+    axum::serve(listener, router(state)).await
+}
+
 /// Serve the API until the process stops.
 pub async fn serve(state: Arc<AppState>) -> std::io::Result<()> {
-    let bind = state.cfg.api_bind.clone();
-    let listener = tokio::net::TcpListener::bind(&bind).await?;
-    eprintln!("[VRGDG-RS API] Listening on http://{bind}/api/v1");
-    axum::serve(listener, router(state)).await
+    let listener = bind(&state).await?;
+    serve_on(listener, state).await
 }

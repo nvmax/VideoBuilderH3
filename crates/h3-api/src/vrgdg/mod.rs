@@ -214,7 +214,13 @@ pub async fn fallback(State(state): State<Arc<AppState>>, request: Request) -> R
         eprintln!("[VRGDG-RS Builder] Not built yet: {} {path}", request.method());
         return failure(StatusCode::NOT_IMPLEMENTED, format!("{path} is not available in H3 Studio yet."));
     }
-    if let Some(dir) = state.web_dir.clone().filter(|_| matches!(request.method(), &axum::http::Method::GET | &axum::http::Method::HEAD)) {
+    let reading = matches!(request.method(), &axum::http::Method::GET | &axum::http::Method::HEAD);
+    if reading && state.web_dir.is_none() {
+        if let Some(reply) = crate::embedded::file(&path) {
+            return reply;
+        }
+    }
+    if let Some(dir) = state.web_dir.clone().filter(|_| reading) {
         use tower::ServiceExt;
         let mut probe = Request::builder().method(request.method().clone()).uri(request.uri().clone()).body(Body::empty()).unwrap_or_default();
         *probe.headers_mut() = request.headers().clone();

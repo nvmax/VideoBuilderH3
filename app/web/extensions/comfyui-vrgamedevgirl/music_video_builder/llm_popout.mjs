@@ -154,7 +154,7 @@ export function createLlmPopout({
   }
 
   header.addEventListener("pointerdown", (event) => {
-    if (event.target === closeButton || closeButton.contains(event.target)) return;
+    if (external || event.target === closeButton || closeButton.contains(event.target)) return;
     event.preventDefault();
     header.setPointerCapture?.(event.pointerId);
     const startX = event.clientX;
@@ -178,7 +178,7 @@ export function createLlmPopout({
   // The corner resize handle is the browser's own. Save the new size when it settles.
   let resizeTimer = null;
   const resizeObserver = new ResizeObserver(() => {
-    if (win.style.display === "none") return;
+    if (win.style.display === "none" || external) return;
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
       rememberPlacement();
@@ -190,6 +190,62 @@ export function createLlmPopout({
   // ---- mirroring: the real fields are the source of truth. Panel code sets their values directly, which fires no
   // events, so the window compares on a short timer while it is open.
   let timer = null;
+  // The window of its own, when there is one. The panel is moved into it.
+  let external = null;
+  let externalWatch = null;
+  let panelStyle = "";
+
+  function openExternal() {
+    const width = Math.max(MIN_WIDTH, state.llmPopoutWidth || 460);
+    const height = Math.max(MIN_HEIGHT, state.llmPopoutHeight || 460);
+    let popup = null;
+    try {
+      popup = window.open("", "vrgdg_llm_popout", `popup=yes,width=${width},height=${height},resizable=yes,scrollbars=no,location=no,toolbar=no,menubar=no,status=no`);
+    } catch {
+      popup = null;
+    }
+    if (!popup) return;
+    popup.document.title = "LLM Prompting";
+    popup.document.body.style.cssText = "margin:0;background:#202024;";
+    for (const node of document.querySelectorAll('style, link[rel="stylesheet"]')) {
+      try {
+        const copy = node.cloneNode(true);
+        if (node.href) copy.href = node.href;
+        popup.document.head.append(copy);
+      } catch {
+        // A style that cannot be copied only affects looks.
+      }
+    }
+    panelStyle = win.style.cssText;
+    win.style.cssText += ";position:static;width:100%;height:100vh;min-width:0;min-height:0;border:0;border-radius:0;box-shadow:none;resize:none;";
+    header.style.cursor = "default";
+    popup.document.body.append(win);
+    popup.addEventListener("pagehide", externalClosed);
+    external = popup;
+    externalWatch = setInterval(() => {
+      if (external?.closed) externalClosed();
+    }, 500);
+  }
+
+  function closeExternal() {
+    const popup = external;
+    external = null;
+    clearInterval(externalWatch);
+    if (popup && !popup.closed) {
+      popup.removeEventListener("pagehide", externalClosed);
+      if (popup.innerWidth > 0) state.llmPopoutWidth = Math.round(popup.innerWidth);
+      if (popup.innerHeight > 0) state.llmPopoutHeight = Math.round(popup.innerHeight);
+    }
+    win.style.cssText = panelStyle;
+    header.style.cursor = "move";
+    overlay.append(win);
+    if (popup && !popup.closed) popup.close();
+  }
+
+  // The window was closed with its own close button: the pop-out is off, like after the panel's x.
+  function externalClosed() {
+    if (external) setOpen(false);
+  }
 
   function mirrorFromPanel() {
     if (!win.isConnected) {
@@ -245,11 +301,13 @@ export function createLlmPopout({
     const open = Boolean(state.llmPopoutOpen);
     const miniMax = isMiniMaxProject();
     toggle.input.checked = open;
+    if (open && !external) openExternal();
+    if (!open && external) closeExternal();
     win.style.display = open ? "flex" : "none";
     notMiniMaxNote.style.display = open && !miniMax ? "block" : "none";
     content.style.display = miniMax ? "flex" : "none";
     if (open) {
-      place();
+      if (!external) place();
       startTimer();
     } else {
       stopTimer();
@@ -270,7 +328,7 @@ export function createLlmPopout({
       window.removeEventListener("resize", onWindowResize);
       return;
     }
-    if (win.style.display !== "none") place();
+    if (win.style.display !== "none" && !external) place();
   };
   window.addEventListener("resize", onWindowResize);
 

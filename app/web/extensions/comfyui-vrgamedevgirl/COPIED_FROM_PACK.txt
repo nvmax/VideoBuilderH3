@@ -11,3 +11,9 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/dialogs.mjs: The Download Models dialog opens on MiniMax H3.
   music_video_builder/project_setup.mjs: Builder Settings has no Project Video Engine or LTX Version sections.
   music_video_builder/toolbar.mjs: The Menu has no Buy me a coffee button. It also loaded a script from another site that the app's page does not allow.
+  music_video_builder/llm_popout.mjs: The LLM Prompting pop-out is a window of its own that can go to another screen. The panel is moved into it, so every field, button and timer keeps working. Where the app cannot open a window, the floating panel in the page stays.
+  music_video_builder/llm_popout.mjs: Opening the pop-out opens its window, closing it closes the window.
+  music_video_builder/llm_popout.mjs: The panel is only placed in the page when it is not in a window of its own.
+  music_video_builder/llm_popout.mjs: The title bar of the panel moves it only inside the page.
+  music_video_builder/llm_popout.mjs: The size of the page panel is only remembered while it is in the page.
+  music_video_builder/llm_popout.mjs: Resizing the main window does not move a panel that is in a window of its own.

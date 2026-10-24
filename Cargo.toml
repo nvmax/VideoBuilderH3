@@ -41,6 +41,8 @@ font8x8 = "0.3"
 zip = { version = "2", default-features = false, features = ["deflate"] }
 tokio = { version = "1", features = ["full"] }
 hound = "3.5"
+include_dir = "0.7"
+mime_guess = "2"
 sysinfo = { version = "0.33", default-features = false, features = ["system"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }

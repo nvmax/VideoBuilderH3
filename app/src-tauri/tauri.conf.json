@@ -4,16 +4,10 @@
   "version": "0.1.0",
   "identifier": "com.vrgdg.h3studio",
   "build": {
-    "frontendDist": "../web"
+    "frontendDist": "../shell"
   },
   "app": {
-    "windows": [
-      {
-        "title": "VRGDG H3 Studio",
-        "width": 1400,
-        "height": 900
-      }
-    ],
+    "windows": [],
     "security": {
       "csp": null
     }

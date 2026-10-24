@@ -61,5 +61,47 @@
     "find": "  menuDropdown.append(buyMeACoffeeButton);\n",
     "replace": "",
     "expect": 1
+  },
+  {
+    "why": "The LLM Prompting pop-out is a window of its own that can go to another screen. The panel is moved into it, so every field, button and timer keeps working. Where the app cannot open a window, the floating panel in the page stays.",
+    "file": "music_video_builder/llm_popout.mjs",
+    "find": "  let timer = null;\n",
+    "replace": "  let timer = null;\n  // The window of its own, when there is one. The panel is moved into it.\n  let external = null;\n  let externalWatch = null;\n  let panelStyle = \"\";\n\n  function openExternal() {\n    const width = Math.max(MIN_WIDTH, state.llmPopoutWidth || 460);\n    const height = Math.max(MIN_HEIGHT, state.llmPopoutHeight || 460);\n    let popup = null;\n    try {\n      popup = window.open(\"\", \"vrgdg_llm_popout\", `popup=yes,width=${width},height=${height},resizable=yes,scrollbars=no,location=no,toolbar=no,menubar=no,status=no`);\n    } catch {\n      popup = null;\n    }\n    if (!popup) return;\n    popup.document.title = \"LLM Prompting\";\n    popup.document.body.style.cssText = \"margin:0;background:#202024;\";\n    for (const node of document.querySelectorAll('style, link[rel=\"stylesheet\"]')) {\n      try {\n        const copy = node.cloneNode(true);\n        if (node.href) copy.href = node.href;\n        popup.document.head.append(copy);\n      } catch {\n        // A style that cannot be copied only affects looks.\n      }\n    }\n    panelStyle = win.style.cssText;\n    win.style.cssText += \";position:static;width:100%;height:100vh;min-width:0;min-height:0;border:0;border-radius:0;box-shadow:none;resize:none;\";\n    header.style.cursor = \"default\";\n    popup.document.body.append(win);\n    popup.addEventListener(\"pagehide\", externalClosed);\n    external = popup;\n    externalWatch = setInterval(() => {\n      if (external?.closed) externalClosed();\n    }, 500);\n  }\n\n  function closeExternal() {\n    const popup = external;\n    external = null;\n    clearInterval(externalWatch);\n    if (popup && !popup.closed) {\n      popup.removeEventListener(\"pagehide\", externalClosed);\n      if (popup.innerWidth > 0) state.llmPopoutWidth = Math.round(popup.innerWidth);\n      if (popup.innerHeight > 0) state.llmPopoutHeight = Math.round(popup.innerHeight);\n    }\n    win.style.cssText = panelStyle;\n    header.style.cursor = \"move\";\n    overlay.append(win);\n    if (popup && !popup.closed) popup.close();\n  }\n\n  // The window was closed with its own close button: the pop-out is off, like after the panel's x.\n  function externalClosed() {\n    if (external) setOpen(false);\n  }\n",
+    "expect": 1
+  },
+  {
+    "why": "Opening the pop-out opens its window, closing it closes the window.",
+    "file": "music_video_builder/llm_popout.mjs",
+    "find": "    toggle.input.checked = open;\n    win.style.display = open ? \"flex\" : \"none\";",
+    "replace": "    toggle.input.checked = open;\n    if (open && !external) openExternal();\n    if (!open && external) closeExternal();\n    win.style.display = open ? \"flex\" : \"none\";",
+    "expect": 1
+  },
+  {
+    "why": "The panel is only placed in the page when it is not in a window of its own.",
+    "file": "music_video_builder/llm_popout.mjs",
+    "find": "    if (open) {\n      place();\n      startTimer();",
+    "replace": "    if (open) {\n      if (!external) place();\n      startTimer();",
+    "expect": 1
+  },
+  {
+    "why": "The title bar of the panel moves it only inside the page.",
+    "file": "music_video_builder/llm_popout.mjs",
+    "find": "    if (event.target === closeButton || closeButton.contains(event.target)) return;\n    event.preventDefault();",
+    "replace": "    if (external || event.target === closeButton || closeButton.contains(event.target)) return;\n    event.preventDefault();",
+    "expect": 1
+  },
+  {
+    "why": "The size of the page panel is only remembered while it is in the page.",
+    "file": "music_video_builder/llm_popout.mjs",
+    "find": "    if (win.style.display === \"none\") return;\n    clearTimeout(resizeTimer);",
+    "replace": "    if (win.style.display === \"none\" || external) return;\n    clearTimeout(resizeTimer);",
+    "expect": 1
+  },
+  {
+    "why": "Resizing the main window does not move a panel that is in a window of its own.",
+    "file": "music_video_builder/llm_popout.mjs",
+    "find": "    if (win.style.display !== \"none\") place();\n  };",
+    "replace": "    if (win.style.display !== \"none\" && !external) place();\n  };",
+    "expect": 1
   }
 ]

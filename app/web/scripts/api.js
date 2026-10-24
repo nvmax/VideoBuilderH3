@@ -7,7 +7,8 @@ const fromQuery = new URLSearchParams(location.search).get("api");
 function resolveRoot() {
   if (window.__H3_API_ROOT__) return window.__H3_API_ROOT__;
   if (fromQuery) return fromQuery.replace(/\/api\/v1\/?$/, "").replace(/\/$/, "");
-  return "http://127.0.0.1:8190";
+  // The screens are served by the API, so the API is where the page came from.
+  return location.protocol.startsWith("http") ? location.origin : "http://127.0.0.1:8190";
 }
 
 class StudioApi extends EventTarget {
