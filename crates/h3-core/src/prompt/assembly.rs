@@ -383,7 +383,7 @@ pub fn build_minimax_prompt_context(segment: &Obj, session: &Obj, mode: Option<&
             .collect();
         context.insert("lyric_cue_map".into(), Value::Array(cues));
     }
-    context.insert("lyric_text".into(), json!(py_str(segment.get("lyric_text").filter(|v| truthy(v)))));
+    context.insert("lyric_text".into(), json!(segment.get("lyric_text").filter(|v| truthy(v)).map(|v| py_str(Some(v))).unwrap_or_default()));
     for (k, v) in emotion_expression_input(segment, session) {
         context.insert(k, v);
     }

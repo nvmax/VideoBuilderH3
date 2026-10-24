@@ -258,7 +258,7 @@ fn tools(state: &crate::app::AppState) -> Result<Tools, ApiError> {
 }
 
 /// Copy or decode the song into `project_audio/` and analyse it. An `.m4a` is converted to WAV, as the pack does.
-fn save_project_audio(tools: &Tools, folder: &std::path::Path, source: Option<PathBuf>, data: Option<(Vec<u8>, String)>, name: &str) -> Result<AudioInfo, ApiError> {
+pub(crate) fn save_project_audio(tools: &Tools, folder: &std::path::Path, source: Option<PathBuf>, data: Option<(Vec<u8>, String)>, name: &str) -> Result<AudioInfo, ApiError> {
     let dir = folder.join("project_audio");
     std::fs::create_dir_all(&dir).map_err(|e| ApiError::internal(e.to_string()))?;
     let ext = std::path::Path::new(name).extension().map(|e| format!(".{}", e.to_string_lossy().to_lowercase())).filter(|e| matches!(e.as_str(), ".wav" | ".mp3" | ".flac" | ".m4a" | ".ogg")).unwrap_or_else(|| ".wav".into());

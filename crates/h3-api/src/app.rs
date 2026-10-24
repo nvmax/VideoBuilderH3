@@ -56,6 +56,7 @@ pub fn router(state: Arc<AppState>) -> Router {
     crate::lyric_jobs::register(&state);
     crate::video_routes::register(&state);
     crate::post_routes::register(&state);
+    crate::pipeline_jobs::register(&state);
     let v1 = Router::new()
         .route("/health", get(health))
         .route("/meta", get(meta))
@@ -118,6 +119,9 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/video/minimax-stage-recover", post(crate::video_routes::stage_recover_route))
         .route("/projects/{pid}/minimax/cleanup", post(crate::video_routes::cleanup_route))
         .route("/projects/{pid}/video/scan", post(crate::video_routes::scan_route))
+        .route("/projects/{pid}/pipelines/plan", get(crate::pipeline_jobs::plan_route))
+        .route("/projects/{pid}/pipelines/build-full-video", post(crate::pipeline_jobs::full_video_route))
+        .route("/pipelines/from-song", post(crate::pipeline_jobs::from_song_route))
         .route("/projects/{pid}/slideshow", post(crate::video_routes::slideshow_route))
         .route("/projects/{pid}/scenes/{sid}/image/from-video-frame", post(crate::video_routes::from_video_frame_route))
         .route("/projects/{pid}/minimax/index", get(crate::video_routes::index_route))

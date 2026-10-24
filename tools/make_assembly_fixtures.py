@@ -31,6 +31,7 @@ def base_session(**extra):
             {"id": "s2", "start": 4.0, "end": 9.0, "label": "Scene 2", "lyric_text": "[instrumental]", "notes": "slow drift", "first_last_frame_end_image_path": ROOT + "\\images\\end.png",
              "approved_image_path": ROOT + "\\images\\image_0002.png"},
             {"id": "s3", "start": 9.0, "end": 15.5, "label": "Scene 3", "lyric_text": "we run through the night\nand never look back", "minimax_h3_video_style": "noir"},
+            {"id": "s4", "start": 15.5, "end": 17.0, "label": "Scene 4"},
         ],
         "flux_reference_builder": {
             "subjects": [

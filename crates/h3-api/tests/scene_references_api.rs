@@ -288,3 +288,40 @@ async fn a_slideshow_preview_is_rendered_from_stills_and_the_song() {
     assert!((seconds - 3.5).abs() < 0.2, "{seconds}");
 }
 
+#[tokio::test]
+async fn song_to_video_prepares_the_project_before_it_needs_comfyui() {
+    let s = start().await;
+    let (code, bad) = s.call(Method::POST, "/pipelines/from-song", Some(json!({}))).await;
+    assert_eq!((code, bad["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
+
+    let song = s.dir.path().join("song.wav");
+    let made = std::process::Command::new("ffmpeg").args(["-y", "-f", "lavfi", "-i", "sine=frequency=330:duration=8.5"]).arg(&song).output().expect("ffmpeg is on the PATH");
+    assert!(made.status.success());
+    let (code, queued) = s.call(Method::POST, "/pipelines/from-song", Some(json!({"project_name": "Song", "audio_path": song.display().to_string(), "lyrics_text": "one
+two"}))).await;
+    assert_eq!(code, 202, "{queued}");
+    assert_eq!(queued["data"]["project_id"], "Song");
+    let id = queued["data"]["job_id"].as_str().unwrap().to_string();
+    let mut done = Value::Null;
+    for _ in 0..300 {
+        let (_, job) = s.call(Method::GET, &format!("/jobs/{id}"), None).await;
+        if ["succeeded", "failed", "cancelled"].contains(&job["data"]["status"].as_str().unwrap_or("")) {
+            done = job["data"].clone();
+            break;
+        }
+        tokio::time::sleep(Duration::from_millis(100)).await;
+    }
+    // ComfyUI is not running, so the build stops at its first picture, after the scenes were made.
+    assert_eq!(done["status"], "failed", "{done}");
+    assert_eq!(done["error"]["code"], "COMFY_UNAVAILABLE", "{done}");
+    let (_, scenes) = s.call(Method::GET, "/projects/Song/scenes", None).await;
+    assert_eq!(scenes["data"].as_array().unwrap().len(), 2);
+    assert_eq!((scenes["data"][0]["start"].as_f64(), scenes["data"][1]["end"].as_f64()), (Some(0.0), Some(8.5)));
+
+    let (code, plan) = s.call(Method::GET, "/projects/Song/pipelines/plan?scope=all", None).await;
+    assert_eq!(code, 200, "{plan}");
+    assert_eq!(plan["data"]["summary"]["total_target_scenes"], 2);
+    assert_eq!(plan["data"]["can_run"], true);
+    assert_eq!(plan["data"]["summary"]["videos_to_render"], 2);
+}
+

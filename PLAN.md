@@ -282,3 +282,5 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - F68: Audio Mask renders. An enabled mask renders with its saved masked_mix.wav and the finished clip gets the real song audio back. Building stems stays in the Video Builder.
 
 - F69: P9 route gaps left for P10: prompts/context, prompts/minimax/assemble (and the full prompt validator), minimax/cleanup, minimax/index, video/scan, minimax-stage-recover, per-scene locked settings. They are authoring helpers for outside agents. The app writes prompts itself with minimax-prompts.
+
+- F70: Pipelines. The build job never replaces an existing prompt (the pack's fresh_rebuild overwrites it with the lyric line). It fills a missing one with the lyric line like the pack. The images stage uses the project's image preset. A full unattended build is not run end to end yet (needs the GPU go-ahead). Film grain, adjust, face fix, speaking mode, ElevenLabs, instruction presets and the LLM prompt routes (concepts, motion notes, image/video/enhance/edit/batch) are not in this app yet.

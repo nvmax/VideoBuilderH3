@@ -11,6 +11,7 @@ pub mod continued_prompt;
 pub mod llm_jobs;
 pub mod lyric_jobs;
 pub mod notes_routes;
+pub mod pipeline_jobs;
 pub mod post_routes;
 pub mod refmod_routes;
 pub mod reference_routes;

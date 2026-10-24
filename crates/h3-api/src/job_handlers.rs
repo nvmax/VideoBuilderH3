@@ -51,7 +51,7 @@ pub(crate) async fn context_for(state: &AppState, ctx: &JobCtx) -> Result<(RunCo
     Ok((run, folder))
 }
 
-fn render_params(params: &Value) -> RenderParams {
+pub(crate) fn render_params(params: &Value) -> RenderParams {
     let mut overrides = Obj::new();
     if let Some(map) = params.as_object() {
         for (key, value) in map {
@@ -63,7 +63,7 @@ fn render_params(params: &Value) -> RenderParams {
     RenderParams { overrides, timeout_hours: params.get("timeout_hours").and_then(Value::as_f64) }
 }
 
-fn finish_options(params: &Value) -> FinishOptions {
+pub(crate) fn finish_options(params: &Value) -> FinishOptions {
     FinishOptions { match_start_color: params.get("match_start_color").and_then(Value::as_bool).unwrap_or(false), ..FinishOptions::default() }
 }
 
@@ -75,7 +75,7 @@ fn batch_position(message: &str) -> Option<(i64, i64)> {
     Some((index.parse().ok()?, count.parse().ok()?))
 }
 
-fn reporter(ctx: &JobCtx, scene_id: Option<String>) -> impl FnMut(RenderEvent) + Send + use<> {
+pub(crate) fn reporter(ctx: &JobCtx, scene_id: Option<String>) -> impl FnMut(RenderEvent) + Send + use<> {
     let ctx = ctx.clone();
     move |event: RenderEvent| {
         let position = batch_position(&event.message);

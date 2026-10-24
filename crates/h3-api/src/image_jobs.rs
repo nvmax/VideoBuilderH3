@@ -105,7 +105,7 @@ fn io_fail(e: std::io::Error) -> JobError {
 
 /// Generate and record one scene image.
 #[allow(clippy::too_many_arguments)]
-async fn generate_for_scene(state: &AppState, ctx: &JobCtx, run: &RunContext, folder: &Path, scene_ref: &str, params: &Value, from: f64, span: f64) -> Result<Value, JobError> {
+pub(crate) async fn generate_for_scene(state: &AppState, ctx: &JobCtx, run: &RunContext, folder: &Path, scene_ref: &str, params: &Value, from: f64, span: f64) -> Result<Value, JobError> {
     let project = folder.to_path_buf();
     let loaded = blocking({
         let project = project.clone();
