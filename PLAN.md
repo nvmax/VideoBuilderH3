@@ -280,3 +280,5 @@ Start with P0, P1, P2. They have no UI and no GPU work, and they catch most port
 - **F67.** The RefMod pipeline is in: `GET /refmods` lists the saved RefMods (read from ComfyUI's `refmods` folders, `models/refmods` and the MiniMaxH3Mod pack's `mods`), and a project whose MiniMax setting `pipeline` is `refmod` renders each scene from the RefMod cards mapped to it, with `<Video n>`, `<Picture n>` and `<Audio 1>` labels. It works with Single and 2 Pass, like the pack's. It has not been rendered on this machine, because it needs the separate MiniMaxH3Mod node pack and some saved RefMods. Making new RefMods (RefMod Studio) is not in this app.
 
 - F68: Audio Mask renders. An enabled mask renders with its saved masked_mix.wav and the finished clip gets the real song audio back. Building stems stays in the Video Builder.
+
+- F69: P9 route gaps left for P10: prompts/context, prompts/minimax/assemble (and the full prompt validator), minimax/cleanup, minimax/index, video/scan, minimax-stage-recover, per-scene locked settings. They are authoring helpers for outside agents. The app writes prompts itself with minimax-prompts.
