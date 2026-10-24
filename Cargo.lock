@@ -1812,6 +1812,7 @@ dependencies = [
 name = "h3-core"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "fancy-regex",
  "rust_decimal",
  "serde",

@@ -153,6 +153,12 @@ pub(crate) fn assign_overlay_slots(overlay: &mut [Value]) {
 /// interleave their file replacements into a mixed project.
 static SAVE_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
 
+/// Run `f` while holding the save lock, so a Storyboard save and a session save never write at the same time.
+pub fn with_save_lock<R>(f: impl FnOnce() -> R) -> R {
+    let _guard = SAVE_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+    f()
+}
+
 /// A save step that may change the session and the audio path that is stored.
 pub type PrepareHook<'a> = &'a dyn Fn(&Path, &mut Obj, &mut String) -> io::Result<()>;
 
