@@ -35,7 +35,7 @@ fn session() -> Value {
 
 async fn start() -> Server {
     // The stand-in LLM always answers one shot.
-    let llm = Router::new().route(
+    let llm = Router::new().route("/v1/models", axum::routing::get(|| async { Json(json!({"data": [{"id": "zeta-model"}, {"id": "alpha-model"}]})) })).route(
         "/v1/chat/completions",
         post(|Json(body): Json<Value>| async move {
             // A picture request gets a description, anything else gets one shot.
@@ -240,5 +240,27 @@ async fn image_prompts_need_the_llm() {
     let (_, body) = s.call(Method::POST, "/projects/Demo/scenes/a/prompts/image", None).await;
     let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
     assert_eq!((job["status"].as_str(), job["error"]["code"].as_str()), (Some("failed"), Some("LLM_UNAVAILABLE")), "{job}");
+}
+
+#[tokio::test]
+async fn models_can_be_listed_before_the_settings_are_saved() {
+    let s = start().await;
+    // Nothing is saved: the runner and address typed on the screen are what is asked.
+    let (code, body) = s.call(Method::POST, "/llm/models", Some(json!({"runner": "own_server", "own_server_url": s.mock}))).await;
+    assert_eq!(code, 200, "{body}");
+    let ids: Vec<&str> = body["data"]["models"].as_array().unwrap().iter().map(|m| m["id"].as_str().unwrap()).collect();
+    assert_eq!(ids, ["alpha-model", "zeta-model"], "sorted");
+    let (_, saved) = s.call(Method::GET, "/llm/settings", None).await;
+    assert_eq!(saved["data"]["runner"], "lm_studio", "looking saves nothing");
+
+    // A server that cannot be reached says so. LM Studio being down is the same clear error.
+    let (code, body) = s.call(Method::POST, "/llm/models", Some(json!({"runner": "own_server", "own_server_url": "http://127.0.0.1:9/v1"}))).await;
+    assert_eq!((code, body["error"]["code"].as_str()), (503, Some("LLM_UNAVAILABLE")), "{body}");
+    let (code, body) = s.call(Method::POST, "/llm/models", Some(json!({}))).await;
+    assert_eq!((code, body["error"]["code"].as_str()), (503, Some("LLM_UNAVAILABLE")));
+
+    // Cloud runners need no model name typed either, but they need the key.
+    let (code, body) = s.call(Method::POST, "/llm/models", Some(json!({"nonsense": "x"}))).await;
+    assert_eq!((code, body["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
 }
 

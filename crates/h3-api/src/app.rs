@@ -68,7 +68,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/queue", get(queue))
         .route("/llm/settings", get(lr::get_settings).put(lr::put_settings))
         .route("/llm/active", get(lr::active))
-        .route("/llm/models", get(lr::models))
+        .route("/llm/models", get(lr::models).post(lr::models_for))
         .route("/llm/test", post(lr::test))
         .route("/settings/minimax-h3/schema", get(settings_schema))
         .route("/events", get(events))

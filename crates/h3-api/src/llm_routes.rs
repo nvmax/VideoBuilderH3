@@ -60,29 +60,101 @@ pub async fn active(State(state): Shared) -> ApiResult {
     ))
 }
 
-/// The models the runner offers. For LM Studio only the loaded ones, read from its status call.
+/// The models a runner offers. For LM Studio only the loaded ones, read from its status call. Own server, OpenAI,
+/// Anthropic and Google list what their API reports. Nothing is loaded or changed anywhere.
+async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
+    let client = reqwest::Client::new();
+    let unreachable = |url: &str, e: reqwest::Error| ApiError::from(h3_llm::LlmError::Unavailable(format!("Could not reach {url}: {e}")));
+    let refused = |url: &str, status: u16| {
+        let why = if matches!(status, 401 | 403) { "The key was refused." } else { "The server did not list its models." };
+        ApiError::from(h3_llm::LlmError::Unavailable(format!("{url} answered {status}. {why}")))
+    };
+    let mut note = "";
+    let models: Vec<Value> = match cfg.runner.as_str() {
+        "lm_studio" => {
+            let loaded = loaded_lm_studio_models(cfg).await?;
+            loaded.iter().map(|m| json!({"id": m.id, "loaded": true, "context_length": m.context_length, "vision": m.vision})).collect()
+        }
+        "own_server" | "openai" => {
+            let (url, key) = if cfg.runner == "openai" { ("https://api.openai.com/v1".to_string(), cfg.api_key.clone()) } else { (cfg.own_server_url.trim_end_matches('/').to_string(), cfg.own_server_api_key.clone()) };
+            let url = format!("{url}/models");
+            let mut request = client.get(&url).timeout(std::time::Duration::from_secs(15));
+            if !key.is_empty() {
+                request = request.bearer_auth(&key);
+            }
+            let response = request.send().await.map_err(|e| unreachable(&url, e))?;
+            if !response.status().is_success() {
+                return Err(refused(&url, response.status().as_u16()));
+            }
+            let data: Value = response.json().await.unwrap_or(Value::Null);
+            let mut ids: Vec<String> = data.get("data").and_then(Value::as_array).map(|a| a.iter().filter_map(|m| m.get("id").and_then(Value::as_str)).map(str::to_string).collect()).unwrap_or_default();
+            ids.sort();
+            ids.into_iter().map(|id| json!({"id": id})).collect()
+        }
+        "anthropic" => {
+            let url = "https://api.anthropic.com/v1/models?limit=100";
+            let response = client.get(url).header("x-api-key", &cfg.api_key).header("anthropic-version", "2023-06-01").timeout(std::time::Duration::from_secs(15)).send().await.map_err(|e| unreachable(url, e))?;
+            if !response.status().is_success() {
+                return Err(refused(url, response.status().as_u16()));
+            }
+            let data: Value = response.json().await.unwrap_or(Value::Null);
+            data.get("data").and_then(Value::as_array).map(|a| a.iter().filter_map(|m| m.get("id").and_then(Value::as_str)).map(|id| json!({"id": id})).collect()).unwrap_or_default()
+        }
+        "google" => {
+            let url = "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200";
+            let response = client.get(url).header("x-goog-api-key", &cfg.api_key).timeout(std::time::Duration::from_secs(15)).send().await.map_err(|e| unreachable(url, e))?;
+            if !response.status().is_success() {
+                return Err(refused(url, response.status().as_u16()));
+            }
+            let data: Value = response.json().await.unwrap_or(Value::Null);
+            data.get("models")
+                .and_then(Value::as_array)
+                .map(|a| {
+                    a.iter()
+                        .filter(|m| m.get("supportedGenerationMethods").and_then(Value::as_array).is_some_and(|methods| methods.iter().any(|x| x == "generateContent")))
+                        .filter_map(|m| m.get("name").and_then(Value::as_str))
+                        .map(|name| json!({"id": name.strip_prefix("models/").unwrap_or(name)}))
+                        .collect()
+                })
+                .unwrap_or_default()
+        }
+        _ => {
+            note = "Type the model name.";
+            Vec::new()
+        }
+    };
+    Ok(json!({"runner": cfg.runner, "models": models, "note": note}))
+}
+
+/// `GET /llm/models`: the models of the saved runner, or of `?provider=`.
 pub async fn models(State(state): Shared, Query(q): Query<HashMap<String, String>>) -> ApiResult {
     let mut cfg = current(&state);
     if let Some(runner) = q.get("provider").filter(|p| !p.is_empty()) {
         cfg.runner = runner.clone();
     }
-    match cfg.runner.as_str() {
-        "lm_studio" => {
-            let loaded = loaded_lm_studio_models(&cfg).await?;
-            Ok(success(json!({"runner": "lm_studio", "models": loaded.iter().map(|m| json!({"id": m.id, "loaded": true, "context_length": m.context_length, "vision": m.vision})).collect::<Vec<_>>()}), None))
+    Ok(success(list_models(&cfg).await?, None))
+}
+
+/// `POST /llm/models`: the models for settings that are not saved yet. The body holds the fields typed so far
+/// (`runner`, `lm_studio_base_url`, `own_server_url`, `own_server_api_key`, `api_key`, ...). A key left out or empty is
+/// taken from the saved settings, so a saved key is never sent to the screen and back.
+pub async fn models_for(State(state): Shared, body: Option<Json<Value>>) -> ApiResult {
+    let sent = body_object(body)?;
+    let mut cfg = current(&state);
+    for (key, value) in &sent {
+        let text = value.as_str().map(|s| s.trim().to_string());
+        match (key.as_str(), text) {
+            ("runner", Some(t)) if !t.is_empty() => cfg.runner = t,
+            ("lm_studio_base_url", Some(t)) if !t.is_empty() => cfg.lm_studio_base_url = t,
+            ("lm_studio_api_key", Some(t)) if !t.is_empty() => cfg.lm_studio_api_key = t,
+            ("own_server_url", Some(t)) if !t.is_empty() => cfg.own_server_url = t,
+            ("own_server_api_key", Some(t)) if !t.is_empty() => cfg.own_server_api_key = t,
+            ("api_key", Some(t)) if !t.is_empty() => cfg.api_key = t,
+            ("runner" | "lm_studio_base_url" | "lm_studio_api_key" | "own_server_url" | "own_server_api_key" | "api_key", _) => {}
+            (other, _) => return Err(ApiError::validation(format!("Unknown field '{other}'. Send runner, lm_studio_base_url, lm_studio_api_key, own_server_url, own_server_api_key or api_key."))),
         }
-        "own_server" => {
-            let url = format!("{}/models", cfg.own_server_url.trim_end_matches('/'));
-            let mut request = reqwest::Client::new().get(&url).timeout(std::time::Duration::from_secs(10));
-            if !cfg.own_server_api_key.is_empty() {
-                request = request.bearer_auth(&cfg.own_server_api_key);
-            }
-            let data: Value = request.send().await.map_err(|e| ApiError::from(h3_llm::LlmError::Unavailable(format!("Could not reach {url}: {e}"))))?.json().await.unwrap_or(Value::Null);
-            let ids: Vec<Value> = data.get("data").and_then(Value::as_array).map(|a| a.iter().filter_map(|m| m.get("id")).map(|id| json!({"id": id})).collect()).unwrap_or_default();
-            Ok(success(json!({"runner": "own_server", "models": ids}), None))
-        }
-        other => Ok(success(json!({"runner": other, "models": [], "note": "Type the model name in the LLM settings."}), None)),
     }
+    Ok(success(list_models(&cfg).await?, None))
 }
 
 /// Write MiniMax prompts for scenes that have none, with the project's LLM, as a job.
