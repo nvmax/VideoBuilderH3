@@ -86,6 +86,7 @@ export function buildLeftPanel({
     { value: "even_grid", label: "Even BPM grid (CapCut-style test)" },
     { value: "auto_bpm", label: "Auto-detect BPM + chosen start" },
     { value: "capcut_import", label: "Import exact CapCut markers" },
+    { value: "internal", label: "Internal beat calibration (detect from project audio)" },
   ], "detected_warp");
   const beatCalibrationGridTypeField = document.createElement("label");
   beatCalibrationGridTypeField.style.cssText = "display:flex;flex-direction:column;gap:3px;font-size:10px;color:#bae6fd;";

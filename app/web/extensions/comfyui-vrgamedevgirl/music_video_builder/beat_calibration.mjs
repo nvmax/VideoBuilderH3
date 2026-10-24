@@ -219,6 +219,20 @@ export function createBeatCalibration({
         : anchors.length === 2
           ? "Capture Last Beat"
           : "Apply Calibration";
+    if (beatCalibrationGridType.value === "internal") {
+      const draft = beatCalibration.draft;
+      const bpm = Math.max(0, Number(state.detectedTempoBpm || 0));
+      const markerCount = Array.isArray(state.beats) ? state.beats.length : 0;
+      beatCalibrationTimecodeGrid.style.display = "none";
+      beatCalibrationTimecodeHint.style.display = "none";
+      beatCalibrationCaptureButton.disabled = Boolean(draft?.internalLoading);
+      beatCalibrationGridTypeHint.textContent = "Finds the beats of the song loaded in this project with the app's own beat tracker (tempo, then a beat grid). Nothing outside the app is needed.";
+      beatCalibrationInstruction.textContent = draft?.internalLoading
+        ? "Analyzing the project audio..."
+        : `The project has ${markerCount} beat marker${markerCount === 1 ? "" : "s"}${bpm > 0 ? ` at ${bpm.toFixed(3)} BPM` : ""}. Detect them again from the project audio to replace them.`;
+      beatCalibrationAnchors.textContent = "";
+      beatCalibrationCaptureButton.textContent = draft?.internalLoading ? "Analyzing Audio..." : "Detect Beats from Project Audio";
+    }
   }
 
   async function openBeatCalibrationWizard() {
@@ -253,6 +267,12 @@ export function createBeatCalibration({
   }
 
   function captureBeatCalibrationAnchor() {
+    if (beatCalibrationGridType.value === "internal") {
+      applyInternalBeatCalibration().catch((error) => {
+        toast(`Could not detect beats:\n${String(error?.message || error)}`, true);
+      });
+      return false;
+    }
     const draft = beatCalibration.draft;
     const maximumAnchors = beatCalibrationGridType.value === "auto_bpm" ? 1 : 3;
     if (!draft || draft.anchors.length >= maximumAnchors) return false;
@@ -527,6 +547,70 @@ export function createBeatCalibration({
     await autoSaveSessionQuiet(gridType === "even_grid" ? "even beat grid calibration" : "detected beat marker calibration");
     toast(`${gridType === "even_grid" ? "Even beat grid" : "Detected-marker calibration"} applied. Scene timing was not changed.`);
     return true;
+  }
+
+  async function applyInternalBeatCalibration() {
+    const draft = beatCalibration.draft;
+    if (!draft || draft.internalLoading) return false;
+    const audioPath = String(audioInput.value || getWidget(node, "audio_path")?.value || "").trim();
+    if (!audioPath) {
+      toast("Load project audio before detecting beats.", true);
+      return false;
+    }
+    draft.internalLoading = true;
+    renderBeatCalibrationWizard();
+    try {
+      const data = await postJson("/vrgdg/music_builder/analyze_audio", {
+        audio_path: audioPath,
+        project_folder: projectInput.value || state.projectFolder || "",
+        target_peaks: 1800,
+      }, 90000);
+      const beats = (Array.isArray(data.beats) ? data.beats : [])
+        .map((beat) => Number(beat?.time ?? beat))
+        .filter((beat) => Number.isFinite(beat) && beat >= 0)
+        .sort((a, b) => a - b);
+      if (beats.length < 2) {
+        toast("The audio analysis did not find enough beats. The current markers were kept.", true);
+        return false;
+      }
+      const bpm = Math.max(0, Number(data.tempo_bpm || 0));
+      const confirmed = window.confirm(
+        `Use the app's own beat detection?\n\n` +
+        `Markers found: ${beats.length}\n` +
+        (bpm > 0 ? `Tempo: ${bpm.toFixed(3)} BPM\n` : "") +
+        `First: ${formatTime(beats[0])}\nLast: ${formatTime(beats[beats.length - 1])}\n\n` +
+        `The current ${Array.isArray(state.beats) ? state.beats.length : 0} beat markers will be replaced. Scene timing will not change.`
+      );
+      if (!confirmed) return false;
+      pauseTimelineForEditing();
+      pushHistory();
+      state.peaks = Array.isArray(data.peaks) && data.peaks.length ? data.peaks : state.peaks;
+      state.beats = beats.map((beat) => Number(beat.toFixed(6)));
+      state.detectedTempoBpm = bpm;
+      state.beatCalibration = {
+        mode: "internal",
+        tempo_bpm: Number(bpm.toFixed(6)),
+        marker_count: beats.length,
+        first_time: beats[0],
+        last_time: beats[beats.length - 1],
+        calibrated_at: new Date().toISOString(),
+      };
+      beatCalibration.draft = null;
+      beatCalibrationWizard.style.display = "none";
+      setBeatMarkersVisible(true);
+      render();
+      await autoSaveSessionQuiet("internal beat detection");
+      toast(`Detected ${beats.length} beat markers${bpm > 0 ? ` at ${bpm.toFixed(3)} BPM` : ""}. Scene timing was not changed.`);
+      return true;
+    } catch (error) {
+      toast(`Could not detect beats:\n${String(error?.message || error)}`, true);
+      return false;
+    } finally {
+      if (beatCalibration.draft === draft) {
+        draft.internalLoading = false;
+        renderBeatCalibrationWizard();
+      }
+    }
   }
 
   function closeBeatCalibrationWizard() {

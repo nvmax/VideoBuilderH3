@@ -201,5 +201,33 @@
     "find": "padding:8px;margin-bottom:8px;cursor:pointer;box-shadow:${isActive",
     "replace": "padding:8px;margin-bottom:8px;cursor:pointer;box-sizing:border-box;box-shadow:${isActive",
     "expect": 2
+  },
+  {
+    "why": "Beat Calibration offers an internal beat calibration: the beats of the project's own audio, found by the app's beat tracker, without CapCut.",
+    "file": "music_video_builder/left_panel.mjs",
+    "find": "    { value: \"capcut_import\", label: \"Import exact CapCut markers\" },\n  ], \"detected_warp\");",
+    "replace": "    { value: \"capcut_import\", label: \"Import exact CapCut markers\" },\n    { value: \"internal\", label: \"Internal beat calibration (detect from project audio)\" },\n  ], \"detected_warp\");",
+    "expect": 1
+  },
+  {
+    "why": "Internal beat calibration: how the wizard looks for it (hint, instruction, button).",
+    "file": "music_video_builder/beat_calibration.mjs",
+    "find": "          : \"Apply Calibration\";\n  }\n\n  async function openBeatCalibrationWizard() {",
+    "replace": "          : \"Apply Calibration\";\n    if (beatCalibrationGridType.value === \"internal\") {\n      const draft = beatCalibration.draft;\n      const bpm = Math.max(0, Number(state.detectedTempoBpm || 0));\n      const markerCount = Array.isArray(state.beats) ? state.beats.length : 0;\n      beatCalibrationTimecodeGrid.style.display = \"none\";\n      beatCalibrationTimecodeHint.style.display = \"none\";\n      beatCalibrationCaptureButton.disabled = Boolean(draft?.internalLoading);\n      beatCalibrationGridTypeHint.textContent = \"Finds the beats of the song loaded in this project with the app's own beat tracker (tempo, then a beat grid). Nothing outside the app is needed.\";\n      beatCalibrationInstruction.textContent = draft?.internalLoading\n        ? \"Analyzing the project audio...\"\n        : `The project has ${markerCount} beat marker${markerCount === 1 ? \"\" : \"s\"}${bpm > 0 ? ` at ${bpm.toFixed(3)} BPM` : \"\"}. Detect them again from the project audio to replace them.`;\n      beatCalibrationAnchors.textContent = \"\";\n      beatCalibrationCaptureButton.textContent = draft?.internalLoading ? \"Analyzing Audio...\" : \"Detect Beats from Project Audio\";\n    }\n  }\n\n  async function openBeatCalibrationWizard() {",
+    "expect": 1
+  },
+  {
+    "why": "Internal beat calibration: analyze the project audio and replace the beat markers.",
+    "file": "music_video_builder/beat_calibration.mjs",
+    "find": "  function closeBeatCalibrationWizard() {",
+    "replace": "  async function applyInternalBeatCalibration() {\n    const draft = beatCalibration.draft;\n    if (!draft || draft.internalLoading) return false;\n    const audioPath = String(audioInput.value || getWidget(node, \"audio_path\")?.value || \"\").trim();\n    if (!audioPath) {\n      toast(\"Load project audio before detecting beats.\", true);\n      return false;\n    }\n    draft.internalLoading = true;\n    renderBeatCalibrationWizard();\n    try {\n      const data = await postJson(\"/vrgdg/music_builder/analyze_audio\", {\n        audio_path: audioPath,\n        project_folder: projectInput.value || state.projectFolder || \"\",\n        target_peaks: 1800,\n      }, 90000);\n      const beats = (Array.isArray(data.beats) ? data.beats : [])\n        .map((beat) => Number(beat?.time ?? beat))\n        .filter((beat) => Number.isFinite(beat) && beat >= 0)\n        .sort((a, b) => a - b);\n      if (beats.length < 2) {\n        toast(\"The audio analysis did not find enough beats. The current markers were kept.\", true);\n        return false;\n      }\n      const bpm = Math.max(0, Number(data.tempo_bpm || 0));\n      const confirmed = window.confirm(\n        `Use the app's own beat detection?\\n\\n` +\n        `Markers found: ${beats.length}\\n` +\n        (bpm > 0 ? `Tempo: ${bpm.toFixed(3)} BPM\\n` : \"\") +\n        `First: ${formatTime(beats[0])}\\nLast: ${formatTime(beats[beats.length - 1])}\\n\\n` +\n        `The current ${Array.isArray(state.beats) ? state.beats.length : 0} beat markers will be replaced. Scene timing will not change.`\n      );\n      if (!confirmed) return false;\n      pauseTimelineForEditing();\n      pushHistory();\n      state.peaks = Array.isArray(data.peaks) && data.peaks.length ? data.peaks : state.peaks;\n      state.beats = beats.map((beat) => Number(beat.toFixed(6)));\n      state.detectedTempoBpm = bpm;\n      state.beatCalibration = {\n        mode: \"internal\",\n        tempo_bpm: Number(bpm.toFixed(6)),\n        marker_count: beats.length,\n        first_time: beats[0],\n        last_time: beats[beats.length - 1],\n        calibrated_at: new Date().toISOString(),\n      };\n      beatCalibration.draft = null;\n      beatCalibrationWizard.style.display = \"none\";\n      setBeatMarkersVisible(true);\n      render();\n      await autoSaveSessionQuiet(\"internal beat detection\");\n      toast(`Detected ${beats.length} beat markers${bpm > 0 ? ` at ${bpm.toFixed(3)} BPM` : \"\"}. Scene timing was not changed.`);\n      return true;\n    } catch (error) {\n      toast(`Could not detect beats:\\n${String(error?.message || error)}`, true);\n      return false;\n    } finally {\n      if (beatCalibration.draft === draft) {\n        draft.internalLoading = false;\n        renderBeatCalibrationWizard();\n      }\n    }\n  }\n\n  function closeBeatCalibrationWizard() {",
+    "expect": 1
+  },
+  {
+    "why": "Internal beat calibration: the wizard's main button runs it.",
+    "file": "music_video_builder/beat_calibration.mjs",
+    "find": "  function captureBeatCalibrationAnchor() {\n    const draft = beatCalibration.draft;",
+    "replace": "  function captureBeatCalibrationAnchor() {\n    if (beatCalibrationGridType.value === \"internal\") {\n      applyInternalBeatCalibration().catch((error) => {\n        toast(`Could not detect beats:\\n${String(error?.message || error)}`, true);\n      });\n      return false;\n    }\n    const draft = beatCalibration.draft;",
+    "expect": 1
   }
 ]
