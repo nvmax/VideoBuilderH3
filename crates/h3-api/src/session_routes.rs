@@ -111,27 +111,37 @@ pub async fn put_prompt(State(state): Shared, Path((pid, sid, field)): Path<(Str
     edit(&state, &pid, move |folder, now| session_ops::set_scene_prompt(folder, &sid, &field, &prompt, &origin, expected, now)).await
 }
 
-const MAX_PROMPT_CHARS: usize = 7000;
-
-/// A first check of a MiniMax prompt: not empty and within the length limit. The reference and format rules come with the
-/// prompt writer.
+/// Check a MiniMax prompt against the length, reference and format rules. Port of `validate_minimax_prompt_endpoint`.
 pub async fn validate_prompt(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let loaded = load(&state, &pid).await?;
-    views::find_scene(&loaded, &sid)?;
-    let prompt = body.get("prompt").and_then(Value::as_str).unwrap_or("").trim().to_string();
-    let length = prompt.chars().count();
-    let mut errors = Vec::new();
-    if prompt.is_empty() {
-        errors.push(json!({"code": "EMPTY_PROMPT", "message": "The MiniMax prompt is empty."}));
-    } else if length > MAX_PROMPT_CHARS {
-        errors.push(json!({
-            "code": "MINIMAX_H3_PROMPT_TOO_LONG",
-            "message": format!("Prompt length ({length}) exceeds the 7,000 character maximum by {}.", length - MAX_PROMPT_CHARS),
-            "length": length, "limit": MAX_PROMPT_CHARS, "over_by": length - MAX_PROMPT_CHARS,
-        }));
-    }
-    Ok(success(json!({"valid": errors.is_empty(), "errors": errors, "warnings": [], "length": length}), None))
+    let idx = views::find_scene(&loaded, &sid).ok();
+    let scene = idx.map(|i| views::segments(&loaded.session)[i].clone());
+    let prompt = body.get("prompt").and_then(Value::as_str).unwrap_or("").to_string();
+    let given = body.get("mode").and_then(Value::as_str).map(str::to_string);
+    let resolved = h3_core::prompt::assembly::effective_mode(&scene.clone().unwrap_or_default(), &loaded.session, given.as_deref());
+    let result = h3_core::prompt::assembly::validate_minimax_h3_prompt(&prompt, scene.as_ref(), Some(resolved), true);
+    Ok(success(result, None))
+}
+
+/// `GET /projects/{pid}/scenes/{sid}/prompts/context`: what an outside agent needs to write this scene's shots.
+pub async fn prompt_context(State(state): Shared, Path((pid, sid)): Path<(String, String)>) -> ApiResult {
+    let loaded = load(&state, &pid).await?;
+    let idx = views::find_scene(&loaded, &sid)?;
+    let scene = views::segments(&loaded.session)[idx].clone();
+    let session = loaded.session.clone();
+    let context = blocking(move || h3_core::prompt::assembly::build_minimax_prompt_context(&scene, &session, None)).await?;
+    Ok(success(Value::Object(context), None))
+}
+
+/// `POST /projects/{pid}/scenes/{sid}/prompts/minimax/assemble`: build the official prompt from shot descriptions.
+pub async fn assemble_prompt(State(state): Shared, Path((pid, sid)): Path<(String, String)>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let shots: Vec<String> = body.get("shots").and_then(Value::as_array).map(|a| a.iter().map(|v| h3_core::pyval::py_str(Some(v))).collect()).unwrap_or_default();
+    let mode = body.get("mode").and_then(Value::as_str).map(str::to_string);
+    let save = body.get("save").is_some_and(h3_core::pyval::truthy);
+    let expected = if_match(&headers)?;
+    edit(&state, &pid, move |folder, now| session_ops::assemble_scene_prompt(folder, &sid, &shots, mode.as_deref(), save, expected, now)).await
 }
 
 // -- lyrics -----------------------------------------------------------------------------------------------------------------

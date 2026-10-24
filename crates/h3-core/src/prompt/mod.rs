@@ -3,6 +3,7 @@
 
 pub(crate) mod rx;
 
+pub mod assembly;
 pub mod continuation;
 pub mod cues;
 pub mod emotion;

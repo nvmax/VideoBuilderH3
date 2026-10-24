@@ -617,3 +617,33 @@ pub fn bulk_scene_ops(project: &Path, operations: &[Value], if_match: Option<i64
     let revision = edit.save(now)?;
     Ok(json!({"applied_operations": applied, "revision": revision}))
 }
+
+/// Assemble the official MiniMax prompt from shot descriptions and optionally save it on the scene. Port of
+/// `assemble_minimax_prompt_endpoint`.
+pub fn assemble_scene_prompt(project: &Path, scene_id: &str, shots: &[String], mode: Option<&str>, save: bool, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    let current = ["revision", "builder_save_revision"].iter().filter_map(|k| edit.session.get(*k)).find(|v| truthy(v)).and_then(to_float).map_or(0, |f| f as i64);
+    let session = edit.session.clone();
+    let mut segs = edit.segments();
+    let idx = find_scene(&segs, scene_id).ok_or_else(|| OpError::SceneNotFound(scene_id.to_string()))?;
+    let full = Value::Array(segs.clone());
+    let mut session_with = session;
+    session_with.insert("segments".into(), full);
+    let segment = segs[idx].as_object().cloned().unwrap_or_default();
+    let assembled = h3_core::prompt::assembly::assemble_minimax_h3_prompt(&segment, &session_with, shots, mode).map_err(OpError::Validation)?;
+    let prompt = text_or_empty(assembled.get("prompt"));
+    let used_mode = text_or_empty(assembled.get("mode"));
+    let validation = h3_core::prompt::assembly::validate_minimax_h3_prompt(&prompt, Some(&segment), Some(&used_mode), false);
+    let mut revision = current;
+    if save {
+        set(&mut segs[idx], "minimax_h3_prompt", json!(prompt));
+        set(&mut segs[idx], "minimax_h3_prompt_origin", json!("agent"));
+        edit.put_segments(segs);
+        revision = edit.save(now)?;
+    }
+    Ok(json!({
+        "prompt": prompt, "characters": assembled["characters"], "shots_used": assembled["shots_used"],
+        "valid": validation["valid"], "errors": validation["errors"], "warnings": validation["warnings"],
+        "saved": save, "revision": revision,
+    }))
+}

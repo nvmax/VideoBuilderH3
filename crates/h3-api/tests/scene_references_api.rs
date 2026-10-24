@@ -154,3 +154,33 @@ async fn bulk_edits_save_once_and_modes_lists_the_h3_engine() {
     let (_, unchanged) = s.call(Method::GET, &format!("{p}/scenes"), None).await;
     assert_ne!(unchanged["data"][0]["label"], "X");
 }
+
+#[tokio::test]
+async fn agents_get_a_brief_assemble_a_prompt_and_validate_it() {
+    let s = start().await;
+    s.call(Method::POST, "/projects", Some(json!({"name": "Agent"}))).await;
+    let p = "/projects/Agent";
+    s.call(Method::POST, &format!("{p}/timeline/bulk"), Some(json!({"text": "4 a", "mode": "durations"}))).await;
+    let (code, brief) = s.call(Method::GET, &format!("{p}/scenes/1/prompts/context"), None).await;
+    assert_eq!(code, 200, "{brief}");
+    assert_eq!(brief["data"]["shot_plan"]["shot_count"], 1);
+    assert!(brief["data"]["instruction_text"].as_str().unwrap().starts_with("Generate 1 cinematic shot descriptions for a 4.0s "));
+
+    let (code, preview) = s.call(Method::POST, &format!("{p}/scenes/1/prompts/minimax/assemble"), Some(json!({"shots": ["She sings on a roof"], "mode": "text_to_video"}))).await;
+    assert_eq!(code, 200, "{preview}");
+    assert_eq!((preview["data"]["saved"].clone(), preview["data"]["shots_used"].clone()), (json!(false), json!(1)));
+    let prompt = preview["data"]["prompt"].as_str().unwrap().to_string();
+    assert!(prompt.contains("[Shot 1] She sings on a roof."));
+
+    let (_, saved) = s.call(Method::POST, &format!("{p}/scenes/1/prompts/minimax/assemble"), Some(json!({"shots": ["She sings on a roof"], "mode": "text_to_video", "save": true}))).await;
+    assert_eq!(saved["data"]["saved"], true);
+    let (_, scene) = s.call(Method::GET, &format!("{p}/scenes/1"), None).await;
+    assert_eq!(scene["data"]["minimax_h3_prompt"], prompt);
+
+    let (_, ok) = s.call(Method::POST, &format!("{p}/scenes/1/prompts/minimax/validate"), Some(json!({"prompt": prompt, "mode": "text_to_video"}))).await;
+    assert_eq!(ok["data"]["valid"], true, "{ok}");
+    let (_, bad) = s.call(Method::POST, &format!("{p}/scenes/1/prompts/minimax/validate"), Some(json!({"prompt": "no structure", "mode": "text_to_video"}))).await;
+    assert_eq!(bad["data"]["errors"][0]["code"], "MISSING_HEADER");
+    let (code, _) = s.call(Method::GET, &format!("{p}/scenes/99/prompts/context"), None).await;
+    assert_eq!(code, 404);
+}

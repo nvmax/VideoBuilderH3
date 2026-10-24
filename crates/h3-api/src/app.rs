@@ -93,6 +93,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/references/{kind}/{rid}", axum::routing::put(sr::put_reference).delete(sr::delete_reference))
         .route("/projects/{pid}/scenes/{sid}/prompts/{field}", axum::routing::put(sr::put_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/minimax/validate", post(sr::validate_prompt))
+        .route("/projects/{pid}/scenes/{sid}/prompts/minimax/assemble", post(sr::assemble_prompt))
+        .route("/projects/{pid}/scenes/{sid}/prompts/context", get(sr::prompt_context))
         .route("/projects/{pid}/summary", get(project_summary))
         .route("/projects/{pid}/assets", get(sr::project_assets))
         .route("/projects/{pid}/export", post(sr::export_project))
