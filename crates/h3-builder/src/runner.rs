@@ -552,9 +552,8 @@ pub struct ComfyFolders {
     pub temp: String,
 }
 
-/// `POST .../save_image`: keep a picture ComfyUI made (named by its `/history` entry) in a folder.
-pub fn save_generated_image(folders: &ComfyFolders, output_default: &Path, payload: &Obj) -> Reply {
-    let Some(info) = payload.get("image").and_then(Value::as_object) else { return Err("Image info is missing.".into()) };
+/// `_resolve_comfy_image_path`: the file a ComfyUI `/history` image entry (`{filename, subfolder, type}`) names.
+pub fn resolve_comfy_image(folders: &ComfyFolders, info: &Obj) -> Result<PathBuf, String> {
     let filename = Path::new(&text_or_empty(info.get("filename"))).file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
     if filename.is_empty() {
         return Err("Image filename is empty.".into());
@@ -573,6 +572,14 @@ pub fn save_generated_image(folders: &ComfyFolders, output_default: &Path, paylo
     if !source.is_file() {
         return Err(format!("Generated image was not found: {}", source.display()));
     }
+    Ok(source)
+}
+
+/// `POST .../save_image`: keep a picture ComfyUI made (named by its `/history` entry) in a folder.
+pub fn save_generated_image(folders: &ComfyFolders, output_default: &Path, payload: &Obj) -> Reply {
+    let Some(info) = payload.get("image").and_then(Value::as_object) else { return Err("Image info is missing.".into()) };
+    let source = resolve_comfy_image(folders, info)?;
+    let filename = source.file_name().map(|n| n.to_string_lossy().to_string()).unwrap_or_default();
     let requested = path_text(payload, "save_folder");
     let requested = if requested.is_empty() { "VRGDG_WorkflowRunner_Saved".to_string() } else { requested };
     let target_dir = if Path::new(&requested).is_absolute() { absolute(Path::new(&requested)) } else { absolute(&output_default.join(&requested)) };

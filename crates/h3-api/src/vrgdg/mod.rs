@@ -5,6 +5,7 @@
 //! Anything that is not a `/vrgdg` route goes to ComfyUI: the Builder uses `/prompt`, `/history`, `/queue`, `/view` and
 //! `/interrupt` of ComfyUI itself.
 
+mod assets;
 mod audio_mask;
 mod choices;
 mod files;
@@ -38,6 +39,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = Router::new().route("/vrgdg/events", get(events));
     let router = projects::routes(router);
     let router = files::routes(router);
+    let router = assets::routes(router);
     let router = audio_mask::routes(router);
     let router = runner::routes(router);
     let router = settings::routes(router);

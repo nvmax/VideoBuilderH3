@@ -2,7 +2,9 @@
 
     python tools/make_peaks_fixtures.py --pack <pack folder>
 
-Writes ``fixtures/media/pulses.wav`` (16 kHz mono, so ffmpeg does not resample it) and ``fixtures/media/peaks_cases.json``.
+Writes ``fixtures/media/pulses.wav`` (16 kHz mono) and ``fixtures/media/peaks_cases.json``. The peaks come from the pack's torchaudio
+reader, the one it tries first: the last slice is padded with zeros and there are always as many peaks as asked for (up to the
+number of samples).
 """
 
 import argparse
@@ -44,7 +46,7 @@ def main() -> int:
 
     cases = []
     for target in (400, 100, 7, 100000):
-        info = audio._read_audio_peaks_with_ffmpeg(str(wav_path), target)
+        info = audio._read_audio_peaks_with_torchaudio(str(wav_path), target)  # the reader the pack tries first
         beats = audio._estimate_beats_from_peaks(info["peaks"], info["duration"])
         cases.append({"target": target, "duration": info["duration"], "peaks": info["peaks"], "beats": beats, "tempo": audio._tempo_from_beat_times(beats)})
     (args.out / "peaks_cases.json").write_text(json.dumps({"cases": cases}), encoding="utf-8")

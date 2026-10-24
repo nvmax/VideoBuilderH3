@@ -56,6 +56,21 @@ def close(a, b, path=""):
     return [] if a == b else [f"{path}: {str(a)[:70]!r} (pack) vs {str(b)[:70]!r} (app)"]
 
 
+def make_png():
+    """A small valid PNG, as base64."""
+    import base64
+    import struct
+    import zlib
+
+    def chunk(kind, data):
+        body = kind + data
+        return struct.pack(">I", len(data)) + body + struct.pack(">I", zlib.crc32(body) & 0xFFFFFFFF)
+
+    rows = b"".join(bytes([0]) + bytes([200, 40, 40] * 8) for _ in range(6))
+    png = bytes([137]) + b"PNG" + bytes([13, 10, 26, 10]) + chunk(b"IHDR", struct.pack(">IIBBBBB", 8, 6, 8, 2, 0, 0, 0)) + chunk(b"IDAT", zlib.compress(rows)) + chunk(b"IEND", b"")
+    return base64.b64encode(png).decode()
+
+
 def listing(project):
     skip = ("audio_masks", "session_backups")
     return sorted(str(p.relative_to(project)).replace("\\", "/") for p in project.rglob("*") if p.is_file() and not any(part in skip for part in p.relative_to(project).parts))
@@ -114,12 +129,29 @@ def main():
         ("stitch_scene_videos", {"scene_paths": [{"@": "rendered_scene_videos/video_0002-audio.mp4"}, {"@": "rendered_scene_videos/video_0003-audio.mp4"}], "audio_path": {"@": f"project_audio/{audio.name}"}, "audio_start": 4.2, "audio_duration": 6.0, "output_prefix": "ORACLE_STITCH"}),
         ("render_image_slideshow", {"image_items": [{"path": {"@": str(image1.relative_to(P)).replace("\\", "/")}, "duration": 1.2}, {"path": {"@": str(image2.relative_to(P)).replace("\\", "/")}, "duration": 0.8}], "audio_path": {"@": f"project_audio/{audio.name}"}, "width": 640, "height": 360, "output_prefix": "ORACLE_SLIDES"}) if image1 and image2 else None,
     ]
+    png = "data:image/png;base64," + make_png()
+    steps += [
+        ("music_builder/save_project_srt", {"srt_text": "1\n00:00:00,000 --> 00:00:02,500\nFirst line\n\n2\n00:00:02,500 --> 00:00:05,000\nSecond\nline\n"}),
+        ("music_builder/save_single_scene_srt", {"scene_number": 4, "start_time": 12.5, "duration": 3.2, "label": "Chorus"}),
+        ("music_builder/create_silent_audio", {"duration": 2.5}),
+        ("music_builder/create_silent_audio", {"duration": 1.25, "scope": "scene", "scene_number": 5}),
+        ("music_builder/save_scene_audio", {"scene_number": 6, "source_path": {"@": f"project_audio/{audio.name}"}}),
+        ("music_builder/trim_scene_audio", {"source_path": {"@": f"project_audio/{audio.name}"}, "scene_number": 7, "start": 3.0, "duration": 2.0}),
+        ("music_builder/trim_scene_audio", {"source_path": {"@": f"project_audio/{audio.name}"}, "scene_number": 7, "start": 9999.0, "duration": 2.0}),
+        ("music_builder/prepare_scene_audio_mix", {"global_audio_path": {"@": f"project_audio/{audio.name}"}, "segments": [{"start": 1.0, "end": 3.0, "label": "a"}, {"start": 5.0, "end": 6.5, "label": "b"}], "srt_text_field": "label"}),
+        ("music_builder/prepare_audio_clip_mix", {"duration": 6, "clips": [{"path": {"@": f"project_audio/{audio.name}"}, "start": 1.0, "source_start": 2.0, "duration": 2.0, "volume": 0.5}]}),
+        ("music_builder/save_scene_image", {"scene_number": 2, "image_data": png}),
+        ("music_builder/archive_scene_image", {"scene_number": 2, "image_data": png}),
+        ("music_builder/save_flux_reference_image", {"reference_type": "subject", "name": "Oracle Singer", "image_data": png}),
+        ("music_builder/extract_video_final_frame", {"source_path": {"@": "rendered_scene_videos/video_0002-audio.mp4"}, "scene_number": 3}),
+        ("music_builder/delete_project_media", {"path": {"@": "rendered_scene_videos_backup"}}),
+    ]
     failed = 0
     for step in steps:
         if step is None:
             continue
         route, spec = step
-        path = "/vrgdg/workflow_runner/" + route
+        path = "/vrgdg/" + route if "/" in route else "/vrgdg/workflow_runner/" + route
         results = {}
         for side, base in (("pack", args.pack), ("app", args.app)):
             results[side] = post(base, path, pay(side, spec))
@@ -134,6 +166,15 @@ def main():
                 print("        " + line)
         else:
             print(f"same  {route}")
+    # The cached edit mix is named from a hash of the request. Asked of the app on the pack's own folder, the same request
+    # must find the file the pack made, which shows both apps hash alike.
+    clip_request = pay("pack", {"duration": 6, "clips": [{"path": {"@": f"project_audio/{audio.name}"}, "start": 1.0, "source_start": 2.0, "duration": 2.0, "volume": 0.5}]})
+    _, from_pack = post(args.pack, "/vrgdg/music_builder/prepare_audio_clip_mix", clip_request)
+    before = set(listing(projects["pack"]))
+    _, from_app = post(args.app, "/vrgdg/music_builder/prepare_audio_clip_mix", clip_request)
+    same_name = from_pack.get("audio_path") == from_app.get("audio_path") and set(listing(projects["pack"])) == before
+    print(("same  " if same_name else "DIFF  ") + "audio edit cache name")
+    failed += not same_name
     files_pack = tidy(listing(projects["pack"]))
     files_app = tidy(listing(projects["app"]))
     only_pack = sorted(set(files_pack) - set(files_app))

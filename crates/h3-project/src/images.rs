@@ -20,7 +20,7 @@ pub fn scene_preview_folder(project: &Path, scene_number: u32) -> PathBuf {
 }
 
 /// `preview_<stamp>.<ext>` in the scene's preview folder, with `_02`, `_03`... when the name is taken.
-fn unique_preview_path(project: &Path, scene_number: u32, extension: &str, now: &Stamp) -> io::Result<PathBuf> {
+pub fn unique_preview_path(project: &Path, scene_number: u32, extension: &str, now: &Stamp) -> io::Result<PathBuf> {
     let folder = scene_preview_folder(project, scene_number);
     fs::create_dir_all(&folder)?;
     let ext = extension.trim_start_matches('.').to_lowercase();
