@@ -2,7 +2,11 @@
 
 ## Build the installer (Windows)
 
-Needs Rust (stable, MSVC), Node 20 or newer and PowerShell. Run these in `rustapp`.
+Needs Rust (stable, MSVC), Node 20 or newer and PowerShell.
+
+`build_installer.bat` in `rustapp` (double-click it, or `build_installer.ps1` from a terminal) does all of the steps below and
+prints where the installer is. It downloads ffmpeg only when it is not there yet, and installs the npm packages only when they
+are missing. By hand, run these in `rustapp`:
 
 1. `powershell -File tools\fetch_ffmpeg.ps1` downloads the ffmpeg build the installer carries and puts it in
    `app\src-tauri\binaries` with the license files in `app\src-tauri\licenses`. Both folders are ignored by git.
