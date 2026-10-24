@@ -1,0 +1,618 @@
+[
+ {
+  "method": "DELETE",
+  "path": "/instructions/{key}/override"
+ },
+ {
+  "method": "DELETE",
+  "path": "/post/luts/previews/{id}"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{pid}"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{pid}/references/{kind}/{rid}"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{pid}/scenes/{sid}"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{pid}/timeline/notes/{nid}"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{project_id}/scenes/{scene_id}/image"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{project_id}/scenes/{scene_id}/latent"
+ },
+ {
+  "method": "DELETE",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video"
+ },
+ {
+  "method": "GET",
+  "path": "/events"
+ },
+ {
+  "method": "GET",
+  "path": "/health"
+ },
+ {
+  "method": "GET",
+  "path": "/instructions"
+ },
+ {
+  "method": "GET",
+  "path": "/instructions/{key}"
+ },
+ {
+  "method": "GET",
+  "path": "/jobs"
+ },
+ {
+  "method": "GET",
+  "path": "/jobs/{id}"
+ },
+ {
+  "method": "GET",
+  "path": "/jobs/{id}/log"
+ },
+ {
+  "method": "GET",
+  "path": "/llm/active"
+ },
+ {
+  "method": "GET",
+  "path": "/llm/models"
+ },
+ {
+  "method": "GET",
+  "path": "/meta"
+ },
+ {
+  "method": "GET",
+  "path": "/models"
+ },
+ {
+  "method": "GET",
+  "path": "/modes"
+ },
+ {
+  "method": "GET",
+  "path": "/post/adjust/presets"
+ },
+ {
+  "method": "GET",
+  "path": "/post/luts"
+ },
+ {
+  "method": "GET",
+  "path": "/projects"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/assets"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/audio/beats"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/audio/waveform"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/elevenlabs"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/elevenlabs/voices"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/lyrics"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/references"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/references/scene-mapping"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/scenes"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/scenes/{sid}"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/scenes/{sid}/audio-settings"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/scenes/{sid}/minimax-references"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/context"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/settings"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/speaking-audio/defaults"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/story"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/summary"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{pid}/timeline/notes"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/finals"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/latents"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/latents/dirty"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/minimax/index"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/pipelines/plan"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/scenes/{scene_id}/latent"
+ },
+ {
+  "method": "GET",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/takes"
+ },
+ {
+  "method": "GET",
+  "path": "/queue"
+ },
+ {
+  "method": "GET",
+  "path": "/refmods"
+ },
+ {
+  "method": "GET",
+  "path": "/settings/minimax-h3/schema"
+ },
+ {
+  "method": "PATCH",
+  "path": "/projects/{pid}/scenes/{sid}"
+ },
+ {
+  "method": "PATCH",
+  "path": "/projects/{pid}/scenes/{sid}/audio-settings"
+ },
+ {
+  "method": "PATCH",
+  "path": "/projects/{pid}/settings"
+ },
+ {
+  "method": "PATCH",
+  "path": "/projects/{pid}/speaking-audio/defaults"
+ },
+ {
+  "method": "PATCH",
+  "path": "/projects/{pid}/timeline/notes/{nid}"
+ },
+ {
+  "method": "POST",
+  "path": "/instructions/presets/{name}/load"
+ },
+ {
+  "method": "POST",
+  "path": "/jobs/{id}/cancel"
+ },
+ {
+  "method": "POST",
+  "path": "/jobs/{id}/retry"
+ },
+ {
+  "method": "POST",
+  "path": "/llm/test"
+ },
+ {
+  "method": "POST",
+  "path": "/llm/unload"
+ },
+ {
+  "method": "POST",
+  "path": "/pipelines/from-song"
+ },
+ {
+  "method": "POST",
+  "path": "/post/luts/upload"
+ },
+ {
+  "method": "POST",
+  "path": "/projects"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/audio/silent"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/duplicate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/elevenlabs/test"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/elevenlabs/voice-design/create"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/elevenlabs/voice-design/previews"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/export"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/lyrics/align"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/minimax-prompts"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/prompts/batch"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/prompts/concepts"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/prompts/motion-notes"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/references/assign-scenes"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/references/locations/extract"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/references/subjects/{rid}/voice-design/description"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/references/{kind}/{rid}/describe"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/bulk"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/dialogue/craft"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/dialogue/generate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/merge"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/move"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/edit"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/enhance"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/image"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/minimax/assemble"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/minimax/validate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/video"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/video-chained"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/resize"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/scenes/{sid}/split"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/settings/preflight"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/story/{step}"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/bulk"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/calibrate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/close-gaps"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/enforce-length"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/from-lines"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/notes"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/timeline/snap"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{pid}/validate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/images/generate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/latents/rebuild"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/minimax/cleanup"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/pipelines/build-flf"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/pipelines/build-full-video"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/post/apply-all"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/face-fix/anchors/{n}/enhance"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/face-fix/auto"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/face-fix/estimate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/face-fix/finalize"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/face-fix/prepare"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/face-fix/runs/{n}/ltx"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/image/approve"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/image/from-video-frame"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/image/generate"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/image/revert"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/post/adjust"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/post/adjust/preview"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/post/film-grain"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/post/film-grain/preview"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/post/lut"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/post/lut/preview"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/match-start-color"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/minimax-stage-recover"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/recover"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/render"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/select"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/scenes/{scene_id}/video/trim"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/slideshow"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/stitch"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/video/graph"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/video/render"
+ },
+ {
+  "method": "POST",
+  "path": "/projects/{project_id}/video/scan"
+ },
+ {
+  "method": "PUT",
+  "path": "/instructions/presets/{name}"
+ },
+ {
+  "method": "PUT",
+  "path": "/instructions/{key}"
+ },
+ {
+  "method": "PUT",
+  "path": "/post/adjust/presets/{name}"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/audio"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/audio/beats"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/elevenlabs"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/lyrics"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/references/locations/{rid}"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/references/scene-mapping"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/references/subjects/{rid}"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/scenes/{sid}/minimax-references"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/scenes/{sid}/prompts/{field}"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/story"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{pid}/story/settings"
+ },
+ {
+  "method": "PUT",
+  "path": "/projects/{project_id}/scenes/{scene_id}/image"
+ }
+]
