@@ -1818,7 +1818,9 @@ name = "h3-llm"
 version = "0.1.0"
 dependencies = [
  "axum",
+ "base64 0.22.1",
  "fancy-regex",
+ "h3-comfy",
  "reqwest 0.12.28",
  "serde",
  "serde_json",
@@ -3570,6 +3572,7 @@ dependencies = [
  "base64 0.22.1",
  "bytes",
  "futures-core",
+ "futures-util",
  "http",
  "http-body",
  "http-body-util",
@@ -3578,6 +3581,7 @@ dependencies = [
  "hyper-util",
  "js-sys",
  "log",
+ "mime_guess",
  "percent-encoding",
  "pin-project-lite",
  "quinn",

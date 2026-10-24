@@ -130,6 +130,11 @@ impl ComfyClient {
         self.get_json("/system_stats").await
     }
 
+    /// `GET /object_info/{class}`: one node class with its inputs. An empty object when ComfyUI has no such node.
+    pub async fn object_info_for(&self, class_type: &str) -> Result<Value, ComfyError> {
+        self.get_json(&format!("/object_info/{class_type}")).await
+    }
+
     /// `GET /object_info`: every registered node class with its inputs.
     pub async fn object_info(&self) -> Result<Value, ComfyError> {
         self.get_json("/object_info").await

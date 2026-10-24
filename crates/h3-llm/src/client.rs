@@ -138,6 +138,11 @@ pub async fn describe_active(cfg: &LlmConfig) -> Result<ActiveLlm, LlmError> {
             let context = if model.context_length > 0 { cfg.lm_studio_context_limit.min(model.context_length) } else { cfg.lm_studio_context_limit };
             Ok(ActiveLlm { runner: "lm_studio".into(), model: model.id, context_length: context, base_url: api_root(cfg), saved_model_setting: cfg.lm_studio_model.clone() })
         }
+        "comfyui_gemma" => {
+            let found = crate::comfy_gemma::files(cfg).await?;
+            let model = crate::comfy_gemma::pick_model(&cfg.comfy_gemma_model, &found)?;
+            Ok(ActiveLlm { runner: "comfyui_gemma".into(), model, context_length: cfg.comfy_gemma_n_ctx, base_url: cfg.comfy_url.clone(), saved_model_setting: cfg.comfy_gemma_model.clone() })
+        }
         "own_server" => Ok(ActiveLlm { runner: "own_server".into(), model: cfg.own_server_model.clone(), context_length: 0, base_url: cfg.own_server_url.clone(), saved_model_setting: cfg.own_server_model.clone() }),
         other => Ok(ActiveLlm { runner: other.into(), model: cfg.api_model.clone(), context_length: 0, base_url: String::new(), saved_model_setting: cfg.api_model.clone() }),
     }
@@ -380,9 +385,10 @@ pub async fn chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmEr
     match cfg.runner.as_str() {
         "lm_studio" => lm_studio_chat(cfg, req).await,
         "own_server" => openai_compatible_chat(&cfg.own_server_url, &cfg.own_server_model, &cfg.own_server_api_key, cfg.own_server_timeout, cfg.own_server_output_limit, req, "own server").await,
+        "comfyui_gemma" => crate::comfy_gemma::chat(cfg, req).await,
         "openai" => openai_compatible_chat("https://api.openai.com/v1", &cfg.api_model, &cfg.api_key, cfg.own_server_timeout, req.max_new_tokens, req, "OpenAI").await,
         "anthropic" => anthropic_chat(cfg, req).await,
         "google" => google_chat(cfg, req).await,
-        other => Err(LlmError::Unavailable(format!("Unknown LLM runner '{other}'. Use lm_studio, own_server, openai, anthropic or google."))),
+        other => Err(LlmError::Unavailable(format!("Unknown LLM runner '{other}'. Use lm_studio, own_server, comfyui_gemma, openai, anthropic or google."))),
     }
 }

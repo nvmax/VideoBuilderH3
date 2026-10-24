@@ -51,6 +51,7 @@ fn with_overrides(base: &AppConfig, over: &serde_json::Map<String, Value>) -> Re
             _ => cfg.comfy_output_dir = text,
         }
     }
+    cfg.llm.comfy_url = cfg.comfy_url.clone();
     Ok(cfg)
 }
 

@@ -32,9 +32,11 @@ pub async fn put_settings(State(state): Shared, body: Option<Json<Value>>) -> Ap
         }
         map.insert(key.clone(), new.clone());
     }
-    let updated: LlmConfig = serde_json::from_value(value).map_err(|e| ApiError::validation(e.to_string()))?;
-    if !matches!(updated.runner.as_str(), "lm_studio" | "own_server" | "openai" | "anthropic" | "google") {
-        return Err(ApiError::validation("runner must be lm_studio, own_server, openai, anthropic or google."));
+    let mut updated: LlmConfig = serde_json::from_value(value).map_err(|e| ApiError::validation(e.to_string()))?;
+    // The ComfyUI address is not an LLM setting. It is not in the saved file, so it is carried over from the app settings.
+    updated.comfy_url = state.cfg.comfy_url.clone();
+    if !matches!(updated.runner.as_str(), "lm_studio" | "own_server" | "comfyui_gemma" | "openai" | "anthropic" | "google") {
+        return Err(ApiError::validation("runner must be lm_studio, own_server, comfyui_gemma, openai, anthropic or google."));
     }
     let path = state.config_path.clone();
     let mut file = state.cfg.clone();
@@ -70,7 +72,16 @@ async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
         ApiError::from(h3_llm::LlmError::Unavailable(format!("{url} answered {status}. {why}")))
     };
     let mut note = "";
+    let mut mmproj: Vec<String> = Vec::new();
     let models: Vec<Value> = match cfg.runner.as_str() {
+        "comfyui_gemma" => {
+            let found = h3_llm::comfy_gemma::files(cfg).await?;
+            mmproj = found.mmproj.clone();
+            if found.models.is_empty() {
+                note = "ComfyUI has no Gemma GGUF model. Put a .gguf file with \"gemma\" in its name in ComfyUI's models/LLM folder.";
+            }
+            found.models.iter().map(|m| json!({"id": m})).collect()
+        }
         "lm_studio" => {
             let loaded = loaded_lm_studio_models(cfg).await?;
             loaded.iter().map(|m| json!({"id": m.id, "loaded": true, "context_length": m.context_length, "vision": m.vision})).collect()
@@ -123,7 +134,7 @@ async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
             Vec::new()
         }
     };
-    Ok(json!({"runner": cfg.runner, "models": models, "note": note}))
+    Ok(json!({"runner": cfg.runner, "models": models, "mmproj": mmproj, "note": note}))
 }
 
 /// `GET /llm/models`: the models of the saved runner, or of `?provider=`.
@@ -150,7 +161,8 @@ pub async fn models_for(State(state): Shared, body: Option<Json<Value>>) -> ApiR
             ("own_server_url", Some(t)) if !t.is_empty() => cfg.own_server_url = t,
             ("own_server_api_key", Some(t)) if !t.is_empty() => cfg.own_server_api_key = t,
             ("api_key", Some(t)) if !t.is_empty() => cfg.api_key = t,
-            ("runner" | "lm_studio_base_url" | "lm_studio_api_key" | "own_server_url" | "own_server_api_key" | "api_key", _) => {}
+            ("comfy_url", Some(t)) if !t.is_empty() => cfg.comfy_url = t,
+            ("runner" | "comfy_url" | "lm_studio_base_url" | "lm_studio_api_key" | "own_server_url" | "own_server_api_key" | "api_key", _) => {}
             (other, _) => return Err(ApiError::validation(format!("Unknown field '{other}'. Send runner, lm_studio_base_url, lm_studio_api_key, own_server_url, own_server_api_key or api_key."))),
         }
     }

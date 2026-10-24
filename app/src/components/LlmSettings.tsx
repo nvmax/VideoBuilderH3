@@ -4,6 +4,7 @@ import { say } from "../store";
 
 const RUNNERS: [string, string][] = [
   ["lm_studio", "LM Studio (the model that is loaded)"],
+  ["comfyui_gemma", "Gemma in ComfyUI (built in, no extra server)"],
   ["own_server", "Own server (OpenAI compatible)"],
   ["openai", "OpenAI"],
   ["anthropic", "Anthropic"],
@@ -24,6 +25,7 @@ export default function LlmSettings() {
   const [changes, setChanges] = createSignal<Record<string, unknown>>({});
   const [result, setResult] = createSignal<{ ok: boolean; text: string } | null>(null);
   const [models, setModels] = createSignal<ModelRow[]>([]);
+  const [mmproj, setMmproj] = createSignal<string[]>([]);
   const [lookup, setLookup] = createSignal<{ ok: boolean; text: string } | null>(null);
   const [looking, setLooking] = createSignal(false);
   const value = (key: string) => (key in changes() ? changes()[key] : cfg()?.[key]);
@@ -38,12 +40,14 @@ export default function LlmSettings() {
       const body: Record<string, unknown> = {};
       for (const key of LOOKUP_FIELDS) body[key] = value(key);
       for (const key of LOOKUP_KEYS) if (changes()[key]) body[key] = changes()[key];
-      const reply = await call<{ models: ModelRow[]; note: string }>("POST", "/llm/models", body);
+      const reply = await call<{ models: ModelRow[]; mmproj?: string[]; note: string }>("POST", "/llm/models", body);
       setModels(reply.data.models);
+      setMmproj(reply.data.mmproj ?? []);
       const n = reply.data.models.length;
       setLookup({ ok: n > 0, text: n > 0 ? `Found ${n} model${n === 1 ? "" : "s"}.` : reply.data.note || (runner() === "lm_studio" ? "LM Studio has no model loaded. Load one in LM Studio." : "The server listed no models.") });
     } catch (e) {
       setModels([]);
+      setMmproj([]);
       setLookup({ ok: false, text: (e as Error).message });
     } finally {
       setLooking(false);
@@ -64,6 +68,7 @@ export default function LlmSettings() {
   const changeRunner = (id: string) => {
     set("runner", id);
     setModels([]);
+    setMmproj([]);
     setLookup(null);
     void findModels();
   };
@@ -96,6 +101,21 @@ export default function LlmSettings() {
     </label>
   );
 
+  const check = (key: string, label: string) => (
+    <label class="setting row">
+      <input type="checkbox" checked={Boolean(value(key))} onChange={(e) => set(key, e.currentTarget.checked)} />
+      <span>{label}</span>
+    </label>
+  );
+
+  /** The mmproj file that lets Gemma look at pictures, from the files ComfyUI found. */
+  const visionFile = (key: string) => (
+    <label class="setting">
+      <span>Vision file for pictures (optional, empty uses the first found)</span>
+      <input list="llm-mmproj" placeholder={mmproj().length ? "Pick a file" : "None found in models/LLM"} value={String(value(key) ?? "")} onInput={(e) => set(key, e.currentTarget.value)} />
+    </label>
+  );
+
   /** A model field: pick from what the runner reported, or type a name when the list is empty. */
   const model = (key: string, label: string) => (
     <label class="setting">
@@ -113,6 +133,9 @@ export default function LlmSettings() {
     <fieldset>
       <legend>LLM for writing prompts and story steps</legend>
       <Show when={cfg()}>
+        <datalist id="llm-mmproj">
+          <For each={mmproj()}>{(m) => <option value={m} />}</For>
+        </datalist>
         <datalist id="llm-models">
           <For each={models()}>{(m) => <option value={m.id} />}</For>
         </datalist>
@@ -128,6 +151,15 @@ export default function LlmSettings() {
           {model("lm_studio_model", "Preferred model (optional, when several are loaded)")}
           {text("lm_studio_context_limit", "Context limit", "number")}
           {text("lm_studio_output_limit", "Reply limit", "number")}
+        </Show>
+        <Show when={runner() === "comfyui_gemma"}>
+          <p class="muted">
+            Gemma runs inside your ComfyUI, through the VRGDG Gemma node. Put a Gemma .gguf file (and its mmproj file for pictures) in ComfyUI's models/LLM folder. ComfyUI loads the model, so the first answer takes a moment. By default the model leaves the GPU after each answer so a render has the memory.
+          </p>
+          {model("comfy_gemma_model", "Gemma model (empty uses the first found)")}
+          {visionFile("comfy_gemma_mmproj")}
+          {text("comfy_gemma_n_ctx", "Context size", "number")}
+          {check("comfy_gemma_keep_loaded", "Keep the model loaded between answers (faster, but uses GPU memory)")}
         </Show>
         <Show when={runner() === "own_server"}>
           {text("own_server_url", "Address")}

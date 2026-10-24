@@ -35,7 +35,8 @@ pub fn jobs_db_path(config_path: &Path) -> std::path::PathBuf {
 }
 
 /// Open the job database, mark jobs a stopped app left unfinished as interrupted and build the shared state.
-pub fn build_state(cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, String> {
+pub fn build_state(mut cfg: AppConfig, db_path: &Path) -> Result<Arc<AppState>, String> {
+    cfg.llm.comfy_url = cfg.comfy_url.clone();
     let store = JobStore::open(db_path).map_err(|e| e.to_string())?;
     let jobs = JobManager::new(store);
     match jobs.recover_on_startup() {

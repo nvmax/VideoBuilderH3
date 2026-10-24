@@ -8,6 +8,7 @@ pub const LM_STUDIO_DEFAULT_BASE_URL: &str = "http://127.0.0.1:1234/v1";
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(default)]
 pub struct LlmConfig {
+    /// `lm_studio`, `own_server`, `comfyui_gemma`, `openai`, `anthropic` or `google`.
     pub runner: String,
     pub lm_studio_base_url: String,
     /// The model to prefer when it is loaded. The loaded model is used when it is not.
@@ -25,6 +26,17 @@ pub struct LlmConfig {
     pub own_server_output_limit: u32,
     pub api_model: String,
     pub api_key: String,
+    /// The Gemma GGUF model of `comfyui_gemma`. Empty uses the first one ComfyUI lists.
+    pub comfy_gemma_model: String,
+    /// The mmproj file that lets Gemma look at pictures. Empty uses the first one ComfyUI lists.
+    pub comfy_gemma_mmproj: String,
+    pub comfy_gemma_n_ctx: u32,
+    /// Keep the model loaded after a request. By default it leaves the GPU, so a render has the memory.
+    pub comfy_gemma_keep_loaded: bool,
+    pub comfy_gemma_timeout: u32,
+    /// The ComfyUI address `comfyui_gemma` talks to. Set from the app's own setting, never saved here.
+    #[serde(skip)]
+    pub comfy_url: String,
 }
 
 impl Default for LlmConfig {
@@ -45,6 +57,12 @@ impl Default for LlmConfig {
             own_server_output_limit: 8192,
             api_model: String::new(),
             api_key: String::new(),
+            comfy_gemma_model: String::new(),
+            comfy_gemma_mmproj: String::new(),
+            comfy_gemma_n_ctx: 32768,
+            comfy_gemma_keep_loaded: false,
+            comfy_gemma_timeout: 900,
+            comfy_url: String::new(),
         }
     }
 }
