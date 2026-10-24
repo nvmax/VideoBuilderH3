@@ -594,3 +594,33 @@ pub fn resolve_scene_inputs(
     }
     Ok(result)
 }
+
+/// The cleaned list of reference keys to save for a scene, or what is wrong and what is allowed. Port of
+/// `validate_reference_keys` in `minimax/scene_inputs.py`.
+pub fn validate_reference_keys(choices: &Value, keys: &Value) -> Result<Vec<String>, String> {
+    let Some(list) = keys.as_array() else {
+        return Err("`keys` must be a list of reference keys such as \"location:abc\". Use `automatic: true` to follow the scene mappings.".into());
+    };
+    let cleaned: Vec<String> = list.iter().map(|k| text(Some(k)).trim().to_string()).collect();
+    if cleaned.iter().any(String::is_empty) {
+        return Err("`keys` must not contain empty values.".into());
+    }
+    let mut duplicates: Vec<&String> = cleaned.iter().filter(|k| cleaned.iter().filter(|o| o == k).count() > 1).collect();
+    duplicates.sort();
+    duplicates.dedup();
+    if !duplicates.is_empty() {
+        return Err(format!("Each reference can be listed once. Repeated: {}.", duplicates.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", ")));
+    }
+    let allowed: Vec<String> = choices["available"].as_array().map(|a| a.iter().map(|i| text(i.get("key"))).collect()).unwrap_or_default();
+    let unknown: Vec<&String> = cleaned.iter().filter(|k| !allowed.contains(k)).collect();
+    if !unknown.is_empty() {
+        let shown = if allowed.is_empty() { "(none, add reference images in the Reference Builder first)".to_string() } else { allowed.join(", ") };
+        return Err(format!("Not available for this scene: {}. Available keys: {shown}.", unknown.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", ")));
+    }
+    let limit = choices["limits"]["max_choices"].as_i64().unwrap_or(0) as usize;
+    if cleaned.len() > limit {
+        let reserved = if choices["limits"]["start_frame_image_1"].as_bool().unwrap_or(false) { " (Image 1 is the scene's start frame)" } else { "" };
+        return Err(format!("MiniMax takes at most {limit} chosen references for this scene{reserved}; {} were given.", cleaned.len()));
+    }
+    Ok(cleaned)
+}

@@ -536,3 +536,37 @@ pub fn set_scene_fields(project: &Path, scene_id: &str, fields: &Obj, now: &Stam
     let revision = edit.save(now)?;
     Ok(json!({"scene_id": scene_id, "revision": revision}))
 }
+
+/// Choose the ordered MiniMax references of one scene (`keys`), or hand it back to the scene mappings (`None`).
+pub fn set_scene_reference_keys(project: &Path, scene_id: &str, keys: Option<&Value>, if_match: Option<i64>, now: &Stamp) -> OpResult {
+    let mut edit = open(project, if_match)?;
+    let segs = edit.segments();
+    let idx = find_scene(&segs, scene_id).ok_or_else(|| OpError::SceneNotFound(scene_id.to_string()))?;
+    let value = match keys {
+        None => Value::Null,
+        Some(keys) => {
+            let choices = scene_reference_choices(&Value::Object(edit.session.clone()), &segs, idx);
+            json!(h3_core::scene::validate_reference_keys(&choices, keys).map_err(OpError::Validation)?)
+        }
+    };
+    let mut segs = segs;
+    set(&mut segs[idx], "minimax_h3_reference_keys", value);
+    edit.put_segments(segs);
+    let session = Value::Object(edit.session.clone());
+    let segments = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    let mut answer = scene_reference_choices(&session, &segments, idx);
+    let revision = edit.save(now)?;
+    if let Some(o) = answer.as_object_mut() {
+        o.insert("pipeline".into(), json!("standard"));
+        o.insert("revision".into(), json!(revision));
+    }
+    Ok(answer)
+}
+
+/// What the "Choose MiniMax References" picker shows for a scene of these segments.
+pub fn scene_reference_choices(session: &Value, segments: &[Value], index: usize) -> Value {
+    let segment = segments[index].as_object().cloned().unwrap_or_default();
+    let settings = h3_core::settings::settings_for_scene(session, segments.get(index));
+    let mode = settings.get("video_mode").and_then(Value::as_str).unwrap_or("");
+    h3_core::scene::reference_choices(session, &segment, index, mode)
+}

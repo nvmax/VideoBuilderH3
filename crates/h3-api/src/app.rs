@@ -112,6 +112,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/timeline/notes", get(crate::notes_routes::list_notes).post(crate::notes_routes::create_note))
         .route("/projects/{pid}/timeline/notes/{nid}", axum::routing::patch(crate::notes_routes::update_note).delete(crate::notes_routes::delete_note))
         .route("/refmods", get(crate::refmod_routes::list))
+        .route("/projects/{pid}/scenes/{sid}/minimax-references", get(crate::reference_routes::get).put(crate::reference_routes::put))
         .route("/post/luts", get(crate::post_routes::list_luts))
         .route("/post/luts/upload", post(crate::post_routes::upload_lut))
         .route("/projects/{pid}/scenes/{sid}/post/lut", post(crate::post_routes::lut_route))
