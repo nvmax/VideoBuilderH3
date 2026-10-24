@@ -1,5 +1,5 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
-Pack commit: 070003f
+Pack commit: 5b3b472
 Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
 Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.

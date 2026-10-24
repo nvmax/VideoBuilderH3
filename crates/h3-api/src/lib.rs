@@ -5,6 +5,7 @@ pub mod app;
 pub mod edit_routes;
 pub mod embedded;
 pub mod error;
+pub mod guard;
 pub mod image_jobs;
 pub mod image_routes;
 pub mod instruction_routes;

@@ -40,11 +40,13 @@ the status route says only whether a key is available and where it comes from.
 
 ## Who may call it
 
-Only programs on this computer. `POST /mcp` refuses a request with an `Origin` that is not this computer and a `Host` that is a name other than
-`localhost` (a web page cannot drive the server, and a rebinding name cannot reach it). There is no token: any program on the computer can connect. An agent
-can create, change and delete projects and start renders.
+Only programs and pages on this computer. `guard.rs` runs before every route (`/mcp`, the REST API, the Builder's `/vrgdg` routes and the ComfyUI pass-through):
+a request with an `Origin` that is not this computer (including `null`, which a sandboxed page sends) or a `Host` that is a name other than `localhost`, an
+`*.localhost` name or an IP address is refused with 403, so a web page open in a browser cannot drive the server and a rebinding name cannot reach it. CORS answers
+only pages of this computer. A request with no `Origin` (an agent, curl, the stdio bridge) passes. There is no token: any program on the computer can connect,
+and an agent can create, change and delete projects and start renders.
 
-The REST API under `/api/v1` still answers any origin (see R8 in `PLAN.md`).
+If `api_bind` is set to an address other than this computer's, reach the app by its IP address: a machine name is refused as a `Host`.
 
 ## Keeping it right
 

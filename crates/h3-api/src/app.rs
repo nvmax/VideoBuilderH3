@@ -23,7 +23,7 @@ use serde::Deserialize;
 use serde_json::{json, Value};
 use tokio_stream::wrappers::BroadcastStream;
 use tokio_stream::StreamExt;
-use tower_http::cors::{Any, CorsLayer};
+use tower_http::cors::{AllowOrigin, Any, CorsLayer};
 
 use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
@@ -235,7 +235,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/latents", get(latent_list))
         .route("/projects/{pid}/latents/dirty", get(latent_dirty))
         .route("/projects/{pid}/scenes/{sid}/latent", get(latent_one).delete(latent_delete));
-    let cors = CorsLayer::new().allow_origin(Any).allow_methods(Any).allow_headers(Any);
+    // CORS answers only pages of this computer. `guard` already refused every other origin, so a web page cannot use the API (see `guard.rs`).
+    let cors = CorsLayer::new().allow_origin(AllowOrigin::predicate(|origin, _| origin.to_str().is_ok_and(crate::guard::origin_allowed))).allow_methods(Any).allow_headers(Any);
     // The built-in MCP server calls the API above inside this process. It is added last and has no CORS layer: a web page may not use it.
     let mcp = crate::mcp::router(v1.clone().with_state(Arc::clone(&state)), &state);
     Router::new()
@@ -247,6 +248,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .layer(cors)
         .with_state(state)
         .merge(mcp)
+        // Outermost, so it covers every route, the ComfyUI pass-through and /mcp.
+        .layer(axum::middleware::from_fn(crate::guard::only_this_computer))
 }
 
 // -- helpers ----------------------------------------------------------------------------------------------------------------

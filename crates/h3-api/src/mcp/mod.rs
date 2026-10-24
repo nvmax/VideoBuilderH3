@@ -2,8 +2,7 @@
 //!
 //! It speaks MCP over HTTP (`POST /mcp`, JSON-RPC 2.0, protocol versions 2024-11-05 to 2025-06-18) and exposes the same tools, resources and prompts
 //! as the pack's own MCP server, calling this app's API inside the process. The app's own `--mcp-stdio` command bridges the same server for agents that
-//! can only start a program. Only pages on this computer may call it: a request that carries another site's `Origin`, or a `Host` that is a name other
-//! than `localhost`, is refused (the guard against a web page driving a local server).
+//! can only start a program. Who may call it is decided for the whole server by `guard.rs`.
 
 pub mod bridge;
 mod catalog;
@@ -50,28 +49,6 @@ pub fn router(api: Router, app: &Arc<AppState>) -> Router {
 
 // -- the transport -----------------------------------------------------------------------------------------------------------
 
-fn host_name(authority: &str) -> &str {
-    match authority.strip_prefix('[') {
-        Some(rest) => rest.split(']').next().unwrap_or(""),
-        None => authority.rsplit_once(':').map_or(authority, |(name, _)| name),
-    }
-}
-
-fn host_allowed(host: &str) -> bool {
-    let name = host_name(host);
-    name == "localhost" || name.ends_with(".localhost") || name.parse::<std::net::IpAddr>().is_ok()
-}
-
-fn origin_allowed(origin: &str) -> bool {
-    let authority = origin.split("://").nth(1).unwrap_or("").split('/').next().unwrap_or("");
-    let name = host_name(authority);
-    name == "localhost" || name.ends_with(".localhost") || name.parse::<std::net::IpAddr>().is_ok_and(|ip| ip.is_loopback())
-}
-
-fn forbidden(why: &str) -> Response {
-    (StatusCode::FORBIDDEN, [(header::CONTENT_TYPE, "application/json")], json!({"jsonrpc": "2.0", "id": null, "error": {"code": -32000, "message": why}}).to_string()).into_response()
-}
-
 fn reply(status: StatusCode, value: &Value) -> Response {
     (status, [(header::CONTENT_TYPE, "application/json")], value.to_string()).into_response()
 }
@@ -83,13 +60,7 @@ async fn refuse() -> Response {
     response
 }
 
-async fn receive(State(state): State<McpState>, headers: HeaderMap, body: Bytes) -> Response {
-    if headers.get(header::ORIGIN).and_then(|v| v.to_str().ok()).is_some_and(|origin| !origin_allowed(origin)) {
-        return forbidden("This server only answers requests from this computer.");
-    }
-    if headers.get(header::HOST).and_then(|v| v.to_str().ok()).is_some_and(|host| !host_allowed(host)) {
-        return forbidden("This server only answers requests addressed to localhost or an IP address.");
-    }
+async fn receive(State(state): State<McpState>, body: Bytes) -> Response {
     let Ok(message) = serde_json::from_slice::<Value>(&body) else {
         return reply(StatusCode::BAD_REQUEST, &json!({"jsonrpc": "2.0", "id": null, "error": {"code": -32700, "message": "Parse error"}}));
     };
@@ -273,7 +244,7 @@ async fn read_resource(state: &McpState, params: &Value) -> Result<Value, (i64, 
 
 /// `GET /setup/mcp`: how to connect an agent to this app, for the MCP Setup screen.
 pub async fn info(State(app): Shared, headers: HeaderMap) -> ApiResult {
-    let host = headers.get(header::HOST).and_then(|v| v.to_str().ok()).filter(|h| host_allowed(h)).map_or_else(|| format!("127.0.0.1:{}", app.cfg.api_bind.rsplit(':').next().unwrap_or("8190")), str::to_string);
+    let host = headers.get(header::HOST).and_then(|v| v.to_str().ok()).filter(|h| crate::guard::host_allowed(h)).map_or_else(|| format!("127.0.0.1:{}", app.cfg.api_bind.rsplit(':').next().unwrap_or("8190")), str::to_string);
     let program = std::env::current_exe().map(|p| p.display().to_string()).unwrap_or_default();
     Ok(success(
         json!({
@@ -305,14 +276,6 @@ pub async fn endpoints() -> Response {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn only_this_computer_may_call() {
-        assert!(host_allowed("127.0.0.1:8190") && host_allowed("localhost:8190") && host_allowed("[::1]:8190") && host_allowed("192.168.1.20:8190"));
-        assert!(!host_allowed("evil.example:8190") && !host_allowed("rebind.attacker.com"));
-        assert!(origin_allowed("http://127.0.0.1:8190") && origin_allowed("http://localhost:3000") && origin_allowed("http://tauri.localhost") && origin_allowed("http://[::1]:8190"));
-        assert!(!origin_allowed("https://evil.example") && !origin_allowed("null") && !origin_allowed("http://192.168.1.20:8190"));
-    }
 
     #[test]
     fn escapes_in_a_resource_uri_are_decoded() {
