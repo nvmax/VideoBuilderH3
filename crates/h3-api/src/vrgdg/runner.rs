@@ -38,9 +38,26 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/prepare_scene_audio_clip"), post(|env, p| fields(runner::prepare_scene_audio_clip(&env, &p))))
         .route(&format!("{base}/cleanup_minimax_h3_output"), axum_post(cleanup_output))
         .route(&format!("{base}/save_image"), axum_post(save_image))
-        .route(&format!("{base}/build_minimax_h3_prompt"), axum_post(|state, body| build(state, body, "minimax_h3", false)))
-        .route(&format!("{base}/build_minimax_h3_2pass_prompt"), axum_post(|state, body| build(state, body, "minimax_h3_2pass", false)))
-        .route(&format!("{base}/build_minimax_h3_advanced_2pass_prompt"), axum_post(|state, body| build(state, body, "minimax_h3_advanced_2pass", true)))
+        .route(&format!("{base}/build_minimax_h3_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3"), false)))
+        .route(&format!("{base}/build_minimax_h3_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_2pass"), false)))
+        .route(&format!("{base}/build_minimax_h3_advanced_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_advanced_2pass"), true)))
+        .route(&format!("{base}/build_zimage_prompt"), axum_post(|state, body| build(state, body, Builder::Image("zimage"), false)))
+        .route(&format!("{base}/build_krea2_prompt"), axum_post(|state, body| build(state, body, Builder::Image("krea2"), false)))
+        .route(&format!("{base}/build_krea2_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::Image("krea2_2pass"), false)))
+        .route(&format!("{base}/build_moss_image_prompt"), axum_post(|state, body| build(state, body, Builder::Image("moss_image"), false)))
+        .route(&format!("{base}/build_ernie_image_prompt"), axum_post(|state, body| build(state, body, Builder::Image("ernie_image"), false)))
+        .route(&format!("{base}/build_flux_klein_prompt"), axum_post(|state, body| build(state, body, Builder::Image("flux_klein"), false)))
+        .route(&format!("{base}/build_nb_image_prompt"), axum_post(|state, body| build(state, body, Builder::Image("nb_image"), false)))
+        .route(&format!("{base}/build_z_upscale_enhance_prompt"), axum_post(|state, body| build(state, body, Builder::Image("z_upscale_enhance"), false)))
+}
+
+/// Which family of graphs a route builds.
+#[derive(Clone, Copy)]
+enum Builder {
+    /// A MiniMax H3 video pass, by workflow key.
+    H3(&'static str),
+    /// A still image model, by key.
+    Image(&'static str),
 }
 
 /// The request body as an object, or the reply to send back.
@@ -60,8 +77,8 @@ async fn live_env(state: &AppState) -> Result<LiveEnv, String> {
     Ok(LiveEnv::new(info, dirs, tools).with_refmod_dirs(h3_pipeline::context::refmod_dirs(folder_paths.as_ref())))
 }
 
-/// Build the ComfyUI graph for one MiniMax H3 pass type. `debug_copy` also saves the graph beside the scene's outputs.
-async fn build(State(state): State<Arc<AppState>>, body: Bytes, key: &'static str, debug_copy: bool) -> Response {
+/// Build the ComfyUI graph for one pass type or image model. `debug_copy` also saves the graph beside the scene's outputs.
+async fn build(State(state): State<Arc<AppState>>, body: Bytes, builder: Builder, debug_copy: bool) -> Response {
     let payload = match payload_of(&body) {
         Ok(payload) => payload,
         Err(response) => return *response,
@@ -71,7 +88,11 @@ async fn build(State(state): State<Arc<AppState>>, body: Bytes, key: &'static st
         Err(message) => return super::failure(StatusCode::BAD_REQUEST, message),
     };
     let built = tokio::task::spawn_blocking(move || -> Result<Obj, String> {
-        let mut result = h3_graph::build(&env, key, &payload).map_err(|e| e.to_string())?;
+        let mut result = match builder {
+            Builder::H3(key) => h3_graph::build(&env, key, &payload),
+            Builder::Image(key) => h3_graph::image::build_image(&env, key, &payload),
+        }
+        .map_err(|e| e.to_string())?;
         if debug_copy {
             let path = h3_builder::runner::save_advanced_debug_graph(&result, &payload)?;
             result.insert("debug_workflow_path".into(), Value::String(path));

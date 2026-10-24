@@ -1796,6 +1796,7 @@ dependencies = [
 name = "h3-graph"
 version = "0.1.0"
 dependencies = [
+ "base64 0.22.1",
  "h3-core",
  "serde",
  "serde_json",

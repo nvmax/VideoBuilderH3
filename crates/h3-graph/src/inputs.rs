@@ -37,6 +37,13 @@ pub fn template(name: &str) -> Result<(String, Obj)> {
         }
         "minimax_built_in_audio_builder_api.json" => include_str!("../templates/minimax_built_in_audio_builder_api.json"),
         "lyrics_timestamp_api.json" => include_str!("../templates/lyrics_timestamp_api.json"),
+        "text2image_zimage_API.json" => include_str!("../templates/text2image_zimage_API.json"),
+        "Krea2_TextToImage_API.json" => include_str!("../templates/Krea2_TextToImage_API.json"),
+        "Krea2_API_2Pass.json" => include_str!("../templates/Krea2_API_2Pass.json"),
+        "fluxKleinMultiImage_API.json" => include_str!("../templates/fluxKleinMultiImage_API.json"),
+        "image_ernie_image_turbo_API.json" => include_str!("../templates/image_ernie_image_turbo_API.json"),
+        "NB_API.json" => include_str!("../templates/NB_API.json"),
+        "z_upscaleEnhance_API.json" => include_str!("../templates/z_upscaleEnhance_API.json"),
         other => return Err(GraphError::new(format!("Workflow API template was not found: {other}"))),
     };
     match serde_json::from_str::<Value>(text) {

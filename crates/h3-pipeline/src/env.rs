@@ -57,6 +57,10 @@ impl GraphEnv for LiveEnv {
         self.dirs.output.clone()
     }
 
+    fn input_dir(&self) -> String {
+        self.dirs.input.clone()
+    }
+
     fn probe_duration(&self, path: &str) -> Result<f64, String> {
         audio::probe_duration(&self.tools, path).map_err(|e| e.to_string())
     }

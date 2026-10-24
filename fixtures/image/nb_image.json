@@ -1,0 +1,122 @@
+{
+ "preset": "nb_image",
+ "cases": [
+  {
+   "payload": {
+    "prompt": "a cat in a hat",
+    "api_key": "AIzaSyD-example-key-0123456789abcdef"
+   },
+   "graph": {
+    "1": {
+     "inputs": {
+      "api_key": "AIzaSyD-example-key-0123456789abcdef",
+      "prompt": "a cat in a hat",
+      "model": "gemini-3-pro-image-preview"
+     },
+     "class_type": "VRGDG_NanoBananaPro",
+     "_meta": {
+      "title": "🚀 VRGDG NanoBanana Pro 🚀"
+     }
+    },
+    "4": {
+     "inputs": {
+      "images": [
+       "1",
+       0
+      ]
+     },
+     "class_type": "PreviewImage",
+     "_meta": {
+      "title": "Preview Image"
+     }
+    }
+   },
+   "used_seed": null
+  },
+  {
+   "payload": {
+    "prompt": "AIzaSyD-example-key-0123456789abcdef",
+    "api_key": "a cat in a hat sitting"
+   },
+   "graph": {
+    "1": {
+     "inputs": {
+      "api_key": "AIzaSyD-example-key-0123456789abcdef",
+      "prompt": "a cat in a hat sitting",
+      "model": "gemini-3-pro-image-preview"
+     },
+     "class_type": "VRGDG_NanoBananaPro",
+     "_meta": {
+      "title": "🚀 VRGDG NanoBanana Pro 🚀"
+     }
+    },
+    "4": {
+     "inputs": {
+      "images": [
+       "1",
+       0
+      ]
+     },
+     "class_type": "PreviewImage",
+     "_meta": {
+      "title": "Preview Image"
+     }
+    }
+   },
+   "used_seed": null
+  },
+  {
+   "payload": {
+    "prompt": "a cat in a hat",
+    "api_key": "AIzaSyD-example-key-0123456789abcdef",
+    "model": "gemini-x",
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     },
+     "Z:\\h3fixture\\refs\\b.png"
+    ]
+   },
+   "graph": {
+    "1": {
+     "inputs": {
+      "api_key": "AIzaSyD-example-key-0123456789abcdef",
+      "prompt": "a cat in a hat",
+      "model": "gemini-x",
+      "image1": [
+       "3",
+       0
+      ]
+     },
+     "class_type": "VRGDG_NanoBananaPro",
+     "_meta": {
+      "title": "🚀 VRGDG NanoBanana Pro 🚀"
+     }
+    },
+    "3": {
+     "inputs": {
+      "image_paths": "[\"Z:\\\\h3fixture\\\\refs\\\\a.png\", \"Z:\\\\h3fixture\\\\refs\\\\b.png\"]",
+      "upscale_method": "bilinear"
+     },
+     "class_type": "VRGDG_ImageBatchMultiFromPaths",
+     "_meta": {
+      "title": "VRGDG UI Image Batch Multi"
+     }
+    },
+    "4": {
+     "inputs": {
+      "images": [
+       "1",
+       0
+      ]
+     },
+     "class_type": "PreviewImage",
+     "_meta": {
+      "title": "Preview Image"
+     }
+    }
+   },
+   "used_seed": null
+  }
+ ]
+}

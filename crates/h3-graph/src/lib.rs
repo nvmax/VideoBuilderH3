@@ -5,6 +5,8 @@
 
 pub mod api;
 pub mod env;
+pub mod image;
+pub mod images;
 pub mod inputs;
 pub mod patches;
 pub mod refmod;

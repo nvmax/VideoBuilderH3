@@ -61,6 +61,19 @@ pub trait GraphEnv {
     fn refmod_entry(&self, _name: &str) -> Option<crate::refmod::RefmodEntry> {
         None
     }
+    /// ComfyUI's input folder, where pictures a graph loads are put. Empty when it is not known.
+    fn input_dir(&self) -> String {
+        String::new()
+    }
+    /// A copy of a picture in ComfyUI's input folder under a new name, from a file (`path`) or base64 text (`data`, a data
+    /// URL or plain base64, `name` gives the extension). Returns the name `LoadImage` takes, or "" when neither is given.
+    fn prepare_load_image(&self, path: &str, data: &str, name: &str) -> std::result::Result<String, String> {
+        crate::images::prepare_load_image(self, path, data, name)
+    }
+    /// The small blank picture a graph's unused `LoadImage` node needs so ComfyUI accepts the prompt.
+    fn ensure_placeholder_image(&self) -> std::result::Result<String, String> {
+        crate::images::ensure_placeholder_image(self)
+    }
     /// Memory efficient Sage Attention needs the SageAttention package. Return the reason when it is missing.
     fn check_memory_efficient_sage_attention(&self) -> std::result::Result<(), String> {
         Ok(())
