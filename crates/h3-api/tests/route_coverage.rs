@@ -49,7 +49,6 @@ const LEFT_OUT: &[(&str, &str, &str)] = &[
     ("DELETE", "/instructions/{key}/override", "instruction presets"),
     ("PUT", "/instructions/presets/{name}", "instruction presets"),
     ("POST", "/instructions/presets/{name}/load", "instruction presets"),
-    ("POST", "/projects/{project_id}/latents/rebuild", "latent rebuild"),
     ("DELETE", "/post/luts/previews/{id}", "post previews"),
     ("POST", "/projects/{project_id}/scenes/{scene_id}/post/lut/preview", "post previews"),
     ("POST", "/projects/{project_id}/scenes/{scene_id}/post/film-grain", "film grain"),
@@ -83,7 +82,7 @@ fn concrete(path: &str) -> String {
     while let Some(open) = rest.find('{') {
         out.push_str(&rest[..open]);
         let close = rest[open..].find('}').map_or(rest.len(), |c| open + c + 1);
-        out.push_str("x");
+        out.push('x');
         rest = &rest[close..];
     }
     out.push_str(rest);

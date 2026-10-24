@@ -120,6 +120,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/minimax/cleanup", post(crate::video_routes::cleanup_route))
         .route("/projects/{pid}/video/scan", post(crate::video_routes::scan_route))
         .route("/projects/{pid}/pipelines/plan", get(crate::pipeline_jobs::plan_route))
+        .route("/projects/{pid}/latents/rebuild", post(crate::pipeline_jobs::rebuild_latents_route))
         .route("/projects/{pid}/pipelines/build-full-video", post(crate::pipeline_jobs::full_video_route))
         .route("/pipelines/from-song", post(crate::pipeline_jobs::from_song_route))
         .route("/projects/{pid}/slideshow", post(crate::video_routes::slideshow_route))

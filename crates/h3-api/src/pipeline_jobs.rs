@@ -22,11 +22,16 @@ use crate::views::resolve_project;
 
 pub const PIPELINE_FULL_VIDEO: &str = "pipeline.build_full_video";
 pub const PIPELINE_FROM_SONG: &str = "pipeline.from_song";
+pub const LATENTS_REBUILD: &str = "latents.rebuild";
 
 type Run = fn(Arc<AppState>, JobCtx) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<Value, JobError>> + Send>>;
 
 pub fn register(state: &Arc<AppState>) {
-    let table: [(&str, Run); 2] = [(PIPELINE_FULL_VIDEO, |s, c| Box::pin(full_video(s, c))), (PIPELINE_FROM_SONG, |s, c| Box::pin(from_song(s, c)))];
+    let table: [(&str, Run); 3] = [
+        (PIPELINE_FULL_VIDEO, |s, c| Box::pin(full_video(s, c))),
+        (PIPELINE_FROM_SONG, |s, c| Box::pin(from_song(s, c))),
+        (LATENTS_REBUILD, |s, c| Box::pin(rebuild_latents(s, c))),
+    ];
     for (kind, run) in table {
         let owned = Arc::clone(state);
         let handler: Handler = Arc::new(move |ctx| run(Arc::clone(&owned), ctx));
@@ -334,3 +339,47 @@ async fn from_song(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError>
     out.insert("scenes_created".into(), json!(created));
     Ok(Value::Object(out))
 }
+
+/// `POST /projects/{pid}/latents/rebuild`: render every scene whose latent is out of date, in order.
+pub async fn rebuild_latents_route(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
+    let mut params = body_object(body)?;
+    load(&state, &pid).await?;
+    params.insert("project_id".into(), json!(pid));
+    let job = state.jobs.submit(LATENTS_REBUILD, Some(&pid), Value::Object(params), true)?;
+    Ok(job_response(&job))
+}
+
+async fn rebuild_latents(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
+    let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
+    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let mut dirty = h3_project::latents::list_dirty(&folder);
+    if dirty.is_empty() {
+        progress(&ctx, 100.0, "completed", "No dirty latents found.".into(), None);
+        return Ok(json!({"project_id": pid, "rebuilt_scenes": [], "count": 0, "message": "No dirty latents found"}));
+    }
+    dirty.sort_unstable();
+    let segments: Vec<Value> = load_session(&folder).map_err(io_fail)?.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    let (mut run, _) = context_for(&state, &ctx).await?;
+    run.before_scene = Some(crate::continued_prompt::hook(&state));
+    let render = ctx.params.get("render_params").cloned().unwrap_or_else(|| json!({}));
+    let total = dirty.len();
+    let mut rebuilt: Vec<Value> = Vec::new();
+    for (i, number) in dirty.iter().enumerate() {
+        if ctx.is_cancelled() {
+            return Err(JobError::cancelled());
+        }
+        let Some(seg) = segments.get(*number as usize - 1) else {
+            eprintln!("[VRGDG-RS Pipeline] Scene number {number} is outside the project's scenes ({}). Skipping.", segments.len());
+            continue;
+        };
+        let sid = h3_core::pyval::text_or_empty(seg.get("id"));
+        let sid = if sid.is_empty() { number.to_string() } else { sid };
+        progress(&ctx, i as f64 / total as f64 * 100.0, "rendering", format!("Rebuilding scene {number:03} latent ({}/{total})...", i + 1), Some(sid.clone()));
+        let done = render_scene_full(&run, &folder, &number.to_string(), render_params(&render), finish_options(&render), reporter(&ctx, Some(sid.clone()))).await.map_err(fail)?;
+        h3_project::latents::clear_dirty(&folder, *number);
+        rebuilt.push(json!({"scene_number": number, "scene_id": sid, "video_path": done.video_path}));
+    }
+    progress(&ctx, 100.0, "completed", format!("Rebuilt {} scene latents.", rebuilt.len()), None);
+    Ok(json!({"project_id": pid, "rebuilt_scenes": rebuilt, "count": rebuilt.len()}))
+}
+
