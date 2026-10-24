@@ -309,6 +309,8 @@ fn picker_spec(kind: &str) -> Result<(&'static str, Option<&'static str>, bool),
         "gguf" => ("Choose GGUF model file", Some("GGUF model files (*.gguf)|*.gguf|All files (*.*)|*.*"), false),
         "project_folder" => ("Choose project folder", None, true),
         "project_root" => ("Choose projects root folder", None, true),
+        "folder" => ("Choose folder", None, true),
+        "program" => ("Choose program", Some("Programs (*.exe)|*.exe|All files (*.*)|*.*"), false),
         other => return Err(format!("Unknown picker type: {other}")),
     })
 }

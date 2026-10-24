@@ -58,6 +58,8 @@ async function start() {
   startTrimming();
   const { openBuilder } = await import(/* @vite-ignore */ `${EXT}/music_video_builder/builder.mjs`);
   openBuilder(standInNode(), {});
+  const { startAppSettings } = await import("/host/settings.js");
+  startAppSettings();
 }
 
 start().catch(showFailure);
