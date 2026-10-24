@@ -4,7 +4,8 @@
 use std::path::{Path, PathBuf};
 
 use h3_core::pyval::{to_int, Obj};
-use h3_media::peaks::{estimate_beats_from_peaks, read_audio_peaks, tempo_from_beat_times};
+use h3_media::beats::estimate_beats;
+use h3_media::peaks::read_audio_peaks;
 use h3_media::video::{restore_scene_video, Restored};
 use h3_project::layout::Stamp;
 use h3_project::{assets, latents, takes};
@@ -49,8 +50,7 @@ pub fn analyze_audio(env: &Env, payload: &Obj) -> Reply {
     }
     let target_peaks = int(payload, "target_peaks", 1600)?.max(1) as usize;
     let info = read_audio_peaks(&tools, &audio, target_peaks).map_err(|e| format!("Could not read audio for waveform. Try a standard WAV, MP3, FLAC, or M4A file. {e}"))?;
-    let beats = estimate_beats_from_peaks(&info.peaks, info.duration);
-    let tempo = tempo_from_beat_times(&beats);
+    let (beats, tempo) = estimate_beats(&tools, &audio, &info.peaks, info.duration);
     Ok(json!({
         "audio_path": text(&audio),
         "duration": info.duration,

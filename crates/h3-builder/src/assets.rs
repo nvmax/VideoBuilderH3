@@ -7,7 +7,8 @@ use std::path::{Path, PathBuf};
 
 use base64::Engine;
 use h3_core::pyval::{text_or_empty, to_float, to_int, truthy, Obj};
-use h3_media::peaks::{estimate_beats_from_peaks, read_audio_peaks, tempo_from_beat_times};
+use h3_media::beats::estimate_beats;
+use h3_media::peaks::read_audio_peaks;
 use h3_project::atomic::atomic_write_text;
 use h3_project::derived::{safe_project_name, segments_to_srt, format_srt_time};
 use h3_project::images::{preview_data_url, scene_preview_folder, unique_preview_path};
@@ -410,8 +411,7 @@ pub fn save_project_audio(env: &Env, payload: &Obj) -> Reply {
     let info = peaks_json(env, &target, 1600)?;
     let peaks: Vec<f64> = info.get("peaks").and_then(Value::as_array).map(|a| a.iter().filter_map(Value::as_f64).collect()).unwrap_or_default();
     let duration = info.get("duration").and_then(Value::as_f64).unwrap_or(0.0);
-    let beats = estimate_beats_from_peaks(&peaks, duration);
-    let tempo = tempo_from_beat_times(&beats);
+    let (beats, tempo) = estimate_beats(&env.tools()?, &target, &peaks, duration);
     let mut head = Obj::new();
     head.insert("saved_path".into(), json!(text(&target)));
     head.insert("audio_folder".into(), json!(text(&folder)));
@@ -595,14 +595,14 @@ pub fn prepare_scene_audio_mix(env: &Env, payload: &Obj) -> Reply {
     let info = peaks_json(env, &mix, 1600)?;
     let peaks: Vec<f64> = info.get("peaks").and_then(Value::as_array).map(|a| a.iter().filter_map(Value::as_f64).collect()).unwrap_or_default();
     let duration = info.get("duration").and_then(Value::as_f64).unwrap_or(cursor);
-    let beats = estimate_beats_from_peaks(&peaks, duration);
+    let (beats, tempo) = estimate_beats(&env.tools()?, &mix, &peaks, duration);
     Ok(json!({
         "audio_path": text(&mix),
         "srt_path": text(&srt),
         "duration": duration,
         "peaks": peaks,
         "beats": beats,
-        "tempo_bpm": tempo_from_beat_times(&beats),
+        "tempo_bpm": tempo,
         "scene_count": items.len(),
         "used_scene_audio": true,
     }))

@@ -3,7 +3,7 @@
 //!
 //! The pack reads peaks with torchaudio when it can and falls back to ffmpeg. This port always decodes with ffmpeg
 //! (at the song's own rate) and cuts RMS peaks the way torchaudio's path does. The pack's beat tracking uses librosa when it is installed and the
-//! peak based estimate otherwise. The app uses the peak based estimate.
+//! peak based estimate otherwise. The app tracks beats itself (`beats.rs`, a port of the librosa path) and keeps the peak based estimate as the fallback.
 
 use std::path::Path;
 
@@ -40,7 +40,7 @@ pub fn peaks_from_samples(samples: &[f32], target: usize, sample_rate: u32) -> A
 }
 
 /// The sample rate and channel count of a file's first audio stream, from ffprobe.
-fn stream_format(tools: &Tools, path: &Path) -> Option<(u32, u32)> {
+pub(crate) fn stream_format(tools: &Tools, path: &Path) -> Option<(u32, u32)> {
     let args: Vec<String> = ["-v", "error", "-select_streams", "a:0", "-show_entries", "stream=sample_rate,channels", "-of", "csv=p=0", &path.display().to_string()]
         .iter()
         .map(|s| s.to_string())

@@ -8,7 +8,8 @@ use axum::extract::{Path, Query, Request, State};
 use axum::http::{HeaderMap, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::Json;
-use h3_media::peaks::{estimate_beats_from_peaks, read_audio_peaks, tempo_from_beat_times};
+use h3_media::beats::estimate_beats;
+use h3_media::peaks::read_audio_peaks;
 use h3_media::Tools;
 use h3_project::scene_ops::OpError;
 use h3_project::session_ops::{self, AudioInfo};
@@ -280,8 +281,7 @@ pub(crate) fn save_project_audio(tools: &Tools, folder: &std::path::Path, source
         let _ = std::fs::remove_file(&raw);
     }
     let info = read_audio_peaks(tools, &target, 1600).map_err(|e| ApiError::new(StatusCode::INTERNAL_SERVER_ERROR, "FFMPEG_FAILED", format!("Could not read audio for waveform: {e}")))?;
-    let beats = estimate_beats_from_peaks(&info.peaks, info.duration);
-    let tempo = tempo_from_beat_times(&beats);
+    let (beats, tempo) = estimate_beats(tools, &target, &info.peaks, info.duration);
     Ok(AudioInfo { saved_path: target.display().to_string(), duration: info.duration, peaks: info.peaks, beats, tempo_bpm: tempo })
 }
 
