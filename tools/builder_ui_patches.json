@@ -19,5 +19,40 @@
     "find": "    state.projectVideoEngine = normalizeProjectVideoEngine(state.projectVideoEngine) === \"minimax_h3\"\n      ? \"ltx\"\n      : \"minimax_h3\";",
     "replace": "    if (normalizeProjectVideoEngine(state.projectVideoEngine) === \"minimax_h3\") {\n      toast(\"H3 Studio makes MiniMax H3 videos.\");\n      return;\n    }\n    state.projectVideoEngine = \"minimax_h3\";",
     "expect": 1
+  },
+  {
+    "why": "Resetting the Builder for a new project keeps the MiniMax H3 engine.",
+    "file": "music_video_builder/project_actions.mjs",
+    "find": "    state.projectVideoEngine = \"ltx\";",
+    "replace": "    state.projectVideoEngine = \"minimax_h3\";",
+    "expect": 1
+  },
+  {
+    "why": "The saved video mode of a project with no engine is MiniMax H3.",
+    "file": "music_video_builder/video_mode_resume.mjs",
+    "find": "engine: state.projectVideoEngine || \"ltx\",",
+    "replace": "engine: state.projectVideoEngine || \"minimax_h3\",",
+    "expect": 1
+  },
+  {
+    "why": "The Download Models dialog has no LTX tab and opens on MiniMax H3.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "    { id: \"custom-nodes\", label: \"Custom Nodes\", custom: true },\n  ];",
+    "replace": "    { id: \"custom-nodes\", label: \"Custom Nodes\", custom: true },\n  ].filter((tab) => tab.id !== \"ltx\");",
+    "expect": 1
+  },
+  {
+    "why": "The Download Models dialog opens on MiniMax H3.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "  activateTab(\"ltx\");",
+    "replace": "  activateTab(\"minimax\");",
+    "expect": 1
+  },
+  {
+    "why": "Builder Settings has no Project Video Engine or LTX Version sections.",
+    "file": "music_video_builder/project_setup.mjs",
+    "find": "projectStoragePanel, projectVideoEnginePanel, ltxVersionPanel, renderWaitingPanel,",
+    "replace": "projectStoragePanel, renderWaitingPanel,",
+    "expect": 1
   }
 ]

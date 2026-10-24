@@ -402,7 +402,7 @@ export function showModelDownloadModal() {
       ],
     },
     { id: "custom-nodes", label: "Custom Nodes", custom: true },
-  ];
+  ].filter((tab) => tab.id !== "ltx");
   const backdrop = document.createElement("div");
   backdrop.style.cssText = "position:fixed;inset:0;z-index:100006;background:rgba(0,0,0,.72);display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box;";
   const box = document.createElement("div");
@@ -672,7 +672,7 @@ export function showModelDownloadModal() {
   box.append(header, tabBar, body);
   backdrop.append(box);
   document.body.append(backdrop);
-  activateTab("ltx");
+  activateTab("minimax");
   close.onclick = () => backdrop.remove();
   backdrop.addEventListener("click", (event) => {
     if (event.target === backdrop) backdrop.remove();

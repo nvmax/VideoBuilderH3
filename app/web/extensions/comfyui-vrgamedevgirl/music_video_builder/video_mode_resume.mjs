@@ -6,7 +6,7 @@ const storageKey = folder => PREFIX + String(folder || "").trim().replace(/\\/g,
 function modeSelection(state) {
   const settings = cloneMiniMaxH3Settings(state.miniMaxH3Settings);
   return {
-    engine: state.projectVideoEngine || "ltx",
+    engine: state.projectVideoEngine || "minimax_h3",
     videoModelMode: state.projectVideoEngine === "minimax_h3" ? "" : state.videoModelMode || "i2v",
     miniMax: { video_mode: settings.video_mode, render_pass: settings.render_pass, pipeline: settings.pipeline },
     scenes: [...(state.segments || []), ...(state.overlaySegments || [])]

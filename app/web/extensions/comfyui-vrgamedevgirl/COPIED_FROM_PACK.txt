@@ -5,3 +5,8 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
   music_video_builder/controls.mjs: A session with no engine is a MiniMax H3 project.
   music_video_builder/minimax_panel.mjs: The engine badge can move an old LTX project to MiniMax H3. It no longer moves a project back to LTX.
+  music_video_builder/project_actions.mjs: Resetting the Builder for a new project keeps the MiniMax H3 engine.
+  music_video_builder/video_mode_resume.mjs: The saved video mode of a project with no engine is MiniMax H3.
+  music_video_builder/dialogs.mjs: The Download Models dialog has no LTX tab and opens on MiniMax H3.
+  music_video_builder/dialogs.mjs: The Download Models dialog opens on MiniMax H3.
+  music_video_builder/project_setup.mjs: Builder Settings has no Project Video Engine or LTX Version sections.

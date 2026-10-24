@@ -2,7 +2,12 @@
 // its screens from script, so a watcher hides each piece when it appears.
 
 // Buttons by their label with the spaces taken out.
-const HIDE_BUTTON_LABELS = new Set(["WizardLegacy", "WizardBeta", "AutoBuild", "UpdatetoLatest", "BuildFullFLFVideo"]);
+const HIDE_BUTTON_LABELS = new Set([
+  "WizardLegacy", "WizardBeta", "AutoBuild", "UpdatetoLatest", "BuildFullFLFVideo", "What'sNew",
+  "PromptCreator(Legacy)", "SendToPromptCreator", "ImportDataFromPromptCreator", "ConvertLTXVideoPromptstoMiniMaxH3",
+]);
+// Labels that start the same way. A button in a Tools pane row hides with its row.
+const HIDE_CARD_LABEL_STARTS = ["FaceFix"];
 // Buttons by their accessible name or hint.
 const HIDE_BY_ATTRIBUTE = [
   'button[aria-label="Close Video Builder"]', // the window closes the app
@@ -27,7 +32,10 @@ function trim(root) {
     for (const found of matching(root, selector)) hide(selector.startsWith("a[") ? found.closest("div") || found : found);
   }
   for (const button of matching(root, "button")) {
-    if (HIDE_BUTTON_LABELS.has((button.textContent || "").replace(/\s+/g, ""))) hide(button);
+    const label = (button.textContent || "").replace(/\s+/g, "");
+    if (HIDE_BUTTON_LABELS.has(label) || HIDE_CARD_LABEL_STARTS.some((start) => label.startsWith(start))) {
+      hide(button.closest(".vrgdg-builder-tool-row") || button);
+    }
   }
   for (const span of matching(root, "span")) {
     if (HIDE_BANNER_TEXT.test((span.textContent || "").trim()) && span.parentElement?.querySelector("button")) hide(span.parentElement);

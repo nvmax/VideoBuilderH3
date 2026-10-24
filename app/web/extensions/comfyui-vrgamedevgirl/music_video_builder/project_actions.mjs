@@ -279,7 +279,7 @@ export function createProjectActions({
     state.idLoraReferenceBuilder = defaultIdLoraReferenceBuilder();
     state.zEnhanceSettings = defaultZEnhanceSettings();
     state.videoType = "singing";
-    state.projectVideoEngine = "ltx";
+    state.projectVideoEngine = "minimax_h3";
     state.miniMaxH3Settings = cloneMiniMaxH3Settings();
     state.wizardBetaDraft = null;
     state.miniMaxH3TwoPassEnabled = false;

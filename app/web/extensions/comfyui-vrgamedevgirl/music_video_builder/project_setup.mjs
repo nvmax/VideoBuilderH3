@@ -641,7 +641,7 @@ export function createProjectSetup({
     sceneOptionsNote.textContent = "Scene details, tools, and adjustments apply to the currently selected scene. Select a scene on the timeline before opening these options.";
     sceneOptionsNote.style.cssText = "font-size:12px;color:#a1a1aa;line-height:1.45;";
     const sceneOptionsPanel = makeSettingsSection("Scene Options", [sceneOptionsNote, scenePanel], false);
-    box.append(header, pathGrid, actions, note, sceneOptionsPanel, projectStoragePanel, projectVideoEnginePanel, ltxVersionPanel, renderWaitingPanel, themePanel, memoryManagementPanel, autoChainPanel, notificationPanel);
+    box.append(header, pathGrid, actions, note, sceneOptionsPanel, projectStoragePanel, renderWaitingPanel, themePanel, memoryManagementPanel, autoChainPanel, notificationPanel);
     const elevenLabsPanel = makeElevenLabsSettings({ state, projectInput, saveSession });
     if (elevenLabsPanel) box.insertBefore(elevenLabsPanel, sceneOptionsPanel);
     backdrop.append(box);
