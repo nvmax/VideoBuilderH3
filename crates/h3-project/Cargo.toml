@@ -3,7 +3,7 @@ name = "h3-project"
 description = "Project session model, app config and crash-safe file writes."
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license-file.workspace = true
 
 [dependencies]
 dirs.workspace = true

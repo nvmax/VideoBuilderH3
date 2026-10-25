@@ -3,7 +3,7 @@ name = "h3-cli"
 description = "Command line for the H3 app: doctor, and later render, render-all and stitch."
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license-file.workspace = true
 
 [[bin]]
 name = "h3"

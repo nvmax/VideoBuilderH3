@@ -3,7 +3,7 @@ name = "h3-comfy"
 description = "ComfyUI HTTP and WebSocket client and the startup node check."
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license-file.workspace = true
 
 [dependencies]
 reqwest.workspace = true

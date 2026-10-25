@@ -1,5 +1,14 @@
 # Third party notices
 
+## VRGDG H3 Studio
+
+VRGDG H3 Studio is a Rust port and desktop app of the Video Builder of the comfyui-vrgamedevgirl ComfyUI node pack
+(https://github.com/vrgamegirl19/comfyui-vrgamedevgirl), copyright (c) 2026 Jean Thompson (VRGameDevGirl). It is released under
+the same license, the VRGameDevGirl Community and Commercial License, Version 1.0, in `LICENSE-VRGameDevGirl.txt` next to this
+file. Its Video Builder screens are the pack's own, copied and changed as listed in `tools/builder_ui_patches.json` of the
+source repository (https://github.com/nvmax/VideoBuilderH3), which also lists every other file copied or ported from the pack
+(`COPIED_FROM.md`).
+
 VRGDG H3 Studio includes or runs the following software.
 
 ## FFmpeg (separate program)
@@ -13,7 +22,7 @@ FFmpeg is licensed under the GNU General Public License version 2 or later for t
 
 Source code: the source of this build is available from https://github.com/BtbN/FFmpeg-Builds (the build scripts and
 the pinned FFmpeg and library versions) and from https://ffmpeg.org/download.html. If you want a copy of the corresponding
-source on another medium, write to the address given on the project page of this application. This offer is valid for
+source on another medium, open an issue at https://github.com/nvmax/VideoBuilderH3/issues. This offer is valid for
 three years after you receive the program.
 
 You can replace the bundled programs with your own ffmpeg in the Setup screen (a build that includes libx264 is needed).

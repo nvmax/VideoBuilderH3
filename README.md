@@ -1,8 +1,34 @@
 # VRGDG H3 Studio
 
-Standalone Rust desktop app for MiniMax H3 music videos. It connects to a running ComfyUI. See [PLAN.md](PLAN.md).
+Desktop app that turns a song into a MiniMax H3 music video with ComfyUI. It is a Rust port of the Video Builder of the [comfyui-vrgamedevgirl](https://github.com/vrgamegirl19/comfyui-vrgamedevgirl) node pack by Jean Thompson (VRGameDevGirl) and runs the pack's own Builder screens. It connects to a ComfyUI that you run on the same computer. See [PLAN.md](PLAN.md) for how it is built.
 
-## Requirements
+## Download
+
+1. Open the [latest release](https://github.com/nvmax/VideoBuilderH3/releases/latest) and download `H3-Studio_<version>_x64-setup.exe`.
+2. Run it. It installs for your user only and needs no administrator rights. Windows SmartScreen may say "Windows protected your PC" because the installer is not signed with a paid code signing certificate. Choose **More info**, then **Run anyway**.
+3. Start ComfyUI with the node packs the app needs, then start H3 Studio. The first start opens the setup screen. It checks ComfyUI, the node packs, your folders and ffmpeg, and says what to fix.
+
+It needs Windows 10 or 11 (64 bit) and ComfyUI on the same computer. ffmpeg is included.
+
+The app updates itself. A few seconds after it starts (and on demand from Menu, Check for Updates) it looks for a newer release, and it installs one only when you click Install and restart. Updates are signed, and the app refuses one that is not.
+
+## Build it yourself
+
+Needs Rust stable (MSVC toolchain), Node 20 or newer and PowerShell.
+
+```powershell
+git clone https://github.com/nvmax/VideoBuilderH3.git
+cd VideoBuilderH3
+build_installer.bat          # downloads ffmpeg, builds the installer and prints where it is
+```
+
+The installer is `target\release\bundle\nsis\VRGDG H3 Studio_<version>_x64-setup.exe`. `docs/RELEASE.md` has the same steps by hand and how a release is published.
+
+## License
+
+The app is released under the VRGameDevGirl Community and Commercial License, Version 1.0 (`LICENSE`), the license of the pack it is ported from. It allows free personal, hobby and community use and making videos with the app, including commercial videos. Selling the software, or a service built on it, needs a commercial license from the licensor. Read `LICENSE` for the terms. The bundled ffmpeg (a GPL build, run as a separate program) and the other third party software have their own licenses, listed in `app/src-tauri/licenses/THIRD_PARTY_NOTICES.md`. Files copied or ported from the pack, and the changes made to them, are listed in `COPIED_FROM.md` and `tools/builder_ui_patches.json`.
+
+## Development
 
 - Rust stable (MSVC toolchain), Node 20+, WebView2 (included with Windows 11)
 - ffmpeg and ffprobe on PATH, or set `ffmpeg_path` / `ffprobe_path` in the config

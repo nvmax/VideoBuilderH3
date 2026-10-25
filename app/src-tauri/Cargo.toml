@@ -3,7 +3,7 @@ name = "h3-studio"
 description = "VRGDG H3 Studio desktop app"
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license-file.workspace = true
 
 [lib]
 # The `_lib` suffix keeps the lib name distinct from the bin name on Windows (cargo issue 8519).

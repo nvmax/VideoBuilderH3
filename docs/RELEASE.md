@@ -31,19 +31,20 @@ The installer is about 100 MB because the static ffmpeg and ffprobe are 157 MB e
 
 The app must run on the same computer as ComfyUI, because scene files are exchanged by path.
 
-## Before the first public release
+## Release checklist
+
+Done: the update channel (Updates below), the license (`LICENSE` is the pack's license, copied, and a copy ships in the
+installer's `licenses` folder), the ffmpeg source contact (the repository's issues page), the history (kept as it is, with the
+maintainer's address), and a scan of the files and the history for keys and personal paths. Still open: code signing and a
+clean machine test.
 
 1. **Code signing.** An unsigned installer shows a SmartScreen warning. Buy or obtain a code signing certificate, then add
    to `tauri.release.conf.json` under `bundle.windows`: `"certificateThumbprint"`, `"digestAlgorithm": "sha256"` and
    `"timestampUrl"`, or use `"signCommand"` for a cloud signing service. Sign the sidecar programs too (ffmpeg.exe and
    ffprobe.exe), or leave them as they come.
 2. **Update channel.** Built, see Updates below. It needs the two repository secrets named there.
-3. **License contact.** `licenses\THIRD_PARTY_NOTICES.md` promises a source copy of ffmpeg on request. Put a real contact
-   address or project page in it.
-4. **Git history.** The local history has the author's email address in it. Squash it into a fresh history before the
-   repository is published.
-5. **Secrets.** No API key is stored in the repo. Check with `git grep -i "sk-"` before publishing.
-6. **A clean machine test.** Install on a Windows account that has no Rust, Node or ffmpeg, start ComfyUI with the node packs,
+3. **Secrets.** No API key is stored in the repo. Check with `git grep -i "sk-"` before each push of new files.
+4. **A clean machine test.** Install on a Windows account that has no Rust, Node or ffmpeg, start ComfyUI with the node packs,
    and render one scene.
 
 ## Updates

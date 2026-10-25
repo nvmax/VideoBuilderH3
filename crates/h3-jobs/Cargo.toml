@@ -3,7 +3,7 @@ name = "h3-jobs"
 description = "Background job queue with SQLite persistence and progress events."
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license-file.workspace = true
 
 [dependencies]
 chrono.workspace = true

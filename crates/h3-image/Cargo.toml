@@ -3,7 +3,7 @@ name = "h3-image"
 description = "Image presets: ComfyUI API workflows with bindings, import, and generation."
 version.workspace = true
 edition.workspace = true
-license.workspace = true
+license-file.workspace = true
 
 [dependencies]
 h3-comfy.workspace = true
