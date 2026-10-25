@@ -111,6 +111,11 @@ async fn speaking_routes_follow_the_projects_video_type_and_never_show_a_key() {
     assert_eq!(view["effective_settings"]["silence_before"], 1.5);
     let patched = s.ok(Method::PATCH, &format!("{p}/scenes/{scene}/audio-settings"), json!({"settings": {"use_project_defaults": false, "silence_after": 2}})).await;
     assert_eq!((patched["settings"]["use_project_defaults"].clone(), patched["effective_settings"]["silence_before"].clone()), (json!(false), json!(0.0)));
+    // The scene's number on the timeline names it as well as its id.
+    let by_number = s.ok(Method::GET, &format!("{p}/scenes/1/audio-settings"), json!(null)).await;
+    assert_eq!(by_number["scene_id"], json!(scene));
+    let by_number = s.ok(Method::PATCH, &format!("{p}/scenes/1/audio-settings"), json!({"settings": {"silence_after": 2}})).await;
+    assert_eq!(by_number["scene_id"], json!(scene));
     s.fails(Method::GET, &format!("{p}/scenes/nope/audio-settings"), json!(null), 404).await;
     let message = s.fails(Method::PATCH, &format!("{p}/scenes/{scene}/audio-settings"), json!({"settings": {}, "dialogue": {"speaker_id": "nobody", "text": "Hello"}}), 400).await;
     assert!(message.contains("primary character"), "{message}");

@@ -250,7 +250,15 @@ pub fn find_scene(loaded: &LoadedSession, scene_ref: &str) -> Result<usize, ApiE
             return Ok(i);
         }
     }
-    Err(ApiError::scene_not_found(target, &project_id(&loaded.project_folder)))
+    let mut missing = ApiError::scene_not_found(target, &project_id(&loaded.project_folder));
+    let count = segs.len();
+    let note = match count {
+        0 => "The project has no scenes.".to_string(),
+        1 => "The project has 1 scene: name it by its id or by its number, 1.".to_string(),
+        _ => format!("The project has {count} scenes: name one by its id or by its number, 1 to {count}."),
+    };
+    missing.message = format!("{} {note}", missing.message);
+    Err(missing)
 }
 
 /// Settings groups the app serves: the project switches and the MiniMax H3 settings.

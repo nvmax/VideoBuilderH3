@@ -440,7 +440,7 @@
   },
   {
    "name": "scene_list",
-   "description": "List all scene segments in the project timeline.",
+   "description": "List all scene segments in the project timeline. Each scene has `number` (1 is the first scene, the number the Video Builder shows as Scene N) and `id`. To read one scene, call scene_get with its number as scene_id instead of searching this list.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -462,7 +462,7 @@
   },
   {
    "name": "scene_get",
-   "description": "Get single scene details including prompts, images, takes, and timing.",
+   "description": "Get single scene details including prompts, images, takes, and timing. scene_id can be the scene's number: scene_id \"11\" is Scene 11.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -470,7 +470,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      }
     },
     "required": [
@@ -496,7 +497,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "patch": {
       "type": "object",
@@ -552,7 +554,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "ripple": {
       "type": "boolean",
@@ -581,7 +584,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "op": {
       "type": "string",
@@ -844,7 +848,8 @@
       ]
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "params": {
       "type": "object"
@@ -907,7 +912,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "params": {
       "type": "object"
@@ -933,7 +939,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "image_data": {
       "type": "string"
@@ -963,7 +970,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "action": {
       "type": "string",
@@ -1005,7 +1013,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "params": {
       "type": "object"
@@ -1031,7 +1040,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "params": {
       "type": "object"
@@ -1058,7 +1068,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "source_path": {
       "type": "string"
@@ -1095,7 +1106,8 @@
       ]
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "all": {
       "type": "boolean"
@@ -1131,7 +1143,8 @@
       ]
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "settings": {
       "type": "object"
@@ -1207,7 +1220,8 @@
       "type": "array",
       "items": {
        "type": "string"
-      }
+      },
+      "description": "The scenes to work on, each an id or a timeline number (\"11\" for Scene 11)."
      },
      "stitch": {
       "type": "boolean",
@@ -1625,7 +1639,8 @@
       "type": "array",
       "items": {
        "type": "string"
-      }
+      },
+      "description": "The scenes to work on, each an id or a timeline number (\"11\" for Scene 11)."
      },
      "seed": {
       "type": "integer"
@@ -1768,7 +1783,8 @@
       "type": "array",
       "items": {
        "type": "string"
-      }
+      },
+      "description": "The scenes to work on, each an id or a timeline number (\"11\" for Scene 11)."
      },
      "replace_existing": {
       "type": "boolean",
@@ -1802,7 +1818,8 @@
       "type": "array",
       "items": {
        "type": "string"
-      }
+      },
+      "description": "The scenes to work on, each an id or a timeline number (\"11\" for Scene 11)."
      },
      "replace_existing": {
       "type": "boolean",
@@ -1898,7 +1915,8 @@
       "type": "string"
      },
      "scene_ids": {
-      "type": "string"
+      "type": "string",
+      "description": "The scenes to work on, each an id or a timeline number (\"11\" for Scene 11). Separate several with commas."
      }
     },
     "required": [
@@ -2010,7 +2028,8 @@
       "type": "string"
      },
      "scene_id": {
-      "type": "string"
+      "type": "string",
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "asset_id": {
       "type": "string"
@@ -3025,7 +3044,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      }
     },
     "required": [
@@ -3063,7 +3082,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3119,7 +3138,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3165,7 +3184,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3211,7 +3230,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      }
     },
     "required": [
@@ -3249,7 +3268,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3304,7 +3323,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "query": {
       "type": "object",
@@ -3352,7 +3371,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3394,7 +3413,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3436,7 +3455,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3478,7 +3497,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3536,7 +3555,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3587,7 +3606,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -3971,7 +3990,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -4019,7 +4038,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      }
     },
     "required": [
@@ -4057,7 +4076,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -4099,7 +4118,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -4141,7 +4160,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",
@@ -4183,7 +4202,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      }
     },
     "required": [
@@ -4221,7 +4240,7 @@
      },
      "scene_id": {
       "type": "string",
-      "description": "The scene's id, e.g. seg_1. Get it from scene_list."
+      "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "body": {
       "type": "object",

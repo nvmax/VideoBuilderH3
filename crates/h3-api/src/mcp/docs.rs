@@ -11,6 +11,7 @@ pub const OPENAPI: &str = include_str!("openapi.json");
 pub const INSTRUCTIONS: &str = "VRGDG H3 Studio. These tools drive the same projects the app's Video Builder edits, so a project made here opens there as if it was built by hand.\n\
 To make a music video while chatting with the user, get the prompt `chat_make_music_video`: it asks the user what they want, confirms, then builds everything. If you already have all the details, get `make_music_video` (or read resource `vrgdg://docs/music-video-playbook`) and follow it step by step.\n\
 Resource `vrgdg://docs/endpoints` lists every API endpoint and what it does, and `vrgdg://docs/openapi` is the full contract. Every endpoint has a tool: the named tools first, `api_*` tools for the rest, and `api_request` for any endpoint by path. Call `llm_active` before any step that writes text: the LLM is whatever the app is set to use, and you must never load, unload or switch a model.\n\
+A scene is named by its id (seg_...) or by its number on the timeline, the one the Video Builder shows. When the user says Scene 11, pass scene_id \"11\" to any tool (scene_get reads it, scene_update edits it) and do not search the scene list for it. Numbers move when scenes are added or removed, ids do not.\n\
 Long operations (LLM steps, renders, the stitch) return a job id. Call `job_wait` until the job is succeeded or failed. Run one GPU job at a time.";
 
 /// The documents an agent can read: uri, name, type, description, text.

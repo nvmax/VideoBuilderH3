@@ -52,7 +52,7 @@ fn next_steps(code: &str) -> Vec<String> {
         "PREDECESSOR_MISSING" => "Render the predecessor scene first, or turn latent continuation off.",
         "LATENT_STALE" => "Call latents_status_rebuild with action 'rebuild' to rebuild the dirty latent chain.",
         "REVISION_CONFLICT" => "Read the project again with project_get and retry with the new revision.",
-        "SCENE_NOT_FOUND" => "Call scene_list to see the scene ids of this project.",
+        "SCENE_NOT_FOUND" => "Call scene_list to see the scenes of this project. A scene is named by its id or by its number (1 is the first scene, as in Scene 11).",
         "PROJECT_NOT_FOUND" => "Call project_list to see the projects.",
         "JOB_NOT_FOUND" => "Call api_get_jobs to see the jobs.",
         "VALIDATION_ERROR" => "Check the arguments against the tool's description, and call project_validate to look for missing settings.",

@@ -84,6 +84,16 @@ fn scene_of<'a>(session: &'a Obj, scene_id: &str) -> Option<&'a Value> {
     session.get("segments").and_then(Value::as_array).and_then(|all| all.iter().find(|s| s.get("id").and_then(Value::as_str) == Some(scene_id)))
 }
 
+/// The id of the scene a route was given: an id, or the scene's 1-based number on the timeline like the other scene routes take. Anything else comes back as it was.
+fn scene_key(session: &Obj, scene: &str) -> String {
+    let wanted = scene.trim();
+    if scene_of(session, wanted).is_some() {
+        return wanted.to_string();
+    }
+    let segments = session.get("segments").and_then(Value::as_array).map(Vec::as_slice).unwrap_or_default();
+    wanted.parse::<usize>().ok().and_then(|n| n.checked_sub(1)).and_then(|i| segments.get(i)).and_then(|s| s.get("id").and_then(Value::as_str)).map_or_else(|| wanted.to_string(), str::to_string)
+}
+
 /// The scene's dialogue draft (or the one sent), checked, with the voice of its speaker. Nothing is changed.
 fn dialogue_request(session: &Obj, project: &str, scene_id: &str, dialogue: Option<&Value>) -> Result<(Value, Value), ApiError> {
     let scene = scene_of(session, scene_id).ok_or_else(|| ApiError::scene_not_found(scene_id, project))?;
@@ -225,6 +235,7 @@ async fn voice_description_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Valu
 pub async fn craft(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let loaded = load(&state, &pid).await?;
+    let sid = scene_key(&loaded.session, &sid);
     let (draft, _) = dialogue_request(&loaded.session, &pid, &sid, body.get("dialogue").filter(|v| !v.is_null()))?;
     let job = state.jobs.submit(CRAFT_DIALOGUE, Some(&pid), json!({"scene_id": sid, "dialogue": draft}), false)?;
     Ok(job_response(&job))
@@ -250,6 +261,7 @@ async fn craft_dialogue_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, 
 pub async fn generate(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let loaded = load(&state, &pid).await?;
+    let sid = scene_key(&loaded.session, &sid);
     let (draft, speaker) = dialogue_request(&loaded.session, &pid, &sid, body.get("dialogue").filter(|v| !v.is_null()))?;
     let key = elevenlabs_key(&state, &loaded.session);
     let take = elevenlabs::generate_speech(&Network, &json!(key), &text_or_empty(speaker.get("voice_id")), &draft).await.map_err(ApiError::validation)?;
@@ -268,6 +280,7 @@ pub async fn get_defaults(State(state): Shared, Path(pid): Path<String>) -> ApiR
 /// `GET /projects/{pid}/scenes/{sid}/audio-settings`
 pub async fn get_scene_settings(State(state): Shared, Path((pid, sid)): Path<(String, String)>) -> ApiResult {
     let loaded = load(&state, &pid).await?;
+    let sid = scene_key(&loaded.session, &sid);
     let scene = scene_of(&loaded.session, &sid).cloned().ok_or_else(|| ApiError::scene_not_found(&sid, &pid))?;
     let view = audio_settings_view(&Value::Object(loaded.session), &scene).map_err(ApiError::validation)?;
     Ok(success(view, Some(loaded.revision)))
@@ -294,6 +307,7 @@ async fn patch_audio(state: &Arc<AppState>, pid: String, scene_id: Option<String
         if let Some(incoming) = expected.filter(|i| *i != loaded.revision) {
             return Err(ApiError::revision_conflict(loaded.revision, incoming));
         }
+        let scene_id = scene_id.map(|id| scene_key(&loaded.session, &id));
         let session = Value::Object(loaded.session.clone());
         let segments = loaded.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
         let scene_number = scene_id.as_ref().map(|id| segments.iter().position(|s| s.get("id").and_then(Value::as_str) == Some(id.as_str())).ok_or_else(|| ApiError::scene_not_found(id, &pid))).transpose()?.map(|i| i + 1);
