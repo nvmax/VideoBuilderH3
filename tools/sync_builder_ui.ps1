@@ -63,6 +63,8 @@ if (Test-Path $patchFile) {
 }
 
 $commit = (git -C $Pack rev-parse --short HEAD 2>$null)
+# A copy made from a working tree that is ahead of its commit must say so.
+if (git -C $Pack status --porcelain -- web 2>$null) { $commit = "$commit plus uncommitted changes in web" }
 @"
 Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
 Pack commit: $commit

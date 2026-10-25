@@ -57,7 +57,7 @@ async fn the_acts_and_the_scene_plan_match_the_pack() {
 
 #[tokio::test]
 async fn the_places_and_the_scene_revision_match_the_pack() {
-    check_cases("story/places_steps.json", 20, "", dispatch).await;
+    check_cases("story/places_steps.json", 23, "", dispatch).await;
 }
 
 #[tokio::test]

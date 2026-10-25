@@ -20,6 +20,8 @@ JOE = {"id": "joe", "name": "Joe", "description": "a tall man", "reference_type"
 REFS = {"subjects": [MARA, JOE], "locations": []}
 MADE = {"subjects": [MARA, JOE], "locations": [{"id": "l1", "name": "Home - Kitchen", "story_setting_id": "setting_home", "description": "warm kitchen"}, {"id": "l2", "name": "Platform", "story_setting_id": "setting_station",
                                                                                                                       "description": "a platform"}, {"id": "l3", "name": "Dock", "description": "user card"}]}
+# The same cards after the Reference Builder edited them: none keeps its story link.
+LOST_LINKS = {"subjects": [MARA, JOE], "locations": [{k: v for k, v in card.items() if k != "story_setting_id"} for card in MADE["locations"]]}
 
 
 def scenes():
@@ -68,6 +70,9 @@ def cases():
         ({**base, "story_layer": {"story_flow_version": 2, "story_book": {"chapters": [{"id": "c", "title": "", "paragraphs": ["x"]}]}}, "scenes": []}, []),
         ({**base, "story_layer": {"story_flow_version": 2}, "scenes": []}, []),
         ({**base, "story_layer": LAYER, "reference_builder": MADE, "temperature": 0.3, "max_new_tokens": 800}, [LOOKS, SPOTS, SPOTS, SPOTS]),
+        # Map only: cards that lost their story link are still places to map to, and the first chapter without a setting maps to any card.
+        ({**base, "story_layer": LAYER, "reference_builder": LOST_LINKS, "map_only": True}, []),
+        ({**base, "story_layer": {**LAYER, "story_book": {**BOOK, "chapters": [{**BOOK["chapters"][0], "setting_id": ""}, *BOOK["chapters"][1:]]}}, "reference_builder": MADE, "map_only": True}, []),
     ]
     revise = [
         ({**base, "story_layer": {**LAYER, "story_scene_plan": plan("Joe comes in")}, "scene_id": "s4"}, [REVISE.replace('"scene": 2', '"scene": 5')]),

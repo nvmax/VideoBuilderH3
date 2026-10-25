@@ -264,19 +264,33 @@ fn name_unassigned_chapters(layer: &Value) -> Obj {
 }
 
 /// `_map_scenes_to_made_cards`: maps every planned scene to a location card that already exists. No card, look or description is made. A spot
-/// with no card of its own takes the first card of its setting.
+/// with no card of its own takes the first card of its setting. A card keeps the story link it already has (the apply step writes
+/// `story_setting_id` back), and a setting whose cards lost that link still maps to the unlinked cards, so a planned scene is not left unmapped.
+/// A chapter with no setting at all maps to any card.
 fn map_scenes_to_made_cards(payload: &Obj, groups: &[Group], settings: Vec<Value>) -> Value {
     let refs = first_truthy(payload, &["reference_builder", "referenceBuilder"]).cloned().unwrap_or_else(|| json!({}));
     let cards: Vec<Value> = array(refs.get("locations")).into_iter().filter(Value::is_object).collect();
+    let linked_to = |card: &Value| s(card.get("story_setting_id").filter(|v| truthy(v)));
+    let named: Vec<(String, &Value)> = cards
+        .iter()
+        .filter_map(|card| {
+            let name = s(card.get("name")).trim().to_string();
+            (!name.is_empty()).then_some((name, card))
+        })
+        .collect();
+    // A dict by lowercased name: a repeated name takes the later card.
+    let card_by_name: HashMap<String, &Value> = named.iter().map(|(name, card)| (name.to_lowercase(), *card)).collect();
     let mut locations: Vec<Card> = Vec::new();
     for group in groups {
-        let made: Vec<(String, &Value)> = cards
-            .iter()
-            .filter_map(|card| {
-                let name = s(card.get("name")).trim().to_string();
-                (!name.is_empty() && (group.setting_id.is_empty() || s(card.get("story_setting_id")) == group.setting_id)).then_some((name, card))
-            })
-            .collect();
+        let linked: Vec<(String, &Value)> = named.iter().filter(|(_, card)| linked_to(card) == group.setting_id).cloned().collect();
+        let unlinked: Vec<(String, &Value)> = named.iter().filter(|(_, card)| linked_to(card).is_empty()).cloned().collect();
+        let made = if group.setting_id.is_empty() {
+            named.clone()
+        } else if linked.is_empty() {
+            unlinked
+        } else {
+            linked
+        };
         for spot in &group.spots {
             let mut name = made.iter().find(|(n, _)| n.to_lowercase() == spot.card_name.to_lowercase()).map(|(n, _)| n.clone()).unwrap_or_default();
             if name.is_empty() {
@@ -292,7 +306,9 @@ fn map_scenes_to_made_cards(payload: &Obj, groups: &[Group], settings: Vec<Value
             let position = match locations.iter().position(|c| c.name.to_lowercase() == name.to_lowercase()) {
                 Some(p) => p,
                 None => {
-                    locations.push(Card { name: name.clone(), story_setting_id: group.setting_id.clone(), ..Card::default() });
+                    let own_setting = card_by_name.get(&name.to_lowercase()).map(|card| linked_to(card)).unwrap_or_default();
+                    let story_setting_id = if group.setting_id.is_empty() { own_setting } else { group.setting_id.clone() };
+                    locations.push(Card { name: name.clone(), story_setting_id, ..Card::default() });
                     locations.len() - 1
                 }
             };
