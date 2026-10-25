@@ -2944,7 +2944,7 @@ export function openBuilder(node, options = {}) {
     useVisionReference,
   });
   wireToolbar({
-    modelSelections: [videoSubTabs.modelSelection, miniMaxSubTabs.modelSelection, ...imageModelSelections],
+    modelSelections: [miniMaxSubTabs.modelSelection, ...imageModelSelections],
     render,
     activeSegment, addOverlaySegment, addOverlaySegmentButton, addSegment, addSegmentButton,
     addTimelineMarkerButton, addTimelineMarkerFromSelection, applyBuilderFullscreen, autoBuildButton,

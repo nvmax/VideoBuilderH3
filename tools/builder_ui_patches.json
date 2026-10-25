@@ -250,5 +250,12 @@
     "find": "row.onclick = (event) => handleSegmentPick(segment, event);",
     "replace": "row.dataset.h3SceneId = String(segment.id || \"\");\n      row.onclick = (event) => handleSegmentPick(segment, event);",
     "expect": 2
+  },
+  {
+    "why": "The Models dialog's Select models list has no LTX entry (the app makes MiniMax H3 videos only), so it opens on MiniMax H3 like Download models does. Without this it opened on the LTX models panel that the list no longer offered a button for.",
+    "file": "music_video_builder/builder.mjs",
+    "find": "modelSelections: [videoSubTabs.modelSelection, miniMaxSubTabs.modelSelection, ...imageModelSelections],",
+    "replace": "modelSelections: [miniMaxSubTabs.modelSelection, ...imageModelSelections],",
+    "expect": 1
   }
 ]
