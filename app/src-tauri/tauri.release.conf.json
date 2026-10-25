@@ -3,6 +3,7 @@
   "bundle": {
     "active": true,
     "targets": ["nsis"],
+    "createUpdaterArtifacts": true,
     "publisher": "VRGDG",
     "copyright": "Copyright (c) VRGDG",
     "shortDescription": "Turn a song into a MiniMax H3 music video with ComfyUI.",

@@ -25,6 +25,8 @@ pub struct AppConfig {
     pub comfy_output_dir: String,
     /// The LLM runner settings, saved for every project.
     pub llm: h3_llm::LlmConfig,
+    /// Look for a new version of the app when it starts. The check asks GitHub for a public file and sends nothing else.
+    pub check_for_updates: bool,
 }
 
 impl Default for AppConfig {
@@ -38,6 +40,7 @@ impl Default for AppConfig {
             api_bind: "127.0.0.1:8190".into(),
             comfy_output_dir: String::new(),
             llm: h3_llm::LlmConfig::default(),
+            check_for_updates: true,
         }
     }
 }

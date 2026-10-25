@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "tauri": "tauri",
-    "release": "tauri build --config src-tauri/tauri.release.conf.json"
+    "release": "tauri build --config src-tauri/tauri.release.conf.json",
+    "release:local": "tauri build --config src-tauri/tauri.release.conf.json --config src-tauri/tauri.local.conf.json"
   },
   "license": "MIT",
   "dependencies": {},

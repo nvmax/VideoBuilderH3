@@ -64,7 +64,8 @@ try {
         }
         Write-Step 'Building the installer. The first build takes several minutes.'
         $started = Get-Date
-        npm run release
+        # A build on this computer is not published, so it does not make the signed update files (they need the private update key).
+        npm run release:local
         if ($LASTEXITCODE -ne 0) { throw 'The build failed. The messages above say why.' }
     }
     finally {

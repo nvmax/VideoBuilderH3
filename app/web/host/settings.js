@@ -243,6 +243,15 @@ function addMenuEntry(root) {
     mcp.title = "Connect an AI agent (Claude, Codex, Cursor, LM Studio and others) to the MCP server built into this app.";
     mcp.onclick = () => import("/host/mcp_setup.js").then((module) => module.openMcpSetup());
     menu.insertBefore(mcp, found);
+    // Updates are installed by the app window, so a browser tab that shows the app has no entry for them.
+    if (window.__TAURI_INTERNALS__?.invoke) {
+      const updates = found.cloneNode(true);
+      updates.textContent = "Check for Updates";
+      updates.dataset.h3AppSettings = "1";
+      updates.title = "Look for a newer version of this app and install it.";
+      updates.onclick = () => import("/host/updates.js").then((module) => module.openUpdates());
+      menu.insertBefore(updates, found);
+    }
   }
 }
 

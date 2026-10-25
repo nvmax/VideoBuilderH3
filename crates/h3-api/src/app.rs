@@ -109,7 +109,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/modes", get(modes))
         .route("/setup/status", get(crate::setup_routes::status))
         .route("/setup/check", post(crate::setup_routes::check_settings))
-        .route("/setup/config", axum::routing::put(crate::setup_routes::save))
+        .route("/setup/config", get(crate::setup_routes::config).put(crate::setup_routes::save))
         .route("/setup/mcp", get(crate::mcp::info))
         .route("/agent/activity", get(crate::activity::recent))
         .route("/openapi.json", get(crate::mcp::openapi))

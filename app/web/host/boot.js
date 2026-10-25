@@ -62,6 +62,8 @@ async function start() {
   startAppSettings();
   const { startAgentFollow } = await import("/host/agent_follow.js");
   startAgentFollow();
+  const { startUpdates } = await import("/host/updates.js");
+  startUpdates();
 }
 
 start().catch(showFailure);

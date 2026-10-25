@@ -16,7 +16,7 @@ use crate::app::{blocking, body_object, Shared};
 use crate::error::{success, ApiError, ApiResult};
 
 /// The settings the setup can change.
-const SETTINGS: [&str; 5] = ["comfy_url", "project_root", "ffmpeg_path", "ffprobe_path", "comfy_output_dir"];
+const SETTINGS: [&str; 6] = ["comfy_url", "project_root", "ffmpeg_path", "ffprobe_path", "comfy_output_dir", "check_for_updates"];
 
 fn check(id: &str, label: &str, level: &str, detail: impl Into<String>, fix: &str) -> Value {
     json!({"id": id, "label": label, "level": level, "ok": level != "fail", "detail": detail.into(), "fix": fix})
@@ -28,6 +28,10 @@ fn with_overrides(base: &AppConfig, over: &serde_json::Map<String, Value>) -> Re
     for (key, value) in over {
         if !SETTINGS.contains(&key.as_str()) {
             return Err(ApiError::validation(format!("Unknown setting '{key}'. Settings: {}.", SETTINGS.join(", "))));
+        }
+        if key == "check_for_updates" {
+            cfg.check_for_updates = value.as_bool().ok_or_else(|| ApiError::validation("check_for_updates must be true or false."))?;
+            continue;
         }
         let Some(text) = value.as_str() else {
             return Err(ApiError::validation(format!("{key} must be text.")));
@@ -63,6 +67,7 @@ fn config_view(cfg: &AppConfig) -> Value {
         "ffprobe_path": cfg.ffprobe_path,
         "comfy_output_dir": cfg.comfy_output_dir,
         "api_bind": cfg.api_bind,
+        "check_for_updates": cfg.check_for_updates,
     })
 }
 
@@ -194,6 +199,14 @@ pub async fn status(State(state): Shared) -> ApiResult {
 pub async fn check_settings(State(state): Shared, body: Option<Json<Value>>) -> ApiResult {
     let cfg = with_overrides(&state.cfg, &body_object(body)?)?;
     Ok(success(report(&state, cfg).await, None))
+}
+
+/// `GET /setup/config`: the saved settings, without the checks `GET /setup/status` runs. The file is read, so a setting that applies at once
+/// (`check_for_updates`) shows what was just saved.
+pub async fn config(State(state): Shared) -> ApiResult {
+    let path = state.config_path.clone();
+    let saved = blocking(move || AppConfig::load(&path)).await?.unwrap_or_else(|_| state.cfg.clone());
+    Ok(success(config_view(&saved), None))
 }
 
 /// `PUT /setup/config`: save the settings to the config file. They are used after the app restarts.

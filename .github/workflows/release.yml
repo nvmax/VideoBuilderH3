@@ -1,0 +1,45 @@
+# Builds the installer when a version tag is pushed, signs it for the app's updater and publishes the release.
+# Make a release: tools\set_version.ps1 -Version 0.1.1, commit, git tag -a v0.1.1 -m "H3 Studio 0.1.1", git push origin main v0.1.1.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Download ffmpeg
+        shell: pwsh
+        run: ./tools/fetch_ffmpeg.ps1
+
+      - name: Install the npm packages
+        working-directory: app
+        run: npm ci
+
+      - name: Build and sign the installer
+        working-directory: app
+        run: npm run release
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+      - name: Publish the release
+        shell: pwsh
+        run: ./tools/publish_release.ps1 -Tag "$env:GITHUB_REF_NAME" -Repo "$env:GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ github.token }}

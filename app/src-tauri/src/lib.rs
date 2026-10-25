@@ -1,6 +1,8 @@
 //! Tauri entry point. The app serves the same `/api/v1` the agents use and the UI talks to it, so there is one code
 //! path for the window and for outside tools.
 
+mod updates;
+
 use std::sync::atomic::{AtomicU32, Ordering};
 
 use h3_project::AppConfig;
@@ -41,10 +43,14 @@ fn open_popup(app: &tauri::AppHandle, url: tauri::Url, features: NewWindowFeatur
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_updater::Builder::new().build())
+        .manage(updates::Updates::default())
         .setup(|app| {
             let config_path = AppConfig::default_path();
             let cfg = AppConfig::load(&config_path).map_err(|e| format!("The config file could not be read: {e}"))?;
             let state = h3_api::build_state_for(cfg, &config_path)?;
+            // An update is refused while a job runs, so the update commands read the same job list the API serves.
+            app.manage(state.jobs.clone());
             // The address is taken before the window opens, so the window finds the server there. The window shows the Builder from the server's own
             // address: the page, its media and the API share one origin, like the Builder inside ComfyUI.
             let listener = tauri::async_runtime::block_on(h3_api::bind(&state)).map_err(|e| format!("The address {} could not be used: {e}", state.cfg.api_bind))?;
@@ -69,7 +75,7 @@ pub fn run() {
                 window.app_handle().exit(0);
             }
         })
-        .invoke_handler(tauri::generate_handler![restart_app])
+        .invoke_handler(tauri::generate_handler![restart_app, updates::app_version, updates::update_check, updates::update_progress, updates::update_install])
         .run(tauri::generate_context!())
         .expect("error while running the VRGDG H3 Studio app");
 }

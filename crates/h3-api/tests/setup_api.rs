@@ -141,6 +141,25 @@ async fn saved_settings_keep_the_llm_settings_and_end_the_first_run() {
 }
 
 #[tokio::test]
+async fn the_update_check_is_on_until_it_is_switched_off() {
+    let s = start().await;
+    let config = s.dir.path().join("config.json");
+    let (code, shown) = s.call(Method::GET, "/setup/config", None).await;
+    assert_eq!((code, shown["data"]["check_for_updates"].clone()), (200, json!(true)));
+    let (code, _) = s.call(Method::PUT, "/setup/config", Some(json!({"check_for_updates": "no"}))).await;
+    assert_eq!(code, 400);
+    assert!(!config.exists(), "a refused change writes nothing");
+    let (code, saved) = s.call(Method::PUT, "/setup/config", Some(json!({"check_for_updates": false}))).await;
+    assert_eq!(code, 200, "{saved}");
+    assert!(!AppConfig::load(&config).unwrap().check_for_updates);
+    let (_, shown) = s.call(Method::GET, "/setup/config", None).await;
+    assert_eq!(shown["data"]["check_for_updates"], false, "the saved value is shown at once");
+    // An older config file with no such key keeps loading, with the check on.
+    std::fs::write(&config, r#"{"comfy_url": "http://127.0.0.1:8188"}"#).unwrap();
+    assert!(AppConfig::load(&config).unwrap().check_for_updates);
+}
+
+#[tokio::test]
 async fn a_project_folder_that_is_a_file_is_refused() {
     let s = start().await;
     let file = s.dir.path().join("not_a_folder");

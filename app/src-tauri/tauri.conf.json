@@ -12,6 +12,13 @@
       "csp": null
     }
   },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDI3NkVBM0Y3OUZENUJFNTcKUldSWHZ0V2Y5Nk51Snl1bm9xbXFoYXJGeVZ3dit5SitqTW5sWmp3STA4WXBJUTMzMnZDZDEzbXYK",
+      "endpoints": ["https://github.com/nvmax/VideoBuilderH3/releases/latest/download/latest.json"],
+      "windows": { "installMode": "passive" }
+    }
+  },
   "bundle": {
     "active": true,
     "targets": "all",
