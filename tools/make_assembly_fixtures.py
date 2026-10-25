@@ -60,7 +60,28 @@ VARIANTS = {
     "omit_lyrics": {"minimax_h3_settings": {"audio_mode": "input_audio", "omit_lyrics_from_video_prompts": True}},
     "masked": {"minimax_h3_settings": {"audio_mode": "input_audio", "continuity_mode": "latent_continuation_masked"}, "builder_storyboard_defaults": {"minimax_h3_cut_frequency": 2}},
     "session_mode": {"video_mode": "reference_to_video"},
+    # Theatrical presets chosen for the whole project, and scenes with their own Scene Defaults on top.
+    "theatrical_project": {"builder_storyboard_defaults": {"minimax_h3_cut_frequency": 2, "performance_style": "theatrical", "camera_flow": "pretty_little_malfunction"}, "default_facial_performance": "theatrical"},
+    "theatrical_scoped": {"builder_storyboard_defaults": {"minimax_h3_cut_frequency": 2, "performance_style": "theatrical", "camera_flow": "pretty_little_malfunction"}, "default_facial_performance": "theatrical"},
+    "omit_lyrics_theatrical": {"omit_lyrics_from_video_prompts": True, "default_facial_performance": "theatrical"},
 }
+
+
+def scene_overrides(session):
+    """Scene Defaults on three scenes: a cut frequency and style, other presets (and an empty facial override), and a broken value."""
+    segments = session["segments"]
+    segments[0]["scene_defaults"] = {"minimax_h3_cut_frequency": 5, "minimax_h3_cut_style": "hard"}
+    segments[1]["scene_defaults"] = {"performance_style": "calm", "camera_flow": "close_ups", "facial_performance": "off"}
+    segments[2]["scene_defaults"] = {"facial_performance": "", "facial_performance_custom": "wry brows"}
+    segments[2]["motion_summary"] = "slow push in"
+    segments[3]["scene_defaults"] = "broken"
+
+
+def make_session(name, extra):
+    session = base_session(**copy.deepcopy(extra))
+    if name == "theatrical_scoped":
+        scene_overrides(session)
+    return session
 
 SHOTS = {
     "none": [],
@@ -92,9 +113,9 @@ def main() -> int:
     pa = importlib.import_module("vrgdg_pack.minimax.prompt_assembly")
 
     assemble, context, validate = [], [], []
-    sessions = {name: base_session(**copy.deepcopy(extra)) for name, extra in VARIANTS.items()}
+    sessions = {name: make_session(name, extra) for name, extra in VARIANTS.items()}
     for vname, extra in VARIANTS.items():
-        session = base_session(**copy.deepcopy(extra))
+        session = make_session(vname, extra)
         for index in range(len(session["segments"])):
             scene = copy.deepcopy(session["segments"][index])
             case = {"variant": vname, "index": index}

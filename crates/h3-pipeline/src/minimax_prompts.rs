@@ -22,9 +22,11 @@ use h3_core::prompt::performance::strip_singing_articulation;
 use h3_core::prompt::plan::{apply_cut_style, shot_plan, HARD_LIMIT};
 use h3_core::prompt::task::{build_shot_task, ShotTaskArgs};
 use h3_core::prompt::text::{assemble_prompt, parse_shot_descriptions};
-use h3_core::pyval::{text_or_empty, to_float, truthy, Obj};
+use h3_core::pyval::{py_str, text_or_empty, to_float, truthy, Obj};
 use h3_core::scene::ordered_reference_items;
+use h3_core::scene_defaults::normalize_scene_defaults;
 use h3_core::style::{append_temporal_world_effect, apply_fx, fx_reserve, storyboard_cut_plan_for_duration, temporal_world_effect_verbiage, video_style_guidance, video_style_label};
+use h3_core::theatrical;
 use h3_core::timeline::sort_segments;
 use h3_core::CoreError;
 use h3_llm::{chat, ChatRequest, LlmConfig, LlmError};
@@ -87,36 +89,84 @@ fn obj_of(value: Option<&Value>) -> Obj {
     value.and_then(Value::as_object).cloned().unwrap_or_default()
 }
 
-/// The scene's directions as `Title:\nvalue` blocks, in the Builder's order. The Storyboard card JSON the Builder adds
+/// `str(value)` for a value that is set, empty for a missing or null one, trimmed (`_text` of `storyboard/session_sync.py`).
+fn card_text(value: Option<&Value>) -> String {
+    match value {
+        None | Some(Value::Null) => String::new(),
+        Some(other) => py_str(Some(other)).trim().to_string(),
+    }
+}
+
+/// `a or b`: the first of the two that is truthy.
+fn either<'a>(a: Option<&'a Value>, b: Option<&'a Value>) -> Option<&'a Value> {
+    a.filter(|v| truthy(v)).or(b)
+}
+
+/// The fields of the scene's Storyboard card that the directions read, made from the timeline scene the way `scene_cards` in
+/// `storyboard/session_sync.py` makes them: a scene without its own performance style takes the project's, or its Scene Defaults'.
+fn scene_card(segment: &Obj, project_defaults: &Obj) -> Obj {
+    let scoped = normalize_scene_defaults(segment.get("scene_defaults").unwrap_or(&Value::Null), false).unwrap_or_default();
+    let mut defaults = project_defaults.clone();
+    defaults.extend(scoped.clone());
+    let mut card = Obj::new();
+    card.insert("scene_defaults".into(), Value::Object(scoped));
+    card.insert("timeline_note".into(), json!(segment.get("timeline_note").filter(|v| truthy(v)).map(|v| py_str(Some(v))).unwrap_or_default()));
+    for key in ["story_beat", "lyric_section", "shot_type", "character_motion", "facial_performance", "facial_performance_custom", "audio_direction", "continuity"] {
+        card.insert(key.into(), json!(card_text(segment.get(key))));
+    }
+    let notes = segment.get("i2v_notes").filter(|v| !v.is_null()).or_else(|| segment.get("video_notes").filter(|v| !v.is_null()));
+    card.insert("motion_summary".into(), json!(card_text(notes)));
+    card.insert("camera_motion".into(), json!(card_text(either(segment.get("camera_motion"), segment.get("motion_preset")))));
+    card.insert("performance_style".into(), json!(card_text(either(segment.get("performance_style"), defaults.get("performance_style")))));
+    card
+}
+
+/// The card's directions as `Title:\nvalue` blocks, in the Builder's order. The Storyboard card JSON the Builder adds
 /// after them is left out: this app has no Storyboard.
-fn direction_lines(segment: &Obj) -> Vec<String> {
+fn direction_lines(card: &Obj) -> Vec<String> {
     let mut lines = Vec::new();
     let mut add = |title: &str, value: String| {
         if !value.is_empty() {
             lines.push(format!("{title}:\n{value}"));
         }
     };
-    add("Director note (timeline)", field(segment, "timeline_note"));
-    add("Storyboard scene story beat", field(segment, "story_beat"));
-    let motion = field(segment, "i2v_notes");
+    add("Director note (timeline)", card_text(card.get("timeline_note")));
+    add("Storyboard scene story beat", card_text(card.get("story_beat")));
+    let motion = card_text(card.get("motion_summary"));
     add("Storyboard motion/video summary", motion.clone());
     if motion.is_empty() {
-        add("Storyboard camera motion", field(segment, "camera_motion"));
+        add("Storyboard camera motion", card_text(card.get("camera_motion")));
     }
-    add("Storyboard shot type", field(segment, "shot_type"));
-    add("Storyboard character motion guidance", field(segment, "character_motion"));
-    add("Storyboard performance direction", field(segment, "performance_style"));
-    let facial = Some(field(segment, "facial_performance_custom")).filter(|s| !s.is_empty()).unwrap_or_else(|| field(segment, "facial_performance"));
-    add("Storyboard facial performance direction", facial);
-    add("Storyboard lyric section", field(segment, "lyric_section"));
-    add("Exact manual audio / sound direction", field(segment, "audio_direction"));
-    add("Exact manual continuity requirements", field(segment, "continuity"));
+    add("Storyboard shot type", card_text(card.get("shot_type")));
+    add("Storyboard character motion guidance", card_text(card.get("character_motion")));
+    add("Storyboard performance direction", card_text(card.get("performance_style")));
+    add("Storyboard facial performance direction", card_text(either(card.get("facial_performance_custom"), card.get("facial_performance"))));
+    add("Storyboard lyric section", card_text(card.get("lyric_section")));
+    add("Exact manual audio / sound direction", card_text(card.get("audio_direction")));
+    add("Exact manual continuity requirements", card_text(card.get("continuity")));
     lines
 }
 
-fn describe(item: &Obj) -> String {
-    let (name, description) = (field(item, "name"), field(item, "description"));
-    if description.is_empty() { name } else { format!("{name}: {description}") }
+/// `_id_list` of `storyboard/session_sync.py`: a list of ids, or ids separated by commas.
+fn id_list(value: Option<&Value>) -> Vec<String> {
+    match value {
+        Some(Value::Array(items)) => items.iter().map(|item| card_text(Some(item))).filter(|id| !id.is_empty()).collect(),
+        other => card_text(other).split(',').map(|part| part.trim().to_string()).filter(|part| !part.is_empty()).collect(),
+    }
+}
+
+/// The scene's mapped characters as the Storyboard card lists them: name and description, in the order of the Reference Builder's scene map.
+fn mapped_subjects(session: &Obj, segment: &Obj) -> Vec<(String, String)> {
+    if segment.get("no_character_present").is_some_and(truthy) {
+        return Vec::new();
+    }
+    let Some(refs) = session.get("flux_reference_builder").and_then(Value::as_object) else { return Vec::new() };
+    let mut subjects: std::collections::HashMap<String, &Obj> = std::collections::HashMap::new();
+    for subject in refs.get("subjects").and_then(Value::as_array).into_iter().flatten().filter_map(Value::as_object) {
+        subjects.insert(card_text(subject.get("id")), subject);
+    }
+    let wanted = segment.get("id").and_then(Value::as_str).and_then(|id| refs.get("subject_scene_map").and_then(|map| map.get(id)));
+    id_list(wanted).iter().filter_map(|id| subjects.get(id)).map(|s| (card_text(s.get("name")), card_text(s.get("description")))).collect()
 }
 
 /// The text sent to the LLM: the instructions, the scene concept (the shot task), the notes and the acting direction.
@@ -177,7 +227,13 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
     let segment = segments.get(index).and_then(Value::as_object).cloned().ok_or_else(|| PromptError::Invalid("The scene was not found.".into()))?;
     let session_value = Value::Object(session.clone());
     let label = Some(field(&segment, "label")).filter(|l| !l.is_empty()).unwrap_or_else(|| format!("Scene {}", index + 1));
-    let defaults = obj_of(session.get("builder_storyboard_defaults"));
+    // The project's defaults with the scene's own Scene Defaults on top.
+    let project_defaults = obj_of(session.get("builder_storyboard_defaults"));
+    let scoped = normalize_scene_defaults(segment.get("scene_defaults").unwrap_or(&Value::Null), false).unwrap_or_default();
+    let mut defaults = theatrical::project_defaults(session);
+    defaults.extend(scoped.clone());
+    let card = scene_card(&segment, &project_defaults);
+    let theatrical_lines = theatrical::direction_lines(&card, Some(&defaults));
     let settings = obj_of(session.get("minimax_h3_settings"));
     let mut warnings: Vec<String> = Vec::new();
 
@@ -203,19 +259,19 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
         }
         (performer, performer_labels) = scene_performers(session, &segment, MODE);
     }
-    let mut card = Obj::new();
+    let mut look = Obj::new();
     for (key, from) in [("video_style", "minimax_h3_video_style"), ("video_style_custom", "minimax_h3_video_style_custom"), ("temporal_world_effect_override", "temporal_world_effect_override"), ("temporal_world_effect_custom", "temporal_world_effect_custom")] {
-        card.insert(key.into(), json!(field(&segment, from)));
+        look.insert(key.into(), json!(field(&segment, from)));
     }
-    let style = video_style_label(&card, &defaults);
-    let style_text = video_style_guidance(&card, &defaults);
-    let temporal = temporal_world_effect_verbiage(&card, &defaults);
+    let style = video_style_label(&look, &defaults);
+    let style_text = video_style_guidance(&look, &defaults);
+    let temporal = temporal_world_effect_verbiage(&look, &defaults);
     let lyric_raw = field(&segment, "lyric_text");
     let visual_only = segment.get("lyric_no_lip_sync").is_some_and(truthy) || segment.get("no_character_present").is_some_and(truthy) || h3_core::lyric_scenes::is_instrumental_lyric_text(&lyric_raw);
     let lyric = if visual_only { String::new() } else { h3_core::pyval::collapse_ws(&lyric_raw) };
     let labels = reference_labels(&items);
-    let subject_text = items.iter().filter(|i| field(i, "kind") == "subject").map(describe).collect::<Vec<_>>().join("\n");
-    let location_text = items.iter().filter(|i| field(i, "kind") == "location").map(describe).collect::<Vec<_>>().join("\n");
+    let subject_text = mapped_subjects(session, &segment).iter().map(|(name, description)| if description.is_empty() { name.clone() } else { format!("{name}: {description}") }).collect::<Vec<_>>().join("\n");
+    let location_text = location_ref(session, &segment).map(|card| [field(&card, "name"), field(&card, "description")].into_iter().filter(|part| !part.is_empty()).collect::<Vec<_>>().join("\n")).unwrap_or_default();
 
     // A scene continued with masked latent continuation is the next moment of the previous take.
     let mut continuation: Option<Obj> = None;
@@ -301,7 +357,9 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
         if budget.fixed_chars >= budget.hard_limit {
             return Err(PromptError::Invalid("The fixed MiniMax H3 format already exceeds 7,000 characters.".into()));
         }
-        let mut context = direction_lines(&segment).join("\n\n");
+        let mut lines = direction_lines(&card);
+        lines.extend(theatrical_lines.iter().cloned());
+        let mut context = lines.join("\n\n");
         if !style_text.is_empty() {
             context.push_str(&format!("\n\nThe builder adds this exact video style look to the opening line. Write shots that fit it; do not copy it into the shots:\n{style_text}"));
         }
@@ -321,10 +379,10 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
             cut_plan: plan.clone(),
             style: style.clone(),
             labels: labels.clone(),
-            camera_speed: number(segment.get("camera_motion_speed").or_else(|| defaults.get("camera_motion_speed")), 4.0),
-            character_speed: number(segment.get("character_motion_speed").or_else(|| defaults.get("character_motion_speed")), 4.0),
-            camera_guidance: Some(field(&segment, "camera_motion_speed_guidance")).filter(|s| !s.is_empty()).unwrap_or_else(|| field(&defaults, "camera_guidance")),
-            character_guidance: Some(field(&segment, "character_motion_guidance")).filter(|s| !s.is_empty()).unwrap_or_else(|| field(&defaults, "character_guidance")),
+            camera_speed: number(scoped.get("camera_motion_speed").or_else(|| segment.get("camera_motion_speed")).or_else(|| defaults.get("camera_motion_speed")), 4.0),
+            character_speed: number(scoped.get("character_motion_speed").or_else(|| segment.get("character_motion_speed")).or_else(|| defaults.get("character_motion_speed")), 4.0),
+            camera_guidance: card_text(either(scoped.get("camera_guidance"), either(segment.get("camera_motion_speed_guidance"), defaults.get("camera_guidance")))),
+            character_guidance: card_text(either(scoped.get("character_guidance"), either(segment.get("character_motion_guidance"), defaults.get("character_guidance")))),
             lyric_text: lyric.clone(),
             visual_only,
             no_character: segment.get("no_character_present").is_some_and(truthy),

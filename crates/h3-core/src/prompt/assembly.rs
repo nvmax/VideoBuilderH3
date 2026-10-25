@@ -73,7 +73,8 @@ pub fn effective_mode(segment: &Obj, session: &Obj, mode: Option<&str>) -> &'sta
 
 /// The scene's shot plan from its length and the project's saved cut frequency and cut style.
 pub fn scene_cut_plan(segment: &Obj, session: &Obj) -> Obj {
-    apply_cut_style(&frequency_cut_plan(segment, session), defaults_of(session).get("minimax_h3_cut_style"))
+    let defaults = crate::scene_defaults::with_scene_overrides(&defaults_of(session), segment);
+    apply_cut_style(&frequency_cut_plan(segment, session), defaults.get("minimax_h3_cut_style"))
 }
 
 fn plan_int(plan: &Obj, key: &str) -> usize {
@@ -389,6 +390,13 @@ pub fn build_minimax_prompt_context(segment: &Obj, session: &Obj, mode: Option<&
     }
     let base = text_or_empty(context.get("instruction_text"));
     let extra = emotion_expression_instruction(&context);
-    context.insert("instruction_text".into(), json!(format!("{base}\n\n{extra}")));
+    let mut text = format!("{base}\n\n{extra}");
+    // Theatrical presets the scene or the project selects.
+    let presets = crate::theatrical::direction_lines(segment, Some(&crate::theatrical::project_defaults(session)));
+    if !presets.is_empty() {
+        text.push_str("\n\n");
+        text.push_str(&presets.join("\n\n"));
+    }
+    context.insert("instruction_text".into(), json!(text));
     context
 }

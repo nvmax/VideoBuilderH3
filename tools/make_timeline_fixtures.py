@@ -201,6 +201,33 @@ def main() -> int:
             except card.SceneCardFieldError as exc:
                 entry["error"] = str(exc)
             cases.append(entry)
+    # Scene Defaults: the scene's own overrides, merged, cleared, refused, and kept in step with the scene fields that share their names.
+    scoped_patches = [
+        ({}, {"scene_defaults": {"camera_flow": "medium_shots", "camera_motion_speed": 0, "unused": None}}),
+        ({}, {"scene_defaults": {"camera_flow": "medium_shots", "camera_motion_speed": 0}}),
+        ({}, {"scene_defaults": {}}),
+        ({}, {"scene_defaults": {"nope": 1, "also": 2}}),
+        ({}, {"scene_defaults": {"camera_motion_speed": 11}}),
+        ({}, {"scene_defaults": {"temporal_allow_background_extras": 1}}),
+        ({}, {"scene_defaults": "x"}),
+        ({}, {"scene_defaults": {"performance_style": "theatrical", "video_style": "noir", "facial_performance_custom": "wry"}, "label": "Opening"}),
+        ({"scene_defaults": {"camera_flow": "close_ups", "performance_style": "calm"}}, {"scene_defaults": {"camera_flow": "medium_shots"}}),
+        ({"scene_defaults": {"camera_flow": "close_ups", "performance_style": "calm"}}, {"scene_defaults": {}}),
+        ({"scene_defaults": {"camera_flow": "close_ups", "performance_style": "calm", "video_style": "noir"}}, {"performance_style": "theatrical", "video_style_custom": "grain"}),
+        ({"scene_defaults": {"video_style": "noir"}}, {"video_style": "pastel", "label": "x"}),
+        ({"scene_defaults": "broken"}, {"label": "x"}),
+    ]
+    for base, patch in scoped_patches:
+        for engine, mode in (("minimax_h3", "zimage"),):
+            entry = {"patch": patch, "engine": engine, "mode": mode, "base": base}
+            try:
+                values, rest = card.parse_scene_card_patch(patch)
+                segment = {**copy.deepcopy(base_seg), **copy.deepcopy(base)}
+                card.apply_to_segment(segment, values, video_engine=engine, image_mode=mode)
+                entry.update({"values": values, "rest": rest, "segment": segment, "card_only": card.card_only_names(values)})
+            except card.SceneCardFieldError as exc:
+                entry["error"] = str(exc)
+            cases.append(entry)
     cases.append({"names": card.field_names()})
     write("scene_card", cases)
     return 0

@@ -1540,6 +1540,26 @@
    "segment": {
     "id": "s1",
     "lyric_text": "x",
+    "facial_performance": "theatrical",
+    "facial_performance_custom": ""
+   },
+   "session": {},
+   "return": "Use big, playful, cheeky facial acting that develops from beat to beat, Select expressive details that fit the words and each character's role: brows shooting up, one eyebrow cocked, sly sideways glances, eyes widening with mock alarm or flaring with glee, extravagant eye rolls, wide grins, slow knowing winks, mock-innocent pouts, sugary fake-polite smiles that crack into delight, Connect each change to a specific thought, gesture, or reaction, giving each expression time to read clearly, Let a supporting character's prim disapproval, frozen astonishment, skeptical raised brow, or deadpan pride develop into amusement when the scene calls for it, For intimate passages, soften the eyes and cheeks, lift the inner brows gently, settle into a small fond smile and warm knowing gaze."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "lyric_text": "x",
+    "facial_performance": "theatrical",
+    "facial_performance_custom": "soft eyes, parted lips, and a tender glance. Warm cheeks; jaw relaxed, bright notes"
+   },
+   "session": {},
+   "return": "Use big, playful, cheeky facial acting that develops from beat to beat, Select expressive details that fit the words and each character's role: brows shooting up, one eyebrow cocked, sly sideways glances, eyes widening with mock alarm or flaring with glee, extravagant eye rolls, wide grins, slow knowing winks, mock-innocent pouts, sugary fake-polite smiles that crack into delight, Connect each change to a specific thought, gesture, or reaction, giving each expression time to read clearly, Let a supporting character's prim disapproval, frozen astonishment, skeptical raised brow, or deadpan pride develop into amusement when the scene calls for it, For intimate passages, soften the eyes and cheeks, lift the inner brows gently, settle into a small fond smile and warm knowing gaze, soft eyes, a tender glance, Warm cheeks."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "lyric_text": "x",
     "facial_performance": "unknown",
     "facial_performance_custom": ""
    },
@@ -1573,6 +1593,95 @@
    },
    "session": {},
    "return": ""
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "scene_defaults": {
+     "facial_performance": "theatrical"
+    }
+   },
+   "session": {},
+   "return": "Use big, playful, cheeky facial acting that develops from beat to beat, Select expressive details that fit the words and each character's role: brows shooting up, one eyebrow cocked, sly sideways glances, eyes widening with mock alarm or flaring with glee, extravagant eye rolls, wide grins, slow knowing winks, mock-innocent pouts, sugary fake-polite smiles that crack into delight, Connect each change to a specific thought, gesture, or reaction, giving each expression time to read clearly, Let a supporting character's prim disapproval, frozen astonishment, skeptical raised brow, or deadpan pride develop into amusement when the scene calls for it, For intimate passages, soften the eyes and cheeks, lift the inner brows gently, settle into a small fond smile and warm knowing gaze."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "scene_defaults": {
+     "facial_performance": "theatrical"
+    }
+   },
+   "session": {
+    "default_facial_performance": "love_tender"
+   },
+   "return": "Use big, playful, cheeky facial acting that develops from beat to beat, Select expressive details that fit the words and each character's role: brows shooting up, one eyebrow cocked, sly sideways glances, eyes widening with mock alarm or flaring with glee, extravagant eye rolls, wide grins, slow knowing winks, mock-innocent pouts, sugary fake-polite smiles that crack into delight, Connect each change to a specific thought, gesture, or reaction, giving each expression time to read clearly, Let a supporting character's prim disapproval, frozen astonishment, skeptical raised brow, or deadpan pride develop into amusement when the scene calls for it, For intimate passages, soften the eyes and cheeks, lift the inner brows gently, settle into a small fond smile and warm knowing gaze."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "scene_defaults": {
+     "facial_performance": ""
+    }
+   },
+   "session": {
+    "default_facial_performance": "love_tender"
+   },
+   "return": "Use natural expressive facial performance: engaged eyes, subtle natural eye movement, active brows, occasional natural blinking."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "scene_defaults": {
+     "facial_performance": "off"
+    }
+   },
+   "session": {
+    "default_facial_performance": "love_tender"
+   },
+   "return": ""
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "scene_defaults": {
+     "facial_performance_custom": "wry brows"
+    }
+   },
+   "session": {
+    "default_facial_performance": "love_tender",
+    "default_facial_performance_custom": "extra eyes"
+   },
+   "return": "Use tender love-song facial performance: softened eyes, subtle natural eye movement, warm smile, affectionate gaze, raised inner brows, gentle head tilt, relaxed cheeks, subtle vulnerable emotion, occasional natural blinking, wry brows."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "facial_performance": "pop_flirty",
+    "scene_defaults": {
+     "facial_performance": "theatrical"
+    }
+   },
+   "session": {},
+   "return": "Use playful pop facial performance: flirty smile, coy glance, subtle natural eye movement, light pout, glossy pout, raised brows, charming direct gaze, playful smirk, subtle head tilt, occasional natural blinking."
+  },
+  {
+   "segment": {
+    "id": "s1",
+    "scene_defaults": "broken"
+   },
+   "session": {
+    "default_facial_performance": "happy_joyful"
+   },
+   "return": "Use joyful facial performance: bright smile, smiling eyes, subtle natural eye movement, raised cheeks, delighted expression, playful gaze, relaxed brows, head tilt with smile, occasional natural blinking."
+  },
+  {
+   "segment": {
+    "id": "s1"
+   },
+   "session": {
+    "default_facial_performance": "theatrical"
+   },
+   "return": "Use big, playful, cheeky facial acting that develops from beat to beat, Select expressive details that fit the words and each character's role: brows shooting up, one eyebrow cocked, sly sideways glances, eyes widening with mock alarm or flaring with glee, extravagant eye rolls, wide grins, slow knowing winks, mock-innocent pouts, sugary fake-polite smiles that crack into delight, Connect each change to a specific thought, gesture, or reaction, giving each expression time to read clearly, Let a supporting character's prim disapproval, frozen astonishment, skeptical raised brow, or deadpan pride develop into amusement when the scene calls for it, For intimate passages, soften the eyes and cheeks, lift the inner brows gently, settle into a small fond smile and warm knowing gaze."
   }
  ],
  "directions": [
@@ -51903,6 +52012,99 @@
    }
   },
   {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
    "session": "keep",
    "segment": {
     "id": "s1",
@@ -52296,6 +52498,99 @@
    }
   },
   {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
    "session": "built_in",
    "segment": {
     "id": "s1",
@@ -52680,6 +52975,99 @@
    }
   },
   {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
    "session": "speaking",
    "segment": {
     "id": "s1",
@@ -53056,6 +53444,99 @@
     "frequency": 0,
     "exact_duration_seconds": 0.1,
     "maximum_one_per_second_cuts": 0,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
     "cut_count": 0,
     "shot_count": 1,
     "cut_times_seconds": [],
@@ -53489,6 +53970,103 @@
    }
   },
   {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": {
+    "frequency": 5,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 3,
+    "shot_count": 4,
+    "cut_times_seconds": [
+     1.625,
+     3.25,
+     4.875
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
    "session": "freq_string",
    "segment": {
     "id": "s1",
@@ -53904,6 +54482,102 @@
     "shot_count": 1,
     "cut_times_seconds": [],
     "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": {
+    "frequency": 0,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 0,
+    "shot_count": 1,
+    "cut_times_seconds": [],
+    "continuous_shot": true,
+    "continuous": false
+   }
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": {
+    "frequency": 3,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
+    "continuous": false
+   }
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": {
+    "frequency": 4,
+    "exact_duration_seconds": 6.5,
+    "maximum_one_per_second_cuts": 6,
+    "cut_count": 2,
+    "shot_count": 3,
+    "cut_times_seconds": [
+     2.167,
+     4.333
+    ],
+    "continuous_shot": false,
     "continuous": false
    }
   }
@@ -54598,6 +55272,57 @@
    "return": true
   },
   {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "omit",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": true
+  },
+  {
    "session": "keep",
    "segment": {
     "id": "s1",
@@ -54865,6 +55590,57 @@
    "return": false
   },
   {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "keep",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": false
+  },
+  {
    "session": "built_in",
    "segment": {
     "id": "s1",
@@ -55132,6 +55908,57 @@
    "return": false
   },
   {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "built_in",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": false
+  },
+  {
    "session": "speaking",
    "segment": {
     "id": "s1",
@@ -55399,6 +56226,57 @@
    "return": false
   },
   {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": false
+  },
+  {
+   "session": "speaking",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": false
+  },
+  {
    "session": "hard_cuts",
    "segment": {
     "id": "s1",
@@ -55666,6 +56544,57 @@
    "return": true
   },
   {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "hard_cuts",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
+   },
+   "return": true
+  },
+  {
    "session": "freq_string",
    "segment": {
     "id": "s1",
@@ -55929,6 +56858,57 @@
     "start": 1.0,
     "end": 1.05,
     "lyric_text": "x"
+   },
+   "return": true
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 4,
+     "minimax_h3_cut_style": "hard"
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": 0
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": {
+     "minimax_h3_cut_frequency": "3"
+    }
+   },
+   "return": true
+  },
+  {
+   "session": "freq_string",
+   "segment": {
+    "id": "s1",
+    "start": 0.0,
+    "end": 6.5,
+    "lyric_text": "x",
+    "scene_defaults": "oops"
    },
    "return": true
   }

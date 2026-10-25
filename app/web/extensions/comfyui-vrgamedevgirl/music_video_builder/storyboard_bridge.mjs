@@ -510,6 +510,7 @@ export function createStoryboardBridge({
         segment.facial_performance = nextFacial;
         segment.facial_performance_custom = nextFacialCustom;
         segment.emotion_expression_tags = String(scene.emotion_expression_tags ?? segment.emotion_expression_tags ?? "").trim();
+        if (Object.prototype.hasOwnProperty.call(scene, "scene_defaults")) segment.scene_defaults = scene.scene_defaults || {};
         if (Object.prototype.hasOwnProperty.call(scene, "video_style")) segment.minimax_h3_video_style = String(scene.video_style || "").trim();
         if (Object.prototype.hasOwnProperty.call(scene, "video_style_custom")) segment.minimax_h3_video_style_custom = String(scene.video_style_custom || "").trim();
         if (Object.prototype.hasOwnProperty.call(scene, "temporal_world_effect_override")) segment.temporal_world_effect_override = String(scene.temporal_world_effect_override || "global").trim();
@@ -715,9 +716,6 @@ export function createStoryboardBridge({
         assertMiniMaxH3ReferenceDescriptionsReady(workingSegment, mode);
         if (mode === "video_to_video" && !workingSegment.minimax_h3_video_references.some((item) => String(item?.path || "").trim())) {
           throw new Error(`${sceneDisplayName(segment, segmentIndexInfo(segment).index)}: MiniMax Video to Video needs a reference video.`);
-        }
-        if (visionImages.length && state.textGemmaRunner === "llm_api" && !llmApiVisionModelSelected()) {
-          throw new Error("MiniMax image/reference prompting needs a vision-capable API model selected in LLM Runner.");
         }
         options.progress?.set(
           `${options.progressLabel || scene.label || sceneDisplayName(segment, segmentIndexInfo(segment).index)}: creating MiniMax ${modeLabel} prompt with the scene's H3 instructions...\n${gemmaRunnerLine({ vision: Boolean(visionImages.length) })}`,
@@ -985,6 +983,7 @@ export function createStoryboardBridge({
         segment.shot_type = String(scene.shot_type || "").trim();
         segment.camera_motion = String(scene.camera_motion || "").trim();
         segment.character_motion = String(scene.character_motion || "").trim();
+        segment.scene_defaults = scene.scene_defaults || {};
         segment.temporal_world_effect_override = String(scene.temporal_world_effect_override || "global").trim();
         segment.temporal_world_effect_custom = String(scene.temporal_world_effect_custom || "").trim();
         const imagePrompt = String(scene.image_prompt || scene.t2i_prompt || "").trim();

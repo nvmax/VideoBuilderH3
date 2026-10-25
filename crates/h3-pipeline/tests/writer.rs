@@ -57,12 +57,21 @@ async fn prompts_match_the_pack() {
                     assert_eq!(json!(written.warnings), case["warnings"], "{name}: warnings");
                     with_frame += usize::from(written.used_previous_frame);
                 }
+                // The LLM was asked with the directions the scene gives and the Theatrical presets it selects, as the pack asks.
+                let sent = shared.lock().unwrap().1.last().cloned().expect("a request was sent");
+                let content = &sent["messages"][0]["content"];
+                let request = match content.as_str() {
+                    Some(text) => text.to_string(),
+                    None => content.as_array().into_iter().flatten().filter_map(|part| part["text"].as_str()).collect::<Vec<_>>().join("\n"),
+                };
+                let task = case["task"].as_str().unwrap();
+                assert!(request.contains(&format!("Scene concept:\n{task}\n\nUser motion/camera notes:")), "{name}: task\n want {task}\n in {request}");
                 compared += 1;
             }
             (other, want) => panic!("{name}: {other:?} vs {want:?}"),
         }
     }
-    assert_eq!(compared, 64);
+    assert_eq!(compared, 78);
     assert_eq!(with_frame, 2, "two cases show the previous frame to the LLM");
     // The request carries the pack's instructions, the shot task and the default notes.
     let sent = shared.lock().unwrap().1[0].clone();

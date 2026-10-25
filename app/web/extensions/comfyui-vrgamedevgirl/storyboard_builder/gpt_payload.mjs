@@ -1,3 +1,4 @@
+import { effectiveSceneDefaultsState } from "./scene_defaults_state.mjs";
 import { isRefmodCard } from "../music_video_builder/refmod_labels.mjs";
 import {
   FACIAL_PERFORMANCE_PRESETS,
@@ -175,8 +176,6 @@ function storyboardScenesForGpt(state) {
   const facialPresets = filmPlanningProfile ? ID_LORA_FACIAL_PERFORMANCE_PRESETS : FACIAL_PERFORMANCE_PRESETS;
   const performancePreset = (value = "") => performancePresets.find((item) => item.value === value) || performancePresets[0] || PERFORMANCE_STYLE_PRESETS[0];
   const facialPresetForPayload = (value = "") => facialPresets.find((item) => item.value === value) || facialPresets[0] || FACIAL_PERFORMANCE_PRESETS[0];
-  const cameraFlowKey = STORYBOARD_CAMERA_FLOW_PRESETS[state.cameraFlow] ? state.cameraFlow : "balanced";
-  const cameraFlowPreset = STORYBOARD_CAMERA_FLOW_PRESETS[cameraFlowKey];
   const explicitLyricSections = state.scenes.map((scene, index) => String(normalizeScene(scene, index).lyric_section || "").trim());
   const effectiveLyricSection = (index) => {
     if (explicitLyricSections[index]) return explicitLyricSections[index];
@@ -189,7 +188,11 @@ function storyboardScenesForGpt(state) {
     return "";
   };
   let previousCameraMotion = "";
+  const projectState = state;
   return state.scenes.map((scene, index) => {
+    const state = effectiveSceneDefaultsState(projectState, scene);
+    const cameraFlowKey = STORYBOARD_CAMERA_FLOW_PRESETS[state.cameraFlow] ? state.cameraFlow : "balanced";
+    const cameraFlowPreset = STORYBOARD_CAMERA_FLOW_PRESETS[cameraFlowKey];
     const normalized = normalizeScene(scene, index);
     const sceneVideoEngine = normalizeStoryboardProjectVideoEngine(normalized.project_video_engine || state.projectVideoEngine);
     const lyricSection = effectiveLyricSection(index);
@@ -455,8 +458,6 @@ function storyboardScenesForGpt(state) {
             text: normalized.image_prompt,
             instruction: "Use only for visible first-frame inventory: subject identity, wardrobe, hair, makeup, props, setting, lighting, color palette, framing, and composition. Do not use this field for body action, camera motion, performance energy, facial performance, lyric action, story action, or animation pacing.",
           },
-      text_to_image_prompt: imageMode ? normalized.image_prompt : "",
-      video_prompt: normalized.video_prompt,
       notes: normalized.notes,
       audio_direction: normalized.audio_direction,
       continuity: normalized.continuity,

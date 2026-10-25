@@ -10,6 +10,7 @@
 
 use std::path::PathBuf;
 
+use h3_core::fresh_context::fresh_prompt_context_text;
 use h3_core::prompt::emotion::emotion_expression_instruction;
 use h3_core::prompt::lyric_free;
 use h3_core::pyval::{py_str, repr_text, text_or_empty, truthy, Obj};
@@ -162,8 +163,9 @@ fn or_empty_list(payload: &Obj, key: &str) -> Value {
 /// `POST generate_t2v`.
 pub async fn generate_t2v(llm: &dyn Llm, payload: &Obj) -> Reply {
     let model_file = text(payload, "model_file");
-    let scene_prompt = first_truthy(payload, &["t2i_prompt", "scene_prompt"], "");
-    let mut user_notes = text(payload, "user_notes");
+    // A new prompt is written from the scene's directions, not from the prompts saved on the card the request carries.
+    let scene_prompt = fresh_prompt_context_text(&first_truthy(payload, &["t2i_prompt", "scene_prompt"], ""));
+    let mut user_notes = fresh_prompt_context_text(&text(payload, "user_notes"));
     let performance = Some(text_or_empty(payload.get("performance_mode"))).filter(|s| !s.is_empty()).unwrap_or_else(|| "singing".into());
     let audio_mode = Some(text_or_empty(payload.get("audio_mode"))).filter(|s| !s.is_empty()).unwrap_or_else(|| "input_audio".into());
     let omit_lyrics = lyric_free::enabled(flag(payload, "omit_lyrics_from_video_prompts"), &performance, &audio_mode);

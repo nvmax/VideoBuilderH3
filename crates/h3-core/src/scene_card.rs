@@ -4,6 +4,7 @@
 use serde_json::{json, Value};
 
 use crate::pyval::{py_str, to_float, Obj};
+use crate::scene_defaults::normalize_scene_defaults;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Kind {
@@ -17,6 +18,7 @@ pub enum Kind {
     References,
     Objects,
     Speakers,
+    SceneDefaults,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -56,6 +58,7 @@ pub const FIELDS: &[Field] = &[
     text("i2v_notes", &["i2v_notes", "video_notes"], Some("motion_summary"), &["video_notes", "motion_summary"], 3000),
     text("notes", &["notes"], Some("notes"), &["planning_notes"], 4000),
     other("prompt_summary", Kind::Text, &[], Some("prompt_summary"), &["summary"], &[], 1000),
+    other("scene_defaults", Kind::SceneDefaults, &["scene_defaults"], Some("scene_defaults"), &[], &[], 20000),
     text("shot_type", &["shot_type"], Some("shot_type"), &[], 200),
     text("camera_motion", &["camera_motion"], Some("camera_motion"), &[], 200),
     text("character_motion", &["character_motion"], Some("character_motion"), &[], 240),
@@ -202,6 +205,7 @@ pub fn normalize_value(field: &Field, value: &Value) -> Result<Value, String> {
             _ => Err(format!("{} must be a list of objects.", field.name)),
         },
         Kind::Speakers => speaker_assignments(value),
+        Kind::SceneDefaults => normalize_scene_defaults(value, true).map(Value::Object),
     }
 }
 
@@ -266,6 +270,17 @@ pub fn apply_to_segment(segment: &mut Value, values: &Obj, video_engine: &str, i
                     map.insert(video_prompt_keys(video_engine).1.into(), value.clone());
                 }
             }
+            Kind::SceneDefaults => {
+                // A nonempty object adds to the scene's overrides, an empty one clears them.
+                let mut merged = Obj::new();
+                if let (Some(Value::Object(old)), Some(new)) = (map.get("scene_defaults"), value.as_object().filter(|new| !new.is_empty())) {
+                    merged.extend(old.clone());
+                    merged.extend(new.clone());
+                } else if let Some(new) = value.as_object().filter(|new| !new.is_empty()) {
+                    merged.extend(new.clone());
+                }
+                map.insert("scene_defaults".into(), Value::Object(merged));
+            }
             Kind::Speakers => {
                 map.insert("minimax_speaker_assignments".into(), value.clone());
                 let filled: Vec<&Value> = value.as_array().map(|a| a.iter().filter(|c| c["text"].as_str().is_some_and(|t| !t.is_empty())).collect()).unwrap_or_default();
@@ -289,6 +304,25 @@ pub fn apply_to_segment(segment: &mut Value, values: &Obj, video_engine: &str, i
                 }
             }
         }
+    }
+    // The scene's own overrides and the scene fields that share their names stay the same setting: sending the overrides sets the fields, and editing a
+    // field that is overridden updates the override.
+    if let Some(Value::Object(mut scoped)) = map.get("scene_defaults").cloned() {
+        const SHARED: [(&str, &str); 5] = [
+            ("performance_style", "performance_style"),
+            ("facial_performance", "facial_performance"),
+            ("facial_performance_custom", "facial_performance_custom"),
+            ("video_style", "minimax_h3_video_style"),
+            ("video_style_custom", "minimax_h3_video_style_custom"),
+        ];
+        for (name, key) in SHARED {
+            if values.contains_key("scene_defaults") && scoped.contains_key(name) {
+                map.insert(key.into(), scoped[name].clone());
+            } else if let (Some(new), true) = (values.get(name), scoped.contains_key(name)) {
+                scoped.insert(name.into(), new.clone());
+            }
+        }
+        map.insert("scene_defaults".into(), Value::Object(scoped));
     }
 }
 

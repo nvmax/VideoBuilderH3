@@ -3,8 +3,9 @@
     python tools/make_prompt_writer_fixtures.py --pack <pack folder>
 
 Each case is a project session, a scene and the shots a stand-in LLM answers. The pack's ``generate_scene_prompt`` turns
-them into the final prompt. The Rust writer must produce the same text from the same reply. The request text itself is
-not compared: the pack adds the Storyboard card JSON to it, which this app has no use for.
+them into the final prompt. The Rust writer must produce the same text from the same reply. The request is compared too: the
+shot task (``task``) the LLM is given, with the directions the scene gives and the Theatrical presets it selects. The pack adds the
+Storyboard card JSON to it, which this app has no use for, so the pack is asked for the context without that block.
 
 Writes ``fixtures/prompt/writer.json``.
 """
@@ -59,8 +60,17 @@ def main() -> int:
     orch.prepare_llm_payload = lambda body: body
     orch.llm_payload_from_session = lambda session, overrides=None: {}
 
-    state = {"reply": ""}
-    orch.vid_gen._generate_builder_t2v_prompt = lambda request: {"prompt": state["reply"]}
+    state = {"reply": "", "task": ""}
+
+    def stand_in_llm(request):
+        state["task"] = request["t2i_prompt"]
+        return {"prompt": state["reply"]}
+
+    orch.vid_gen._generate_builder_t2v_prompt = stand_in_llm
+    scene_context = importlib.import_module("vrgdg_pack.agent_api.scene_card_context")
+    theatrical = importlib.import_module("vrgdg_pack.storyboard.theatrical_presets")
+    # The context without the Storyboard card JSON: the directions and the Theatrical presets.
+    orch.storyboard_video_context = lambda card, defaults=None: (chr(10) * 2).join(scene_context.video_direction_lines(card) + theatrical.theatrical_direction_lines(card, defaults))
 
     def shots_json(count, extra=""):
         lines = [f"<Subject 1> (Ava) stands on the roof, wind lifting the denim jacket, the camera drifting closer in a steady glide{extra}, shot {i + 1}." for i in range(count)]
@@ -75,13 +85,33 @@ def main() -> int:
         "temporal": {"builder_storyboard_defaults": {"temporal_world_effect": "frozen_world", "minimax_h3_cut_frequency": 2}},
         "structured_all": {"use_structured_outputs": True, "builder_storyboard_defaults": {"minimax_h3_cut_frequency": 4, "video_style": "dark_fantasy", "fx_preset": "glitch", "temporal_world_effect": "day_night_sweep"}},
         "built_in_audio": {"minimax_h3_settings": {"audio_mode": "built_in_audio", "aspect_ratio": "9:16 (Portrait Widescreen)"}},
+        # Theatrical presets for the whole project, and scenes with Scene Defaults of their own on top.
+        "theatrical_project": {"builder_storyboard_defaults": {"minimax_h3_cut_frequency": 2, "performance_style": "theatrical", "camera_flow": "pretty_little_malfunction"}, "default_facial_performance": "theatrical"},
+        "theatrical_scoped": {"builder_storyboard_defaults": {"minimax_h3_cut_frequency": 2, "performance_style": "theatrical", "camera_flow": "pretty_little_malfunction"}, "default_facial_performance": "theatrical"},
+        "scoped_look": {"builder_storyboard_defaults": {"minimax_h3_cut_frequency": 2, "video_style": "cinematic_realism"}},
     }
+
+    def scene_overrides(session):
+        segments = session["segments"]
+        segments[0]["scene_defaults"] = {"minimax_h3_cut_frequency": 3, "minimax_h3_cut_style": "hard", "camera_motion_speed": 9, "camera_guidance": "slow orbit", "character_guidance": "stay still", "performance_style": "theatrical"}
+        segments[1]["scene_defaults"] = {"camera_flow": "pretty_little_malfunction", "facial_performance": "theatrical", "character_motion_speed": 0}
+        segments[2]["scene_defaults"] = {"performance_style": "calm", "facial_performance_custom": "wry brows", "camera_flow": "close_ups"}
+
+    def look_overrides(session):
+        segments = session["segments"]
+        segments[0]["scene_defaults"] = {"video_style": "dark_fantasy", "fx_preset": "glitch", "temporal_world_effect": "frozen_world", "minimax_h3_cut_frequency": 4}
+        segments[2]["scene_defaults"] = {"video_style": "custom", "video_style_custom": "Neon noir", "minimax_h3_cut_frequency": 1}
+
     cases = []
     for name, extra in variants.items():
         session = base_session(**copy.deepcopy(extra))
+        if name == "theatrical_scoped":
+            scene_overrides(session)
+        elif name == "scoped_look":
+            look_overrides(session)
         cards = sync.scene_cards(session)
         for index, segment in enumerate(session["segments"]):
-            defaults = session.get("builder_storyboard_defaults") or {}
+            defaults = {**(session.get("builder_storyboard_defaults") or {}), **(segment.get("scene_defaults") or {})}
             freq = int(defaults.get("minimax_h3_cut_frequency") or 0)
             pa = importlib.import_module("vrgdg_pack.minimax.prompt_assembly")
             duration = segment["end"] - segment["start"]
@@ -93,6 +123,7 @@ def main() -> int:
                 entry["prompt"] = result["prompt"]
                 entry["characters"] = result["characters"]
                 entry["shots"] = result["shots"]
+                entry["task"] = state["task"]
             except Exception as exc:  # noqa: BLE001
                 entry["error"] = str(exc)
             cases.append(entry)
@@ -121,12 +152,14 @@ def main() -> int:
             state["reply"] = shots_json(shots or 1)
             if shots is None:
                 # One shot per planned cut, found by asking the pack for the plan it will use.
-                freq = int((session.get("builder_storyboard_defaults") or {}).get("minimax_h3_cut_frequency") or 0)
+                scoped = {**(session.get("builder_storyboard_defaults") or {}), **(segment.get("scene_defaults") or {})}
+                freq = int(scoped.get("minimax_h3_cut_frequency") or 0)
                 shots = pa.storyboard_cut_plan_for_duration(segment["end"] - segment["start"], freq)["shot_count"]
                 state["reply"] = shots_json(shots)
             entry["reply"] = state["reply"]
             result = orch.generate_scene_prompt(session, ROOT, segment, cards[index], index, {}, previous_frame="Z:\\frame.png" if previous_frame else "")
-            entry.update({"prompt": result["prompt"], "characters": result["characters"], "shots": result["shots"], "used_previous_frame": result["used_previous_frame"], "warnings": result["warnings"]})
+            entry.update({"prompt": result["prompt"], "characters": result["characters"], "shots": result["shots"], "used_previous_frame": result["used_previous_frame"], "warnings": result["warnings"],
+                          "task": state["task"]})
             _ = probe
         except Exception as exc:  # noqa: BLE001
             entry["reply"] = state["reply"]
@@ -208,6 +241,17 @@ def main() -> int:
     add("omit_with_emotion_tags", {**omit_session(), "segments": [dict(s, emotion_expression_tags="longing, hope") for s in omit_session()["segments"]]}, 0)
     omit_continued = continued("masked", location_for_s2="l2", omit_lyrics_from_video_prompts=True)
     add("omit_continued_scene2", omit_continued, 1)
+    # Theatrical presets and Scene Defaults with lyric-free prompts and with a continued scene.
+    scoped_omit = omit_session(default_facial_performance="theatrical", builder_storyboard_defaults={"minimax_h3_cut_frequency": 2})
+    scoped_omit["segments"][0]["scene_defaults"] = {"facial_performance": "pop_polished", "minimax_h3_cut_frequency": 4}
+    scoped_omit["segments"][2]["scene_defaults"] = {"facial_performance": "theatrical", "performance_style": "theatrical", "minimax_h3_cut_frequency": 3, "minimax_h3_cut_style": "hard"}
+    add("omit_scoped_scene1", scoped_omit, 0)
+    add("omit_scoped_scene2_project_face", scoped_omit, 1)
+    add("omit_scoped_scene3", scoped_omit, 2)
+    add("omit_theatrical_project_face", omit_session(default_facial_performance="theatrical"), 0)
+    scoped_continued = continued("masked", location_for_s2="l2", builder_storyboard_defaults={"minimax_h3_cut_frequency": 5, "performance_style": "theatrical"})
+    scoped_continued["segments"][1]["scene_defaults"] = {"performance_style": "theatrical", "camera_flow": "pretty_little_malfunction", "minimax_h3_cut_frequency": 1}
+    add("continued_scoped", scoped_continued, 1)
     (out / "writer.json").write_text(json.dumps({"cases": cases}, indent=1, ensure_ascii=False), encoding="utf-8")
     print("writer cases:", len(cases), "errors:", sum(1 for c in cases if "error" in c))
     for c in cases:

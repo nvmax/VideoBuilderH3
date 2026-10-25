@@ -113,33 +113,11 @@
    ]
   },
   {
-   "method": "POST",
-   "path": "/vrgdg/music_builder/save_wizard_draft",
-   "handler": "vrgdg_music_builder_save_wizard_draft",
-   "file": "builder/routes.py",
-   "line": 220,
-   "doc": "",
-   "callers": [
-    "wizard_bridge.mjs"
-   ]
-  },
-  {
-   "method": "POST",
-   "path": "/vrgdg/music_builder/load_wizard_draft",
-   "handler": "vrgdg_music_builder_load_wizard_draft",
-   "file": "builder/routes.py",
-   "line": 229,
-   "doc": "",
-   "callers": [
-    "wizard_bridge.mjs"
-   ]
-  },
-  {
    "method": "GET",
    "path": "/vrgdg/music_builder/model_defaults",
    "handler": "vrgdg_music_builder_model_defaults",
    "file": "builder/routes.py",
-   "line": 238,
+   "line": 220,
    "doc": "",
    "callers": [
     "builder.mjs",
@@ -151,7 +129,7 @@
    "path": "/vrgdg/music_builder/llm_runner",
    "handler": "vrgdg_music_builder_save_llm_runner",
    "file": "builder/routes.py",
-   "line": 246,
+   "line": 228,
    "doc": "",
    "callers": [
     "gemma_runner.mjs"
@@ -162,7 +140,7 @@
    "path": "/vrgdg/music_builder/new_project",
    "handler": "vrgdg_music_builder_new_project",
    "file": "builder/routes.py",
-   "line": 255,
+   "line": 237,
    "doc": "",
    "callers": [
     "project_actions.mjs"
@@ -173,7 +151,7 @@
    "path": "/vrgdg/music_builder/save_project_as",
    "handler": "vrgdg_music_builder_save_project_as",
    "file": "builder/routes.py",
-   "line": 264,
+   "line": 246,
    "doc": "",
    "callers": [
     "batch_actions.mjs",
@@ -185,7 +163,7 @@
    "path": "/vrgdg/music_builder/export_project",
    "handler": "vrgdg_music_builder_export_project",
    "file": "builder/routes.py",
-   "line": 273,
+   "line": 255,
    "doc": "",
    "callers": [
     "project_actions.mjs"
@@ -196,7 +174,7 @@
    "path": "/vrgdg/music_builder/import_project",
    "handler": "vrgdg_music_builder_import_project",
    "file": "builder/routes.py",
-   "line": 308,
+   "line": 290,
    "doc": "",
    "callers": [
     "project_actions.mjs"
@@ -207,7 +185,7 @@
    "path": "/vrgdg/music_builder/save_scene_image",
    "handler": "vrgdg_music_builder_save_scene_image",
    "file": "builder/routes.py",
-   "line": 346,
+   "line": 328,
    "doc": "",
    "callers": [
     "scene_render_prep.mjs"
@@ -218,7 +196,7 @@
    "path": "/vrgdg/music_builder/delete_project_media",
    "handler": "vrgdg_music_builder_delete_project_media",
    "file": "builder/routes.py",
-   "line": 355,
+   "line": 337,
    "doc": "",
    "callers": [
     "batch_actions.mjs",
@@ -230,7 +208,7 @@
    "path": "/vrgdg/music_builder/archive_scene_image",
    "handler": "vrgdg_music_builder_archive_scene_image",
    "file": "builder/routes.py",
-   "line": 364,
+   "line": 346,
    "doc": "",
    "callers": [
     "image_prompts.mjs",
@@ -246,7 +224,7 @@
    "path": "/vrgdg/music_builder/extract_video_final_frame",
    "handler": "vrgdg_music_builder_extract_video_final_frame",
    "file": "builder/routes.py",
-   "line": 373,
+   "line": 355,
    "doc": "",
    "callers": [
     "scene_render_prep.mjs",
@@ -258,7 +236,7 @@
    "path": "/vrgdg/music_builder/save_flux_reference_image",
    "handler": "vrgdg_music_builder_save_flux_reference_image",
    "file": "builder/routes.py",
-   "line": 382,
+   "line": 364,
    "doc": "",
    "callers": [
     "reference_generation.mjs",
@@ -270,7 +248,7 @@
    "path": "/vrgdg/music_builder/own_server_reference_image",
    "handler": "vrgdg_music_builder_own_server_reference_image",
    "file": "builder/routes.py",
-   "line": 391,
+   "line": 373,
    "doc": "",
    "callers": [
     "reference_generation.mjs"
@@ -281,7 +259,7 @@
    "path": "/vrgdg/music_builder/import_reference_subjects",
    "handler": "vrgdg_music_builder_import_reference_subjects",
    "file": "builder/routes.py",
-   "line": 405,
+   "line": 387,
    "doc": "",
    "callers": [
     "reference_builder.mjs"
@@ -292,7 +270,7 @@
    "path": "/vrgdg/music_builder/import_reference_locations",
    "handler": "vrgdg_music_builder_import_reference_locations",
    "file": "builder/routes.py",
-   "line": 414,
+   "line": 396,
    "doc": "",
    "callers": [
     "reference_locations.mjs"
@@ -303,7 +281,7 @@
    "path": "/vrgdg/music_builder/save_scene_audio",
    "handler": "vrgdg_music_builder_save_scene_audio",
    "file": "builder/routes.py",
-   "line": 423,
+   "line": 405,
    "doc": "",
    "callers": [
     "audio_clip_editor.mjs",
@@ -317,7 +295,7 @@
    "path": "/vrgdg/music_builder/save_project_audio",
    "handler": "vrgdg_music_builder_save_project_audio",
    "file": "builder/routes.py",
-   "line": 432,
+   "line": 414,
    "doc": "",
    "callers": [
     "project_setup.mjs"
@@ -328,7 +306,7 @@
    "path": "/vrgdg/music_builder/save_project_srt",
    "handler": "vrgdg_music_builder_save_project_srt",
    "file": "builder/routes.py",
-   "line": 441,
+   "line": 423,
    "doc": "",
    "callers": [
     "project_setup.mjs"
@@ -339,7 +317,7 @@
    "path": "/vrgdg/music_builder/save_single_scene_srt",
    "handler": "vrgdg_music_builder_save_single_scene_srt",
    "file": "builder/routes.py",
-   "line": 450,
+   "line": 432,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -350,7 +328,7 @@
    "path": "/vrgdg/music_builder/trim_scene_audio",
    "handler": "vrgdg_music_builder_trim_scene_audio",
    "file": "builder/routes.py",
-   "line": 459,
+   "line": 441,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -361,7 +339,7 @@
    "path": "/vrgdg/music_builder/create_silent_audio",
    "handler": "vrgdg_music_builder_create_silent_audio",
    "file": "builder/routes.py",
-   "line": 468,
+   "line": 450,
    "doc": "",
    "callers": [
     "project_setup.mjs",
@@ -373,7 +351,7 @@
    "path": "/vrgdg/music_builder/prepare_scene_audio_mix",
    "handler": "vrgdg_music_builder_prepare_scene_audio_mix",
    "file": "builder/routes.py",
-   "line": 477,
+   "line": 459,
    "doc": "",
    "callers": [
     "scene_render_prep.mjs"
@@ -384,7 +362,7 @@
    "path": "/vrgdg/music_builder/prepare_audio_clip_mix",
    "handler": "vrgdg_music_builder_prepare_audio_clip_mix",
    "file": "builder/routes.py",
-   "line": 486,
+   "line": 468,
    "doc": "Prepare the audio clip arrangement for playback and rendering.",
    "callers": [
     "audio_clip_editor.mjs",
@@ -396,7 +374,7 @@
    "path": "/vrgdg/music_builder/preview_scene_audio_settings",
    "handler": "vrgdg_preview_scene_audio_settings",
    "file": "builder/routes.py",
-   "line": 498,
+   "line": 480,
    "doc": "Calculate Speaking audio edits without writing the browser's project snapshot.",
    "callers": [
     "scene_audio_settings.mjs"
@@ -407,7 +385,7 @@
    "path": "/vrgdg/music_builder/audio_mask/state",
    "handler": "vrgdg_music_builder_audio_mask_state",
    "file": "builder/routes.py",
-   "line": 514,
+   "line": 496,
    "doc": "",
    "callers": [
     "audio_mask.mjs",
@@ -419,7 +397,7 @@
    "path": "/vrgdg/music_builder/audio_mask/states",
    "handler": "vrgdg_music_builder_audio_mask_states",
    "file": "builder/routes.py",
-   "line": 523,
+   "line": 505,
    "doc": "",
    "callers": [
     "audio_mask.mjs"
@@ -430,7 +408,7 @@
    "path": "/vrgdg/music_builder/audio_mask/separate",
    "handler": "vrgdg_music_builder_audio_mask_separate",
    "file": "builder/routes.py",
-   "line": 532,
+   "line": 514,
    "doc": "",
    "callers": [
     "audio_mask.mjs"
@@ -441,7 +419,7 @@
    "path": "/vrgdg/music_builder/audio_mask/render",
    "handler": "vrgdg_music_builder_audio_mask_render",
    "file": "builder/routes.py",
-   "line": 541,
+   "line": 523,
    "doc": "",
    "callers": [
     "audio_mask.mjs"
@@ -452,7 +430,7 @@
    "path": "/vrgdg/music_builder/audio_mask/list",
    "handler": "vrgdg_music_builder_audio_mask_list",
    "file": "builder/routes.py",
-   "line": 550,
+   "line": 532,
    "doc": "",
    "callers": [
     "audio_mask.mjs"
@@ -463,7 +441,7 @@
    "path": "/vrgdg/music_builder/audio_mask/delete",
    "handler": "vrgdg_music_builder_audio_mask_delete",
    "file": "builder/routes.py",
-   "line": 559,
+   "line": 541,
    "doc": "",
    "callers": [
     "audio_mask.mjs"
@@ -474,7 +452,7 @@
    "path": "/vrgdg/music_builder/load_session",
    "handler": "vrgdg_music_builder_load_session",
    "file": "builder/routes.py",
-   "line": 568,
+   "line": 550,
    "doc": "",
    "callers": [
     "external_changes.mjs",
@@ -486,7 +464,7 @@
    "path": "/vrgdg/music_builder/list_projects",
    "handler": "vrgdg_music_builder_list_projects",
    "file": "builder/routes.py",
-   "line": 577,
+   "line": 559,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -497,7 +475,7 @@
    "path": "/vrgdg/music_builder/delete_project",
    "handler": "vrgdg_music_builder_delete_project",
    "file": "builder/routes.py",
-   "line": 585,
+   "line": 567,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -508,7 +486,7 @@
    "path": "/vrgdg/music_builder/latent_status",
    "handler": "vrgdg_music_builder_latent_status",
    "file": "builder/routes.py",
-   "line": 594,
+   "line": 576,
    "doc": "",
    "callers": []
   },
@@ -517,7 +495,7 @@
    "path": "/vrgdg/music_builder/list_scene_latent_takes",
    "handler": "vrgdg_music_builder_list_scene_latent_takes",
    "file": "builder/routes.py",
-   "line": 605,
+   "line": 587,
    "doc": "",
    "callers": []
   },
@@ -526,7 +504,7 @@
    "path": "/vrgdg/music_builder/check_latent_predecessor",
    "handler": "vrgdg_music_builder_check_latent_predecessor",
    "file": "builder/routes.py",
-   "line": 616,
+   "line": 598,
    "doc": "",
    "callers": [
     "minimax_panel.mjs",
@@ -538,7 +516,7 @@
    "path": "/vrgdg/music_builder/delete_scene_latent",
    "handler": "vrgdg_music_builder_delete_scene_latent",
    "file": "builder/routes.py",
-   "line": 658,
+   "line": 640,
    "doc": "",
    "callers": [
     "timeline_actions.mjs"
@@ -549,7 +527,7 @@
    "path": "/vrgdg/music_builder/renumber_scenes_after_removal",
    "handler": "vrgdg_music_builder_renumber_scenes_after_removal",
    "file": "builder/routes.py",
-   "line": 678,
+   "line": 660,
    "doc": "",
    "callers": [
     "timeline_actions.mjs",
@@ -561,7 +539,7 @@
    "path": "/vrgdg/music_builder/renumber_scenes_after_insert",
    "handler": "vrgdg_music_builder_renumber_scenes_after_insert",
    "file": "builder/routes.py",
-   "line": 691,
+   "line": 673,
    "doc": "",
    "callers": [
     "timeline_actions.mjs"
@@ -572,7 +550,7 @@
    "path": "/vrgdg/music_builder/list_dirty_latents",
    "handler": "vrgdg_music_builder_list_dirty_latents",
    "file": "builder/routes.py",
-   "line": 704,
+   "line": 686,
    "doc": "",
    "callers": [
     "timeline_edit.mjs"
@@ -583,7 +561,7 @@
    "path": "/vrgdg/music_builder/scan_scene_videos",
    "handler": "vrgdg_music_builder_scan_scene_videos",
    "file": "builder/routes.py",
-   "line": 714,
+   "line": 696,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -594,7 +572,7 @@
    "path": "/vrgdg/music_builder/restore_scene_video",
    "handler": "vrgdg_music_builder_restore_scene_video",
    "file": "builder/routes.py",
-   "line": 723,
+   "line": 705,
    "doc": "",
    "callers": [
     "timeline_edit.mjs"
@@ -605,7 +583,7 @@
    "path": "/vrgdg/music_builder/load_srt",
    "handler": "vrgdg_music_builder_load_srt",
    "file": "builder/routes.py",
-   "line": 732,
+   "line": 714,
    "doc": "",
    "callers": [
     "project_setup.mjs",
@@ -617,7 +595,7 @@
    "path": "/vrgdg/music_builder/load_prompt_json",
    "handler": "vrgdg_music_builder_load_prompt_json",
    "file": "builder/routes.py",
-   "line": 741,
+   "line": 723,
    "doc": "",
    "callers": [
     "prompt_text.mjs",
@@ -629,7 +607,7 @@
    "path": "/vrgdg/music_builder/load_text_file",
    "handler": "vrgdg_music_builder_load_text_file",
    "file": "builder/routes.py",
-   "line": 750,
+   "line": 732,
    "doc": "",
    "callers": [
     "project_files.mjs"
@@ -640,7 +618,7 @@
    "path": "/vrgdg/music_builder/save_text_file",
    "handler": "vrgdg_music_builder_save_text_file",
    "file": "builder/routes.py",
-   "line": 759,
+   "line": 741,
    "doc": "",
    "callers": [
     "builder_agent.mjs",
@@ -655,7 +633,7 @@
    "path": "/vrgdg/music_builder/open_local_file",
    "handler": "vrgdg_music_builder_open_local_file",
    "file": "builder/routes.py",
-   "line": 768,
+   "line": 750,
    "doc": "",
    "callers": [
     "dialogs.mjs",
@@ -668,7 +646,7 @@
    "path": "/vrgdg/music_builder/default_context_paths",
    "handler": "vrgdg_music_builder_default_context_paths",
    "file": "builder/routes.py",
-   "line": 777,
+   "line": 759,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -679,7 +657,7 @@
    "path": "/vrgdg/music_builder/project_prompt_creator_paths",
    "handler": "vrgdg_music_builder_project_prompt_creator_paths",
    "file": "builder/routes.py",
-   "line": 785,
+   "line": 767,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -690,7 +668,7 @@
    "path": "/vrgdg/music_builder/import_latest_prompt_creator_outputs",
    "handler": "vrgdg_music_builder_import_latest_prompt_creator_outputs",
    "file": "builder/routes.py",
-   "line": 794,
+   "line": 776,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -701,7 +679,7 @@
    "path": "/vrgdg/music_builder/copy_prompt_creator_outputs",
    "handler": "vrgdg_music_builder_copy_prompt_creator_outputs",
    "file": "builder/routes.py",
-   "line": 803,
+   "line": 785,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -712,7 +690,7 @@
    "path": "/vrgdg/music_builder/default_audio_srt_paths",
    "handler": "vrgdg_music_builder_default_audio_srt_paths",
    "file": "builder/routes.py",
-   "line": 816,
+   "line": 798,
    "doc": "",
    "callers": [
     "project_setup.mjs"
@@ -723,7 +701,7 @@
    "path": "/vrgdg/music_builder/pick_path",
    "handler": "vrgdg_music_builder_pick_path",
    "file": "builder/routes.py",
-   "line": 824,
+   "line": 806,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -735,7 +713,7 @@
    "path": "/vrgdg/music_builder/audio",
    "handler": "vrgdg_music_builder_audio",
    "file": "builder/routes.py",
-   "line": 835,
+   "line": 817,
    "doc": "",
    "callers": [
     "comfy_api.mjs"
@@ -746,7 +724,7 @@
    "path": "/vrgdg/music_builder/gemma_choices",
    "handler": "vrgdg_music_builder_gemma_choices",
    "file": "builder/routes.py",
-   "line": 843,
+   "line": 825,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -759,7 +737,7 @@
    "path": "/vrgdg/music_builder/llm_api_choices",
    "handler": "vrgdg_music_builder_llm_api_choices",
    "file": "builder/routes.py",
-   "line": 851,
+   "line": 833,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -771,7 +749,7 @@
    "path": "/vrgdg/music_builder/test_llm_api",
    "handler": "vrgdg_music_builder_test_llm_api",
    "file": "builder/routes.py",
-   "line": 859,
+   "line": 841,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -783,7 +761,7 @@
    "path": "/vrgdg/music_builder/test_own_server",
    "handler": "vrgdg_music_builder_test_own_server",
    "file": "builder/routes.py",
-   "line": 868,
+   "line": 850,
    "doc": "",
    "callers": [
     "gemma_runner.mjs"
@@ -794,7 +772,7 @@
    "path": "/vrgdg/music_builder/own_server_models",
    "handler": "vrgdg_music_builder_own_server_models",
    "file": "builder/routes.py",
-   "line": 877,
+   "line": 859,
    "doc": "",
    "callers": [
     "gemma_runner.mjs"
@@ -805,7 +783,7 @@
    "path": "/vrgdg/music_builder/lm_studio_models",
    "handler": "vrgdg_music_builder_lm_studio_models",
    "file": "builder/routes.py",
-   "line": 886,
+   "line": 868,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -817,7 +795,7 @@
    "path": "/vrgdg/music_builder/get_instruction",
    "handler": "vrgdg_music_builder_get_instruction",
    "file": "builder/routes.py",
-   "line": 895,
+   "line": 877,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -828,7 +806,7 @@
    "path": "/vrgdg/music_builder/save_instruction",
    "handler": "vrgdg_music_builder_save_instruction",
    "file": "builder/routes.py",
-   "line": 904,
+   "line": 886,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -839,7 +817,7 @@
    "path": "/vrgdg/music_builder/reset_instruction",
    "handler": "vrgdg_music_builder_reset_instruction",
    "file": "builder/routes.py",
-   "line": 913,
+   "line": 895,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -850,7 +828,7 @@
    "path": "/vrgdg/music_builder/list_instruction_presets",
    "handler": "vrgdg_music_builder_list_instruction_presets",
    "file": "builder/routes.py",
-   "line": 922,
+   "line": 904,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -861,7 +839,7 @@
    "path": "/vrgdg/music_builder/save_instruction_preset",
    "handler": "vrgdg_music_builder_save_instruction_preset",
    "file": "builder/routes.py",
-   "line": 931,
+   "line": 913,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -872,7 +850,7 @@
    "path": "/vrgdg/music_builder/load_instruction_preset",
    "handler": "vrgdg_music_builder_load_instruction_preset",
    "file": "builder/routes.py",
-   "line": 940,
+   "line": 922,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -883,7 +861,7 @@
    "path": "/vrgdg/music_builder/list_scene_defaults_presets",
    "handler": "vrgdg_list_scene_defaults_presets",
    "file": "builder/routes.py",
-   "line": 949,
+   "line": 931,
    "doc": "List global named Scene Defaults presets shared by projects.",
    "callers": [
     "defaults_presets.mjs"
@@ -894,7 +872,7 @@
    "path": "/vrgdg/music_builder/load_scene_defaults_preset",
    "handler": "vrgdg_load_scene_defaults_preset",
    "file": "builder/routes.py",
-   "line": 958,
+   "line": 940,
    "doc": "Load a named defaults snapshot; does not mutate a project.",
    "callers": [
     "defaults_presets.mjs"
@@ -905,7 +883,7 @@
    "path": "/vrgdg/music_builder/save_scene_defaults_preset",
    "handler": "vrgdg_save_scene_defaults_preset",
    "file": "builder/routes.py",
-   "line": 970,
+   "line": 952,
    "doc": "Save defaults atomically; replacing a preset requires overwrite=true.",
    "callers": [
     "defaults_presets.mjs"
@@ -916,7 +894,7 @@
    "path": "/vrgdg/music_builder/list_video_profiles",
    "handler": "vrgdg_music_builder_list_video_profiles",
    "file": "builder/routes.py",
-   "line": 983,
+   "line": 965,
    "doc": "",
    "callers": [
     "video_profiles.mjs"
@@ -927,7 +905,7 @@
    "path": "/vrgdg/music_builder/load_video_profile",
    "handler": "vrgdg_music_builder_load_video_profile",
    "file": "builder/routes.py",
-   "line": 992,
+   "line": 974,
    "doc": "",
    "callers": [
     "video_profiles.mjs"
@@ -938,7 +916,7 @@
    "path": "/vrgdg/music_builder/set_last_video_profile",
    "handler": "vrgdg_music_builder_set_last_video_profile",
    "file": "builder/routes.py",
-   "line": 1004,
+   "line": 986,
    "doc": "",
    "callers": [
     "video_profiles.mjs"
@@ -949,7 +927,7 @@
    "path": "/vrgdg/music_builder/save_video_profile",
    "handler": "vrgdg_music_builder_save_video_profile",
    "file": "builder/routes.py",
-   "line": 1015,
+   "line": 997,
    "doc": "",
    "callers": [
     "video_profiles.mjs"
@@ -960,7 +938,7 @@
    "path": "/vrgdg/music_builder/delete_video_profile",
    "handler": "vrgdg_music_builder_delete_video_profile",
    "file": "builder/routes.py",
-   "line": 1028,
+   "line": 1010,
    "doc": "",
    "callers": [
     "video_profiles.mjs"
@@ -971,7 +949,7 @@
    "path": "/vrgdg/music_builder/list_ui_profiles",
    "handler": "vrgdg_music_builder_list_ui_profiles",
    "file": "builder/routes.py",
-   "line": 1039,
+   "line": 1021,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -982,7 +960,7 @@
    "path": "/vrgdg/music_builder/load_default_ui_layout",
    "handler": "vrgdg_music_builder_load_default_ui_layout",
    "file": "builder/routes.py",
-   "line": 1048,
+   "line": 1030,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -993,7 +971,7 @@
    "path": "/vrgdg/music_builder/save_default_ui_layout",
    "handler": "vrgdg_music_builder_save_default_ui_layout",
    "file": "builder/routes.py",
-   "line": 1056,
+   "line": 1038,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -1004,7 +982,7 @@
    "path": "/vrgdg/music_builder/load_ui_profile",
    "handler": "vrgdg_music_builder_load_ui_profile",
    "file": "builder/routes.py",
-   "line": 1065,
+   "line": 1047,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -1015,7 +993,7 @@
    "path": "/vrgdg/music_builder/set_last_ui_profile",
    "handler": "vrgdg_music_builder_set_last_ui_profile",
    "file": "builder/routes.py",
-   "line": 1077,
+   "line": 1059,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -1026,7 +1004,7 @@
    "path": "/vrgdg/music_builder/save_ui_profile",
    "handler": "vrgdg_music_builder_save_ui_profile",
    "file": "builder/routes.py",
-   "line": 1088,
+   "line": 1070,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -1037,7 +1015,7 @@
    "path": "/vrgdg/music_builder/update_ui_profile_layout",
    "handler": "vrgdg_music_builder_update_ui_profile_layout",
    "file": "builder/routes.py",
-   "line": 1101,
+   "line": 1083,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -1048,7 +1026,7 @@
    "path": "/vrgdg/music_builder/delete_ui_profile",
    "handler": "vrgdg_music_builder_delete_ui_profile",
    "file": "builder/routes.py",
-   "line": 1112,
+   "line": 1094,
    "doc": "",
    "callers": [
     "ui_profiles.mjs"
@@ -1059,7 +1037,7 @@
    "path": "/vrgdg/music_builder/clear_memory_direct",
    "handler": "vrgdg_music_builder_clear_memory_direct",
    "file": "builder/routes.py",
-   "line": 1123,
+   "line": 1105,
    "doc": "",
    "callers": [
     "session.mjs"
@@ -1070,7 +1048,7 @@
    "path": "/vrgdg/music_builder/generate_t2i",
    "handler": "vrgdg_music_builder_generate_t2i",
    "file": "builder/routes.py",
-   "line": 1131,
+   "line": 1113,
    "doc": "",
    "callers": [
     "image_prompts.mjs",
@@ -1082,7 +1060,7 @@
    "path": "/vrgdg/music_builder/agent_chat",
    "handler": "vrgdg_music_builder_agent_chat",
    "file": "builder/routes.py",
-   "line": 1140,
+   "line": 1122,
    "doc": "",
    "callers": [
     "builder_agent.mjs"
@@ -1093,7 +1071,7 @@
    "path": "/vrgdg/music_builder/generate_concept_prompts",
    "handler": "vrgdg_music_builder_generate_concept_prompts",
    "file": "builder/routes.py",
-   "line": 1149,
+   "line": 1131,
    "doc": "",
    "callers": [
     "prompt_creators.mjs"
@@ -1104,7 +1082,7 @@
    "path": "/vrgdg/music_builder/generate_motion_notes",
    "handler": "vrgdg_music_builder_generate_motion_notes",
    "file": "builder/routes.py",
-   "line": 1158,
+   "line": 1140,
    "doc": "",
    "callers": [
     "prompt_creators.mjs"
@@ -1115,7 +1093,7 @@
    "path": "/vrgdg/music_builder/generate_i2v",
    "handler": "vrgdg_music_builder_generate_i2v",
    "file": "builder/routes.py",
-   "line": 1167,
+   "line": 1149,
    "doc": "",
    "callers": [
     "batch_prompts.mjs",
@@ -1127,7 +1105,7 @@
    "path": "/vrgdg/music_builder/generate_chained_i2v",
    "handler": "vrgdg_music_builder_generate_chained_i2v",
    "file": "builder/routes.py",
-   "line": 1176,
+   "line": 1158,
    "doc": "",
    "callers": [
     "scene_render_prep.mjs"
@@ -1138,7 +1116,7 @@
    "path": "/vrgdg/music_builder/generate_t2v",
    "handler": "vrgdg_music_builder_generate_t2v",
    "file": "builder/routes.py",
-   "line": 1185,
+   "line": 1167,
    "doc": "",
    "callers": [
     "batch_prompts.mjs",
@@ -1150,7 +1128,7 @@
    "path": "/vrgdg/music_builder/enhance_video_prompt",
    "handler": "vrgdg_music_builder_enhance_video_prompt",
    "file": "builder/routes.py",
-   "line": 1194,
+   "line": 1176,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -1161,7 +1139,7 @@
    "path": "/vrgdg/music_builder/edit_video_prompt",
    "handler": "vrgdg_music_builder_edit_video_prompt",
    "file": "builder/routes.py",
-   "line": 1203,
+   "line": 1185,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -1172,7 +1150,7 @@
    "path": "/vrgdg/music_builder/enhance_minimax_h3_prompt",
    "handler": "vrgdg_music_builder_enhance_minimax_h3_prompt",
    "file": "builder/routes.py",
-   "line": 1212,
+   "line": 1194,
    "doc": "",
    "callers": [
     "minimax_prompt_enhance.mjs"
@@ -1183,7 +1161,7 @@
    "path": "/vrgdg/music_builder/edit_image_prompt",
    "handler": "vrgdg_music_builder_edit_image_prompt",
    "file": "builder/routes.py",
-   "line": 1221,
+   "line": 1203,
    "doc": "",
    "callers": [
     "prompt_editing.mjs"
@@ -1194,7 +1172,7 @@
    "path": "/vrgdg/music_builder/generate_flux_klein_prompt",
    "handler": "vrgdg_music_builder_generate_flux_klein_prompt",
    "file": "builder/routes.py",
-   "line": 1230,
+   "line": 1212,
    "doc": "",
    "callers": [
     "image_generation.mjs"
@@ -1205,7 +1183,7 @@
    "path": "/vrgdg/music_builder/describe_reference_image",
    "handler": "vrgdg_music_builder_describe_reference_image",
    "file": "builder/routes.py",
-   "line": 1239,
+   "line": 1221,
    "doc": "",
    "callers": [
     "builder.mjs",
@@ -1217,7 +1195,7 @@
    "path": "/vrgdg/music_builder/analyze_story_references",
    "handler": "vrgdg_music_builder_analyze_story_references",
    "file": "builder/routes.py",
-   "line": 1248,
+   "line": 1230,
    "doc": "",
    "callers": [
     "builder_agent.mjs"
@@ -1228,7 +1206,7 @@
    "path": "/vrgdg/music_builder/generate_nb_image_prompt",
    "handler": "vrgdg_music_builder_generate_nb_image_prompt",
    "file": "builder/routes.py",
-   "line": 1257,
+   "line": 1239,
    "doc": "",
    "callers": [
     "image_generation.mjs"
@@ -1239,11 +1217,10 @@
    "path": "/vrgdg/music_builder/flux_reference_location_map",
    "handler": "vrgdg_music_builder_flux_reference_location_map",
    "file": "builder/routes.py",
-   "line": 1266,
+   "line": 1248,
    "doc": "",
    "callers": [
-    "reference_locations.mjs",
-    "wizard_bridge.mjs"
+    "reference_locations.mjs"
    ]
   },
   {
@@ -1251,7 +1228,7 @@
    "path": "/vrgdg/music_builder/flux_reference_extract_locations",
    "handler": "vrgdg_music_builder_flux_reference_extract_locations",
    "file": "builder/routes.py",
-   "line": 1275,
+   "line": 1257,
    "doc": "",
    "callers": [
     "ingredients_builder.mjs"
@@ -1262,7 +1239,7 @@
    "path": "/vrgdg/music_builder/lm_scout_locations",
    "handler": "vrgdg_music_builder_lm_scout_locations",
    "file": "builder/routes.py",
-   "line": 1284,
+   "line": 1266,
    "doc": "",
    "callers": [
     "reference_locations.mjs"
@@ -1273,11 +1250,10 @@
    "path": "/vrgdg/music_builder/wizard_locations_from_lyrics",
    "handler": "vrgdg_music_builder_wizard_locations_from_lyrics",
    "file": "builder/routes.py",
-   "line": 1293,
+   "line": 1275,
    "doc": "",
    "callers": [
-    "ingredients_builder.mjs",
-    "wizard_bridge.mjs"
+    "ingredients_builder.mjs"
    ]
   },
   {
@@ -1285,7 +1261,7 @@
    "path": "/vrgdg/music_builder/flux_reference_extract_subjects",
    "handler": "vrgdg_music_builder_flux_reference_extract_subjects",
    "file": "builder/routes.py",
-   "line": 1302,
+   "line": 1284,
    "doc": "",
    "callers": [
     "reference_subjects.mjs"
@@ -1296,7 +1272,7 @@
    "path": "/vrgdg/music_builder/flux_reference_zimage_prompt",
    "handler": "vrgdg_music_builder_flux_reference_zimage_prompt",
    "file": "builder/routes.py",
-   "line": 1311,
+   "line": 1293,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -1308,7 +1284,7 @@
    "path": "/vrgdg/gemma4/generate",
    "handler": "vrgdg_gemma4_generate",
    "file": "builder/routes.py",
-   "line": 1320,
+   "line": 1302,
    "doc": "",
    "callers": [
     "llm_runner.mjs",
@@ -2420,8 +2396,7 @@
    "line": 134,
    "doc": "",
    "callers": [
-    "story_layer.mjs",
-    "wizard_bridge.mjs"
+    "story_layer.mjs"
    ]
   },
   {
@@ -2432,8 +2407,7 @@
    "line": 143,
    "doc": "",
    "callers": [
-    "story_layer.mjs",
-    "wizard_bridge.mjs"
+    "story_layer.mjs"
    ]
   },
   {

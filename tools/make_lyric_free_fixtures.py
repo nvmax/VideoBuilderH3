@@ -101,7 +101,7 @@ def main() -> int:
         "cue": sp.cue_cut_plan(pa.storyboard_cut_plan_for_duration(6.5, 0), sp.timed_cue_rows(segments["cue_map"])),
     }
     labels_sets = {"none": {}, "two": {"Ava": "<Subject 1>", "Ben": "<Subject 2>", "a": "<Subject 1>", "b": "<Subject 2>"}}
-    presets = ["", "off", "custom", "pop_polished", "pop_flirty", "love_tender", "sad_wounded", "happy_joyful", "rock_intense", "metal_rage", "rap_high_intensity", "unknown"]
+    presets = ["", "off", "custom", "pop_polished", "pop_flirty", "love_tender", "sad_wounded", "happy_joyful", "rock_intense", "metal_rage", "rap_high_intensity", "theatrical", "unknown"]
 
     for seg_name, segment in segments.items():
         for plan_name, plan in plans.items():
@@ -117,6 +117,18 @@ def main() -> int:
             data["facial"].append({"segment": segment, "session": {}, "return": lfp.facial_text(segment, {})})
     data["facial"].append({"segment": {"id": "s1"}, "session": {"default_facial_performance": "love_tender", "default_facial_performance_custom": "extra eyes"}, "return": lfp.facial_text({"id": "s1"}, {"default_facial_performance": "love_tender", "default_facial_performance_custom": "extra eyes"})})
     data["facial"].append({"segment": {"id": "s1", "facial_performance": 5}, "session": {}, "return": lfp.facial_text({"id": "s1", "facial_performance": 5}, {})})
+    # The scene's own facial settings come before the project's, and a present but empty one still counts.
+    for segment, session_defaults in (
+        ({"id": "s1", "scene_defaults": {"facial_performance": "theatrical"}}, {}),
+        ({"id": "s1", "scene_defaults": {"facial_performance": "theatrical"}}, {"default_facial_performance": "love_tender"}),
+        ({"id": "s1", "scene_defaults": {"facial_performance": ""}}, {"default_facial_performance": "love_tender"}),
+        ({"id": "s1", "scene_defaults": {"facial_performance": "off"}}, {"default_facial_performance": "love_tender"}),
+        ({"id": "s1", "scene_defaults": {"facial_performance_custom": "wry brows"}}, {"default_facial_performance": "love_tender", "default_facial_performance_custom": "extra eyes"}),
+        ({"id": "s1", "facial_performance": "pop_flirty", "scene_defaults": {"facial_performance": "theatrical"}}, {}),
+        ({"id": "s1", "scene_defaults": "broken"}, {"default_facial_performance": "happy_joyful"}),
+        ({"id": "s1"}, {"default_facial_performance": "theatrical"}),
+    ):
+        data["facial"].append({"segment": segment, "session": session_defaults, "return": lfp.facial_text(segment, session_defaults)})
 
     for seg_name, segment in segments.items():
         for facial in ("", "pop_polished", "off"):
@@ -153,6 +165,10 @@ def main() -> int:
         "cue_map_dupes": {"id": "s1", "start": 0.0, "end": 6.5, "lyric_text": "x", "lyric_performance_mode": "cue_map",
                           "lyric_cue_map": [{"start": 0.0}, {"start": 2.0}, {"start": 2.0}, {"start": 0.02}, {"start": 6.49}, {"start": None}, {"start": 4}]},
         "short": {"id": "s1", "start": 1.0, "end": 1.05, "lyric_text": "x"},
+        "scoped_frequency": {"id": "s1", "start": 0.0, "end": 6.5, "lyric_text": "x", "scene_defaults": {"minimax_h3_cut_frequency": 4, "minimax_h3_cut_style": "hard"}},
+        "scoped_single": {"id": "s1", "start": 0.0, "end": 6.5, "lyric_text": "x", "scene_defaults": {"minimax_h3_cut_frequency": 0}},
+        "scoped_text": {"id": "s1", "start": 0.0, "end": 6.5, "lyric_text": "x", "scene_defaults": {"minimax_h3_cut_frequency": "3"}},
+        "scoped_broken": {"id": "s1", "start": 0.0, "end": 6.5, "lyric_text": "x", "scene_defaults": "oops"},
     }
     for sess_name, sess in sessions.items():
         for seg_name, segment in cut_segments.items():

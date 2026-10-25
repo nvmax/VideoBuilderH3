@@ -200,6 +200,8 @@ pub fn scene_view(project: &Path, segment: &Obj, index: usize, locked_settings: 
     });
     if locked_settings {
         let map = view.as_object_mut().expect("object");
+        // The scene's own Scene Defaults (the settings it keeps apart from the project's), as PATCH accepts them.
+        map.insert("scene_defaults".into(), Value::Object(h3_core::scene_defaults::normalize_scene_defaults(segment.get("scene_defaults").unwrap_or(&Value::Null), false).unwrap_or_default()));
         map.insert("audio_mask".into(), segment.get("audio_mask").filter(|v| v.is_object()).cloned().unwrap_or(Value::Null));
         map.insert("use_scene_minimax_h3_settings".into(), json!(segment.get("use_scene_minimax_h3_settings").is_some_and(truthy)));
         map.insert("minimax_h3_settings".into(), segment.get("minimax_h3_settings").filter(|v| v.is_object()).cloned().unwrap_or(Value::Null));

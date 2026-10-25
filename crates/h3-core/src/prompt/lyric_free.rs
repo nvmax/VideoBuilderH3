@@ -156,6 +156,7 @@ pub fn shot_direction(performer: &str, timing: &str, include_expression: bool) -
 
 fn facial_preset(key: &str) -> &'static str {
     match key {
+        "theatrical" => crate::theatrical::facial_direction(),
         "" => "Use natural expressive facial performance: engaged eyes, subtle natural eye movement, active brows, subtle cheek and jaw movement, visible emotion that fits the lyric or scene, and occasional natural blinking.",
         "pop_polished" => "Use polished pop-star facial performance: bright eyes, subtle natural eye movement, direct camera gaze, soft confident smile, playful smirk, relaxed brows, slight head tilts, lips slightly parted while singing, charming camera-ready expression, and occasional natural blinking.",
         "pop_flirty" => "Use playful pop facial performance: flirty smile, coy glance, subtle natural eye movement, light pout, glossy pout, raised brows, charming direct gaze, playful smirk, subtle head tilt, lips slightly parted while singing, and occasional natural blinking.",
@@ -171,11 +172,13 @@ fn facial_preset(key: &str) -> &'static str {
 
 /// The selected facial emotion without vocal articulation.
 pub fn facial_text(segment: &Obj, session: &Obj) -> String {
-    let key = first_text(&[segment.get("facial_performance"), session.get("default_facial_performance")]);
+    // `scoped.get(name, fallback)`: a scene override that is present counts even when it is empty.
+    let scoped = segment.get("scene_defaults").and_then(Value::as_object);
+    let key = first_text(&[segment.get("facial_performance"), scoped.and_then(|s| s.get("facial_performance")).or_else(|| session.get("default_facial_performance"))]);
     if key == "off" {
         return String::new();
     }
-    let custom = first_text(&[segment.get("facial_performance_custom"), session.get("default_facial_performance_custom")]);
+    let custom = first_text(&[segment.get("facial_performance_custom"), scoped.and_then(|s| s.get("facial_performance_custom")).or_else(|| session.get("default_facial_performance_custom"))]);
     let text = if key == "custom" { custom } else { [facial_preset(&key).to_string(), custom].into_iter().filter(|p| !p.is_empty()).collect::<Vec<_>>().join(" ") };
     let banned = rx!(r"(?i)\b(?:mouth\w*|lips?|jaw|sing\w*|sang|sung|vocals?|lyrics?|teeth|notes)\b");
     let clauses: Vec<String> = py_split(rx!(r"[,.;]"), &text).into_iter().map(|c| c.trim().to_string()).filter(|c| !c.is_empty() && !is_match(banned, c)).collect();
@@ -404,7 +407,8 @@ pub fn prompt_context(text: &str, segment: &Obj, cut_plan: &Obj, performer: &str
 
 /// The scene's shot plan from its length and the project's saved cut frequency and cut style.
 pub fn scene_cut_plan(segment: &Obj, session: &Obj) -> Obj {
-    let defaults: Obj = session.get("builder_storyboard_defaults").and_then(Value::as_object).cloned().unwrap_or_default();
+    let project: Obj = session.get("builder_storyboard_defaults").and_then(Value::as_object).cloned().unwrap_or_default();
+    let defaults = crate::scene_defaults::with_scene_overrides(&project, segment);
     let duration = (num_of(segment.get("end")).filter(|n| *n != 0.0).unwrap_or(0.0) - num_of(segment.get("start")).filter(|n| *n != 0.0).unwrap_or(0.0)).max(0.1);
     let frequency = defaults.get("minimax_h3_cut_frequency").filter(|v| truthy(v)).and_then(to_float).map_or(0, |f| f as i64);
     let mut plan = storyboard_cut_plan_for_duration(duration, frequency);

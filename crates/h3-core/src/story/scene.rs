@@ -165,7 +165,8 @@ pub fn normalize_storyboard_scene(scene: &Value, fallback_number: i64) -> Value 
     put("project_video_engine", json!(engine));
     put("minimax_h3_mode", json!(h3_mode));
     put("minimax_h3_audio_mode", json!(audio_mode));
-    put("video_style", json!(clean_of(scene, &["video_style", "videoStyle"], 160)));
+    put("scene_defaults", Value::Object(crate::scene_defaults::normalize_scene_defaults(scene.get("scene_defaults").unwrap_or(&Value::Null), false).unwrap_or_default()));
+    put("video_style",json!(clean_of(scene, &["video_style", "videoStyle"], 160)));
     put("video_style_custom", json!(clean_of(scene, &["video_style_custom", "videoStyleCustom"], 3000)));
     put("temporal_world_effect_override", json!(text_s(&string_or(scene, &["temporal_world_effect_override", "temporalWorldEffectOverride"], "global"), 120)));
     put("temporal_world_effect_custom", json!(clean_of(scene, &["temporal_world_effect_custom", "temporalWorldEffectCustom"], 3000)));

@@ -1019,6 +1019,299 @@
    "card_only": []
   },
   {
+   "patch": {
+    "scene_defaults": {
+     "camera_flow": "medium_shots",
+     "camera_motion_speed": 0,
+     "unused": null
+    }
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "error": "Unknown scene_defaults fields: unused"
+  },
+  {
+   "patch": {
+    "scene_defaults": {
+     "camera_flow": "medium_shots",
+     "camera_motion_speed": 0
+    }
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "values": {
+    "scene_defaults": {
+     "camera_flow": "medium_shots",
+     "camera_motion_speed": 0
+    }
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "scene_defaults": {
+     "camera_flow": "medium_shots",
+     "camera_motion_speed": 0
+    }
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "scene_defaults": {}
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "values": {
+    "scene_defaults": {}
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "scene_defaults": {}
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "scene_defaults": {
+     "nope": 1,
+     "also": 2
+    }
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "error": "Unknown scene_defaults fields: also, nope"
+  },
+  {
+   "patch": {
+    "scene_defaults": {
+     "camera_motion_speed": 11
+    }
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "error": "Invalid scene_defaults value for camera_motion_speed"
+  },
+  {
+   "patch": {
+    "scene_defaults": {
+     "temporal_allow_background_extras": 1
+    }
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "error": "Invalid scene_defaults value for temporal_allow_background_extras"
+  },
+  {
+   "patch": {
+    "scene_defaults": "x"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "error": "scene_defaults must be an object."
+  },
+  {
+   "patch": {
+    "scene_defaults": {
+     "performance_style": "theatrical",
+     "video_style": "noir",
+     "facial_performance_custom": "wry"
+    },
+    "label": "Opening"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {},
+   "values": {
+    "scene_defaults": {
+     "performance_style": "theatrical",
+     "facial_performance_custom": "wry",
+     "video_style": "noir"
+    },
+    "label": "Opening"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Opening",
+    "lyric_text": "old",
+    "scene_defaults": {
+     "performance_style": "theatrical",
+     "facial_performance_custom": "wry",
+     "video_style": "noir"
+    },
+    "performance_style": "theatrical",
+    "facial_performance_custom": "wry",
+    "minimax_h3_video_style": "noir"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "scene_defaults": {
+     "camera_flow": "medium_shots"
+    }
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {
+    "scene_defaults": {
+     "camera_flow": "close_ups",
+     "performance_style": "calm"
+    }
+   },
+   "values": {
+    "scene_defaults": {
+     "camera_flow": "medium_shots"
+    }
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "scene_defaults": {
+     "camera_flow": "medium_shots",
+     "performance_style": "calm"
+    },
+    "performance_style": "calm"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "scene_defaults": {}
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {
+    "scene_defaults": {
+     "camera_flow": "close_ups",
+     "performance_style": "calm"
+    }
+   },
+   "values": {
+    "scene_defaults": {}
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "scene_defaults": {}
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "performance_style": "theatrical",
+    "video_style_custom": "grain"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {
+    "scene_defaults": {
+     "camera_flow": "close_ups",
+     "performance_style": "calm",
+     "video_style": "noir"
+    }
+   },
+   "values": {
+    "performance_style": "theatrical",
+    "video_style_custom": "grain"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "Scene 1",
+    "lyric_text": "old",
+    "scene_defaults": {
+     "camera_flow": "close_ups",
+     "performance_style": "theatrical",
+     "video_style": "noir"
+    },
+    "performance_style": "theatrical",
+    "minimax_h3_video_style_custom": "grain"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "video_style": "pastel",
+    "label": "x"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {
+    "scene_defaults": {
+     "video_style": "noir"
+    }
+   },
+   "values": {
+    "video_style": "pastel",
+    "label": "x"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "x",
+    "lyric_text": "old",
+    "scene_defaults": {
+     "video_style": "pastel"
+    },
+    "minimax_h3_video_style": "pastel"
+   },
+   "card_only": []
+  },
+  {
+   "patch": {
+    "label": "x"
+   },
+   "engine": "minimax_h3",
+   "mode": "zimage",
+   "base": {
+    "scene_defaults": "broken"
+   },
+   "values": {
+    "label": "x"
+   },
+   "rest": {},
+   "segment": {
+    "id": "s1",
+    "start": 0,
+    "end": 4,
+    "label": "x",
+    "lyric_text": "old",
+    "scene_defaults": "broken"
+   },
+   "card_only": []
+  },
+  {
    "names": [
     "audio_direction",
     "camera_motion",
@@ -1057,6 +1350,7 @@
     "performance_style",
     "planning_notes",
     "prompt_summary",
+    "scene_defaults",
     "shot_type",
     "speaker_assignments",
     "story_beat",

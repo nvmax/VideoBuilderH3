@@ -34,6 +34,9 @@ fn scene_card_patches_match_the_pack() {
         assert!(same(&Value::Object(values.clone()), &case["values"]), "values\n got  {values:?}\n want {}", case["values"]);
         assert!(same(&Value::Object(rest), &case["rest"]), "rest {case}");
         let mut segment = json!({"id": "s1", "start": 0, "end": 4, "label": "Scene 1", "lyric_text": "old"});
+        if let Some(base) = case.get("base").and_then(Value::as_object) {
+            segment.as_object_mut().unwrap().extend(base.clone());
+        }
         apply_to_segment(&mut segment, &values, case["engine"].as_str().unwrap(), case["mode"].as_str().unwrap());
         assert!(same(&segment, &case["segment"]), "segment\n got  {segment}\n want {}", case["segment"]);
         let keys = |v: &Value| -> Vec<String> { v.as_object().unwrap().keys().cloned().collect() };

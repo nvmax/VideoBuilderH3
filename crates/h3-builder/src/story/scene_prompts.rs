@@ -1,5 +1,6 @@
 //! The Storyboard's text-to-image prompt for a scene card. Port of `_build_storyboard_image_prompt` in `storyboard/scene_prompts.py`.
 
+use h3_core::fresh_context::fresh_prompt_scene_context;
 use h3_core::pyjson::dumps;
 use h3_core::pyval::{text_or_empty, truthy, Obj};
 use h3_core::story::helpers::first_truthy;
@@ -16,9 +17,13 @@ use crate::prompt_writers::{number, whole, Llm, TextCall};
 /// `POST gemma_image_prompt`: the still image prompt of the selected scene of a scene card bundle.
 pub async fn build_storyboard_image_prompt(llm: &dyn Llm, payload: &Obj) -> Result<Value, String> {
     let bundle = first_truthy(payload, &["storyboard_payload", "scene_bundle", "gpt_payload"]).filter(|v| v.is_object()).cloned();
-    let Some(bundle) = bundle else { return Err("Storyboard scene-card payload is missing.".into()) };
+    let Some(mut bundle) = bundle else { return Err("Storyboard scene-card payload is missing.".into()) };
     if !matches!(bundle.get("scenes"), Some(Value::Array(scenes)) if !scenes.is_empty()) {
         return Err("Storyboard scene-card payload has no scenes.".into());
+    }
+    // A new prompt is written from the scenes' directions, not from the prompts saved on them.
+    if let Some(scenes) = bundle.get("scenes") {
+        bundle["scenes"] = fresh_prompt_scene_context(scenes);
     }
     let mut instruction_text = constant("storyboard", "_STORYBOARD_T2I_GEMMA_INSTRUCTIONS").to_string();
     let key = first_truthy(payload, &["builder_instruction_key", "instruction_key"]).map(|v| text_or_empty(Some(v))).unwrap_or_default().trim().to_string();

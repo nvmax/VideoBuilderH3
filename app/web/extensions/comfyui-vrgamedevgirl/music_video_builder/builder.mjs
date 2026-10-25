@@ -1,3 +1,4 @@
+import { createLlmSetup, registerLlmSetup } from "./llm_setup.mjs";
 import { api } from "../../../scripts/api.js";
 import "./prompt_creator.mjs";
 import { applyGlobalLlmKeys, bindGlobalLlmKeys, rememberGlobalLlmKeys } from "./llm_global_keys.mjs";
@@ -219,6 +220,7 @@ export function openBuilder(node, options = {}) {
     builderLifecycle.resourceResizeObserver?.disconnect();
     window.removeEventListener("vrgdg:builder-toast", toastNotificationHandler);
     window.removeEventListener("vrgdg:builder-session-saved", videoModeSavedHandler);
+    builderLifecycle.disposeLlmSetup?.();
     builderLifecycle.disposeErrorLog?.();
     builderLifecycle.externalChangeSync?.dispose();
     builderLifecycle.sceneAudioSettings?.dispose();
@@ -234,7 +236,7 @@ export function openBuilder(node, options = {}) {
     lyricMapperButton, menuDropdown, pollBuilderResources, positionBuilderETA, positionBuilderResourceMonitor,
     projectBatchButton, projectVideoEngineBadge, promptCreatorButton, promptOptionsButton, renderAllButton,
     renderLogButton, sendToPromptCreatorButton, slideshowPreviewButton, stitchPreviewButton,
-    stopWorkflowButton, storyboardBuilderButton, updateV10Button, updateV10HintButton, wizardBetaButton,
+    syncWorkflowActionOrder, stopWorkflowButton, storyboardBuilderButton, updateV10Button, updateV10HintButton,
     wizardButton, zEnhanceAllButton, zEnhanceAllToolButton, zImageAllButton,
   } = buildTopbar({
     autoSaveControl, branchProjectButton, builderETAState, builderLifecycle, closeBuilderNow, closeButton,
@@ -381,9 +383,6 @@ export function openBuilder(node, options = {}) {
     generateFacePrompt: async ({ referenceImage }) => {
       const modelFile = referenceDescriptionVisionModel();
       const mmprojFile = referenceDescriptionMmproj();
-      if (!["lm_studio", "llm_api", "own_server"].includes(state.textGemmaRunner) && (!modelFile || !mmprojFile)) {
-        throw new Error("Choose a vision model and Vision mmproj in LLM Runner first.");
-      }
       const data = await postJson("/vrgdg/music_builder/describe_reference_image", {
         ...textGemmaRunnerPayload(),
         model_file: modelFile,
@@ -678,7 +677,7 @@ export function openBuilder(node, options = {}) {
   imageTabButton.onclick = () => setInspectorTab("image");
   videoTabButton.onclick = () => setInspectorTab("video");
   audioTabButton.onclick = () => setInspectorTab("audio");
-  const { idLoraVoiceSettingsSection, imageContinuityEnabled, imageContinuityStrength } = buildInspectorPanels({
+  const { idLoraVoiceSettingsSection, imageContinuityEnabled, imageContinuityStrength, imageModelSelections } = buildInspectorPanels({
     browserAiAutoAdvanceGroup, browserAiBandSequenceMode, browserAiBandSequencePanel,
     browserAiCustomGroupsPanel, browserAiGroupPrompt, browserAiGroupsNote, browserAiGroupStatus,
     browserAiSessionActions, createFluxPromptButton, createNBPromptButton, createT2IButton,
@@ -739,7 +738,7 @@ export function openBuilder(node, options = {}) {
     miniMaxLatentStatusPill, miniMaxLocationTransitionControls, miniMaxLocationTransitionCustom,
     miniMaxLocationTransitionCustomField, miniMaxLocationTransitionPreset, miniMaxLoraCount, miniMaxLoraNote,
     miniMaxLoraRows, miniMaxLoraSection, miniMaxLoraSlots, miniMaxMegapixels, miniMaxMegapixelsField, miniMaxResolutionPreset,
-    miniMaxMemoryEfficientSageAttention, miniMaxModeButtons, miniMaxModelLoaderSettings, miniMaxModePanels,
+    miniMaxMemoryEfficientSageAttention, miniMaxModeSelect, miniMaxModelLoaderSettings, miniMaxModePanels,
     miniMaxPass2Prompt, miniMaxPass2PromptField, miniMaxPassButtons, miniMaxPassChooser, miniMaxPrompt, miniMaxVideoProfileControls,
     miniMaxPromptCharacterStatus, miniMaxPromptRunnerNote, miniMaxReferenceConditioningSettings,
     miniMaxRefImageSize, miniMaxSageAttention, miniMaxSamplerName, miniMaxSamplerSettings,
@@ -841,7 +840,7 @@ export function openBuilder(node, options = {}) {
         makeCreateSceneVideoButton(),
       ]),
     },
-  ]);
+  ], { modelSelectionLabel: "LTX" });
   const ltxVideoPanel = document.createElement("div");
   ltxVideoPanel.style.cssText = "display:flex;flex-direction:column;gap:10px;";
   ltxVideoPanel.append(videoModeChooser, importCustomVideoPanel, videoSubTabs.wrapper);
@@ -865,7 +864,7 @@ export function openBuilder(node, options = {}) {
   const {
     addOverlaySegmentButton, addSegmentButton, addTimelineMarkerButton, audioMaskButton, beatMarkersButton, bulkSegmentsButton, stemMonitorButton, stemVisibilityButton, stemLayer,
     clearRangeButton, closeTimelineGapsButton, deleteAllSegmentsButton, deleteAllTimelineImagesButton,
-    deleteAllTimelineVideosButton, deleteSegmentButton, freezeTimingControl, globalAudioMuteButton, addAudioClipButton,
+    deleteAllTimelineVideosButton, deleteSegmentButton, globalAudioMuteButton, addAudioClipButton,
     globalScrub, globalScrubTime, idLoraTrimModeButton, lyricNoteButton, emotionTagButton, locationThumbnailButton, multiSelectButton,
     multiSelectHintButton, overlayTrackHintButton, overlayTrackToggleButton, playButton, playhead, redoButton,
     latentContinuationOffAllButton, unlockAllScenesButton, refreshDeleteActions, sceneDragLockButton, sceneNoteButton, segmentLayer, setInButton, setOutButton, snapSceneEdgeButton,
@@ -1197,7 +1196,7 @@ export function openBuilder(node, options = {}) {
   });
 
   const { playBuilderNotification, shouldNotifyForToast, syncVideoTypeControl } = createNotificationSounds({
-    state, videoTypeSelect,
+    state, videoTypeSelect, syncWorkflowActionOrder,
   });
 
   const {
@@ -1256,7 +1255,7 @@ export function openBuilder(node, options = {}) {
     ernieT2IPrompt, ernieTextGemmaModelSelect, ernieUseVisionReference, firstLastFramePromptReferences,
     firstLastFrameResolvedEndImageSource, firstLastFrameStartImageSource, flfTransitionTypeSelect,
     flowGptCreatePromptButton, fluxPrompt, fluxUseDirectorNotes, fluxUseTextOnlyGemmaPrompt,
-    freezeTimingControl, gemmaModelSelect, globalAudioSummary, globalScrub, globalScrubTime,
+    gemmaModelSelect, globalAudioSummary, globalScrub, globalScrubTime,
     i2vGemmaModelSelect, i2vMmprojSelect, i2vMotionJsonInput, i2vNotesInput, i2vPrompt,
     i2vTextGemmaModelSelect, i2vUseGgufModel, krea2TwoPassCreateT2IButton, krea2TwoPassNotesInput,
     krea2TwoPassRefImagePanel, krea2TwoPassT2IPrompt, krea2TwoPassUseVisionReference, labelInput,
@@ -1357,7 +1356,7 @@ export function openBuilder(node, options = {}) {
     miniMaxLocationTransitionControls, miniMaxLocationTransitionCustom, miniMaxLocationTransitionCustomField,
     miniMaxLocationTransitionPreset, miniMaxLoraCount, miniMaxLoraNote, miniMaxLoraRows, miniMaxLoraSection,
     miniMaxLoraSlots, miniMaxMegapixels, miniMaxMegapixelsField, miniMaxResolutionPreset, miniMaxMemoryEfficientSageAttention,
-    miniMaxModeButtons, miniMaxModelLoaderSettings, miniMaxModePanels, miniMaxPass2Prompt,
+    miniMaxModeSelect, miniMaxModelLoaderSettings, miniMaxModePanels, miniMaxPass2Prompt,
     miniMaxPass2PromptField, miniMaxPassButtons, miniMaxPassChooser, miniMaxPrompt,
     miniMaxPromptCharacterStatus, miniMaxPromptRunnerNote, miniMaxReferenceButtons,
     miniMaxReferenceConditioningSettings, miniMaxRefImageSize, miniMaxSageAttention, miniMaxSamplerName,
@@ -1999,7 +1998,7 @@ export function openBuilder(node, options = {}) {
     createSilentTimelineAudioForDuration, loadAudio, loadSrt, openSettingsModal, render,
   } = createProjectSetup({
     activeProjectFolderForSave, audio, audioInput, autoSaveSessionQuiet, createSilentTimelineAudioButton,
-    drawWaveform, freezeTimingControl, getPreferredProjectRoot, globalScrub, loadButton, loadSrtButton,
+    drawWaveform, getPreferredProjectRoot, globalScrub, loadButton, loadSrtButton,
     lutsTools, node, pickAudioButton, pickSrtButton, playBuilderNotification, projectInput,
     projectLyricNotesPath, pushHistory, renderList, renderSegments, saveSession, scenePanel, setPreferredProjectRoot,
     settingsModalControls, silentAudioDurationInput, srtInput, state, syncI2VVideoSettingsPanel,
@@ -2410,6 +2409,15 @@ export function openBuilder(node, options = {}) {
     autoSaveSessionQuiet, createProgressWindow, saveSession, state, syncBuilderLlmModelSelectsFromRunner,
     mmprojSelect, t2iTextGemmaModelSelect, textGemmaRunnerPayload, updatePromptRunnerButtonLabels,
   });
+  builderLifecycle.disposeLlmSetup = registerLlmSetup(createLlmSetup({
+    openRunner: openGemmaRunnerModal,
+    getRunnerPayload: () => ({
+      ...textGemmaRunnerPayload(),
+      model_file: state.textGemmaRunner === "qwen_local" ? state.qwenModelFile || ""
+        : state.gemmaModelFile || t2iTextGemmaModelSelect.value || referenceDescriptionVisionModel(),
+      mmproj_file: state.textGemmaRunner === "qwen_local" ? state.qwenMmprojFile || "" : referenceDescriptionMmproj(),
+    }),
+  }));
 
   const {
     buildFullFLFVideoPipeline, buildFullVideoPipeline, buildIndependentFLFPairs, createEndFramesAllScenes,
@@ -2462,7 +2470,7 @@ export function openBuilder(node, options = {}) {
     activeSegment, addOverlaySegmentButton, addSceneImageHistoryPath, allEditableSegments, audio,
     autoSaveSessionQuiet, baseSceneVideoTrimKind, chooseRenderedSceneTrimAtPlayhead, closeBaseTimelineGap,
     currentGlobalTime, customImageFileInput, enforceAudioTimelineEnd,
-    ensureSegmentRuntimeFields, freezeTimingControl, loadDirtyLatentBadges, loadedGlobalAudioDuration,
+    ensureSegmentRuntimeFields, loadDirtyLatentBadges, loadedGlobalAudioDuration,
     nextFreeTimelineMarkerRange, nextOverlaySlotNumber, openTimelineMarkerEditor, overlayTrackToggleButton,
     pauseTimelineForEditing, playbackSegmentAtTime, previewVideo, projectInput, pushHistory, render,
     renderList, requireActiveSegment, sceneAudio, sceneListPane, sceneSlotNumber, segmentImageSource,
@@ -2503,42 +2511,32 @@ export function openBuilder(node, options = {}) {
     sceneDefaultsPromptOptions: (...args) => sceneDefaultsPromptOptions(...args),
   });
 
-  const { createSceneBeats, createVideoPrompts, openWizardBetaFromBuilder, openWizardFromBuilder } = createWizardBridge({
-    openStoryBuilder,
-    activeI2VVideoSettings, activeProjectFolderForSave, activeSegment, allEditableSegments, audioInput,
-    autoSaveSessionQuiet, chooseProjectAudioFile, confirmAndRunFullBuild, confirmAndRunGemmaT2IAll,
-    confirmAndRunGemmaVideoAll, confirmAndRunZImageAll, createProgressWindow,
-    createScenesFromTimestampedLyrics, createSceneVideoActions, createSceneVideoButtons,
-    createSilentTimelineAudioForDuration, currentVideoMode, ensureAllSegmentRuntimeFields,
-    ensureAutoTimedSingerCuesBeforePrompt, ernieClipPicker, ernieImagePanel, ernieUnetPicker, ernieVaePicker,
-    exportManualFlowGptRefs, finalizeVideoPromptDraftOnly, flowGptImageAllScenes, flowGptManualAutoAdvance,
-    flowGptManualMode, flowGptManualStatus, flowGptModePanel, flowGptStatusText, fluxClipPicker,
-    fluxKleinPanel, fluxUnetPicker, fluxVaePicker, gemmaModelSelect, gemmaRunnerLabel, gemmaRunnerLine,
-    i2vAudioVaePicker, i2vClip1Picker, i2vClip2Picker, i2vDiffusionModelPicker, i2vFpsInput,
-    i2vGemmaModelSelect, i2vHeightInput, i2vLoraCount, i2vLoraSlots, i2vMmprojSelect, i2vSeedInput,
-    i2vTextGemmaModelSelect, i2vUnetPicker, i2vUpscalePicker, i2vUseGgufModel, i2vUseLora, i2vVaePicker,
-    i2vWidthInput, imageModeDisplayLabel, importLatestManualFlowGptDownload, importTimelineImagesFromFolder,
-    inspector, krea2TwoPassClipPicker, krea2TwoPassPanel, krea2TwoPassUnetPicker, krea2TwoPassVaePicker,
-    ltxMsrFirstPassStrength, ltxMsrLoraPicker, miniMaxGemmaModelSelect, miniMaxMmprojSelect,
-    miniMaxModePanels, miniMaxPassChooser, miniMaxSubTabs, miniMaxTextGemmaModelSelect, mmprojSelect,
-    nbImagePanel, newProject, normalizeLyricCueMapForSegment, openBulkSegmentsModal,
-    openFluxReferenceBuilderModal, openGemmaRunnerModal, openIdLoraReferenceBuilderModalSafely,
-    openIngredientsReferenceBuilderModal, openLyricMappingWorkflowModal, openLyricReviewModal,
-    openManualFlowGptBrowser, openStoryboardBuilderFromProject, projectInput, promptRunnerActionName,
-    pushHistory, render, renderAllScenes, rtvSceneImageAnchorSection, saveErnieImageSettingsFromPanel,
-    saveFlowGptBrowserSettingsFromPanel, saveFluxKleinSettingsFromPanel, saveGemmaJunkDebug,
-    saveI2VVideoSettingsFromPanel, saveKrea2TwoPassSettingsFromPanel, saveMiniMaxH3SettingsFromPanel,
-    saveNBImageSettingsFromPanel, saveSession, saveZImageSettingsFromPanel, sceneDisplayName, segmentTrack,
-    selectedPerformerSubjectsForSegment, setInspectorTab, setSegmentPromptForEdit, state, storyboardPipeline,
-    storyboardReferenceBuilderWithIdLoraRefs, storyboardScenePayload, subjectSceneInput, syncErnieImagePanel,
-    syncFlowGptBrowserPanel, syncFlowGptManualPanel, syncFluxKleinPanel, syncI2VVideoModelPickerVisibility,
-    syncI2VVideoSettingsPanel, syncInspector, syncKrea2TwoPassLlmSelectsFromShared, syncKrea2TwoPassPanel,
-    syncLyricAndSubjectNoteFiles, syncMiniMaxH3Panel, syncNBImagePanel, syncProjectVideoEngineUI,
-    syncVideoModePanel, syncVideoTypeControl, syncZImageSettingsPanel, t2iTextGemmaModelSelect,
-    textGemmaRunnerPayload, transcribeLyricsForTimeline, updateActiveFromInputs, useSceneI2VVideoSettings,
-    useSceneI2VVideoSettingsNote, useSceneMiniMaxH3Settings, useSceneMiniMaxH3SettingsNote,
-    videoModeDisplayLabel, videoSubTabs, wizardStoryboardState, wizardVideoSettings, zClipPicker,
-    zimageSettingsPanel, zUnetPicker, zVaePicker,
+  const { createSceneBeats, createVideoPrompts, openWizardFromBuilder } = createWizardBridge({
+  activeProjectFolderForSave, activeSegment, allEditableSegments, audioInput, autoSaveSessionQuiet,
+  chooseProjectAudioFile, confirmAndRunZImageAll, createProgressWindow,
+  createScenesFromTimestampedLyrics, createSceneVideoActions, createSceneVideoButtons,
+  createSilentTimelineAudioForDuration, currentVideoMode, ensureAllSegmentRuntimeFields,
+  ensureAutoTimedSingerCuesBeforePrompt, ernieImagePanel, finalizeVideoPromptDraftOnly,
+  flowGptModePanel, fluxKleinPanel, gemmaModelSelect, i2vGemmaModelSelect, i2vMmprojSelect,
+  i2vTextGemmaModelSelect, imageModeDisplayLabel, importTimelineImagesFromFolder, inspector,
+  krea2TwoPassPanel, miniMaxModePanels, miniMaxPassChooser, miniMaxSubTabs, mmprojSelect,
+  nbImagePanel, newProject, normalizeLyricCueMapForSegment, openBulkSegmentsModal,
+  openFluxReferenceBuilderModal, openGemmaRunnerModal, openIdLoraReferenceBuilderModalSafely,
+  openIngredientsReferenceBuilderModal, openLyricMappingWorkflowModal, openLyricReviewModal,
+  openStoryboardBuilderFromProject, projectInput, promptRunnerActionName, pushHistory, render,
+  renderAllScenes, rtvSceneImageAnchorSection, saveErnieImageSettingsFromPanel,
+  saveFlowGptBrowserSettingsFromPanel, saveFluxKleinSettingsFromPanel, saveGemmaJunkDebug,
+  saveI2VVideoSettingsFromPanel, saveKrea2TwoPassSettingsFromPanel, saveMiniMaxH3SettingsFromPanel,
+  saveNBImageSettingsFromPanel, saveSession, saveZImageSettingsFromPanel, sceneDisplayName,
+  segmentTrack, selectedPerformerSubjectsForSegment, setInspectorTab, setSegmentPromptForEdit,
+  state, storyboardPipeline, storyboardScenePayload, syncErnieImagePanel, syncFlowGptBrowserPanel,
+  syncFluxKleinPanel, syncI2VVideoSettingsPanel, syncInspector, syncKrea2TwoPassPanel,
+  syncMiniMaxH3Panel, syncNBImagePanel, syncProjectVideoEngineUI, syncVideoModePanel,
+  syncVideoTypeControl, syncZImageSettingsPanel, t2iTextGemmaModelSelect, textGemmaRunnerPayload,
+  transcribeLyricsForTimeline, updateActiveFromInputs, useSceneI2VVideoSettings,
+  useSceneI2VVideoSettingsNote, useSceneMiniMaxH3Settings, useSceneMiniMaxH3SettingsNote,
+  videoModeDisplayLabel, videoSubTabs, wizardStoryboardState, wizardVideoSettings,
+  zimageSettingsPanel,
   });
 
   const {
@@ -2946,6 +2944,7 @@ export function openBuilder(node, options = {}) {
     useVisionReference,
   });
   wireToolbar({
+    modelSelections: [videoSubTabs.modelSelection, miniMaxSubTabs.modelSelection, ...imageModelSelections],
     render,
     activeSegment, addOverlaySegment, addOverlaySegmentButton, addSegment, addSegmentButton,
     addTimelineMarkerButton, addTimelineMarkerFromSelection, applyBuilderFullscreen, autoBuildButton,
@@ -2968,7 +2967,7 @@ export function openBuilder(node, options = {}) {
     openBulkSegmentsModal, openGemmaRunnerModal, openLyricMappingWorkflowModal, openPromptOptionsModal,
     openReferenceBuilderTargetChooser, openRenderLogModal, openSceneAudioOptionsButton, openSceneOptions,
     openSettingsModal, openSnapSceneEdgeMenu, openStitchPreviewModal, openStoryboardBuilderFromProject,
-    openStoryBuilder, openWhatsNewModal, openWizardBetaFromBuilder, openWizardFromBuilder, overlayTrackHintButton,
+    openStoryBuilder, openWhatsNewModal, openWizardFromBuilder, overlayTrackHintButton,
     overlayTrackToggleButton, pauseTimelineForEditing, pickAudioButton, pickIdLoraReferenceAudioButton,
     pickSrtButton, projectAudioFileInput, projectSrtFileInput, promptCreatorButton, promptOptionsButton, redo,
     redoButton, renderAllButton, renderImageSlideshowPreview, renderLogButton, requireActiveSegment,
@@ -2981,7 +2980,7 @@ export function openBuilder(node, options = {}) {
     toggleOverlayTrack, undo,
     undoButton, updateAudioScrubbers, updatePromptRunnerButtonLabels, updateStatus, updateStatusAction,
     updateV10Button, updateV10HintButton, updateWhatsNewAction, videoTypeSelect, whatsNewMenuButton,
-    wizardBetaButton, wizardButton, zEnhanceAllButton, zEnhanceAllToolButton, zImageAllButton,
+    wizardButton, zEnhanceAllButton, zEnhanceAllToolButton, zImageAllButton,
   });
   wirePanelButtons({
     applyRTVReferenceBehaviorToAll, autoSaveSessionQuiet, createFlowGptPromptWithGemma,
@@ -3028,7 +3027,7 @@ export function openBuilder(node, options = {}) {
     clearActiveSegment, closeBeatCalibrationWizard, currentGlobalTime,
     deleteAllSegments, deleteAllSegmentsButton, deleteAllTimelineImages, deleteAllTimelineImagesButton,
     deleteAllTimelineVideos, deleteAllTimelineVideosButton, deleteSegment, deleteSegmentButton,
-    enforceAudioTimelineEnd, ensureAutoBpmForCalibration, freezeTimingControl,
+    enforceAudioTimelineEnd, ensureAutoBpmForCalibration,
     ensureCapCutBeatsForCalibration, ensureGlobalTimelineAudioSource, globalAudioMuteButton, globalScrub,
     isTimelinePlaying, lyricNoteButton, emotionTagButton, multiSelectButton, multiSelectHintButton, openBeatCalibrationWizard,
     openMultiSelectChooser, pauseAllAudio, playbackDuration, playbackSegmentAtTime, playButton, playhead,
@@ -3093,7 +3092,7 @@ export function openBuilder(node, options = {}) {
     miniMaxContinuationStartValue, miniMaxLatentContextFrames, miniMaxKeyframes,
     miniMaxLocationTransitionCustom, miniMaxLocationTransitionPreset, miniMaxLoraCount, miniMaxLoraSlots,
     miniMaxMappedSpeakersForSegment, miniMaxMegapixels, miniMaxMemoryEfficientSageAttention, miniMaxResolutionPreset, miniMaxVideoProfileControls,
-    miniMaxModeButtons, miniMaxPass2Prompt, miniMaxPassButtons, miniMaxPrompt, miniMaxSageAttention,
+    miniMaxModeSelect, miniMaxPass2Prompt, miniMaxPassButtons, miniMaxPrompt, miniMaxSageAttention,
     miniMaxSamplerName, miniMaxSceneImageUse, miniMaxScheduler, miniMaxSeed,
     miniMaxStartFrameCharacterInfluence, miniMaxSteps, miniMaxThreePassLoraPicker,
     miniMaxThreePassLoraStrength, miniMaxThreePassRefImageSize,
