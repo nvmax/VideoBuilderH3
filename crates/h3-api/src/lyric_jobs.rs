@@ -152,14 +152,27 @@ async fn align(state: &AppState, ctx: &JobCtx, params: &Value) -> Result<(Value,
             return Err(fail(ApiError::new(axum::http::StatusCode::SERVICE_UNAVAILABLE, "COMFY_NODES_MISSING", format!("ComfyUI is missing these nodes: {}. Install or update the VRGDG node pack.", missing.join(", ")))));
         }
     }
-    let queued = run.client.queue_prompt(&Value::Object(graph)).await.map_err(|e| fail(ApiError::from(e)))?;
+    let graph = Value::Object(graph);
+    // The progress socket is opened first, under the id the prompt is queued with, so no step is missed. Without it only the clock moves.
+    let client_id = h3_comfy::unique_client_id();
+    let feed = run.client.progress_feed(&client_id).await;
+    let queued = run.client.queue_prompt_as(&graph, &client_id).await.map_err(|e| fail(ApiError::from(e)))?;
     ctx.set_prompt_id(&queued.prompt_id);
     ctx.progress(ProgressUpdate { percent: 15.0, stage: "aligning_lyrics".into(), message: "Timing the lyrics against the song...".into(), stage_count: 1, ..Default::default() });
+    // 15% is the graph handed to ComfyUI and 70% the timing read back, so the work itself fills what lies between.
+    let mut last_message = String::new();
     let history = run
         .client
-        .wait_for_prompt(&queued.prompt_id, Duration::from_secs(45 * 60), Duration::from_millis(500), &ctx.cancel, |_| {})
+        .wait_for_prompt_live(&queued.prompt_id, &graph, feed.as_ref(), Duration::from_secs(45 * 60), Duration::from_millis(500), &ctx.cancel, |live, elapsed| {
+            let message = live.describe("Timing the lyrics against the song", elapsed);
+            if message != last_message {
+                ctx.progress(ProgressUpdate { percent: 15.0 + 55.0 * live.fraction, stage: "aligning_lyrics".into(), message: message.clone(), stage_count: 1, ..Default::default() });
+                last_message = message;
+            }
+        })
         .await
         .map_err(|e| fail(ApiError::from(e)))?;
+    drop(feed);
     let texts = h3_comfy::extract_texts(&history, &queued.prompt_id);
     let mut payload = parse_timestamped_lyrics_output(&texts.join("\n")).map_err(validation)?;
     payload.entry("segment_mode").or_insert_with(|| request["segment_mode"].clone());

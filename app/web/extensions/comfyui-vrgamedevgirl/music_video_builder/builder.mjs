@@ -2748,6 +2748,16 @@ export function openBuilder(node, options = {}) {
     },
     loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),
     busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),
+    // The scenes an agent renders. The timeline draws them with the rendering glow, beside the scenes whose video_status is "running".
+    // The scene's own data is not changed, so merging the agent's saves finds no local edit and the window is not left with unsaved ones.
+    agentRendering: new Set(),
+    markRendering(sceneId, on) {
+      if (this.agentRendering.has(sceneId) === Boolean(on)) return true;
+      if (on) this.agentRendering.add(sceneId);
+      else this.agentRendering.delete(sceneId);
+      render();
+      return true;
+    },
   };
 
   function updateGlobalAudioMuteButton() {

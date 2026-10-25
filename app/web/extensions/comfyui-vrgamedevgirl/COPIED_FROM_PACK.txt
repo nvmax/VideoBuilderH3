@@ -1,5 +1,5 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
-Pack commit: edfee77 plus uncommitted changes in web
+Pack commit: edc1d01
 Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
 Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
@@ -35,7 +35,9 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/beat_calibration.mjs: Internal beat calibration: how the wizard looks for it (hint, instruction, button).
   music_video_builder/beat_calibration.mjs: Internal beat calibration: analyze the project audio and replace the beat markers.
   music_video_builder/beat_calibration.mjs: Internal beat calibration: the wizard's main button runs it.
-  music_video_builder/builder.mjs: Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on and opens the project it works in, through this small handle.
+  music_video_builder/builder.mjs: Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on, opens the project it works in and shows a scene it renders as rendering, through this small handle.
   music_video_builder/external_changes.mjs: Follow the agent: tell the panel whether this window has unsaved edits, an open text field or a render running, so it does not switch projects under the user.
   music_video_builder/timeline_view.mjs: Follow the agent: each scene card in the left pane names its scene, so the panel can scroll to it and flash it.
+  music_video_builder/timeline_view.mjs: Follow the agent: a scene an agent renders glows as rendering (blue, purple when selected), like a scene the user renders.
+  music_video_builder/timeline_view.mjs: Follow the agent: the timeline repaints when the set of rendering scenes changes, which includes the scenes an agent renders.
   music_video_builder/builder.mjs: The Models dialog's Select models list has no LTX entry (the app makes MiniMax H3 videos only), so it opens on MiniMax H3 like Download models does. Without this it opened on the LTX models panel that the list no longer offered a button for.

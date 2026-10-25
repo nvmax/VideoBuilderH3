@@ -248,10 +248,11 @@ pub async fn render_scene_full(
         tokio::task::spawn_blocking(move || load_session(&path)).await.map_err(other)?.map_err(other)?
     };
     let outcome = render_scene(&ctx.client, Arc::clone(&ctx.env), loaded, scene_ref, params, Arc::clone(&ctx.cancel), &mut on_event).await?;
-    on_event(RenderEvent { percent: 80.0, stage: "trimming", message: "Trimming the clip to the exact timeline length and collecting it...".into() });
+    let scene_id = outcome.scene_id.clone();
+    on_event(RenderEvent::for_scene(80.0, "trimming", "Trimming the clip to the exact timeline length and collecting it...", &scene_id));
     let env = Arc::clone(&ctx.env);
     let finished = tokio::task::spawn_blocking(move || finish_scene(&env, &project_path, &outcome, &options)).await.map_err(other)??;
-    on_event(RenderEvent { percent: 100.0, stage: "completed", message: "Scene video rendered successfully.".into() });
+    on_event(RenderEvent::for_scene(100.0, "completed", "Scene video rendered successfully.", &scene_id));
     Ok(finished)
 }
 
@@ -319,15 +320,17 @@ pub async fn render_all(ctx: &RunContext, project: &Path, options: BatchOptions,
         return Ok(BatchResult { results: vec![], final_video_path: None });
     }
     let total = targets.len();
-    on_event(RenderEvent { percent: 0.0, stage: "batch_videos", message: format!("Starting batch render for {total} scene(s)...") });
+    on_event(RenderEvent::new(0.0, "batch_videos", format!("Starting batch render for {total} scene(s)...")));
     let mut results = Vec::new();
     for (i, (id, number)) in targets.iter().enumerate() {
         if ctx.cancel.load(Ordering::Relaxed) {
             return Err(RenderError::Comfy(h3_comfy::ComfyError::Cancelled));
         }
         let percent = ((i as f64 / total as f64) * 90.0 * 10.0).round() / 10.0;
-        on_event(RenderEvent { percent, stage: "batch_videos", message: format!("Rendering video for scene {} of {total} ({id})...", i + 1) });
-        match render_scene_full(ctx, project, &number.to_string(), options.params.clone(), options.finish.clone(), &mut on_event).await {
+        on_event(RenderEvent::for_scene(percent, "batch_videos", format!("Rendering video for scene {} of {total} ({id})...", i + 1), id));
+        // The scene's own progress fills its share of the batch (0% to 90%, the stitch is the rest).
+        let mut in_batch = |event: RenderEvent| on_event(RenderEvent { percent: ((i as f64 + event.percent / 100.0) / total as f64 * 90.0 * 10.0).round() / 10.0, ..event });
+        match render_scene_full(ctx, project, &number.to_string(), options.params.clone(), options.finish.clone(), &mut in_batch).await {
             Ok(done) => results.push(BatchSceneResult { scene_id: id.clone(), video_path: Some(done.video_path), error: None }),
             Err(RenderError::Comfy(h3_comfy::ComfyError::Cancelled)) => return Err(RenderError::Comfy(h3_comfy::ComfyError::Cancelled)),
             Err(e) => {
@@ -338,13 +341,13 @@ pub async fn render_all(ctx: &RunContext, project: &Path, options: BatchOptions,
     }
     let mut final_video_path = None;
     if !options.skip_final_stitch && options.scope.trim().to_lowercase() != "selected" {
-        on_event(RenderEvent { percent: 92.0, stage: "stitching", message: "Stitching final project video...".into() });
+        on_event(RenderEvent::new(92.0, "stitching", "Stitching final project video..."));
         match stitch_project(ctx, project, &Obj::new(), false).await {
             Ok((result, _)) => final_video_path = Some(result.final_video_path.display().to_string()),
             Err(e) => eprintln!("[VRGDG-RS Render] Final video stitch after batch render failed: {e}"),
         }
     }
-    on_event(RenderEvent { percent: 100.0, stage: "completed", message: "Batch video render finished.".into() });
+    on_event(RenderEvent::new(100.0, "completed", "Batch video render finished."));
     Ok(BatchResult { results, final_video_path })
 }
 

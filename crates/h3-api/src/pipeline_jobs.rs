@@ -17,7 +17,7 @@ use serde_json::{json, Value};
 
 use crate::app::{blocking, body_object, job_response, load, AppState, Shared};
 use crate::error::{success, ApiError, ApiResult};
-use crate::job_handlers::{context_for, fail, finish_options, render_params, reporter};
+use crate::job_handlers::{context_for, fail, finish_options, render_params, reporter_in};
 use crate::views::resolve_project;
 
 pub const PIPELINE_FULL_VIDEO: &str = "pipeline.build_full_video";
@@ -234,7 +234,8 @@ async fn run_full_video(state: &Arc<AppState>, ctx: &JobCtx, params: &Value) -> 
             if ctx.is_cancelled() {
                 return Err(JobError::cancelled());
             }
-            let done = render_scene_full(&run, &folder, &(idx + 1).to_string(), render_params(&render_value), finish_options(&render_value), reporter(ctx, Some(sid.clone()))).await;
+            // The scene's own progress fills its share of the video pass (45% to 85%).
+            let done = render_scene_full(&run, &folder, &(idx + 1).to_string(), render_params(&render_value), finish_options(&render_value), reporter_in(ctx, Some(sid.clone()), percent, 40.0 / total as f64)).await;
             match done {
                 Ok(scene) => {
                     videos_made += 1;
@@ -375,7 +376,8 @@ async fn rebuild_latents(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
         let sid = h3_core::pyval::text_or_empty(seg.get("id"));
         let sid = if sid.is_empty() { number.to_string() } else { sid };
         progress(&ctx, i as f64 / total as f64 * 100.0, "rendering", format!("Rebuilding scene {number:03} latent ({}/{total})...", i + 1), Some(sid.clone()));
-        let done = render_scene_full(&run, &folder, &number.to_string(), render_params(&render), finish_options(&render), reporter(&ctx, Some(sid.clone()))).await.map_err(fail)?;
+        let share = 100.0 / total as f64;
+        let done = render_scene_full(&run, &folder, &number.to_string(), render_params(&render), finish_options(&render), reporter_in(&ctx, Some(sid.clone()), i as f64 * share, share)).await.map_err(fail)?;
         h3_project::latents::clear_dirty(&folder, *number);
         rebuilt.push(json!({"scene_number": number, "scene_id": sid, "video_path": done.video_path}));
     }

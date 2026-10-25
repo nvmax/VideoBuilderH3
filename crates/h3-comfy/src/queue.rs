@@ -1,6 +1,6 @@
 //! Running a graph: queue it, wait for it, read what it produced. Port of `agent_api/orchestrator/comfy_client.py`.
-//! Waiting polls `/history/{id}` once a second, like the pack, so it needs no WebSocket and survives a restart of the
-//! app mid render. Live step progress through the WebSocket comes with the job system.
+//! Waiting polls `/history/{id}` once a second, like the pack, so it survives a restart of the app mid render and does
+//! not depend on a socket. Live step progress comes from the socket in `progress.rs` and only adds what is shown meanwhile.
 
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -9,6 +9,7 @@ use std::time::{Duration, Instant};
 use serde_json::{json, Value};
 
 use crate::client::{ComfyClient, ComfyError};
+use crate::progress::{Live, ProgressFeed};
 
 /// What `POST /prompt` answered.
 #[derive(Debug, Clone)]
@@ -22,7 +23,12 @@ const CLIENT_ID: &str = "vrgdg_h3_studio";
 impl ComfyClient {
     /// Send a prompt graph to ComfyUI. A graph ComfyUI cannot validate comes back as [`ComfyError::Queue`].
     pub async fn queue_prompt(&self, prompt: &Value) -> Result<Queued, ComfyError> {
-        let body = json!({"prompt": prompt, "client_id": CLIENT_ID});
+        self.queue_prompt_as(prompt, CLIENT_ID).await
+    }
+
+    /// [`Self::queue_prompt`] under a client id of the caller's, so that the socket opened with the same id (`progress_feed`) gets this prompt's progress.
+    pub async fn queue_prompt_as(&self, prompt: &Value, client_id: &str) -> Result<Queued, ComfyError> {
+        let body = json!({"prompt": prompt, "client_id": client_id});
         let (status, text) = self.post_text("/prompt", &body).await?;
         let parsed: Value = serde_json::from_str(&text).unwrap_or(Value::Null);
         if status >= 400 {
@@ -76,6 +82,30 @@ impl ComfyClient {
         cancel: &Arc<AtomicBool>,
         mut on_status: impl FnMut(&str),
     ) -> Result<Value, ComfyError> {
+        self.wait_loop(prompt_id, timeout, poll, cancel, |_| on_status("Waiting for ComfyUI to finish...")).await
+    }
+
+    /// [`Self::wait_for_prompt`] that says how far the prompt is. `on_live` hears every poll with what the socket `feed` knows (nothing before ComfyUI says
+    /// anything, or without a feed) and how long the wait has lasted, so a caller can always show a clock that moves. `graph` is the prompt that was queued.
+    #[allow(clippy::too_many_arguments)]
+    pub async fn wait_for_prompt_live(
+        &self,
+        prompt_id: &str,
+        graph: &Value,
+        feed: Option<&ProgressFeed>,
+        timeout: Duration,
+        poll: Duration,
+        cancel: &Arc<AtomicBool>,
+        mut on_live: impl FnMut(&Live, Duration),
+    ) -> Result<Value, ComfyError> {
+        self.wait_loop(prompt_id, timeout, poll, cancel, |elapsed| {
+            let live = feed.and_then(|feed| feed.live(prompt_id, graph)).unwrap_or_default();
+            on_live(&live, elapsed);
+        })
+        .await
+    }
+
+    async fn wait_loop(&self, prompt_id: &str, timeout: Duration, poll: Duration, cancel: &Arc<AtomicBool>, mut tick: impl FnMut(Duration)) -> Result<Value, ComfyError> {
         let started = Instant::now();
         while started.elapsed() < timeout {
             if cancel.load(Ordering::Relaxed) {
@@ -92,7 +122,7 @@ impl ComfyClient {
                     return Ok(history);
                 }
             }
-            on_status("Waiting for ComfyUI to finish...");
+            tick(started.elapsed());
             tokio::time::sleep(poll).await;
         }
         Err(ComfyError::Timeout { prompt_id: prompt_id.to_string(), seconds: timeout.as_secs_f64() })

@@ -40,16 +40,32 @@ The open Builder shows what an agent does while it does it, so you can watch the
   (merged in without touching what you have not saved), the character or location of a scene, Timeline Notes, or the project as a whole (the Builder reloads it when
   nothing is unsaved, focused or rendering). Each save has its own event and the next revision, which the Builder's merge needs. The Builder's own saves are not announced
   to itself (`SaveHooks.quiet`).
-- **The Agent activity panel** (bottom right, opens with the first activity) lists each MCP tool call as it starts and ends, each REST call a program makes
-  (a call with no `Origin`), and each job with its progress (`Writing MiniMax prompts: scene 3 of 12`, a render, the stitch). Reads such as `scene_list` are not listed.
-  Arguments are summarized (`patch: {label, minimax_h3_prompt}`, `lyrics: 640 characters`) and keys, tokens and file contents never appear. A window that opens later
-  asks for what it missed (`GET /api/v1/agent/activity?after=N`).
+- **The Agent activity panel** (bottom right, opens with the first activity, and stands above the Builder's own dialogs) lists, as it happens:
+  - **That an agent connected** (`Agent connected`, with the client's name and version and the protocol). The button shows `Agent connected: <name>` for 15 seconds, also with
+    the panel hidden. A client that says hello with every call is announced once a minute.
+  - **Each MCP tool call** while it runs and when it ends, and each REST call a program makes (a call with no `Origin`). Click a row for the details: the API calls the tool
+    made (`PATCH /projects/Demo/scenes/seg_1`), what that endpoint does, what it was told (`patch: {label, minimax_h3_prompt}`, `lyrics: 640 characters`), what it answered
+    (`revision: 7`), what it changed (`Scene 3: label, MiniMax prompt`, from the saves made while the call ran), how long it took and the client. Keys, tokens and file
+    contents never appear.
+  - **Reads** such as `scene_list` dimmed, a repeated read as one row (`x3`). The Reads checkbox hides them. Calls that only wait or check (`job_get`, `job_wait`,
+    `system_health`) are not listed.
+  - **Each job** with its message, a clock that moves every second and, for a job that measures its work, a bar. A render and an image show ComfyUI's own step
+    (`Rendering with ComfyUI - Pass 1 sampler step 12 of 30 - about 2:10 left - 4:21 elapsed`), read from ComfyUI's WebSocket (`h3_comfy::progress`). A batch or a full
+    video build moves through all its scenes, each scene filling its share. A job that is one call to an LLM has no percent: the number it sets only marks a step, and showing it
+    as progress was what looked stuck at 20% and 30%.
+
+  A window that opens later asks for what it missed (`GET /api/v1/agent/activity?after=N`, which also lists the scenes jobs work on now).
+- **A scene an agent renders looks like one you render.** The timeline draws it with the rendering glow (blue, purple when it is the selected scene) and its card in the scene list
+  carries a badge with the render's progress, until the scene is done or the job fails. A picture an agent makes shows the badge only. The server sends `vrgdg.scene_work`
+  for this and the Builder keeps the scenes in a set beside `video_status` (`window.__h3Builder.agentRendering`), so the scene's own data is not changed, merging the
+  agent's saves finds no local edit, and the window is not left with unsaved ones. A render started by an agent runs on the server, as before, whether or not a Builder is open.
+  It is not a click on the Render button, and the Builder's own Render status log and Stop button do not know about it.
 - **Follow** (a checkbox on the panel, on by default, remembered) takes the Builder where the agent goes: it opens the project the agent works in (not while there are
-  unsaved edits, a text field in use or a render running) and selects the scene the agent edits, scrolls to it and flashes it. Clicking an entry goes to its scene.
+  unsaved edits, a text field in use or a render running) and selects the scene the agent edits or renders, scrolls to it and flashes it. Click a scene in a row to go to it.
   With Follow off the data still updates, and the selection stays where you left it.
 
 The events travel over `/vrgdg/events` (`h3_project::changes` for the saves, `activity.rs` for the feed). The panel is `app/web/host/agent_follow.js`. The Builder gives it a
-small handle (`window.__h3Builder`: select a scene, load a project, whether it is busy) through three patches in `tools/builder_ui_patches.json`.
+small handle (`window.__h3Builder`: select a scene, load a project, whether it is busy, which scenes render) through patches in `tools/builder_ui_patches.json`.
 
 ## ElevenLabs
 

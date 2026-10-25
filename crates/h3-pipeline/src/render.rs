@@ -51,6 +51,30 @@ pub struct RenderEvent {
     pub percent: f64,
     pub stage: &'static str,
     pub message: String,
+    /// The id of the scene being rendered, when the event is about one.
+    pub scene_id: Option<String>,
+}
+
+impl RenderEvent {
+    /// An event that is not about one scene (a batch starting, the stitch).
+    pub fn new(percent: f64, stage: &'static str, message: impl Into<String>) -> Self {
+        Self { percent, stage, message: message.into(), scene_id: None }
+    }
+
+    /// An event about the scene with this id.
+    pub fn for_scene(percent: f64, stage: &'static str, message: impl Into<String>, scene_id: &str) -> Self {
+        Self { percent, stage, message: message.into(), scene_id: Some(scene_id.to_string()) }
+    }
+}
+
+/// The id of the scene a reference names: an id, or the scene's number as text.
+pub fn scene_id_of(loaded: &LoadedSession, scene_ref: &str) -> Option<String> {
+    let segments = loaded.session.get("segments").and_then(Value::as_array)?;
+    segments
+        .iter()
+        .enumerate()
+        .find(|(i, s)| s.get("id").and_then(Value::as_str) == Some(scene_ref) || (i + 1).to_string() == scene_ref)
+        .and_then(|(_, s)| s.get("id").and_then(Value::as_str).map(str::to_string))
 }
 
 /// A scene ready to become a graph.
@@ -286,7 +310,9 @@ pub async fn render_scene(
     cancel: Arc<AtomicBool>,
     mut on_event: impl FnMut(RenderEvent),
 ) -> Result<RenderOutcome, RenderError> {
-    let mut emit = |percent: f64, stage: &'static str, message: String| on_event(RenderEvent { percent, stage, message });
+    // Every event names its scene, so a window can show which one is rendering. A reference that names no scene fails in the preparation below.
+    let scene_id = scene_id_of(&loaded, scene_ref);
+    let mut emit = |percent: f64, stage: &'static str, message: String| on_event(RenderEvent { percent, stage, message, scene_id: scene_id.clone() });
     emit(5.0, "preparing", format!("Preparing scene {scene_ref}..."));
     let (prepared, graph_result) = {
         let env = Arc::clone(&env);
@@ -303,12 +329,19 @@ pub async fn render_scene(
     emit(15.0, "compiling_graph", "Compiled the ComfyUI video graph.".into());
     let graph = graph_result.get("prompt").cloned().unwrap_or(Value::Null);
     let started = SystemTime::now();
-    let queued = client.queue_prompt(&graph).await?;
+    // The progress socket is opened first, under the id the prompt is queued with, so no step is missed. Without it only the clock moves.
+    let client_id = h3_comfy::unique_client_id();
+    let feed = client.progress_feed(&client_id).await;
+    let queued = client.queue_prompt_as(&graph, &client_id).await?;
     emit(30.0, "rendering", format!("Rendering with ComfyUI (prompt {})...", queued.prompt_id));
     let timeout = Duration::from_secs_f64((params.timeout_hours.unwrap_or(1.0) * 3600.0).max(60.0));
+    // 30% is the graph handed to ComfyUI and 75% the clip found, so the render itself fills what lies between.
     let history = client
-        .wait_for_prompt(&queued.prompt_id, timeout, Duration::from_secs(1), &cancel, |_| {})
+        .wait_for_prompt_live(&queued.prompt_id, &graph, feed.as_ref(), timeout, Duration::from_secs(1), &cancel, |live, elapsed| {
+            emit(30.0 + 45.0 * live.fraction, "rendering", live.describe("Rendering with ComfyUI", elapsed));
+        })
         .await?;
+    drop(feed);
     emit(75.0, "collecting", "Locating the rendered clip...".into());
 
     // The final clip is saved by node 142. The 2 Pass Advanced backup comes from another node and is never the answer.

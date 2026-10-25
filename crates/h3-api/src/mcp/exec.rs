@@ -76,6 +76,8 @@ pub enum Output {
 pub struct Api {
     router: Router,
     base: String,
+    /// The calls made through this copy, when it was made by [`Api::recording`].
+    calls: Option<std::sync::Arc<std::sync::Mutex<Vec<String>>>>,
 }
 
 /// Percent-encode text for one path segment or a query value.
@@ -127,7 +129,19 @@ fn query_pairs(value: &Value) -> Vec<(String, String)> {
 
 impl Api {
     pub fn new(router: Router, base: String) -> Self {
-        Self { router, base }
+        Self { router, base, calls: None }
+    }
+
+    /// A copy that remembers the calls made through it, for the Builder's activity feed.
+    pub fn recording(&self) -> Self {
+        Self { calls: Some(std::sync::Arc::default()), ..self.clone() }
+    }
+
+    /// The calls a recording copy made, as `METHOD /path` in the order they were made, a call repeated in a row once.
+    pub fn calls(&self) -> Vec<String> {
+        let mut all: Vec<String> = self.calls.as_ref().map(|log| log.lock().unwrap_or_else(|e| e.into_inner()).clone()).unwrap_or_default();
+        all.dedup();
+        all
     }
 
     /// The address a client outside this process uses for the API.
@@ -136,6 +150,10 @@ impl Api {
     }
 
     async fn raw(&self, method: &str, path: &str, query: &[(String, String)], body: Option<&Value>, if_match: Option<i64>) -> Result<(u16, HeaderMap, Vec<u8>), ToolError> {
+        if let Some(log) = &self.calls {
+            let slash = if path.starts_with('/') { "" } else { "/" };
+            log.lock().unwrap_or_else(|e| e.into_inner()).push(format!("{} {slash}{path}", method.to_uppercase()));
+        }
         let method = Method::from_bytes(method.as_bytes()).map_err(|_| ToolError::validation(format!("'{method}' is not an HTTP method.")))?;
         let mut builder = Request::builder().method(method).uri(uri(path, query)).header(header::CONTENT_TYPE, "application/json");
         if let Some(revision) = if_match {

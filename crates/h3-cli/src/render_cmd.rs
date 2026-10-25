@@ -85,6 +85,15 @@ async fn make_context(cfg: &AppConfig) -> Result<RunContext> {
 }
 
 fn print_event(event: RenderEvent) {
+    // The render reports about once a second while ComfyUI works. Its line is printed every 15 seconds, any other event at once.
+    static LAST_LIVE: std::sync::Mutex<Option<std::time::Instant>> = std::sync::Mutex::new(None);
+    if event.stage == "rendering" {
+        let mut last = LAST_LIVE.lock().unwrap_or_else(|e| e.into_inner());
+        if last.is_some_and(|at| at.elapsed() < std::time::Duration::from_secs(15)) {
+            return;
+        }
+        *last = Some(std::time::Instant::now());
+    }
     println!("[{:>5.1}%] {}: {}", event.percent, event.stage, event.message);
 }
 

@@ -76,15 +76,27 @@ fn batch_position(message: &str) -> Option<(i64, i64)> {
 }
 
 pub(crate) fn reporter(ctx: &JobCtx, scene_id: Option<String>) -> impl FnMut(RenderEvent) + Send + use<> {
+    reporter_in(ctx, scene_id, 0.0, 100.0)
+}
+
+/// [`reporter`] for one scene of several: the scene's own 0 to 100% fills `span` percent of the job from `from`, so the job's percent moves forward through
+/// all the scenes instead of starting over at each one.
+pub(crate) fn reporter_in(ctx: &JobCtx, scene_id: Option<String>, from: f64, span: f64) -> impl FnMut(RenderEvent) + Send + use<> {
     let ctx = ctx.clone();
+    let mut logged_stage = "";
     move |event: RenderEvent| {
         let position = batch_position(&event.message);
-        ctx.log("info", &event.message);
+        // The render reports once a second while ComfyUI works: the log keeps the first line of each stage, not every tick.
+        if event.stage != logged_stage || event.stage == "batch_videos" {
+            ctx.log("info", &event.message);
+            logged_stage = event.stage;
+        }
         ctx.progress(ProgressUpdate {
-            percent: event.percent,
+            percent: from + span * event.percent / 100.0,
             stage: event.stage.to_string(),
             message: event.message,
-            scene_id: scene_id.clone(),
+            // The event names its scene, which a batch needs (the scene it renders now), else the job's own scene.
+            scene_id: event.scene_id.or_else(|| scene_id.clone()),
             scene_index: position.map(|p| p.0),
             scene_count: position.map(|p| p.1),
             stage_index: position.map_or(0, |p| p.0),

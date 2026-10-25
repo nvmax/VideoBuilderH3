@@ -87,6 +87,8 @@ fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Res
     let state = Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(256).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()), activity: activity::Feed::default() });
     // A save that the Video Builder did not make itself (an agent, a job) is announced to the open Builder windows, which show it. See `h3_project::changes`.
     let sender = state.builder_events.clone();
+    // A weak handle: the listener lives as long as the process, the state may not.
+    let feed = Arc::downgrade(&state);
     h3_project::changes::on_saved(
         &state.roots,
         Arc::new(move |saved| {
@@ -95,6 +97,10 @@ fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Res
                 "source": "agent_api", "change": saved.change,
             });
             let _ = sender.send(serde_json::json!({"type": "vrgdg.project_changed", "data": data}).to_string());
+            // The calls and jobs that work in this project learn what they touched.
+            if let Some(app) = feed.upgrade() {
+                app.touched(&views::project_id(&saved.project_folder), &saved.change);
+            }
         }),
     );
     Ok(state)

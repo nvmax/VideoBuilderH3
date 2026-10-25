@@ -43,8 +43,13 @@ pub fn register(state: &Arc<AppState>) {
 
 fn reporter(ctx: &JobCtx, scene_id: Option<String>, from: f64, span: f64) -> impl FnMut(ImageEvent) + Send + use<> {
     let ctx = ctx.clone();
+    let mut logged_stage = "";
     move |event: ImageEvent| {
-        ctx.log("info", &event.message);
+        // The generation reports every second while ComfyUI works: the log keeps the first line of each stage, not every tick.
+        if event.stage != logged_stage {
+            ctx.log("info", &event.message);
+            logged_stage = event.stage;
+        }
         ctx.progress(ProgressUpdate {
             percent: from + span * event.percent / 100.0,
             stage: event.stage.to_string(),

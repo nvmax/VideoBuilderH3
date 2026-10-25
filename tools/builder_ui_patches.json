@@ -231,10 +231,10 @@
     "expect": 1
   },
   {
-    "why": "Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on and opens the project it works in, through this small handle.",
+    "why": "Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on, opens the project it works in and shows a scene it renders as rendering, through this small handle.",
     "file": "music_video_builder/builder.mjs",
     "find": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });",
-    "replace": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });\n  window.__h3Builder = {\n    state,\n    selectScene(sceneId) {\n      const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);\n      if (!found) return false;\n      setActiveSegment(found);\n      return true;\n    },\n    loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),\n    busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),\n  };",
+    "replace": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });\n  window.__h3Builder = {\n    state,\n    selectScene(sceneId) {\n      const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);\n      if (!found) return false;\n      setActiveSegment(found);\n      return true;\n    },\n    loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),\n    busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),\n    // The scenes an agent renders. The timeline draws them with the rendering glow, beside the scenes whose video_status is \"running\".\n    // The scene's own data is not changed, so merging the agent's saves finds no local edit and the window is not left with unsaved ones.\n    agentRendering: new Set(),\n    markRendering(sceneId, on) {\n      if (this.agentRendering.has(sceneId) === Boolean(on)) return true;\n      if (on) this.agentRendering.add(sceneId);\n      else this.agentRendering.delete(sceneId);\n      render();\n      return true;\n    },\n  };",
     "expect": 1
   },
   {
@@ -250,6 +250,20 @@
     "find": "row.onclick = (event) => handleSegmentPick(segment, event);",
     "replace": "row.dataset.h3SceneId = String(segment.id || \"\");\n      row.onclick = (event) => handleSegmentPick(segment, event);",
     "expect": 2
+  },
+  {
+    "why": "Follow the agent: a scene an agent renders glows as rendering (blue, purple when selected), like a scene the user renders.",
+    "file": "music_video_builder/timeline_view.mjs",
+    "find": "const isRendering = segment.video_status === \"running\";",
+    "replace": "const isRendering = segment.video_status === \"running\" || Boolean(window.__h3Builder?.agentRendering?.has(segment.id));",
+    "expect": 1
+  },
+  {
+    "why": "Follow the agent: the timeline repaints when the set of rendering scenes changes, which includes the scenes an agent renders.",
+    "file": "music_video_builder/timeline_view.mjs",
+    "find": "const nextRenderingKey = [...state.segments, ...state.overlaySegments].filter((segment) => segment.video_status === \"running\").map((segment) => segment.id).join(\",\");",
+    "replace": "const nextRenderingKey = [...state.segments, ...state.overlaySegments].filter((segment) => segment.video_status === \"running\" || window.__h3Builder?.agentRendering?.has(segment.id)).map((segment) => segment.id).join(\",\");",
+    "expect": 1
   },
   {
     "why": "The Models dialog's Select models list has no LTX entry (the app makes MiniMax H3 videos only), so it opens on MiniMax H3 like Download models does. Without this it opened on the LTX models panel that the list no longer offered a button for.",

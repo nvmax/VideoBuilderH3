@@ -40,6 +40,9 @@ base64 = "0.22"
 font8x8 = "0.3"
 zip = { version = "2", default-features = false, features = ["deflate"] }
 tokio = { version = "1", features = ["full"] }
+# ComfyUI reports step progress over a WebSocket. Plain ws:// only: the app talks to a ComfyUI on the same computer, and no TLS feature here keeps a second TLS provider out of the program.
+tokio-tungstenite = { version = "0.26", default-features = false, features = ["connect"] }
+futures-util = { version = "0.3", default-features = false }
 hound = "3.5"
 include_dir = "0.7"
 mime_guess = "2"

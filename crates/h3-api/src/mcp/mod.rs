@@ -93,7 +93,11 @@ async fn dispatch(state: &McpState, message: Value) -> Option<Value> {
 
 async fn handle(state: &McpState, method: &str, params: &Value) -> Result<Value, (i64, String)> {
     match method {
-        "initialize" => Ok(initialize(params)),
+        "initialize" => {
+            // The open Builder shows who connected.
+            state.app.agent_connected(params);
+            Ok(initialize(params))
+        }
         "ping" => Ok(json!({})),
         "tools/list" => Ok(json!({"tools": tool_list()})),
         "tools/call" => Ok(call_tool(state, params).await),
@@ -178,18 +182,32 @@ fn tool_result(text: String, is_error: bool) -> Value {
     json!({"content": [{"type": "text", "text": text}], "isError": is_error})
 }
 
-/// Whether the Builder's activity feed lists this call: what changes something, and a look at a picture. Plain reads would only fill it.
-fn shown_in_feed(name: &str, args: &Map<String, Value>) -> bool {
-    if name == "asset_view" {
-        return true;
+/// Calls an agent makes again and again to wait or to check, which would only fill the feed.
+const POLLING: [&str; 3] = ["job_get", "job_wait", "system_health"];
+
+/// How the Builder's activity feed lists this call: `write` for what changes something, `read` for a look at the project or a picture (shown dimmed), and
+/// `None` for the calls that only wait or check.
+fn feed_kind(name: &str, args: &Map<String, Value>) -> Option<&'static str> {
+    if POLLING.contains(&name) {
+        return None;
     }
-    if READ_ONLY.contains(&name) {
-        return false;
+    if name == "asset_view" || READ_ONLY.contains(&name) {
+        return Some("read");
     }
     match catalog().tool(name).and_then(|tool| tool.route.as_ref()) {
-        Some(route) => route.method != "GET",
-        None if name == "api_request" => !args.get("method").and_then(Value::as_str).unwrap_or("GET").eq_ignore_ascii_case("GET"),
-        None => true,
+        Some(route) => Some(if route.method == "GET" { "read" } else { "write" }),
+        None if name == "api_request" => {
+            let method = args.get("method").and_then(Value::as_str).unwrap_or("GET");
+            let path = args.get("path").and_then(Value::as_str).unwrap_or("");
+            if !method.eq_ignore_ascii_case("GET") {
+                Some("write")
+            } else if path.starts_with("/jobs") || path.starts_with("/health") {
+                None
+            } else {
+                Some("read")
+            }
+        }
+        None => Some("write"),
     }
 }
 
@@ -198,13 +216,27 @@ async fn call_tool(state: &McpState, params: &Value) -> Value {
     let args: Map<String, Value> = params.get("arguments").and_then(Value::as_object).cloned().unwrap_or_default();
     // The open Builder shows the call while it runs and how it ended.
     let started = std::time::Instant::now();
-    let entry = shown_in_feed(name, &args).then(|| {
+    let entry = feed_kind(name, &args).map(|kind| {
         let (project, scene, detail) = crate::activity::summarize(&args);
-        state.app.activity(None, json!({"source": "mcp", "tool": name, "title": crate::activity::humanize(name), "detail": detail, "project_id": project, "scene_id": scene, "status": "running"}))
+        let fields = json!({
+            "source": "mcp", "kind": kind, "tool": name, "title": crate::activity::humanize(name), "detail": detail, "project_id": project, "scene_id": scene, "status": "running",
+        });
+        // Only what changes a project can touch it: its saves are listed on the entry while it runs.
+        if kind == "write" { state.app.begin_call(&project, fields) } else { state.app.activity(None, fields) }
     });
-    let outcome = exec::run(&state.api, name, &args).await;
+    // The calls the tool makes to the API are what the entry names as the API it ran.
+    let api = state.api.recording();
+    let outcome = exec::run(&api, name, &args).await;
     if let Some(id) = entry {
         let mut patch = json!({"duration_ms": started.elapsed().as_millis() as u64});
+        let calls = api.calls();
+        if !calls.is_empty() {
+            patch["api"] = json!(calls.join(", "));
+            // What the first of them does, in a sentence.
+            if let Some(about) = calls[0].split_once(' ').and_then(|(method, path)| describe_endpoint(method, path)) {
+                patch["about"] = json!(about);
+            }
+        }
         match &outcome {
             Ok(Output::Data(data)) => {
                 patch["status"] = json!("done");
@@ -213,6 +245,10 @@ async fn call_tool(state: &McpState, params: &Value) -> Value {
                         patch[field] = json!(value);
                     }
                 }
+                let result = crate::activity::result_summary(data);
+                if !result.is_empty() {
+                    patch["result"] = json!(result);
+                }
             }
             Ok(Output::Image { .. }) => patch["status"] = json!("done"),
             Err(error) => {
@@ -220,7 +256,7 @@ async fn call_tool(state: &McpState, params: &Value) -> Value {
                 patch["message"] = json!(format!("{}: {}", error.code, error.message.lines().next().unwrap_or("")));
             }
         }
-        state.app.activity(Some(id), patch);
+        state.app.end_call(id, patch);
     }
     match outcome {
         Ok(Output::Data(data)) => tool_result(pretty(&data), false),
