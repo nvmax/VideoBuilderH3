@@ -60,7 +60,7 @@ const NODE_STEMS: [&str; 4] = ["vocals", "drums", "bass", "other"];
 
 /// Split the audio file with ComfyUI's Get Stems node and read the four stems back. The node has no 6 stem model, so that
 /// choice is split with `htdemucs`, which gives the same vocals. The result says which model was used.
-async fn demucs_in_comfy(base: &str, env: &Env, context: &Path, requested: &str, device: &str) -> Result<Separated, String> {
+pub(crate) async fn demucs_in_comfy(base: &str, env: &Env, context: &Path, requested: &str, device: &str) -> Result<Separated, String> {
     let model = if audio_mask::stems_for_model(requested).len() == NODE_STEMS.len() { requested } else { "htdemucs" };
     if model != requested {
         eprintln!("[VRGDG-RS Audio Mask] ComfyUI's Get Stems node has no {requested} model. Splitting with {model}, which gives the same vocals.");

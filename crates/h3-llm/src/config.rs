@@ -84,4 +84,57 @@ impl LlmConfig {
         }
         value
     }
+
+    /// The runner settings of this configuration as a Builder request carries them (`text_runner`, `lmstudio_*`, `own_server_*`, `llm_api_*`, ...), so a
+    /// writer that reads its runner from the request runs on the LLM the app is set to use. `runner_config` turns them back into this configuration.
+    pub fn runner_payload(&self) -> serde_json::Map<String, serde_json::Value> {
+        use serde_json::json;
+        let fields = match self.runner.as_str() {
+            "lm_studio" => json!({
+                "text_runner": "lm_studio", "lmstudio_base_url": self.lm_studio_base_url, "lmstudio_model": self.lm_studio_model, "lmstudio_api_key": self.lm_studio_api_key,
+                "lmstudio_context_limit": self.lm_studio_context_limit, "lmstudio_output_token_limit": self.lm_studio_output_limit,
+                "lmstudio_reasoning": self.lm_studio_reasoning, "lmstudio_timeout": self.lm_studio_timeout,
+            }),
+            "own_server" => json!({
+                "text_runner": "own_server", "own_server_url": self.own_server_url, "own_server_model": self.own_server_model, "own_server_api_key": self.own_server_api_key,
+                "own_server_timeout": self.own_server_timeout, "own_server_output_token_limit": self.own_server_output_limit,
+            }),
+            "comfyui_gemma" => json!({"text_runner": "builtin", "gemma_model_file": self.comfy_gemma_model, "mmproj_file": self.comfy_gemma_mmproj, "n_ctx": self.comfy_gemma_n_ctx}),
+            hosted => json!({
+                "text_runner": "llm_api", "llm_api_provider": if hosted == "llm_api" { self.api_provider.as_str() } else { hosted },
+                "llm_api_model": self.api_model, "llm_api_custom_model": self.api_custom_model, "llm_api_key": self.api_key,
+            }),
+        };
+        fields.as_object().cloned().unwrap_or_default()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::runner::{runner_config, runner_kind};
+
+    /// Every runner comes back from its payload as the same configuration.
+    #[test]
+    fn a_configuration_survives_the_request_it_is_carried_in() {
+        let base = LlmConfig { comfy_url: "http://127.0.0.1:8188".into(), ..LlmConfig::default() };
+        let lm_studio = LlmConfig { runner: "lm_studio".into(), lm_studio_base_url: "http://box:1234/v1".into(), lm_studio_model: "gemma-4".into(), lm_studio_api_key: "k".into(), lm_studio_context_limit: 16384, lm_studio_output_limit: 6000, lm_studio_reasoning: "off".into(), lm_studio_timeout: 99, ..base.clone() };
+        let back = runner_config(&lm_studio.runner_payload(), &base, 1200);
+        assert_eq!(back, lm_studio);
+
+        let own = LlmConfig { runner: "own_server".into(), own_server_url: "http://box:8000/v1".into(), own_server_model: "m".into(), own_server_api_key: "k".into(), own_server_timeout: 120, own_server_output_limit: 4000, ..base.clone() };
+        assert_eq!(runner_config(&own.runner_payload(), &base, 1200), own);
+
+        let gemma = LlmConfig { runner: "comfyui_gemma".into(), comfy_gemma_model: "g.gguf".into(), comfy_gemma_mmproj: "p.gguf".into(), comfy_gemma_n_ctx: 32768, ..base.clone() };
+        let back = runner_config(&gemma.runner_payload(), &base, 1200);
+        assert_eq!((back.runner.as_str(), back.comfy_gemma_model.as_str(), back.comfy_gemma_mmproj.as_str(), back.comfy_gemma_n_ctx), ("comfyui_gemma", "g.gguf", "p.gguf", 32768));
+
+        for hosted in ["openai", "anthropic", "google"] {
+            let api = LlmConfig { runner: hosted.into(), api_model: "model-1".into(), api_custom_model: "custom".into(), api_key: "k".into(), ..base.clone() };
+            let payload = api.runner_payload();
+            assert_eq!(runner_kind(&payload), "llm_api");
+            let back = runner_config(&payload, &base, 1200);
+            assert_eq!((back.api_provider.as_str(), back.api_model.as_str(), back.api_custom_model.as_str(), back.api_key.as_str()), (hosted, "model-1", "custom", "k"));
+        }
+    }
 }

@@ -33,7 +33,7 @@ pub struct Field {
 }
 
 const PERFORMANCE_MODES: &[&str] = &["singing", "speaking", "no_lip_sync"];
-const VIDEO_PROMPT_TYPES: &[&str] = &["i2v", "id_lora", "t2v", "rtv", "ingredients", "flf"];
+pub const VIDEO_PROMPT_TYPES: &[&str] = &["i2v", "id_lora", "t2v", "rtv", "ingredients", "flf"];
 const VIDEO_PROMPT_ORIGINS: &[&str] = &["gemma", "manual"];
 const TRIGGER_POSITIONS: &[&str] = &["start", "end"];
 

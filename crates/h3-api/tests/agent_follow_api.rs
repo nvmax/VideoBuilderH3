@@ -125,7 +125,8 @@ async fn the_builder_is_told_about_every_change_an_agent_makes_and_about_nothing
     let loaded: Value = s.client.post(format!("{}/vrgdg/music_builder/load_session", s.root)).json(&json!({"project_folder": made["data"]["project_folder"]})).send().await.unwrap().json().await.unwrap();
     let mut session = loaded["session"].clone();
     session["segments"][0]["label"] = json!("Typed in the window");
-    session["builder_save_revision"] = json!(session["revision"].as_i64().unwrap() + 1);
+    // The window numbers its next save one above the number it loaded.
+    session["builder_save_revision"] = json!(session["builder_save_revision"].as_i64().unwrap() + 1);
     s.drain().await;
     let saved: Value = s.client.post(format!("{}/vrgdg/music_builder/save_session", s.root)).json(&json!({"project_folder": made["data"]["project_folder"], "session": session})).send().await.unwrap().json().await.unwrap();
     assert_eq!(saved["stale"], false, "{saved}");

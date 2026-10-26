@@ -285,6 +285,25 @@ fn subject_voice(speaking: &Value, old: &Value, payload: &Obj) -> Result<(Value,
     Ok((voice, draft))
 }
 
+/// Bind or release a saved RefMod on a card. The route has already checked the RefMod against the library, so a `refmod` here is complete: name, folder, type,
+/// kind, tokens and frames. A strength that is not sent stays the card's when it is the same RefMod, else 1. `source: "image"` takes the RefMod off.
+fn bind_refmod(card: &mut Value, payload: &Obj) {
+    let Some(source) = payload.get("source").and_then(Value::as_str) else { return };
+    let Some(map) = card.as_object_mut() else { return };
+    if source != "refmod" {
+        map.insert("source".into(), json!("image"));
+        map.remove("refmod");
+        return;
+    }
+    let Some(picked) = payload.get("refmod").and_then(Value::as_object) else { return };
+    let kept = map.get("refmod").filter(|saved| saved.get("name") == picked.get("name")).and_then(|saved| saved.get("strength")).and_then(to_float);
+    let strength = picked.get("strength").and_then(to_float).or(kept).unwrap_or(1.0);
+    let mut refmod = picked.clone();
+    refmod.insert("strength".into(), json!(strength));
+    map.insert("source".into(), json!("refmod"));
+    map.insert("refmod".into(), Value::Object(refmod));
+}
+
 /// Create or update a character or location card. Only the fields sent change. Existing cards keep their other keys.
 pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj, if_match: Option<i64>, now: &Stamp) -> OpResult {
     let mut edit = open(project, if_match)?;
@@ -315,11 +334,11 @@ pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj
     } else {
         json!({
             "id": card_id,
-            "name": payload.get("name").cloned().unwrap_or_else(|| json!("Location")),
-            "description": payload.get("description").cloned().unwrap_or_else(|| json!("")),
-            "trigger_phrase": payload.get("trigger_phrase").cloned().unwrap_or_else(|| json!("")),
-            "trigger_position": payload.get("trigger_position").cloned().unwrap_or_else(|| json!("start")),
-            "image": payload.get("image").cloned().unwrap_or_else(|| json!({})),
+            "name": pick("name", json!("Location")),
+            "description": pick("description", json!("")),
+            "trigger_phrase": pick("trigger_phrase", json!("")),
+            "trigger_position": pick("trigger_position", json!("start")),
+            "image": pick("image", json!({})),
         })
     };
     let saved = match existing {
@@ -329,9 +348,12 @@ pub fn upsert_reference(project: &Path, kind: &str, card_id: &str, payload: &Obj
                     target.insert(k.clone(), v.clone());
                 }
             }
+            bind_refmod(&mut list[i], payload);
             list[i].clone()
         }
         None => {
+            let mut card = card;
+            bind_refmod(&mut card, payload);
             list.push(card.clone());
             card
         }
@@ -612,33 +634,47 @@ pub fn scene_reference_choices(session: &Value, segments: &[Value], index: usize
 /// Several scene edits (`move`, `resize`, `patch`) in one write. Nothing is saved when one of them fails. Port of
 /// `bulk_scene_operations`.
 pub fn bulk_scene_ops(project: &Path, operations: &[Value], if_match: Option<i64>, now: &Stamp) -> OpResult {
+    if operations.is_empty() {
+        return Err(OpError::Validation("operations must be a non-empty list of {op, scene_id, ...} objects.".into()));
+    }
     let mut edit = open(project, if_match)?;
     let mut segs = edit.segments();
     let mut applied = 0;
-    let missing = |op: &Value, key: &str| OpError::Validation(format!("Operation {} needs `{key}`.", op));
-    for op in operations {
+    for (position, op) in operations.iter().enumerate() {
+        let here = format!("operations[{position}]");
+        if !op.is_object() {
+            return Err(OpError::Validation(format!("{here} must be an object like {{\"op\": \"patch\", \"scene_id\": \"11\", \"fields\": {{...}}}}.")));
+        }
         let kind = ["op", "action"].iter().filter_map(|k| op.get(*k)).find(|v| truthy(v)).map(|v| text_or_empty(Some(v))).unwrap_or_default();
-        let scene_id = || op.get("scene_id").and_then(Value::as_str).map(str::to_string);
+        if !matches!(kind.as_str(), "move" | "resize" | "patch") {
+            return Err(OpError::Validation(format!("{here} needs \"op\" set to move, resize or patch (got {kind:?}).")));
+        }
+        let need = |key: &str, what: &str| OpError::Validation(format!("{here} ({kind}) needs {key}{what}"));
+        // A scene is named by its id or its number on the timeline.
+        let given = match op.get("scene_id") {
+            Some(Value::String(s)) if !s.trim().is_empty() => s.trim().to_string(),
+            Some(Value::Number(n)) => n.to_string(),
+            _ => return Err(need("scene_id", ": a scene id or its number on the timeline.")),
+        };
+        let idx = find_scene(&segs, &given).ok_or_else(|| OpError::SceneNotFound(given.clone()))?;
+        let id = text_of(&segs[idx], "id");
         match kind.as_str() {
             "move" => {
-                let id = scene_id().ok_or_else(|| missing(op, "scene_id"))?;
-                let start = op.get("start").and_then(to_float).ok_or_else(|| missing(op, "start"))?;
+                let start = op.get("start").and_then(to_float).ok_or_else(|| need("start", ", in seconds."))?;
                 let ripple = op.get("ripple").is_some_and(truthy);
-                h3_core::timeline::move_scene_timing(&mut segs, &id, start, ripple).map_err(|_| OpError::SceneNotFound(id))?;
-                applied += 1;
+                h3_core::timeline::move_scene_timing(&mut segs, &id, start, ripple).map_err(|_| OpError::SceneNotFound(given))?;
             }
             "resize" => {
-                let id = scene_id().ok_or_else(|| missing(op, "scene_id"))?;
                 let ripple = op.get("ripple").is_some_and(truthy);
                 let duration = op.get("duration").and_then(to_float);
                 let end = op.get("end").and_then(to_float);
-                h3_core::timeline::resize_scene_timing(&mut segs, &id, duration, end, ripple).map_err(|_| OpError::SceneNotFound(id))?;
-                applied += 1;
+                if duration.is_none() && end.is_none() {
+                    return Err(need("duration or end", ", in seconds."));
+                }
+                h3_core::timeline::resize_scene_timing(&mut segs, &id, duration, end, ripple).map_err(|_| OpError::SceneNotFound(given))?;
             }
-            "patch" => {
-                let id = scene_id().ok_or_else(|| missing(op, "scene_id"))?;
-                let Some(idx) = segs.iter().position(|s| s.get("id").and_then(Value::as_str) == Some(id.as_str())) else { continue };
-                let fields = op.get("fields").and_then(Value::as_object).cloned().unwrap_or_default();
+            _ => {
+                let fields = op.get("fields").and_then(Value::as_object).filter(|f| !f.is_empty()).cloned().ok_or_else(|| need("fields", ": an object of scene fields to set."))?;
                 for (k, v) in &fields {
                     set(&mut segs[idx], k, v.clone());
                 }
@@ -646,10 +682,9 @@ pub fn bulk_scene_ops(project: &Path, operations: &[Value], if_match: Option<i64
                     let instrumental = is_instrumental_lyric_text(&text_or_empty(segs[idx].get("lyric_text")));
                     set(&mut segs[idx], "lyric_no_lip_sync", json!(instrumental));
                 }
-                applied += 1;
             }
-            _ => {}
         }
+        applied += 1;
     }
     edit.put_segments(segs);
     let revision = edit.save(now)?;

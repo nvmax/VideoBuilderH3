@@ -20,7 +20,7 @@ Agents that do not speak MCP can use the REST API under `/api/v1`. `GET /api/v1/
 
 ## What an agent sees
 
-- **126 tools.** 67 named tools with the pack's names and arguments (`project_create`, `story_create`, `minimax_prompts`, `video_render`, `job_wait`, ...),
+- **128 tools.** 69 named tools with the pack's names and arguments (`project_create`, `story_create`, `minimax_prompts`, `video_render`, `job_wait`, ...),
   58 `api_*` tools for the endpoints the named tools do not cover (ElevenLabs and Speaking, timeline notes, instructions, post processing, ...), and
   `api_request` for any endpoint by path. `api_request` reaches the agent API only, never the app's own setup routes.
 - **Resources.** The music video playbook and the chat prompt (`vrgdg://docs/music-video-playbook`, `vrgdg://docs/chat-agent-prompt`), the endpoint list,

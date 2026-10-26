@@ -446,6 +446,8 @@ async fn named_tool(api: &Api, name: &str, args: &Args) -> Result<Output, ToolEr
             api.send("PATCH", &path, &pick(args, &["start", "end", "type", "label", "note"]), revision(args)).await?
         }
         "timeline_note_delete" => api.call("DELETE", &format!("{}/timeline/notes/{}", project(args)?, seg(&need(args, "note_id")?)), &[], None, revision(args)).await?,
+        "refmod_create" => api.send("POST", "/refmods", &pick(args, &["name", "type", "paths", "crops", "quality", "mode", "steps", "description", "overwrite"]), None).await?,
+        "audio_stems_split" => api.send("POST", &format!("{}/audio/stems", project(args)?), &pick(args, &["audio_path", "model_name", "device", "input_gain_db"]), None).await?,
         "reference_describe" => {
             let kind = Some(text(args, "kind")).filter(|k| !k.is_empty()).unwrap_or_else(|| "subjects".into());
             let path = format!("{}/references/{}/{}/describe", project(args)?, seg(&kind), seg(&need(args, "ref_id")?));

@@ -143,11 +143,13 @@ async fn bulk_edits_save_once_and_modes_lists_the_h3_engine() {
     let ops = json!({"operations": [
         {"op": "resize", "scene_id": first, "duration": 3.0, "ripple": true},
         {"op": "patch", "scene_id": second, "fields": {"label": "Chorus", "lyric_text": "[instrumental]"}},
-        {"op": "nothing"},
     ]});
     let (code, done) = s.call(Method::POST, &format!("{p}/scenes/bulk"), Some(ops)).await;
     assert_eq!(code, 200, "{done}");
     assert_eq!(done["data"]["applied_operations"], 2);
+    // An operation that is not move, resize or patch is refused, not skipped.
+    let (code, unknown) = s.call(Method::POST, &format!("{p}/scenes/bulk"), Some(json!({"operations": [{"op": "nothing"}]}))).await;
+    assert_eq!((code, unknown["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")), "{unknown}");
     let (_, after) = s.call(Method::GET, &format!("{p}/scenes"), None).await;
     assert_eq!((after["data"][0]["end"].as_f64(), after["data"][1]["start"].as_f64()), (Some(3.0), Some(3.0)));
     assert_eq!(after["data"][1]["label"], "Chorus");

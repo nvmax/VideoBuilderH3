@@ -1,10 +1,10 @@
-//! Storyboard scene defaults and the story idea, saved where the Video Builder keeps them. Port of `set_story_settings`
-//! in `agent_api/orchestrator/storyboard_orchestrator.py`. The story steps that need an LLM, and Story Mode, belong to the
-//! Storyboard Builder, which this app does not have, so only the settings are here.
+//! Storyboard scene defaults, the story idea and the Story Mode fields (book, acts, scene plan, cast), saved where the Video Builder keeps them. Port of
+//! `set_story_settings` in `agent_api/orchestrator/storyboard_orchestrator.py`. The steps that write them with an LLM are in `h3_builder::story::agent`.
 
 use std::path::Path;
 
 use h3_core::pyval::{text_or_empty, to_float, truthy, Obj};
+use h3_core::story::apply::{apply_continuations_to_segments, apply_plan_to_segments, fill_cast_from_acts, story_mode_edit_fields};
 use serde_json::{json, Value};
 
 use crate::layout::Stamp;
@@ -12,9 +12,8 @@ use crate::scene_ops::{open, OpError, OpResult};
 
 pub const STORY_LAYER_KEYS: [&str; 7] =
     ["enabled", "overall_story_idea", "user_story_arc", "song_story_brief", "lyric_story_strength", "image_world_style", "image_custom_style_direction"];
-/// Fields of the Storyboard's Story Mode. They are known so the error text matches the pack, but not supported here.
-pub const STORY_MODE_EDIT_KEYS: [&str; 9] =
-    ["story_book_text", "story_settings", "story_acts", "story_scene_plan", "story_spot_min_scenes", "story_cast_ids", "story_allow_new_cast", "story_video_style", "story_continuation_mode"];
+/// Story Mode fields an agent may send. Each is checked before it is saved.
+pub use h3_core::story::apply::STORY_MODE_EDIT_KEYS;
 const IMAGE_WORLD_STYLES: [&str; 6] = ["natural", "surreal_subject", "balanced_surreal", "full_surreal", "abstract", "custom"];
 pub const DEFAULT_KEYS: [&str; 26] = [
     "global_consistency_phrase", "camera_motion_speed", "character_motion_speed", "minimax_h3_cut_frequency", "minimax_h3_cut_style", "defaults_speed_preset", "defaults_music_preset", "camera_guidance",
@@ -127,11 +126,6 @@ pub fn set_story_settings(project: &Path, params: &Obj, if_match: Option<i64>, n
         let allowed: Vec<&str> = STORY_LAYER_KEYS.iter().chain(STORY_MODE_EDIT_KEYS.iter()).copied().collect();
         return Err(invalid(format!("Unknown story field(s): {}. Allowed: {}.", unknown_story.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "), allowed.join(", "))));
     }
-    let mut story_mode: Vec<&String> = story_in.keys().filter(|k| STORY_MODE_EDIT_KEYS.contains(&k.as_str())).collect();
-    story_mode.sort();
-    if !story_mode.is_empty() {
-        return Err(invalid(format!("Story Mode fields are not supported by this app: {}.", story_mode.iter().map(|s| s.as_str()).collect::<Vec<_>>().join(", "))));
-    }
     for key in SPEED_KEYS {
         if let Some(value) = defaults_in.get(key) {
             let number = number_0_to_10(value, key)?;
@@ -179,11 +173,31 @@ pub fn set_story_settings(project: &Path, params: &Obj, if_match: Option<i64>, n
     }
     edit.session.insert("builder_storyboard_defaults".into(), Value::Object(defaults.clone()));
     let mut layer = story_layer(&edit.session);
-    for (key, value) in story_in {
-        layer.insert(key, value);
+    if story_in.keys().any(|k| STORY_MODE_EDIT_KEYS.contains(&k.as_str())) {
+        // Story Mode edits are checked: the book text is parsed into chapters and settings, and acts must cover the timeline.
+        let checked = story_mode_edit_fields(&edit.session, &layer, &story_in).map_err(invalid)?;
+        story_in.extend(checked);
+    }
+    for (key, value) in &story_in {
+        layer.insert(key.clone(), value.clone());
+    }
+    if let Some(plan) = story_in.get("story_scene_plan") {
+        apply_plan_to_segments(&mut edit.session, plan);
+        // Like the Story Builder when a plan is saved: each planned scene's cast becomes its characters.
+        fill_cast_from_acts(&mut edit.session, layer.get("story_acts").unwrap_or(&json!([])), plan);
+        apply_continuations_to_segments(&mut edit.session, plan);
     }
     edit.session.insert("builder_story_layer".into(), Value::Object(layer.clone()));
     edit.session.shift_remove("builderStoryLayer");
     let revision = edit.save(now)?;
     Ok(json!({"defaults": defaults, "story": layer, "revision": revision}))
+}
+
+/// Change the saved project through `change` and save it, under the revision check. Nothing is written when `change` fails. The answer is what `change`
+/// returned and the new revision.
+pub fn edit_session(project: &Path, if_match: Option<i64>, now: &Stamp, change: impl FnOnce(&mut Obj) -> Result<Value, OpError>) -> Result<(Value, i64), OpError> {
+    let mut edit = open(project, if_match)?;
+    let answer = change(&mut edit.session)?;
+    let revision = edit.save(now)?;
+    Ok((answer, revision))
 }

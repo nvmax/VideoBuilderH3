@@ -168,8 +168,14 @@ async fn stitch_rejects_bad_requests_up_front_and_health_reports_comfy_down() {
     let (_, body) = s.get("/health").await;
     assert_eq!(body["data"]["status"], "degraded");
     assert_eq!(body["data"]["comfy_up"], false);
+    // The health answer says what this build can do, so an agent plans with it: the story steps, RefMod cards and the stems, and what is not here.
+    let features = &body["data"]["features"];
+    assert!(features["story_steps"].as_array().unwrap().iter().any(|s| s == "locations"), "{features}");
+    assert!(features["refmod_cards"].is_string() && features["audio_stems"].is_string() && features["not_in_this_app"].is_array(), "{features}");
     let (_, body) = s.get("/meta").await;
     assert_eq!(body["data"]["api_version"], "v1");
+    assert!(body["data"]["capabilities"].as_array().unwrap().iter().any(|c| c == "story"));
+    assert_eq!(body["data"]["features"], *features);
 }
 
 #[tokio::test]

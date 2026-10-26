@@ -50,27 +50,6 @@ def adjust(path: str, text: str) -> str:
     return text
 
 
-SCENE_ARGUMENT = (
-    "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. "
-    "Numbers move when scenes are added or removed, ids do not."
-)
-SCENES_ARGUMENT = "The scenes to work on, each an id or a timeline number (\"11\" for Scene 11)."
-SCENE_TOOLS = {
-    "scene_list": " Each scene has `number` (1 is the first scene, the number the Video Builder shows as Scene N) and `id`. To read one scene, call scene_get with its number as scene_id instead of searching this list.",
-    "scene_get": " scene_id can be the scene's number: scene_id \"11\" is Scene 11.",
-}
-
-
-def name_scenes(tool: dict) -> None:
-    """Say in every tool that a scene is given by its id or by its number on the timeline, which is how a user says it (Scene 11)."""
-    props = tool["inputSchema"].get("properties", {})
-    if isinstance(props.get("scene_id"), dict):
-        props["scene_id"]["description"] = SCENE_ARGUMENT
-    if isinstance(props.get("scene_ids"), dict):
-        props["scene_ids"]["description"] = SCENES_ARGUMENT + (" Separate several with commas." if props["scene_ids"].get("type") == "string" else "")
-    tool["description"] += SCENE_TOOLS.get(tool["name"], "")
-
-
 def reword(name: str, tool: dict) -> dict:
     """The tool as the app offers it: no ticket numbers, and only what this app does."""
     text = adjust("", re.sub(r"\s*\(T\d+\)", "", tool["description"]).strip())
@@ -152,9 +131,6 @@ def write_docs(pack: Path) -> None:
         ("You have the VRGDG MCP tools, which\ndrive the AI Video Builder in ComfyUI.", "You have the H3 Studio MCP tools, which\ndrive the app's Video Builder."),
         ("is done by the model already loaded in LM Studio. Never load, unload or switch models.", "is done by the LLM the app is set to use. Never load, unload or switch models."),
         ("If ComfyUI is down or no LLM is loaded", "If ComfyUI is down or no LLM is available"),
-        ("or `video_render` for that scene.",
-         "or `video_render` for that scene.\n\nThe user names a scene by its number on the timeline (\"scene 11\"). Pass that number as `scene_id` (\"11\") to any tool,\n"
-         "for example `scene_get` to read its prompt, and do not search `scene_list` for it. Numbers move when scenes are added or removed, ids do not."),
     ])
     (folder / "chat_agent_prompt.md").write_text(chat, encoding="utf-8")
 
@@ -191,8 +167,6 @@ def main() -> int:
             "job": bool(endpoint["job"]), "if_match": bool(endpoint["if_match"]),
         }
         tools.append(entry)
-    for tool in tools:
-        name_scenes(tool)
 
     listed = sorted((e for e in all_endpoints if (e["method"], e["path"]) in served and e["path"] != "/events"), key=lambda e: (e["path"], e["method"]))
     catalog = {"version": 1, "tools": tools, "endpoints": [

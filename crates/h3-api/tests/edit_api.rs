@@ -203,13 +203,13 @@ async fn a_project_is_built_edited_and_deleted_through_the_api() {
     let (code, _) = s.call(Method::POST, &format!("{p}/duplicate"), &[], Some(json!({"new_name": " "}))).await;
     assert_eq!(code, 400);
 
-    // Story settings are saved, a bad value is refused, and the Storyboard-only steps say so.
+    // Story settings are saved, a bad value is refused, and a story step that does not exist is refused.
     let saved = s.ok(Method::PUT, &format!("{p}/story/settings"), json!({"defaults": {"camera_motion_speed": 6}, "story": {"overall_story_idea": "A fox"}})).await;
     assert_eq!((saved["defaults"]["camera_motion_speed"].as_f64(), saved["story"]["overall_story_idea"].as_str()), (Some(6.0), Some("A fox")));
     let (code, _) = s.call(Method::PUT, &format!("{p}/story/settings"), &[], Some(json!({"defaults": {"camera_motion_speed": 40}}))).await;
     assert_eq!(code, 400);
-    let (code, body) = s.call(Method::POST, &format!("{p}/story/arc"), &[], Some(json!({}))).await;
-    assert_eq!((code, body["error"]["code"].as_str()), (501, Some("NOT_SUPPORTED")));
+    let (code, body) = s.call(Method::POST, &format!("{p}/story/dance"), &[], Some(json!({}))).await;
+    assert_eq!((code, body["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
     s.ok(Method::DELETE, &format!("{p}/references/subjects/subj1"), json!(null)).await;
 
     // Deleting needs the id typed back.

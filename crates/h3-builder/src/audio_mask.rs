@@ -499,6 +499,90 @@ pub fn separate_scene_stems(env: &Env, payload: &Obj, separator: Separator) -> R
     scene_state(payload)
 }
 
+/// Split the whole song into stems and write a vocal-free mix (`no_vocals.wav`) beside them. The Audio Mask splits one scene at a time. This splits the song
+/// once, for a render that must not have the singer's voice (`audio_path` of a scene render), so a face that is not the singer has nothing to lip-sync to.
+/// Files live in `<project>/project_audio/stems/`: one wav per stem, `no_vocals.wav` and `stems.json`. Every wav is 44.1 kHz stereo 16 bit and exactly the
+/// song's length. Port of `separate_project_audio` in `builder/audio_stems.py`.
+pub fn separate_project_audio(env: &Env, payload: &Obj, separator: Separator) -> Reply {
+    let null = Value::Null;
+    let project = project_of(payload.get("project_folder").unwrap_or(&null))?;
+    let folder = project.join("project_audio").join("stems");
+    fs::create_dir_all(&folder).map_err(|e| at(&folder, e))?;
+    let source = resolve_existing_file(&text_or_empty(payload.get("audio_path")), "Project audio")?;
+    let model = match text_or_empty(payload.get("model_name")) {
+        m if m.is_empty() => "htdemucs".to_string(),
+        m => m,
+    };
+    if !MODEL_NAMES.contains(&model.as_str()) {
+        return Err(format!("Unknown Demucs model: {model}"));
+    }
+    let device = match text_or_empty(payload.get("device")) {
+        d if d.is_empty() => "auto".to_string(),
+        d => d,
+    };
+    if !DEVICES.contains(&device.as_str()) {
+        return Err(format!("Unknown device: {device}"));
+    }
+    let gain_db = number(payload, "input_gain_db", 0.0, -24.0, 24.0);
+    let full_path = folder.join("_full.wav");
+    let mut cut = strings(&["-hide_banner", "-loglevel", "error", "-y", "-i", &text(&source), "-vn", "-ac", "2", "-ar", &SAMPLE_RATE.to_string()]);
+    if gain_db != 0.0 {
+        let mut filters = vec![format!("volume={gain_db:.2}dB")];
+        if gain_db > 0.0 {
+            filters.push("alimiter=limit=0.97".into());
+        }
+        cut.extend(strings(&["-af", &filters.join(",")]));
+    }
+    cut.extend(strings(&["-c:a", "pcm_s16le", &text(&full_path)]));
+    let started = now_seconds();
+    ffmpeg_run(env, cut, "ffmpeg could not read the song.")?;
+    let samples = read_wav(&full_path).map(|mix| mix[0].len());
+    let separated = match &samples {
+        Ok(_) => separator(&full_path, &model, &device),
+        Err(error) => Err(error.clone()),
+    };
+    let _ = fs::remove_file(&full_path);
+    let samples = samples?;
+    let Separated { model, stems } = separated?;
+    if !stems.iter().any(|(n, _)| n == "vocals") || stems.len() < 2 {
+        return Err("The split did not give a vocals stem and the rest.".into());
+    }
+    let mut written = Map::new();
+    for name in SIX_STEMS {
+        let path = folder.join(format!("{name}.wav"));
+        match stems.iter().find(|(n, _)| n == name) {
+            Some((_, audio)) => {
+                write_wav(&path, &fit(audio, samples))?;
+                written.insert(name.to_string(), json!(text(&path)));
+            }
+            // A stem the new model does not have, left by an earlier split.
+            None => {
+                let _ = fs::remove_file(&path);
+            }
+        }
+    }
+    let mut instrumental: Audio = [vec![0.0; samples], vec![0.0; samples]];
+    for (_, audio) in stems.iter().filter(|(n, _)| n != "vocals") {
+        let piece = fit(audio, samples);
+        for (channel, mixed) in instrumental.iter_mut().enumerate() {
+            for (sum, value) in mixed.iter_mut().zip(&piece[channel]) {
+                *sum += value;
+            }
+        }
+    }
+    let no_vocals_path = folder.join("no_vocals.wav");
+    write_wav(&no_vocals_path, &instrumental)?;
+    let result = json!({
+        "model_name": model, "device": device, "input_gain_db": gain_db, "source_path": text(&source), "stems": written,
+        "vocals_path": written.get("vocals").cloned().unwrap_or(Value::Null), "no_vocals_path": text(&no_vocals_path),
+        "duration_seconds": round_to(samples as f64 / f64::from(SAMPLE_RATE), 3), "seconds_taken": round_to(now_seconds() - started, 2),
+    });
+    let mut saved = result.as_object().cloned().unwrap_or_default();
+    saved.insert("created_at".into(), json!(now_seconds()));
+    atomic_write_json(&folder.join("stems.json"), &Value::Object(saved)).map_err(|e| e.to_string())?;
+    Ok(result)
+}
+
 /// `POST .../audio_mask/render`: build `masked_mix.wav` from the saved stems and the per stem settings.
 pub fn render_masked_mix(payload: &Obj) -> Reply {
     let null = Value::Null;
@@ -678,6 +762,51 @@ mod tests {
         let failing = |_: &Path, _: &str, _: &str| -> Result<Separated, String> { Err("no GPU".into()) };
         assert_eq!(separate_scene_stems(&env, &payload, &failing).unwrap_err(), "no GPU");
         assert!(!folder.join("_context.wav").exists());
+    }
+
+    #[test]
+    fn the_whole_song_is_split_and_a_vocal_free_mix_is_written_beside_the_stems() {
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
+        if env.tools().is_err() {
+            return; // ffmpeg is not installed here
+        }
+        let dir = tempfile::tempdir().unwrap();
+        let song = dir.path().join("song.wav");
+        write_wav(&song, &tone(44_100 * 2, 0.2)).unwrap();
+        let payload = obj(json!({"project_folder": dir.path().display().to_string(), "audio_path": text(&song), "device": "cpu"}));
+        let levels = [("vocals", 0.5), ("drums", 0.1), ("bass", 0.1), ("other", 0.05)];
+        let separator = |context: &Path, model: &str, device: &str| -> Result<Separated, String> {
+            assert!(context.is_file());
+            assert_eq!((model, device), ("htdemucs", "cpu"));
+            let length = read_wav(context).unwrap()[0].len();
+            assert!((length as i64 - 88_200).abs() < 2000, "the whole song was cut: {length} samples");
+            // A split may be a few samples longer than the song.
+            Ok(Separated { model: model.to_string(), stems: levels.iter().map(|(n, level)| (n.to_string(), tone(length + 7, *level))).collect() })
+        };
+        let result = separate_project_audio(&env, &payload, &separator).unwrap();
+        let folder = dir.path().join("project_audio").join("stems");
+        assert_eq!(result["no_vocals_path"], text(&folder.join("no_vocals.wav")));
+        assert_eq!(result["vocals_path"], text(&folder.join("vocals.wav")));
+        assert_eq!(result["model_name"], "htdemucs");
+        assert_eq!(result["stems"].as_object().unwrap().keys().collect::<Vec<_>>(), ["vocals", "drums", "bass", "other"]);
+        for name in ["vocals", "drums", "bass", "other", "no_vocals"] {
+            assert_eq!(wav_samples(&folder.join(format!("{name}.wav"))).unwrap(), 88_200, "{name}");
+        }
+        let level = |name: &str| -> f32 { read_wav(&folder.join(format!("{name}.wav"))).unwrap()[0][1000] };
+        assert!((level("vocals") - 0.5).abs() < 0.01 && (level("no_vocals") - 0.25).abs() < 0.01, "the vocal-free mix is every stem but the vocals");
+        assert!(folder.join("stems.json").is_file() && !folder.join("_full.wav").exists());
+
+        let failing = |_: &Path, _: &str, _: &str| -> Result<Separated, String> { Err("no GPU".into()) };
+        assert_eq!(separate_project_audio(&env, &payload, &failing).unwrap_err(), "no GPU");
+        assert!(!folder.join("_full.wav").exists(), "the copy of the song is removed when the split fails");
+        for (extra, message) in [(json!({"model_name": "demucs9"}), "Unknown Demucs model"), (json!({"device": "tpu"}), "Unknown device")] {
+            let mut bad = payload.clone();
+            bad.extend(obj(extra));
+            assert!(separate_project_audio(&env, &bad, &separator).unwrap_err().contains(message));
+        }
+        let mut missing = payload.clone();
+        missing.insert("audio_path".into(), json!(text(&dir.path().join("nope.wav"))));
+        assert!(separate_project_audio(&env, &missing, &separator).unwrap_err().contains("was not found"));
     }
 
     #[test]

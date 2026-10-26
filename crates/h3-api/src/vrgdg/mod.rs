@@ -6,13 +6,13 @@
 //! `/interrupt` of ComfyUI itself.
 
 mod assets;
-mod audio_mask;
+pub(crate) mod audio_mask;
 mod choices;
 mod files;
 pub(crate) mod llm;
 mod post_process;
 mod projects;
-mod refmod;
+pub(crate) mod refmod;
 mod runner;
 mod settings;
 pub(crate) mod speaking;

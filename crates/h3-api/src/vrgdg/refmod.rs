@@ -146,7 +146,7 @@ async fn describe(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
 }
 
 /// Why creating a RefMod failed: the file is already there, or something else.
-enum CreateError {
+pub(crate) enum CreateError {
     Exists { path: String, message: String },
     Failed(String),
 }
@@ -191,7 +191,7 @@ fn create_graph(request: &Request, image_names: &[String]) -> Value {
 }
 
 /// `create_refmod`: make the RefMod file and its preview.
-async fn create_refmod(state: &AppState, payload: Obj) -> Result<Value, CreateError> {
+pub(crate) async fn create_refmod(state: &AppState, payload: Obj) -> Result<Value, CreateError> {
     let request = studio::validate_request(&payload)?;
     let client = ComfyClient::new(state.cfg.comfy_base());
     let node = client.object_info_for(EXTRACT_NODE).await.map_err(|e| e.to_string())?;

@@ -22,7 +22,7 @@ use crate::app::{blocking, body_object, if_match, load, Shared};
 use crate::error::{respond, success, ApiError, ApiResult};
 use crate::views;
 
-fn op_error(e: OpError, pid: &str) -> ApiError {
+pub(crate) fn op_error(e: OpError, pid: &str) -> ApiError {
     match e {
         OpError::SceneNotFound(id) => ApiError::scene_not_found(&id, pid),
         OpError::Validation(m) => ApiError::validation(m),
@@ -174,7 +174,8 @@ pub async fn put_lyrics(State(state): Shared, Path(pid): Path<String>, headers: 
 // -- references -------------------------------------------------------------------------------------------------------------
 
 pub async fn put_reference(State(state): Shared, Path((pid, kind, rid)): Path<(String, String, String)>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
-    let payload = body_object(body)?;
+    let mut payload = body_object(body)?;
+    crate::reference_cards::resolve_refmod(&state, &mut payload).await?;
     let expected = if_match(&headers)?;
     edit(&state, &pid, move |folder, now| session_ops::upsert_reference(folder, &kind, &rid, &payload, expected, now)).await
 }
@@ -217,15 +218,6 @@ pub async fn story_settings(State(state): Shared, Path(pid): Path<String>, heade
     let params = body_object(body)?;
     let expected = if_match(&headers)?;
     edit(&state, &pid, move |folder, now| h3_project::story::set_story_settings(folder, &params, expected, now)).await
-}
-
-/// The story steps (arc, brief, scene beats, Story Mode) write with the Storyboard Builder, which this app does not have.
-pub async fn story_step(Path((_pid, step)): Path<(String, String)>) -> ApiResult {
-    Err(ApiError::new(
-        StatusCode::NOT_IMPLEMENTED,
-        "NOT_SUPPORTED",
-        format!("The story step '{step}' is part of the Storyboard Builder, which this app does not include. Save the story idea with PUT story/settings and write scene prompts with minimax-prompts."),
-    ))
 }
 
 /// Assign characters and locations to scenes by pattern. `dry_run` returns the plan and saves nothing.

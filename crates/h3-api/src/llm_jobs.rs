@@ -4,6 +4,7 @@
 
 use std::sync::Arc;
 
+use h3_builder::story::agent::location_style_theme_text;
 use h3_core::pyval::{text_or_empty, Obj};
 use h3_core::timeline::sort_segments;
 use h3_jobs::{Handler, JobCtx, JobError, ProgressUpdate};
@@ -171,20 +172,6 @@ async fn describe_reference(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, 
 /// First of the keys that has text, like Python's `a or b or c`, stripped.
 fn first_text(segment: &Value, keys: &[&str]) -> String {
     keys.iter().filter_map(|k| segment.get(*k)).find(|v| h3_core::pyval::truthy(v)).map(|v| text_or_empty(Some(v)).trim().to_string()).unwrap_or_default()
-}
-
-/// The project's theme file and the location notes, as the scout gets them.
-fn location_style_theme_text(folder: &std::path::Path, session: &Obj, local_notes: &str) -> String {
-    let use_context = session.get("use_vrgdg_text_context").is_none_or(h3_core::pyval::truthy);
-    let theme = if use_context { std::fs::read_to_string(folder.join("project_context").join("themestyle.txt")).map(|t| t.trim().to_string()).unwrap_or_default() } else { String::new() };
-    let mut parts = Vec::new();
-    if !theme.is_empty() {
-        parts.push(format!("Global theme/style:\n{theme}"));
-    }
-    if !local_notes.trim().is_empty() {
-        parts.push(format!("Location extraction notes:\n{}", local_notes.trim()));
-    }
-    parts.join("\n\n").trim().to_string()
 }
 
 fn new_location_id(taken: &[String]) -> String {
@@ -369,9 +356,16 @@ async fn batch_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobEr
 
 // -- concepts, motion notes, enhance and edit -------------------------------------------------------------------------------
 
-/// What a Builder writer reads: the request's own text and settings, and the project folder.
-fn writer_payload(folder: &std::path::Path, params: &Value) -> Obj {
+/// What a Builder writer reads: the request's own text and settings, the project folder, and the runner. The runner is the LLM the app is set to use, unless the
+/// request names one itself (an agent does not).
+fn writer_payload(state: &AppState, folder: &std::path::Path, params: &Value) -> Obj {
     let mut payload = params.as_object().cloned().unwrap_or_default();
+    let names_runner = ["text_runner", "text_gemma_runner", "gemma_runner"].iter().any(|key| payload.get(*key).is_some_and(h3_core::pyval::truthy));
+    if !names_runner {
+        for (key, value) in current(state).runner_payload() {
+            payload.entry(key).or_insert(value);
+        }
+    }
     payload.insert("project_folder".into(), json!(folder.display().to_string()));
     payload
 }
@@ -398,7 +392,7 @@ fn job_project(state: &AppState, ctx: &JobCtx) -> Result<std::path::PathBuf, Job
 async fn concepts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let folder = job_project(&state, &ctx)?;
     ctx.progress(ProgressUpdate { percent: 20.0, stage: "generating".into(), message: "Writing concept prompts...".into(), stage_count: 1, ..Default::default() });
-    let payload = writer_payload(&folder, &ctx.params);
+    let payload = writer_payload(&state, &folder, &ctx.params);
     let base = crate::vrgdg::llm::base_config(&state);
     let llm = h3_builder::prompt_writers::RunnerLlm { payload: &payload, base: &base };
     h3_builder::prompt_writers::concepts::generate_concept_prompts(&llm, &payload).await.map_err(writer_failure)
@@ -408,7 +402,7 @@ async fn concepts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> 
 async fn motion_notes(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let folder = job_project(&state, &ctx)?;
     ctx.progress(ProgressUpdate { percent: 20.0, stage: "generating".into(), message: "Writing motion notes...".into(), stage_count: 1, ..Default::default() });
-    let payload = writer_payload(&folder, &ctx.params);
+    let payload = writer_payload(&state, &folder, &ctx.params);
     let base = crate::vrgdg::llm::base_config(&state);
     let llm = h3_builder::prompt_writers::RunnerLlm { payload: &payload, base: &base };
     h3_builder::prompt_writers::motion_notes::generate_motion_notes(&llm, &payload).await.map_err(writer_failure)
@@ -419,7 +413,7 @@ async fn enhance_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobE
     let folder = job_project(&state, &ctx)?;
     let scene = text_or_empty(ctx.params.get("scene_id")).trim().to_string();
     let session = read_session(&folder).await?.session;
-    let mut payload = writer_payload(&folder, &ctx.params);
+    let mut payload = writer_payload(&state, &folder, &ctx.params);
     if first_non_empty(&payload, &["current_prompt"]).is_empty() {
         let given = first_non_empty(&payload, &["prompt", "draft_prompt"]);
         payload.insert("current_prompt".into(), json!(if given.is_empty() { scene_text(&session, &scene, "minimax_h3_prompt") } else { given }));
@@ -450,7 +444,7 @@ async fn edit_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobErro
         )));
     }
     let session = read_session(&folder).await?.session;
-    let mut payload = writer_payload(&folder, &ctx.params);
+    let mut payload = writer_payload(&state, &folder, &ctx.params);
     if first_non_empty(&payload, &["current_prompt"]).is_empty() {
         payload.insert("current_prompt".into(), json!(scene_text(&session, &scene, "t2i_prompt")));
     }

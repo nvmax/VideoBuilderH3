@@ -268,10 +268,14 @@ pub fn save_session_with(project: &Path, input: SaveInput, hooks: &SaveHooks) ->
 /// Save an edited session the way the pack's API does: the revision goes one above both counters (the UI counts saves in
 /// `builder_save_revision`, the server in `revision`, and they can drift apart), so the save is never mistaken for a
 /// stale snapshot. A save the server discarded is an error, never reported as success.
+///
+/// An open Video Builder window numbers its next save one above its last. The save number is left one higher than the
+/// revision, so that save is refused as stale (a save that equals the saved number is accepted) until the window has reloaded,
+/// and does not overwrite this edit with its older snapshot.
 pub fn persist_session(project: &Path, mut session: Obj, now: Stamp) -> io::Result<SaveOutcome> {
     let next = int_of(session.get("revision")).max(int_of(session.get("builder_save_revision"))) + 1;
     session.insert("revision".into(), json!(next));
-    session.insert("builder_save_revision".into(), json!(next));
+    session.insert("builder_save_revision".into(), json!(next + 1));
     let folder = absolute(project);
     session.insert("project_folder".into(), json!(folder.display().to_string()));
     let audio_path = h3_core::pyval::text_or_empty(session.get("audio_path"));

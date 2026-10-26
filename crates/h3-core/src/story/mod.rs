@@ -1,6 +1,7 @@
 //! The Story Builder's data: Story Mode (the book, acts, scene plan), the Storyboard's normalizers and the pure steps around them.
 
 pub mod acts;
+pub mod apply;
 pub mod arc;
 pub mod cast_guard;
 pub mod dialogue;

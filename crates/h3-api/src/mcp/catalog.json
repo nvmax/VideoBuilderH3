@@ -632,7 +632,7 @@
   },
   {
    "name": "scenes_bulk_edit",
-   "description": "Execute multiple scene operations atomically.",
+   "description": "Execute multiple scene operations atomically. Each operation is an object with `op` (move, resize or patch) and `scene_id`. A malformed operation or an unknown scene fails the whole batch and saves nothing.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -641,8 +641,48 @@
      },
      "operations": {
       "type": "array",
+      "minItems": 1,
+      "description": "For example [{\"op\": \"patch\", \"scene_id\": \"11\", \"fields\": {\"timeline_note\": \"...\"}}, {\"op\": \"move\", \"scene_id\": \"12\", \"start\": 30.5}, {\"op\": \"resize\", \"scene_id\": \"12\", \"duration\": 4}].",
       "items": {
-       "type": "object"
+       "type": "object",
+       "properties": {
+        "op": {
+         "type": "string",
+         "enum": [
+          "move",
+          "resize",
+          "patch"
+         ]
+        },
+        "scene_id": {
+         "type": "string",
+         "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
+        },
+        "start": {
+         "type": "number",
+         "description": "move: the scene's new start, in seconds."
+        },
+        "duration": {
+         "type": "number",
+         "description": "resize: the new length, in seconds (or send end)."
+        },
+        "end": {
+         "type": "number",
+         "description": "resize: the new end, in seconds (or send duration)."
+        },
+        "ripple": {
+         "type": "boolean",
+         "description": "move and resize: shift the later scenes too."
+        },
+        "fields": {
+         "type": "object",
+         "description": "patch: the scene fields to set, under the Builder's own names."
+        }
+       },
+       "required": [
+        "op",
+        "scene_id"
+       ]
       }
      }
     },
@@ -654,6 +694,131 @@
    "annotations": {
     "readOnlyHint": false,
     "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "refmod_create",
+   "description": "Make a saved RefMod from pictures, as a GPU job (use job_wait). A RefMod is what a RefMod render sends to H3 for a character, a place or an object, so this is how a picture such as a location plate becomes one. The result names it \"<type>/<name>\": pick it on a card with reference_upsert (source \"refmod\", refmod {name}). Needs ComfyUI with ComfyUI-MiniMaxH3Mod.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string",
+      "description": "The RefMod's name, for example Darrel_noclothes."
+     },
+     "type": {
+      "type": "string",
+      "enum": [
+       "identity",
+       "clothing_men",
+       "clothing_women",
+       "background",
+       "generic",
+       "object",
+       "prop",
+       "vehicle",
+       "creature"
+      ],
+      "description": "What the RefMod is. It is also the folder it is saved in."
+     },
+     "paths": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "Picture files on this computer, one or more, in order."
+     },
+     "crops": {
+      "type": "array",
+      "description": "One [x0, y0, x1, y1] or null for each picture, to keep only that part."
+     },
+     "quality": {
+      "type": "string",
+      "enum": [
+       "maximum",
+       "high",
+       "balanced",
+       "compact",
+       "draft"
+      ],
+      "description": "Default balanced."
+     },
+     "mode": {
+      "type": "string",
+      "enum": [
+       "Full Reference",
+       "Compressed Reference"
+      ],
+      "description": "Default Full Reference."
+     },
+     "steps": {
+      "type": "integer",
+      "description": "Refinement steps, 0 to 2000. Default 500."
+     },
+     "description": {
+      "type": "string"
+     },
+     "overwrite": {
+      "type": "boolean",
+      "description": "Replace a RefMod of the same name."
+     }
+    },
+    "required": [
+     "name",
+     "type",
+     "paths"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "audio_stems_split",
+   "description": "Split the project's song into stems with Demucs and write a vocal-free mix, as a GPU job (use job_wait). The result has vocals_path and no_vocals_path. To render a scene without the singer's voice, so a face that is not the singer has nothing to lip-sync to, send no_vocals_path as audio_path in the params of video_render.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "audio_path": {
+      "type": "string",
+      "description": "A sound file to split instead of the project song."
+     },
+     "model_name": {
+      "type": "string",
+      "enum": [
+       "htdemucs",
+       "htdemucs_ft",
+       "mdx_extra",
+       "htdemucs_6s"
+      ],
+      "description": "Default htdemucs."
+     },
+     "device": {
+      "type": "string",
+      "enum": [
+       "auto",
+       "cuda",
+       "cpu"
+      ]
+     },
+     "input_gain_db": {
+      "type": "number",
+      "description": "-24 to 24. Raise it when the vocals are quiet."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
     "openWorldHint": false
    },
    "kind": "named"
@@ -739,7 +904,7 @@
   },
   {
    "name": "reference_upsert",
-   "description": "Add or update a reference subject or location.",
+   "description": "Add or update a reference subject or location. Keys you do not send keep their saved value. To render with a saved RefMod, send source \"refmod\" and refmod {name, strength} with a name from api_get_refmods.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -757,7 +922,8 @@
       "type": "string"
      },
      "payload": {
-      "type": "object"
+      "type": "object",
+      "description": "Card fields: name, description, reference_type (subjects: character, prop, vehicle, creature, outfit...), trigger_phrase, image {path}, and source \"refmod\" with refmod {\"name\": \"vehicle/C8_Corvette\", \"strength\": 1} (a name from api_get_refmods, strength 0 to 1) to bind a saved RefMod. source \"image\" takes the RefMod off. An unknown RefMod name is an error."
      }
     },
     "required": [
@@ -1005,7 +1171,7 @@
   },
   {
    "name": "video_render",
-   "description": "Submit a video render job for a scene or batch.",
+   "description": "Submit a video render job for a scene or batch. Send scene_id for one scene, leave it out for many.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -1017,7 +1183,8 @@
       "description": "The scene: its id (seg_...) or its number on the timeline, the one the Video Builder shows. Send \"11\" for Scene 11. Numbers move when scenes are added or removed, ids do not."
      },
      "params": {
-      "type": "object"
+      "type": "object",
+      "description": "Render options. mode (\"minimax_h3\"). audio_path: a sound file to render against instead of the project song, for example a vocal-free track so a face that is not the singer has nothing to lip-sync to. timeout_hours. match_start_color (true matches the first frame's colour to the previous scene). prompt: a prompt to use instead of the saved one. Many scenes: scene_ids, scope, range, run_mode (missing or resume_missing), force."
      }
     },
     "required": [
@@ -1707,7 +1874,7 @@
   },
   {
    "name": "story_create",
-   "description": "Write a story layer step with the project's LLM, as a background job. step 'arc' writes the story arc from the story idea, 'brief' writes the song story brief, 'beats' writes a beat per scene (only scenes without one unless replace_existing; limit caps the count). Returns a job id for job_wait. Order: arc, brief, beats. Story Mode (video_type 'story') uses its own steps: 'book' writes the story book from story_idea, 'split' turns a story you pass as text into chapters without changing a word, 'convert' does the same with an older project's story arc, 'chapter' rewrites chapter_id following direction, 'cast' lists story characters that have no card (nothing saved), 'remove_people' rewrites the book without the people in names, 'acts' splits every chapter (or chapter_id) into acts, 'plan' gives every scene (or act_id's scenes) a story slice, spot, mood and performance, 'locations' makes a location card per spot (from the story, never the lyrics) and maps the scenes. For LM Studio the loaded model is used and never changed.",
+   "description": "Write a story layer step with the project's LLM, as a background job. step 'arc' writes the story arc from the story idea, 'brief' writes the song story brief, 'beats' writes a beat per scene (only scenes without one unless replace_existing; limit caps the count). Returns a job id for job_wait. Order: arc, brief, beats. Story Mode (video_type 'story') uses its own steps: 'book' writes the story book from story_idea, 'split' turns a story you pass as text into chapters without changing a word, 'convert' does the same with an older project's story arc, 'chapter' rewrites chapter_id following direction, 'cast' lists story characters that have no card (nothing saved), 'remove_people' rewrites the book without the people in names, 'acts' splits every chapter (or chapter_id) into acts, 'plan' gives every scene (or act_id's scenes) a story slice, spot, mood and performance, 'locations' makes a location card per place and maps the scenes (from the story, never the lyrics): before the plan it finds the places inside each chapter setting (the Places tab), and with map_only after the plan it only maps each scene to a card that exists. For LM Studio the loaded model is used and never changed.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -1734,6 +1901,18 @@
      "style_theme": {
       "type": "string",
       "description": "locations only: look and banned places."
+     },
+     "map_only": {
+      "type": "boolean",
+      "description": "locations only: after the plan, map each scene to a location card that exists and make nothing (no LLM)."
+     },
+     "regenerate_looks": {
+      "type": "boolean",
+      "description": "locations only: write every setting's look again."
+     },
+     "replace_descriptions": {
+      "type": "boolean",
+      "description": "locations only: replace the description of a card that has one."
      },
      "act_id": {
       "type": "string",
@@ -2801,7 +2980,7 @@
   },
   {
    "name": "api_put_references_locations",
-   "description": "Create or update a location (name, description, optional image). (PUT /projects/{pid}/references/locations/{rid})",
+   "description": "Create or update a location (name, description, trigger phrase, optional `image`). Fields that are not sent keep their saved value. `source: \"refmod\"` with `refmod: {\"name\", \"strength\"}` binds a saved RefMod from GET /refmods, as on a character. (PUT /projects/{pid}/references/locations/{rid})",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -2890,7 +3069,7 @@
   },
   {
    "name": "api_put_references_subjects",
-   "description": "Create or update a character (name, description, `reference_type`, voice, trigger phrase, `image`). In Speaking mode also accepts `elevenlabs_voice`: {enabled: boolean, voice_id: string, name: string}. Enabled assignments require a voice ID and a primary character reference. Also accepts elevenlabs_voice_design editing fields: user_input, voice_description, preview_text, voice_name, model_id. Only durable draft fields are stored; preview audio and temporary IDs are discarded. Preserves existing voice and design fields when omitted; supports If-Match. (PUT /projects/{pid}/references/subjects/{rid})",
+   "description": "Create or update a character (name, description, `reference_type`, voice, trigger phrase, `image`). To render with a saved RefMod, send `source: \"refmod\"` and `refmod: {\"name\": \"vehicle/C8_Corvette\", \"strength\": 1}` (a name from GET /refmods, strength 0 to 1, default 1): the folder, type, kind, tokens and frames are read from the RefMod file, and an unknown name is a 400. `source: \"image\"` takes the RefMod off again. In Speaking mode also accepts `elevenlabs_voice`: {enabled: boolean, voice_id: string, name: string}. Enabled assignments require a voice ID and a primary character reference. Also accepts elevenlabs_voice_design editing fields: user_input, voice_description, preview_text, voice_name, model_id. Only durable draft fields are stored; preview audio and temporary IDs are discarded. Preserves existing voice and design fields when omitted; supports If-Match. (PUT /projects/{pid}/references/subjects/{rid})",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -4765,6 +4944,20 @@
    "if_match": true
   },
   {
+   "method": "POST",
+   "path": "/projects/{pid}/audio/stems",
+   "description": "Split the project's song into stems with Demucs (the Audio Mask's splitter, on the whole song) and write a vocal-free mix. Optional: `audio_path` (default the project song), `model_name` (htdemucs by default, htdemucs_ft, mdx_extra or htdemucs_6s), `device` (auto, cuda or cpu) and `input_gain_db` (-24 to 24, raise it when the vocals are quiet). The job result has `vocals_path`, `no_vocals_path`, `stems` (a wav for each stem), `model_name` and `duration_seconds`. The files are in project_audio/stems. To render a scene without the singer's voice, send `audio_path: <no_vocals_path>` in the render params, so a face that is not the singer has nothing to lip-sync to.",
+   "job": true,
+   "body_keys": [
+    "audio_path",
+    "device",
+    "input_gain_db",
+    "model_name"
+   ],
+   "query": [],
+   "if_match": false
+  },
+  {
    "method": "GET",
    "path": "/projects/{pid}/audio/waveform",
    "description": "Waveform peaks for drawing the audio. `peaks` sets how many.",
@@ -4958,7 +5151,7 @@
   {
    "method": "PUT",
    "path": "/projects/{pid}/references/locations/{rid}",
-   "description": "Create or update a location (name, description, optional image).",
+   "description": "Create or update a location (name, description, trigger phrase, optional `image`). Fields that are not sent keep their saved value. `source: \"refmod\"` with `refmod: {\"name\", \"strength\"}` binds a saved RefMod from GET /refmods, as on a character.",
    "job": false,
    "body_keys": [],
    "query": [],
@@ -4988,7 +5181,7 @@
   {
    "method": "PUT",
    "path": "/projects/{pid}/references/subjects/{rid}",
-   "description": "Create or update a character (name, description, `reference_type`, voice, trigger phrase, `image`). In Speaking mode also accepts `elevenlabs_voice`: {enabled: boolean, voice_id: string, name: string}. Enabled assignments require a voice ID and a primary character reference. Also accepts elevenlabs_voice_design editing fields: user_input, voice_description, preview_text, voice_name, model_id. Only durable draft fields are stored; preview audio and temporary IDs are discarded. Preserves existing voice and design fields when omitted; supports If-Match.",
+   "description": "Create or update a character (name, description, `reference_type`, voice, trigger phrase, `image`). To render with a saved RefMod, send `source: \"refmod\"` and `refmod: {\"name\": \"vehicle/C8_Corvette\", \"strength\": 1}` (a name from GET /refmods, strength 0 to 1, default 1): the folder, type, kind, tokens and frames are read from the RefMod file, and an unknown name is a 400. `source: \"image\"` takes the RefMod off again. In Speaking mode also accepts `elevenlabs_voice`: {enabled: boolean, voice_id: string, name: string}. Enabled assignments require a voice ID and a primary character reference. Also accepts elevenlabs_voice_design editing fields: user_input, voice_description, preview_text, voice_name, model_id. Only durable draft fields are stored; preview audio and temporary IDs are discarded. Preserves existing voice and design fields when omitted; supports If-Match.",
    "job": false,
    "body_keys": [],
    "query": [],
@@ -5057,7 +5250,7 @@
   {
    "method": "POST",
    "path": "/projects/{pid}/scenes/bulk",
-   "description": "Apply several scene operations in one atomic change (`operations`).",
+   "description": "Apply several scene operations in one atomic change. `operations` is a non-empty list of objects: `{\"op\": \"move\", \"scene_id\", \"start\", \"ripple\"}`, `{\"op\": \"resize\", \"scene_id\", \"duration\" or \"end\", \"ripple\"}` or `{\"op\": \"patch\", \"scene_id\", \"fields\": {...}}`. `scene_id` is a scene id or its number on the timeline. An operation with another `op`, a missing field or an unknown scene fails the whole batch with a 400 or 404 and saves nothing.",
    "job": false,
    "body_keys": [
     "operations"
@@ -5369,7 +5562,7 @@
   {
    "method": "PUT",
    "path": "/projects/{pid}/story/settings",
-   "description": "Save the Storyboard scene defaults (`defaults`: every key the Builder saves in `builder_storyboard_defaults`, e.g. video style, camera flow, motion speeds, cut frequency, short film planning, temporal and FX settings, plus `story_arc_detail`) and the story fields (`story`: every key of `builder_story_layer`, e.g. `enabled`, idea, strength, world style). Story Mode fields: `story_book_text` replaces the book (parsed into chapters and settings: `Chapter N: title`, then `Setting: name`), `story_settings` (setting looks), `story_acts` (refused unless every scene is in exactly one act, in order), `story_scene_plan` (also sets each scene's performance) `story_spot_min_scenes` (1-20), `story_cast_ids` (subject ids the story is about; empty means every card) `story_allow_new_cast` (true lets the story add people with no card) and `story_video_style` (`music_video`, `spoken` or `story_only`: how the story is told on screen).",
+   "description": "Save the Storyboard scene defaults (`defaults`: every key the Builder saves in `builder_storyboard_defaults`, e.g. video style, camera flow, motion speeds, cut frequency, short film planning, temporal and FX settings, plus `story_arc_detail`) and the story fields (`story`: every key of `builder_story_layer`, e.g. `enabled`, idea, strength, world style). Story Mode fields: `story_book_text` replaces the book (parsed into chapters and settings: `Chapter N: title`, then `Setting: name`), `story_settings` (setting looks: a list of `{id, name, look}`, ids as the book gave them), `story_acts` (a list of `{id, chapter_id, title, summary, cast_ids, scene_ids, location_note, direction}`, refused unless every scene is in exactly one act, in order), `story_scene_plan` (a list of `{scene_id, act_id, story_slice, spot, mood, performance_mode, cast_ids, continues_previous, continuation_direction}` with `performance_mode` singing, speaking, no_lip_sync or instrumental; it also sets each scene's performance, maps each planned scene's `cast_ids` onto the scene and makes a scene that continues its predecessor a masked continuation) `story_spot_min_scenes` (1-20), `story_cast_ids` (subject ids the story is about; empty means every card) `story_allow_new_cast` (true lets the story add people with no card) and `story_video_style` (`music_video`, `spoken` or `story_only`: how the story is told on screen).",
    "job": false,
    "body_keys": [],
    "query": [],
@@ -5378,7 +5571,7 @@
   {
    "method": "POST",
    "path": "/projects/{pid}/story/{step}",
-   "description": "Write a story step with the project's LLM. `step` is `arc` (from the story idea, lyrics and saved timed Timeline Notes), `brief` or `beats` (a beat per scene without one; `replace_existing`, `scene_ids`, `limit`). Story Mode steps: `book` (the story book from `story_idea` and `tone_notes`; lyrics set mood only), `split` (a story you wrote, sent as `text`, divided into chapters with a setting each, every word kept), `convert` (an older project's song-section story arc becomes the book the same way; the arc is kept), `remove_people` (rewrite the book without the people in `names`, so only the story cast is left; acts and plan are cleared), `chapter` (rewrite `chapter_id` following `direction`), `cast` (story characters with no card yet; nothing saved), `acts` (each chapter gets a run of scenes and is split into acts; `chapter_id` rebuilds one chapter; timed Timeline Notes stay inside one act) and `plan` (each scene of each act gets `story_slice`, `spot` inside the chapter's setting, `mood` and `performance_mode`; `act_id` rebuilds one act; `spot_min_scenes` overrides the saved scenes-per-spot). The plan also writes each scene's performance to the timeline (`performance_mode`, `lyric_no_lip_sync`). `locations` gives each chapter setting a look and each planned spot a location card named `Setting - Spot`, and maps every scene to its spot (`flux_reference_builder.scene_map`); it uses the story and `style_theme` only, never the lyrics. `regenerate_looks` rewrites setting looks, `replace_descriptions` rewrites card text (images are never touched). Director, Video and Planning Notes and timed notes win over the story. The book is saved in the story layer as `story_book`, `story_book_text` and `story_settings`; edit the text with PUT /story/settings `story.story_book_text`. Each step also updates the Storyboard Builder's saved copy.",
+   "description": "Write a story step with the project's LLM. `step` is `arc` (from the story idea, lyrics and saved timed Timeline Notes), `brief` or `beats` (a beat per scene without one; `replace_existing`, `scene_ids`, `limit`). Story Mode steps: `book` (the story book from `story_idea` and `tone_notes`; lyrics set mood only), `split` (a story you wrote, sent as `text`, divided into chapters with a setting each, every word kept), `convert` (an older project's song-section story arc becomes the book the same way; the arc is kept), `remove_people` (rewrite the book without the people in `names`, so only the story cast is left; acts and plan are cleared), `chapter` (rewrite `chapter_id` following `direction`), `cast` (story characters with no card yet; nothing saved), `acts` (each chapter gets a run of scenes and is split into acts; `chapter_id` rebuilds one chapter; timed Timeline Notes stay inside one act) and `plan` (each scene of each act gets `story_slice`, `spot` inside the chapter's setting, `mood` and `performance_mode`; `act_id` rebuilds one act; `spot_min_scenes` overrides the saved scenes-per-spot). The plan also writes each scene's performance to the timeline (`performance_mode`, `lyric_no_lip_sync`). `locations` gives each chapter setting a look and each place a location card named `Setting - Spot`, and maps every scene to its spot (`flux_reference_builder.scene_map`); it uses the story and `style_theme` only, never the lyrics. Run it before the acts (no plan yet) and it finds the places inside each chapter setting, the Story Builder's Places tab, keeping the location cards you made by hand. Run it with `map_only: true` after the plan and it asks the LLM nothing: each scene is mapped to the card of its spot, and a card is linked to its setting and acts. `regenerate_looks` rewrites setting looks, `replace_descriptions` rewrites card text (images are never touched). Director, Video and Planning Notes and timed notes win over the story. The book is saved in the story layer as `story_book`, `story_book_text` and `story_settings`; edit the text with PUT /story/settings `story.story_book_text`. Each step also updates the Storyboard Builder's saved copy.",
    "job": true,
    "body_keys": [],
    "query": [],
@@ -5745,7 +5938,7 @@
   {
    "method": "POST",
    "path": "/projects/{project_id}/scenes/{scene_id}/video/render",
-   "description": "Render one scene's video with ComfyUI (`mode`, e.g. `minimax_h3`). Trims to the exact timeline length and saves it as `video_NNNN-audio.mp4`. Set `audio_mode: built_in_audio` in the MiniMax settings for H3 voices and sound (Single or 2 Pass; 2 Pass Advanced needs input audio). With `continuity_mode: latent_continuation_masked` the previous scene must be rendered first (`PREDECESSOR_MISSING` otherwise); it works in Single and 2 Pass. When `continuity_prompt_from_last_frame` is also true, the scene's prompt is first written by the LLM from the previous scene's rendered final frame (the Video Builder's automatic prompt), saved on the scene, and then rendered. A `prompt` in `params` skips that.",
+   "description": "Render one scene's video with ComfyUI (`mode`, e.g. `minimax_h3`). To render against another sound than the project song, send `audio_path` (for example the `no_vocals_path` of POST audio/stems). Trims to the exact timeline length and saves it as `video_NNNN-audio.mp4`. Set `audio_mode: built_in_audio` in the MiniMax settings for H3 voices and sound (Single or 2 Pass; 2 Pass Advanced needs input audio). With `continuity_mode: latent_continuation_masked` the previous scene must be rendered first (`PREDECESSOR_MISSING` otherwise); it works in Single and 2 Pass. When `continuity_prompt_from_last_frame` is also true, the scene's prompt is first written by the LLM from the previous scene's rendered final frame (the Video Builder's automatic prompt), saved on the scene, and then rendered. A `prompt` in `params` skips that.",
    "job": true,
    "body_keys": [],
    "query": [],
@@ -5849,6 +6042,25 @@
    "query": [
     "folder"
    ],
+   "if_match": false
+  },
+  {
+   "method": "POST",
+   "path": "/refmods",
+   "description": "Make a saved RefMod from pictures, like RefMods Studio's Create. Needs `name`, `type` (identity, clothing_men, clothing_women, background, generic, object, prop, vehicle or creature) and `paths` (picture files on this computer, one or more, in order). Optional: `crops` (one [x0, y0, x1, y1] or null per picture), `quality` (maximum, high, balanced by default, compact or draft), `mode` (`Full Reference` by default or `Compressed Reference`), `steps` (0 to 2000, default 500), `description` and `overwrite` (replace a RefMod of the same name). A bad request is a 400 with no job. Needs ComfyUI with ComfyUI-MiniMaxH3Mod and the MiniMax H3 video VAE. The job result has `path`, `folder`, `name`, `kind`, `tokens`, `latent_frames` and `canvas`. Then pick the RefMod on a card with PUT references/subjects/{rid}: `source: \"refmod\"` and `refmod: {\"name\": \"<type>/<name>\"}`.",
+   "job": true,
+   "body_keys": [
+    "crops",
+    "description",
+    "mode",
+    "name",
+    "overwrite",
+    "paths",
+    "quality",
+    "steps",
+    "type"
+   ],
+   "query": [],
    "if_match": false
   },
   {

@@ -109,6 +109,42 @@ impl Llm for RunnerLlm<'_> {
     }
 }
 
+/// The runner the app is set to use (App Settings), for the steps an agent runs. The agent API takes no runner settings with a request: the LLM is the one the
+/// user chose, and the model that is loaded is used and never changed.
+pub struct AppLlm<'a> {
+    pub config: &'a LlmConfig,
+}
+
+impl Llm for AppLlm<'_> {
+    fn text(&self, call: TextCall) -> LlmFuture<'_> {
+        Box::pin(async move {
+            let cfg = self.config;
+            let tokens = call.max_new_tokens.clamp(0, i64::from(u32::MAX)) as u32;
+            // With a schema the reply is raw JSON for the caller to read. Only LM Studio and a custom server can be held to the schema.
+            let raw = call.json_schema.is_some() && !matches!(cfg.runner.as_str(), "openai" | "anthropic" | "google");
+            let mut request = h3_llm::ChatRequest::text(&call.instruction, call.temperature, call.top_p, tokens);
+            if raw && matches!(cfg.runner.as_str(), "lm_studio" | "own_server") {
+                request.json_schema = call.json_schema.clone();
+            }
+            request.seed = call.seed;
+            let reply = h3_llm::chat(cfg, &request).await.map_err(|e| e.to_string())?;
+            let text = if raw {
+                reply.text.trim().to_string()
+            } else if call.preserve_paragraphs {
+                h3_llm::clean::clean_plain_text(&reply.text)
+            } else {
+                h3_llm::checks::clean_visual_text(&reply.text)
+            };
+            let info = json!({"runner": cfg.runner, "used_model": reply.model, "unloaded": false}).as_object().cloned().unwrap_or_default();
+            Ok((text, info))
+        })
+    }
+
+    fn vision(&self, _call: VisionCall) -> LlmFuture<'_> {
+        Box::pin(async { Err("This step does not look at pictures.".to_string()) })
+    }
+}
+
 // -- reading the request the way the pack's functions do ------------------------------------------------------------------
 
 /// `str(payload.get(key) or "").strip()`.

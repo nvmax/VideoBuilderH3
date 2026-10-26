@@ -18,6 +18,8 @@ pub mod notes_routes;
 pub mod pipeline_jobs;
 pub mod post_routes;
 pub mod refmod_routes;
+pub mod render_files;
+pub mod reference_cards;
 pub mod reference_routes;
 pub mod video_routes;
 pub mod llm_routes;
@@ -25,6 +27,7 @@ pub mod mcp;
 pub mod session_routes;
 pub mod speaking_routes;
 pub mod setup_routes;
+pub mod story_jobs;
 pub mod views;
 pub mod vrgdg;
 

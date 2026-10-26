@@ -96,6 +96,8 @@ pub fn router(state: Arc<AppState>) -> Router {
     job_handlers::register(&state);
     crate::image_jobs::register(&state);
     crate::llm_jobs::register(&state);
+    crate::story_jobs::register(&state);
+    crate::render_files::register(&state);
     crate::lyric_jobs::register(&state);
     crate::video_routes::register(&state);
     crate::post_routes::register(&state);
@@ -142,7 +144,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/audio/silent", post(sr::silent_audio))
         .route("/projects/{pid}/duplicate", post(sr::duplicate_project))
         .route("/projects/{pid}/settings/preflight", post(preflight_settings))
-        .route("/projects/{pid}/story/{step}", post(sr::story_step))
+        .route("/projects/{pid}/story/{step}", post(crate::story_jobs::story_step))
         .route("/projects/{pid}/references/{kind}/{rid}", axum::routing::put(sr::put_reference).delete(sr::delete_reference))
         .route("/projects/{pid}/scenes/{sid}/prompts/{field}", axum::routing::put(sr::put_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/minimax/validate", post(sr::validate_prompt))
@@ -180,7 +182,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/minimax/index", get(crate::video_routes::index_route))
         .route("/projects/{pid}/timeline/notes", get(crate::notes_routes::list_notes).post(crate::notes_routes::create_note))
         .route("/projects/{pid}/timeline/notes/{nid}", axum::routing::patch(crate::notes_routes::update_note).delete(crate::notes_routes::delete_note))
-        .route("/refmods", get(crate::refmod_routes::list))
+        .route("/refmods", get(crate::refmod_routes::list).post(crate::render_files::create))
+        .route("/projects/{pid}/audio/stems", post(crate::render_files::stems))
         .route("/projects/{pid}/scenes/{sid}/minimax-references", get(crate::reference_routes::get).put(crate::reference_routes::put))
         .route("/post/luts", get(crate::post_routes::list_luts))
         .route("/post/luts/upload", post(crate::post_routes::upload_lut))
@@ -314,9 +317,23 @@ async fn health(State(state): Shared) -> ApiResult {
             "queue_depth": queue_depth,
             "ffmpeg_available": ffmpeg,
             "gpu_available": stats.as_ref().is_some_and(|s| !s.devices.is_empty()),
+            "features": features(),
         }),
         None,
     ))
+}
+
+/// What this build can and cannot do, so an agent plans with it. The pack's own list has no such thing because the pack has all of it.
+fn features() -> Value {
+    json!({
+        "video_engine": "minimax_h3",
+        "story_steps": h3_builder::story::agent::STEPS,
+        "scene_numbers": "A scene is named by its id or by its number on the timeline (scene_id \"11\" is Scene 11).",
+        "refmod_cards": "A character or location card renders from a saved RefMod with source \"refmod\" and refmod {name, strength} (reference_upsert). A RefMod render sends RefMods and audio only, never scene images.",
+        "refmod_create": "POST /refmods makes a RefMod from pictures (tool refmod_create).",
+        "audio_stems": "POST /projects/{pid}/audio/stems splits the song and writes a vocal-free track (tool audio_stems_split). Render a scene against it with audio_path in the render params.",
+        "not_in_this_app": ["LTX video engine", "face fix", "film grain and color adjust on scenes", "LUT previews", "the Storyboard Builder's own copy of the project (storyboard.json)"],
+    })
 }
 
 async fn meta() -> ApiResult {
@@ -325,7 +342,11 @@ async fn meta() -> ApiResult {
             "api_version": "v1",
             "app": "vrgdg-h3",
             "app_version": env!("CARGO_PKG_VERSION"),
-            "capabilities": ["projects", "scenes", "settings", "summary", "videos", "latents", "jobs", "events"],
+            "capabilities": [
+                "projects", "scenes", "assets", "modes", "models", "settings", "summary", "mutations", "references", "lyrics", "audio", "prompts", "images", "videos", "latents", "post",
+                "pipelines", "story", "refmods", "jobs", "events", "queue",
+            ],
+            "features": features(),
         }),
         None,
     ))

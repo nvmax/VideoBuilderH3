@@ -269,6 +269,10 @@
  },
  {
   "method": "POST",
+  "path": "/projects/{pid}/audio/stems"
+ },
+ {
+  "method": "POST",
   "path": "/projects/{pid}/duplicate"
  },
  {
@@ -554,6 +558,10 @@
  {
   "method": "POST",
   "path": "/projects/{project_id}/video/scan"
+ },
+ {
+  "method": "POST",
+  "path": "/refmods"
  },
  {
   "method": "PUT",
