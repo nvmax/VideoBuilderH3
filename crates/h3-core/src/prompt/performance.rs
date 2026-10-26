@@ -41,6 +41,20 @@ pub fn strip_singing_articulation(text: &str) -> String {
         format!("VRGDGPROTECTED{}TOKEN", saved.len() - 1)
     });
     clean = sub(rx!(r"(\d)\.(?=\d)"), &clean, "${1}VRGDGDECIMALTOKEN");
+    // "<Subject 1> keeps her lips relaxed, then sings" keeps the actor: "<Subject 1> sings".
+    clean = sub(
+        rx!(
+            r"(?i)(<Subject\s+\d+>(?:\s+\([^)]*\))?|\b(?:she|he|they))\s+(?:keeps?|holds?|lets?|maintains?)\s+(?:(?:her|his|their|a|an|the)\s+)?(?:(?:relaxed|closed|soft|neutral|gently|pressed|shut|still|natural|loose|calm)[ -]+){0,6}(?:mouth|lips?|jaw)\b[^,;.!?]*,\s*(?:then|and)\s+"
+        ),
+        &clean,
+        "${1} ",
+    );
+    // "her lips close and she holds that gaze" keeps the action of the next actor.
+    clean = sub(
+        rx!(r"(?i)\b(?:her|his|their)\s+(?:mouth|lips?|jaw)\s+(?:close|closes|relax|relaxes|settle|settles)\b[^,;.!?]*?\s+and\s+(?=(?:she|he|they)\b)"),
+        &clean,
+        "",
+    );
     clean = sub(rx!(r"(?i)\bwith\s+(?:natural\s+)?(?:mouth|lips?|jaw)\b[^,;.!?]*,\s*"), &clean, "with ");
     let mut result: Vec<String> = Vec::new();
     for sentence in split_sentences_keep(&clean) {
@@ -49,6 +63,17 @@ pub fn strip_singing_articulation(text: &str) -> String {
         for i in (0..parts.len()).step_by(2) {
             let clause = sub(rx!(r"(?i)\s+(?:with|and|while)\s+(?:(?:her|his|their|natural)\s+)*(?:mouth|lips?|jaw)\b[^.!?]*"), &parts[i], "");
             let clause = clause.trim();
+            // "after the cue" only introduced a mouth movement that is gone now, or ends the sentence.
+            let is_timing_lead = rx!(
+                r"(?i)^(?:after|before|between|during)\s+(?:the\s+)?(?:vocal\s+)?(?:cues?|lines?|phrases?|vocals?|singing)(?:\s+(?:ends?|finishes?))?$"
+            )
+            .is_match(clause)
+            .unwrap_or(false);
+            if is_timing_lead
+                && (i + 2 >= parts.len() || rx!(r"(?i)\b(?:mouth\w*|lips?|jaw)\b").is_match(&parts[i + 2]).unwrap_or(false))
+            {
+                continue;
+            }
             if !clause.is_empty() && !rx!(r"(?i)\b(?:mouth\w*|lips?|jaw)\b").is_match(clause).unwrap_or(false) {
                 if !rebuilt.is_empty() {
                     let sep = if parts[i - 1].is_empty() { ",".to_string() } else { parts[i - 1].clone() };

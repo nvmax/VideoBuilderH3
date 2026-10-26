@@ -292,7 +292,7 @@ fn move_file(from: &Path, to: &Path) -> std::io::Result<()> {
 
 fn same_path(a: &Path, b: &Path) -> bool {
     let norm = |p: &Path| {
-        let abs = std::path::absolute(p).unwrap_or_else(|_| p.to_path_buf()).display().to_string();
+        let abs = h3_core::abspath::absolute(p).unwrap_or_else(|_| p.to_path_buf()).display().to_string();
         if cfg!(windows) { abs.replace('/', "\\").to_lowercase() } else { abs }
     };
     norm(a) == norm(b)
@@ -350,8 +350,8 @@ pub fn restore_scene_video(tools: &Tools, project: &Path, source: &Path, scene: 
 
 /// Save the last frame of a clip as a PNG in the scene's preview folder. Returns its path.
 pub fn extract_final_frame(tools: &Tools, project: &Path, source: &Path, scene: u32, stamp: &str) -> Result<PathBuf, MediaError> {
-    let source_abs = std::path::absolute(source).unwrap_or_else(|_| source.to_path_buf());
-    let project_abs = std::path::absolute(project).unwrap_or_else(|_| project.to_path_buf());
+    let source_abs = h3_core::abspath::absolute(source).unwrap_or_else(|_| source.to_path_buf());
+    let project_abs = h3_core::abspath::absolute(project).unwrap_or_else(|_| project.to_path_buf());
     if !source.is_file() || !source_abs.starts_with(&project_abs) {
         return Err(MediaError::Failed("Source video must be inside the current project folder.".into()));
     }

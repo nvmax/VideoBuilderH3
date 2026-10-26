@@ -31,7 +31,8 @@ pub struct AppConfig {
 
 impl Default for AppConfig {
     fn default() -> Self {
-        let documents = dirs::document_dir().unwrap_or_else(|| PathBuf::from("."));
+        // A Linux account without a Documents folder set up has no document folder at all, so the home folder is the next place.
+        let documents = dirs::document_dir().or_else(|| dirs::home_dir().map(|home| home.join("Documents"))).unwrap_or_else(|| PathBuf::from("."));
         Self {
             comfy_url: "http://127.0.0.1:8188".into(),
             project_root: documents.join("VRGDG-H3 Projects"),
@@ -85,6 +86,12 @@ impl AppConfig {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn the_default_project_folder_is_never_relative() {
+        // A relative folder would end up wherever the app was started from.
+        assert!(AppConfig::default().project_root.is_absolute());
+    }
 
     #[test]
     fn missing_file_gives_defaults_and_round_trips() {

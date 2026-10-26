@@ -1,5 +1,6 @@
 //! The image graphs the pack's own patch functions made (`tools/make_image_fixtures.py`), rebuilt in Rust from the same
 //! request and compared whole.
+#![cfg_attr(not(windows), allow(dead_code, unused_imports))] // the tests that use these helpers only run on Windows
 
 use std::fs;
 use std::path::PathBuf;
@@ -97,6 +98,8 @@ fn ernie_graphs_match_the_pack() {
     run("ernie", "ernie_image");
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn flux_klein_graphs_match_the_pack() {
     run("flux_klein", "flux_klein");
@@ -117,6 +120,8 @@ fn moss_image_graphs_match_the_pack() {
     run("moss_image", "moss_image");
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn nano_banana_graphs_match_the_pack() {
     run("nb_image", "nb_image");

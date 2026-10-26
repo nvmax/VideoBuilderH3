@@ -27,7 +27,7 @@ const IMAGE_EXTENSIONS: [&str; 5] = [".png", ".jpg", ".jpeg", ".webp", ".bmp"];
 const VIDEO_EXTENSIONS: [&str; 5] = [".mp4", ".mov", ".avi", ".webm", ".mkv"];
 
 fn absolute(path: &Path) -> PathBuf {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
 }
 
 fn extension(path: &Path) -> String {

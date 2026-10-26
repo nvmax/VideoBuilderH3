@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
 use super::plan::{exact_duration, FALLBACK_SHOT};
-use super::rx::{group, is_match, rx, split_sentences, sub, sub_with};
+use super::rx::{find_all, group, is_match, rx, split_sentences, sub, sub_with};
 use super::text::normalize_description;
 use crate::pyval::{collapse_ws, fmt_g, round_to, text_or_empty, to_float, truthy, Obj};
 
@@ -258,8 +258,59 @@ pub fn cue_shot_contract(cues: &[CueRow]) -> String {
     lines.join("\n")
 }
 
-/// An instrumental shot loses its vocal sentences. A vocal shot keeps the LLM's prose and ends with the one canonical
-/// cue, carrying the LLM's emotion header and delivery marks.
+/// Normalize one inline cue in the sentence it is in, keeping its action and the complete sentences around it: the performer and the
+/// vocal window are corrected and the tag is the authoritative one. `None` when the text does not hold exactly one tagged cue
+/// after a singing verb, so the caller builds the cue sentence itself.
+pub fn merge_timed_cue(text: &str, performer: &str, vocal_window: &str, tag: &str) -> Option<String> {
+    let tags: Vec<fancy_regex::Match> = rx!(r"(?i)<d>[\s\S]*?</d>").find_iter(text).filter_map(Result::ok).collect();
+    let [found] = tags.as_slice() else { return None };
+    let prefix = &text[..found.start()];
+    let lead = rx!(
+        r"(?i)(?:(?:continues?|keeps?)\s+(?:the\s+same\s+)?(?:uninterrupted\s+)?)?(?:is\s+(?:the\s+only\s+visible\s+performer\s+)?singing|sings?|singing|lip[ -]?sync(?:s|ing)?)\b(?:<Audio\s+\d+>|[^<>.!?\n]|\.(?=\d))*$"
+    )
+    .find(prefix)
+    .ok()
+    .flatten()?;
+    let mut stem = prefix[..lead.start()].to_string();
+    let subject = rx!(r"(?i)<Subject\s+\d+>");
+    let wanted = subject.find(performer).ok().flatten().map(|m| m.as_str().to_string());
+    let actors = find_all(subject, &stem);
+    let mut verb = if is_match(rx!(r"(?i)^(?:singing\b|lip[ -]?syncing\b)"), lead.as_str()) {
+        "singing"
+    } else if is_match(rx!(r"(?i)^(?:continues?|keeps?)\b"), lead.as_str()) {
+        "continues singing"
+    } else {
+        "sings"
+    };
+    if !matches!((&wanted, actors.last()), (Some(wanted), Some(last)) if wanted == last) {
+        let direct_actor = rx!(r"(?i)(?:<Subject\s+\d+>(?:\s+\([^)]*\))?|\b(?:she|he|they|the singer))\s*$");
+        if is_match(direct_actor, &stem) {
+            stem = sub_with(direct_actor, &stem, |_| format!("{performer} "));
+        } else {
+            stem = sub(rx!(r"(?i)[,;:]?\s*\b(?:and|then|while|as)\s*$"), &stem, "").trim().to_string();
+            let action = stem.trim_end_matches([',', ';', ':']);
+            stem = format!("{}{performer} ", if action.is_empty() { String::new() } else { format!("{action}. ") });
+        }
+        verb = "sings";
+    }
+    let mut suffix = text[found.end()..].to_string();
+    if is_match(rx!(r#"[“"‘']\s*$"#), prefix) {
+        suffix = sub(rx!(r#"^\s*[”"’']"#), &suffix, "");
+    }
+    suffix = sub(
+        rx!(
+            r"(?i)^\s*[,;]?\s*in sync with\s+(?:the\s+)?(?:(?:assigned|supplied|provided|original)\s+)?(?:vocals\s+in\s+)?(?:<Audio\s+\d+>|Audio\s+\d+)"
+        ),
+        &suffix,
+        "",
+    );
+    suffix = sub(rx!(r"(?i)^\s+(?:from|during)\s+\d+(?:\.\d+)?\s*s?\s*(?:to|[–—-])\s*\d+(?:\.\d+)?\s*s?"), &suffix, "");
+    suffix = sub(rx!(r"^\s*\.(?=\s|$)"), &suffix, "");
+    Some(format!("{stem}{verb} in sync with <Audio 1>{vocal_window}: {tag}{suffix}"))
+}
+
+/// An instrumental shot loses its vocal sentences. A vocal shot keeps one authoritative cue in place with the LLM's acting,
+/// emotion header and delivery marks.
 pub fn enforce_cue_shot(description: &str, cue: &CueRow) -> String {
     let mut text = normalize_description(description);
     if cue.kind == "instrumental" {
@@ -281,6 +332,12 @@ pub fn enforce_cue_shot(description: &str, cue: &CueRow) -> String {
     let header = cue_header(header_source.as_ref());
     let body = llm_cue.as_ref().map_or(String::new(), |c| group(c, 2));
     let delivered = cue_delivery(&canonical, &body);
+    let performer = label_or_singer(cue);
+    let window = cue_window(cue);
+    let tag = format!("<d>[{header}] {delivered}</d>");
+    if let Some(merged) = merge_timed_cue(&text, &performer, &window, &tag) {
+        return normalize_description(&merged);
+    }
     text = sub(
         rx!(r"(?i)<Subject\s+\d+>[^.\n]*?is the only visible performer singing[\s\S]*?every other visible performer remains silent\.?"),
         &text,
@@ -295,22 +352,20 @@ pub fn enforce_cue_shot(description: &str, cue: &CueRow) -> String {
     for variant in ordered {
         let pattern = format!(r#"(?i)[“"']\s*{}[.!?…]*\s*[”"']"#, fancy_regex::escape(&variant));
         if let Ok(re) = fancy_regex::Regex::new(&pattern) {
-            text = re.replace_all(&text, fancy_regex::NoExpand("the assigned vocal cue")).into_owned();
+            text = re.replace_all(&text, fancy_regex::NoExpand(tag.as_str())).into_owned();
         }
     }
-    let mut clean = sub(rx!(r"(?i)<d>[\s\S]*?</d>"), &text, "the assigned vocal cue");
+    if let Some(merged) = merge_timed_cue(&text, &performer, &window, &tag) {
+        return normalize_description(&merged);
+    }
+    let mut clean = sub(rx!(r"(?i)<d>[\s\S]*?</d>"), &text, "");
+    clean = sub(rx!(r",\s*(?:,\s*)+"), &clean, ", ");
     clean = sub(rx!(r"\s+([,.;!?])"), &clean, "$1");
     clean = sub(rx!(r"\s{2,}"), &clean, " ").trim().to_string();
     clean = sub(rx!(r"[,;:]\s*([.!?…])"), &clean, "$1").trim_end_matches(['.', '!', '?', '…', ' ']).to_string();
     if clean.is_empty() {
         clean = FALLBACK_SHOT.trim_end_matches('.').to_string();
     }
-    let contract = format!(
-        "{} is the only visible performer singing, in sync with <Audio 1>{}, <d>[{}] {}</d>; every other visible performer remains silent.",
-        label_or_singer(cue),
-        cue_window(cue),
-        header,
-        delivered
-    );
+    let contract = format!("{performer} sings in sync with <Audio 1>{window}: {tag}; every other visible performer remains silent.");
     normalize_description(&format!("{clean}. {contract}"))
 }

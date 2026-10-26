@@ -6,7 +6,9 @@
   "scripts": {
     "tauri": "tauri",
     "release": "tauri build --config src-tauri/tauri.release.conf.json",
-    "release:local": "tauri build --config src-tauri/tauri.release.conf.json --config src-tauri/tauri.local.conf.json"
+    "release:local": "tauri build --config src-tauri/tauri.release.conf.json --config src-tauri/tauri.local.conf.json",
+    "release:linux": "tauri build --config src-tauri/tauri.release.conf.json --config src-tauri/tauri.linux.conf.json",
+    "release:linux:local": "tauri build --config src-tauri/tauri.release.conf.json --config src-tauri/tauri.linux.conf.json --config src-tauri/tauri.local.conf.json"
   },
   "license": "SEE LICENSE IN ../LICENSE",
   "dependencies": {},

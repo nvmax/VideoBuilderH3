@@ -12,13 +12,14 @@ use h3_project::atomic::atomic_write_text;
 use h3_project::layout::{context_folder, srt_path};
 use serde_json::{json, Value};
 
+use crate::linux_dialog;
 use crate::payload::path_text;
 use crate::Env;
 
 type Reply = Result<Value, String>;
 
 fn absolute(path: &Path) -> PathBuf {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
 }
 
 fn text(path: &Path) -> String {
@@ -315,11 +316,61 @@ fn picker_spec(kind: &str) -> Result<(&'static str, Option<&'static str>, bool),
     })
 }
 
+/// Run a PowerShell dialog script and return what it wrote: the chosen path, or "" when the dialog was cancelled.
+fn powershell_dialog(script: &str) -> Result<String, String> {
+    let mut command = Command::new("powershell");
+    command.args(["-NoProfile", "-STA", "-Command", script]);
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        command.creation_flags(0x0800_0000);
+    }
+    let output = command.output().map_err(|e| format!("Native file dialog is not available: {e}"))?;
+    if !output.status.success() {
+        let message = String::from_utf8_lossy(if output.stderr.is_empty() { &output.stdout } else { &output.stderr }).trim().to_string();
+        return Err(if message.is_empty() { "PowerShell picker failed.".into() } else { message });
+    }
+    Ok(String::from_utf8_lossy(&output.stdout).trim().to_string())
+}
+
+const SAVE_VIDEO_FILTER: &str = "MP4 video (*.mp4)|*.mp4";
+
+/// The PowerShell Save dialog that starts with `name`. Single quotes in a PowerShell string are doubled.
+fn save_video_script(name: &str) -> String {
+    format!(
+        "Add-Type -AssemblyName System.Windows.Forms\n$dialog = New-Object System.Windows.Forms.SaveFileDialog\n$dialog.Title = 'Export video'\n$dialog.Filter = '{SAVE_VIDEO_FILTER}'\n$dialog.DefaultExt = 'mp4'\n$dialog.AddExtension = $true\n$dialog.OverwritePrompt = $true\n$dialog.FileName = '{}'\nif ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {{ [Console]::Write($dialog.FileName) }}",
+        name.replace('\'', "''")
+    )
+}
+
+/// The `save_video` dialog of the Export button: where to save the finished video, starting with `file_name`. The reply is the
+/// chosen path, or "" when the dialog was closed. The dialog asks before it replaces a video.
+fn save_video_dialog(file_name: &str) -> Reply {
+    let name = crate::export_video::export_file_name(file_name);
+    if cfg!(target_os = "linux") {
+        let dialog = linux_dialog::Dialog { title: "Export video", filter: Some(SAVE_VIDEO_FILTER), folder: false, multiple: false, save_as: Some(&name) };
+        return Ok(json!({"path": linux_dialog::choose(&dialog)?.first().cloned().unwrap_or_default()}));
+    }
+    if !cfg!(windows) {
+        return Err("Native file dialog is not available on this system. Type the path instead.".into());
+    }
+    Ok(json!({"path": powershell_dialog(&save_video_script(&name))?}))
+}
+
 /// `POST /vrgdg/music_builder/pick_path`: a native file or folder dialog on this computer. Returns the chosen path, or ""
-/// when the dialog was cancelled.
+/// when the dialog was cancelled. `kind: "save_video"` is a save dialog that starts with the name in `file_name`.
 pub fn pick_path(payload: &Obj) -> Reply {
     let kind = text_or_empty(payload.get("kind"));
+    if kind == "save_video" {
+        return save_video_dialog(&text_or_empty(payload.get("file_name")));
+    }
     let (title, filter, folder) = picker_spec(&kind)?;
+    if cfg!(target_os = "linux") {
+        // A program has no file extension on Linux, so that dialog lists every file.
+        let filter = filter.filter(|_| kind != "program");
+        let chosen = linux_dialog::choose(&linux_dialog::Dialog { title, filter, folder, multiple: false, save_as: None })?;
+        return Ok(json!({"path": chosen.first().cloned().unwrap_or_default()}));
+    }
     if !cfg!(windows) {
         return Err("Native file dialog is not available on this system. Type the path instead.".into());
     }
@@ -332,19 +383,7 @@ pub fn pick_path(payload: &Obj) -> Reply {
             filter.unwrap_or("All files (*.*)|*.*")
         ),
     };
-    let mut command = Command::new("powershell");
-    command.args(["-NoProfile", "-STA", "-Command", &script]);
-    #[cfg(windows)]
-    {
-        use std::os::windows::process::CommandExt;
-        command.creation_flags(0x0800_0000);
-    }
-    let output = command.output().map_err(|e| format!("Native file dialog is not available: {e}"))?;
-    if !output.status.success() {
-        let message = String::from_utf8_lossy(if output.stderr.is_empty() { &output.stdout } else { &output.stderr }).trim().to_string();
-        return Err(if message.is_empty() { "PowerShell picker failed.".into() } else { message });
-    }
-    Ok(json!({"path": String::from_utf8_lossy(&output.stdout).trim()}))
+    Ok(json!({"path": powershell_dialog(&script)?}))
 }
 
 #[cfg(test)]
@@ -398,6 +437,19 @@ mod tests {
         fs::write(&exe, "echo").unwrap();
         assert!(open_local_file(&obj(json!({"path": text(&exe)}))).unwrap_err().starts_with("Only video, image"));
         assert_eq!(open_local_file(&obj(json!({"path": text(&dir.path().join("none.mp4"))}))).unwrap_err(), "File was not found.");
+    }
+
+    #[test]
+    fn the_save_dialog_asks_before_replacing_and_a_quote_cannot_end_its_string() {
+        let script = save_video_script("My Song.mp4");
+        assert!(script.contains("System.Windows.Forms.SaveFileDialog"));
+        assert!(script.contains("$dialog.Filter = 'MP4 video (*.mp4)|*.mp4'"));
+        assert!(script.contains("$dialog.DefaultExt = 'mp4'"));
+        assert!(script.contains("$dialog.OverwritePrompt = $true"));
+        assert!(script.contains("$dialog.FileName = 'My Song.mp4'"));
+        assert!(save_video_script("Don't stop.mp4").contains("$dialog.FileName = 'Don''t stop.mp4'"));
+        let injected = save_video_script(&crate::export_video::export_file_name("a'; Remove-Item x; '"));
+        assert!(injected.contains("$dialog.FileName = 'a''; Remove-Item x; ''.mp4'"), "{injected}");
     }
 
     #[test]

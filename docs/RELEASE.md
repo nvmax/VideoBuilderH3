@@ -21,6 +21,10 @@ files because they need the private update key. `npm run release` is the build f
 
 The installer is about 100 MB because the static ffmpeg and ffprobe are 157 MB each before compression.
 
+## Build the packages (Linux)
+
+`bash build_installer.sh` builds a `.deb` and an AppImage with `npm run release:linux:local`. `docs/BUILDING_LINUX.md` has the requirements, what differs from Windows and how to fix a blank window. The packages are in `target/release/bundle/deb` and `target/release/bundle/appimage`. ffmpeg is not bundled on Linux: the `.deb` depends on the distribution's ffmpeg and the AppImage uses the one on PATH. `tauri.linux.conf.json` is merged over `tauri.release.conf.json` for that build (package types, no ffmpeg sidecar, the `.deb` dependencies).
+
 ## What the app does on first start
 
 - It has no config file yet, so it opens on the Setup screen.
@@ -78,6 +82,12 @@ This key is not the Windows code signing certificate: it does not stop the Smart
    three version files.
 
 `tools\publish_release.ps1 -Tag v0.1.1 -DryRun` makes the same files in a temp folder without touching GitHub.
+
+### The Linux packages
+
+The same tag push also starts the `linux` job (Ubuntu 22.04, `npm run release:linux`, signed with the same key). Once the Windows job has published the release, the `linux_publish` job runs `tools/publish_linux_assets.py`. It uploads `H3-Studio_<version>_amd64.AppImage` and `H3-Studio_<version>_amd64.deb` with their signatures and adds `linux-x86_64-appimage`, `linux-x86_64-deb` and `linux-x86_64` to the release's `latest.json`. A Linux build that fails leaves the Windows release as it is, and running the job again replaces the Linux files. An AppImage updates itself like the Windows app. A `.deb` update is installed with `dpkg` after the system asks for the password.
+
+`python3 tools/publish_linux_assets.py --tag v0.1.1 --bundle target/release/bundle --latest latest.json --dry-run` makes the files without touching GitHub (`--latest` is a `latest.json` of that version to add the entries to).
 
 Each update downloads the whole installer (about 100 MB, most of it ffmpeg). A debug build can look at another address:
 set `H3_UPDATE_ENDPOINT` to the address of a `latest.json`. A release build ignores it.

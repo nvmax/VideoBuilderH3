@@ -11,10 +11,12 @@ pub mod drafts;
 pub mod elevenlabs;
 pub mod env;
 pub mod error_log;
+pub mod export_video;
 pub mod files;
 #[cfg(test)]
 mod golden_support;
 pub mod instructions;
+pub mod linux_dialog;
 pub mod media;
 pub mod payload;
 pub mod post_process;

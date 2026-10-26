@@ -22,22 +22,22 @@
    },
    "enforced": [
     {
-     "output": "A wide shot of the singer on stage, singing the line. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 0.5 s to 2.25 s, <d>[English] Hold on tight.</d>; every other visible performer remains silent."
+     "output": "A wide shot of the singer on stage, singing the line. <Subject 1> (Mara) sings in sync with <Audio 1> from 0.5 s to 2.25 s: <d>[English] Hold on tight.</d>; every other visible performer remains silent."
     },
     {
-     "output": "<Subject 1> sings the assigned vocal cue softly. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 0.5 s to 2.25 s, <d>[English, tender, wistful] <i>Hold</i> on tight.</d>; every other visible performer remains silent."
-    },
-    {
-     "output": "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
+     "output": "<Subject 1> sings in sync with <Audio 1> from 0.5 s to 2.25 s: <d>[English, tender, wistful] <i>Hold</i> on tight.</d> softly."
     },
     {
      "output": "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
     },
     {
-     "output": "A wide shot of the singer on stage, singing the line. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 4.1 s to 6 s, <d>[English] Don't let go.</d>; every other visible performer remains silent."
+     "output": "A steady cinematic shot continues the scene with natural camera movement and continuous physical action."
     },
     {
-     "output": "<Subject 1> sings the assigned vocal cue softly. <Subject 1> (Mara) is the only visible performer singing, in sync with <Audio 1> from 4.1 s to 6 s, <d>[English, tender, wistful] Don't let go.</d>; every other visible performer remains silent."
+     "output": "A wide shot of the singer on stage, singing the line. <Subject 1> (Mara) sings in sync with <Audio 1> from 4.1 s to 6 s: <d>[English] Don't let go.</d>; every other visible performer remains silent."
+    },
+    {
+     "output": "<Subject 1> sings in sync with <Audio 1> from 4.1 s to 6 s: <d>[English, tender, wistful] Don't let go.</d> softly."
     }
    ],
    "input": {

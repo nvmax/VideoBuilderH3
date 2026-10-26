@@ -1,5 +1,6 @@
 //! The clear memory graph, the Beat Mode graph and the MiniMax draft graphs against what the pack's own code made
 //! (`tools/make_utility_fixtures.py`). Draft ids and folders are random, so both sides are compared with `<ID>` and `<FOLDER>`.
+#![cfg_attr(not(windows), allow(dead_code, unused_imports))] // the tests that use these helpers only run on Windows
 
 use std::fs;
 use std::path::PathBuf;
@@ -49,6 +50,8 @@ fn the_beat_graph_matches_the_pack() {
     }
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn drafts_match_the_pack() {
     let data = fixture();

@@ -27,7 +27,7 @@ pub fn prepare_load_image<E: GraphEnv + ?Sized>(env: &E, path: &str, data: &str,
     let input = env.input_dir();
     let raw_path = path.trim().trim_matches('"');
     if !raw_path.is_empty() {
-        let source = std::path::absolute(Path::new(raw_path)).unwrap_or_else(|_| raw_path.into());
+        let source = h3_core::abspath::absolute(Path::new(raw_path)).unwrap_or_else(|_| raw_path.into());
         if !source.is_file() {
             return Err(format!("Image-to-image source was not found: {}", source.display()));
         }

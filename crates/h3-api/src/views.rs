@@ -118,7 +118,7 @@ fn asset(project: &Path, path: &str, kind: &str, id: &str) -> Value {
     if text.is_empty() || !Path::new(text).is_file() {
         return Value::Null;
     }
-    let absolute = std::path::absolute(text).unwrap_or_else(|_| PathBuf::from(text));
+    let absolute = h3_core::abspath::absolute(text).unwrap_or_else(|_| PathBuf::from(text));
     let meta = absolute.metadata().ok();
     let mtime = meta.as_ref().map_or(0.0, |_| modified_seconds(&absolute)) as i64;
     let relative = absolute.strip_prefix(project).map(|p| p.to_string_lossy().replace('\\', "/")).unwrap_or_else(|_| absolute.to_string_lossy().replace('\\', "/"));

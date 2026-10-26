@@ -123,7 +123,7 @@ pub fn save_render_log(payload: &Obj, now: &Stamp) -> Reply {
     if folder.is_empty() {
         return Err("Project folder is required before saving a render log.".into());
     }
-    let project = std::path::absolute(Path::new(&folder)).map_err(|e| e.to_string())?;
+    let project = h3_core::abspath::absolute(Path::new(&folder)).map_err(|e| e.to_string())?;
     fs::create_dir_all(&project).map_err(|e| e.to_string())?;
     let mut log = object(payload.get("log"));
     if log.is_empty() {

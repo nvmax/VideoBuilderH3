@@ -100,7 +100,11 @@ fn project_folder_check(root: &FsPath) -> Value {
 fn ffmpeg_check(cfg: &AppConfig) -> Vec<Value> {
     let found = Tools::find(&cfg.ffmpeg_path, &cfg.ffprobe_path);
     match found {
-        Err(e) => vec![check("ffmpeg", "ffmpeg and ffprobe", "fail", e.to_string(), "Install ffmpeg and ffprobe, or set their paths.")],
+        Err(e) => {
+            // The Linux packages do not carry ffmpeg, so the hint says how to get it.
+            let hint = if cfg!(target_os = "linux") { "Install ffmpeg (for example: sudo apt install ffmpeg), or set the paths of ffmpeg and ffprobe." } else { "Install ffmpeg and ffprobe, or set their paths." };
+            vec![check("ffmpeg", "ffmpeg and ffprobe", "fail", e.to_string(), hint)]
+        }
         Ok(tools) => {
             let info = tools.describe();
             let mut out = vec![check("ffmpeg", "ffmpeg and ffprobe", "ok", format!("{} ({})", info.version, info.source), "")];

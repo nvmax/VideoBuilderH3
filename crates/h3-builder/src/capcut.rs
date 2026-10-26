@@ -115,7 +115,7 @@ pub fn extract_project_beats(draft: &Value, draft_path: &str) -> Option<Value> {
     let project_name = Some(text_or_empty(draft.get("name")).trim().to_string()).filter(|n| !n.is_empty()).unwrap_or_else(|| {
         Path::new(draft_path).parent().and_then(Path::file_name).map(|n| n.to_string_lossy().into_owned()).unwrap_or_default()
     });
-    let absolute = if draft_path.is_empty() { String::new() } else { std::path::absolute(draft_path).map(|p| p.components().collect::<PathBuf>().display().to_string()).unwrap_or_else(|_| draft_path.to_string()) };
+    let absolute = if draft_path.is_empty() { String::new() } else { h3_core::abspath::absolute(draft_path).map(|p| p.components().collect::<PathBuf>().display().to_string()).unwrap_or_else(|_| draft_path.to_string()) };
     Some(json!({
         "project_name": project_name,
         "draft_path": absolute,

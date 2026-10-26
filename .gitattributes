@@ -1,0 +1,2 @@
+# A shell script with Windows line endings does not run on Linux (the first line becomes "bash\r"), whatever git is set to on the cloning computer.
+*.sh text eol=lf

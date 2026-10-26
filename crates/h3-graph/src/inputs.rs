@@ -56,7 +56,7 @@ pub fn template(name: &str) -> Result<(String, Obj)> {
 
 /// `os.path.abspath`.
 pub fn abspath(path: &str) -> String {
-    std::path::absolute(Path::new(path)).map(|p| p.display().to_string()).unwrap_or_else(|_| path.to_string())
+    h3_core::abspath::absolute(Path::new(path)).map(|p| p.display().to_string()).unwrap_or_else(|_| path.to_string())
 }
 
 /// `str(value or "").strip().strip('"').strip("'")` for a path typed by a person.

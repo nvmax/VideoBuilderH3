@@ -51,7 +51,8 @@ impl PresetStore {
             .filter_map(|text| serde_json::from_str::<ImagePreset>(&text).ok())
             .filter(|p| p.origin == PresetOrigin::Custom)
             .collect();
-        custom.sort_by_key(|p| p.name.to_lowercase());
+        // The id breaks a tie between two presets of one name, because the folder lists its files in no set order on Linux.
+        custom.sort_by_key(|p| (p.name.to_lowercase(), p.id.clone()));
         all.extend(custom);
         all
     }

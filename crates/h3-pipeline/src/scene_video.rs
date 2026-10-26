@@ -16,7 +16,7 @@ fn key_of(path: &str) -> String {
     if path.trim().is_empty() {
         return String::new();
     }
-    std::path::absolute(Path::new(path)).map(|p| p.display().to_string()).unwrap_or_else(|_| path.to_string()).to_lowercase().replace('\\', "/")
+    h3_core::abspath::absolute(Path::new(path)).map(|p| p.display().to_string()).unwrap_or_else(|_| path.to_string()).to_lowercase().replace('\\', "/")
 }
 
 /// `os.path.dirname` for a Windows or Unix path.

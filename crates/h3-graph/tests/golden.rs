@@ -1,5 +1,6 @@
 //! Every golden graph from the pack's Python builders, rebuilt in Rust from the same settings and compared whole.
 //! Fixtures come from `tools/make_graph_fixtures.py`, which runs the pack's own code against a fake ComfyUI.
+#![cfg_attr(not(windows), allow(dead_code, unused_imports))] // the tests that use these helpers only run on Windows
 
 use std::cell::RefCell;
 use std::fs;
@@ -145,6 +146,8 @@ fn case_files() -> Vec<PathBuf> {
     files
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn rust_graphs_equal_the_golden_graphs() {
     let env_info = read(&fixtures().join("graph_env.json"));

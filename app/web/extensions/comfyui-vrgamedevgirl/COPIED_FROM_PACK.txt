@@ -1,5 +1,5 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
-Pack commit: edc1d01
+Pack commit: dfb014d
 Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
 Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
@@ -41,3 +41,4 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/timeline_view.mjs: Follow the agent: a scene an agent renders glows as rendering (blue, purple when selected), like a scene the user renders.
   music_video_builder/timeline_view.mjs: Follow the agent: the timeline repaints when the set of rendering scenes changes, which includes the scenes an agent renders.
   music_video_builder/builder.mjs: The Models dialog's Select models list has no LTX entry (the app makes MiniMax H3 videos only), so it opens on MiniMax H3 like Download models does. Without this it opened on the LTX models panel that the list no longer offered a button for.
+  music_video_builder/export_video.mjs: Follow the agent: Export waits for a scene an agent is rendering, like a scene the user renders, so it never joins a clip that is about to be replaced.

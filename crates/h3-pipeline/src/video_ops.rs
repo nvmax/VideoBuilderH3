@@ -22,7 +22,7 @@ pub enum VideoOpError {
 }
 
 fn key_of(path: &Path) -> String {
-    let resolved = fs::canonicalize(path).unwrap_or_else(|_| std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()));
+    let resolved = fs::canonicalize(path).unwrap_or_else(|_| h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()));
     let text = resolved.display().to_string();
     if cfg!(windows) { text.replace('/', "\\").to_lowercase() } else { text }
 }

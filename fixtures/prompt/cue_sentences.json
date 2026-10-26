@@ -1,0 +1,307 @@
+{
+ "cases": [
+  {
+   "again": "<Subject 1> advances with squared shoulders; after the opening, she sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, curious, sly, singing] Find the <i>spark</i>.</d> Her brows lift into a knowing grin.",
+   "clean": "<Subject 1> advances with squared shoulders; after the opening, she sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, curious, sly, singing] Find the <i>spark</i>.</d> Her brows lift into a knowing grin.",
+   "enforced": "<Subject 1> advances with squared shoulders; after the opening, she sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, curious, sly, singing] Find the <i>spark</i>.</d> Her brows lift into a knowing grin.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "<Subject 1> advances with squared shoulders; after the opening, she sings “<d>[English, curious, sly, singing] Find the <i>spark</i>.</d>” in sync with the assigned Audio 1. Her brows lift into a knowing grin.",
+    "name": "quoted tags and assigned audio suffix normalize as a single vocal clause"
+   }
+  },
+  {
+   "again": "A frontal tracking shot follows <Subject 1>. <Subject 1> keeps a relaxed closed-mouth expression during the silent opening beat, then continues the same performance and sings in sync with <Audio 1> from 6.2 s to 7.82 s: <d>[English, pensive, defiant, singing] Hold that <i>light</i>.</d>; her brows rise into a deliberate look.",
+   "clean": "A frontal tracking shot follows <Subject 1>. <Subject 1> continues the same performance and sings in sync with <Audio 1> from 6.2 s to 7.82 s: <d>[English, pensive, defiant, singing] Hold that <i>light</i>.</d>; her brows rise into a deliberate look.",
+   "enforced": "A frontal tracking shot follows <Subject 1>. <Subject 1> keeps a relaxed closed-mouth expression during the silent opening beat, then continues the same performance and sings in sync with <Audio 1> from 6.2 s to 7.82 s: <d>[English, pensive, defiant, singing] Hold that <i>light</i>.</d>; her brows rise into a deliberate look.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Hold that light",
+     "type": "vocal",
+     "vocal_end": 7.82,
+     "vocal_start": 6.2
+    },
+    "description": "A frontal tracking shot follows <Subject 1>. <Subject 1> keeps a relaxed closed-mouth expression during the silent opening beat, then continues the same performance and sings “<d>[English, pensive, defiant, singing] Hold that <i>light</i>.</d>” in sync with the assigned Audio 1; her brows rise into a deliberate look.",
+    "name": "closed-mouth expression keeps the actor of continued performance"
+   }
+  },
+  {
+   "again": "A close-up holds on <Subject 1>. <Subject 1> advances along the path, shoulders upright, and sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, searching, wry, singing] Find the <i>spark</i>.</d> Her brows lift and one arches into a broad knowing grin.",
+   "clean": "A close-up holds on <Subject 1>. <Subject 1> advances along the path, shoulders upright, and sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, searching, wry, singing] Find the <i>spark</i>.</d> Her brows lift and one arches into a broad knowing grin.",
+   "enforced": "A close-up holds on <Subject 1>. <Subject 1> advances along the path, shoulders upright, and sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, searching, wry, singing] Find the <i>spark</i>.</d> Her brows lift and one arches into a broad knowing grin.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "A close-up holds on <Subject 1>. <Subject 1> advances along the path, shoulders upright, and sings in sync with Audio 1 from 0.210s: <d>[English, searching, wry, singing] Find the <i>spark</i>.</d> Her brows lift and one arches into a broad knowing grin.",
+    "name": "walking and tagged singing remain one complete sentence"
+   }
+  },
+  {
+   "again": "The camera tracks backward. <Subject 1> keeps her lips relaxed and closed through the brief opening, then sings in sync with <Audio 1> from 6.2 s to 7.82 s: <d>[English, tender, wry, singing] Hold that <i>light</i>.</d> Her brows rise into a warm open smile; after the cue, her lips close and she holds that gaze.",
+   "clean": "The camera tracks backward. <Subject 1> sings in sync with <Audio 1> from 6.2 s to 7.82 s: <d>[English, tender, wry, singing] Hold that <i>light</i>.</d> Her brows rise into a warm open smile; after the cue, she holds that gaze.",
+   "enforced": "The camera tracks backward. <Subject 1> keeps her lips relaxed and closed through the brief opening, then sings in sync with <Audio 1> from 6.2 s to 7.82 s: <d>[English, tender, wry, singing] Hold that <i>light</i>.</d> Her brows rise into a warm open smile; after the cue, her lips close and she holds that gaze.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Hold that light",
+     "type": "vocal",
+     "vocal_end": 7.82,
+     "vocal_start": 6.2
+    },
+    "description": "The camera tracks backward. <Subject 1> keeps her lips relaxed and closed through the brief opening, then sings in sync with Audio 1 from 6.200s: <d>[English, tender, wry, singing] Hold that <i>light</i>.</d> Her brows rise into a warm open smile; after the cue, her lips close and she holds that gaze.",
+    "name": "oral rest clauses preserve the following singer and gaze action"
+   }
+  },
+  {
+   "again": "<Subject 1> sings in sync with <Audio 1> from 0.94 s to 1.8 s: <d>[English] Hold that light.</d>, her eyes widening into mock surprise.",
+   "clean": "<Subject 1> sings in sync with <Audio 1> from 0.94 s to 1.8 s: <d>[English] Hold that light.</d>, her eyes widening into mock surprise.",
+   "enforced": "<Subject 1> sings in sync with <Audio 1> from 0.94 s to 1.8 s: <d>[English] Hold that light.</d>, her eyes widening into mock surprise.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Hold that light",
+     "type": "vocal",
+     "vocal_end": 1.8,
+     "vocal_start": 0.94
+    },
+    "description": "<Subject 1> lip-syncs only \"Hold that light\" from 0.940s–1.800s, her eyes widening into mock surprise.",
+    "name": "quoted timed singing becomes one tagged cue"
+   }
+  },
+  {
+   "again": "<Subject 2> strums the guitar. <Subject 1> sings in sync with <Audio 1> from 1.1 s to 2.4 s: <d>[English, cheeky, singing] Find the spark.</d> The camera drifts beside the performers.",
+   "clean": "<Subject 2> strums the guitar. <Subject 1> sings in sync with <Audio 1> from 1.1 s to 2.4 s: <d>[English, cheeky, singing] Find the spark.</d> The camera drifts beside the performers.",
+   "enforced": "<Subject 2> strums the guitar. <Subject 1> sings in sync with <Audio 1> from 1.1 s to 2.4 s: <d>[English, cheeky, singing] Find the spark.</d> The camera drifts beside the performers.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.4,
+     "vocal_start": 1.1
+    },
+    "description": "<Subject 2> strums the guitar. <Subject 2> sings in sync with <Audio 1>: <d>[English, cheeky, singing] Find the spark.</d> The camera drifts beside the performers.",
+    "name": "an incorrect vocal actor is corrected without removing other action"
+   }
+  },
+  {
+   "again": "<Subject 1> sings in sync with <Audio 1> from 2.2 s to 3.1 s: <d>[English, gleeful, singing] Find the spark.</d>, her shoulders bouncing to the rhythm.",
+   "clean": "<Subject 1> sings in sync with <Audio 1> from 2.2 s to 3.1 s: <d>[English, gleeful, singing] Find the spark.</d>, her shoulders bouncing to the rhythm.",
+   "enforced": "<Subject 1> sings in sync with <Audio 1> from 2.2 s to 3.1 s: <d>[English, gleeful, singing] Find the spark.</d>, her shoulders bouncing to the rhythm.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 3.1,
+     "vocal_start": 2.2
+    },
+    "description": "<Subject 1> sings <d>[English, gleeful, singing] Different invented words.</d> in sync with <Audio 1> from 0s to 9s, her shoulders bouncing to the rhythm.",
+    "name": "an incorrectly tagged lyric keeps the authoritative cue words"
+   }
+  },
+  {
+   "again": "A medium shot shows <Subject 1> swinging her shoulders, her brows shooting upward. <Subject 1> sings in sync with <Audio 1> from 0.5 s to 2 s: <d>[English, cheeky, singing] Find the <i>spark</i>.</d>; every other visible performer remains silent.",
+   "clean": "A medium shot shows <Subject 1> swinging her shoulders, her brows shooting upward. <Subject 1> sings in sync with <Audio 1> from 0.5 s to 2 s: <d>[English, cheeky, singing] Find the <i>spark</i>.</d>; every other visible performer remains silent.",
+   "enforced": "A medium shot shows <Subject 1> swinging her shoulders, her brows shooting upward. <Subject 1> sings in sync with <Audio 1> from 0.5 s to 2 s: <d>[English, cheeky, singing] Find the <i>spark</i>.</d>; every other visible performer remains silent.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2,
+     "vocal_start": 0.5
+    },
+    "description": "A medium shot shows <Subject 1> swinging her shoulders, \"Find the spark\", <d>[English, cheeky, singing] Find the <i>spark</i>.</d>, her brows shooting upward.",
+    "name": "bare lyric tags get a canonical cue while preserving visible acting"
+   }
+  },
+  {
+   "again": "<Subject 1> advances along the path, singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the <i>spark</i>.</d> The camera follows.",
+   "clean": "<Subject 1> advances along the path, singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the <i>spark</i>.</d> The camera follows.",
+   "enforced": "<Subject 1> advances along the path, singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the <i>spark</i>.</d> The camera follows.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "<Subject 1> advances along the path, singing in sync with <Audio 1>: <d>[English, bright, singing] Find the <i>spark</i>.</d> The camera follows.",
+    "name": "singing after the actor keeps the participle"
+   }
+  },
+  {
+   "again": "<Subject 1> continues singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the <i>spark</i>.</d> with a grin.",
+   "clean": "<Subject 1> continues singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the <i>spark</i>.</d> with a grin.",
+   "enforced": "<Subject 1> continues singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the <i>spark</i>.</d> with a grin.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "<Subject 1> continues singing <d>[English, bright, singing] Find the <i>spark</i>.</d> with a grin.",
+    "name": "continues singing keeps the verb for the same actor"
+   }
+  },
+  {
+   "again": "<Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>, shoulders swaying.",
+   "clean": "<Subject 1> is singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>, shoulders swaying.",
+   "enforced": "<Subject 1> is singing in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>, shoulders swaying.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "<Subject 1> is lip-syncing <d>[English, bright, singing] Find the spark.</d> from 0 s to 9 s, shoulders swaying.",
+    "name": "lip-syncing for the same actor"
+   }
+  },
+  {
+   "again": "<Subject 1> stands tall. She sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d> The light fades.",
+   "clean": "<Subject 1> stands tall. She sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d> The light fades.",
+   "enforced": "<Subject 1> stands tall. She sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d> The light fades.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "<Subject 1> stands tall. She sings in sync with Audio 1: <d>[English, bright, singing] Find the spark.</d> The light fades.",
+    "name": "a pronoun is the performer"
+   }
+  },
+  {
+   "again": "The camera pans across the stage. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>",
+   "clean": "The camera pans across the stage. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>",
+   "enforced": "The camera pans across the stage. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "The camera pans across the stage, and sings in sync with <Audio 1>: <d>[English, bright, singing] Find the spark.</d>",
+    "name": "an action before a bare verb becomes its own sentence"
+   }
+  },
+  {
+   "again": "The camera pans left. Someone. The singer sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>",
+   "clean": "The camera pans left. Someone. The singer sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>",
+   "enforced": "The camera pans left. Someone. The singer sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>",
+   "input": {
+    "cue": {
+     "label": null,
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "The camera pans left. Someone sings <d>[English, bright, singing] Find the spark.</d> in sync with <Audio 1>.",
+    "name": "a cue with no label uses the singer"
+   }
+  },
+  {
+   "again": "<Subject 1> sings in sync with <Audio 1>: <d>[English, bright, singing] Find the spark.</d> and smiles.",
+   "clean": "<Subject 1> sings in sync with <Audio 1>: <d>[English, bright, singing] Find the spark.</d> and smiles.",
+   "enforced": "<Subject 1> sings in sync with <Audio 1>: <d>[English, bright, singing] Find the spark.</d> and smiles.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal"
+    },
+    "description": "<Subject 1> sings <d>[English, bright, singing] Find the spark.</d> and smiles.",
+    "name": "no cue window"
+   }
+  },
+  {
+   "again": "<Subject 1> sings then sings again. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "clean": "<Subject 1> sings then sings again. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "enforced": "<Subject 1> sings then sings again. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "<Subject 1> sings <d>[English, bright, singing] Find the spark.</d> then sings <d>[English, bright, singing] Find the spark.</d> again.",
+    "name": "two tags cannot be merged and get the closing contract"
+   }
+  },
+  {
+   "again": "A wide shot of <Subject 1> at the mic, the crowd cheering. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "clean": "A wide shot of <Subject 1> at the mic, the crowd cheering. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "enforced": "A wide shot of <Subject 1> at the mic, the crowd cheering. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "A wide shot of <Subject 1> at the mic, <d>[English, bright, singing] Find the spark.</d>, the crowd cheering.",
+    "name": "a tag with no singing verb before it gets the closing contract"
+   }
+  },
+  {
+   "again": "A wide shot of <Subject 1> at the mic. The crowd cheers. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English] Find the spark.</d>; every other visible performer remains silent.",
+   "clean": "A wide shot of <Subject 1> at the mic. The crowd cheers. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English] Find the spark.</d>; every other visible performer remains silent.",
+   "enforced": "A wide shot of <Subject 1> at the mic. The crowd cheers. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English] Find the spark.</d>; every other visible performer remains silent.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "A wide shot of <Subject 1> at the mic. The crowd cheers.",
+    "name": "no tag at all gets the closing contract"
+   }
+  },
+  {
+   "again": "A wide shot of the stage. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "clean": "A wide shot of the stage. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "enforced": "A wide shot of the stage. <Subject 1> sings in sync with <Audio 1> from 0.21 s to 2.67 s: <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+   "input": {
+    "cue": {
+     "label": "<Subject 1>",
+     "text": "Find the spark",
+     "type": "vocal",
+     "vocal_end": 2.67,
+     "vocal_start": 0.21
+    },
+    "description": "A wide shot of the stage. <Subject 1> is the only visible performer singing, in sync with <Audio 1>, <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent.",
+    "name": "an old canonical contract is replaced, not repeated"
+   }
+  }
+ ],
+ "function": "enforce_cue_shot / strip_singing_articulation on sentences that hold a tagged cue"
+}

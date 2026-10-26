@@ -33,7 +33,7 @@ fn int_of(value: Option<&Value>) -> i64 {
 }
 
 fn absolute(path: &Path) -> PathBuf {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf())
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf())
 }
 
 pub fn read_session_file(path: &Path) -> io::Result<Obj> {

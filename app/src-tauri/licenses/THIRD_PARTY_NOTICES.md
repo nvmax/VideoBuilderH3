@@ -13,8 +13,9 @@ VRGDG H3 Studio includes or runs the following software.
 
 ## FFmpeg (separate program)
 
-The installer includes `ffmpeg.exe` and `ffprobe.exe` from the BtbN FFmpeg-Builds project (GPL build, which includes the
-libx264 H.264 encoder). They are separate programs. VRGDG H3 Studio starts them as processes to cut, join and encode
+The Windows installer includes `ffmpeg.exe` and `ffprobe.exe` from the BtbN FFmpeg-Builds project (GPL build, which includes the
+libx264 H.264 encoder). The Linux packages do not include ffmpeg: they use the one installed on the computer. They are
+separate programs. VRGDG H3 Studio starts them as processes to cut, join and encode
 video and does not link to them.
 
 FFmpeg is licensed under the GNU General Public License version 2 or later for this build. The license text is in
@@ -37,7 +38,8 @@ licenses.
 
 The application is built with Tauri (MIT or Apache-2.0), SolidJS (MIT), and Rust crates under MIT, Apache-2.0 or similar
 licenses, including tokio, axum, reqwest, serde, rusqlite (with bundled SQLite, public domain), image, symphonia and
-rustfft. The Microsoft Edge WebView2 runtime is installed by the installer when it is missing, under Microsoft's terms.
+rustfft. The Microsoft Edge WebView2 runtime is installed by the installer when it is missing, under Microsoft's terms. On Linux
+the window is WebKitGTK (LGPL) from the system, and the AppImage carries the GTK libraries it needs under their own licenses.
 
 ## Inter font
 

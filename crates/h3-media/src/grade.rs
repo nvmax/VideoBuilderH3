@@ -567,6 +567,8 @@ mod tests {
         }
     }
 
+    // Its fixtures hold Windows paths, so it only runs on Windows.
+    #[cfg(windows)]
     #[test]
     fn lut_errors_name_the_problem() {
         assert!(Cube::parse("LUT_1D_SIZE 4\n", "C:\\luts\\a.cube").unwrap_err().contains("1D LUTs are not supported: a.cube"));

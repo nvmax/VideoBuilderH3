@@ -2179,6 +2179,46 @@
    "return": "No articulation here at all. Just a wide shot, slow dolly, warm light."
   },
   {
+   "op": "articulation",
+   "text": "<Subject 1> keeps a relaxed closed-mouth expression during the silent opening beat, then continues the same performance. Her brows rise.",
+   "return": "<Subject 1> continues the same performance. Her brows rise."
+  },
+  {
+   "op": "articulation",
+   "text": "She holds her lips soft and still for a moment, and then turns away. He lets his jaw hang loose, then grins.",
+   "return": "She then turns away. He grins."
+  },
+  {
+   "op": "articulation",
+   "text": "<Subject 2> (Joe) maintains the pressed lips and calm jaw posture, and steps forward.",
+   "return": "<Subject 2> (Joe) steps forward."
+  },
+  {
+   "op": "articulation",
+   "text": "The camera tracks backward. After the cue, her lips close and she holds that gaze.",
+   "return": "The camera tracks backward. After the cue, she holds that gaze."
+  },
+  {
+   "op": "articulation",
+   "text": "Her brows rise. After the cue, her lips relax. Then the camera drifts.",
+   "return": "Her brows rise. Then the camera drifts."
+  },
+  {
+   "op": "articulation",
+   "text": "Her mouth settles into a smile and they keep dancing. Before the vocal line, her lips part, and she breathes in.",
+   "return": "they keep dancing. and she breathes in."
+  },
+  {
+   "op": "articulation",
+   "text": "She steps forward, during the vocal cue. She sings, after the vocal line ends.",
+   "return": "She steps forward, during the vocal cue. She sings, after the vocal line ends."
+  },
+  {
+   "op": "articulation",
+   "text": "She spins, after the singing finishes, with her lips closed, and laughs.",
+   "return": "She spins, and laughs."
+  },
+  {
    "op": "emotion",
    "payload": {},
    "return": ""

@@ -33,7 +33,7 @@ use crate::instructions::effective_instruction;
 type Reply = Result<Value, String>;
 
 fn absolute(path: &std::path::Path) -> PathBuf {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf())
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf())
 }
 
 const SHOT_TASK_MARKER: &str = "MiniMax H3 shot-description task.";

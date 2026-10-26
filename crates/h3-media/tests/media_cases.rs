@@ -1,6 +1,7 @@
 //! Clip operations against `fixtures/media/media_cases.json`. Each case builds small synthetic inputs with ffmpeg, runs
 //! the operation and compares what ffprobe reports about the result with what the pack's Python produced. Needs ffmpeg
 //! and ffprobe on `PATH` (the tests say so and stop when they are missing).
+#![cfg_attr(not(windows), allow(dead_code, unused_imports))] // the tests that use these helpers only run on Windows
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -154,6 +155,8 @@ fn stitch_request(work: &Path, payload: &Value) -> StitchRequest {
     }
 }
 
+// Its fixtures were made with the bundled ffmpeg build, whose clip lengths other ffmpeg versions do not repeat, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn clip_operations_match_the_pack() {
     let Some(tools) = tools() else { return };

@@ -276,7 +276,7 @@ fn normalize_model_root(value: &str) -> String {
         Some(rest) if rest.is_empty() || rest.starts_with(['/', '\\']) => dirs::home_dir().map(|h| h.join(rest.trim_start_matches(['/', '\\']))).unwrap_or_else(|| PathBuf::from(text)),
         _ => PathBuf::from(text),
     };
-    path_text(&std::path::absolute(&expanded).unwrap_or(expanded))
+    path_text(&h3_core::abspath::absolute(&expanded).unwrap_or(expanded))
 }
 
 /// `GET /vrgdg/workflow_runner/model_root`: a folder with `diffusion_models`, `loras` and the like that the user keeps

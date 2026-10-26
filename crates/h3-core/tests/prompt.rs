@@ -9,6 +9,7 @@ use h3_core::prompt::frame::{
     reference_labels, validate_prompt, wrap_reference_prompt,
 };
 use h3_core::prompt::lyrics::{ensure_quoted_lyrics, last_shot_text, lyric_chunks, lyric_lines};
+use h3_core::prompt::performance::strip_singing_articulation;
 use h3_core::prompt::plan::{
     apply_cut_style, cut_plan_instruction, cut_style_value, performance_craft_instruction, shot_plan, timecode,
 };
@@ -266,6 +267,23 @@ fn timed_cues() {
         let i = &c["input"];
         let got = cue_delivery(i["cue_text"].as_str().unwrap(), i["llm_body"].as_str().unwrap());
         assert_eq!(json!(got), c["output"], "{c}");
+    }
+}
+
+/// A tagged cue is normalized in the sentence it is in, then the oral directions of the prompt are cleaned: the same text the
+/// pack's Python makes, and the same again when the cue step runs a second time (the pack's own cases are idempotent, the
+/// generator's "is lip-syncing" case settles on "sings" in its second pass).
+#[test]
+fn inline_cue_sentences() {
+    let cases = common::cases("prompt/cue_sentences.json");
+    assert!(cases.len() >= 19, "the pack's eight cases and the generator's own");
+    for c in cases {
+        let i = &c["input"];
+        let cue: CueRow = serde_json::from_value(i["cue"].clone()).expect("cue row");
+        let enforced = enforce_cue_shot(i["description"].as_str().unwrap(), &cue);
+        assert_eq!(json!(enforced), c["enforced"], "{}", i["name"]);
+        assert_eq!(json!(strip_singing_articulation(&enforced)), c["clean"], "{}", i["name"]);
+        assert_eq!(json!(enforce_cue_shot(&enforced, &cue)), c["again"], "{}", i["name"]);
     }
 }
 

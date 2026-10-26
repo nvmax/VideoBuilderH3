@@ -10,6 +10,10 @@ Desktop app that turns a song into a MiniMax H3 music video with ComfyUI. It is 
 
 It needs Windows 10 or 11 (64 bit) and ComfyUI on the same computer. ffmpeg is included.
 
+### Linux
+
+Download `H3-Studio_<version>_amd64.AppImage` (any distribution: make it executable and run it) or `H3-Studio_<version>_amd64.deb` (Debian, Ubuntu: `sudo apt install ./H3-Studio_<version>_amd64.deb`) from the same page. Both need ffmpeg and a file dialog program (`sudo apt install ffmpeg zenity`), and ComfyUI on the same computer. `docs/BUILDING_LINUX.md` lists the requirements and what differs from Windows.
+
 The app updates itself. A few seconds after it starts (and on demand from Menu, Check for Updates) it looks for a newer release, and it installs one only when you click Install and restart. Updates are signed, and the app refuses one that is not.
 
 ## Build it yourself
@@ -24,13 +28,15 @@ build_installer.bat          # downloads ffmpeg, builds the installer and prints
 
 The installer is `target\release\bundle\nsis\VRGDG H3 Studio_<version>_x64-setup.exe`. `docs/RELEASE.md` has the same steps by hand and how a release is published.
 
+On Linux, `bash build_installer.sh` builds the `.deb` and the AppImage (needs Rust stable, Node 20 or newer and the WebKitGTK development packages, see `docs/BUILDING_LINUX.md`).
+
 ## License
 
 The app is released under the VRGameDevGirl Community and Commercial License, Version 1.0 (`LICENSE`), the license of the pack it is ported from. It allows free personal, hobby and community use and making videos with the app, including commercial videos. Selling the software, or a service built on it, needs a commercial license from the licensor. Read `LICENSE` for the terms. The bundled ffmpeg (a GPL build, run as a separate program) and the other third party software have their own licenses, listed in `app/src-tauri/licenses/THIRD_PARTY_NOTICES.md`. Files copied or ported from the pack, and the changes made to them, are listed in `COPIED_FROM.md` and `tools/builder_ui_patches.json`.
 
 ## Development
 
-- Rust stable (MSVC toolchain), Node 20+, WebView2 (included with Windows 11)
+- Rust stable (MSVC toolchain on Windows), Node 20+, WebView2 (included with Windows 11) or, on Linux, the WebKitGTK packages of `docs/BUILDING_LINUX.md`
 - ffmpeg and ffprobe on PATH, or set `ffmpeg_path` / `ffprobe_path` in the config
 - ComfyUI running with the nodes listed by `h3 doctor`
 
@@ -43,7 +49,7 @@ cargo run -p h3-cli -- config          # show the config and its location
 cd app; npm install; npm run tauri dev # desktop app in dev mode
 ```
 
-Config: `%APPDATA%\VRGDG-H3\config.json`. Missing keys use defaults (`comfy_url` is `http://127.0.0.1:8188`).
+Config: `%APPDATA%\VRGDG-H3\config.json` (Linux: `~/.config/VRGDG-H3/config.json`). Missing keys use defaults (`comfy_url` is `http://127.0.0.1:8188`).
 
 ## Render a scene from the command line
 

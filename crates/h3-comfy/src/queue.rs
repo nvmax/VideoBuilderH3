@@ -417,6 +417,8 @@ mod tests {
         assert_eq!(extract_videos(&history, "p", Some("nope")).len(), 2);
     }
 
+    // Its fixtures hold Windows paths, so it only runs on Windows.
+    #[cfg(windows)]
     #[test]
     fn folders_come_from_the_command_line() {
         let argv: Vec<String> = ["C:\\Comfy\\ComfyUI\\main.py", "--output-directory", "D:\\out", "--disable-auto-launch"].iter().map(|s| s.to_string()).collect();
@@ -428,6 +430,8 @@ mod tests {
         assert!(path.starts_with("D:\\out") && path.ends_with("evil.mp4") && !path.contains(".."));
     }
 
+    // Its fixtures hold Windows paths, so it only runs on Windows.
+    #[cfg(windows)]
     #[test]
     fn a_relative_main_py_is_anchored_by_the_custom_nodes_folder() {
         let argv: Vec<String> = ["ComfyUI\\main.py", "--output-directory", "render_out"].iter().map(|s| s.to_string()).collect();

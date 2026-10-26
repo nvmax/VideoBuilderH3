@@ -49,6 +49,12 @@ async fn start_app(socket: &str, launch: &Mutex<()>) -> Result<(), String> {
         // Detached, so closing the agent does not close the app.
         command.creation_flags(0x0000_0008 | 0x0000_0200);
     }
+    #[cfg(unix)]
+    {
+        use std::os::unix::process::CommandExt;
+        // Its own process group, so closing the agent does not close the app.
+        command.process_group(0);
+    }
     command.spawn().map_err(|e| format!("H3 Studio could not be started: {e}"))?;
     let until = Instant::now() + LAUNCH_WAIT;
     while Instant::now() < until {

@@ -1,4 +1,5 @@
 //! Scene operations against `fixtures/scene_ops`: each case replays what the pack's mutation did to a project folder.
+#![cfg_attr(not(windows), allow(dead_code, unused_imports))] // the tests that use these helpers only run on Windows
 
 mod common;
 
@@ -73,6 +74,8 @@ fn is_plain_json(path: &str) -> bool {
     path.ends_with(".json") && !path.starts_with("session_backups") && !path.ends_with("index.json") && !path.ends_with(".latent.json") && !path.ends_with(".timeline_journal.json")
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn scene_operations_match_the_pack() {
     let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/scene_ops/ops.json");

@@ -67,6 +67,15 @@ def main() -> int:
         "Rate 2.5 per second, with natural lips moving, the singer steps. \"Quoted lips stay.\" Final.",
         "A [Image 1] wide shot with natural mouth, then and while lips quiver; hair blows in wind...",
         "No articulation here at all. Just a wide shot, slow dolly, warm light.",
+        # Oral rest clauses keep the actor of what follows, and a timing lead-in only stays while it introduces something that stays.
+        "<Subject 1> keeps a relaxed closed-mouth expression during the silent opening beat, then continues the same performance. Her brows rise.",
+        "She holds her lips soft and still for a moment, and then turns away. He lets his jaw hang loose, then grins.",
+        "<Subject 2> (Joe) maintains the pressed lips and calm jaw posture, and steps forward.",
+        "The camera tracks backward. After the cue, her lips close and she holds that gaze.",
+        "Her brows rise. After the cue, her lips relax. Then the camera drifts.",
+        "Her mouth settles into a smile and they keep dancing. Before the vocal line, her lips part, and she breathes in.",
+        "She steps forward, during the vocal cue. She sings, after the vocal line ends.",
+        "She spins, after the singing finishes, with her lips closed, and laughs.",
     ]
     for text_in in articulation:
         cases.append({"op": "articulation", "text": text_in, "return": lfp.strip_singing_articulation(text_in)})

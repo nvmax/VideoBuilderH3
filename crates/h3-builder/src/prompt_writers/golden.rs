@@ -47,6 +47,8 @@ fn dispatch<'a>(name: &'a str, llm: &'a Canned, payload: &'a Obj) -> Answer<'a> 
     })
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[tokio::test]
 async fn the_image_writers_match_the_pack() {
     let dir = tempfile::tempdir().unwrap();
@@ -63,6 +65,8 @@ async fn the_reference_writers_match_the_pack() {
     check_cases("llm/reference_writers.json", 70, &dir.path().display().to_string(), dispatch).await;
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[tokio::test]
 async fn the_prompt_enhancer_matches_the_pack() {
     check_cases("llm/enhance_writer.json", 20, "", dispatch).await;
@@ -73,6 +77,8 @@ async fn the_motion_note_writer_matches_the_pack() {
     check_cases("llm/motion_notes.json", 20, "", dispatch).await;
 }
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[tokio::test]
 async fn the_h3_prompt_writer_matches_the_pack() {
     let dir = tempfile::tempdir().unwrap();

@@ -234,7 +234,7 @@
     "why": "Follow the agent: the activity panel (host/agent_follow.js) selects the scene an agent works on, opens the project it works in and shows a scene it renders as rendering, through this small handle.",
     "file": "music_video_builder/builder.mjs",
     "find": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });",
-    "replace": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });\n  window.__h3Builder = {\n    state,\n    selectScene(sceneId) {\n      const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);\n      if (!found) return false;\n      setActiveSegment(found);\n      return true;\n    },\n    loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),\n    busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),\n    // The scenes an agent renders. The timeline draws them with the rendering glow, beside the scenes whose video_status is \"running\".\n    // The scene's own data is not changed, so merging the agent's saves finds no local edit and the window is not left with unsaved ones.\n    agentRendering: new Set(),\n    markRendering(sceneId, on) {\n      if (this.agentRendering.has(sceneId) === Boolean(on)) return true;\n      if (on) this.agentRendering.add(sceneId);\n      else this.agentRendering.delete(sceneId);\n      render();\n      return true;\n    },\n  };",
+    "replace": "whenBuilderSessionSavesIdle, normalizeTimelineMarkers, normalizeFluxReferenceBuilder, ensureAllSegmentRuntimeFields,\n    syncInspector, render, toast,\n  });\n  window.__h3Builder = {\n    state,\n    selectScene(sceneId) {\n      const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);\n      if (!found) return false;\n      setActiveSegment(found);\n      return true;\n    },\n    loadProject: (folder) => loadSessionFromProject(folder, { quiet: true }),\n    busy: () => Boolean(builderLifecycle.externalChangeSync?.busy?.()),\n    status: () => builderLifecycle.externalChangeSync?.status?.(),\n    // The scenes an agent renders. The timeline draws them with the rendering glow, beside the scenes whose video_status is \"running\".\n    // The scene's own data is not changed, so merging the agent's saves finds no local edit and the window is not left with unsaved ones.\n    agentRendering: new Set(),\n    markRendering(sceneId, on) {\n      if (this.agentRendering.has(sceneId) === Boolean(on)) return true;\n      if (on) this.agentRendering.add(sceneId);\n      else this.agentRendering.delete(sceneId);\n      render();\n      return true;\n    },\n  };",
     "expect": 1
   },
   {
@@ -270,6 +270,13 @@
     "file": "music_video_builder/builder.mjs",
     "find": "modelSelections: [videoSubTabs.modelSelection, miniMaxSubTabs.modelSelection, ...imageModelSelections],",
     "replace": "modelSelections: [miniMaxSubTabs.modelSelection, ...imageModelSelections],",
+    "expect": 1
+  },
+  {
+    "why": "Follow the agent: Export waits for a scene an agent is rendering, like a scene the user renders, so it never joins a clip that is about to be replaced.",
+    "file": "music_video_builder/export_video.mjs",
+    "find": "if (segment?.video_status === \"running\") rendering.push(sceneLabel(segment, index));",
+    "replace": "if (segment?.video_status === \"running\" || window.__h3Builder?.agentRendering?.has(segment?.id)) rendering.push(sceneLabel(segment, index));",
     "expect": 1
   }
 ]

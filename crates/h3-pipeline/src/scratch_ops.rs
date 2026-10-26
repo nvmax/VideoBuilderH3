@@ -48,7 +48,7 @@ pub fn find_stage_outputs(output_folder: &Path, min_mtime: f64) -> Value {
                 continue;
             }
             if found[stage].as_ref().is_none_or(|(prev, _)| modified > *prev) {
-                found[stage] = Some((modified, std::path::absolute(&path).unwrap_or(path).display().to_string()));
+                found[stage] = Some((modified, h3_core::abspath::absolute(&path).unwrap_or(path).display().to_string()));
             }
         }
     }
@@ -67,11 +67,11 @@ fn inside(parent: &Path, child: &Path) -> bool {
 
 /// Copy a stage clip into `rendered_scene_videos_backup/scene_NNNN/` of the project. The source must be outside it.
 pub fn backup_stage(tools: &Tools, project: &Path, source: &Path, stage: &str, scene: u32, stamp: &str) -> Result<Value, VideoOpError> {
-    let source = std::path::absolute(source).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let source = h3_core::abspath::absolute(source).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
     if !source.is_file() {
         return Err(VideoOpError::Invalid(format!("MiniMax H3 stage video was not found: {}", source.display())));
     }
-    let project = std::path::absolute(project).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let project = h3_core::abspath::absolute(project).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
     if inside(&project, &source) {
         return Err(VideoOpError::Invalid("MiniMax H3 stage backup source must be outside the project folder.".into()));
     }
@@ -114,11 +114,11 @@ pub fn cleanup_scratch(output_dir: &str, project: &Path, output_folder: &str, sc
     if !(1..=999_999).contains(&scene) {
         return Err(VideoOpError::Invalid("A valid scene number is required.".into()));
     }
-    let project = std::path::absolute(project).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let project = h3_core::abspath::absolute(project).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
     let (expected, _) = output_location_in(output_dir, &project.display().to_string(), scene);
-    let expected = std::path::absolute(&expected).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
-    let folder = std::path::absolute(given).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
-    let root = std::path::absolute(PathBuf::from(output_dir).join("VRGDG_MiniMaxH3")).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let expected = h3_core::abspath::absolute(&expected).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let folder = h3_core::abspath::absolute(given).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let root = h3_core::abspath::absolute(PathBuf::from(output_dir).join("VRGDG_MiniMaxH3")).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
     if norm(&folder) != norm(&expected) || !inside(&root, &folder) || norm(&folder) == norm(&root) || linked(&folder, &root) {
         return Err(VideoOpError::Invalid("Output folder must be the scene's MiniMax H3 scratch directory without links.".into()));
     }
@@ -173,7 +173,7 @@ fn walk_mp4(dir: &Path, out: &mut Vec<PathBuf>) {
 /// Index the project's scene clips and backups, and copy finished clips found in the Builder's old scratch folders into
 /// `rendered_scene_videos`. Port of `_scan_builder_scene_videos`.
 pub fn scan_scene_videos(tools: &Tools, project: &Path) -> Result<Value, VideoOpError> {
-    let folder = std::path::absolute(project).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
+    let folder = h3_core::abspath::absolute(project).map_err(|e| VideoOpError::Invalid(e.to_string()))?;
     let video_folder = folder.join("rendered_scene_videos");
     let backup_root = folder.join("rendered_scene_videos_backup");
     let list = |dir: &Path| -> Vec<(String, PathBuf)> {
@@ -233,7 +233,7 @@ pub fn scan_scene_videos(tools: &Tools, project: &Path) -> Result<Value, VideoOp
             if meta.len() == 0 {
                 continue;
             }
-            let path = std::path::absolute(&path).unwrap_or(path);
+            let path = h3_core::abspath::absolute(&path).unwrap_or(path);
             let key = match scene_from_path(&path) {
                 Some(n) => n,
                 None if raw != 1 && !videos.contains_key(&raw) => raw,

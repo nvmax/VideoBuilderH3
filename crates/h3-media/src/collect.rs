@@ -107,7 +107,7 @@ fn replace_file(source: &Path, target: &Path) -> Result<(), MediaError> {
 /// `existing` is `Backup`. `stamp` is `%Y%m%d_%H%M%S`. A source that is not an `-audio.mp4` is swapped for the newest
 /// `-audio.mp4` in its folder.
 pub fn collect_scene_video(tools: &Tools, project: &Path, scene: u32, source: &Path, existing: Existing, stamp: &str, now: &h3_project::Stamp) -> Result<CollectResult, MediaError> {
-    let mut source = std::path::absolute(source).unwrap_or_else(|_| source.to_path_buf());
+    let mut source = h3_core::abspath::absolute(source).unwrap_or_else(|_| source.to_path_buf());
     if !source.is_file() {
         return Err(MediaError::Failed(format!("Scene video was not found: {}", source.display())));
     }
@@ -130,7 +130,7 @@ pub fn collect_scene_video(tools: &Tools, project: &Path, scene: u32, source: &P
     let legacy_thumb = legacy_thumbnail_path(&target);
     let mut backup_path = None;
     let mut backup_thumb = None;
-    if source != std::path::absolute(&target).unwrap_or_else(|_| target.clone()) {
+    if source != h3_core::abspath::absolute(&target).unwrap_or_else(|_| target.clone()) {
         if target.exists() {
             if existing == Existing::Backup {
                 let dir = project.join("rendered_scene_videos_backup").join(format!("scene_{scene:04}"));

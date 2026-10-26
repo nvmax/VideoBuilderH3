@@ -163,11 +163,11 @@ fn scene_clip(project: &FsPath, segment: &Value, scene: &str) -> Result<PathBuf,
     if path.is_empty() {
         return Err(invalid(format!("Scene '{scene}' has no rendered video to post-process.")));
     }
-    let resolved = std::path::absolute(&path).unwrap_or_else(|_| PathBuf::from(&path));
+    let resolved = h3_core::abspath::absolute(&path).unwrap_or_else(|_| PathBuf::from(&path));
     if !resolved.is_file() {
         return Err(invalid(format!("Scene '{scene}' video was not found on disk: {}", resolved.display())));
     }
-    let root = std::path::absolute(project).unwrap_or_else(|_| project.to_path_buf());
+    let root = h3_core::abspath::absolute(project).unwrap_or_else(|_| project.to_path_buf());
     let inside = |a: &FsPath, b: &FsPath| if cfg!(windows) { a.display().to_string().to_lowercase().starts_with(&b.display().to_string().to_lowercase()) } else { a.starts_with(b) };
     if !inside(&resolved, &root) {
         return Err(invalid(format!("Scene video must be inside project folder '{}', got '{}'.", project.display(), resolved.display())));

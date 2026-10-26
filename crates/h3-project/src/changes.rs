@@ -28,7 +28,7 @@ static LISTENERS: RwLock<Vec<(Vec<String>, Listener)>> = RwLock::new(Vec::new())
 
 /// A folder as a comparable text: absolute, forward slashes, lower case, no trailing slash.
 fn key(path: &Path) -> String {
-    let absolute = std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf());
+    let absolute = h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf());
     absolute.to_string_lossy().replace('\\', "/").trim_end_matches('/').to_lowercase()
 }
 

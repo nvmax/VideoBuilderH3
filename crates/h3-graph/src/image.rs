@@ -442,7 +442,7 @@ fn ingredient_paths(env: &dyn GraphEnv, payload: &Obj, label: &str, kind: &str, 
 }
 
 fn abs(path: &Path) -> String {
-    let full: PathBuf = std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf());
+    let full: PathBuf = h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf());
     full.components().collect::<PathBuf>().display().to_string()
 }
 

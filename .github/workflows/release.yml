@@ -1,4 +1,5 @@
-# Builds the installer when a version tag is pushed, signs it for the app's updater and publishes the release.
+# Builds the installer when a version tag is pushed, signs it for the app's updater and publishes the release. The Linux packages are built
+# at the same time and added to the release once the Windows job has published it, so a failed Linux build never holds back the Windows release.
 # Make a release: tools\set_version.ps1 -Version 0.1.1, commit, git tag -a v0.1.1 -m "H3 Studio 0.1.1", git push origin main v0.1.1.
 name: Release
 
@@ -41,5 +42,61 @@ jobs:
       - name: Publish the release
         shell: pwsh
         run: ./tools/publish_release.ps1 -Tag "$env:GITHUB_REF_NAME" -Repo "$env:GITHUB_REPOSITORY"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Install the system libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config libwebkit2gtk-4.1-dev libgtk-3-dev librsvg2-dev patchelf file curl
+
+      - name: Install the npm packages
+        working-directory: app
+        run: npm ci
+
+      - name: Build and sign the packages
+        working-directory: app
+        run: npm run release:linux
+        env:
+          NO_STRIP: "true"
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-packages
+          path: |
+            target/release/bundle/deb/*.deb
+            target/release/bundle/deb/*.deb.sig
+            target/release/bundle/appimage/*.AppImage
+            target/release/bundle/appimage/*.AppImage.sig
+          if-no-files-found: error
+
+  linux_publish:
+    needs: [windows, linux]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: linux-packages
+          path: linux-bundle
+
+      - name: Add the Linux packages to the release
+        run: python3 tools/publish_linux_assets.py --tag "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --bundle linux-bundle
         env:
           GH_TOKEN: ${{ github.token }}

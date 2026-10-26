@@ -237,6 +237,42 @@ def main() -> int:
                   ("a b c d e f", "<i>a</i> <i>b</i> <i>c</i> <i>d</i> <i>e</i> f"), ("it's  fine", "<i>it's</i> fine"), ("", ""), ("don’t stop", "don't <i>stop</i>")]
     write(out, "cue_delivery", "cue_delivery", [{"input": {"cue_text": a, "llm_body": b}, **call(sp.cue_delivery, a, b)} for a, b in deliveries])
 
+    # A tagged cue is normalized in the sentence it is in (merge_timed_cue). The pack's own regression cases, plus one case for every
+    # other way the merge reads its sentence: the verb forms, a wrong or missing actor, an action before the verb, no merge possible.
+    lfp = importlib.import_module("vrgdg_pack.minimax.lyric_free_performance")
+    sentence_cases = json.loads((args.pack / "tests" / "minimax_cue_sentence_cases.json").read_text(encoding="utf-8"))
+    vocal = {"type": "vocal", "text": "Find the spark", "label": "<Subject 1>", "vocal_start": 0.21, "vocal_end": 2.67}
+    sentence_cases += [
+        {"name": "singing after the actor keeps the participle", "cue": vocal,
+         "description": "<Subject 1> advances along the path, singing in sync with <Audio 1>: <d>[English, bright, singing] Find the <i>spark</i>.</d> The camera follows."},
+        {"name": "continues singing keeps the verb for the same actor", "cue": vocal,
+         "description": "<Subject 1> continues singing <d>[English, bright, singing] Find the <i>spark</i>.</d> with a grin."},
+        {"name": "lip-syncing for the same actor", "cue": vocal,
+         "description": "<Subject 1> is lip-syncing <d>[English, bright, singing] Find the spark.</d> from 0 s to 9 s, shoulders swaying."},
+        {"name": "a pronoun is the performer", "cue": vocal,
+         "description": "<Subject 1> stands tall. She sings in sync with Audio 1: <d>[English, bright, singing] Find the spark.</d> The light fades."},
+        {"name": "an action before a bare verb becomes its own sentence", "cue": vocal,
+         "description": "The camera pans across the stage, and sings in sync with <Audio 1>: <d>[English, bright, singing] Find the spark.</d>"},
+        {"name": "a cue with no label uses the singer", "cue": {**vocal, "label": None},
+         "description": "The camera pans left. Someone sings <d>[English, bright, singing] Find the spark.</d> in sync with <Audio 1>."},
+        {"name": "no cue window", "cue": {"type": "vocal", "text": "Find the spark", "label": "<Subject 1>"},
+         "description": "<Subject 1> sings <d>[English, bright, singing] Find the spark.</d> and smiles."},
+        {"name": "two tags cannot be merged and get the closing contract", "cue": vocal,
+         "description": "<Subject 1> sings <d>[English, bright, singing] Find the spark.</d> then sings <d>[English, bright, singing] Find the spark.</d> again."},
+        {"name": "a tag with no singing verb before it gets the closing contract", "cue": vocal,
+         "description": "A wide shot of <Subject 1> at the mic, <d>[English, bright, singing] Find the spark.</d>, the crowd cheering."},
+        {"name": "no tag at all gets the closing contract", "cue": vocal,
+         "description": "A wide shot of <Subject 1> at the mic. The crowd cheers."},
+        {"name": "an old canonical contract is replaced, not repeated", "cue": vocal,
+         "description": "A wide shot of the stage. <Subject 1> is the only visible performer singing, in sync with <Audio 1>, <d>[English, bright, singing] Find the spark.</d>; every other visible performer remains silent."},
+    ]
+    cases = []
+    for item in sentence_cases:
+        enforced = sp.enforce_cue_shot(item["description"], item["cue"])
+        cases.append({"input": {"name": item["name"], "description": item["description"], "cue": item["cue"]}, "enforced": enforced,
+                      "clean": lfp.strip_singing_articulation(enforced), "again": sp.enforce_cue_shot(enforced, item["cue"])})
+    write(out, "cue_sentences", "enforce_cue_shot / strip_singing_articulation on sentences that hold a tagged cue", cases)
+
     # Location continuity and continuation text.
     places = {
         "street": {"id": "l1", "name": "Neon street", "description": "A wet street at night. Signs reflect in puddles."},

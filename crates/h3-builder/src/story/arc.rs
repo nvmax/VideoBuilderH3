@@ -347,7 +347,7 @@ async fn expand_scene_entries(
 fn project_lyrics(payload: &Obj) -> String {
     let given = pick([payload.get("project_folder"), payload.get("projectFolder")]);
     let Some(raw) = given.map(|v| text_or_empty(Some(v)).trim().trim_matches('"').to_string()) else { return String::new() };
-    let path = std::path::absolute(&raw).unwrap_or_else(|_| raw.into()).join("project_context").join("full_lyrics.txt");
+    let path = h3_core::abspath::absolute(&raw).unwrap_or_else(|_| raw.into()).join("project_context").join("full_lyrics.txt");
     if !path.is_file() {
         return String::new();
     }

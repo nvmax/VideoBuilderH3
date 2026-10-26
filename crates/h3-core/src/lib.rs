@@ -1,5 +1,6 @@
 //! Pure MiniMax H3 logic: resolution, timing, token math, settings, scene inputs and shot prompts. No IO.
 
+pub mod abspath;
 pub mod continuity;
 pub mod error;
 pub mod fresh_context;

@@ -129,7 +129,7 @@ pub fn approve_scene_image(session: &mut Obj, index: usize, image_path: Option<&
     if target.is_empty() || !Path::new(&target).is_file() {
         return Err(io::Error::new(io::ErrorKind::NotFound, "No valid image path found to approve."));
     }
-    let absolute = std::path::absolute(&target).unwrap_or_else(|_| PathBuf::from(&target)).display().to_string();
+    let absolute = h3_core::abspath::absolute(&target).unwrap_or_else(|_| PathBuf::from(&target)).display().to_string();
     segment.insert("approved_image_path".into(), json!(absolute));
     segment.insert("preview_mode".into(), json!("image"));
     Ok(absolute)

@@ -17,7 +17,7 @@ use crate::Env;
 type Reply = Result<Value, String>;
 
 fn absolute(path: &Path) -> PathBuf {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
 }
 
 /// `_safe_file_name`: the last part of the name with `<>:"/\|?*` made `_`.

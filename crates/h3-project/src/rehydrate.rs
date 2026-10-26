@@ -19,7 +19,7 @@ const IMAGE_EXTENSIONS: [&str; 4] = [".png", ".jpg", ".jpeg", ".webp"];
 
 /// `os.path.abspath`: a full path with `..` resolved and no trailing separator.
 pub fn absolute(path: &Path) -> PathBuf {
-    let full = std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf());
+    let full = h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf());
     // `Path::components` drops a trailing separator and a `.` in the middle.
     full.components().collect()
 }

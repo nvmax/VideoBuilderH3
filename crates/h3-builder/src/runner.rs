@@ -29,7 +29,7 @@ fn text(path: &Path) -> String {
 }
 
 fn absolute(path: &Path) -> PathBuf {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).components().collect()
 }
 
 fn abs_text(payload: &Obj, key: &str) -> PathBuf {

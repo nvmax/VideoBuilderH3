@@ -64,8 +64,8 @@ pub fn duplicate_project(root: &Path, source: &Path, new_name: &str, now: &Stamp
     }
     fs::create_dir_all(root)?;
     let target = crate::scaffold::new_project(&root.join(safe_project_name(clean)))?;
-    let source_abs = std::path::absolute(source).unwrap_or_else(|_| source.to_path_buf());
-    let target_abs = std::path::absolute(&target).unwrap_or_else(|_| target.clone());
+    let source_abs = h3_core::abspath::absolute(source).unwrap_or_else(|_| source.to_path_buf());
+    let target_abs = h3_core::abspath::absolute(&target).unwrap_or_else(|_| target.clone());
     if normcase(&target_abs.display().to_string()).starts_with(&normcase(&source_abs.display().to_string())) {
         let _ = fs::remove_dir_all(&target);
         return Err(OpError::Validation("The copy cannot be inside the project it copies.".into()));

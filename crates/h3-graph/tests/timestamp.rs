@@ -1,10 +1,13 @@
 //! The lyric timing graph against `fixtures/timeline/timestamp_graph.json`, recorded from the pack.
+#![cfg_attr(not(windows), allow(dead_code, unused_imports))] // the tests that use these helpers only run on Windows
 
 use std::path::Path;
 
 use h3_graph::timestamp::timestamp_graph;
 use serde_json::{json, Value};
 
+// Its fixtures hold Windows paths, so it only runs on Windows.
+#[cfg(windows)]
 #[test]
 fn timestamp_graphs_match_the_pack() {
     let path = Path::new(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/timeline/timestamp_graph.json");

@@ -291,7 +291,7 @@ pub fn apply_preset(preset: &ImagePreset, values: &Obj, ctx: &mut ApplyCtx) -> R
                     .map(|p| {
                         let path = Path::new(&p);
                         if path.is_file() {
-                            Ok(std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string())
+                            Ok(h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string())
                         } else {
                             Err(ImageError::Input(format!("Reference image not found: {p}")))
                         }

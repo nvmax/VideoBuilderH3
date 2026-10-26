@@ -7,9 +7,20 @@
   there yet, installs the npm packages when they are missing, then runs `npm run release`.
   The installer is written to target\release\bundle\nsis and its path is printed at the end.
 
-  Run it from anywhere:  powershell -ExecutionPolicy Bypass -File build_installer.ps1
-  Or double-click build_installer.bat.
+  When the node pack is the folder this one sits in (the usual place), the build first copies the pack's Video Builder front
+  end into the app (tools\sync_builder_ui.ps1) and refreshes the agent tool catalog and instructions from it
+  (tools\export_mcp_catalog.py), so the installer carries the pack's current files, committed or not. The Rust code is always
+  built from the files on disk. Pass -NoSync to build exactly what is in this folder now.
+
+  The installer carries the version that will be released next: one patch above the latest release tag (v0.1.4 builds 0.1.5),
+  or the version already in the version files when that is higher. The script sets it in the three version files
+  (tools\set_version.ps1), so a test build is the build that gets tagged and pushed later. Nothing is committed or pushed.
+  Pass -Version 0.2.0 for another number, or -KeepVersion to build the number in the files.
+
+  Run it from anywhere:  powershell -ExecutionPolicy Bypass -File build_installer.ps1 [-NoSync] [-Version x.y.z] [-KeepVersion]
+  Or double-click build_installer.bat (a terminal run can pass the options too).
 #>
+param([switch]$NoSync, [string]$Version = '', [switch]$KeepVersion)
 
 $ErrorActionPreference = 'Stop'
 $root = $PSScriptRoot
@@ -49,6 +60,57 @@ try {
         throw "Close $names first. It runs from the target folder and would block the build."
     }
 
+    # The app shows the pack's Video Builder and ships the pack's agent instructions. Copy both from the pack as it is now, so a
+    # build made before the pack is pushed (or before this repository is committed) still has the latest.
+    $pack = Split-Path -Parent $root
+    if ($NoSync) {
+        Write-Step 'Skipping the copy from the pack (-NoSync).'
+    }
+    elseif (-not (Test-Path (Join-Path $pack 'web\music_video_builder'))) {
+        Write-Step "No node pack at $pack, building with the front end already in app\web."
+    }
+    else {
+        Write-Step "Copying the Video Builder front end from $pack."
+        & (Join-Path $root 'tools\sync_builder_ui.ps1') -Pack $pack
+        # The pack's own Python is the one that is always there. Any Python 3 does the job (standard library only).
+        $python = Join-Path (Split-Path -Parent (Split-Path -Parent (Split-Path -Parent $pack))) 'python_embeded\python.exe'
+        if (-not (Test-Path $python)) { $python = (Get-Command python -ErrorAction SilentlyContinue).Source }
+        if ($python) {
+            Write-Step 'Refreshing the agent tool catalog and instructions from the pack.'
+            & $python (Join-Path $root 'tools\export_mcp_catalog.py') --pack $pack
+            if ($LASTEXITCODE -ne 0) { throw 'tools\export_mcp_catalog.py failed. The messages above say why.' }
+        }
+        else {
+            Write-Warning 'No Python found, so the agent tool catalog was not refreshed from the pack.'
+        }
+    }
+
+    # The version of this build: the one that will be released next, so what is tested here is what gets tagged and pushed.
+    $cargoText = Get-Content (Join-Path $root 'Cargo.toml') -Raw
+    $current = [regex]::Match($cargoText, '(?m)^version = "(\d+\.\d+\.\d+)"').Groups[1].Value
+    if (-not $current) { throw 'No version found in Cargo.toml.' }
+    if ($Version) {
+        if ($Version -notmatch '^\d+\.\d+\.\d+$') { throw "The version must look like 1.2.3, not '$Version'." }
+        $wanted = $Version
+    }
+    elseif ($KeepVersion) {
+        $wanted = $current
+    }
+    else {
+        $wanted = $current
+        # A repository with no tags (or no git) keeps the version in the files.
+        try { $tag = (git -C $root describe --tags --abbrev=0 2>$null) } catch { $tag = '' }
+        if ($tag -match '^v?(\d+\.\d+\.\d+)$') {
+            $released = [version]$Matches[1]
+            if ([version]$current -le $released) { $wanted = '{0}.{1}.{2}' -f $released.Major, $released.Minor, ($released.Build + 1) }
+        }
+    }
+    if ($wanted -ne $current) {
+        Write-Step "Setting the version to $wanted (it was $current)."
+        & (Join-Path $root 'tools\set_version.ps1') -Version $wanted
+    }
+    Write-Step "Building version $wanted."
+
     $sidecars = 'ffmpeg', 'ffprobe' | ForEach-Object { Join-Path $app "src-tauri\binaries\$_-$triple.exe" }
     if ($sidecars | Where-Object { -not (Test-Path $_) }) {
         Write-Step 'The bundled ffmpeg is missing, downloading it.'
@@ -79,7 +141,8 @@ try {
     if (-not $installer) { throw 'The build finished but there is no new installer in target\release\bundle\nsis.' }
 
     Write-Host ''
-    Write-Step ('Installer: {0} ({1:N1} MiB)' -f $installer.FullName, ($installer.Length / 1MB))
+    Write-Step ('Installer for version {0}: {1} ({2:N1} MiB)' -f $wanted, $installer.FullName, ($installer.Length / 1MB))
+    Write-Step 'Nothing was committed or pushed. Install it over your current copy to test.'
 }
 catch {
     Write-Host "[VRGDG-RS Build] $($_.Exception.Message)" -ForegroundColor Red

@@ -338,6 +338,10 @@ pub fn collect_image_paths(payload: &Obj, save: &dyn Fn(&str, &str) -> Result<St
 
 /// `pick_image_files`: the native multi-select file dialog. The chosen picture paths, none when the dialog is cancelled.
 pub fn pick_image_files() -> Result<Vec<String>, String> {
+    if cfg!(target_os = "linux") {
+        let filter = "Image files (*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif)|*.png;*.jpg;*.jpeg;*.webp;*.bmp;*.gif|All files (*.*)|*.*";
+        return crate::linux_dialog::choose(&crate::linux_dialog::Dialog { title: "Choose reference images", filter: Some(filter), folder: false, multiple: true, save_as: None });
+    }
     if !cfg!(windows) {
         return Err("Native file dialog is not available on this system. Type the path instead.".into());
     }

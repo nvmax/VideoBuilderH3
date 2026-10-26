@@ -93,7 +93,7 @@ fn s(path: &Path) -> String {
 
 /// `file '<path>'` escaping for ffmpeg's concat list.
 fn concat_path(path: &Path) -> String {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string().replace('\\', "/").replace('\'', "'\\''")
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string().replace('\\', "/").replace('\'', "'\\''")
 }
 
 fn write_concat_list(list: &Path, paths: &[PathBuf]) -> Result<(), MediaError> {

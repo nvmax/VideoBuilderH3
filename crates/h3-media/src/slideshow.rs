@@ -33,7 +33,7 @@ pub struct SlideshowRequest {
 }
 
 fn concat_path(path: &Path) -> String {
-    std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string().replace('\\', "/").replace('\'', "'\\''")
+    h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string().replace('\\', "/").replace('\'', "'\\''")
 }
 
 fn ffmpeg(tools: &Tools, a: &[String], what: &str) -> Result<(), MediaError> {

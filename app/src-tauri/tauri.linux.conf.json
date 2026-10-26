@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "bundle": {
+    "targets": ["deb", "appimage"],
+    "category": "Video",
+    "longDescription": "VRGDG H3 Studio turns a song into a MiniMax H3 music video. It runs the Video Builder of the comfyui-vrgamedevgirl node pack against a ComfyUI on the same computer.",
+    "externalBin": [],
+    "linux": {
+      "deb": {
+        "depends": ["ffmpeg"],
+        "recommends": ["zenity"]
+      }
+    }
+  }
+}
