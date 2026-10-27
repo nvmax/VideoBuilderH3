@@ -144,6 +144,21 @@ pub fn post<F>(f: F) -> MethodRouter<Arc<AppState>>
 where
     F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
 {
+    post_in(f, false)
+}
+
+/// [`post`] for a route that works with the overlay library, which finds its folder first (`AppState::overlay_env`).
+pub fn post_overlay<F>(f: F) -> MethodRouter<Arc<AppState>>
+where
+    F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
+{
+    post_in(f, true)
+}
+
+fn post_in<F>(f: F, overlay_library: bool) -> MethodRouter<Arc<AppState>>
+where
+    F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
+{
     axum::routing::post(move |State(state): State<Arc<AppState>>, body: Bytes| {
         let f = f.clone();
         async move {
@@ -151,7 +166,7 @@ where
                 Ok(payload) => payload,
                 Err(fail) => return into_response(Err(fail)),
             };
-            let env = state.builder_env();
+            let env = if overlay_library { state.overlay_env().await } else { state.builder_env() };
             let reply = tokio::task::spawn_blocking(move || f(env, payload)).await.unwrap_or_else(|e| Err(Fail::new(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}"))));
             into_response(reply)
         }
@@ -163,11 +178,26 @@ pub fn get_query<F>(f: F) -> MethodRouter<Arc<AppState>>
 where
     F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
 {
+    get_query_in(f, false)
+}
+
+/// [`get_query`] for a route that works with the overlay library, which finds its folder first (`AppState::overlay_env`).
+pub fn get_query_overlay<F>(f: F) -> MethodRouter<Arc<AppState>>
+where
+    F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
+{
+    get_query_in(f, true)
+}
+
+fn get_query_in<F>(f: F, overlay_library: bool) -> MethodRouter<Arc<AppState>>
+where
+    F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
+{
     get(move |State(state): State<Arc<AppState>>, Query(query): Query<HashMap<String, String>>| {
         let f = f.clone();
         async move {
             let payload: Obj = query.into_iter().map(|(k, v)| (k, Value::String(v))).collect();
-            let env = state.builder_env();
+            let env = if overlay_library { state.overlay_env().await } else { state.builder_env() };
             let reply = tokio::task::spawn_blocking(move || f(env, payload)).await.unwrap_or_else(|e| Err(Fail::new(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}"))));
             into_response(reply)
         }

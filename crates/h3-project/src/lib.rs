@@ -13,6 +13,7 @@ pub mod config;
 pub mod derived;
 pub mod duplicate;
 pub mod export;
+pub mod overlay_project;
 pub mod images;
 pub mod journal;
 pub mod latents;

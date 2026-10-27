@@ -220,3 +220,27 @@ You never see it and never set it.
 6. Put the take on the scene with `api_patch_scenes_audio_settings` and `audio_data` plus `audio_name`. `silence_before`, `silence_after` (seconds) and
    `fit_duration` set the timing. `api_patch_speaking_audio_defaults` sets them for every scene.
 7. Then render the scenes and stitch as in Part 3 (steps 15 to 18).
+
+
+
+---
+
+## Part 6 - Overlays: a vignette, film grain, dust and captions (optional)
+
+The final video can carry film grain, a vignette, dust or light-leak clips, lyric captions and titles. These are the Overlays of the Video Builder. The stitch
+draws them onto the video, so set them up before the stitch in Part 3 (step 18), or stitch again after changing them. Skip this part when the person did not ask
+for overlays.
+
+1. `api_get_overlay_library` lists the overlay library: `items` (clips with an `id`), `fonts`, `luts` and `caption_styles`. The person fills the library in the app
+   (Post Process, Overlays), so it can be empty. Never invent a library id.
+2. `api_get_overlay_layers` reads the overlays. `api_post_overlay_layers_add` adds layers without touching the others, `api_put_overlay_layers` replaces the whole
+   list. Times are seconds on the project timeline, so the last scene's end is the song's length.
+3. Film grain and a vignette over the whole song: {"kind": "grain", "start": 0, "end": <seconds>, "strength": 25} and
+   {"kind": "vignette", "start": 0, "end": <seconds>, "strength": 0.6}. A grain strength of 20 to 30 reads as film, above 45 is heavy.
+4. A library clip (dust, smoke, light leaks): `api_post_overlay_layers_media` with the clip's `library_id`. It covers the timeline unless `start` and `end` are given.
+5. Lyric captions: `api_post_overlay_layers_lyric_captions` with a `style` (clean, bold or lower). Run the lyrics alignment first (`lyrics_align`) so each caption
+   starts when its line is sung. A second run replaces the first one's captions.
+6. A title: `api_post_overlay_layers_add` with {"layers": [{"kind": "text", "text": "...", "font": "Bebas Neue", "start": 1, "end": 5}]}.
+7. Read `warnings` in every reply and fix what it names (a missing file, a font that is not installed). Then `stitch_final`: the job result has an `overlay_layers`
+   section (`applied`, `clips`, `skipped`). `overlay_layers: false` in `params` leaves the overlays out. `api_put_overlay_layers` with `overlay_layer_track` set to
+   enabled false turns every overlay off without deleting the layers.

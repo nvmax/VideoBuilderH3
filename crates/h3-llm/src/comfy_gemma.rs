@@ -26,6 +26,8 @@ pub struct GemmaFiles {
     pub mmproj: Vec<String>,
     /// What the node lists for mmproj even when there is none. ComfyUI only accepts a listed value.
     pub mmproj_raw_first: String,
+    /// Whether the node has the `gpu_device` input. The node of an older comfyui-vrgamedevgirl pack does not, and a GPU choice needs it.
+    pub supports_gpu_choice: bool,
 }
 
 fn unavailable(message: impl Into<String>) -> LlmError {
@@ -68,13 +70,25 @@ pub fn files_from_node_info(info: &Value) -> Result<GemmaFiles, LlmError> {
     }
     let real = |all: Vec<String>| -> Vec<String> { all.into_iter().filter(|f| !f.starts_with("[No ")).collect() };
     let raw_mmproj = listed(info, "mmproj_file");
-    Ok(GemmaFiles { models: real(listed(info, "model_file")), mmproj_raw_first: raw_mmproj.first().cloned().unwrap_or_default(), mmproj: real(raw_mmproj) })
+    let supports_gpu_choice = info.pointer(&format!("/{NODE}/input/optional/gpu_device")).is_some();
+    Ok(GemmaFiles { models: real(listed(info, "model_file")), mmproj_raw_first: raw_mmproj.first().cloned().unwrap_or_default(), mmproj: real(raw_mmproj), supports_gpu_choice })
 }
 
 /// The Gemma models and mmproj files ComfyUI has. Reads one node description. Nothing is loaded.
 pub async fn files(cfg: &LlmConfig) -> Result<GemmaFiles, LlmError> {
     let info = client(cfg)?.object_info_for(NODE).await.map_err(|e| comfy_error(e, cfg.comfy_gemma_timeout))?;
     files_from_node_info(&info)
+}
+
+/// A GPU chosen in the LLM Runner needs the `gpu_device` input of the node. Without it ComfyUI would ignore the choice, so say so instead.
+pub fn check_gpu_choice(cfg: &LlmConfig, files: &GemmaFiles) -> Result<(), LlmError> {
+    if cfg.comfy_gemma_gpu_device >= 0 && !files.supports_gpu_choice {
+        return Err(unavailable(format!(
+            "GPU {} is chosen in the LLM Runner, but the comfyui-vrgamedevgirl pack in ComfyUI is too old to put a model on a GPU. Update the pack and restart ComfyUI, or choose Automatic.",
+            cfg.comfy_gemma_gpu_device
+        )));
+    }
+    Ok(())
 }
 
 /// The model to use: the saved one when ComfyUI lists it, else the first.
@@ -118,6 +132,9 @@ pub fn build_graph(cfg: &LlmConfig, req: &ChatRequest, model: &str, mmproj: &str
         "top_p": req.top_p.clamp(0.0, 1.0),
         "max_new_tokens": req.max_new_tokens.clamp(32, 32_000),
     });
+    if cfg.comfy_gemma_gpu_device >= 0 {
+        inputs["gpu_device"] = json!(cfg.comfy_gemma_gpu_device);
+    }
     if let Some(object) = inputs.as_object_mut() {
         object.extend(node);
     }
@@ -172,6 +189,7 @@ async fn upload(cfg: &LlmConfig, index: usize, url: &str) -> Result<String, LlmE
 pub async fn chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmError> {
     let client = client(cfg)?;
     let found = files(cfg).await?;
+    check_gpu_choice(cfg, &found)?;
     let model = pick_model(&cfg.comfy_gemma_model, &found)?;
     let mut names: Vec<String> = Vec::new();
     if !req.images.is_empty() {
@@ -218,6 +236,30 @@ mod tests {
         assert_eq!(empty.mmproj_raw_first, "[No mmproj GGUF found in models/LLM]");
         assert!(pick_model("", &empty).unwrap_err().to_string().contains("models/LLM"));
         assert!(files_from_node_info(&json!({})).unwrap_err().to_string().contains(NODE));
+    }
+
+    #[test]
+    fn a_gpu_choice_goes_into_the_request_only_when_one_is_chosen_and_an_old_node_is_noticed() {
+        let req = ChatRequest::text("x", 0.6, 0.95, 100);
+        let automatic = build_graph(&LlmConfig::default(), &req, "m.gguf", "p.gguf", &[]);
+        assert!(automatic["gemma"]["inputs"].get("gpu_device").is_none(), "automatic leaves the request as it always was");
+        let pinned = build_graph(&LlmConfig { comfy_gemma_gpu_device: 1, ..LlmConfig::default() }, &req, "m.gguf", "p.gguf", &[]);
+        assert_eq!(pinned["gemma"]["inputs"]["gpu_device"], 1);
+
+        let old = files_from_node_info(&node_info()).unwrap();
+        assert!(!old.supports_gpu_choice);
+        let current = json!({NODE: {"input": {
+            "required": {"model_file": [["g.gguf"], {}], "mmproj_file": [["p.gguf"], {}]},
+            "optional": {"gpu_device": ["INT", {"default": -1}]},
+        }}});
+        let new = files_from_node_info(&current).unwrap();
+        assert!(new.supports_gpu_choice);
+
+        let chosen = LlmConfig { comfy_gemma_gpu_device: 0, ..LlmConfig::default() };
+        assert!(check_gpu_choice(&LlmConfig::default(), &old).is_ok(), "automatic works with an old node");
+        assert!(check_gpu_choice(&chosen, &new).is_ok());
+        let refused = check_gpu_choice(&chosen, &old).unwrap_err().to_string();
+        assert!(refused.contains("GPU 0") && refused.contains("Update the pack"), "{refused}");
     }
 
     #[test]

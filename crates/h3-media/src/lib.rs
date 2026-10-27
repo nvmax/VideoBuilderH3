@@ -4,6 +4,8 @@ pub mod audio;
 pub mod beats;
 pub mod collect;
 pub mod effect;
+pub mod fonts;
+pub mod overlay;
 pub mod grade;
 pub mod peaks;
 pub mod post;

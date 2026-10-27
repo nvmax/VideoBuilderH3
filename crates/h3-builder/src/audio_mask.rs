@@ -731,7 +731,7 @@ mod tests {
 
     #[test]
     fn separation_cuts_the_scene_and_saves_the_stems() {
-        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new(), overlay_dir: None };
         if env.tools().is_err() {
             return; // ffmpeg is not installed here
         }
@@ -766,7 +766,7 @@ mod tests {
 
     #[test]
     fn the_whole_song_is_split_and_a_vocal_free_mix_is_written_beside_the_stems() {
-        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new(), overlay_dir: None };
         if env.tools().is_err() {
             return; // ffmpeg is not installed here
         }

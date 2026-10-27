@@ -576,7 +576,7 @@ mod tests {
     use super::*;
 
     fn env(dir: &Path) -> Env {
-        Env { output: dir.join("output"), roots: vec![dir.join("projects")], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: dir.join("luts") }
+        Env { output: dir.join("output"), roots: vec![dir.join("projects")], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: dir.join("luts"), overlay_dir: None }
     }
 
     fn obj(value: Value) -> Obj {

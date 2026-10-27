@@ -35,6 +35,8 @@ pub struct LlmConfig {
     /// The mmproj file that lets Gemma look at pictures. Empty uses the first one ComfyUI lists.
     pub comfy_gemma_mmproj: String,
     pub comfy_gemma_n_ctx: u32,
+    /// The GPU of the local model, as ComfyUI numbers its GPUs: `-1` lets llama.cpp use every GPU ComfyUI sees, `0` and up puts the whole model on that one.
+    pub comfy_gemma_gpu_device: i32,
     /// Keep the model loaded after a request. By default it leaves the GPU, so a render has the memory.
     pub comfy_gemma_keep_loaded: bool,
     pub comfy_gemma_timeout: u32,
@@ -66,6 +68,7 @@ impl Default for LlmConfig {
             comfy_gemma_model: String::new(),
             comfy_gemma_mmproj: String::new(),
             comfy_gemma_n_ctx: 32768,
+            comfy_gemma_gpu_device: -1,
             comfy_gemma_keep_loaded: false,
             comfy_gemma_timeout: 900,
             comfy_url: String::new(),
@@ -99,7 +102,7 @@ impl LlmConfig {
                 "text_runner": "own_server", "own_server_url": self.own_server_url, "own_server_model": self.own_server_model, "own_server_api_key": self.own_server_api_key,
                 "own_server_timeout": self.own_server_timeout, "own_server_output_token_limit": self.own_server_output_limit,
             }),
-            "comfyui_gemma" => json!({"text_runner": "builtin", "gemma_model_file": self.comfy_gemma_model, "mmproj_file": self.comfy_gemma_mmproj, "n_ctx": self.comfy_gemma_n_ctx}),
+            "comfyui_gemma" => json!({"text_runner": "builtin", "gemma_model_file": self.comfy_gemma_model, "mmproj_file": self.comfy_gemma_mmproj, "n_ctx": self.comfy_gemma_n_ctx, "gpu_device": self.comfy_gemma_gpu_device}),
             hosted => json!({
                 "text_runner": "llm_api", "llm_api_provider": if hosted == "llm_api" { self.api_provider.as_str() } else { hosted },
                 "llm_api_model": self.api_model, "llm_api_custom_model": self.api_custom_model, "llm_api_key": self.api_key,
@@ -125,9 +128,9 @@ mod tests {
         let own = LlmConfig { runner: "own_server".into(), own_server_url: "http://box:8000/v1".into(), own_server_model: "m".into(), own_server_api_key: "k".into(), own_server_timeout: 120, own_server_output_limit: 4000, ..base.clone() };
         assert_eq!(runner_config(&own.runner_payload(), &base, 1200), own);
 
-        let gemma = LlmConfig { runner: "comfyui_gemma".into(), comfy_gemma_model: "g.gguf".into(), comfy_gemma_mmproj: "p.gguf".into(), comfy_gemma_n_ctx: 32768, ..base.clone() };
+        let gemma = LlmConfig { runner: "comfyui_gemma".into(), comfy_gemma_model: "g.gguf".into(), comfy_gemma_mmproj: "p.gguf".into(), comfy_gemma_n_ctx: 32768, comfy_gemma_gpu_device: 1, ..base.clone() };
         let back = runner_config(&gemma.runner_payload(), &base, 1200);
-        assert_eq!((back.runner.as_str(), back.comfy_gemma_model.as_str(), back.comfy_gemma_mmproj.as_str(), back.comfy_gemma_n_ctx), ("comfyui_gemma", "g.gguf", "p.gguf", 32768));
+        assert_eq!((back.runner.as_str(), back.comfy_gemma_model.as_str(), back.comfy_gemma_mmproj.as_str(), back.comfy_gemma_n_ctx, back.comfy_gemma_gpu_device), ("comfyui_gemma", "g.gguf", "p.gguf", 32768, 1));
 
         for hosted in ["openai", "anthropic", "google"] {
             let api = LlmConfig { runner: hosted.into(), api_model: "model-1".into(), api_custom_model: "custom".into(), api_key: "k".into(), ..base.clone() };

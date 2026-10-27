@@ -5,6 +5,8 @@ pub mod activity;
 pub mod app;
 pub mod edit_routes;
 pub mod embedded;
+mod overlay_dir;
+pub mod overlay_routes;
 pub mod error;
 pub mod guard;
 pub mod image_jobs;
@@ -87,7 +89,8 @@ fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Res
     let roots = views::project_roots(&cfg.project_root, output.as_deref());
     let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
     let llm = std::sync::RwLock::new(cfg.llm.clone());
-    let state = Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(256).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()), activity: activity::Feed::default() });
+    let overlay_found = std::sync::RwLock::new(overlay_dir::remembered(config_path));
+    let state = Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, overlay_found, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(256).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()), activity: activity::Feed::default() });
     // A save that the Video Builder did not make itself (an agent, a job) is announced to the open Builder windows, which show it. See `h3_project::changes`.
     let sender = state.builder_events.clone();
     // A weak handle: the listener lives as long as the process, the state may not.

@@ -41,6 +41,14 @@ licenses, including tokio, axum, reqwest, serde, rusqlite (with bundled SQLite, 
 rustfft. The Microsoft Edge WebView2 runtime is installed by the installer when it is missing, under Microsoft's terms. On Linux
 the window is WebKitGTK (LGPL) from the system, and the AppImage carries the GTK libraries it needs under their own licenses.
 
+## Fonts for overlay text
+
+VRGDG H3 Studio includes six fonts for the text of overlays, so a title or a lyric caption looks the same on every computer: Anton,
+Bebas Neue, Oswald, Montserrat, Playfair Display and Caveat. They are copied from the Google Fonts repository
+(https://github.com/google/fonts) and are licensed under the SIL Open Font License, Version 1.1 (https://openfontlicense.org). Each font's
+copyright line and the license text are in `OFL-overlay-fonts.txt` next to this file. They are written to the app's `overlay\fonts` folder the first time
+text is drawn, where you can add your own `.ttf` or `.otf` files too.
+
 ## Inter font
 
 `app/web/host/fonts/inter-latin-normal.woff2` is the Inter typeface, copied from ComfyUI's frontend package, which ships

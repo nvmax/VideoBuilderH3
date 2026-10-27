@@ -4,6 +4,7 @@ pub mod abspath;
 pub mod continuity;
 pub mod error;
 pub mod fresh_context;
+pub mod overlay_layers;
 pub mod prompt;
 pub mod pyjson;
 pub mod pyval;

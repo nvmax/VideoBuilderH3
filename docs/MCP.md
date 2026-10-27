@@ -20,8 +20,8 @@ Agents that do not speak MCP can use the REST API under `/api/v1`. `GET /api/v1/
 
 ## What an agent sees
 
-- **128 tools.** 69 named tools with the pack's names and arguments (`project_create`, `story_create`, `minimax_prompts`, `video_render`, `job_wait`, ...),
-  58 `api_*` tools for the endpoints the named tools do not cover (ElevenLabs and Speaking, timeline notes, instructions, post processing, ...), and
+- **134 tools.** 69 named tools with the pack's names and arguments (`project_create`, `story_create`, `minimax_prompts`, `video_render`, `job_wait`, ...),
+  64 `api_*` tools for the endpoints the named tools do not cover (ElevenLabs and Speaking, timeline notes, overlays, instructions, post processing, ...), and
   `api_request` for any endpoint by path. `api_request` reaches the agent API only, never the app's own setup routes.
 - **Resources.** The music video playbook and the chat prompt (`vrgdg://docs/music-video-playbook`, `vrgdg://docs/chat-agent-prompt`), the endpoint list,
   the OpenAPI file, and live ones: projects, modes, a project, a scene, lyrics, a job.
@@ -87,7 +87,8 @@ If `api_bind` is set to an address other than this computer's, reach the app by 
 
 `tools/export_mcp_catalog.py` writes `crates/h3-api/src/mcp/` (`catalog.json`, `endpoints.md`, `openapi.json`, `docs/`) from the pack's MCP server and the endpoints
 this app serves. Run it with the pack's Python (`..\..\..\python_embeded\python.exe -I tools\export_mcp_catalog.py`) after a route is added or the pack's tools,
-playbook or chat prompt change. `crates/h3-api/tests/mcp_api.rs` calls every tool and fails when one reaches a route that does not exist, and
+playbook or chat prompt change. The routes only this app has so far (the overlay routes: `GET /overlay-library`, `GET` and `PUT /projects/{pid}/overlay-layers`, `POST` `.../overlay-layers/add`, `.../overlay-layers/lyric_captions`,
+`.../overlay-layers/media`) are described in `tools/app_extra_endpoints.json`, which the script adds to the catalog, the endpoint list and the OpenAPI file. `crates/h3-api/tests/mcp_api.rs` calls every tool and fails when one reaches a route that does not exist, and
 `tests/route_coverage.rs` fails when an endpoint of the pack is neither served nor listed as left out.
 
 Left out on purpose (17 of the pack's 154 endpoints): `POST /llm/unload` (the app never unloads a model), the LTX routes (face fix and first last frame),

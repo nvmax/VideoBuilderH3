@@ -43,6 +43,8 @@ pub struct AppState {
     pub roots: Vec<PathBuf>,
     /// ComfyUI's output folder, when known. The Builder keeps its profiles and defaults there, like the pack.
     pub comfy_output: Option<PathBuf>,
+    /// `models/overlay` of the ComfyUI the app last talked to. See `overlay_dir.rs`.
+    pub overlay_found: std::sync::RwLock<Option<PathBuf>>,
     pub jobs: JobManager,
     pub presets: h3_image::PresetStore,
     pub presets_dir: PathBuf,
@@ -80,6 +82,7 @@ impl AppState {
             ffmpeg: self.cfg.ffmpeg_path.clone(),
             ffprobe: self.cfg.ffprobe_path.clone(),
             luts: self.luts_dir(),
+            overlay_dir: self.overlay_dir(),
         }
     }
 
@@ -181,6 +184,11 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/scenes/{sid}/image/from-video-frame", post(crate::video_routes::from_video_frame_route))
         .route("/projects/{pid}/minimax/index", get(crate::video_routes::index_route))
         .route("/projects/{pid}/timeline/notes", get(crate::notes_routes::list_notes).post(crate::notes_routes::create_note))
+        .route("/overlay-library", get(crate::overlay_routes::library))
+        .route("/projects/{pid}/overlay-layers", get(crate::overlay_routes::get_overlay).put(crate::overlay_routes::put_overlay))
+        .route("/projects/{pid}/overlay-layers/add", post(crate::overlay_routes::add_clips))
+        .route("/projects/{pid}/overlay-layers/lyric_captions", post(crate::overlay_routes::lyric_captions))
+        .route("/projects/{pid}/overlay-layers/media", post(crate::overlay_routes::add_media))
         .route("/projects/{pid}/timeline/notes/{nid}", axum::routing::patch(crate::notes_routes::update_note).delete(crate::notes_routes::delete_note))
         .route("/refmods", get(crate::refmod_routes::list).post(crate::render_files::create))
         .route("/projects/{pid}/audio/stems", post(crate::render_files::stems))
@@ -570,7 +578,7 @@ async fn render_batch(State(state): Shared, Path(pid): Path<String>, body: Optio
 }
 
 async fn stitch(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
-    const SUPPORTED: [&str; 5] = ["scene_ids", "output_prefix", "audio", "audio_path", "overlays"];
+    const SUPPORTED: [&str; 6] = ["scene_ids", "output_prefix", "audio", "audio_path", "overlays", "overlay_layers"];
     let payload = body_object(body)?;
     let unknown: Vec<&String> = payload.keys().filter(|k| !SUPPORTED.contains(&k.as_str())).collect();
     if !unknown.is_empty() {
@@ -584,7 +592,8 @@ async fn stitch(State(state): Shared, Path(pid): Path<String>, body: Option<Json
     let params: Obj = payload.into_iter().filter(|(_, v)| !v.is_null()).collect();
     // Check the scenes, audio and files now so a bad request is a 400 instead of a failed job.
     let loaded = load(&state, &pid).await?;
-    let check = params.clone();
+    let mut check = params.clone();
+    check.remove("overlay_layers");
     blocking(move || h3_pipeline::stitch_plan::build_stitch_request(&loaded.project_folder, &loaded.session, &check, true).map(|_| ()))
         .await?
         .map_err(ApiError::validation)?;

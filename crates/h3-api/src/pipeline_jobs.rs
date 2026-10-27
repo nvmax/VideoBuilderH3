@@ -260,17 +260,21 @@ async fn run_full_video(state: &Arc<AppState>, ctx: &JobCtx, params: &Value) -> 
 
     // Stage 4: stitch.
     let mut final_video = String::new();
+    let mut final_overlay: Option<Value> = None;
     if stitch {
         progress(ctx, 88.0, "stitching", "Stitching scene videos into final video...".into(), None);
         match stitch_project(&run, &folder, &Obj::new(), false).await {
-            Ok((done, _)) => final_video = done.final_video_path.display().to_string(),
+            Ok((done, summary)) => {
+                final_video = done.final_video_path.display().to_string();
+                final_overlay = summary.overlay_layers;
+            }
             Err(e) => eprintln!("[VRGDG-RS Pipeline] Final video stitch after the full pipeline failed: {e}"),
         }
     }
     progress(ctx, 100.0, "completed", "Full video pipeline completed.".into(), None);
     Ok(json!({
         "project_id": pid, "pipeline": "full_video", "build_mode": build_mode, "scenes_processed": total, "images_generated": images_made,
-        "videos_rendered": videos_made, "final_video_path": final_video, "results": results,
+        "videos_rendered": videos_made, "final_video_path": final_video, "overlay_layers": final_overlay, "results": results,
     }))
 }
 

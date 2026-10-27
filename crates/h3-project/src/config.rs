@@ -23,6 +23,8 @@ pub struct AppConfig {
     pub api_bind: String,
     /// ComfyUI's output folder. Empty means work it out from the running ComfyUI.
     pub comfy_output_dir: String,
+    /// Where the overlay library (overlay clips and fonts) is kept. Empty means `models/overlay` of the running ComfyUI.
+    pub overlay_library_dir: String,
     /// The LLM runner settings, saved for every project.
     pub llm: h3_llm::LlmConfig,
     /// Look for a new version of the app when it starts. The check asks GitHub for a public file and sends nothing else.
@@ -40,6 +42,7 @@ impl Default for AppConfig {
             ffprobe_path: "ffprobe".into(),
             api_bind: "127.0.0.1:8190".into(),
             comfy_output_dir: String::new(),
+            overlay_library_dir: String::new(),
             llm: h3_llm::LlmConfig::default(),
             check_for_updates: true,
         }

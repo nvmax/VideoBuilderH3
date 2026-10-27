@@ -1,6 +1,7 @@
 //! Model lists the Builder offers in its dropdowns. ComfyUI knows the files, so they come from its loader nodes.
 
 use std::sync::Arc;
+use std::time::Duration;
 
 use axum::extract::State;
 use axum::http::StatusCode;
@@ -21,6 +22,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/workflow_runner/lora_list", get(lora_list))
         .route("/vrgdg/workflow_runner/i2v_choices", get(i2v_choices))
         .route("/vrgdg/music_builder/gemma_choices", get(gemma_choices))
+        .route("/vrgdg/music_builder/llm_gpus", get(llm_gpus))
 }
 
 /// The loader nodes' inputs, as one `object_info` map. A node ComfyUI does not have is left out.
@@ -82,7 +84,31 @@ async fn i2v_choices(State(state): State<Arc<AppState>>) -> Response {
     .into_response()
 }
 
-/// GGUF files for the local Gemma and Qwen runners. The nodes list them from `models/LLM`, so ComfyUI's lists are the
+/// The GPUs a local model can be put on, as the pack inside ComfyUI lists them (`GET /vrgdg/music_builder/llm_gpus`). Only the process that runs the model
+/// knows the GPU numbers it uses, so the app asks it. An older pack has no such route and the answer is `None`.
+async fn gpu_list(state: &AppState) -> Option<Value> {
+    let url = format!("{}/vrgdg/music_builder/llm_gpus", state.cfg.comfy_base());
+    let client = reqwest::Client::builder().timeout(Duration::from_secs(10)).build().ok()?;
+    let response = client.get(&url).send().await.ok()?;
+    if !response.status().is_success() {
+        return None;
+    }
+    let mut body: Value = response.json().await.ok()?;
+    body.as_object_mut()?.remove("ok");
+    Some(body)
+}
+
+async fn llm_gpus(State(state): State<Arc<AppState>>) -> Response {
+    match gpu_list(&state).await {
+        Some(mut body) => {
+            body["ok"] = json!(true);
+            Json(body).into_response()
+        }
+        None => super::failure(StatusCode::BAD_REQUEST, "ComfyUI did not list its GPUs. Start ComfyUI with the current comfyui-vrgamedevgirl pack."),
+    }
+}
+
+/// GGUF files for the local Gemma and Qwen runners, and the GPUs they can use. The nodes list the files from `models/LLM`, so ComfyUI's lists are the
 /// pack's lists.
 async fn gemma_choices(State(state): State<Arc<AppState>>) -> Response {
     match loader_info(&state, &["VRGDG_SuperGemmaGGUFChat", "VRGDG_QwenGGUF"]).await {
@@ -92,6 +118,7 @@ async fn gemma_choices(State(state): State<Arc<AppState>>) -> Response {
             "mmproj": combo_choices(&info, "VRGDG_SuperGemmaGGUFChat", "mmproj_file"),
             "qwen_models": combo_choices(&info, "VRGDG_QwenGGUF", "model_file"),
             "qwen_mmproj": combo_choices(&info, "VRGDG_QwenGGUF", "mmproj_file"),
+            "gpus": gpu_list(&state).await,
         }))
         .into_response(),
         Err(response) => *response,

@@ -1,5 +1,5 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
-Pack commit: dfb014d
+Pack commit: 6214d3d
 Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
 Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
@@ -11,7 +11,7 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/dialogs.mjs: The Download Models dialog opens on MiniMax H3.
   music_video_builder/project_setup.mjs: Builder Settings has no Project Video Engine or LTX Version sections.
   music_video_builder/toolbar.mjs: The Menu has no Buy me a coffee button. It also loaded a script from another site that the app's page does not allow.
-  music_video_builder/llm_popout.mjs: The LLM Prompting pop-out is a window of its own that can go to another screen. The panel is moved into it, so every field, button and timer keeps working. Where the app cannot open a window, the floating panel in the page stays.
+  music_video_builder/llm_popout.mjs: The LLM Prompting pop-out is a window of its own that can go to another screen. The panel is moved into it, so every field, button and timer keeps working. Every window the page opens is kept in one list, so unchecking it closes the window and only one is ever open. Where the app cannot open a window, the floating panel in the page stays.
   music_video_builder/llm_popout.mjs: Opening the pop-out opens its window, closing it closes the window.
   music_video_builder/llm_popout.mjs: The panel is only placed in the page when it is not in a window of its own.
   music_video_builder/llm_popout.mjs: The title bar of the panel moves it only inside the page.

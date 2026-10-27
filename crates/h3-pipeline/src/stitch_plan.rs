@@ -27,6 +27,10 @@ pub struct StitchSummary {
     pub audio_start: f64,
     pub audio_duration: f64,
     pub expected_frame_count: Option<i64>,
+    /// Where the stitched video starts on the project timeline, in seconds: 0 for the whole project, the first scene's start for a range.
+    pub timeline_offset: f64,
+    /// What a post-stitch step (the overlay pass) reported, when one ran.
+    pub overlay_layers: Option<Value>,
 }
 
 fn time_of(segment: &Obj, key: &str) -> f64 {
@@ -245,6 +249,8 @@ pub fn build_stitch_request(folder: &Path, session: &Obj, params: &Obj, strict: 
         audio_start,
         audio_duration,
         expected_frame_count: Some(expected_frames),
+        timeline_offset: aligned_offset,
+        overlay_layers: None,
     };
     Ok((request, summary))
 }

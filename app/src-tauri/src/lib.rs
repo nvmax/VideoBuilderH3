@@ -16,6 +16,19 @@ fn restart_app(app: tauri::AppHandle) {
     app.restart();
 }
 
+/// Closes the pop-out windows that have this title. A pop-out that closes itself (`window.close()`) loses its page but the empty window stays open,
+/// so the page asks for the window to go as well.
+#[tauri::command]
+fn close_popups(app: tauri::AppHandle, title: String) {
+    for (label, window) in app.webview_windows() {
+        if label.starts_with("popup-") && window.title().is_ok_and(|current| current == title) {
+            if let Err(error) = window.destroy() {
+                eprintln!("[VRGDG-RS Window] Could not close the pop-out window {label}: {error}");
+            }
+        }
+    }
+}
+
 static POPUPS: AtomicU32 = AtomicU32::new(0);
 
 /// What `window.open` asks for. The Builder's pop-outs (the preview player, the Builder Agent) open a blank window and fill it, so they get a window
@@ -75,7 +88,7 @@ pub fn run() {
                 window.app_handle().exit(0);
             }
         })
-        .invoke_handler(tauri::generate_handler![restart_app, updates::app_version, updates::update_check, updates::update_progress, updates::update_install])
+        .invoke_handler(tauri::generate_handler![restart_app, close_popups, updates::app_version, updates::update_check, updates::update_progress, updates::update_install])
         .run(tauri::generate_context!())
         .expect("error while running the VRGDG H3 Studio app");
 }

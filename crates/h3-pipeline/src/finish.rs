@@ -183,6 +183,10 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
 /// project folder, the scene reference and whether the render was given a prompt of its own.
 pub type SceneHook = Arc<dyn Fn(std::path::PathBuf, String, bool) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<(), String>> + Send>> + Send + Sync>;
 
+/// Work to do on the stitched video before the stitch reports it done: the overlay pass. It gets the project folder, the video file and what was stitched,
+/// and what it returns is kept in the stitch summary as `overlay_layers`. It runs on a blocking thread.
+pub type StitchHook = Arc<dyn Fn(&std::path::Path, &std::path::Path, &crate::stitch_plan::StitchSummary) -> Option<Value> + Send + Sync>;
+
 /// Everything a run needs: the ComfyUI client, the environment and a flag that cancels it.
 #[derive(Clone)]
 pub struct RunContext {
@@ -191,6 +195,8 @@ pub struct RunContext {
     pub cancel: Arc<AtomicBool>,
     /// Runs before each scene renders. `None` renders the saved project as it is.
     pub before_scene: Option<SceneHook>,
+    /// Runs on every video the stitch writes. `None` leaves the stitched video as it is.
+    pub after_stitch: Option<StitchHook>,
 }
 
 /// The MiniMax seed settings. Same list as `SEED_FIELDS` in the pack's `settings_payload.py`.
@@ -282,6 +288,8 @@ pub struct BatchSceneResult {
 pub struct BatchResult {
     pub results: Vec<BatchSceneResult>,
     pub final_video_path: Option<String>,
+    /// What the overlay pass reported for the final video, when the project has overlays.
+    pub final_overlay: Option<Value>,
 }
 
 /// The scenes a batch will render, as `(scene id, scene number)`, in timeline order.
@@ -317,7 +325,7 @@ pub async fn render_all(ctx: &RunContext, project: &Path, options: BatchOptions,
     let segments: Vec<Value> = loaded.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
     let targets = batch_targets(&segments, &options);
     if targets.is_empty() {
-        return Ok(BatchResult { results: vec![], final_video_path: None });
+        return Ok(BatchResult { results: vec![], final_video_path: None, final_overlay: None });
     }
     let total = targets.len();
     on_event(RenderEvent::new(0.0, "batch_videos", format!("Starting batch render for {total} scene(s)...")));
@@ -340,15 +348,19 @@ pub async fn render_all(ctx: &RunContext, project: &Path, options: BatchOptions,
         }
     }
     let mut final_video_path = None;
+    let mut final_overlay = None;
     if !options.skip_final_stitch && options.scope.trim().to_lowercase() != "selected" {
         on_event(RenderEvent::new(92.0, "stitching", "Stitching final project video..."));
         match stitch_project(ctx, project, &Obj::new(), false).await {
-            Ok((result, _)) => final_video_path = Some(result.final_video_path.display().to_string()),
+            Ok((result, summary)) => {
+                final_video_path = Some(result.final_video_path.display().to_string());
+                final_overlay = summary.overlay_layers;
+            }
             Err(e) => eprintln!("[VRGDG-RS Render] Final video stitch after batch render failed: {e}"),
         }
     }
     on_event(RenderEvent::new(100.0, "completed", "Batch video render finished."));
-    Ok(BatchResult { results, final_video_path })
+    Ok(BatchResult { results, final_video_path, final_overlay })
 }
 
 /// Stitch the project's scene clips with the song. `strict` makes a selected scene without a clip an error.
@@ -361,10 +373,14 @@ pub async fn stitch_project(
     let project = project.to_path_buf();
     let params = params.clone();
     let tools = ctx.env.tools.clone();
+    let after = ctx.after_stitch.clone();
     tokio::task::spawn_blocking(move || -> Result<_, RenderError> {
         let loaded = load_session(&project).map_err(other)?;
-        let (request, summary) = build_stitch_request(&loaded.project_folder, &loaded.session, &params, strict).map_err(RenderError::Invalid)?;
+        let (request, mut summary) = build_stitch_request(&loaded.project_folder, &loaded.session, &params, strict).map_err(RenderError::Invalid)?;
         let result = stitch_scene_videos(&tools, &request).map_err(other)?;
+        if let Some(hook) = after {
+            summary.overlay_layers = hook(&loaded.project_folder, &result.final_video_path, &summary);
+        }
         Ok((result, summary))
     })
     .await

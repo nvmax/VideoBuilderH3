@@ -6,6 +6,8 @@ Reads the pack's own MCP server (`mcp_server`, standard library only) for the to
 `agent_api/endpoints.json` / `agent_api/openapi.json` for the endpoints. What the app does not serve (the endpoints listed in `LEFT_OUT` of
 `crates/h3-api/tests/route_coverage.rs`) is left out, and a few descriptions are reworded for an app that makes MiniMax H3 videos only.
 Writes `crates/h3-api/src/mcp/catalog.json`, `endpoints.md` and `openapi.json`.
+
+The endpoints this app serves that the pack does not have yet are in `tools/app_extra_endpoints.json` (the overlay routes). They are added to all three files.
 """
 
 import argparse
@@ -26,13 +28,46 @@ SETTINGS_GROUPS = (
 )
 
 
+OVERLAY_NOTE = (
+    " When the project has overlays (GET /projects/{pid}/overlay-layers), the stitch draws them onto the video and the job result has an `overlay_layers` section "
+    "(applied, clips, skipped). Send `overlay_layers: false` to leave them out."
+)
+
+
+def app_extras():
+    """The endpoints only this app serves yet, in the shape of the pack's endpoints.json entries."""
+    return json.loads((ROOT / "tools" / "app_extra_endpoints.json").read_text(encoding="utf-8"))["endpoints"]
+
+
+def extra_operation(endpoint: dict) -> dict:
+    """An OpenAPI operation for an app-only endpoint, shaped like the ones the pack's file has."""
+    parameters = [{"in": "path", "name": name, "required": True, "schema": {"type": "string"}} for name in endpoint["path_params"]]
+    if endpoint["if_match"]:
+        parameters.append({"description": "Project revision the caller last saw. A mismatch returns REVISION_CONFLICT.", "in": "header", "name": "If-Match", "required": False, "schema": {"type": "integer"}})
+    slug = re.sub(r"[^a-z0-9]+", "_", PARAM.sub("", endpoint["path"]).lower()).strip("_")
+    operation = {
+        "operationId": f"app_{endpoint['method'].lower()}_{slug}",
+        "parameters": parameters,
+        "responses": {
+            "200": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/SuccessEnvelope"}}}, "description": "Success."},
+            "default": {"content": {"application/json": {"schema": {"$ref": "#/components/schemas/ErrorEnvelope"}}}, "description": "Error. The HTTP status mirrors error.code."},
+        },
+        "security": [{"bearerAuth": []}, {}],
+        "summary": endpoint["description"].split(". ")[0].rstrip(".")[:160],
+        "tags": [slug.split("_")[1] if slug.startswith("projects_") else slug.split("_")[0]],
+    }
+    if endpoint["method"] in ("POST", "PUT", "PATCH"):
+        operation["requestBody"] = {"content": {"application/json": {"schema": {"type": "object", "properties": {key: {} for key in endpoint["body_keys"]}}}}, "required": False}
+    return operation
+
+
 def served_endpoints(pack: Path):
     """The pack's endpoints (method, path) that the app serves."""
     listed = json.loads((ROOT / "fixtures" / "api" / "pack_endpoints.json").read_text(encoding="utf-8"))
     coverage = (ROOT / "crates" / "h3-api" / "tests" / "route_coverage.rs").read_text(encoding="utf-8")
     block = coverage.split("const LEFT_OUT", 1)[1].split("];", 1)[0]
     left_out = set(re.findall(r'\("([A-Z]+)",\s*"([^"]+)",\s*"[^"]*"\)', block))
-    return {(e["method"], e["path"]) for e in listed} - left_out
+    return ({(e["method"], e["path"]) for e in listed} - left_out) | {(e["method"], e["path"]) for e in app_extras()}
 
 
 def adjust(path: str, text: str) -> str:
@@ -43,6 +78,8 @@ def adjust(path: str, text: str) -> str:
     text = text.replace(
         "Scene-card fields are saved on the timeline scene with the Builder's keys and on the Storyboard card (when the project has a saved Storyboard, or the field is one only the card stores), and the open Video Builder and Storyboard show the change:",
         "Fields are saved on the timeline scene with the Builder's keys, and the open Video Builder shows the change (fields marked card only belong to a Storyboard card, which this app does not have):")
+    if path.endswith("/stitch") and OVERLAY_NOTE not in text:
+        text += OVERLAY_NOTE
     if "API version (`v1`), pack version" in text:
         text = "API version (`v1`), the app's name and version, and the capabilities this app serves."
     if ("/elevenlabs" in path or "/voice-design" in path or path.endswith("/dialogue/generate")) and "App Settings" not in text:
@@ -70,6 +107,8 @@ def reword(name: str, tool: dict) -> dict:
         props["what"]["enum"] = ["arc", "brief", "beats", "concepts", "motion_notes"]
     elif name == "lyrics_transcribe":
         text = "Time the project's lyrics against its song (same as lyrics_align). Runs as a job: use job_wait."
+    elif name == "stitch_final":
+        text += OVERLAY_NOTE
     elif name == "latents_status_rebuild":
         text = "Check the latent status of the scenes, list the dirty ones, rebuild the dirty chain, or delete a scene's latent."
     elif name == "audio_analyze":
@@ -105,6 +144,33 @@ You never see it and never set it.
 """
 
 
+OVERLAY_STEPS = """
+
+
+---
+
+## Part 6 - Overlays: a vignette, film grain, dust and captions (optional)
+
+The final video can carry film grain, a vignette, dust or light-leak clips, lyric captions and titles. These are the Overlays of the Video Builder. The stitch
+draws them onto the video, so set them up before the stitch in Part 3 (step 18), or stitch again after changing them. Skip this part when the person did not ask
+for overlays.
+
+1. `api_get_overlay_library` lists the overlay library: `items` (clips with an `id`), `fonts`, `luts` and `caption_styles`. The person fills the library in the app
+   (Post Process, Overlays), so it can be empty. Never invent a library id.
+2. `api_get_overlay_layers` reads the overlays. `api_post_overlay_layers_add` adds layers without touching the others, `api_put_overlay_layers` replaces the whole
+   list. Times are seconds on the project timeline, so the last scene's end is the song's length.
+3. Film grain and a vignette over the whole song: {"kind": "grain", "start": 0, "end": <seconds>, "strength": 25} and
+   {"kind": "vignette", "start": 0, "end": <seconds>, "strength": 0.6}. A grain strength of 20 to 30 reads as film, above 45 is heavy.
+4. A library clip (dust, smoke, light leaks): `api_post_overlay_layers_media` with the clip's `library_id`. It covers the timeline unless `start` and `end` are given.
+5. Lyric captions: `api_post_overlay_layers_lyric_captions` with a `style` (clean, bold or lower). Run the lyrics alignment first (`lyrics_align`) so each caption
+   starts when its line is sung. A second run replaces the first one's captions.
+6. A title: `api_post_overlay_layers_add` with {"layers": [{"kind": "text", "text": "...", "font": "Bebas Neue", "start": 1, "end": 5}]}.
+7. Read `warnings` in every reply and fix what it names (a missing file, a font that is not installed). Then `stitch_final`: the job result has an `overlay_layers`
+   section (`applied`, `clips`, `skipped`). `overlay_layers: false` in `params` leaves the overlays out. `api_put_overlay_layers` with `overlay_layer_track` set to
+   enabled false turns every overlay off without deleting the layers.
+"""
+
+
 def rewrite(text: str, pairs) -> str:
     for old, new in pairs:
         if old not in text:
@@ -125,7 +191,7 @@ def write_docs(pack: Path) -> None:
         ("is done by the model that is already loaded in LM Studio. Never load, unload or switch models.\n   Call `llm_active` first. If it reports no loaded model, stop and ask the user to load one.",
          "is done by the LLM the app is set to use (the model already loaded in LM Studio, an own server or an API provider). Never load, unload or switch models.\n   Call `llm_active` first. If it reports no model, stop and ask the user to set one up."),
     ])
-    (folder / "music_video_playbook.md").write_text(playbook.rstrip() + "\n" + SPEAKING, encoding="utf-8")
+    (folder / "music_video_playbook.md").write_text(playbook.rstrip() + "\n" + SPEAKING + OVERLAY_STEPS, encoding="utf-8")
     chat = (pack / "CHAT_AGENT_PROMPT.md").read_text(encoding="utf-8")
     chat = rewrite(chat, [
         ("You have the VRGDG MCP tools, which\ndrive the AI Video Builder in ComfyUI.", "You have the H3 Studio MCP tools, which\ndrive the app's Video Builder."),
@@ -148,7 +214,7 @@ def main() -> int:
     named = {name: tool for name, tool in tools_module.ALL_TOOLS.items() if name not in DROP}
     handwritten = {name: tool for name, tool in named.items() if not name.startswith("api_")}
     covered = endpoints_module.covered_by_handwritten_tools()
-    all_endpoints = endpoints_module.load_endpoints()
+    all_endpoints = endpoints_module.load_endpoints() + app_extras()
     uncovered = [e for e in all_endpoints if not endpoints_module._is_covered(e, covered)]
     names = endpoints_module._unique_names(uncovered, set(handwritten))
 
@@ -204,6 +270,8 @@ def main() -> int:
         kept = {m: op for m, op in operations.items() if (m.upper(), PARAM.sub("{}", short)) in keep}
         if kept:
             paths[short] = kept
+    for extra in app_extras():
+        paths.setdefault(extra["path"], {})[extra["method"].lower()] = extra_operation(extra)
     spec["paths"] = paths
     spec["servers"] = [{"url": "http://127.0.0.1:8190/api/v1"}]
     spec["info"] = dict(spec.get("info", {}), title="VRGDG H3 Studio API")

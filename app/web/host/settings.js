@@ -7,6 +7,7 @@ const SKIPPED = "h3studio.setupSkipped";
 const FIELDS = [
   { key: "comfy_url", label: "ComfyUI address", hint: "Where ComfyUI is running, for example http://127.0.0.1:8188.", pick: null },
   { key: "comfy_output_dir", label: "ComfyUI output folder", hint: "Leave empty to ask the running ComfyUI. The Video Builder keeps its projects here.", pick: "folder" },
+  { key: "overlay_library_dir", label: "Overlay library folder", hint: "Clips and fonts for overlays. Leave empty to use models/overlay of the running ComfyUI.", pick: "folder" },
   { key: "project_root", label: "Project folder", hint: "Where new projects are made when they are not in the ComfyUI output folder.", pick: "project_root" },
   { key: "ffmpeg_path", label: "ffmpeg", hint: "A name found on PATH, or the full path of ffmpeg.exe.", pick: "program" },
   { key: "ffprobe_path", label: "ffprobe", hint: "A name found on PATH, or the full path of ffprobe.exe.", pick: "program" },
@@ -174,7 +175,7 @@ export function openAppSettings({ welcome = false } = {}) {
     }
   }
 
-  const current = () => Object.fromEntries(FIELDS.map((field) => [field.key, inputs[field.key].value.trim()]).filter(([key, value]) => value || key === "comfy_output_dir" || key.startsWith("ff")));
+  const current = () => Object.fromEntries(FIELDS.map((field) => [field.key, inputs[field.key].value.trim()]).filter(([key, value]) => value || key === "comfy_output_dir" || key === "overlay_library_dir" || key.startsWith("ff")));
 
   const buttons = element("div", "display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;");
   const checkButton = button("Check");

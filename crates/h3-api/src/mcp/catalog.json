@@ -1330,7 +1330,7 @@
   },
   {
    "name": "stitch_final",
-   "description": "Stitch rendered scene videos into FINAL_VIDEO.mp4.",
+   "description": "Stitch rendered scene videos into FINAL_VIDEO.mp4. When the project has overlays (GET /projects/{pid}/overlay-layers), the stitch draws them onto the video and the job result has an `overlay_layers` section (applied, clips, skipped). Send `overlay_layers: false` to leave them out.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -4613,6 +4613,243 @@
     "job": false,
     "if_match": false
    }
+  },
+  {
+   "name": "api_get_overlay_library",
+   "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media. (GET /overlay-library)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/overlay-library",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_get_overlay_layers",
+   "description": "The project's overlays as the render sees it: `overlay_layer_track` (`enabled`), `overlay_layers` (every setting filled in and clamped), `count`, `revision`, and `warnings` for layers that will not draw as asked (a missing media file, a LUT or font that is not installed, an unknown kind, empty text). Overlays are drawn onto the final video by the stitch (`stitch_final`, `pipeline_build_full_video`) and by the Video Builder's Render All and Export. The timeline is in seconds from the start of the song. (GET /projects/{pid}/overlay-layers)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/projects/{pid}/overlay-layers",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
+   "name": "api_put_overlay_layers",
+   "description": "Replace the project's overlays (`overlay_layers`, the whole list) and/or the switch for all of them (`overlay_layer_track`, `{\"enabled\": false}` turns every overlay off for every render without deleting the layers). Read first (GET), change what you need, send the list back. Later layers draw on top. Every layer has `kind` (media, grain, vignette, text, lut), `id`, `start` and `end` in seconds, `enabled`, `locked`, `opacity` (0 to 1), `fade_in` and `fade_out` (seconds). media: `path` (a file in the project, `overlay/<name>`, from POST /projects/{pid}/overlay-layers/media), `blend_mode` (screen drops black and suits dust, smoke and flares, then add, lighten, overlay, softlight, multiply, normal), `scale` (cover, contain, stretch), `loop`, `speed` (0.5 to 2), `flip_h`, `brightness` (-1 to 1), `contrast` (0 to 2), `tint` (#rrggbb). grain: `strength` (0 to 60, 20 to 30 is film), `chroma` (0 to 20), `size` (fine, medium, coarse), `animated`. vignette: `strength` (0 to 1, 0.7 is the default). text: `text`, `font`, `size` (pixels on a 1080 tall picture), `color`, `outline_width`, `outline_color`, `shadow`, `x` and `y` (0 to 1, the centre of the text), `animation` (none or slide_up). lut: `lut` (an installed .cube name), `strength` (0 to 1). Values out of range are clamped and the reply shows what was saved. A clip sent without `locked` is unlocked. Send If-Match with the revision you read. (PUT /projects/{pid}/overlay-layers)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: overlay_layers, overlay_layer_track.",
+      "properties": {
+       "overlay_layers": {},
+       "overlay_layer_track": {}
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "PUT",
+    "path": "/projects/{pid}/overlay-layers",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_overlay_layers_add",
+   "description": "Add `layers` (a list of overlay layers, fields as in PUT /projects/{pid}/overlay-layers) to the end of the list without touching the others. The reply is the whole list with `added`, the ids the new layers got. (POST /projects/{pid}/overlay-layers/add)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: layers.",
+      "properties": {
+       "layers": {}
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/overlay-layers/add",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_overlay_layers_lyric_captions",
+   "description": "Add one text clip for each lyric line, timed to the words of the song when the project has word timing (`project_context/timestamped_lyrics.json`, from the lyrics alignment) and otherwise one caption over each scene that has lyrics. `style` is clean (default), bold or lower (a lower third). `from` and `to` (seconds) limit it to a range. Captions from an earlier run are replaced (only those inside the range when one is given) unless `replace` is false. The reply is the whole list with `source` (timestamped_lyrics or scenes), `style` and `captions`. (POST /projects/{pid}/overlay-layers/lyric_captions)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: style, from, to, replace.",
+      "properties": {
+       "style": {},
+       "from": {},
+       "to": {},
+       "replace": {}
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/overlay-layers/lyric_captions",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
+  },
+  {
+   "name": "api_post_overlay_layers_media",
+   "description": "Add a clip of the overlay library (`library_id`, from GET /overlay-library) as an overlay: it is copied into the project's `overlay` folder and starts at `start` (default 0) and runs to `end` (default the end of the timeline, looping its file). The blend mode is the library's suggestion (screen for clips on black). Any other media clip field (opacity, blend_mode, speed, fades) can be sent too. The reply is the whole list with `added` and the project `path`. (POST /projects/{pid}/overlay-layers/media)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string",
+      "description": "The project's id (its folder name). Get it from project_list."
+     },
+     "body": {
+      "type": "object",
+      "description": "JSON request body. Fields: library_id, start, end.",
+      "properties": {
+       "library_id": {},
+       "start": {},
+       "end": {}
+      },
+      "additionalProperties": true
+     },
+     "if_match_revision": {
+      "type": "integer",
+      "description": "Fail with a conflict if the project revision differs."
+     }
+    },
+    "required": [
+     "project_id"
+    ]
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": false,
+    "destructiveHint": false,
+    "idempotentHint": false,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "POST",
+    "path": "/projects/{pid}/overlay-layers/media",
+    "args": {
+     "pid": "project_id"
+    },
+    "job": false,
+    "if_match": true
+   }
   }
  ],
  "endpoints": [
@@ -4802,6 +5039,15 @@
    "method": "GET",
    "path": "/modes",
    "description": "Supported image and video modes with their requirements and capabilities.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/overlay-library",
+   "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media.",
    "job": false,
    "body_keys": [],
    "query": [],
@@ -5093,6 +5339,65 @@
    "body_keys": [],
    "query": [],
    "if_match": false
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/overlay-layers",
+   "description": "The project's overlays as the render sees it: `overlay_layer_track` (`enabled`), `overlay_layers` (every setting filled in and clamped), `count`, `revision`, and `warnings` for layers that will not draw as asked (a missing media file, a LUT or font that is not installed, an unknown kind, empty text). Overlays are drawn onto the final video by the stitch (`stitch_final`, `pipeline_build_full_video`) and by the Video Builder's Render All and Export. The timeline is in seconds from the start of the song.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/overlay-layers",
+   "description": "Replace the project's overlays (`overlay_layers`, the whole list) and/or the switch for all of them (`overlay_layer_track`, `{\"enabled\": false}` turns every overlay off for every render without deleting the layers). Read first (GET), change what you need, send the list back. Later layers draw on top. Every layer has `kind` (media, grain, vignette, text, lut), `id`, `start` and `end` in seconds, `enabled`, `locked`, `opacity` (0 to 1), `fade_in` and `fade_out` (seconds). media: `path` (a file in the project, `overlay/<name>`, from POST /projects/{pid}/overlay-layers/media), `blend_mode` (screen drops black and suits dust, smoke and flares, then add, lighten, overlay, softlight, multiply, normal), `scale` (cover, contain, stretch), `loop`, `speed` (0.5 to 2), `flip_h`, `brightness` (-1 to 1), `contrast` (0 to 2), `tint` (#rrggbb). grain: `strength` (0 to 60, 20 to 30 is film), `chroma` (0 to 20), `size` (fine, medium, coarse), `animated`. vignette: `strength` (0 to 1, 0.7 is the default). text: `text`, `font`, `size` (pixels on a 1080 tall picture), `color`, `outline_width`, `outline_color`, `shadow`, `x` and `y` (0 to 1, the centre of the text), `animation` (none or slide_up). lut: `lut` (an installed .cube name), `strength` (0 to 1). Values out of range are clamped and the reply shows what was saved. A clip sent without `locked` is unlocked. Send If-Match with the revision you read.",
+   "job": false,
+   "body_keys": [
+    "overlay_layers",
+    "overlay_layer_track"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/overlay-layers/add",
+   "description": "Add `layers` (a list of overlay layers, fields as in PUT /projects/{pid}/overlay-layers) to the end of the list without touching the others. The reply is the whole list with `added`, the ids the new layers got.",
+   "job": false,
+   "body_keys": [
+    "layers"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/overlay-layers/lyric_captions",
+   "description": "Add one text clip for each lyric line, timed to the words of the song when the project has word timing (`project_context/timestamped_lyrics.json`, from the lyrics alignment) and otherwise one caption over each scene that has lyrics. `style` is clean (default), bold or lower (a lower third). `from` and `to` (seconds) limit it to a range. Captions from an earlier run are replaced (only those inside the range when one is given) unless `replace` is false. The reply is the whole list with `source` (timestamped_lyrics or scenes), `style` and `captions`.",
+   "job": false,
+   "body_keys": [
+    "style",
+    "from",
+    "to",
+    "replace"
+   ],
+   "query": [],
+   "if_match": true
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/overlay-layers/media",
+   "description": "Add a clip of the overlay library (`library_id`, from GET /overlay-library) as an overlay: it is copied into the project's `overlay` folder and starts at `start` (default 0) and runs to `end` (default the end of the timeline, looping its file). The blend mode is the library's suggestion (screen for clips on black). Any other media clip field (opacity, blend_mode, speed, fades) can be sent too. The reply is the whole list with `added` and the project `path`.",
+   "job": false,
+   "body_keys": [
+    "library_id",
+    "start",
+    "end"
+   ],
+   "query": [],
+   "if_match": true
   },
   {
    "method": "POST",
@@ -5985,7 +6290,7 @@
   {
    "method": "POST",
    "path": "/projects/{project_id}/stitch",
-   "description": "Join the scenes' videos into one video (`output_prefix`, default `FINAL_VIDEO`), frame-accurate to the timeline like the Builder's stitch: in a MiniMax H3 project every clip is synced to its scene's frames at 24 fps, so the output has exactly the timeline's frames. `scene_ids` picks scenes by number (1 = first scene) or id and stitches them in timeline order (default: every scene); an unknown scene or a selected scene without a video is a 400. `audio`: `auto` (default) uses the scenes' own audio when every selected MiniMax scene renders with built-in audio, the project song otherwise; `embedded` or `project` forces one. With the project song (or `audio_path`) a selection is cut to its window of the song, so it must be contiguous. `overlays` adds insert clips (`path`, `start`, `end`, `source_start`). The job result lists the stitched `scene_ids`, `audio`, the requested song window (`requested_audio_start`, `requested_audio_duration`; `audio_start` repeats the start) and `expected_frame_count`, and describes the written file from ffprobe: `output_width`, `output_height`, `output_duration` and `audio_duration` (= `output_audio_duration`, the audio actually in the file). An unknown body field is a 400.",
+   "description": "Join the scenes' videos into one video (`output_prefix`, default `FINAL_VIDEO`), frame-accurate to the timeline like the Builder's stitch: in a MiniMax H3 project every clip is synced to its scene's frames at 24 fps, so the output has exactly the timeline's frames. `scene_ids` picks scenes by number (1 = first scene) or id and stitches them in timeline order (default: every scene); an unknown scene or a selected scene without a video is a 400. `audio`: `auto` (default) uses the scenes' own audio when every selected MiniMax scene renders with built-in audio, the project song otherwise; `embedded` or `project` forces one. With the project song (or `audio_path`) a selection is cut to its window of the song, so it must be contiguous. `overlays` adds insert clips (`path`, `start`, `end`, `source_start`). The job result lists the stitched `scene_ids`, `audio`, the requested song window (`requested_audio_start`, `requested_audio_duration`; `audio_start` repeats the start) and `expected_frame_count`, and describes the written file from ffprobe: `output_width`, `output_height`, `output_duration` and `audio_duration` (= `output_audio_duration`, the audio actually in the file). An unknown body field is a 400. When the project has overlays (GET /projects/{pid}/overlay-layers), the stitch draws them onto the video and the job result has an `overlay_layers` section (applied, clips, skipped). Send `overlay_layers: false` to leave them out.",
    "job": true,
    "body_keys": [
     "audio",

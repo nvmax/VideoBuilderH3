@@ -16,7 +16,7 @@ use crate::app::{blocking, body_object, Shared};
 use crate::error::{success, ApiError, ApiResult};
 
 /// The settings the setup can change.
-const SETTINGS: [&str; 6] = ["comfy_url", "project_root", "ffmpeg_path", "ffprobe_path", "comfy_output_dir", "check_for_updates"];
+const SETTINGS: [&str; 7] = ["comfy_url", "project_root", "ffmpeg_path", "ffprobe_path", "comfy_output_dir", "overlay_library_dir", "check_for_updates"];
 
 fn check(id: &str, label: &str, level: &str, detail: impl Into<String>, fix: &str) -> Value {
     json!({"id": id, "label": label, "level": level, "ok": level != "fail", "detail": detail.into(), "fix": fix})
@@ -52,6 +52,7 @@ fn with_overrides(base: &AppConfig, over: &serde_json::Map<String, Value>) -> Re
             }
             "ffmpeg_path" => cfg.ffmpeg_path = if text.is_empty() { "ffmpeg".into() } else { text },
             "ffprobe_path" => cfg.ffprobe_path = if text.is_empty() { "ffprobe".into() } else { text },
+            "overlay_library_dir" => cfg.overlay_library_dir = text,
             _ => cfg.comfy_output_dir = text,
         }
     }
@@ -66,6 +67,7 @@ fn config_view(cfg: &AppConfig) -> Value {
         "ffmpeg_path": cfg.ffmpeg_path,
         "ffprobe_path": cfg.ffprobe_path,
         "comfy_output_dir": cfg.comfy_output_dir,
+        "overlay_library_dir": cfg.overlay_library_dir,
         "api_bind": cfg.api_bind,
         "check_for_updates": cfg.check_for_updates,
     })

@@ -38,7 +38,7 @@ fn int_of(session: &Obj, key: &str) -> i64 {
     session.get(key).filter(|v| truthy(v)).and_then(to_float).map_or(0, |f| f as i64)
 }
 
-fn current_revision(session: &Obj) -> i64 {
+pub(crate) fn current_revision(session: &Obj) -> i64 {
     match int_of(session, "revision") {
         0 => int_of(session, "builder_save_revision"),
         n => n,

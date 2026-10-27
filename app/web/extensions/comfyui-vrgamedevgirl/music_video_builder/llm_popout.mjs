@@ -190,12 +190,43 @@ export function createLlmPopout({
   // ---- mirroring: the real fields are the source of truth. Panel code sets their values directly, which fires no
   // events, so the window compares on a short timer while it is open.
   let timer = null;
-  // The window of its own, when there is one. The panel is moved into it.
+  // The window of its own, when there is one. The panel is moved into it. Every window the page opens is kept in one list so
+  // none is left behind: opening the pop-out first closes any window still there, and closing it (or leaving the page)
+  // closes them all.
   let external = null;
   let externalWatch = null;
   let panelStyle = "";
+  const openedWindows = (window.__vrgdgLlmPopoutWindows ||= new Set());
+
+  function closeWindow(popup) {
+    openedWindows.delete(popup);
+    try {
+      popup.close();
+    } catch {
+      // Already closed.
+    }
+  }
+
+  function closeAllWindows() {
+    for (const popup of [...openedWindows]) closeWindow(popup);
+  }
+
+  // Closing a window from the page ends its page, but the app's empty window can stay open. The app closes the pop-out
+  // windows with this title, so none is left behind. A browser closes the whole window itself.
+  function removeLeftoverWindows() {
+    try {
+      window.__TAURI_INTERNALS__?.invoke?.("close_popups", { title: "LLM Prompting" })?.catch?.(() => {});
+    } catch {
+      // Not the app's window.
+    }
+  }
+  window.addEventListener("pagehide", () => {
+    closeAllWindows();
+    removeLeftoverWindows();
+  });
 
   function openExternal() {
+    closeAllWindows();
     const width = Math.max(MIN_WIDTH, state.llmPopoutWidth || 460);
     const height = Math.max(MIN_HEIGHT, state.llmPopoutHeight || 460);
     let popup = null;
@@ -205,41 +236,54 @@ export function createLlmPopout({
       popup = null;
     }
     if (!popup) return;
-    popup.document.title = "LLM Prompting";
-    popup.document.body.style.cssText = "margin:0;background:#202024;";
-    for (const node of document.querySelectorAll('style, link[rel="stylesheet"]')) {
-      try {
-        const copy = node.cloneNode(true);
-        if (node.href) copy.href = node.href;
-        popup.document.head.append(copy);
-      } catch {
-        // A style that cannot be copied only affects looks.
-      }
-    }
-    panelStyle = win.style.cssText;
-    win.style.cssText += ";position:static;width:100%;height:100vh;min-width:0;min-height:0;border:0;border-radius:0;box-shadow:none;resize:none;";
-    header.style.cursor = "default";
-    popup.document.body.append(win);
-    popup.addEventListener("pagehide", externalClosed);
+    // Listed and remembered at once, so nothing can open a second window while this one is being filled.
+    openedWindows.add(popup);
     external = popup;
-    externalWatch = setInterval(() => {
-      if (external?.closed) externalClosed();
-    }, 500);
+    try {
+      popup.document.title = "LLM Prompting";
+      popup.document.body.style.cssText = "margin:0;background:#202024;";
+      for (const node of document.querySelectorAll('style, link[rel="stylesheet"]')) {
+        try {
+          const copy = node.cloneNode(true);
+          if (node.href) copy.href = node.href;
+          popup.document.head.append(copy);
+        } catch {
+          // A style that cannot be copied only affects looks.
+        }
+      }
+      panelStyle = win.style.cssText;
+      win.style.cssText += ";position:static;width:100%;height:100vh;min-width:0;min-height:0;border:0;border-radius:0;box-shadow:none;resize:none;";
+      header.style.cursor = "default";
+      popup.document.body.append(win);
+      popup.addEventListener("pagehide", externalClosed);
+      externalWatch = setInterval(() => {
+        if (external?.closed) externalClosed();
+      }, 500);
+    } catch {
+      // A window that cannot be filled is closed and the floating panel in the page stays.
+      closeExternal();
+    }
   }
 
   function closeExternal() {
     const popup = external;
     external = null;
     clearInterval(externalWatch);
-    if (popup && !popup.closed) {
-      popup.removeEventListener("pagehide", externalClosed);
-      if (popup.innerWidth > 0) state.llmPopoutWidth = Math.round(popup.innerWidth);
-      if (popup.innerHeight > 0) state.llmPopoutHeight = Math.round(popup.innerHeight);
+    if (popup) {
+      try {
+        popup.removeEventListener("pagehide", externalClosed);
+        if (popup.innerWidth > 0) state.llmPopoutWidth = Math.round(popup.innerWidth);
+        if (popup.innerHeight > 0) state.llmPopoutHeight = Math.round(popup.innerHeight);
+      } catch {
+        // The window is already gone.
+      }
     }
-    win.style.cssText = panelStyle;
+    if (panelStyle) win.style.cssText = panelStyle;
+    panelStyle = "";
     header.style.cursor = "move";
     overlay.append(win);
-    if (popup && !popup.closed) popup.close();
+    closeAllWindows();
+    removeLeftoverWindows();
   }
 
   // The window was closed with its own close button: the pop-out is off, like after the panel's x.
@@ -302,7 +346,7 @@ export function createLlmPopout({
     const miniMax = isMiniMaxProject();
     toggle.input.checked = open;
     if (open && !external) openExternal();
-    if (!open && external) closeExternal();
+    if (!open && (external || openedWindows.size)) closeExternal();
     win.style.display = open ? "flex" : "none";
     notMiniMaxNote.style.display = open && !miniMax ? "block" : "none";
     content.style.display = miniMax ? "flex" : "none";

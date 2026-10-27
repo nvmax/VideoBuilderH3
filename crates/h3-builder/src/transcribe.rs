@@ -111,7 +111,7 @@ mod tests {
     }
 
     fn env(dir: &Path) -> Env {
-        Env { output: dir.join("output"), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: dir.join("luts") }
+        Env { output: dir.join("output"), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: dir.join("luts"), overlay_dir: None }
     }
 
     #[test]

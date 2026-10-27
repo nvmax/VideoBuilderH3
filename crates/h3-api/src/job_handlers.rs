@@ -42,12 +42,15 @@ pub(crate) fn fail(error: impl Into<ApiError>) -> JobError {
 }
 
 pub(crate) async fn context_for(state: &AppState, ctx: &JobCtx) -> Result<(RunContext, std::path::PathBuf), JobError> {
+    // Every stitch a job makes draws the project's overlays onto the video, the way the Video Builder's Export does.
+    let overlay_pass = crate::overlay_routes::stitch_hook(state.builder_env());
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
     let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
     let mut run = connect(&state.cfg).await.map_err(|e| {
         fail(ApiError::new(axum::http::StatusCode::SERVICE_UNAVAILABLE, "COMFY_UNAVAILABLE", e).retryable())
     })?;
     run.cancel = Arc::clone(&ctx.cancel);
+    run.after_stitch = Some(overlay_pass);
     Ok((run, folder))
 }
 
@@ -192,12 +195,17 @@ async fn render_batch(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobErr
         "failed": failed,
         "results": results,
         "final_video_path": result.final_video_path.clone().unwrap_or_default(),
+        "overlay_layers": result.final_overlay,
     }))
 }
 
 async fn stitch(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
-    let (run, folder) = context_for(&state, &ctx).await?;
-    let params: Obj = ctx.params.as_object().cloned().unwrap_or_default();
+    let (mut run, folder) = context_for(&state, &ctx).await?;
+    let mut params: Obj = ctx.params.as_object().cloned().unwrap_or_default();
+    // `overlay_layers: false` leaves the project's overlays out of this stitch.
+    if params.remove("overlay_layers").is_some_and(|v| v == Value::Bool(false)) {
+        run.after_stitch = None;
+    }
     ctx.progress(ProgressUpdate { percent: 10.0, stage: "stitching".into(), message: "Stitching the scene videos...".into(), stage_count: 1, ..Default::default() });
     let (result, summary) = stitch_project(&run, &folder, &params, true).await.map_err(fail)?;
     Ok(json!({
@@ -214,5 +222,6 @@ async fn stitch(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
         "output_height": result.output_height,
         "output_duration": result.output_duration,
         "output_audio_duration": result.output_audio_duration,
+        "overlay_layers": summary.overlay_layers,
     }))
 }

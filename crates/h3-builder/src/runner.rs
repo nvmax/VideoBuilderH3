@@ -625,7 +625,7 @@ mod tests {
 
     #[test]
     fn stitch_checks_the_request_before_working() {
-        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new(), overlay_dir: None };
         assert_eq!(stitch_videos(&env, &obj(json!({"project_folder": "x"}))).unwrap_err(), "No scene video paths were provided.");
         assert_eq!(stitch_videos(&env, &obj(json!({"scene_paths": ["a.mp4"], "project_folder": ""}))).unwrap_err(), "Project folder is empty.");
         let dir = tempfile::tempdir().unwrap();
@@ -639,7 +639,7 @@ mod tests {
 
     #[test]
     fn slideshow_checks_the_request_before_working() {
-        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new(), overlay_dir: None };
         assert!(render_image_slideshow(&env, &obj(json!({}))).unwrap_err().starts_with("No scene images"));
         let dir = tempfile::tempdir().unwrap();
         let error = render_image_slideshow(&env, &obj(json!({"image_items": [{"path": "x.png"}], "project_folder": text(dir.path()), "audio_path": "Y:\\none.wav"}))).unwrap_err();
@@ -664,7 +664,7 @@ mod tests {
 
     #[test]
     fn scene_audio_clip_needs_a_project_and_a_song() {
-        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() };
+        let env = Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new(), overlay_dir: None };
         assert_eq!(prepare_scene_audio_clip(&env, &obj(json!({}))).unwrap_err(), "Audio file path is empty.");
         assert!(prepare_scene_audio_clip(&env, &obj(json!({"audio_path": "Y:\\none.wav"}))).unwrap_err().starts_with("Audio file was not found"));
     }

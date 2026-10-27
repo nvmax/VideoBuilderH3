@@ -111,6 +111,11 @@ fn own_server_timeout(payload: &Obj) -> u32 {
     value.clamp(15.0, 600.0) as u32
 }
 
+/// `normalize_gpu_device`: the GPU number the local model goes on (as ComfyUI numbers its GPUs), or -1 for automatic when it is missing or not a number from 0 up.
+fn gpu_device(payload: &Obj) -> i32 {
+    payload.get("gpu_device").and_then(to_int).filter(|number| *number >= 0).map_or(-1, |number| number.min(63) as i32)
+}
+
 /// The configuration a request runs with, from the runner settings in its body. `requested` is the output size the caller
 /// asks for, used when the runner has no limit of its own.
 pub fn runner_config(payload: &Obj, base: &LlmConfig, requested: i64) -> LlmConfig {
@@ -150,6 +155,7 @@ pub fn runner_config(payload: &Obj, base: &LlmConfig, requested: i64) -> LlmConf
             cfg.comfy_gemma_model = if kind == "qwen_local" { first_text(payload, &["qwen_model_file", "model_file"]) } else { first_text(payload, &["gemma_model_file", "model_file"]) };
             cfg.comfy_gemma_mmproj = first_text(payload, &["mmproj_file", "gemma_mmproj_file", "qwen_mmproj_file"]);
             cfg.comfy_gemma_n_ctx = gemma_context_limit(payload) as u32;
+            cfg.comfy_gemma_gpu_device = gpu_device(payload);
         }
     }
     cfg
@@ -316,6 +322,20 @@ mod tests {
         assert_eq!((api.runner.as_str(), api.api_provider.as_str(), api.api_model.as_str(), api.api_key.as_str()), ("llm_api", "grok", "grok-4.6", "k"));
         let gemma = runner_config(&payload(json!({"gemma_model_file": "g.gguf", "mmproj_file": "p.gguf"})), &base, 1200);
         assert_eq!((gemma.runner.as_str(), gemma.comfy_gemma_model.as_str(), gemma.comfy_gemma_mmproj.as_str(), gemma.comfy_gemma_n_ctx, gemma.comfy_url.as_str()), ("comfyui_gemma", "g.gguf", "p.gguf", 16384, "http://127.0.0.1:8188"));
+    }
+
+    #[test]
+    fn the_gpu_of_a_local_model_comes_from_the_request_and_is_automatic_without_one() {
+        let base = LlmConfig::default();
+        let gpu = |value: Value| runner_config(&payload(value), &base, 1200).comfy_gemma_gpu_device;
+        assert_eq!(gpu(json!({"gemma_model_file": "g.gguf"})), -1, "no choice is automatic");
+        assert_eq!(gpu(json!({"gemma_model_file": "g.gguf", "gpu_device": 1})), 1);
+        assert_eq!(gpu(json!({"text_runner": "qwen_local", "qwen_model_file": "q.gguf", "gpu_device": "0"})), 0, "Qwen Local takes it too, and a number may come as text");
+        assert_eq!(gpu(json!({"gemma_model_file": "g.gguf", "gpu_device": -1})), -1);
+        assert_eq!(gpu(json!({"gemma_model_file": "g.gguf", "gpu_device": "auto"})), -1);
+        assert_eq!(gpu(json!({"gemma_model_file": "g.gguf", "gpu_device": null})), -1);
+        assert_eq!(gpu(json!({"gemma_model_file": "g.gguf", "gpu_device": 500})), 63, "a number is kept inside the range llama.cpp takes");
+        assert_eq!(gpu(json!({"text_runner": "lm_studio", "gpu_device": 1})), -1, "a server runner has no GPU of its own to choose");
     }
 
     #[tokio::test]

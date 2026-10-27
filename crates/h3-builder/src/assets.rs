@@ -773,7 +773,7 @@ mod tests {
     }
 
     fn env() -> Env {
-        Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new() }
+        Env { output: PathBuf::new(), roots: vec![], ffmpeg: "ffmpeg".into(), ffprobe: "ffprobe".into(), luts: PathBuf::new(), overlay_dir: None }
     }
 
     fn png_data_url() -> String {

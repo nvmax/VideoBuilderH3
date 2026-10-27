@@ -74,7 +74,7 @@ fn json_files(root: &Path) -> Vec<PathBuf> {
 
 // -- model defaults and the global LLM settings -------------------------------------------------------------------------
 
-const MODEL_DEFAULT_KEYS: [&str; 28] = [
+const MODEL_DEFAULT_KEYS: [&str; 29] = [
     "text_gemma_runner",
     "qwen_model_file",
     "qwen_mmproj_file",
@@ -83,6 +83,7 @@ const MODEL_DEFAULT_KEYS: [&str; 28] = [
     "gemma_context_limit",
     "gemma_output_token_limit",
     "gemma_gpu_layers",
+    "gemma_gpu_device",
     "lm_studio_base_url",
     "lm_studio_model",
     "lm_studio_api_key",
@@ -109,7 +110,7 @@ const MODEL_DEFAULT_KEYS: [&str; 28] = [
 const GLOBAL_LLM_KEY_FIELDS: [&str; 3] = ["llm_api_key", "own_server_api_key", "elevenlabs_api_key"];
 
 /// LLM runner settings kept for every project, in session key names.
-const GLOBAL_LLM_RUNNER_FIELDS: [&str; 18] = [
+const GLOBAL_LLM_RUNNER_FIELDS: [&str; 19] = [
     "text_gemma_runner",
     "gemma_model_file",
     "qwen_model_file",
@@ -117,6 +118,7 @@ const GLOBAL_LLM_RUNNER_FIELDS: [&str; 18] = [
     "gemma_context_limit",
     "gemma_output_token_limit",
     "gemma_gpu_layers",
+    "gemma_gpu_device",
     "lm_studio_base_url",
     "lm_studio_model",
     "lm_studio_api_key",

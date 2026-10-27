@@ -13,6 +13,8 @@ pub mod env;
 pub mod error_log;
 pub mod export_video;
 pub mod files;
+pub mod overlay;
+pub mod overlay_library;
 #[cfg(test)]
 mod golden_support;
 pub mod instructions;

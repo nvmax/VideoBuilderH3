@@ -16,6 +16,8 @@ pub struct Env {
     pub ffprobe: String,
     /// The folder of `.cube` LUT files the Post Process tab lists.
     pub luts: PathBuf,
+    /// The overlay library folder when it is not the default `overlay` folder beside `luts` (`models/overlay` of ComfyUI, or the folder set in the config).
+    pub overlay_dir: Option<PathBuf>,
 }
 
 impl Env {
