@@ -10,7 +10,7 @@ use serde_json::{json, Value};
 use crate::pyval::{text_or_empty, to_float, to_int, truthy, Obj};
 use crate::scene::{builder, forced_extra_keys, scene_map_value, split_ids, subject_items_for_segment};
 
-pub const TOKEN_WARN_LIMIT: i64 = 6000;
+pub const TOKEN_WARN_LIMIT: i64 = 8192;
 const IMBALANCE_RATIO: f64 = 2.0;
 
 fn text(value: Option<&Value>) -> String {

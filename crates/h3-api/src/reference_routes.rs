@@ -6,6 +6,7 @@ use axum::http::{HeaderMap, StatusCode};
 use axum::Json;
 use h3_core::pyval::Obj;
 use h3_core::refmod::{assign_labels, refmod_items_for_scene, token_report};
+use h3_core::scene::MAX_SCENE_REFERENCES;
 use h3_core::settings::settings_for_scene;
 use h3_pipeline::refmod_library::find_refmod;
 use h3_project::scene_ops::OpError;
@@ -75,6 +76,19 @@ fn refmod_view(session: &Value, segment: &Value, index: usize, dirs: &[std::path
     if items.is_empty() {
         warnings.push("No RefMod is mapped to this scene; the render needs at least one.".into());
     }
+    if items.len() > MAX_SCENE_REFERENCES {
+        warnings.push(format!(
+            "This scene maps {} RefMods and a scene can use at most {MAX_SCENE_REFERENCES}; the render will stop. Remove some from the scene mapping.",
+            items.len()
+        ));
+    }
+    let report = token_report(&labelled);
+    if report["over_limit"].as_bool() == Some(true) {
+        warnings.push(format!(
+            "These RefMods use {} tokens, above {}; the scene may not render or may crash. The render is not stopped.",
+            report["total"], report["limit"]
+        ));
+    }
     json!({
         "pipeline": "refmod",
         "scene_id": h3_core::pyval::text_or_empty(segment.get("id")),
@@ -83,7 +97,7 @@ fn refmod_view(session: &Value, segment: &Value, index: usize, dirs: &[std::path
         "audio_mode": if with_audio { "input_audio" } else { "built_in_audio" },
         "labels": out.iter().map(|o| o["label"].clone()).collect::<Vec<_>>(),
         "items": out,
-        "tokens": token_report(&labelled),
+        "tokens": report,
         "warnings": warnings,
         "editable": false,
     })

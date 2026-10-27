@@ -11,6 +11,9 @@ use crate::error::CoreError;
 use crate::pyval::{text_or_empty, to_float, truthy, Obj};
 
 pub const MAX_REFERENCE_IMAGES: usize = 9;
+/// The most Reference Builder images a scene sends. H3 takes nine images in all, so the scene start frame shares the ninth
+/// slot with the references and never raises this number. Port of `MAX_SCENE_REFERENCES` in `minimax/scene_inputs.py`.
+pub const MAX_SCENE_REFERENCES: usize = 8;
 const REFERENCE_BUILDER_MODES: [&str; 3] = ["reference_to_video", "image_reference_to_video", "video_to_video"];
 
 fn text(value: Option<&Value>) -> String {
@@ -325,8 +328,8 @@ fn mapped_keys(refs: &Obj, segment: &Obj, index: usize, catalog_keys: &HashSet<S
     keys
 }
 
-/// Explicit keys else mapped keys, plus forced extras, at most nine.
-pub fn desired_reference_keys(refs: &Obj, segment: &Obj, index: usize) -> Vec<String> {
+/// Explicit keys else mapped keys, plus forced extras, with no limit.
+pub fn all_desired_reference_keys(refs: &Obj, segment: &Obj, index: usize) -> Vec<String> {
     let catalog_keys: HashSet<String> = reference_catalog(refs).iter().map(key_of).collect();
     let selected: Vec<String> = match segment.get("minimax_h3_reference_keys") {
         Some(Value::Array(items)) => items.iter().map(|k| text(Some(k))).collect(),
@@ -345,7 +348,13 @@ pub fn desired_reference_keys(refs: &Obj, segment: &Obj, index: usize) -> Vec<St
         }
         keys.push(key.clone());
     }
-    keys.truncate(MAX_REFERENCE_IMAGES);
+    keys
+}
+
+/// The keys above, the first `MAX_SCENE_REFERENCES` of them.
+pub fn desired_reference_keys(refs: &Obj, segment: &Obj, index: usize) -> Vec<String> {
+    let mut keys = all_desired_reference_keys(refs, segment, index);
+    keys.truncate(MAX_SCENE_REFERENCES);
     keys
 }
 
@@ -373,8 +382,9 @@ pub fn reference_choices(session: &Value, segment: &Obj, index: usize, mode: &st
     let catalog_keys: HashSet<String> = catalog.iter().map(key_of).collect();
     let start_reserved =
         mode == "image_reference_to_video" && uses_scene_image_as_start_frame(segment) && !segment_image_path(segment).is_empty();
-    let max_choices = MAX_REFERENCE_IMAGES - usize::from(start_reserved);
+    let max_choices = (MAX_REFERENCE_IMAGES - usize::from(start_reserved)).min(MAX_SCENE_REFERENCES);
     let mapped = mapped_keys(&refs, segment, index, &catalog_keys);
+    let over_limit_by = all_desired_reference_keys(&refs, segment, index).len().saturating_sub(max_choices);
     let mut selected_keys = desired_reference_keys(&refs, segment, index);
     selected_keys.truncate(max_choices);
     let offset = if start_reserved { 2 } else { 1 };
@@ -411,6 +421,8 @@ pub fn reference_choices(session: &Value, segment: &Obj, index: usize, mode: &st
         "available": available.iter().map(|i| describe(i)).collect::<Vec<_>>(),
         "selected": selected_keys.iter().filter_map(|k| find(k)).map(describe).collect::<Vec<_>>(),
         "automatic_keys": automatic,
+        // How many references the scene asks for beyond `max_choices`. The render sends the first ones and leaves these out.
+        "over_limit_by": over_limit_by,
         "limits": {
             "max_images": MAX_REFERENCE_IMAGES,
             "start_frame_image_1": start_reserved,

@@ -462,7 +462,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -884,7 +884,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -1334,8 +1334,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -1791,7 +1791,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -2239,8 +2239,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -2687,7 +2687,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -2699,19 +2699,11 @@
   },
   {
    "graph": "r2v_single_scene1",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -3067,39 +3059,6 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9310": {
       "class_type": "MiniMaxH3RefModAudioExtract",
       "inputs": {
@@ -3132,10 +3091,6 @@
         0
        ],
        "mods_2": [
-        "9302",
-        0
-       ],
-       "mods_3": [
         "9310",
         0
        ]
@@ -3220,18 +3175,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -3243,8 +3186,6 @@
       "<Video 6>",
       "<Video 7>",
       "<Video 8>",
-      "<Video 9>",
-      "<Video 10>",
       "<Audio 1>"
      ],
      "labels_missing_from_prompt": [
@@ -3253,14 +3194,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -3268,6 +3207,56 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_single_scene1",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -3380,7 +3369,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -3813,8 +3802,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -4642,7 +4631,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -5332,7 +5321,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -6050,8 +6039,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -6775,7 +6764,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -7491,8 +7480,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -8207,7 +8196,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -8219,19 +8208,11 @@
   },
   {
    "graph": "r2v_two_pass_scene1",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -8855,39 +8836,6 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9310": {
       "class_type": "MiniMaxH3RefModAudioExtract",
       "inputs": {
@@ -8920,10 +8868,6 @@
         0
        ],
        "mods_2": [
-        "9302",
-        0
-       ],
-       "mods_3": [
         "9310",
         0
        ]
@@ -9008,18 +8952,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -9031,8 +8963,6 @@
       "<Video 6>",
       "<Video 7>",
       "<Video 8>",
-      "<Video 9>",
-      "<Video 10>",
       "<Audio 1>"
      ],
      "labels_missing_from_prompt": [
@@ -9041,14 +8971,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -9056,6 +8984,56 @@
      "guiders_rewired": 2,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_two_pass_scene1",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -9168,7 +9146,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -9869,8 +9847,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -10386,7 +10364,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -10793,7 +10771,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -11199,8 +11177,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": false,
@@ -11612,7 +11590,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -12016,8 +11994,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": false,
@@ -12420,7 +12398,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -12432,19 +12410,11 @@
   },
   {
    "graph": "r2v_single_built_in_audio",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -12785,48 +12755,11 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9320": {
       "class_type": "VRGDG_RefModCombine",
       "inputs": {
        "mods_1": [
         "9301",
-        0
-       ],
-       "mods_2": [
-        "9302",
         0
        ]
       },
@@ -12910,18 +12843,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -12932,9 +12853,7 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
      "labels_missing_from_prompt": [
       "<Video 3>",
@@ -12942,14 +12861,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -12957,6 +12874,56 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_single_built_in_audio",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -13069,7 +13036,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -13458,8 +13425,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": false,
@@ -14243,7 +14210,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -14918,7 +14885,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -15592,8 +15559,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": false,
@@ -16273,7 +16240,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -16945,8 +16912,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": false,
@@ -17617,7 +17584,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -17629,19 +17596,11 @@
   },
   {
    "graph": "r2v_two_pass_built_in_audio",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -18250,48 +18209,11 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9320": {
       "class_type": "VRGDG_RefModCombine",
       "inputs": {
        "mods_1": [
         "9301",
-        0
-       ],
-       "mods_2": [
-        "9302",
         0
        ]
       },
@@ -18375,18 +18297,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -18397,9 +18307,7 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
      "labels_missing_from_prompt": [
       "<Video 3>",
@@ -18407,14 +18315,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -18422,6 +18328,56 @@
      "guiders_rewired": 2,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_two_pass_built_in_audio",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -18534,7 +18490,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -19191,8 +19147,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": false,
@@ -19786,7 +19742,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -20242,7 +20198,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -20726,8 +20682,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -21217,7 +21173,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -21699,8 +21655,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -22181,7 +22137,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -22193,19 +22149,11 @@
   },
   {
    "graph": "r2v_single_masked_ctx90_scene3",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -22595,39 +22543,6 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9310": {
       "class_type": "MiniMaxH3RefModAudioExtract",
       "inputs": {
@@ -22660,10 +22575,6 @@
         0
        ],
        "mods_2": [
-        "9302",
-        0
-       ],
-       "mods_3": [
         "9310",
         0
        ]
@@ -22748,18 +22659,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -22771,8 +22670,6 @@
       "<Video 6>",
       "<Video 7>",
       "<Video 8>",
-      "<Video 9>",
-      "<Video 10>",
       "<Audio 1>"
      ],
      "labels_missing_from_prompt": [
@@ -22781,14 +22678,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -22796,6 +22691,56 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_single_masked_ctx90_scene3",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -22908,7 +22853,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -23375,8 +23320,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -24218,7 +24163,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -24922,7 +24867,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -25654,8 +25599,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -26393,7 +26338,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -27123,8 +27068,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -27853,7 +27798,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -27865,19 +27810,11 @@
   },
   {
    "graph": "r2v_two_pass_lora",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -28515,39 +28452,6 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9310": {
       "class_type": "MiniMaxH3RefModAudioExtract",
       "inputs": {
@@ -28580,10 +28484,6 @@
         0
        ],
        "mods_2": [
-        "9302",
-        0
-       ],
-       "mods_3": [
         "9310",
         0
        ]
@@ -28668,18 +28568,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -28691,8 +28579,6 @@
       "<Video 6>",
       "<Video 7>",
       "<Video 8>",
-      "<Video 9>",
-      "<Video 10>",
       "<Audio 1>"
      ],
      "labels_missing_from_prompt": [
@@ -28701,14 +28587,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -28716,6 +28600,56 @@
      "guiders_rewired": 2,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_two_pass_lora",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -28828,7 +28762,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -29543,8 +29477,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -30122,7 +30056,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -30562,7 +30496,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -31030,8 +30964,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -31505,7 +31439,7 @@
      "tokens": 8626,
      "token_report": {
       "total": 8626,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -31971,8 +31905,8 @@
      "tokens": 6232,
      "token_report": {
       "total": 6232,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,
@@ -32437,7 +32371,7 @@
      "tokens": 5932,
      "token_report": {
       "total": 5932,
-      "limit": 6000,
+      "limit": 8192,
       "over_limit": false,
       "imbalance": null
      },
@@ -32449,19 +32383,11 @@
   },
   {
    "graph": "r2v_single_use_te_speed",
-   "payload_name": "ten_mods",
+   "payload_name": "eight_mods",
    "payload": {
     "pipeline": "refmod",
     "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
     "refmod_references": [
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
-     {
-      "name": "identity/brad",
-      "strength": 1.0
-     },
      {
       "name": "identity/brad",
       "strength": 1.0
@@ -32835,39 +32761,6 @@
        "title": "RefMods for this scene (1)"
       }
      },
-     "9302": {
-      "class_type": "MiniMaxH3RefModsLoader",
-      "inputs": {
-       "show_info": false,
-       "mod_1": "identity/brad",
-       "strength_1": 1.0,
-       "copies_1": 1,
-       "mod_2": "identity/brad",
-       "strength_2": 1.0,
-       "copies_2": 1,
-       "mod_3": "(none)",
-       "strength_3": 1.0,
-       "copies_3": 1,
-       "mod_4": "(none)",
-       "strength_4": 1.0,
-       "copies_4": 1,
-       "mod_5": "(none)",
-       "strength_5": 1.0,
-       "copies_5": 1,
-       "mod_6": "(none)",
-       "strength_6": 1.0,
-       "copies_6": 1,
-       "mod_7": "(none)",
-       "strength_7": 1.0,
-       "copies_7": 1,
-       "mod_8": "(none)",
-       "strength_8": 1.0,
-       "copies_8": 1
-      },
-      "_meta": {
-       "title": "RefMods for this scene (2)"
-      }
-     },
      "9310": {
       "class_type": "MiniMaxH3RefModAudioExtract",
       "inputs": {
@@ -32900,10 +32793,6 @@
         0
        ],
        "mods_2": [
-        "9302",
-        0
-       ],
-       "mods_3": [
         "9310",
         0
        ]
@@ -32988,18 +32877,6 @@
        "strength": 1.0,
        "kind": "video",
        "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
-      },
-      {
-       "name": "identity/brad",
-       "strength": 1.0,
-       "kind": "video",
-       "tokens": 5632
       }
      ],
      "labels": [
@@ -33011,8 +32888,6 @@
       "<Video 6>",
       "<Video 7>",
       "<Video 8>",
-      "<Video 9>",
-      "<Video 10>",
       "<Audio 1>"
      ],
      "labels_missing_from_prompt": [
@@ -33021,14 +32896,12 @@
       "<Video 5>",
       "<Video 6>",
       "<Video 7>",
-      "<Video 8>",
-      "<Video 9>",
-      "<Video 10>"
+      "<Video 8>"
      ],
-     "tokens": 56320,
+     "tokens": 45056,
      "token_report": {
-      "total": 56320,
-      "limit": 6000,
+      "total": 45056,
+      "limit": 8192,
       "over_limit": true,
       "imbalance": null
      },
@@ -33036,6 +32909,56 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   }
+  },
+  {
+   "graph": "r2v_single_use_te_speed",
+   "payload_name": "nine_mods",
+   "payload": {
+    "pipeline": "refmod",
+    "prompt": "Brad <Video 1> and Darrel <Video 2> in <Picture 1> <Audio 1>",
+    "refmod_references": [
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     },
+     {
+      "name": "identity/brad",
+      "strength": 1.0
+     }
+    ]
+   },
+   "return": {
+    "error": "A scene can use at most 8 RefMods (9 were given).",
+    "type": "ValueError"
    }
   },
   {
@@ -33148,7 +33071,7 @@
     ]
    },
    "return": {
-    "error": "A scene can use at most 24 RefMods (25 were given).",
+    "error": "A scene can use at most 8 RefMods (25 were given).",
     "type": "ValueError"
    }
   },
@@ -33599,8 +33522,8 @@
      "tokens": 8026,
      "token_report": {
       "total": 8026,
-      "limit": 6000,
-      "over_limit": true,
+      "limit": 8192,
+      "over_limit": false,
       "imbalance": null
      },
      "scene_audio_mod": true,

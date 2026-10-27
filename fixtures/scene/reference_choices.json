@@ -88,10 +88,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -223,10 +224,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -358,10 +360,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -493,10 +496,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -628,10 +632,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -777,10 +782,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc2",
     "scene_number": 2,
     "selected": [
@@ -950,10 +956,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc2",
     "scene_number": 2,
     "selected": [
@@ -1123,10 +1130,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc2",
     "scene_number": 2,
     "selected": [
@@ -1296,10 +1304,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc2",
     "scene_number": 2,
     "selected": [
@@ -1469,10 +1478,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc2",
     "scene_number": 2,
     "selected": [
@@ -1627,10 +1637,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc3",
     "scene_number": 3,
     "selected": [
@@ -1749,10 +1760,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc3",
     "scene_number": 3,
     "selected": [
@@ -1871,10 +1883,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc3",
     "scene_number": 3,
     "selected": [
@@ -1993,10 +2006,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc3",
     "scene_number": 3,
     "selected": [
@@ -2115,10 +2129,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc3",
     "scene_number": 3,
     "selected": [
@@ -2237,10 +2252,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc4",
     "scene_number": 4,
     "selected": [
@@ -2359,10 +2375,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc4",
     "scene_number": 4,
     "selected": [
@@ -2481,10 +2498,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc4",
     "scene_number": 4,
     "selected": [
@@ -2603,10 +2621,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc4",
     "scene_number": 4,
     "selected": [
@@ -2725,10 +2744,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc4",
     "scene_number": 4,
     "selected": [
@@ -2847,10 +2867,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc5",
     "scene_number": 5,
     "selected": [
@@ -2969,10 +2990,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc5",
     "scene_number": 5,
     "selected": [
@@ -3091,10 +3113,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc5",
     "scene_number": 5,
     "selected": [
@@ -3213,10 +3236,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc5",
     "scene_number": 5,
     "selected": [
@@ -3335,10 +3359,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc5",
     "scene_number": 5,
     "selected": [
@@ -3454,10 +3479,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc6",
     "scene_number": 6,
     "selected": [],
@@ -3548,10 +3574,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc6",
     "scene_number": 6,
     "selected": [],
@@ -3642,10 +3669,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc6",
     "scene_number": 6,
     "selected": [],
@@ -3736,10 +3764,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc6",
     "scene_number": 6,
     "selected": [],
@@ -3830,10 +3859,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc6",
     "scene_number": 6,
     "selected": [],
@@ -3926,10 +3956,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4035,10 +4066,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4144,10 +4176,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4253,10 +4286,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4362,10 +4396,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4473,10 +4508,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4596,10 +4632,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4719,10 +4756,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4842,10 +4880,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -4965,10 +5004,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -5088,10 +5128,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [],
@@ -5186,10 +5227,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [],
@@ -5284,10 +5326,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [],
@@ -5382,10 +5425,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [],
@@ -5480,10 +5524,11 @@
     ],
     "custom": true,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [],
@@ -5578,10 +5623,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -5713,10 +5759,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -5848,10 +5895,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -5983,10 +6031,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6118,10 +6167,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6253,10 +6303,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6388,10 +6439,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6523,10 +6575,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6658,10 +6711,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6793,10 +6847,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -6928,10 +6983,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7063,10 +7119,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7198,10 +7255,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7333,10 +7391,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7468,10 +7527,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7603,10 +7663,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7738,10 +7799,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -7877,6 +7939,7 @@
      "max_images": 9,
      "start_frame_image_1": true
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8008,10 +8071,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8143,10 +8207,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8278,10 +8343,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8413,10 +8479,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8552,6 +8619,7 @@
      "max_images": 9,
      "start_frame_image_1": true
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8683,10 +8751,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8818,10 +8887,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -8953,10 +9023,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9088,10 +9159,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9223,10 +9295,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9358,10 +9431,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9493,10 +9567,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9628,10 +9703,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9763,10 +9839,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -9898,10 +9975,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10033,10 +10111,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10168,10 +10247,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10303,10 +10383,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10438,10 +10519,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10573,10 +10655,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10708,10 +10791,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10843,10 +10927,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -10978,10 +11063,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11113,10 +11199,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11248,10 +11335,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11383,10 +11471,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11518,10 +11607,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11653,10 +11743,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11788,10 +11879,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -11923,10 +12015,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12058,10 +12151,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12193,10 +12287,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12328,10 +12423,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12463,10 +12559,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12598,10 +12695,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12733,10 +12831,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [
@@ -12868,10 +12967,11 @@
     ],
     "custom": false,
     "limits": {
-     "max_choices": 9,
+     "max_choices": 8,
      "max_images": 9,
      "start_frame_image_1": false
     },
+    "over_limit_by": 0,
     "scene_id": "sc1",
     "scene_number": 1,
     "selected": [

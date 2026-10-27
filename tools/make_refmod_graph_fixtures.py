@@ -39,8 +39,8 @@ def payloads():
         {"name": "background/meadow", "strength": 1.0, "label": "<Video 1>"}, {"name": "identity/brad", "strength": 1.0, "label": "<Picture 1>"}]}
     yield "names_and_categories", {"pipeline": "refmod", "prompt": "x", "refmod_references": [
         {"name": "identity/brad", "strength": "0.5", "display_name": "Brad", "category": "character"}, {"name": "style/film", "display_name": "Film", "category": "style"}]}
-    many = [{"name": "identity/brad", "strength": 1.0}] * 10
-    yield "ten_mods", {"pipeline": "refmod", "prompt": text, "refmod_references": many}
+    yield "eight_mods", {"pipeline": "refmod", "prompt": text, "refmod_references": [BASE_REFS[0]] * 8}
+    yield "nine_mods", {"pipeline": "refmod", "prompt": text, "refmod_references": [BASE_REFS[0]] * 9}
     yield "twenty_five_mods", {"pipeline": "refmod", "prompt": text, "refmod_references": [BASE_REFS[0]] * 25}
     yield "unbalanced", {"pipeline": "refmod", "prompt": text, "refmod_references": [{"name": "identity/brad", "strength": 1.0}, {"name": "identity/darrel", "strength": 0.3}]}
     yield "no_references", {"pipeline": "refmod", "prompt": text, "refmod_references": []}

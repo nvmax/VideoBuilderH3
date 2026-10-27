@@ -43,7 +43,14 @@ fn the_token_report_names_an_unbalanced_cast() {
     assert_eq!((report["total"].as_i64(), report["over_limit"].as_bool()), (Some(4354), Some(false)));
     assert!(token_report(&[person("A", 520, 1.0, "character"), person("B", 1000, 0.6, "character")])["imbalance"].is_null());
     assert!(token_report(&[person("A", 1000, 1.0, "character"), person("Meadow", 5000, 1.0, "background")])["imbalance"].is_null());
-    assert_eq!(token_report(&[person("A", 3500, 1.0, "character"), person("B", 3500, 1.0, "character")])["over_limit"], true);
+    assert_eq!(token_report(&[person("A", 4500, 1.0, "character"), person("B", 4500, 1.0, "character")])["over_limit"], true);
+}
+
+#[test]
+fn the_token_warning_starts_above_8192() {
+    assert_eq!(h3_core::refmod::TOKEN_WARN_LIMIT, 8192);
+    assert_eq!(token_report(&[person("A", 8192, 1.0, "character")])["over_limit"], false);
+    assert_eq!(token_report(&[person("A", 8193, 1.0, "character")])["over_limit"], true);
 }
 
 fn card(id: &str, name: &str, kind: &str, strength: f64, reference_type: &str) -> Value {

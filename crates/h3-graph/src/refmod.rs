@@ -12,8 +12,7 @@ use serde_json::{json, Value};
 use crate::env::{GraphError, Result};
 
 pub const LOADER_SLOTS: usize = 8;
-pub const MAX_LOADERS: usize = 3;
-pub const MAX_REFERENCES: usize = LOADER_SLOTS * MAX_LOADERS;
+pub const MAX_REFERENCES: usize = h3_core::scene::MAX_SCENE_REFERENCES;
 const REFERENCE_INPUT_PREFIXES: [&str; 4] = ["ref_images.", "ref_videos.", "ref_video_audios.", "ref_audios."];
 
 /// What the RefMod library knows about one saved RefMod.
@@ -256,7 +255,7 @@ pub fn apply_refmod_pipeline(prompt: &mut Obj, payload: &Obj, find: &dyn Fn(&str
         eprintln!("[VRGDG-RS RefMod] {} is {}x lighter than {} and may be duplicated.", imbalance["weak"].as_str().unwrap_or(""), imbalance["ratio"], imbalance["strong"].as_str().unwrap_or(""));
     }
     if report["over_limit"].as_bool().unwrap_or(false) {
-        eprintln!("[VRGDG-RS RefMod] Scene uses {} RefMod tokens (above {}).", report["total"], report["limit"]);
+        eprintln!("[VRGDG-RS RefMod] Scene uses {} RefMod tokens (above {}), so it may not render or may crash.", report["total"], report["limit"]);
     }
     let mut text = text_or_empty(payload.get("prompt").filter(|v| truthy(v)));
     let relabelled = relabel_prompt(prompt, &prompt_node, &references, &labels);
