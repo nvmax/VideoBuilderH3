@@ -3,7 +3,8 @@
 //! `/vrgdg` routes, the ComfyUI pass-through and `/mcp`:
 //!
 //! - A request that carries an `Origin` (a browser sends one with every request a page makes to another address, and with every POST) must name this computer:
-//!   `localhost`, a loopback address or a `*.localhost` name (the app's own window). `Origin: null`, which a sandboxed page sends, is refused too.
+//!   `localhost`, a loopback address or a `*.localhost` name (the app's own window), or be the request's own `Host` (a page this server served, opened by its
+//!   LAN address when `api_bind` is not loopback). `Origin: null`, which a sandboxed page sends, is refused too.
 //! - The `Host` must be `localhost`, a `*.localhost` name or an IP address. A name that points at this computer only because an attacker's DNS says so (rebinding)
 //!   is refused.
 //!
@@ -44,7 +45,12 @@ fn refuse(code: &'static str, message: &str) -> Response {
 /// What is wrong with the request's `Origin` or `Host`, if anything: the error code and message.
 pub fn violation(headers: &HeaderMap) -> Option<(&'static str, &'static str)> {
     let text = |name| headers.get(name).map(|v| v.to_str().unwrap_or("\u{0}invalid"));
-    if text(header::ORIGIN).is_some_and(|origin| !origin_allowed(origin)) {
+    // A page this server served over the LAN (`http://192.168.1.20:8190`) sends its own address as the Origin: same origin, not a foreign page.
+    let same_origin = |origin: &str| {
+        let authority = origin.trim().split("://").nth(1).unwrap_or("").split('/').next().unwrap_or("");
+        !authority.is_empty() && text(header::HOST).is_some_and(|host| host.trim().eq_ignore_ascii_case(authority))
+    };
+    if text(header::ORIGIN).is_some_and(|origin| !origin_allowed(origin) && !same_origin(origin)) {
         return Some(("FOREIGN_ORIGIN", "This server only answers pages and programs on this computer."));
     }
     if text(header::HOST).is_some_and(|host| !host_allowed(host)) {
@@ -83,5 +89,18 @@ mod tests {
         for origin in ["https://evil.example", "null", "", "http://192.168.1.20:8190", "http://localhost.evil.example", "file://"] {
             assert!(!origin_allowed(origin), "{origin}");
         }
+    }
+
+    #[test]
+    fn a_lan_page_of_this_server_passes() {
+        let headers = |origin: &str, host: &str| {
+            let mut h = HeaderMap::new();
+            h.insert(header::ORIGIN, origin.parse().unwrap());
+            h.insert(header::HOST, host.parse().unwrap());
+            h
+        };
+        assert!(violation(&headers("http://192.168.1.20:8190", "192.168.1.20:8190")).is_none());
+        assert!(violation(&headers("https://evil.example", "192.168.1.20:8190")).is_some());
+        assert!(violation(&headers("http://192.168.1.30:8190", "192.168.1.20:8190")).is_some());
     }
 }
