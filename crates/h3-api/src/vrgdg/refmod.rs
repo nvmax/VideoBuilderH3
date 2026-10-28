@@ -11,7 +11,7 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use axum::body::{Body, Bytes};
-use axum::extract::{Multipart, Query, State};
+use axum::extract::{DefaultBodyLimit, Multipart, Query, State};
 use axum::http::{header, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::routing::{get, post as axum_post};
@@ -313,6 +313,9 @@ async fn from_image(State(state): State<Arc<AppState>>, body: Bytes) -> Response
     create_response(result)
 }
 
+/// Room for a picture of up to `MAX_UPLOAD_BYTES`, also when it arrives base64-encoded; axum's own limit is 2 MB.
+const IMAGE_BODY_LIMIT: usize = studio::MAX_UPLOAD_BYTES / 3 * 4 + 1024 * 1024;
+
 pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
     router
         .route("/vrgdg/refmod/library", get(library))
@@ -320,8 +323,8 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/refmod/preview", get(preview))
         .route("/vrgdg/refmod/pick_images", axum_post(pick_images))
         .route("/vrgdg/refmod/describe_prompts", get(describe_prompts))
-        .route("/vrgdg/refmod/upload_image", axum_post(upload_image))
+        .route("/vrgdg/refmod/upload_image", axum_post(upload_image).layer(DefaultBodyLimit::max(IMAGE_BODY_LIMIT)))
         .route("/vrgdg/refmod/describe", axum_post(describe))
-        .route("/vrgdg/refmod/from_image", axum_post(from_image))
+        .route("/vrgdg/refmod/from_image", axum_post(from_image).layer(DefaultBodyLimit::max(IMAGE_BODY_LIMIT)))
         .route("/vrgdg/refmod/create", axum_post(create))
 }
