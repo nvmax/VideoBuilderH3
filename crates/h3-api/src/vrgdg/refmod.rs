@@ -175,7 +175,7 @@ fn create_graph(request: &Request, image_names: &[String]) -> Value {
     let mut inputs = studio::fixed_settings();
     inputs.insert("name".into(), json!(request.name));
     inputs.insert("mode".into(), json!(request.mode));
-    inputs.insert("concept_type".into(), json!(request.concept_type));
+    inputs.insert("concept_type".into(), json!(studio::node_concept_type(&request.concept_type)));
     inputs.insert("identity".into(), json!(request.steps));
     inputs.insert("description".into(), json!(request.description));
     inputs.insert("save".into(), json!(true));
@@ -238,6 +238,9 @@ pub(crate) async fn create_refmod(state: &AppState, payload: Obj) -> Result<Valu
     let history = client.wait_for_prompt(&queued.prompt_id, Duration::from_secs(3600), Duration::from_secs(1), &cancel, |_| {}).await.map_err(|e| e.to_string())?;
     let details: Value = extract_texts(&history, &queued.prompt_id).first().and_then(|t| serde_json::from_str(t).ok()).unwrap_or(Value::Null);
     let saved: PathBuf = details.get("saved_paths").and_then(Value::as_array).and_then(|a| a.first()).and_then(Value::as_str).map(PathBuf::from).unwrap_or(target);
+    if let Err(error) = studio::set_concept_type(&saved, &request.concept_type) {
+        eprintln!("[VRGDG-RS RefMod] Could not write the type into the RefMod: {error}");
+    }
     // The first picture as it was encoded is the preview the pickers show.
     if let Some(first) = canvases.first() {
         let preview = FsPath::new(&saved).with_extension("").with_extension(&PREVIEW_SUFFIX[1..]);
