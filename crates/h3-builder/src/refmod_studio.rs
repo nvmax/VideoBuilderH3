@@ -21,7 +21,8 @@ use crate::prompt_writers::{Llm, VisionCall};
 pub const ACTIVE_TYPES: [&str; 9] = ["identity", "clothing_men", "clothing_women", "background", "generic", "object", "prop", "vehicle", "creature"];
 
 /// The `concept_type` the Create H3 RefMod node accepts for a Studio type. The node only knows its own list, so ComfyUI
-/// refuses `clothing_women` or `prop`; the type itself still names the folder.
+/// refuses `clothing_women` or `prop`; the type itself still names the folder, and `set_concept_type` writes it into the
+/// saved file afterwards, as the pack does.
 pub fn node_concept_type(studio_type: &str) -> &'static str {
     match studio_type {
         "identity" => "identity",
@@ -256,6 +257,34 @@ pub fn prepare_images(paths: &[String], crops: &[Option<[i64; 4]>], quality: &st
     Ok((canvases, (canvas_width as u32, canvas_height as u32)))
 }
 
+/// Write `concept_type` into a saved RefMod's `refmod_meta`, so the Viewer and the loaders' prompt hint see the Studio
+/// type (`clothing_women`), not the node's nearest one (`clothing`). Only the header changes; the tensors are copied as they are.
+pub fn set_concept_type(path: &Path, concept_type: &str) -> Result<(), String> {
+    let fail = |e: &dyn std::fmt::Display| format!("{}: {e}", path.display());
+    let bytes = std::fs::read(path).map_err(|e| fail(&e))?;
+    let length = bytes.get(..8).map(|b| u64::from_le_bytes(b.try_into().unwrap()) as usize).ok_or_else(|| fail(&"not a safetensors file"))?;
+    let rest = bytes.get(8..8 + length).ok_or_else(|| fail(&"not a safetensors file"))?;
+    let mut header: Value = serde_json::from_slice(rest).map_err(|e| fail(&e))?;
+    let Some(raw) = header.pointer_mut("/__metadata__/refmod_meta") else { return Err(fail(&"no refmod_meta")) };
+    let mut meta: Value = serde_json::from_str(raw.as_str().unwrap_or_default()).map_err(|e| fail(&e))?;
+    let Some(fields) = meta.as_object_mut() else { return Err(fail(&"refmod_meta is not an object")) };
+    if fields.get("concept_type").and_then(Value::as_str) == Some(concept_type) {
+        return Ok(());
+    }
+    fields.insert("concept_type".into(), json!(concept_type));
+    *raw = Value::String(meta.to_string());
+    let mut text = header.to_string().into_bytes();
+    // safetensors pads the header with spaces to a multiple of 8 bytes.
+    text.resize(text.len().div_ceil(8) * 8, b' ');
+    let mut out = Vec::with_capacity(8 + text.len() + bytes.len() - 8 - length);
+    out.extend_from_slice(&(text.len() as u64).to_le_bytes());
+    out.extend_from_slice(&text);
+    out.extend_from_slice(&bytes[8 + length..]);
+    let temporary = path.with_extension("safetensors.tmp");
+    std::fs::write(&temporary, &out).map_err(|e| fail(&e))?;
+    std::fs::rename(&temporary, path).map_err(|e| fail(&e))
+}
+
 /// `save_preview`: a picture as a preview PNG no larger than 384 pixels on its longest side.
 pub fn save_preview(image: &RgbImage, destination: &Path) -> Result<(), String> {
     let longest = image.width().max(image.height());
@@ -464,6 +493,29 @@ mod tests {
         assert_eq!(node_concept_type("clothing_men"), "clothing");
         assert_eq!(node_concept_type("vehicle"), "generic");
         assert_eq!(node_concept_type("identity"), "identity");
+    }
+
+    #[test]
+    fn the_studio_type_is_written_into_the_saved_file() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("a.safetensors");
+        let meta = json!({"name": "a", "concept_type": "clothing", "description": "a coat"}).to_string();
+        let header = json!({"__metadata__": {"refmod_meta": meta}, "x": {"dtype": "F32", "shape": [2], "data_offsets": [0, 8]}}).to_string();
+        let mut file = (header.len() as u64).to_le_bytes().to_vec();
+        file.extend_from_slice(header.as_bytes());
+        file.extend_from_slice(&[1, 2, 3, 4, 5, 6, 7, 8]);
+        std::fs::write(&path, &file).unwrap();
+
+        set_concept_type(&path, "clothing_women").unwrap();
+        let saved = std::fs::read(&path).unwrap();
+        let length = u64::from_le_bytes(saved[..8].try_into().unwrap()) as usize;
+        assert_eq!(length % 8, 0);
+        let header: Value = serde_json::from_slice(&saved[8..8 + length]).unwrap();
+        let meta: Value = serde_json::from_str(header["__metadata__"]["refmod_meta"].as_str().unwrap()).unwrap();
+        assert_eq!((meta["concept_type"].as_str(), meta["description"].as_str()), (Some("clothing_women"), Some("a coat")));
+        assert_eq!(header["x"]["data_offsets"], json!([0, 8]));
+        assert_eq!(&saved[8 + length..], &[1, 2, 3, 4, 5, 6, 7, 8]);
+        assert!(set_concept_type(&dir.path().join("missing.safetensors"), "identity").is_err());
     }
 
     #[test]
