@@ -175,7 +175,7 @@ fn create_graph(request: &Request, image_names: &[String]) -> Value {
     let mut inputs = studio::fixed_settings();
     inputs.insert("name".into(), json!(request.name));
     inputs.insert("mode".into(), json!(request.mode));
-    inputs.insert("concept_type".into(), json!(request.concept_type));
+    inputs.insert("concept_type".into(), json!(studio::node_concept_type(&request.concept_type)));
     inputs.insert("identity".into(), json!(request.steps));
     inputs.insert("description".into(), json!(request.description));
     inputs.insert("save".into(), json!(true));

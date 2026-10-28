@@ -19,6 +19,18 @@ use crate::prompt_writers::{Llm, VisionCall};
 
 /// Types the Studio can create. The folder under models/refmods is always the type.
 pub const ACTIVE_TYPES: [&str; 9] = ["identity", "clothing_men", "clothing_women", "background", "generic", "object", "prop", "vehicle", "creature"];
+
+/// The `concept_type` the Create H3 RefMod node accepts for a Studio type. The node only knows its own list, so ComfyUI
+/// refuses `clothing_women` or `prop`; the type itself still names the folder.
+pub fn node_concept_type(studio_type: &str) -> &'static str {
+    match studio_type {
+        "identity" => "identity",
+        "clothing_men" | "clothing_women" => "clothing",
+        "background" => "background",
+        _ => "generic",
+    }
+}
+
 pub const IMAGE_EXTENSIONS: [&str; 6] = [".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif"];
 pub const MAX_TOKENS: i64 = 5120;
 const MIN_CROP_SIZE: i64 = 32;
@@ -440,6 +452,18 @@ mod tests {
 
     fn payload(value: Value) -> Obj {
         value.as_object().cloned().unwrap()
+    }
+
+    #[test]
+    fn every_type_has_a_concept_the_node_accepts() {
+        let node_types = ["generic", "identity", "pose_motion", "clothing", "background", "voice", "singing", "music_style", "sound_fx", "ambience", "style"];
+        for studio_type in ACTIVE_TYPES {
+            assert!(node_types.contains(&node_concept_type(studio_type)), "{studio_type}");
+        }
+        assert_eq!(node_concept_type("clothing_women"), "clothing");
+        assert_eq!(node_concept_type("clothing_men"), "clothing");
+        assert_eq!(node_concept_type("vehicle"), "generic");
+        assert_eq!(node_concept_type("identity"), "identity");
     }
 
     #[test]
