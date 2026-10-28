@@ -269,7 +269,7 @@ pub async fn fallback(State(state): State<Arc<AppState>>, request: Request) -> R
 async fn proxy_to_comfy(state: &AppState, request: Request) -> Response {
     let (parts, body) = request.into_parts();
     let url = format!("{}{}", state.cfg.comfy_base(), parts.uri.path_and_query().map_or("/", |p| p.as_str()));
-    let bytes = match axum::body::to_bytes(body, 256 * 1024 * 1024).await {
+    let bytes = match axum::body::to_bytes(body, crate::app::REQUEST_BODY_LIMIT).await {
         Ok(bytes) => bytes,
         Err(e) => return failure(StatusCode::BAD_REQUEST, format!("The request body could not be read: {e}")),
     };

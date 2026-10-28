@@ -6,7 +6,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
 
-use axum::extract::{Path, Query, State};
+use axum::extract::{DefaultBodyLimit, Path, Query, State};
 use axum::http::{header, HeaderMap, HeaderValue, StatusCode};
 use axum::response::sse::{Event as SseEvent, KeepAlive, Sse};
 use axum::response::Response;
@@ -93,6 +93,10 @@ impl AppState {
 }
 
 pub type Shared = State<Arc<AppState>>;
+
+/// The largest request body a route takes. axum's own default is 2 MB, which refused a picture or a song sent as base64
+/// (the pack's routes run under ComfyUI's 100 MB). The ComfyUI pass-through reads up to the same size, and a route can set its own limit.
+pub(crate) const REQUEST_BODY_LIMIT: usize = 256 * 1024 * 1024;
 
 /// Build the `/api/v1` router and register the job handlers.
 pub fn router(state: Arc<AppState>) -> Router {
@@ -264,6 +268,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .layer(axum::middleware::from_fn_with_state(Arc::clone(&state), crate::activity::rest_activity))
         .with_state(state)
         .merge(mcp)
+        .layer(DefaultBodyLimit::max(REQUEST_BODY_LIMIT))
         // Outermost, so it covers every route, the ComfyUI pass-through and /mcp.
         .layer(axum::middleware::from_fn(crate::guard::only_this_computer))
 }
