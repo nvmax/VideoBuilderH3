@@ -16,6 +16,7 @@ use h3_core::pyval::{text_or_empty, to_float, to_int, truthy, Obj};
 use h3_core::scene_card::VIDEO_PROMPT_TYPES;
 use h3_core::scene_defaults::normalize_scene_defaults;
 use h3_core::story::apply::{apply_continuations_to_segments, apply_plan_to_segments, fill_cast_from_acts};
+use h3_core::story::helpers::refmod_card_fields;
 use h3_core::story::locations::apply_story_locations;
 use h3_llm::prompts::text as constant;
 use h3_project::scene_ops::OpError;
@@ -114,19 +115,24 @@ fn is_minimax(session: &Obj) -> bool {
     text(session.get("video_engine")).to_lowercase() == "minimax_h3"
 }
 
-/// The picture a card shows, as the Storyboard sends it: no file data, just the path and name.
+/// The picture a card shows, as the Storyboard sends it: no file data, just the path and name. A RefMod card keeps its RefMod, so the
+/// Storyboard shows its preview and labels it (`refmod_card_fields`).
 fn slim_reference(card: Option<&Value>) -> Value {
     let Some(card) = card.and_then(Value::as_object) else { return Value::Null };
     let image = dict(card.get("image"));
-    json!({
-        "id": text(card.get("id")),
-        "name": text(card.get("name")),
-        "description": text(card.get("description")),
-        "minimax_voice": if card.get("minimax_voice").is_some_and(Value::is_object) { card["minimax_voice"].clone() } else { json!({}) },
-        "trigger_phrase": text(card.get("trigger_phrase")),
-        "trigger_position": if text(card.get("trigger_position")) == "end" { "end" } else { "start" },
-        "image": {"path": text(image.get("path")), "name": text(image.get("name")), "data": ""},
-    })
+    let mut slim = refmod_card_fields(card);
+    for (key, value) in [
+        ("id", json!(text(card.get("id")))),
+        ("name", json!(text(card.get("name")))),
+        ("description", json!(text(card.get("description")))),
+        ("minimax_voice", if card.get("minimax_voice").is_some_and(Value::is_object) { card["minimax_voice"].clone() } else { json!({}) }),
+        ("trigger_phrase", json!(text(card.get("trigger_phrase")))),
+        ("trigger_position", json!(if text(card.get("trigger_position")) == "end" { "end" } else { "start" })),
+        ("image", json!({"path": text(image.get("path")), "name": text(image.get("name")), "data": ""})),
+    ] {
+        slim.insert(key.to_string(), value);
+    }
+    Value::Object(slim)
 }
 
 /// The image prompt a card shows for the project's image model.
@@ -935,6 +941,20 @@ mod tests {
 
     fn params(value: Value) -> Obj {
         value.as_object().cloned().unwrap()
+    }
+
+    #[test]
+    fn a_refmod_card_keeps_its_refmod_and_a_picture_card_has_none() {
+        let mut value = session();
+        let refmod = params(json!({"source": "refmod", "refmod": {"name": "background/Main Street", "kind": "image", "strength": 0.8}}));
+        value["flux_reference_builder"]["locations"][0].as_object_mut().unwrap().extend(refmod);
+        let cards = scene_cards(value.as_object().unwrap());
+        let location = &cards[0]["location_ref"];
+        assert_eq!((location["source"].as_str(), location["refmod"]["name"].as_str()), (Some("refmod"), Some("background/Main Street")));
+        assert_eq!(location["refmod"]["strength"], 0.8);
+        assert_eq!(location["name"], "Main Street", "the card keeps its other fields");
+        let subject = cards[0]["subject_refs"][0].as_object().unwrap();
+        assert!(!subject.contains_key("source") && !subject.contains_key("refmod"), "{subject:?}");
     }
 
     #[test]
