@@ -12,10 +12,12 @@ use std::time::Duration;
 
 use axum::body::{Body, Bytes};
 use axum::extract::{Multipart, Query, State};
-use axum::http::{header, StatusCode};
+use axum::http::{header, HeaderMap, HeaderValue, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::routing::{get, post as axum_post};
 use axum::Router;
+use tower::ServiceExt;
+use tower_http::services::ServeFile;
 use h3_builder::prompt_writers::RunnerLlm;
 use h3_builder::refmod_studio::{self as studio, Request};
 use h3_comfy::queue::extract_texts;
@@ -79,14 +81,27 @@ async fn delete(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
     into_response(result.map(Out::Fields).map_err(bad))
 }
 
-async fn preview(State(state): State<Arc<AppState>>, Query(query): Query<HashMap<String, String>>) -> Response {
+/// The preview picture of a RefMod. `no-cache` with `Last-Modified`, like the pack's `FileResponse`: the browser asks again
+/// each time and gets a 304 with no body while the picture has not changed, instead of the whole picture.
+async fn preview(State(state): State<Arc<AppState>>, Query(query): Query<HashMap<String, String>>, headers: HeaderMap) -> Response {
     let dirs = refmod_dirs_of(&state.cfg).await;
     let name = query.get("name").cloned().unwrap_or_default();
     let path = studio::preview_path(&dirs, &name).filter(|p| p.is_file());
     let Some(path) = path else { return failure(StatusCode::NOT_FOUND, "No preview for this RefMod.") };
-    match tokio::fs::read(&path).await {
-        Ok(bytes) => Response::builder().header(header::CONTENT_TYPE, "image/png").header(header::CACHE_CONTROL, "no-cache").body(Body::from(bytes)).unwrap_or_else(|e| failure(StatusCode::INTERNAL_SERVER_ERROR, e.to_string())),
-        Err(_) => failure(StatusCode::NOT_FOUND, "No preview for this RefMod."),
+    let mut request = axum::http::Request::builder().method("GET").uri("/").body(Body::empty()).unwrap_or_default();
+    if let Some(value) = headers.get(header::IF_MODIFIED_SINCE) {
+        request.headers_mut().insert(header::IF_MODIFIED_SINCE, value.clone());
+    }
+    match ServeFile::new(&path).oneshot(request).await {
+        Ok(response) => {
+            let mut response = response.into_response();
+            if response.status() == StatusCode::NOT_FOUND {
+                return failure(StatusCode::NOT_FOUND, "No preview for this RefMod.");
+            }
+            response.headers_mut().insert(header::CACHE_CONTROL, HeaderValue::from_static("no-cache"));
+            response
+        }
+        Err(e) => failure(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
     }
 }
 
