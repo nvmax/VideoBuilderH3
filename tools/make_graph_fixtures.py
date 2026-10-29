@@ -138,6 +138,17 @@ def cases():
     add("i2v_legacy_save_migrates_to_single", {"video_mode": "image_to_video", **seeds, "render_pass": "two_pass"}, one_image)
     add("ir2v_single_with_references", {"video_mode": "image_reference_to_video", **seeds, "render_pass": "single"},
         scene(image_paths=[START_FRAME, IMAGES[0], IMAGES[1]]))
+    # Text to video: Single and 2 Pass, with supplied or built-in audio. Saves from version 1 on opt in to the pass.
+    no_references = scene(image_paths=[])
+    t2v = {"video_mode": "text_to_video", **seeds, "t2v_pass_settings_version": 1}
+    for render_pass in ("single", "two_pass"):
+        for audio_mode in ("input_audio", "built_in_audio"):
+            add(f"t2v_{render_pass}_{audio_mode}", {**t2v, "render_pass": render_pass, "audio_mode": audio_mode}, no_references)
+    add("t2v_legacy_save_migrates_to_single", {"video_mode": "text_to_video", **seeds, "render_pass": "two_pass"}, no_references)
+    # Built-in audio in the multi-pass modes that used to require supplied audio.
+    add("i2v_two_pass_built_in_audio", {"video_mode": "image_to_video", **seeds, "render_pass": "two_pass", "i2v_pass_settings_version": 1,
+                                        "audio_mode": "built_in_audio"}, one_image)
+    add("r2v_advanced_built_in_audio", {**base, "render_pass": "three_pass", "audio_mode": "built_in_audio"})
     # Scene prompt, timing and input edge cases that must error.
     add("error_empty_prompt", {**base, "render_pass": "single"}, scene(prompt=""))
     add("error_unknown_model", {**base, "render_pass": "single", "diffusion_model_name": "missing_model.safetensors"})

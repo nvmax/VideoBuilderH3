@@ -12,7 +12,7 @@ use h3_core::timing::{calculate_timing, TimingInput, TimingPlan};
 use serde_json::{json, Value};
 
 use crate::api::{
-    as_link, compat_node_inputs, inputs, link, node_id_by_class, set_input,
+    as_link, class_of, compat_node_inputs, inputs, link, node_id_by_class, set_input,
 };
 use crate::env::{GraphEnv, GraphError, Result};
 use crate::inputs::{
@@ -46,10 +46,6 @@ fn named(payload: &Obj, key: &str, default: &str) -> String {
 /// A number from a loose value for the timing plan, with the plan's own wording for what is wrong.
 fn timing_number(value: &Value, name: &str) -> Result<f64> {
     to_float(value).filter(|f| f.is_finite()).ok_or_else(|| GraphError::new(format!("{name} must be a finite number.")))
-}
-
-fn pyrepr_list(items: &[String]) -> String {
-    format!("[{}]", items.iter().map(|i| format!("'{i}'")).collect::<Vec<_>>().join(", "))
 }
 
 /// The scene's audio file, project folder, scene number and timing plan.
@@ -354,47 +350,42 @@ fn apply_refmod_if_requested(env: &dyn GraphEnv, prompt: &mut Obj, payload: &Obj
 
 // -- native audio -------------------------------------------------------------------------------------------------------------
 
-/// Rewire the audio driven 2 pass graph to use H3's own joint video and audio latent (built-in audio). The template
-/// reads a project audio file and locks the pass 1 latent to it through the audio drive node. For built-in audio those
-/// inputs go away, everything that read the audio locked latent reads the H3 conditioning node's own latent, and the
-/// pass 1 audio is decoded and becomes the saved video's audio. Nodes are found by class and link, not by id, so the
-/// rewire survives a template renumbering.
+/// Generate audio with pass 1 and reuse it through every refinement and output. The templates lock the input latent through the audio drive
+/// node. Remove that lock, sample the conditioning node's joint audio and video latent, and decode pass 1's audio, which becomes the saved
+/// video's audio. Nodes are found by class and link, not by id, so the rewire survives a template renumbering. Run it before continuation,
+/// RefMod and draft or finalize rewrites.
 fn use_native_audio(prompt: &mut Obj) -> Result<()> {
     let by_class = |prompt: &Obj, class: &str| -> Vec<String> {
         prompt.iter().filter(|(_, n)| n.get("class_type").and_then(Value::as_str) == Some(class)).map(|(k, _)| k.clone()).collect()
     };
     let drives = by_class(prompt, "VRGDG_MiniMaxH3AudioDrive");
     if drives.is_empty() {
-        return Err(GraphError::new("The MiniMax H3 two-pass template changed: built-in audio needs an audio drive node."));
+        return Err(GraphError::new("The MiniMax H3 template changed: built-in audio needs an audio drive node."));
     }
-    let mut h3_nodes: Vec<String> = Vec::new();
-    for d in &drives {
-        if let Some((id, 1)) = inputs(prompt, d).and_then(|i| i.get("av_latent")).and_then(as_link) {
-            if !h3_nodes.contains(&id) {
-                h3_nodes.push(id);
+    const H3_CLASSES: [&str; 3] = ["MiniMaxH3ReferenceToVideo", "MiniMaxH3ImageToVideo", "VRGDG_MiniMaxH3ImageReferenceToVideo"];
+    // The samplers that read a conditioning node's joint latent, straight or through the audio drive: (sampler, conditioning node).
+    let mut samplers: Vec<(String, String)> = Vec::new();
+    for key in by_class(prompt, "SamplerCustomAdvanced") {
+        let Some((mut source, mut index)) = inputs(prompt, &key).and_then(|i| i.get("latent_image")).and_then(as_link) else { continue };
+        if drives.contains(&source) {
+            match inputs(prompt, &source).and_then(|i| i.get("av_latent")).and_then(as_link) {
+                Some((next, next_index)) => {
+                    source = next;
+                    index = next_index;
+                }
+                None => continue,
             }
+        }
+        if index == 1 && H3_CLASSES.contains(&class_of(prompt, &source)) {
+            samplers.push((key, source));
         }
     }
     let audio_vaes: Vec<Value> =
         drives.iter().filter_map(|d| inputs(prompt, d).and_then(|i| i.get("audio_vae")).filter(|v| v.is_array()).cloned()).collect();
-    if h3_nodes.len() != 1 || audio_vaes.is_empty() {
-        return Err(GraphError::new(
-            "The MiniMax H3 two-pass template changed: the audio drive must read one H3 node's latent and the audio VAE.",
-        ));
+    if samplers.len() != 1 || audio_vaes.is_empty() {
+        return Err(GraphError::new("The MiniMax H3 template changed: expected one pass-1 joint AV sampler and an audio VAE."));
     }
-    let h3 = h3_nodes.remove(0);
-    let samplers: Vec<String> = by_class(prompt, "SamplerCustomAdvanced")
-        .into_iter()
-        .filter(|key| {
-            inputs(prompt, key).and_then(|i| i.get("latent_image")).and_then(as_link).is_some_and(|(id, _)| drives.contains(&id))
-        })
-        .collect();
-    if samplers.len() != 1 {
-        return Err(GraphError::new(format!(
-            "The MiniMax H3 two-pass template changed: expected one pass-1 sampler reading the audio drive, found {}.",
-            pyrepr_list(&samplers)
-        )));
-    }
+    let sampler = samplers[0].0.clone();
     let mut loaders: Vec<String> = Vec::new();
     for d in &drives {
         if let Some((id, _)) = inputs(prompt, d).and_then(|i| i.get("source_audio")).and_then(as_link) {
@@ -404,22 +395,14 @@ fn use_native_audio(prompt: &mut Obj) -> Result<()> {
         }
     }
     loaders.sort();
-    if let Some(map) = prompt.get_mut(&h3).and_then(|n| n.get_mut("inputs")).and_then(Value::as_object_mut) {
+    // Remove supplied-audio references from every conditioning branch, including any separately encoded pass 2 keyframes, before the loader
+    // links are replaced.
+    for n in prompt.values_mut() {
+        let Some(map) = n.get_mut("inputs").and_then(Value::as_object_mut) else { continue };
         let names: Vec<String> = map.keys().filter(|k| k.starts_with("ref_audios.")).cloned().collect();
         for name in names {
             map.shift_remove(&name);
         }
-    }
-    for n in prompt.values_mut() {
-        let Some(map) = n.get_mut("inputs").and_then(Value::as_object_mut) else { continue };
-        for value in map.values_mut() {
-            if as_link(value).is_some_and(|(id, index)| drives.contains(&id) && index == 0) {
-                *value = link(&h3, 1);
-            }
-        }
-    }
-    for key in drives.iter().chain(loaders.iter()) {
-        prompt.shift_remove(key);
     }
     let next = prompt.keys().filter_map(|k| k.parse::<i64>().ok()).max().unwrap_or(0) + 1;
     let decode = next.to_string();
@@ -428,9 +411,35 @@ fn use_native_audio(prompt: &mut Obj) -> Result<()> {
         json!({
             "class_type": "LTXVAudioVAEDecode",
             "_meta": {"title": "Decode MiniMax H3 native audio (pass 1)"},
-            "inputs": {"samples": [samplers[0], 0], "audio_vae": audio_vaes[0]},
+            "inputs": {"samples": [sampler, 0], "audio_vae": audio_vaes[0]},
         }),
     );
+    // What read the audio drive's latent reads the conditioning node's own latent, and what read the audio drive's audio or the loaded song
+    // reads the decoded pass 1 audio. Links are rewritten in node order, so a link that is read after it was rewritten is the new one.
+    let keys: Vec<String> = prompt.keys().cloned().collect();
+    for key in keys {
+        let names: Vec<String> = inputs(prompt, &key).map(|m| m.keys().cloned().collect()).unwrap_or_default();
+        for name in names {
+            let Some((source, index)) = inputs(prompt, &key).and_then(|m| m.get(&name)).and_then(as_link) else { continue };
+            let replacement = if drives.contains(&source) {
+                if index == 0 {
+                    inputs(prompt, &source).and_then(|m| m.get("av_latent")).cloned()
+                } else {
+                    Some(link(&decode, 0))
+                }
+            } else if loaders.contains(&source) {
+                Some(link(&decode, 0))
+            } else {
+                None
+            };
+            if let Some(value) = replacement {
+                set_input(prompt, &key, &name, value)?;
+            }
+        }
+    }
+    for key in drives.iter().chain(loaders.iter()) {
+        prompt.shift_remove(key);
+    }
     for key in by_class(prompt, "VHS_VideoCombine") {
         set_input(prompt, &key, "audio", link(&decode, 0))?;
     }
@@ -467,9 +476,6 @@ pub fn build_two_pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     };
     let (workflow_path, mut prompt) = template(template_name)?;
     let video_prompt = video_prompt(payload, &["prompt", "video_prompt"], "MiniMax H3 two-pass video prompt is empty.")?;
-    if video_mode == "image_to_video" && audio_mode(payload) == "built_in_audio" {
-        return Err(GraphError::new("MiniMax H3 Image to Video 2 Pass currently supports Input Audio only."));
-    }
     let ctx = scene_context(env, payload, "MiniMax H3 two-pass", false)?;
     let timing = ctx.timing.clone();
 

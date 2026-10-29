@@ -197,9 +197,12 @@ pub fn patch_scene(project: &Path, scene_id: &str, patch: &Obj, if_match: Option
         set(&mut segs[idx], "lyric_no_lip_sync", json!(instrumental));
     }
     for (key, val) in &legacy {
-        if key == "minimax_h3_settings" && val.is_object() && segs[idx].get(key).is_some_and(Value::is_object) {
-            let mut merged = segs[idx][key].as_object().cloned().unwrap_or_default();
-            merged.extend(val.as_object().cloned().unwrap_or_default());
+        if let (true, Some(patch)) = (key == "minimax_h3_settings", val.as_object()) {
+            // Merge like the Builder's scene lock; a pass edit opts the scene into the current pass rules.
+            let project_mode = edit.session.get("minimax_h3_settings").and_then(|s| s.get("video_mode")).map(|m| text_or_empty(Some(m))).unwrap_or_default();
+            let scene_mode = text_of(&segs[idx], "minimax_h3_mode");
+            let inherited = if scene_mode.is_empty() { project_mode } else { scene_mode };
+            let merged = h3_core::settings::apply_settings_patch(segs[idx].get(key).and_then(Value::as_object), patch, Some(&inherited));
             set(&mut segs[idx], key, Value::Object(merged));
         } else if key.starts_with("use_scene_") || key.ends_with("_settings") {
             set(&mut segs[idx], key, val.clone());

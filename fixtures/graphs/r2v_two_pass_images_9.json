@@ -916,6 +916,7 @@
   "seed": 1234,
   "steps": 20,
   "steps_before_turbo": 20,
+  "t2v_pass_settings_version": 1,
   "three_pass_lightx_lora_name": "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy_resized_avg_rank_21_bf16.safetensors",
   "three_pass_lightx_lora_strength": 0.5,
   "three_pass_pass1_denoise": 1,

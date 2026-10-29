@@ -1,0 +1,945 @@
+{
+ "audio_trim_call": null,
+ "mode": "minimax_h3_2pass",
+ "name": "t2v_two_pass_built_in_audio",
+ "payload": {
+  "advanced_pass1_megapixels": 0.4,
+  "advanced_pass2_megapixels": 0.5625,
+  "advanced_vram_preset": "16gb",
+  "aspect_ratio": "16:9 (Widescreen)",
+  "audio_mode": "built_in_audio",
+  "audio_path": "Z:\\h3fixture\\Projects\\Demo Song\\song.wav",
+  "audio_vae_name": "minimax_h3_audio_vae_fp32.safetensors",
+  "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+  "continuity_mode": "off",
+  "denoise": 1,
+  "diffusion_model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+  "duration": 6.0,
+  "easy_cache_bypass": false,
+  "easy_cache_end_percent": 0.9,
+  "easy_cache_reuse_threshold": 0.3,
+  "easy_cache_start_percent": 0.2,
+  "easy_cache_verbose": false,
+  "enable_fp16_accumulation": true,
+  "end": 6.0,
+  "final_height": 576,
+  "final_resize_method": "nvidia_rtx_vsr",
+  "final_width": 1024,
+  "i2v_prompt": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+  "image_paths": [],
+  "latent_context_frames": 39,
+  "latent_upscale_scale": 2,
+  "latent_upscaler_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+  "lora_count": 0,
+  "loras": [],
+  "megapixels": 0.5625,
+  "minimax_h3_latent_context_frames": 39,
+  "output_crf": 19,
+  "pass1_denoise": 1,
+  "pass1_sampler_name": "res_multistep",
+  "pass1_scheduler": "simple",
+  "pass1_seed": 1234,
+  "pass1_steps": 20,
+  "pass1_use_block_sparse_attention": false,
+  "pass1_use_feedforward": false,
+  "pass1_use_te_speed": false,
+  "pass2_denoise": 0.2,
+  "pass2_sampler_name": "res_multistep",
+  "pass2_scheduler": "simple",
+  "pass2_seed": 5678,
+  "pass2_steps": 2,
+  "pass2_use_block_sparse_attention": false,
+  "pass2_use_feedforward": false,
+  "pass2_use_te_speed": false,
+  "pipeline": "standard",
+  "pre_frames": 0,
+  "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+  "prompt": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+  "ref_image_size": "max",
+  "sage_attention": "auto",
+  "sampler_name": "res_multistep",
+  "scene_number": 1,
+  "scheduler": "simple",
+  "seed": 1234,
+  "start": 0.0,
+  "steps": 20,
+  "t2v_prompt": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+  "tail_loss_frames": 0,
+  "te_speed_cache_depth": 0.75,
+  "te_speed_device": "auto",
+  "te_speed_end_percent": 0.9,
+  "te_speed_mcs": 2,
+  "te_speed_processing_control": 0.07,
+  "te_speed_start_percent": 0.1,
+  "three_pass_lightx_lora_name": "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy_resized_avg_rank_21_bf16.safetensors",
+  "three_pass_lightx_lora_strength": 0.5,
+  "three_pass_pass1_denoise": 1,
+  "three_pass_pass1_megapixels": 0.4,
+  "three_pass_pass1_sampler": "euler",
+  "three_pass_pass1_scheduler": "beta",
+  "three_pass_pass1_seed": 69,
+  "three_pass_pass1_steps": 20,
+  "three_pass_pass1_te_speed": true,
+  "three_pass_pass2_denoise": 0.2,
+  "three_pass_pass2_megapixels": 2,
+  "three_pass_pass2_sampler": "sa_solver",
+  "three_pass_pass2_scheduler": "simple",
+  "three_pass_pass2_seed": 69,
+  "three_pass_pass2_steps": 1,
+  "three_pass_pass2_te_speed": false,
+  "three_pass_pass3_denoise": 0.2,
+  "three_pass_pass3_megapixels": 2,
+  "three_pass_pass3_sampler": "euler",
+  "three_pass_pass3_scheduler": "beta",
+  "three_pass_pass3_seed": 69,
+  "three_pass_pass3_steps": 5,
+  "three_pass_pass3_te_speed": false,
+  "turbo_lora_name": "minimax_h3_turbo_4step_ema_ckpt850.safetensors",
+  "turbo_lora_strength": 1,
+  "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+  "two_pass_lora_strength": 1,
+  "two_pass_use_block_sparse_attention": false,
+  "two_pass_use_fast_vae_decode": false,
+  "two_pass_use_feedforward": false,
+  "use_fast_vae_decode": false,
+  "use_loras": false,
+  "use_memory_efficient_sage_attention": false,
+  "use_turbo_lora": false,
+  "video_mode": "text_to_video",
+  "video_references": [],
+  "video_vae_name": "minimax_h3_video_vae_fp16.safetensors"
+ },
+ "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+ "result": {
+  "audio_mode": "built_in_audio",
+  "latent_continuation_settings": {
+   "enabled": false,
+   "reason": "Continuity mode is not latent_continuation_masked"
+  },
+  "output_folder": "Z:\\h3fixture\\comfy\\output\\VRGDG_MiniMaxH3\\Demo_Song_ae60cccf\\scene_0001",
+  "post_render_trim": {
+   "duration": 6.0,
+   "frames": 144,
+   "start": 0.0
+  },
+  "prepared_audio": null,
+  "prompt": {
+   "115": {
+    "_meta": {
+     "title": "BUILDER INPUT - Desired Final Width"
+    },
+    "class_type": "PrimitiveInt",
+    "inputs": {
+     "value": 1024
+    }
+   },
+   "119": {
+    "_meta": {
+     "title": "Load Video VAE"
+    },
+    "class_type": "VAELoader",
+    "inputs": {
+     "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+   },
+   "120": {
+    "_meta": {
+     "title": "Load Audio VAE"
+    },
+    "class_type": "VAELoader",
+    "inputs": {
+     "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+   },
+   "122": {
+    "_meta": {
+     "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+    },
+    "class_type": "VAEDecode",
+    "inputs": {
+     "samples": [
+      "9850",
+      0
+     ],
+     "vae": [
+      "119",
+      0
+     ]
+    }
+   },
+   "123": {
+    "_meta": {
+     "title": "KSamplerSelect"
+    },
+    "class_type": "KSamplerSelect",
+    "inputs": {
+     "sampler_name": "res_multistep"
+    }
+   },
+   "124": {
+    "_meta": {
+     "title": "BasicScheduler"
+    },
+    "class_type": "BasicScheduler",
+    "inputs": {
+     "denoise": 1.0,
+     "model": [
+      "141",
+      0
+     ],
+     "scheduler": "simple",
+     "steps": 20
+    }
+   },
+   "125": {
+    "_meta": {
+     "title": "Low Resolution Generation"
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+     "guider": [
+      "126",
+      0
+     ],
+     "latent_image": [
+      "136",
+      1
+     ],
+     "noise": [
+      "129",
+      0
+     ],
+     "sampler": [
+      "123",
+      0
+     ],
+     "sigmas": [
+      "124",
+      0
+     ]
+    }
+   },
+   "126": {
+    "_meta": {
+     "title": "Basic Guider"
+    },
+    "class_type": "BasicGuider",
+    "inputs": {
+     "conditioning": [
+      "136",
+      0
+     ],
+     "model": [
+      "141",
+      0
+     ]
+    }
+   },
+   "128": {
+    "_meta": {
+     "title": "Load CLIP"
+    },
+    "class_type": "CLIPLoader",
+    "inputs": {
+     "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+     "device": "default",
+     "type": "minimax"
+    }
+   },
+   "129": {
+    "_meta": {
+     "title": "BUILDER INPUT - Seed"
+    },
+    "class_type": "RandomNoise",
+    "inputs": {
+     "noise_seed": 1234
+    }
+   },
+   "131": {
+    "_meta": {
+     "title": "H3 Duration To Valid Frame Count"
+    },
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+     "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+     "values.a": [
+      "132",
+      0
+     ]
+    }
+   },
+   "132": {
+    "_meta": {
+     "title": "BUILDER INPUT - Duration"
+    },
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+     "value": 6.0
+    }
+   },
+   "136": {
+    "_meta": {
+     "title": "MiniMax H3 Reference to Video"
+    },
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+     "audio_vae": [
+      "120",
+      0
+     ],
+     "clip": [
+      "128",
+      0
+     ],
+     "height": [
+      "187",
+      1
+     ],
+     "length": [
+      "131",
+      1
+     ],
+     "prompt": [
+      "138",
+      0
+     ],
+     "ref_image_size": "max",
+     "ref_images.ref_image_0": [
+      "180",
+      0
+     ],
+     "ref_images.ref_image_1": [
+      "180",
+      1
+     ],
+     "ref_images.ref_image_2": [
+      "180",
+      2
+     ],
+     "ref_images.ref_image_3": [
+      "180",
+      3
+     ],
+     "ref_images.ref_image_4": [
+      "180",
+      4
+     ],
+     "ref_images.ref_image_5": [
+      "180",
+      5
+     ],
+     "ref_images.ref_image_6": [
+      "180",
+      6
+     ],
+     "ref_images.ref_image_7": [
+      "180",
+      7
+     ],
+     "ref_images.ref_image_8": [
+      "180",
+      8
+     ],
+     "ref_video_audios.ref_video_audio_0": [
+      "180",
+      12
+     ],
+     "ref_video_audios.ref_video_audio_1": [
+      "180",
+      13
+     ],
+     "ref_video_audios.ref_video_audio_2": [
+      "180",
+      14
+     ],
+     "ref_videos.ref_video_0": [
+      "180",
+      9
+     ],
+     "ref_videos.ref_video_1": [
+      "180",
+      10
+     ],
+     "ref_videos.ref_video_2": [
+      "180",
+      11
+     ],
+     "vae": [
+      "119",
+      0
+     ],
+     "width": [
+      "186",
+      1
+     ]
+    }
+   },
+   "138": {
+    "_meta": {
+     "title": "BUILDER INPUT - Prompt"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+     "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+    }
+   },
+   "141": {
+    "_meta": {
+     "title": "Diffusion Model Loader KJ"
+    },
+    "class_type": "DiffusionModelLoaderKJ",
+    "inputs": {
+     "compute_dtype": "default",
+     "enable_fp16_accumulation": true,
+     "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+     "patch_cublaslinear": false,
+     "sage_attention": "auto",
+     "weight_dtype": "default"
+    }
+   },
+   "142": {
+    "_meta": {
+     "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+    },
+    "class_type": "VHS_VideoCombine",
+    "inputs": {
+     "audio": [
+      "212",
+      0
+     ],
+     "crf": 19,
+     "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+     "format": "video/h264-mp4",
+     "frame_rate": 24,
+     "images": [
+      "183",
+      0
+     ],
+     "loop_count": 0,
+     "pingpong": false,
+     "pix_fmt": "yuv420p",
+     "save_metadata": true,
+     "save_output": true,
+     "trim_to_audio": false
+    }
+   },
+   "180": {
+    "_meta": {
+     "title": "BUILDER INPUTS - Ordered H3 Reference Images And Videos"
+    },
+    "class_type": "VRGDG_MiniMaxH3ReferenceMediaFromPaths",
+    "inputs": {
+     "image_paths": "[]",
+     "video_references": "[]"
+    }
+   },
+   "181": {
+    "_meta": {
+     "title": "PASS 1 OUTPUT - Separate Video and Audio Latents"
+    },
+    "class_type": "MiniMaxH3AVLatentSeparateT8",
+    "inputs": {
+     "av_latent": [
+      "9851",
+      0
+     ]
+    }
+   },
+   "182": {
+    "_meta": {
+     "title": "LEARNED UPSCALE - MiniMax H3"
+    },
+    "class_type": "VRGDG_MiniMaxH3LearnedLatentUpscale",
+    "inputs": {
+     "latent": [
+      "181",
+      0
+     ],
+     "scale": [
+      "185",
+      0
+     ],
+     "upscale_model": [
+      "188",
+      0
+     ]
+    }
+   },
+   "183": {
+    "_meta": {
+     "title": "Final Center Crop - Exact 1920x1080"
+    },
+    "class_type": "ImageResizeKJv2",
+    "inputs": {
+     "crop_position": "center",
+     "device": "cpu",
+     "divisible_by": 0,
+     "height": [
+      "184",
+      0
+     ],
+     "image": [
+      "122",
+      0
+     ],
+     "keep_proportion": "crop",
+     "pad_color": "0, 0, 0",
+     "upscale_method": "nvidia_rtx_vsr",
+     "width": [
+      "115",
+      0
+     ]
+    }
+   },
+   "184": {
+    "_meta": {
+     "title": "BUILDER INPUT - Desired Final Height"
+    },
+    "class_type": "PrimitiveInt",
+    "inputs": {
+     "value": 576
+    }
+   },
+   "185": {
+    "_meta": {
+     "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+    },
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+     "value": 2.0
+    }
+   },
+   "186": {
+    "_meta": {
+     "title": "AUTO - Aligned First Pass Width"
+    },
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+     "expression": "max(32, ceil((a / b) / 32) * 32)",
+     "values.a": [
+      "115",
+      0
+     ],
+     "values.b": [
+      "185",
+      0
+     ]
+    }
+   },
+   "187": {
+    "_meta": {
+     "title": "AUTO - Aligned First Pass Height"
+    },
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+     "expression": "max(32, ceil((a / b) / 32) * 32)",
+     "values.a": [
+      "184",
+      0
+     ],
+     "values.b": [
+      "185",
+      0
+     ]
+    }
+   },
+   "188": {
+    "_meta": {
+     "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+    },
+    "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+    "inputs": {
+     "device": "cuda",
+     "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+     "precision": "bf16"
+    }
+   },
+   "189": {
+    "_meta": {
+     "title": "PASS 2 - Restore Upscaled Video into Locked AV Latent"
+    },
+    "class_type": "VRGDG_MiniMaxH3ReplaceUpscaledVideoLatent",
+    "inputs": {
+     "original_av_latent": [
+      "9851",
+      0
+     ],
+     "upscaled_video_latent": [
+      "182",
+      0
+     ]
+    }
+   },
+   "190": {
+    "_meta": {
+     "title": "BUILDER INPUT - Refinement Schedule Steps"
+    },
+    "class_type": "PrimitiveInt",
+    "inputs": {
+     "value": 2
+    }
+   },
+   "191": {
+    "_meta": {
+     "title": "BUILDER INPUT - Refinement Denoise"
+    },
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+     "value": 0.2
+    }
+   },
+   "192": {
+    "_meta": {
+     "title": "PASS 2 - Adjustable Refinement Scheduler"
+    },
+    "class_type": "BasicScheduler",
+    "inputs": {
+     "denoise": [
+      "191",
+      0
+     ],
+     "model": [
+      "207",
+      0
+     ],
+     "scheduler": "simple",
+     "steps": [
+      "190",
+      0
+     ]
+    }
+   },
+   "193": {
+    "_meta": {
+     "title": "PASS 2 - Basic Guider"
+    },
+    "class_type": "BasicGuider",
+    "inputs": {
+     "conditioning": [
+      "136",
+      0
+     ],
+     "model": [
+      "207",
+      0
+     ]
+    }
+   },
+   "194": {
+    "_meta": {
+     "title": "PASS 2 - High Resolution Refinement"
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+     "guider": [
+      "193",
+      0
+     ],
+     "latent_image": [
+      "189",
+      0
+     ],
+     "noise": [
+      "211",
+      0
+     ],
+     "sampler": [
+      "210",
+      0
+     ],
+     "sigmas": [
+      "192",
+      0
+     ]
+    }
+   },
+   "207": {
+    "_meta": {
+     "title": "Load LoRA"
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+     "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "model": [
+      "141",
+      0
+     ],
+     "strength_model": 1.0
+    }
+   },
+   "210": {
+    "_meta": {
+     "title": "BUILDER INPUT - Pass 2 Sampler"
+    },
+    "class_type": "KSamplerSelect",
+    "inputs": {
+     "sampler_name": "res_multistep"
+    }
+   },
+   "211": {
+    "_meta": {
+     "title": "BUILDER INPUT - Pass 2 Seed"
+    },
+    "class_type": "RandomNoise",
+    "inputs": {
+     "noise_seed": 5678
+    }
+   },
+   "212": {
+    "_meta": {
+     "title": "Decode MiniMax H3 native audio (pass 1)"
+    },
+    "class_type": "LTXVAudioVAEDecode",
+    "inputs": {
+     "audio_vae": [
+      "120",
+      0
+     ],
+     "samples": [
+      "9851",
+      0
+     ]
+    }
+   },
+   "9850": {
+    "_meta": {
+     "title": "Universal Latent Auto-Save (Scene 001)"
+    },
+    "class_type": "VRGDG_MiniMaxH3SaveLatent",
+    "inputs": {
+     "fps": 24.0,
+     "frame_count": 0,
+     "latent": [
+      "194",
+      0
+     ],
+     "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+     "scene_number": 1,
+     "tail_padding_frames": 14
+    }
+   },
+   "9851": {
+    "_meta": {
+     "title": "First-Pass Latent Save (Scene 001)"
+    },
+    "class_type": "VRGDG_MiniMaxH3SaveLatent",
+    "inputs": {
+     "fps": 24.0,
+     "frame_count": 0,
+     "latent": [
+      "125",
+      0
+     ],
+     "pass1": true,
+     "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+     "scene_number": 1,
+     "tail_padding_frames": 14
+    }
+   }
+  },
+  "reference_inputs": {
+   "image_count": 0,
+   "video_count": 0
+  },
+  "refmod": null,
+  "save_latent_settings": {
+   "enabled": true,
+   "pass1_save_node_id": "9851",
+   "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+   "save_node_id": "9850",
+   "scene_number": 1
+  },
+  "timing": {
+   "actual_cooldown_seconds": 0.0,
+   "actual_warmup_seconds": 0.0,
+   "alignment_padding_seconds": 0.583333333,
+   "audio_leading_padding_seconds": 0.0,
+   "audio_trim_duration_seconds": 6.0,
+   "audio_trim_start_seconds": 0.0,
+   "context_duration_seconds": 6.0,
+   "context_frame_count": 144,
+   "discard_after_scene_seconds": 0.583333333,
+   "final_frame_count": 144,
+   "final_trim_duration_seconds": 6.0,
+   "final_trim_start_seconds": 0.0,
+   "h3_frame_count": 158,
+   "h3_render_duration_seconds": 6.583333333,
+   "requested_cooldown_frames": 0,
+   "requested_warmup_frames": 0,
+   "scene_duration_seconds": 6.0,
+   "source_duration_seconds": null,
+   "source_start_seconds": 0.0,
+   "timeline_end_seconds": 6.0,
+   "timeline_start_seconds": 0.0,
+   "workflow_duration_input_seconds": 6.0
+  },
+  "two_pass": {
+   "block_sparse_attention_enabled": false,
+   "extra_loras": [],
+   "fast_vae_decode_enabled": false,
+   "fast_vae_decode_tile_batch_size": null,
+   "feedforward_enabled": false,
+   "final_height": 576,
+   "final_width": 1024,
+   "latent_upscale_scale": 2.0,
+   "optional_patch_nodes": [],
+   "pass1_steps": 20,
+   "pass2_steps": 2,
+   "pass_acceleration": {
+    "pass1": {
+     "block_sparse_attention": false,
+     "feedforward": false,
+     "te_speed": false
+    },
+    "pass2": {
+     "block_sparse_attention": false,
+     "feedforward": false,
+     "te_speed": false
+    }
+   },
+   "te_speed_enabled": false
+  },
+  "used_seed": 1234,
+  "workflow_path": "minimax_audio_driven_builder_latent_upscale_2pass_api.json"
+ },
+ "scene": {
+  "audio_path": "Z:\\h3fixture\\Projects\\Demo Song\\song.wav",
+  "continuity_mode": "off",
+  "duration": 6.0,
+  "end": 6.0,
+  "image_paths": [],
+  "prompt": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>.",
+  "scene_number": 1,
+  "start": 0.0,
+  "video_references": []
+ },
+ "settings": {
+  "advanced_two_pass_defaults_version": 4,
+  "advanced_two_pass_pass1_denoise": 1,
+  "advanced_two_pass_pass1_megapixels": 0.4,
+  "advanced_two_pass_pass1_resolution_preset": "custom",
+  "advanced_two_pass_pass1_sampler": "euler",
+  "advanced_two_pass_pass1_scheduler": "beta",
+  "advanced_two_pass_pass1_seed": 1234,
+  "advanced_two_pass_pass1_steps": 20,
+  "advanced_two_pass_pass2_denoise": 0.2,
+  "advanced_two_pass_pass2_sampler": "sa_solver",
+  "advanced_two_pass_pass2_scheduler": "simple",
+  "advanced_two_pass_pass2_seed": 5678,
+  "advanced_two_pass_pass2_steps": 1,
+  "advanced_two_pass_vram_preset": "16gb",
+  "aspect_ratio": "16:9 (Widescreen)",
+  "audio_mode": "built_in_audio",
+  "audio_vae_name": "minimax_h3_audio_vae_fp32.safetensors",
+  "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+  "continuity_mode": "off",
+  "continuity_prompt_from_last_frame": false,
+  "cooldown_frames": 0,
+  "denoise": 1,
+  "diffusion_model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+  "easy_cache_bypass": false,
+  "easy_cache_bypass_before_turbo": false,
+  "easy_cache_end_percent": 0.9,
+  "easy_cache_reuse_threshold": 0.3,
+  "easy_cache_start_percent": 0.2,
+  "easy_cache_verbose": false,
+  "enable_fp16_accumulation": true,
+  "i2v_pass_profiles": {},
+  "i2v_pass_settings_version": 1,
+  "i2v_transition_direction": "",
+  "i2v_transition_style": "natural",
+  "latent_context_frames": 39,
+  "location_transition_custom": "",
+  "location_transition_preset": "normal",
+  "lora_count": 0,
+  "loras": [],
+  "megapixels": 0.5625,
+  "pipeline": "standard",
+  "ref_image_size": "max",
+  "render_pass": "two_pass",
+  "resolution_preset": "1k",
+  "sage_attention": "auto",
+  "sampler_name": "res_multistep",
+  "scheduler": "simple",
+  "seed": 1234,
+  "steps": 20,
+  "steps_before_turbo": 20,
+  "t2v_pass_settings_version": 1,
+  "three_pass_lightx_lora_name": "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy_resized_avg_rank_21_bf16.safetensors",
+  "three_pass_lightx_lora_strength": 0.5,
+  "three_pass_pass1_denoise": 1,
+  "three_pass_pass1_megapixels": 0.4,
+  "three_pass_pass1_sampler": "euler",
+  "three_pass_pass1_scheduler": "beta",
+  "three_pass_pass1_seed": 69,
+  "three_pass_pass1_steps": 20,
+  "three_pass_pass1_te_speed": true,
+  "three_pass_pass2_denoise": 0.2,
+  "three_pass_pass2_megapixels": 2,
+  "three_pass_pass2_sampler": "sa_solver",
+  "three_pass_pass2_scheduler": "simple",
+  "three_pass_pass2_seed": 69,
+  "three_pass_pass2_steps": 1,
+  "three_pass_pass2_te_speed": false,
+  "three_pass_pass3_denoise": 0.2,
+  "three_pass_pass3_megapixels": 2,
+  "three_pass_pass3_sampler": "euler",
+  "three_pass_pass3_scheduler": "beta",
+  "three_pass_pass3_seed": 69,
+  "three_pass_pass3_steps": 5,
+  "three_pass_pass3_te_speed": false,
+  "turbo_lora_name": "minimax_h3_turbo_4step_ema_ckpt850.safetensors",
+  "turbo_lora_strength": 1,
+  "two_pass_defaults_version": 1,
+  "two_pass_final_resize_method": "nvidia_rtx_vsr",
+  "two_pass_latent_upscale_scale": 2,
+  "two_pass_latent_upscaler_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+  "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+  "two_pass_lora_preset": 4,
+  "two_pass_lora_strength": 1,
+  "two_pass_output_crf": 19,
+  "two_pass_pass1_denoise": 1,
+  "two_pass_pass1_megapixels": 0.5,
+  "two_pass_pass1_sampler": "res_multistep",
+  "two_pass_pass1_scheduler": "simple",
+  "two_pass_pass1_seed": 1234,
+  "two_pass_pass1_steps": 20,
+  "two_pass_pass2_denoise": 0.2,
+  "two_pass_pass2_megapixels": 1.5,
+  "two_pass_pass2_sampler": "res_multistep",
+  "two_pass_pass2_scheduler": "simple",
+  "two_pass_pass2_seed": 5678,
+  "two_pass_pass2_steps": 2,
+  "two_pass_te_speed_cache_depth": 0.75,
+  "two_pass_te_speed_device": "auto",
+  "two_pass_te_speed_end_percent": 0.9,
+  "two_pass_te_speed_mcs": 2,
+  "two_pass_te_speed_processing_control": 0.07,
+  "two_pass_te_speed_start_percent": 0.1,
+  "two_pass_use_block_sparse_attention": false,
+  "two_pass_use_fast_vae_decode": false,
+  "two_pass_use_feedforward": false,
+  "two_pass_use_te_speed": false,
+  "use_block_sparse_attention": false,
+  "use_fast_vae_decode": false,
+  "use_feedforward": false,
+  "use_loras": false,
+  "use_memory_efficient_sage_attention": false,
+  "use_te_speed": false,
+  "use_turbo_lora": false,
+  "video_mode": "text_to_video",
+  "video_vae_name": "minimax_h3_video_vae_fp16.safetensors",
+  "warmup_frames": 0
+ },
+ "settings_overrides": {
+  "advanced_two_pass_pass1_seed": 1234,
+  "advanced_two_pass_pass2_seed": 5678,
+  "audio_mode": "built_in_audio",
+  "render_pass": "two_pass",
+  "seed": 1234,
+  "t2v_pass_settings_version": 1,
+  "two_pass_pass1_seed": 1234,
+  "two_pass_pass2_seed": 5678,
+  "video_mode": "text_to_video"
+ }
+}

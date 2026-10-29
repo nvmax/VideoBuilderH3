@@ -335,11 +335,8 @@ pub fn apply_settings_patch(session: &mut Obj, patch: &Obj) -> Result<(), ApiErr
                 if !problems.is_empty() {
                     return Err(ApiError::new(axum::http::StatusCode::BAD_REQUEST, "SETTINGS_INVALID", "Some MiniMax H3 settings are not valid.").details(json!({"invalid_fields": problems})));
                 }
-                let mut current: Map<String, Value> = session.get("minimax_h3_settings").and_then(Value::as_object).cloned().unwrap_or_default();
-                for (k, v) in fields {
-                    current.insert(k.clone(), v.clone());
-                }
-                session.insert("minimax_h3_settings".into(), Value::Object(current));
+                let merged = h3_core::settings::apply_settings_patch(session.get("minimax_h3_settings").and_then(Value::as_object), fields, None);
+                session.insert("minimax_h3_settings".into(), Value::Object(merged));
             }
             "project" => {
                 const ALLOWED: [&str; 7] =

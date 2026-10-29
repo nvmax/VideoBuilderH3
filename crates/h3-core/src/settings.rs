@@ -380,6 +380,15 @@ pub fn normalize_settings(raw: Option<&Value>) -> Obj {
                 json!("minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors"),
             );
         }
+    } else if raw.get("video_mode").and_then(Value::as_str) == Some("text_to_video") {
+        // Older T2V saves ignored render_pass even when it held the global default. Only a save that names the mode counts: the default mode is T2V.
+        let version = raw.get("t2v_pass_settings_version").filter(|v| truthy(v)).and_then(to_float).map_or(0, |f| f as i64);
+        if version < 1 {
+            settings.insert("render_pass".into(), json!("single"));
+        } else if str_of(&settings, "render_pass") == "three_pass" {
+            settings.insert("render_pass".into(), json!("two_pass"));
+        }
+        settings.insert("t2v_pass_settings_version".into(), json!(1));
     }
 
     // One output resolution for every pass type. Older saves took it from the pass type they rendered with.
@@ -428,19 +437,42 @@ pub fn settings_for_scene(session: &Value, segment: Option<&Value>) -> Obj {
             // The pipeline belongs to the whole project, so a scene with its own settings follows it.
             let pipeline = project_raw.and_then(|p| p.get("pipeline")).cloned().unwrap_or_else(|| json!("standard"));
             merged.insert("pipeline".into(), pipeline);
+            if str_of(&merged, "video_mode") == "text_to_video" {
+                if let Some(Value::Object(scene)) = scene_raw {
+                    merged.insert("t2v_pass_settings_version".into(), scene.get("t2v_pass_settings_version").cloned().unwrap_or(json!(0)));
+                }
+            }
         }
     }
     normalize_settings(Some(&Value::Object(merged)))
 }
 
-/// Supported pass: I2V has Single and 2 Pass, reference modes also have Advanced.
+/// Merge an intentional API edit without treating pass selection as an old save. Unedited legacy saves still migrate to Single. An explicit
+/// pass edit opts into the current pass semantics, like the Builder's pass buttons do. `inherited_mode` is the project's mode, for a scene.
+pub fn apply_settings_patch(current: Option<&Obj>, patch: &Obj, inherited_mode: Option<&str>) -> Obj {
+    let mut merged: Obj = current.cloned().unwrap_or_default();
+    for (key, value) in patch {
+        merged.insert(key.clone(), value.clone());
+    }
+    if patch.contains_key("render_pass") {
+        let mode = merged.get("video_mode").filter(|v| truthy(v)).map(|v| text_or_empty(Some(v))).or_else(|| inherited_mode.filter(|m| !m.is_empty()).map(str::to_string)).unwrap_or_else(|| "text_to_video".into());
+        if mode == "text_to_video" {
+            merged.insert("t2v_pass_settings_version".into(), json!(1));
+        } else if mode == "image_to_video" {
+            merged.insert("i2v_pass_settings_version".into(), json!(1));
+        }
+    }
+    merged
+}
+
+/// Supported pass: T2V and I2V have Single and 2 Pass, reference modes also have Advanced.
 pub fn render_pass(settings: &Obj) -> &'static str {
     let pass = match settings.get("render_pass") {
         Some(v) if truthy(v) => text_or_empty(Some(v)),
         _ => "single".to_string(),
     };
     let mode = str_of(settings, "video_mode");
-    if pass == "two_pass" && mode == "image_to_video" {
+    if pass == "two_pass" && (mode == "image_to_video" || mode == "text_to_video") {
         return "two_pass";
     }
     if (pass == "two_pass" || pass == "three_pass") && REFERENCE_MODES.contains(&mode) {
@@ -467,11 +499,6 @@ pub fn build_render_payload(settings: &Obj, overrides: Option<&Obj>) -> Result<O
     let two_pass = pass == "two_pass";
     let advanced = pass == "three_pass";
     let multi = two_pass || advanced;
-    if advanced && str_of(s, "audio_mode") == "built_in_audio" {
-        return Err(err(
-            "MiniMax H3 2 Pass Advanced currently supports Input Audio only. Switch audio_mode to input_audio, or use Single or 2 Pass, before rendering.",
-        ));
-    }
     let pick = |single: Value, two: Value, adv: Value| if two_pass { two } else if advanced { adv } else { single };
 
     let mut continuity = match s.get("continuity_mode") {

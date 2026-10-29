@@ -179,6 +179,12 @@ def main() -> int:
         {"video_mode": "image_to_video", "render_pass": "three_pass", "i2v_pass_settings_version": 1},
         {"video_mode": "reference_to_video", "render_pass": "three_pass"},
         {"video_mode": "text_to_video", "render_pass": "two_pass"}, {"video_mode": "bogus"},
+        {"video_mode": "text_to_video", "render_pass": "two_pass", "t2v_pass_settings_version": 1},
+        {"video_mode": "text_to_video", "render_pass": "three_pass", "t2v_pass_settings_version": 1},
+        {"video_mode": "text_to_video", "render_pass": "three_pass"}, {"video_mode": "text_to_video", "t2v_pass_settings_version": "bad"},
+        {"video_mode": "text_to_video", "render_pass": "two_pass", "t2v_pass_settings_version": "1"},
+        {"video_mode": "text_to_video", "render_pass": "two_pass", "t2v_pass_settings_version": 0},
+        {"render_pass": "two_pass", "t2v_pass_settings_version": 1},
         {"continuity_mode": "latent_continuation_masked"}, {"continuity_mode": "latent_continuation"}, {"continuity_mode": "bogus"},
         {"continuity_mode": "latent_continuation_masked", "latent_context_frames": 90},
         {"continuity_mode": "latent_continuation_masked", "latent_context_frames": 50},
@@ -212,7 +218,7 @@ def main() -> int:
     for mode, rp, audio, cont in itertools.product(
             ("reference_to_video", "image_to_video", "image_reference_to_video", "text_to_video"),
             ("single", "two_pass", "three_pass"), ("input_audio", "built_in_audio"), ("off", "latent_continuation_masked")):
-        raw = {"video_mode": mode, "render_pass": rp, "audio_mode": audio, "continuity_mode": cont, "i2v_pass_settings_version": 1,
+        raw = {"video_mode": mode, "render_pass": rp, "audio_mode": audio, "continuity_mode": cont, "i2v_pass_settings_version": 1, "t2v_pass_settings_version": 1,
                "seed": 1234, "two_pass_pass1_seed": 1234, "two_pass_pass2_seed": 5678,
                "advanced_two_pass_pass1_seed": 1234, "advanced_two_pass_pass2_seed": 5678}
 
@@ -233,7 +239,33 @@ def main() -> int:
         {"use_scene_minimax_h3_settings": True, "minimax_h3_settings": "bad"},
     ]
     cases = [{"input": {"session": session, "segment": seg}, **call(payload_mod.minimax_h3_settings_for_scene, session, seg)} for seg in segments]
+    t2v_session = {"minimax_h3_settings": {"video_mode": "text_to_video", "render_pass": "two_pass", "t2v_pass_settings_version": 1}}
+    t2v_segments = [
+        {"use_scene_minimax_h3_settings": True, "minimax_h3_settings": {"video_mode": "text_to_video", "render_pass": "two_pass"}},
+        {"use_scene_minimax_h3_settings": True, "minimax_h3_settings": {"video_mode": "text_to_video", "render_pass": "two_pass", "t2v_pass_settings_version": 1}},
+        {"use_scene_minimax_h3_settings": True, "minimax_h3_settings": {"steps": 8}},
+        {"use_scene_minimax_h3_settings": True, "minimax_h3_settings": {"steps": 8}, "minimax_h3_mode": "text_to_video"},
+        {"use_scene_minimax_h3_settings": False, "minimax_h3_settings": {"video_mode": "text_to_video", "render_pass": "single"}},
+    ]
+    cases += [{"input": {"session": t2v_session, "segment": seg}, **call(payload_mod.minimax_h3_settings_for_scene, t2v_session, seg)} for seg in t2v_segments]
     write(args.out, "settings_for_scene", "minimax_h3_settings_for_scene", cases)
+
+    # An API edit of the settings: a pass choice opts into the current pass rules, other edits leave an old save to migrate.
+    edits = [
+        (None, {"render_pass": "two_pass"}, None),
+        ({"video_mode": "text_to_video", "render_pass": "single"}, {"render_pass": "two_pass"}, None),
+        ({"video_mode": "image_to_video"}, {"render_pass": "two_pass"}, None),
+        ({"video_mode": "reference_to_video"}, {"render_pass": "three_pass"}, None),
+        ({}, {"render_pass": "two_pass"}, "image_to_video"),
+        ({}, {"render_pass": "two_pass"}, "reference_to_video"),
+        ({"steps": 20}, {"steps": 12}, None),
+        ({"video_mode": "text_to_video", "render_pass": "two_pass"}, {"steps": 12}, None),
+        ({"video_mode": "text_to_video"}, {"render_pass": "two_pass", "steps": 12}, "image_to_video"),
+        ({"video_mode": ""}, {"render_pass": "two_pass"}, "image_to_video"),
+    ]
+    cases = [{"input": {"current": cur, "patch": patch, "inherited_mode": inherited},
+              **call(payload_mod.apply_minimax_h3_settings_patch, cur, patch, inherited)} for cur, patch, inherited in edits]
+    write(args.out, "settings_apply_patch", "apply_minimax_h3_settings_patch", cases)
     return 0
 
 

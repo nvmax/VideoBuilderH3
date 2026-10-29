@@ -3,7 +3,7 @@
 mod common;
 
 use h3_core::continuity::{canonical_continuity_mode, normalize_continuity_mode};
-use h3_core::settings::{build_render_payload, normalize_settings, render_pass, settings_for_scene, validate_patch, workflow_key};
+use h3_core::settings::{apply_settings_patch, build_render_payload, normalize_settings, render_pass, settings_for_scene, validate_patch, workflow_key};
 use serde_json::{json, Value};
 
 #[test]
@@ -39,6 +39,17 @@ fn settings_for_a_scene() {
     for c in common::cases("core/settings_for_scene.json") {
         let segment = c["input"]["segment"].clone();
         let got = Value::Object(settings_for_scene(&c["input"]["session"], Some(&segment).filter(|s| !s.is_null())));
+        common::assert_json(&got, &c["output"], &c);
+    }
+}
+
+#[test]
+fn settings_edits_merge_like_the_pack() {
+    let cases = common::cases("core/settings_apply_patch.json");
+    assert!(cases.len() >= 10);
+    for c in cases {
+        let patch = c["input"]["patch"].as_object().unwrap();
+        let got = Value::Object(apply_settings_patch(c["input"]["current"].as_object(), patch, c["input"]["inherited_mode"].as_str()));
         common::assert_json(&got, &c["output"], &c);
     }
 }

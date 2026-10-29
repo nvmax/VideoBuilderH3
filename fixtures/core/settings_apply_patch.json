@@ -1,0 +1,156 @@
+{
+ "cases": [
+  {
+   "input": {
+    "current": null,
+    "inherited_mode": null,
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {
+    "render_pass": "two_pass",
+    "t2v_pass_settings_version": 1
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "single",
+     "video_mode": "text_to_video"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {
+    "render_pass": "two_pass",
+    "t2v_pass_settings_version": 1,
+    "video_mode": "text_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "video_mode": "image_to_video"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {
+    "i2v_pass_settings_version": 1,
+    "render_pass": "two_pass",
+    "video_mode": "image_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "video_mode": "reference_to_video"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "render_pass": "three_pass"
+    }
+   },
+   "output": {
+    "render_pass": "three_pass",
+    "video_mode": "reference_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {},
+    "inherited_mode": "image_to_video",
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {
+    "i2v_pass_settings_version": 1,
+    "render_pass": "two_pass"
+   }
+  },
+  {
+   "input": {
+    "current": {},
+    "inherited_mode": "reference_to_video",
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {
+    "render_pass": "two_pass"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "steps": 20
+    },
+    "inherited_mode": null,
+    "patch": {
+     "steps": 12
+    }
+   },
+   "output": {
+    "steps": 12
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "two_pass",
+     "video_mode": "text_to_video"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "steps": 12
+    }
+   },
+   "output": {
+    "render_pass": "two_pass",
+    "steps": 12,
+    "video_mode": "text_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "video_mode": "text_to_video"
+    },
+    "inherited_mode": "image_to_video",
+    "patch": {
+     "render_pass": "two_pass",
+     "steps": 12
+    }
+   },
+   "output": {
+    "render_pass": "two_pass",
+    "steps": 12,
+    "t2v_pass_settings_version": 1,
+    "video_mode": "text_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "video_mode": ""
+    },
+    "inherited_mode": "image_to_video",
+    "patch": {
+     "render_pass": "two_pass"
+    }
+   },
+   "output": {
+    "i2v_pass_settings_version": 1,
+    "render_pass": "two_pass",
+    "video_mode": ""
+   }
+  }
+ ],
+ "function": "apply_minimax_h3_settings_patch"
+}

@@ -258,7 +258,11 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
     let mut restore_audio = None;
     let built_in = text_or_empty(payload.get("audio_mode").filter(|v| truthy(v))).trim() == "built_in_audio";
     let mut audio = audio;
-    if !audio.is_empty() && !built_in {
+    // Built-in audio is generated with the picture: no song goes to the graph.
+    if built_in {
+        audio.clear();
+    }
+    if !audio.is_empty() {
         let masked = crate::audio_mask::audio_override_for_scene(&segment, &loaded.project_folder, duration)
             .map_err(|e| RenderError::Invalid(format!("Scene {scene_number}: {e}")))?;
         if let Some(masked) = masked {
