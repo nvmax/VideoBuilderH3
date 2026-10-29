@@ -278,5 +278,54 @@
     "find": "if (segment?.video_status === \"running\") rendering.push(sceneLabel(segment, index));",
     "replace": "if (segment?.video_status === \"running\" || window.__h3Builder?.agentRendering?.has(segment?.id)) rendering.push(sceneLabel(segment, index));",
     "expect": 1
+  },
+  {
+    "why": "RefMod cards: the reference module can refresh the scene's prompt status when it brings a card's tokens in line with the library (PR 6).",
+    "file": "music_video_builder/builder.mjs",
+    "find": "    rtvSceneImageAnchorPayload, sceneDisplayName, sceneReferenceMapValue, segmentImageSource,\n    segmentIndexInfo, state, syncMiniMaxReferenceButtons,\n  });",
+    "replace": "    rtvSceneImageAnchorPayload, sceneDisplayName, sceneReferenceMapValue, segmentImageSource,\n    segmentIndexInfo, state, syncMiniMaxReferenceButtons, updateMiniMaxPromptCharacterStatus,\n  });",
+    "expect": 1
+  },
+  {
+    "why": "RefMod cards: bring a card's kind, tokens and frames in line with the saved RefMod when the scene status is worked out (PR 6).",
+    "file": "music_video_builder/minimax_references.mjs",
+    "find": "import { normalizeMiniMaxH3Mode, normalizeMiniMaxH3Pipeline } from \"./minimax_h3.mjs\";\nimport { applySceneItemUsers, assignLabels, clothingChoices, composeRefmodItems, sceneSubjectCards, tokenStatusText } from \"./refmod_labels.mjs\";",
+    "replace": "import { normalizeMiniMaxH3Mode, normalizeMiniMaxH3Pipeline } from \"./minimax_h3.mjs\";\nimport { loadRefmodLibrary, syncRefmodCards } from \"./refmod_card.mjs\";\nimport { applySceneItemUsers, assignLabels, clothingChoices, composeRefmodItems, sceneSubjectCards, tokenStatusText } from \"./refmod_labels.mjs\";",
+    "expect": 1
+  },
+  {
+    "why": "RefMod cards: the reference module gets the prompt status refresh (PR 6).",
+    "file": "music_video_builder/minimax_references.mjs",
+    "find": "  rtvSceneImageAnchorPayload, sceneDisplayName, sceneReferenceMapValue, segmentImageSource, segmentIndexInfo,\n  state, syncMiniMaxReferenceButtons,\n}) {",
+    "replace": "  rtvSceneImageAnchorPayload, sceneDisplayName, sceneReferenceMapValue, segmentImageSource, segmentIndexInfo,\n  state, syncMiniMaxReferenceButtons, updateMiniMaxPromptCharacterStatus,\n}) {",
+    "expect": 1
+  },
+  {
+    "why": "RefMod cards: once per read of the library, the scene's cards take the tokens and frames of the RefMods on disk, so a RefMod saved again with fewer frames does not keep a false 'Over 8,192' warning (PR 6).",
+    "file": "music_video_builder/minimax_references.mjs",
+    "find": "\n  // The scene's RefMods in render order, labelled the way Text Encode with RefMods will number them. Items with",
+    "replace": "\n  // The cards keep the token count their RefMod had when it was picked. Once per read of the library, bring them in line\n  // with the RefMods on disk, so a RefMod saved again with fewer frames does not keep an old total and a false warning.\n  let syncedLibrary = null;\n  function syncRefmodCardsWithLibrary() {\n    const request = loadRefmodLibrary();\n    if (request === syncedLibrary) return;\n    syncedLibrary = request;\n    request.then((library) => {\n      const refs = state.fluxReferenceBuilder || {};\n      const cards = [refs.subjects, refs.locations, refs.extra_subjects].flatMap((list) => (Array.isArray(list) ? list : []));\n      if (!syncRefmodCards(cards, library)) return;\n      updateMiniMaxPromptCharacterStatus?.();\n      syncMiniMaxReferenceButtons?.();\n      autoSaveSessionQuiet?.(\"RefMod token counts\");\n    });\n  }\n\n  // The scene's RefMods in render order, labelled the way Text Encode with RefMods will number them. Items with",
+    "expect": 1
+  },
+  {
+    "why": "RefMod cards: the scene status syncs the cards before it counts tokens (PR 6).",
+    "file": "music_video_builder/minimax_references.mjs",
+    "find": "      // A scene sends at most MAX_SCENE_REFERENCES RefMods. The token total only warns, it never blocks.\n      const items = miniMaxRefmodItemsForSegment(segment);",
+    "replace": "      // A scene sends at most MAX_SCENE_REFERENCES RefMods. The token total only warns, it never blocks.\n      syncRefmodCardsWithLibrary();\n      const items = miniMaxRefmodItemsForSegment(segment);",
+    "expect": 1
+  },
+  {
+    "why": "RefMod cards: syncRefmodCards updates kind, tokens and frames of cards from the library and leaves strength and RefMods that are not in the library alone (PR 6).",
+    "file": "music_video_builder/refmod_card.mjs",
+    "find": "\nexport function refmodPreviewUrl(name) {",
+    "replace": "\n// A card copies its RefMod's kind, tokens and frames when the RefMod is picked. A RefMod saved again under the same name\n// (fewer frames, another quality) changes them, so bring the cards in line with the library. Cards whose RefMod is not\n// in the library keep what they have. Returns true when a card changed.\nexport function syncRefmodCards(cards, library) {\n  const byName = new Map((library || []).map((entry) => [entry.name, entry]));\n  let changed = false;\n  for (const card of cards || []) {\n    const refmod = card?.refmod;\n    const entry = refmod && typeof refmod === \"object\" ? byName.get(refmod.name) : null;\n    if (!entry) continue;\n    const kind = entry.kind === \"image\" ? \"image\" : \"video\";\n    if (refmod.kind === kind && refmod.tokens === entry.tokens && refmod.frames === entry.frames) continue;\n    Object.assign(refmod, { kind, tokens: entry.tokens, frames: entry.frames });\n    changed = true;\n  }\n  return changed;\n}\n\nexport function refmodPreviewUrl(name) {",
+    "expect": 1
+  },
+  {
+    "why": "RefMod cards: a card's own picker syncs the card whenever it loads the library (PR 6).",
+    "file": "music_video_builder/refmod_card.mjs",
+    "find": "    refreshInfo();\n  };",
+    "replace": "    refreshInfo();\n    if (syncRefmodCards([item], library)) onChange(false);\n  };",
+    "expect": 1
   }
 ]
