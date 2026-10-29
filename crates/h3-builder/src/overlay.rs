@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 
 use h3_core::overlay_layers::{caption_clips, caption_lines_from_scenes, caption_lines_from_timestamped, shift_overlay_layers, TEXT_STYLES};
 use h3_core::pyval::{to_float, truthy, Obj};
-use h3_media::fonts::{ensure_fonts, list_fonts, resolve_font, DEFAULT_FONT};
+use h3_media::fonts::{ensure_fonts, list_all_fonts, resolve_font, DEFAULT_FONT};
 use h3_media::overlay::{render_overlay, render_overlay_frame};
 use h3_media::post::{normalize_encode_crf, normalize_encode_preset};
 use serde_json::{json, Value};
@@ -143,11 +143,12 @@ pub fn preview_frame(env: &Env, payload: &Obj) -> Reply {
     Ok(reply)
 }
 
-/// `GET /vrgdg/music_builder/overlay_layers/fonts`: the fonts a text clip can use (the bundled ones and any font file in the fonts folder).
+/// `GET /vrgdg/music_builder/overlay_layers/fonts`: the fonts a text clip can use: the bundled ones, any font file in the fonts folder and the
+/// fonts installed on the computer (`system`, read from the system font folders again on every request).
 pub fn fonts(env: &Env) -> Reply {
     let dir = env.overlay_library().join("fonts");
     let _ = ensure_fonts(&dir);
-    let list: Vec<Value> = list_fonts(&dir).into_iter().map(|f| json!({"name": f.name, "file": f.file, "bundled": f.bundled})).collect();
+    let list: Vec<Value> = list_all_fonts(&dir, true).into_iter().map(|f| json!({"name": f.name, "file": f.file, "bundled": f.bundled, "system": f.system})).collect();
     Ok(json!({"fonts": list, "default": DEFAULT_FONT, "folder": dir.display().to_string()}))
 }
 
@@ -158,11 +159,15 @@ pub fn font_path(env: &Env, name: &str) -> Result<PathBuf, String> {
     resolve_font(&dir, name).ok_or_else(|| format!("There is no font called {name}."))
 }
 
-/// `POST /vrgdg/music_builder/overlay_layers/lyric_captions`: `{project_folder, style?, from?, to?}`. One text clip for each line of the song's lyrics, with the
+/// `POST /vrgdg/music_builder/overlay_layers/lyric_captions`: `{project_folder, style?, font?, from?, to?}`. One text clip for each line of the song's lyrics, with the
 /// time the line is sung: the project's word-timed lyrics when it has them, otherwise the lyrics of each scene over the whole scene. The clips
-/// come back for the page to add (they carry `group: "lyric_captions"`).
+/// come back for the page to add (they carry `group: "lyric_captions"`). A `font` (any name of the fonts list) replaces the font of the style.
 pub fn lyric_captions(env: &Env, payload: &Obj) -> Reply {
-    let _ = env;
+    let font = path_text(payload, "font");
+    let font = font.trim();
+    if !font.is_empty() {
+        font_path(env, font)?;
+    }
     let folder = path_text(payload, "project_folder");
     let folder = Path::new(folder.trim());
     if !folder.join("vrgdg_builder_session.json").is_file() {
@@ -187,6 +192,11 @@ pub fn lyric_captions(env: &Env, payload: &Obj) -> Reply {
         (Some(a), Some(b)) if b > a => Some((a, b)),
         _ => None,
     };
-    let clips = caption_clips(&lines, &style, range);
+    let mut clips = caption_clips(&lines, &style, range);
+    if !font.is_empty() {
+        for clip in clips.iter_mut().filter_map(Value::as_object_mut) {
+            clip.insert("font".into(), json!(font));
+        }
+    }
     Ok(json!({"source": source, "style": style, "styles": TEXT_STYLES, "count": clips.len(), "clips": clips}))
 }

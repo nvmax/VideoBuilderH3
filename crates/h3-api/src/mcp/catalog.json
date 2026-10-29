@@ -4616,7 +4616,7 @@
   },
   {
    "name": "api_get_overlay_library",
-   "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media. (GET /overlay-library)",
+   "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use: the bundled fonts, font files in the fonts folder and the fonts installed on the computer), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media. (GET /overlay-library)",
    "inputSchema": {
     "type": "object",
     "properties": {},
@@ -4760,7 +4760,7 @@
   },
   {
    "name": "api_post_overlay_layers_lyric_captions",
-   "description": "Add one text clip for each lyric line, timed to the words of the song when the project has word timing (`project_context/timestamped_lyrics.json`, from the lyrics alignment) and otherwise one caption over each scene that has lyrics. `style` is clean (default), bold or lower (a lower third). `from` and `to` (seconds) limit it to a range. Captions from an earlier run are replaced (only those inside the range when one is given) unless `replace` is false. The reply is the whole list with `source` (timestamped_lyrics or scenes), `style` and `captions`. (POST /projects/{pid}/overlay-layers/lyric_captions)",
+   "description": "Add one text clip for each lyric line, timed to the words of the song when the project has word timing (`project_context/timestamped_lyrics.json`, from the lyrics alignment) and otherwise one caption over each scene that has lyrics. `style` is clean (default), bold or lower (a lower third). `font` is a name from the library's `fonts` list and replaces the font of the style. `from` and `to` (seconds) limit it to a range. Captions from an earlier run are replaced (only those inside the range when one is given) unless `replace` is false. The reply is the whole list with `source` (timestamped_lyrics or scenes), `style` and `captions`. (POST /projects/{pid}/overlay-layers/lyric_captions)",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -4770,9 +4770,10 @@
      },
      "body": {
       "type": "object",
-      "description": "JSON request body. Fields: style, from, to, replace.",
+      "description": "JSON request body. Fields: style, font, from, to, replace.",
       "properties": {
        "style": {},
+       "font": {},
        "from": {},
        "to": {},
        "replace": {}
@@ -5510,7 +5511,7 @@
   {
    "method": "GET",
    "path": "/overlay-library",
-   "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media.",
+   "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use: the bundled fonts, font files in the fonts folder and the fonts installed on the computer), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media.",
    "job": false,
    "body_keys": [],
    "query": [],
@@ -5910,10 +5911,11 @@
   {
    "method": "POST",
    "path": "/projects/{pid}/overlay-layers/lyric_captions",
-   "description": "Add one text clip for each lyric line, timed to the words of the song when the project has word timing (`project_context/timestamped_lyrics.json`, from the lyrics alignment) and otherwise one caption over each scene that has lyrics. `style` is clean (default), bold or lower (a lower third). `from` and `to` (seconds) limit it to a range. Captions from an earlier run are replaced (only those inside the range when one is given) unless `replace` is false. The reply is the whole list with `source` (timestamped_lyrics or scenes), `style` and `captions`.",
+   "description": "Add one text clip for each lyric line, timed to the words of the song when the project has word timing (`project_context/timestamped_lyrics.json`, from the lyrics alignment) and otherwise one caption over each scene that has lyrics. `style` is clean (default), bold or lower (a lower third). `font` is a name from the library's `fonts` list and replaces the font of the style. `from` and `to` (seconds) limit it to a range. Captions from an earlier run are replaced (only those inside the range when one is given) unless `replace` is false. The reply is the whole list with `source` (timestamped_lyrics or scenes), `style` and `captions`.",
    "job": false,
    "body_keys": [
     "style",
+    "font",
     "from",
     "to",
     "replace"

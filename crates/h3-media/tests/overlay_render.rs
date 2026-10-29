@@ -438,6 +438,25 @@ fn text_shows_only_inside_its_window_with_the_chosen_look() {
 }
 
 #[test]
+fn text_is_drawn_in_fonts_installed_on_the_computer() {
+    let Some(tools) = tools() else { return };
+    let installed = h3_media::fonts::system_fonts(false);
+    if installed.is_empty() {
+        eprintln!("no fonts are installed on this computer: installed font test skipped");
+        return;
+    }
+    let dir = tempfile::tempdir().unwrap();
+    let base = base_clip(&tools, dir.path(), "30");
+    // The first, the middle and the last of the list, so a few different families are tried.
+    for font in [&installed[0], &installed[installed.len() / 2], &installed[installed.len() - 1]] {
+        let out = dir.path().join("installed.mp4");
+        let reply = render(&tools, &base, &out, json!([{"kind": "text", "id": "t", "start": 0, "end": 4, "text": "VERSE", "font": font.name, "size": 150, "fade_in": 0, "fade_out": 0}]), dir.path());
+        assert_eq!(reply["applied"], json!(["t"]), "{}: {reply}", font.name);
+        assert!(bright(&frame(&tools, &out, 2.0)).0 > 300, "{} is drawn", font.name);
+    }
+}
+
+#[test]
 fn text_with_quotes_colons_percent_signs_backslashes_and_other_scripts_is_drawn_as_it_is() {
     let Some(tools) = tools() else { return };
     let dir = tempfile::tempdir().unwrap();

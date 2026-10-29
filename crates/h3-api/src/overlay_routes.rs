@@ -128,12 +128,12 @@ pub async fn add_clips(State(state): Shared, Path(pid): Path<String>, headers: H
     Ok(success(view, revision))
 }
 
-/// `POST /projects/{pid}/overlay-layers/lyric_captions`: `{style?, from?, to?, replace?}`. One text clip for each lyric line, timed to the words of the song when
+/// `POST /projects/{pid}/overlay-layers/lyric_captions`: `{style?, font?, from?, to?, replace?}`. One text clip for each lyric line, timed to the words of the song when
 /// the project has them and to each scene when it does not. The earlier captions (those inside `from`..`to` when it is given) are replaced unless
-/// `replace` is false.
+/// `replace` is false. A `font` (a name of the fonts list, which includes the fonts installed on the computer) replaces the font of the style.
 pub async fn lyric_captions(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
     let fields = body_object(body)?;
-    reject_unknown(&fields, &["style", "from", "to", "replace"])?;
+    reject_unknown(&fields, &["style", "font", "from", "to", "replace"])?;
     let expected = if_match(&headers)?;
     let folder = resolve_project(&state.roots, &pid)?;
     let env = state.builder_env();
@@ -141,7 +141,7 @@ pub async fn lyric_captions(State(state): Shared, Path(pid): Path<String>, heade
     let view = blocking(move || -> Result<Value, ApiError> {
         let mut payload = Obj::new();
         payload.insert("project_folder".into(), json!(folder.display().to_string()));
-        for key in ["style", "from", "to"] {
+        for key in ["style", "font", "from", "to"] {
             if let Some(value) = fields.get(key).filter(|v| !v.is_null()) {
                 payload.insert(key.into(), value.clone());
             }

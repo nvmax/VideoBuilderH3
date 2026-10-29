@@ -160,6 +160,22 @@ async fn an_agent_reads_replaces_and_adds_clips_and_sees_what_was_saved() {
 }
 
 #[tokio::test]
+async fn lyric_captions_take_any_font_of_the_fonts_list_and_refuse_one_that_is_not_there() {
+    let s = start().await;
+    let chosen = s.ok(Method::POST, "/projects/Demo/overlay-layers/lyric_captions", Some(json!({"style": "bold", "font": " Caveat "}))).await;
+    let fonts: Vec<&str> = chosen["overlay_layers"].as_array().unwrap().iter().map(|c| c["font"].as_str().unwrap()).collect();
+    assert_eq!(fonts, ["Caveat", "Caveat"], "the font replaces the font of the style");
+    // A font installed on this computer works the same way (the first one, when the computer has any).
+    if let Some(installed) = h3_media::fonts::system_fonts(false).first() {
+        let reply = s.ok(Method::POST, "/projects/Demo/overlay-layers/lyric_captions", Some(json!({"font": installed.name}))).await;
+        assert_eq!(reply["overlay_layers"][0]["font"], json!(installed.name));
+    }
+    let (code, body) = s.call(Method::POST, "/projects/Demo/overlay-layers/lyric_captions", Some(json!({"font": "No Such Font"})), None).await;
+    assert_eq!(code, 400, "{body}");
+    assert!(body.to_string().contains("There is no font called No Such Font."), "{body}");
+}
+
+#[tokio::test]
 async fn lyric_captions_come_from_the_scenes_replace_each_other_and_take_a_style() {
     let s = start().await;
     let first = s.ok(Method::POST, "/projects/Demo/overlay-layers/lyric_captions", Some(json!({"style": "bold"}))).await;
