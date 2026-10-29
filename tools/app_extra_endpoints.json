@@ -84,6 +84,172 @@
    "if_match": true,
    "job": false,
    "description": "Add a clip of the overlay library (`library_id`, from GET /overlay-library) as an overlay: it is copied into the project's `overlay` folder and starts at `start` (default 0) and runs to `end` (default the end of the timeline, looping its file). The blend mode is the library's suggestion (screen for clips on black). Any other media clip field (opacity, blend_mode, speed, fades) can be sent too. The reply is the whole list with `added` and the project `path`."
+  },
+  {
+   "method": "GET",
+   "path": "/transitions",
+   "path_params": [],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The transitions the timeline's transition lane can hold: `transitions` (each with `id`, `origin` (`original` for the app's own, `library` for the gl-transitions collection), `author`, `license`, `description`, `tags` and `params`: name, type, default and range of each setting), and `count`. Use an `id` as `transition` in the project's transitions or in a stitch."
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/transitions",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The project's transitions in timeline order, as the stitch reads them: `scene_transitions`, each `{id, transition, start, end, seconds, params}` (a block of the timeline like an overlay: `start` and `end` are seconds on the timeline, `seconds` its length), `count`, and `revision`. On a cut between two scenes the block draws one scene into the other, inside a scene it is an effect on that scene's footage. Every stitch draws them, and so do the Video Builder's Render All and Export."
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/transitions",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [
+    "scene_transitions"
+   ],
+   "query": [],
+   "if_match": true,
+   "job": false,
+   "description": "Replace all the project's transitions with `scene_transitions`, a list of `{transition, start, seconds, params, id}`. `transition` is an id from GET /transitions, `start` the time on the timeline in seconds, `seconds` the length 0.1 to 10 (default 0.5), `params` the settings to change from their defaults, `id` optional. Instead of `start`, `after_scene` (the number, 1 = first, or id of the scene before a cut) with `align` (center by default, end or start) puts the block on that cut. Blocks may not overlap: a later one starts where the one before it ends when the video is drawn. The reply is the saved list."
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/transitions/set",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [
+    "id",
+    "transition",
+    "start",
+    "after_scene",
+    "seconds",
+    "align",
+    "params"
+   ],
+   "query": [],
+   "if_match": true,
+   "job": false,
+   "description": "Add one transition, change one, or remove one, and leave the others alone. Without an `id` a new block is added at `start`, or on the cut after `after_scene` (placed around the cut by `align`). With the `id` of an existing block only the fields sent change. A `transition` that is null, empty or `none` removes the block with that `id`, or the blocks that cover the cut after `after_scene`. `seconds` and `params` are as in PUT /projects/{pid}/transitions. The reply is the whole list."
+  },
+  {
+   "method": "GET",
+   "path": "/effects",
+   "path_params": [],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The effects the timeline's effect lane can hold: `effects` (each with `id`, `kind`, `category` (how the picker groups it), `origin` (`original`: the app's own), `author`, `license`, `description`, `tags` and `params`: name, type, default and range of each setting), and `count`. Use an `id` as `look` in the project's effects or in a stitch. An effect adds or bends something (a glitch, a blur, a flash). `progress` runs 0 to 1 over its block and `time` is the seconds since it started."
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/effects",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The project's effects in timeline order, as the stitch reads them: `video_effects`, each `{id, look, start, end, seconds, intensity, params}` (a block of the timeline like an overlay: `start` and `end` are seconds on the timeline, `seconds` its length, `intensity` 0 to 1 how much of its change is mixed in, `params` the settings changed from their defaults), `count`, and `revision`. Blocks may overlap: a frame gets every filter that covers it, then every effect. Every stitch draws them, and so do the Video Builder's Render All and Export, before the overlays are laid over the video."
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/effects",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [
+    "video_effects"
+   ],
+   "query": [],
+   "if_match": true,
+   "job": false,
+   "description": "Replace all the project's effects with `video_effects`, a list of `{look, start, seconds, intensity, params, id}`. `look` is an id from GET /effects, `start` the time on the timeline in seconds, `seconds` the length 0.05 or more (default 1), `intensity` 0 to 1 (default 1), `params` the settings to change from their defaults, `id` optional. The reply is the saved list."
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/effects/set",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [
+    "id",
+    "look",
+    "start",
+    "seconds",
+    "intensity",
+    "params"
+   ],
+   "query": [],
+   "if_match": true,
+   "job": false,
+   "description": "Add one effect, change one, or remove one, and leave the others alone. Without an `id` a new block is added at `start`. With the `id` of an existing block only the fields sent change. A `look` that is null, empty or `none` removes the block with that `id`. `seconds`, `intensity` and `params` are as in PUT /projects/{pid}/effects. The reply is the whole list."
+  },
+  {
+   "method": "GET",
+   "path": "/filters",
+   "path_params": [],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The filters the timeline's filter lane can hold: `filters` (each with `id`, `kind`, `category` (how the picker groups it), `origin` (`original`: the app's own), `author`, `license`, `description`, `tags` and `params`: name, type, default and range of each setting), and `count`. Use an `id` as `look` in the project's filters or in a stitch. A filter grades the colours: its settings are exposure, contrast, saturation, temperature, tint, highlights, shadows, fade, gamma, a split tone, a mono mix, a vignette, grain and sharpen. `Adjust` has every setting at its neutral value."
+  },
+  {
+   "method": "GET",
+   "path": "/projects/{pid}/filters",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The project's filters in timeline order, as the stitch reads them: `video_filters`, each `{id, look, start, end, seconds, intensity, params}` (a block of the timeline like an overlay: `start` and `end` are seconds on the timeline, `seconds` its length, `intensity` 0 to 1 how much of its change is mixed in, `params` the settings changed from their defaults), `count`, and `revision`. Blocks may overlap: a frame gets every filter that covers it, then every effect. Every stitch draws them, and so do the Video Builder's Render All and Export, before the overlays are laid over the video."
+  },
+  {
+   "method": "PUT",
+   "path": "/projects/{pid}/filters",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [
+    "video_filters"
+   ],
+   "query": [],
+   "if_match": true,
+   "job": false,
+   "description": "Replace all the project's filters with `video_filters`, a list of `{look, start, seconds, intensity, params, id}`. `look` is an id from GET /filters, `start` the time on the timeline in seconds, `seconds` the length 0.05 or more (default 1), `intensity` 0 to 1 (default 1), `params` the settings to change from their defaults, `id` optional. The reply is the saved list."
+  },
+  {
+   "method": "POST",
+   "path": "/projects/{pid}/filters/set",
+   "path_params": [
+    "pid"
+   ],
+   "body_keys": [
+    "id",
+    "look",
+    "start",
+    "seconds",
+    "intensity",
+    "params"
+   ],
+   "query": [],
+   "if_match": true,
+   "job": false,
+   "description": "Add one filter, change one, or remove one, and leave the others alone. Without an `id` a new block is added at `start`. With the `id` of an existing block only the fields sent change. A `look` that is null, empty or `none` removes the block with that `id`. `seconds`, `intensity` and `params` are as in PUT /projects/{pid}/filters. The reply is the whole list."
   }
  ]
 }

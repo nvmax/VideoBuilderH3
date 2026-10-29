@@ -208,7 +208,8 @@ async fn stitch(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     }
     ctx.progress(ProgressUpdate { percent: 10.0, stage: "stitching".into(), message: "Stitching the scene videos...".into(), stage_count: 1, ..Default::default() });
     let (result, summary) = stitch_project(&run, &folder, &params, true).await.map_err(fail)?;
-    Ok(json!({
+    let transitions: Vec<Value> = result.transitions.iter().map(|t| t.to_json()).collect();
+    let mut reply = json!({
         "final_video_path": result.final_video_path.display().to_string(),
         "video_folder": result.video_folder.display().to_string(),
         "scene_count": result.scene_count,
@@ -223,5 +224,16 @@ async fn stitch(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
         "output_duration": result.output_duration,
         "output_audio_duration": result.output_audio_duration,
         "overlay_layers": summary.overlay_layers,
-    }))
+    });
+    // Only a stitch that had transitions says anything about them.
+    if let Some(map) = reply.as_object_mut().filter(|_| !transitions.is_empty() || !result.transition_notes.is_empty()) {
+        map.insert("transitions".into(), json!(transitions));
+        map.insert("transition_notes".into(), json!(result.transition_notes));
+    }
+    // Only a stitch that had effects or filters says anything about them.
+    if let Some(map) = reply.as_object_mut().filter(|_| !result.looks.is_empty() || !result.look_notes.is_empty()) {
+        map.insert("looks".into(), json!(result.looks.iter().map(|l| l.to_json()).collect::<Vec<Value>>()));
+        map.insert("look_notes".into(), json!(result.look_notes));
+    }
+    Ok(reply)
 }

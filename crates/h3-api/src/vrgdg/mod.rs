@@ -19,6 +19,7 @@ pub(crate) mod speaking;
 mod story;
 mod storyboard;
 mod system;
+mod transitions;
 
 use std::collections::HashMap;
 use std::convert::Infallible;
@@ -56,6 +57,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = story::routes(router);
     let router = storyboard::routes(router);
     let router = system::routes(router);
+    let router = transitions::routes(router);
     choices::routes(router)
 }
 

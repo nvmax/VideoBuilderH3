@@ -422,6 +422,12 @@ pub fn stitch_videos(env: &Env, payload: &Obj) -> Reply {
         timeline_fps,
         use_embedded_scene_audio: use_embedded,
         overlays,
+        transitions: h3_media::transition::items_from_json(payload.get("transitions"))?,
+        looks: {
+            let mut looks = h3_media::looks::items_from_json(h3_media::looks::Kind::Filter, payload.get("filters"))?;
+            looks.extend(h3_media::looks::items_from_json(h3_media::looks::Kind::Effect, payload.get("effects"))?);
+            looks
+        },
         width: int_in(payload, "width", 0, 0, 8192) as u32,
         height: int_in(payload, "height", 0, 0, 8192) as u32,
         audio_start: float_of(payload, "audio_start").max(0.0),
@@ -436,7 +442,7 @@ pub fn stitch_videos(env: &Env, payload: &Obj) -> Reply {
     let embedded = request.use_embedded_scene_audio;
     let fps = request.timeline_fps;
     let result = stitch_scene_videos(&tools, &request).map_err(|e| e.to_string())?;
-    Ok(json!({
+    let mut reply = json!({
         "final_video_path": text(&result.final_video_path),
         "video_folder": text(&result.video_folder),
         "concat_file": "",
@@ -454,7 +460,19 @@ pub fn stitch_videos(env: &Env, payload: &Obj) -> Reply {
         "output_duration": result.output_duration,
         "output_audio_duration": result.output_audio_duration,
         "removed_scratch_folders": [],
-    }))
+    });
+    // Only a stitch that had transitions says anything about them.
+    if let Some(map) = reply.as_object_mut().filter(|_| !result.transitions.is_empty() || !result.transition_notes.is_empty()) {
+        let applied: Vec<Value> = result.transitions.iter().map(|t| t.to_json()).collect();
+        map.insert("transitions".into(), json!(applied));
+        map.insert("transition_notes".into(), json!(result.transition_notes));
+    }
+    // Only a stitch that had effects or filters says anything about them.
+    if let Some(map) = reply.as_object_mut().filter(|_| !result.looks.is_empty() || !result.look_notes.is_empty()) {
+        map.insert("looks".into(), json!(result.looks.iter().map(|l| l.to_json()).collect::<Vec<Value>>()));
+        map.insert("look_notes".into(), json!(result.look_notes));
+    }
+    Ok(reply)
 }
 
 /// `POST .../render_image_slideshow`: the scene images, each for its scene's length, over the song.

@@ -29,6 +29,8 @@ pub mod story;
 pub mod storyboard;
 pub mod takes;
 pub mod timeline_notes;
+pub mod looks_project;
+pub mod transition_project;
 
 pub use atomic::{atomic_write_json, atomic_write_text};
 pub use config::AppConfig;

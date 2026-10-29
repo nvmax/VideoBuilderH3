@@ -3,7 +3,7 @@ resolver = "2"
 members = ["crates/*", "app/src-tauri"]
 
 [workspace.package]
-version = "0.1.10"
+version = "0.1.11"
 edition = "2021"
 license-file = "LICENSE"
 
@@ -19,6 +19,7 @@ h3-pipeline = { path = "crates/h3-pipeline" }
 h3-api = { path = "crates/h3-api" }
 h3-builder = { path = "crates/h3-builder" }
 h3-image = { path = "crates/h3-image" }
+h3-transitions = { path = "crates/h3-transitions" }
 
 anyhow = "1"
 rust_decimal = "1"
@@ -49,6 +50,12 @@ mime_guess = "2"
 sysinfo = { version = "0.33", default-features = false, features = ["system"] }
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+gl-transitions = { version = "1.0.0", default-features = false, features = ["wgsl", "glsl3"] }
+# Transitions render on the GPU (DirectX 12 or Vulkan) and fall back to the software adapter when there is none.
+wgpu = { version = "30.0.1", default-features = false, features = ["std", "parking_lot", "dx12", "vulkan", "wgsl"] }
+pollster = "1"
+# The app's own transitions are written in GLSL and translated to WGSL for the GPU. Same version as the naga inside wgpu.
+naga = { version = "30.0.1", default-features = false, features = ["glsl-in", "wgsl-out"] }
 
 # Picture and frame work is far too slow unoptimized, so these crates are optimized in debug builds too.
 [profile.dev.package.h3-media]

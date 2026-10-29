@@ -193,6 +193,15 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/overlay-layers/add", post(crate::overlay_routes::add_clips))
         .route("/projects/{pid}/overlay-layers/lyric_captions", post(crate::overlay_routes::lyric_captions))
         .route("/projects/{pid}/overlay-layers/media", post(crate::overlay_routes::add_media))
+        .route("/transitions", get(crate::transition_routes::catalog))
+        .route("/projects/{pid}/transitions", get(crate::transition_routes::get_transitions).put(crate::transition_routes::put_transitions))
+        .route("/projects/{pid}/transitions/set", post(crate::transition_routes::set_transition))
+        .route("/effects", get(crate::look_routes::effects_catalog))
+        .route("/projects/{pid}/effects", get(crate::look_routes::get_effects).put(crate::look_routes::put_effects))
+        .route("/projects/{pid}/effects/set", post(crate::look_routes::set_effect))
+        .route("/filters", get(crate::look_routes::filters_catalog))
+        .route("/projects/{pid}/filters", get(crate::look_routes::get_filters).put(crate::look_routes::put_filters))
+        .route("/projects/{pid}/filters/set", post(crate::look_routes::set_filter))
         .route("/projects/{pid}/timeline/notes/{nid}", axum::routing::patch(crate::notes_routes::update_note).delete(crate::notes_routes::delete_note))
         .route("/refmods", get(crate::refmod_routes::list).post(crate::render_files::create))
         .route("/projects/{pid}/audio/stems", post(crate::render_files::stems))
@@ -583,7 +592,7 @@ async fn render_batch(State(state): Shared, Path(pid): Path<String>, body: Optio
 }
 
 async fn stitch(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
-    const SUPPORTED: [&str; 6] = ["scene_ids", "output_prefix", "audio", "audio_path", "overlays", "overlay_layers"];
+    const SUPPORTED: [&str; 9] = ["scene_ids", "output_prefix", "audio", "audio_path", "overlays", "overlay_layers", "transitions", "effects", "filters"];
     let payload = body_object(body)?;
     let unknown: Vec<&String> = payload.keys().filter(|k| !SUPPORTED.contains(&k.as_str())).collect();
     if !unknown.is_empty() {

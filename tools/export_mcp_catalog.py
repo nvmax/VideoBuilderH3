@@ -33,6 +33,13 @@ OVERLAY_NOTE = (
     "(applied, clips, skipped). Send `overlay_layers: false` to leave them out."
 )
 
+TRANSITION_NOTE = (
+    " The project's transitions (GET /projects/{pid}/transitions) are drawn on the video where their blocks lie, and the job result has `transitions` and "
+    "`transition_notes` when there are any. Send `transitions` (a list of {transition, start, seconds, params}, start on the timeline in seconds) to use other ones for this stitch. "
+    "The project's filters (GET /projects/{pid}/filters) and effects (GET /projects/{pid}/effects) are drawn on the joined video after the transitions, filters first, and the job result has "
+    "`looks` and `look_notes` when there are any. Send `filters` or `effects` (a list of {look, start, seconds, intensity, params}) to use other ones for this stitch."
+)
+
 
 def app_extras():
     """The endpoints only this app serves yet, in the shape of the pack's endpoints.json entries."""
@@ -79,7 +86,7 @@ def adjust(path: str, text: str) -> str:
         "Scene-card fields are saved on the timeline scene with the Builder's keys and on the Storyboard card (when the project has a saved Storyboard, or the field is one only the card stores), and the open Video Builder and Storyboard show the change:",
         "Fields are saved on the timeline scene with the Builder's keys, and the open Video Builder shows the change (fields marked card only belong to a Storyboard card, which this app does not have):")
     if path.endswith("/stitch") and OVERLAY_NOTE not in text:
-        text += OVERLAY_NOTE
+        text += OVERLAY_NOTE + TRANSITION_NOTE
     if "API version (`v1`), pack version" in text:
         text = "API version (`v1`), the app's name and version, and the capabilities this app serves."
     if ("/elevenlabs" in path or "/voice-design" in path or path.endswith("/dialogue/generate")) and "App Settings" not in text:
@@ -108,7 +115,7 @@ def reword(name: str, tool: dict) -> dict:
     elif name == "lyrics_transcribe":
         text = "Time the project's lyrics against its song (same as lyrics_align). Runs as a job: use job_wait."
     elif name == "stitch_final":
-        text += OVERLAY_NOTE
+        text += OVERLAY_NOTE + TRANSITION_NOTE
     elif name == "latents_status_rebuild":
         text = "Check the latent status of the scenes, list the dirty ones, rebuild the dirty chain, or delete a scene's latent."
     elif name == "audio_analyze":

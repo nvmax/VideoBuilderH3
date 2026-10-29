@@ -34,6 +34,14 @@ VRGDG H3 Studio talks to a ComfyUI that you run yourself. ComfyUI and the node p
 comfyui-kjnodes, ComfyUI-VideoHelperSuite and others listed on the Setup screen) are not included and keep their own
 licenses.
 
+## Transitions (gl-transitions)
+
+The transitions between scenes are the gl-transitions collection (https://gl-transitions.com), used through its Rust crate
+`gl-transitions`, copyright (c) 2017-present gl-transitions contributors. The collection is under the MIT license in
+`gl-transitions-LICENSE.txt` next to this file. Each transition keeps the license of its author (named in its header and shown in the
+app): MIT for nearly all of them, and BSD 2 Clause (StereoViewer) and BSD 3 Clause (InvertedPageCurl) for two, whose copyright
+notices and conditions are in `gl-transitions-LICENSES.md`. The transitions are drawn with wgpu (MIT or Apache-2.0).
+
 ## Application libraries
 
 The application is built with Tauri (MIT or Apache-2.0), SolidJS (MIT), and Rust crates under MIT, Apache-2.0 or similar

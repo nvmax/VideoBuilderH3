@@ -12,6 +12,10 @@ use std::path::{Path, PathBuf};
 use h3_core::pyval::{text_or_empty, to_float, truthy, Obj};
 use h3_core::settings::settings_for_scene;
 use h3_media::stitch::{OverlayItem, StitchRequest, TimingItem};
+use h3_media::looks::{Kind, LookItem};
+use h3_media::transition::TransitionItem;
+use h3_project::looks_project::{self, LookKind};
+use h3_project::transition_project;
 use serde_json::{json, Value};
 
 pub const STITCH_TIMELINE_FPS: u32 = 24;
@@ -107,6 +111,78 @@ fn select_segments(segments: &[Obj], scene_ids: Option<&Value>) -> Result<Vec<us
     // Like the Builder's preview stitch, play the scenes in timeline order whatever order they were named in.
     indexes.sort_by(|a, b| time_of(&segments[*a], "start").total_cmp(&time_of(&segments[*b], "start")).then(a.cmp(b)));
     Ok(indexes)
+}
+
+/// The transitions of a stitch, on the clock of its scene timing. `params.transitions` replaces the ones saved in the session (`scene_transitions`). An entry
+/// is `{transition, start, seconds, params}`, a block of the project's timeline (`h3_project::transition_project` reads the other forms). One that lies on none
+/// of the selected scenes is left out, as when only some scenes are stitched. A saved entry that no longer makes sense (an unknown transition) is left out too,
+/// so an old project still stitches. One sent with the request is an error instead.
+fn stitch_transitions(session: &Obj, params: &Obj, segments: &[Obj], selected: &[(usize, &Obj, PathBuf)], aligned_offset: f64) -> Result<Vec<TransitionItem>, String> {
+    let sent = params.get("transitions").filter(|v| !v.is_null());
+    let list = match sent {
+        Some(Value::Array(list)) => {
+            let scenes: Vec<Value> = segments.iter().cloned().map(Value::Object).collect();
+            transition_project::normalized(&scenes, list, true)?
+        }
+        Some(_) => return Err("transitions must be a list of {transition, start, seconds, params} items.".to_string()),
+        None => transition_project::saved(session),
+    };
+    let windows: Vec<(f64, f64)> = selected.iter().map(|(_, segment, _)| (time_of(segment, "start"), time_of(segment, "end"))).collect();
+    let mut items = Vec::new();
+    for (n, entry) in list.iter().enumerate() {
+        let start = entry.get("start").and_then(Value::as_f64).unwrap_or(0.0);
+        let end = start + entry.get("seconds").and_then(Value::as_f64).unwrap_or(0.0);
+        if !windows.iter().any(|(from, to)| start < *to && end > *from) {
+            continue;
+        }
+        match TransitionItem::from_json(entry) {
+            Ok(mut item) => {
+                item.start = start - aligned_offset;
+                items.push(item);
+            }
+            Err(e) if sent.is_some() => return Err(format!("Transition {}: {e}", n + 1)),
+            Err(_) => {}
+        }
+    }
+    Ok(items)
+}
+
+/// The effects or the filters of a stitch, on the clock of its scene timing. `params.effects` (or `params.filters`) replaces the ones saved in the session
+/// (`video_effects`, `video_filters`). An entry is `{look, start, seconds, intensity, params}`, a block of the project's timeline. One that lies on none of
+/// the selected scenes is left out, as when only some scenes are stitched, and one that starts before the first scene is cut at its start. A saved entry that
+/// no longer makes sense (an unknown look) is left out too, so an old project still stitches. One sent with the request is an error instead.
+fn stitch_looks(kind: LookKind, session: &Obj, params: &Obj, selected: &[(usize, &Obj, PathBuf)], aligned_offset: f64) -> Result<Vec<LookItem>, String> {
+    let name = kind.name();
+    let sent = params.get(format!("{name}s").as_str()).filter(|v| !v.is_null());
+    let list = match sent {
+        Some(Value::Array(list)) => looks_project::normalized(kind, list, true)?,
+        Some(_) => return Err(format!("{name}s must be a list of {{look, start, seconds, intensity, params}} items.")),
+        None => looks_project::saved(session, kind),
+    };
+    let windows: Vec<(f64, f64)> = selected.iter().map(|(_, segment, _)| (time_of(segment, "start"), time_of(segment, "end"))).collect();
+    let engine_kind = if kind == LookKind::Effect { Kind::Effect } else { Kind::Filter };
+    let mut items = Vec::new();
+    for (n, entry) in list.iter().enumerate() {
+        let start = entry.get("start").and_then(Value::as_f64).unwrap_or(0.0);
+        let seconds = entry.get("seconds").and_then(Value::as_f64).unwrap_or(0.0);
+        if !windows.iter().any(|(from, to)| start < *to && start + seconds > *from) {
+            continue;
+        }
+        match LookItem::from_json(engine_kind, entry) {
+            Ok(mut item) => {
+                // On the clock of the stitch, which starts at the first selected scene.
+                let shifted = start - aligned_offset;
+                item.start = shifted.max(0.0);
+                item.seconds = (shifted + seconds - item.start).max(0.0);
+                if item.seconds > 0.0 {
+                    items.push(item);
+                }
+            }
+            Err(e) if sent.is_some() => return Err(format!("{name} {}: {e}", n + 1)),
+            Err(_) => {}
+        }
+    }
+    Ok(items)
 }
 
 pub fn session_audio_path(session: &Obj) -> String {
@@ -229,6 +305,12 @@ pub fn build_stitch_request(folder: &Path, session: &Obj, params: &Obj, strict: 
         timeline_fps: STITCH_TIMELINE_FPS,
         use_embedded_scene_audio: embedded,
         overlays,
+        transitions: stitch_transitions(session, params, &segments, &selected, aligned_offset)?,
+        looks: {
+            let mut looks = stitch_looks(LookKind::Filter, session, params, &selected, aligned_offset)?;
+            looks.extend(stitch_looks(LookKind::Effect, session, params, &selected, aligned_offset)?);
+            looks
+        },
         width: 0,
         height: 0,
         audio_start,

@@ -7,6 +7,8 @@ pub mod edit_routes;
 pub mod embedded;
 mod overlay_dir;
 pub mod overlay_routes;
+pub mod look_routes;
+pub mod transition_routes;
 pub mod error;
 pub mod guard;
 pub mod image_jobs;

@@ -8,6 +8,7 @@ license-file.workspace = true
 [dependencies]
 h3-core.workspace = true
 h3-project.workspace = true
+h3-transitions.workspace = true
 image.workspace = true
 rustfft.workspace = true
 serde_json.workspace = true

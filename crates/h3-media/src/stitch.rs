@@ -11,7 +11,11 @@ use std::path::{Path, PathBuf};
 use rustfft::num_complex::Complex;
 use rustfft::FftPlanner;
 
+use h3_transitions::TransitionRenderer;
+
 use crate::tools::{args, run, MediaError, Tools};
+use crate::looks::{apply_looks, AppliedLook, LookItem};
+use crate::transition::{clip_at, clip_bounds, clip_frames, pieces, plan, render_window, AppliedTransition, Piece, Source, TransitionItem};
 use crate::video::{clip_frame_length, is_video_file, probe_output_media, probe_stream_fields, video_size, Ratio};
 
 /// Sample rate of the joined embedded audio track.
@@ -58,6 +62,10 @@ pub struct StitchRequest {
     pub timeline_fps: u32,
     pub use_embedded_scene_audio: bool,
     pub overlays: Vec<OverlayItem>,
+    /// Transitions on the cuts between scenes. They need `scene_timing`: without it the clips are joined as they are.
+    pub transitions: Vec<TransitionItem>,
+    /// The filters and the effects on the finished video, applied after the transitions (filters first).
+    pub looks: Vec<LookItem>,
     /// Output canvas. Zero keeps the clips' size.
     pub width: u32,
     pub height: u32,
@@ -81,6 +89,14 @@ pub struct StitchResult {
     pub output_height: u32,
     pub output_duration: f64,
     pub output_audio_duration: f64,
+    /// The transitions that were drawn, after being fitted to the scenes next to them.
+    pub transitions: Vec<AppliedTransition>,
+    /// Why a transition was shortened or left out.
+    pub transition_notes: Vec<String>,
+    /// The filters and effects that were drawn, in the order they were applied.
+    pub looks: Vec<AppliedLook>,
+    /// Why a filter or an effect was shortened or left out.
+    pub look_notes: Vec<String>,
 }
 
 type Frames = Vec<[f32; 2]>;
@@ -96,7 +112,7 @@ fn concat_path(path: &Path) -> String {
     h3_core::abspath::absolute(path).unwrap_or_else(|_| path.to_path_buf()).display().to_string().replace('\\', "/").replace('\'', "'\\''")
 }
 
-fn write_concat_list(list: &Path, paths: &[PathBuf]) -> Result<(), MediaError> {
+pub(crate) fn write_concat_list(list: &Path, paths: &[PathBuf]) -> Result<(), MediaError> {
     let mut text = String::new();
     for path in paths {
         text.push_str(&format!("file '{}'\n", concat_path(path)));
@@ -105,7 +121,7 @@ fn write_concat_list(list: &Path, paths: &[PathBuf]) -> Result<(), MediaError> {
     Ok(())
 }
 
-fn remove_quietly(path: &Path) {
+pub(crate) fn remove_quietly(path: &Path) {
     let _ = fs::remove_file(path);
 }
 
@@ -441,6 +457,11 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
     let mut timeline_frames: i64 = 0;
     let mut timeline_lengths: Vec<(i64, Ratio)> = Vec::new();
     let mut windows: Vec<(f64, f64)> = Vec::new();
+    let mut transition_files: Vec<PathBuf> = Vec::new();
+    let mut applied_transitions: Vec<AppliedTransition> = Vec::new();
+    let mut transition_notes: Vec<String> = Vec::new();
+    let mut applied_looks: Vec<AppliedLook> = Vec::new();
+    let mut look_notes: Vec<String> = Vec::new();
     let mut concat_paths: Vec<PathBuf> = req.scene_paths.clone();
     if !req.scene_timing.is_empty() {
         if req.timeline_fps == 0 {
@@ -451,27 +472,57 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
         }
         let fps = req.timeline_fps;
         concat_paths = Vec::new();
-        for (index, (path, item)) in req.scene_paths.iter().zip(&req.scene_timing).enumerate() {
-            let start = item.start.max(0.0);
-            let end = item.end.max(start);
-            let start_frame = (start * f64::from(fps) + 0.5) as i64;
-            let end_frame = (end * f64::from(fps) + 0.5) as i64;
-            let target_frames = (end_frame - start_frame).max(1);
-            timeline_frames += target_frames;
-            timeline_lengths.push((target_frames, Ratio::new(i128::from(fps), 1)));
-            windows.push((start, end));
-            let sync_path = target_dir.join(format!("_temp_timeline_scene_{:04}.mp4", index + 1));
-            let filter = format!("fps={fps},tpad=stop_mode=clone:stop_duration=1,trim=start_frame=0:end_frame={target_frames},setpts=PTS-STARTPTS");
-            let result = run(
-                &tools.ffmpeg,
-                &args(&["-y", "-i", &s(path), "-map", "0:v:0", "-an", "-vf", &filter, "-frames:v", &target_frames.to_string(), "-r", &fps.to_string(), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", &s(&sync_path)]),
-            )?;
-            if !result.status.success() || !sync_path.is_file() {
-                return Err(MediaError::Failed(crate::tools::failure_text(&result, &format!("FFmpeg failed to align scene {} to the timeline.", index + 1))));
+        let clips: Vec<(f64, f64)> = req
+            .scene_timing
+            .iter()
+            .map(|item| {
+                let start = item.start.max(0.0);
+                (start, item.end.max(start))
+            })
+            .collect();
+        let frame_counts: Vec<i64> = clips.iter().map(|(start, end)| clip_frames(*start, *end, fps)).collect();
+        let bounds = clip_bounds(&frame_counts);
+        let (drawn, notes) = plan(&req.transitions, &clips, fps);
+        transition_notes = notes;
+        timeline_frames = bounds[bounds.len() - 1];
+        timeline_lengths = frame_counts.iter().map(|frames| (*frames, Ratio::new(i128::from(fps), 1))).collect();
+        windows = clips.clone();
+        let mut renderer: Option<TransitionRenderer> = None;
+        // The frames a transition draws are left out of the clips: each clip is cut into the pieces between the transitions.
+        for (number, piece) in pieces(&bounds, &drawn).into_iter().enumerate() {
+            match piece {
+                Piece::Scene { clip, from, to } => {
+                    let sync_path = target_dir.join(format!("_temp_timeline_scene_{:04}.mp4", number + 1));
+                    let filter = format!("fps={fps},tpad=stop_mode=clone:stop_duration=1,trim=start_frame={from}:end_frame={to},setpts=PTS-STARTPTS");
+                    let result = run(
+                        &tools.ffmpeg,
+                        &args(&["-y", "-i", &s(&req.scene_paths[clip]), "-map", "0:v:0", "-an", "-vf", &filter, "-frames:v", &(to - from).to_string(), "-r", &fps.to_string(), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", &s(&sync_path)]),
+                    )?;
+                    if !result.status.success() || !sync_path.is_file() {
+                        return Err(MediaError::Failed(crate::tools::failure_text(&result, &format!("FFmpeg failed to align scene {} to the timeline.", clip + 1))));
+                    }
+                    timeline_sync.push(sync_path.clone());
+                    concat_paths.push(sync_path);
+                }
+                Piece::Transition(index) => {
+                    let window = &drawn[index];
+                    let source = match window.cut {
+                        Some(k) => Source::Cut { outgoing: &req.scene_paths[k], outgoing_frames: frame_counts[k], from: window.first - bounds[k], incoming: &req.scene_paths[k + 1], before: (bounds[k + 1] - window.first) as u32 },
+                        None => {
+                            let clip = clip_at(&bounds, window.first);
+                            Source::Inside { clip: &req.scene_paths[clip], from: window.first - bounds[clip] }
+                        }
+                    };
+                    let cut_path = target_dir.join(format!("_temp_timeline_transition_{:04}.mp4", number + 1));
+                    transition_files.push(cut_path.clone());
+                    render_window(tools, &mut renderer, source, &window.name, &window.params, window.frames, fps, &cut_path)?;
+                    concat_paths.push(cut_path);
+                    applied_transitions.push(AppliedTransition { name: window.name.clone(), start: window.first as f64 / f64::from(fps), frames: window.frames, cut: window.cut });
+                }
             }
-            timeline_sync.push(sync_path.clone());
-            concat_paths.push(sync_path);
         }
+    } else if !req.transitions.is_empty() {
+        transition_notes.push("Transitions need the timeline's scene timing and this stitch has none, so no transition was drawn.".to_string());
     }
 
     let concat_file = target_dir.join("concat_list.txt");
@@ -536,6 +587,22 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
                 remove_quietly(p);
             }
             temp_video = flattened;
+        }
+
+        // The filters and effects go on the joined video, after the transitions are in it and before the canvas is normalized and the audio is put on.
+        if !req.looks.is_empty() {
+            if req.timeline_fps == 0 || timeline_frames <= 0 {
+                look_notes.push("Effects and filters need the timeline's scene timing and this stitch has none, so none was drawn.".to_string());
+            } else {
+                let styled = target_dir.join("_temp_video_with_looks.mp4");
+                let (applied, notes) = apply_looks(tools, &req.looks, &temp_video, &styled, req.timeline_fps, timeline_frames, &target_dir)?;
+                look_notes.extend(notes);
+                if let Some(applied) = applied {
+                    applied_looks = applied;
+                    remove_quietly(&temp_video);
+                    temp_video = styled;
+                }
+            }
         }
 
         if req.width > 0 && req.height > 0 {
@@ -630,7 +697,7 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
     for p in [&temp_video, &normalized_video, &concat_file, &audio_concat_file, &temp_audio, &temp_global_audio] {
         remove_quietly(p);
     }
-    for p in temp_audio_parts.iter().chain(timeline_sync.iter()) {
+    for p in temp_audio_parts.iter().chain(timeline_sync.iter()).chain(transition_files.iter()) {
         remove_quietly(p);
     }
     let (mode, _) = outcome?;
@@ -650,5 +717,9 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
         output_height: if media.height > 0 { media.height } else { req.height },
         output_duration: media.video_duration,
         output_audio_duration: media.audio_duration,
+        transitions: applied_transitions,
+        transition_notes,
+        looks: applied_looks,
+        look_notes,
     })
 }

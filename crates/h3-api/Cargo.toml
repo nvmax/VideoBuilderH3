@@ -18,6 +18,7 @@ reqwest.workspace = true
 h3-media.workspace = true
 h3-pipeline.workspace = true
 h3-project.workspace = true
+h3-transitions.workspace = true
 serde.workspace = true
 base64.workspace = true
 include_dir.workspace = true

@@ -147,6 +147,8 @@ fn stitch_request(work: &Path, payload: &Value) -> StitchRequest {
             .iter()
             .map(|o| OverlayItem { path: path(&o["path"]), start: f(o, "start"), end: f(o, "end"), source_start: f(o, "source_start") })
             .collect(),
+        transitions: vec![],
+        looks: vec![],
         width: payload["width"].as_u64().unwrap_or(0) as u32,
         height: payload["height"].as_u64().unwrap_or(0) as u32,
         audio_start: f(payload, "audio_start"),

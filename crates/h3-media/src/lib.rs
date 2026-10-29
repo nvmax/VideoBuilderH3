@@ -12,6 +12,8 @@ pub mod post;
 pub mod slideshow;
 pub mod stitch;
 pub mod tools;
+pub mod looks;
+pub mod transition;
 pub mod video;
 
 pub use tools::{MediaError, Tools};
