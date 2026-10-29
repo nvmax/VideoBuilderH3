@@ -148,6 +148,50 @@ fn a_media_clip_that_starts_at_zero_and_one_that_is_looped_both_work() {
 }
 
 #[test]
+fn darken_hard_light_color_dodge_and_color_burn_give_the_usual_result() {
+    let Some(tools) = tools() else { return };
+    let dir = tempfile::tempdir().unwrap();
+    let base = base_clip(&tools, dir.path(), "80");
+    let dust = overlay_clip(&tools, dir.path());
+    let original = frame(&tools, &base, 2.0);
+    let (flat, flat_box) = (mean(&region(&original, 220, 130, 80, 40)), mean(&box_region(&original)));
+    // The dust clip is black around a white box. Per mode: what the black part does to a mid gray, then what the white box does.
+    for (mode, black, white) in [("darken", "black", "same"), ("hardlight", "black", "white"), ("colordodge", "same", "white"), ("colorburn", "black", "same")] {
+        let out = dir.path().join(format!("{mode}.mp4"));
+        let clip = json!([{"kind": "media", "id": "dust", "start": 1, "end": 3, "path": dust.display().to_string(), "blend_mode": mode, "opacity": 1, "fade_in": 0, "fade_out": 0, "scale": "stretch"}]);
+        let reply = render(&tools, &base, &out, clip, dir.path());
+        assert_eq!(reply["applied"], json!(["dust"]), "{mode}: {reply}");
+        let frame = frame(&tools, &out, 2.0);
+        for (name, got, was, expect) in [("black part", mean(&region(&frame, 220, 130, 80, 40)), flat, black), ("white box", mean(&box_region(&frame)), flat_box, white)] {
+            match expect {
+                "same" => assert!((got - was).abs() < 8.0, "{mode} {name}: {got} should stay {was}"),
+                "black" => assert!(got < was - 70.0, "{mode} {name}: {got} should go black from {was}"),
+                _ => assert!(got > was + 70.0, "{mode} {name}: {got} should go white from {was}"),
+            }
+        }
+    }
+}
+
+#[test]
+fn color_dodge_and_color_burn_follow_the_opacity() {
+    let Some(tools) = tools() else { return };
+    let dir = tempfile::tempdir().unwrap();
+    let base = base_clip(&tools, dir.path(), "80");
+    let dust = overlay_clip(&tools, dir.path());
+    let was = mean(&box_region(&frame(&tools, &base, 2.0)));
+    // Half opacity puts the white box half way between the picture and full white (color dodge), the black part half way to black (color burn).
+    for (mode, region_of, goal) in [("colordodge", box_region as fn(&[u8]) -> Vec<f64>, 235.0), ("colorburn", |luma: &[u8]| region(luma, 220, 130, 80, 40), 16.0)] {
+        let out = dir.path().join(format!("{mode}_half.mp4"));
+        let clip = json!([{"kind": "media", "id": "dust", "start": 1, "end": 3, "path": dust.display().to_string(), "blend_mode": mode, "opacity": 0.5, "fade_in": 0, "fade_out": 0, "scale": "stretch"}]);
+        render(&tools, &base, &out, clip, dir.path());
+        let got = mean(&region_of(&frame(&tools, &out, 2.0)));
+        let was = if mode == "colordodge" { was } else { mean(&region(&frame(&tools, &base, 2.0), 220, 130, 80, 40)) };
+        let middle = (was + goal) / 2.0;
+        assert!((got - middle).abs() < 14.0, "{mode}: {got} should be near {middle} (picture {was}, full effect {goal})");
+    }
+}
+
+#[test]
 fn a_fade_in_ramps_the_effect_up() {
     let Some(tools) = tools() else { return };
     let dir = tempfile::tempdir().unwrap();

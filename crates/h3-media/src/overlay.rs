@@ -105,23 +105,39 @@ fn flag(clip: &Obj, key: &str, default: bool) -> bool {
     clip.get(key).and_then(Value::as_bool).unwrap_or(default)
 }
 
-/// `blend` mode names for the blend modes a clip can ask for.
+/// `blend` mode names for the blend modes a clip can ask for. `colordodge` and `colorburn` are not ffmpeg modes, `blend_options` writes them out.
 fn blend_mode(name: &str) -> &'static str {
     match name {
         "add" => "addition",
         "lighten" => "lighten",
+        "darken" => "darken",
         "overlay" => "overlay",
         "softlight" => "softlight",
+        "hardlight" => "hardlight",
+        "colordodge" => "colordodge",
+        "colorburn" => "colorburn",
         "multiply" => "multiply",
         _ => "screen",
+    }
+}
+
+/// The `blend` options of a mode at an opacity. ffmpeg's own `dodge` and `burn` take the first input (the picture) as the light and the second
+/// as the base, the reverse of color dodge and color burn, and an `all_expr` ignores `all_opacity`. So those two are written out, with the
+/// opacity inside the expression.
+fn blend_options(mode: &str, opacity: f64) -> String {
+    let opacity = n(opacity);
+    match mode {
+        "colordodge" => format!("all_expr='A+(if(eq(A,0),0,if(eq(B,255),255,min(255,A*255/(255-B))))-A)*{opacity}'"),
+        "colorburn" => format!("all_expr='A+(if(eq(A,255),255,if(eq(B,0),0,max(0,255-(255-A)*255/B)))-A)*{opacity}'"),
+        _ => format!("all_mode={mode}:all_opacity={opacity}"),
     }
 }
 
 /// The brightness a layer has to reach to leave the picture unchanged in a blend mode, as a fraction of white.
 fn neutral(mode: &str) -> f64 {
     match mode {
-        "overlay" | "softlight" | "grainmerge" => 0.5,
-        "multiply" => 1.0,
+        "overlay" | "softlight" | "hardlight" | "grainmerge" => 0.5,
+        "multiply" | "darken" | "colorburn" => 1.0,
         _ => 0.0,
     }
 }
@@ -362,7 +378,7 @@ pub fn plan_overlay(clips: &[Obj], source: &OverlaySource, file_exists: &dyn Fn(
                 if mode == "normal" {
                     lines.push(format!("[{current}][l{k}]overlay=format=gbrp:{}[{next}]", timing.enable()));
                 } else {
-                    lines.push(format!("[{current}][l{k}]blend=all_mode={}:all_opacity={}:{}[{next}]", blend_mode(mode), n(timing.opacity), timing.enable()));
+                    lines.push(format!("[{current}][l{k}]blend={}:{}[{next}]", blend_options(blend_mode(mode), timing.opacity), timing.enable()));
                 }
             }
             "lut" => {
