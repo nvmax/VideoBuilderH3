@@ -1,5 +1,5 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
-Pack commit: 4ffb0df
+Pack commit: 2552116
 Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
 Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
@@ -42,10 +42,3 @@ Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/timeline_view.mjs: Follow the agent: the timeline repaints when the set of rendering scenes changes, which includes the scenes an agent renders.
   music_video_builder/builder.mjs: The Models dialog's Select models list has no LTX entry (the app makes MiniMax H3 videos only), so it opens on MiniMax H3 like Download models does. Without this it opened on the LTX models panel that the list no longer offered a button for.
   music_video_builder/export_video.mjs: Follow the agent: Export waits for a scene an agent is rendering, like a scene the user renders, so it never joins a clip that is about to be replaced.
-  music_video_builder/builder.mjs: RefMod cards: the reference module can refresh the scene's prompt status when it brings a card's tokens in line with the library (PR 6).
-  music_video_builder/minimax_references.mjs: RefMod cards: bring a card's kind, tokens and frames in line with the saved RefMod when the scene status is worked out (PR 6).
-  music_video_builder/minimax_references.mjs: RefMod cards: the reference module gets the prompt status refresh (PR 6).
-  music_video_builder/minimax_references.mjs: RefMod cards: once per read of the library, the scene's cards take the tokens and frames of the RefMods on disk, so a RefMod saved again with fewer frames does not keep a false 'Over 8,192' warning (PR 6).
-  music_video_builder/minimax_references.mjs: RefMod cards: the scene status syncs the cards before it counts tokens (PR 6).
-  music_video_builder/refmod_card.mjs: RefMod cards: syncRefmodCards updates kind, tokens and frames of cards from the library and leaves strength and RefMods that are not in the library alone (PR 6).
-  music_video_builder/refmod_card.mjs: RefMod cards: a card's own picker syncs the card whenever it loads the library (PR 6).
