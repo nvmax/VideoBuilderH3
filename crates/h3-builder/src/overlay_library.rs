@@ -77,7 +77,7 @@ fn clean_category(value: &str, name: &str) -> String {
     if CATEGORIES.contains(&wanted.as_str()) { wanted } else { suggest_category(name).to_string() }
 }
 
-fn sanitize_file_name(name: &str) -> String {
+pub(crate) fn sanitize_file_name(name: &str) -> String {
     let cleaned: String = name.chars().map(|c| if c.is_alphanumeric() || matches!(c, '.' | '-' | '_' | ' ' | '(' | ')') { c } else { '_' }).collect();
     let cleaned = cleaned.trim().trim_matches('.').to_string();
     if cleaned.is_empty() { "clip".into() } else { cleaned }
@@ -187,7 +187,7 @@ fn describe(env: &Env, id: &str, path: &Path) -> Result<Value, String> {
     Ok(item)
 }
 
-fn urlencode(value: &str) -> String {
+pub(crate) fn urlencode(value: &str) -> String {
     value.bytes().map(|b| if b.is_ascii_alphanumeric() || matches!(b, b'-' | b'_' | b'.' | b'~') { char::from(b).to_string() } else { format!("%{b:02X}") }).collect()
 }
 
@@ -216,7 +216,7 @@ pub fn list(env: &Env) -> Reply {
 }
 
 /// The video files in a folder an import was pointed at (the folder and the ones directly in it), and the unusable ones it found.
-fn videos_in(folder: &Path) -> (Vec<PathBuf>, Vec<PathBuf>) {
+pub(crate) fn videos_in(folder: &Path) -> (Vec<PathBuf>, Vec<PathBuf>) {
     let (mut videos, mut refused) = (Vec::new(), Vec::new());
     let mut stack = vec![(folder.to_path_buf(), 0)];
     while let Some((dir, depth)) = stack.pop() {
@@ -304,34 +304,42 @@ pub fn import(env: &Env, payload: &Obj) -> Reply {
     let mut added = Vec::new();
     let mut existing = Vec::new();
     for path in sources {
-        let name = sanitize_file_name(&file_name(&path));
-        let kind = clean_category(&category, &name);
-        let (target, copied) = copy_into(&path, &env.overlay_library().join(&kind), &name)?;
-        let id = format!("{kind}/{}", file_name(&target));
-        let Some(meta) = probe(env, &target).map_err(|e| {
-            if copied {
-                let _ = fs::remove_file(&target);
-            }
-            format!("{} is not a video that ffmpeg can read. ({})", file_name(&path), e.lines().next().unwrap_or("").trim())
-        })?
-        else {
-            if copied {
-                let _ = fs::remove_file(&target);
-            }
-            return Err(format!("{} has no video stream that ffmpeg can read.", file_name(&path)));
-        };
-        if meta["duration"].as_f64().unwrap_or(0.0) <= 0.0 || meta["width"].as_u64().unwrap_or(0) == 0 {
-            if copied {
-                let _ = fs::remove_file(&target);
-            }
-            return Err(format!("{} is not a video ffmpeg can read.", file_name(&path)));
-        }
-        atomic_json(&meta_path(env, &id), &meta)?;
-        make_previews(env, &id, &target, meta["duration"].as_f64().unwrap_or(0.0));
-        let item = describe(env, &id, &target)?;
+        let (item, copied) = import_file(env, &path, &category, None)?;
         if copied { added.push(item) } else { existing.push(item) }
     }
     Ok(json!({"added": added, "already_there": existing, "items": list(env)?["items"]}))
+}
+
+/// Copies one video into the library, checks that ffmpeg can read it and makes its previews. The item is the clip as the library lists it, and
+/// `copied` is false when the same clip was already there. `blend` replaces the blend mode the library suggests for the clip.
+pub(crate) fn import_file(env: &Env, path: &Path, category: &str, blend: Option<&str>) -> Result<(Value, bool), String> {
+    let name = sanitize_file_name(&file_name(path));
+    let kind = clean_category(category, &name);
+    let (target, copied) = copy_into(path, &env.overlay_library().join(&kind), &name)?;
+    let id = format!("{kind}/{}", file_name(&target));
+    let forget = || {
+        if copied {
+            let _ = fs::remove_file(&target);
+        }
+    };
+    let Some(mut meta) = probe(env, &target).map_err(|e| {
+        forget();
+        format!("{} is not a video that ffmpeg can read. ({})", file_name(path), e.lines().next().unwrap_or("").trim())
+    })?
+    else {
+        forget();
+        return Err(format!("{} has no video stream that ffmpeg can read.", file_name(path)));
+    };
+    if meta["duration"].as_f64().unwrap_or(0.0) <= 0.0 || meta["width"].as_u64().unwrap_or(0) == 0 {
+        forget();
+        return Err(format!("{} is not a video ffmpeg can read.", file_name(path)));
+    }
+    if let (Some(blend), Some(map)) = (blend, meta.as_object_mut()) {
+        map.insert("suggested_blend".into(), json!(blend));
+    }
+    atomic_json(&meta_path(env, &id), &meta)?;
+    make_previews(env, &id, &target, meta["duration"].as_f64().unwrap_or(0.0));
+    Ok((describe(env, &id, &target)?, copied))
 }
 
 /// `POST /vrgdg/music_builder/overlay_library/delete`: `{id}`. Removes the clip, its details and its previews.

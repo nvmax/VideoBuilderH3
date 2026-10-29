@@ -11,6 +11,7 @@ use axum::routing::get;
 use axum::Router;
 use h3_builder::overlay as overlay_tools;
 use h3_builder::overlay_library as overlay_library_tools;
+use h3_builder::pack_import as pack_import_tools;
 use h3_builder::post_process as post_tools;
 use serde_json::Value;
 use tower::ServiceExt;
@@ -46,7 +47,24 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/overlay_library/delete"), post_overlay(|env, p| fields(overlay_library_tools::delete(&env, &p))))
         .route(&format!("{base}/overlay_library/use"), post_overlay(|env, p| fields(overlay_library_tools::use_in_project(&env, &p))))
         .route(&format!("{base}/overlay_library/thumb"), get(overlay_thumb))
+        .route(&format!("{base}/overlay_library/packs/scan"), post_overlay(|env, p| fields(pack_import_tools::scan(&env, &p))))
+        .route(&format!("{base}/overlay_library/packs/import"), post_overlay(|env, p| fields(pack_import_tools::import(&env, &p))))
+        .route(&format!("{base}/overlay_library/packs/image"), get(overlay_pack_image))
         .route(&format!("{base}/overlay_layers/preview"), get(overlay_preview))
+}
+
+/// The picture of a pack in a folder that is being imported from.
+async fn overlay_pack_image(Query(query): Query<HashMap<String, String>>) -> Response {
+    match pack_import_tools::image_path(query.get("root").map(String::as_str).unwrap_or(""), query.get("file").map(String::as_str).unwrap_or("")) {
+        Ok(path) => {
+            let request = Request::builder().method("GET").uri("/").body(Body::empty()).unwrap_or_default();
+            match ServeFile::new(path).oneshot(request).await {
+                Ok(response) => response.into_response(),
+                Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+            }
+        }
+        Err(message) => super::failure(StatusCode::NOT_FOUND, message),
+    }
 }
 
 /// The example picture shown beside a LUT.

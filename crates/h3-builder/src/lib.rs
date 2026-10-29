@@ -15,6 +15,7 @@ pub mod export_video;
 pub mod files;
 pub mod overlay;
 pub mod overlay_library;
+pub mod pack_import;
 #[cfg(test)]
 mod golden_support;
 pub mod instructions;
