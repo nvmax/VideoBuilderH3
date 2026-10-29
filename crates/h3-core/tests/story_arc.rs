@@ -78,3 +78,22 @@ fn the_arc_helpers_match_the_pack() {
     }
     assert!(failures.is_empty(), "{} of {} cases differ\n{}", failures.len(), all.len(), failures.iter().take(4).cloned().collect::<Vec<_>>().join("\n"));
 }
+
+#[test]
+fn a_required_heading_with_its_own_colon_is_read_whole() {
+    let lyrics = "[Intro]\n[Male Voice] Windows open\n[Verse 1: Male Rap]\nline one\n[Chorus: Female Vocals]\nline two\n[Verse 2: Male Rap]\nline three\n[Chorus: Female Vocals]\nline four\n[Outro: Male Voice]\nline five";
+    let labels: Vec<String> = parse_lyric_sections(lyrics, false).into_iter().map(|(label, _)| label).collect();
+    assert!(labels.contains(&"Verse 1: Male Rap".to_string()), "{labels:?}");
+    let reply = labels
+        .iter()
+        .enumerate()
+        .map(|(index, label)| if index % 2 == 0 { format!("{label}:\nMara crosses the street {index}.") } else { format!("[{label}]: Mara crosses the street {index}.") })
+        .collect::<Vec<_>>()
+        .join("\n\n");
+    let normalized = normalize_output(&reply, &labels, 40, "LM Studio").unwrap();
+    let found = split_sections(&normalized, &labels);
+    assert_eq!(found.iter().map(|(label, _)| label.clone()).collect::<Vec<_>>(), labels);
+    for (index, (_, body)) in found.iter().enumerate() {
+        assert_eq!(body, &format!("Mara crosses the street {index}."));
+    }
+}

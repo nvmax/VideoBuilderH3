@@ -263,7 +263,15 @@ pub fn normalize_output(text: &str, required_labels: &[String], maximum_words: i
         raw = lines.join("\n");
     }
     // Local runners may put the section body on the same line as its heading.
-    let heading = rx(r"(?m)^[ \t]*([^\n:]{1,80}):[ \t]*");
+    // A lyric tag such as [Verse 1: Male Rap] gives a required heading with its own colon: match those headings whole before the first colon.
+    let mut colon_labels: Vec<String> = required_labels.iter().map(|label| collapse_ws(label)).filter(|label| label.contains(':')).collect();
+    colon_labels.sort_by_key(|label| std::cmp::Reverse(label.len()));
+    colon_labels.dedup();
+    let whole_labels: String = colon_labels
+        .iter()
+        .map(|label| format!(r"\[?(?i:{})\]?|", label.split(' ').map(fancy_regex::escape).collect::<Vec<_>>().join(r"[ \t]+")))
+        .collect();
+    let heading = rx(&format!(r"(?m)^[ \t]*({whole_labels}[^\n:]{{1,80}}):[ \t]*"));
     let matches: Vec<_> = heading.captures_iter(&raw).flatten().collect();
     if matches.is_empty() {
         if !required_labels.is_empty() {
