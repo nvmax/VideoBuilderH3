@@ -11,6 +11,7 @@
 
 use std::collections::HashMap;
 use std::fs;
+use std::hash::{DefaultHasher, Hash, Hasher};
 use std::path::{Component, Path, PathBuf};
 use std::time::{SystemTime, UNIX_EPOCH};
 
@@ -27,6 +28,11 @@ const FILTER_FILE: &str = "filter.xml";
 const MAX_DEPTH: usize = 5;
 const MAX_PLAIN_FILES: usize = 3000;
 const CLIP_EXTENSIONS: [&str; 6] = ["mp4", "mov", "webm", "m4v", "mkv", "avi"];
+/// Bump when the way a preview is made changes, so the kept ones are made again.
+const PREVIEW_VERSION: u32 = 2;
+/// The picture a preview clip is laid over: a soft, muted sky-to-ground gradient, so a glow, a grain, a light leak and a dark border all show.
+const PREVIEW_BACKDROP: &str = "nullsrc=s=384x216:r=15:d=4,format=gbrp,geq=r='92+58*Y/H+22*sin(X/55+Y/90)':g='112+12*Y/H+18*sin(X/75+1)':b='150-62*Y/H+24*sin(X/45+2)',gblur=sigma=5";
+const PREVIEW_FIT: &str = "scale=384:216:force_original_aspect_ratio=increase,crop=384:216,fps=15";
 
 /// The text between `<name>` and `</name>`.
 fn tag<'a>(xml: &'a str, name: &str) -> Option<&'a str> {
@@ -247,6 +253,17 @@ fn image_url(root: &Path, pack: &Pack) -> Value {
     json!(format!("/vrgdg/music_builder/overlay_library/packs/image?root={}&file={}", urlencode(&root.display().to_string()), urlencode(&relative.display().to_string().replace('\\', "/"))))
 }
 
+/// Where the page gets the live preview of a clip (and its matte) when the pointer is over it. `blend` is how the import would blend it.
+fn preview_url(root: &Path, video: &Path, matte: Option<&Path>, blend: &str) -> Value {
+    let matte = matte.map(|m| relative_id(root, m)).unwrap_or_default();
+    json!(format!(
+        "/vrgdg/music_builder/overlay_library/packs/preview?root={}&video={}&matte={}&blend={blend}",
+        urlencode(&root.display().to_string()),
+        urlencode(&relative_id(root, video)),
+        urlencode(&matte)
+    ))
+}
+
 /// `POST /vrgdg/music_builder/overlay_library/packs/scan`: `{path}`. What can be imported from the folder, without the packs imported before.
 /// A folder of packs gives `packs`, a folder without any gives its video `files`.
 pub fn scan(env: &Env, payload: &Obj) -> Reply {
@@ -269,11 +286,12 @@ pub fn scan(env: &Env, payload: &Obj) -> Reply {
             hidden += 1;
             continue;
         }
-        let note = match plan {
-            Plan::Joined(_) => "A clip with a matte: they are joined into one transparent clip.".to_string(),
-            Plan::Plain(blend) => format!("Blended as {blend}."),
+        let (note, matte, blend) = match &plan {
+            Plan::Joined(matte) => ("A clip with a matte: they are joined into one transparent clip.".to_string(), Some(matte.as_path()), "normal"),
+            Plan::Plain(blend) => (format!("Blended as {blend}."), None, *blend),
         };
-        listed.push(json!({"id": pack.id, "name": pack.name, "folder": pack.folder.file_name().map(|n| n.to_string_lossy().into_owned()), "size_bytes": pack.size(), "image_url": image_url(&root, pack), "note": note}));
+        let preview = pack.video.as_deref().map_or(Value::Null, |video| preview_url(&root, video, matte, blend));
+        listed.push(json!({"id": pack.id, "name": pack.name, "folder": pack.folder.file_name().map(|n| n.to_string_lossy().into_owned()), "size_bytes": pack.size(), "image_url": image_url(&root, pack), "preview_url": preview, "note": note}));
     }
     Ok(json!({"mode": "packs", "root": root.display().to_string(), "packs": listed, "hidden": hidden, "unsupported": unsupported, "not_overlays": others}))
 }
@@ -291,7 +309,7 @@ fn scan_files(root: &Path, ledger: &Map<String, Value>, env: &Env) -> Reply {
             hidden += 1;
         } else if listed.len() < MAX_PLAIN_FILES {
             let folder = Path::new(&id).parent().map(|p| p.display().to_string()).unwrap_or_default();
-            listed.push(json!({"id": id, "name": path.file_stem().map(|s| s.to_string_lossy().into_owned()), "folder": folder, "size_bytes": fs::metadata(path).map(|m| m.len()).unwrap_or(0)}));
+            listed.push(json!({"id": id, "name": path.file_stem().map(|s| s.to_string_lossy().into_owned()), "folder": folder, "size_bytes": fs::metadata(path).map(|m| m.len()).unwrap_or(0), "preview_url": preview_url(root, path, None, "normal")}));
         }
     }
     Ok(json!({"mode": "files", "root": root.display().to_string(), "files": listed, "hidden": hidden, "truncated": videos.len() - hidden > MAX_PLAIN_FILES, "refused": refused.len()}))
@@ -380,6 +398,72 @@ pub fn image_path(root: &str, file: &str) -> Result<PathBuf, String> {
     let path = fs::canonicalize(root.join(file.trim())).map_err(|_| "That picture is not there.".to_string())?;
     let is_image = path.extension().is_some_and(|e| matches!(e.to_string_lossy().to_lowercase().as_str(), "png" | "jpg" | "jpeg"));
     if path.starts_with(&root) && is_image && path.is_file() { Ok(path) } else { Err("That is not a picture of a pack.".into()) }
+}
+
+fn file_stamp(path: &Path) -> (u64, u64) {
+    let Ok(meta) = fs::metadata(path) else { return (0, 0) };
+    (meta.len(), meta.modified().ok().and_then(|t| t.duration_since(UNIX_EPOCH).ok()).map_or(0, |d| d.as_secs()))
+}
+
+/// The ffmpeg filter graph of a preview: the clip, joined with its matte when there is one, laid over the backdrop the way the import blends it.
+/// The backdrop is the last input.
+fn preview_graph(matte: bool, blend: &str) -> String {
+    if matte {
+        return format!("[0:v]{PREVIEW_FIT},format=rgb24[c];[1:v]{PREVIEW_FIT},format=gbrp,extractplanes=g[a];[c][a]alphamerge,format=rgba[ov];[2:v]format=rgba[bg];[bg][ov]overlay=shortest=1:format=auto,format=yuv420p[v]");
+    }
+    if blend == "normal" {
+        return format!("[0:v]{PREVIEW_FIT},format=rgba[ov];[1:v]format=rgba[bg];[bg][ov]overlay=shortest=1:format=auto,format=yuv420p[v]");
+    }
+    format!("[0:v]{PREVIEW_FIT},format=gbrp[ov];[1:v]format=gbrp[bg];[bg][ov]blend=all_mode={blend}:shortest=1,format=yuv420p[v]")
+}
+
+/// A small playable preview of a clip in a folder that is being imported from (`GET .../packs/preview?root=&video=&matte=&blend=`): four seconds
+/// of the clip, joined with its matte when it has one, laid over a soft backdrop with the blend the import would use, 384 pixels wide, no sound. A
+/// browser cannot play the original (a matte and a clip are two files, and many are not in a format it plays). It is made the first time it is
+/// asked for and kept in the temp folder. The clips must be videos inside the folder that was scanned.
+pub fn preview_path(env: &Env, root: &str, video: &str, matte: &str, blend: &str) -> Result<PathBuf, String> {
+    if !["normal", "screen", "overlay", "multiply"].contains(&blend) {
+        return Err("That blend is not known.".into());
+    }
+    let root = h3_core::abspath::absolute(Path::new(root.trim())).map_err(|e| e.to_string())?;
+    let video = inside(&root, video.trim()).filter(|p| is_clip(p)).ok_or("That clip is not in the folder.")?;
+    let matte = match matte.trim() {
+        "" => None,
+        named => Some(inside(&root, named).filter(|p| is_clip(p)).ok_or("That matte is not in the folder.")?),
+    };
+    let mut hasher = DefaultHasher::new();
+    (PREVIEW_VERSION, &video, file_stamp(&video), &matte, matte.as_deref().map(file_stamp), blend).hash(&mut hasher);
+    let dir = std::env::temp_dir().join("h3-studio-pack-previews");
+    let target = dir.join(format!("{:016x}.mp4", hasher.finish()));
+    if target.is_file() {
+        return Ok(target);
+    }
+    fs::create_dir_all(&dir).map_err(|e| format!("{}: {e}", dir.display()))?;
+    let partial = dir.join(format!(".{}.partial.mp4", unique_name()));
+    let (video_text, backdrop) = (video.display().to_string(), PREVIEW_BACKDROP);
+    let mut args = h3_media::tools::args(&["-y", "-v", "error", "-t", "4", "-i", &video_text]);
+    if let Some(matte) = &matte {
+        args.extend(h3_media::tools::args(&["-t", "4", "-i", &matte.display().to_string()]));
+    }
+    args.extend(h3_media::tools::args(&[
+        "-f", "lavfi", "-i", backdrop, "-filter_complex", &preview_graph(matte.is_some(), blend), "-map", "[v]", "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "28", "-pix_fmt", "yuv420p",
+        "-movflags", "+faststart", &partial.display().to_string(),
+    ]));
+    let made = env.tools()?.ffmpeg_checked(&args, &format!("A preview of {} could not be made", video.display()));
+    if let Err(error) = made {
+        let _ = fs::remove_file(&partial);
+        return Err(error.to_string());
+    }
+    // Two requests for the same clip can both get here: the first one to finish keeps its file.
+    if target.is_file() {
+        let _ = fs::remove_file(&partial);
+    } else {
+        fs::rename(&partial, &target).map_err(|e| {
+            let _ = fs::remove_file(&partial);
+            format!("{}: {e}", target.display())
+        })?;
+    }
+    Ok(target)
 }
 
 #[cfg(test)]

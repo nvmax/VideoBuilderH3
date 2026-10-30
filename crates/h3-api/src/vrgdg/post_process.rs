@@ -50,7 +50,27 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/overlay_library/packs/scan"), post_overlay(|env, p| fields(pack_import_tools::scan(&env, &p))))
         .route(&format!("{base}/overlay_library/packs/import"), post_overlay(|env, p| fields(pack_import_tools::import(&env, &p))))
         .route(&format!("{base}/overlay_library/packs/image"), get(overlay_pack_image))
+        .route(&format!("{base}/overlay_library/packs/preview"), get(overlay_pack_preview))
         .route(&format!("{base}/overlay_layers/preview"), get(overlay_preview))
+}
+
+/// A small playable preview of a pack's clip in a folder that is being imported from, for the page to play when the pointer is over a tile.
+async fn overlay_pack_preview(State(state): State<Arc<AppState>>, Query(query): Query<HashMap<String, String>>) -> Response {
+    let env = state.builder_env();
+    let field = |name: &str| query.get(name).cloned().unwrap_or_default();
+    let (root, video, matte, blend) = (field("root"), field("video"), field("matte"), field("blend"));
+    let made = tokio::task::spawn_blocking(move || pack_import_tools::preview_path(&env, &root, &video, &matte, &blend)).await;
+    match made {
+        Ok(Ok(file)) => {
+            let request = Request::builder().method("GET").uri("/").body(Body::empty()).unwrap_or_default();
+            match ServeFile::new(file).oneshot(request).await {
+                Ok(response) => response.into_response(),
+                Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+            }
+        }
+        Ok(Err(message)) => super::failure(StatusCode::NOT_FOUND, message),
+        Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, e.to_string()),
+    }
 }
 
 /// The picture of a pack in a folder that is being imported from.

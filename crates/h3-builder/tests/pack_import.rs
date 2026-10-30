@@ -7,7 +7,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use h3_builder::overlay_library::{delete, list};
-use h3_builder::pack_import::{image_path, import, scan};
+use h3_builder::pack_import::{image_path, import, preview_path, scan};
 use h3_builder::Env;
 use h3_core::pyval::Obj;
 use h3_media::Tools;
@@ -113,6 +113,11 @@ fn only_the_overlay_packs_this_app_can_use_are_listed_and_the_rest_is_counted() 
     assert!(first["size_bytes"].as_u64().unwrap() > 0);
     let url = first["image_url"].as_str().unwrap();
     assert!(url.starts_with("/vrgdg/music_builder/overlay_library/packs/image?root=") && url.contains("4_Dust_Overlay_1"), "{url}");
+    let previews: Vec<&str> = reply["packs"].as_array().unwrap().iter().map(|p| p["preview_url"].as_str().unwrap()).collect();
+    assert!(previews.iter().all(|u| u.starts_with("/vrgdg/music_builder/overlay_library/packs/preview?root=")), "{previews:?}");
+    assert!(previews[0].contains("Dust%20Overlay%201.mp4") && previews[0].contains("_L0.mp4") && previews[0].ends_with("blend=normal"), "a pack with a matte previews as a transparent clip: {}", previews[0]);
+    assert!(previews[1].contains("&matte=&") && previews[1].ends_with("blend=screen"), "{}", previews[1]);
+    assert!(previews[2].ends_with("blend=overlay"), "{}", previews[2]);
     assert!(list(&env).unwrap()["items"].as_array().unwrap().is_empty(), "listing copies nothing");
 }
 
@@ -196,6 +201,84 @@ fn a_folder_without_packs_lists_its_videos_and_remembers_the_ones_imported() {
     assert_eq!(done["failed"][0]["error"], "That file is not in the folder.");
     let after = scan(&env, &payload(json!({"path": path}))).unwrap();
     assert_eq!((after["files"].as_array().unwrap().len(), after["hidden"].clone()), (1, json!(1)));
+}
+
+/// Codec, width and height of a preview.
+fn shape(tools: &Tools, clip: &Path) -> (String, u64, u64) {
+    let out = Command::new(&tools.ffprobe).args(["-v", "error", "-select_streams", "v:0", "-show_entries", "stream=codec_name,width,height", "-of", "json"]).arg(clip).output().unwrap();
+    let stream = serde_json::from_slice::<Value>(&out.stdout).unwrap()["streams"][0].clone();
+    (stream["codec_name"].as_str().unwrap().to_string(), stream["width"].as_u64().unwrap(), stream["height"].as_u64().unwrap())
+}
+
+/// The green channel of one pixel of a 384 pixel wide preview, one second in.
+fn grey_at(tools: &Tools, clip: &Path, x: usize, y: usize) -> u8 {
+    let out = Command::new(&tools.ffmpeg).args(["-v", "error", "-ss", "1", "-i"]).arg(clip).args(["-frames:v", "1", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]).output().unwrap();
+    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+    out.stdout[(y * 384 + x) * 3 + 1]
+}
+
+#[test]
+fn a_preview_is_a_small_clip_with_the_pack_laid_over_a_backdrop_and_it_is_kept() {
+    let Some(tools) = tools() else { return };
+    let dir = tempfile::tempdir().unwrap();
+    let env = env(dir.path());
+    let root = dir.path().join("downloads");
+    packs(&tools, &root);
+    let root_text = root.display().to_string();
+    let dust = "Effect Packs/4_Dust_Overlay_1/Data";
+    let matted = preview_path(&env, &root_text, &format!("{dust}/Dust Overlay 1.mp4"), &format!("{dust}/Dust Overlay 1_L0.mp4"), "normal").unwrap();
+    let screened = preview_path(&env, &root_text, "Effect Packs/4_Glow_Overlay_2/Data/Glow Overlay 2.mp4", "", "screen").unwrap();
+    let grain = preview_path(&env, &root_text, "Effect Packs/4_Grain_Overlay_3/Data/Grain Overlay 3.mp4", "", "overlay").unwrap();
+    for file in [&matted, &screened, &grain] {
+        assert_eq!(shape(&tools, file), ("h264".to_string(), 384, 216), "{}", file.display());
+    }
+    // Inside the box the clip shows (white). Outside it the backdrop shows: a matte keeps it, and so does black blended with screen.
+    assert!(grey_at(&tools, &matted, 120, 84) > 225, "the clip shows where the matte is green");
+    assert!(grey_at(&tools, &screened, 120, 84) > 225, "a screen blend shows the white box");
+    let (a, b) = (grey_at(&tools, &matted, 300, 180), grey_at(&tools, &screened, 300, 180));
+    assert!((15..140).contains(&a), "the backdrop shows outside the box: {a}");
+    assert!(a.abs_diff(b) < 12, "black blended with screen leaves the picture as it is: {a} and {b}");
+    // The same request makes nothing again.
+    let stamp = fs::metadata(&matted).unwrap().modified().unwrap();
+    assert_eq!(preview_path(&env, &root_text, &format!("{dust}/Dust Overlay 1.mp4"), &format!("{dust}/Dust Overlay 1_L0.mp4"), "normal").unwrap(), matted);
+    assert_eq!(fs::metadata(&matted).unwrap().modified().unwrap(), stamp);
+    for file in [matted, screened, grain] {
+        let _ = fs::remove_file(file);
+    }
+}
+
+#[test]
+fn a_preview_is_made_only_from_videos_inside_the_scanned_folder() {
+    let Some(tools) = tools() else { return };
+    let dir = tempfile::tempdir().unwrap();
+    let env = env(dir.path());
+    let root = dir.path().join("downloads");
+    packs(&tools, &root);
+    clip(&tools, &dir.path().join("secret.mp4"));
+    let root_text = root.display().to_string();
+    let glow = "Effect Packs/4_Glow_Overlay_2/Data/Glow Overlay 2.mp4";
+    assert_eq!(preview_path(&env, &root_text, "../secret.mp4", "", "screen").unwrap_err(), "That clip is not in the folder.");
+    assert_eq!(preview_path(&env, &root_text, &dir.path().join("secret.mp4").display().to_string(), "", "screen").unwrap_err(), "That clip is not in the folder.");
+    assert_eq!(preview_path(&env, &root_text, "Effect Packs/4_Glow_Overlay_2/Data/filter.xml", "", "screen").unwrap_err(), "That clip is not in the folder.", "not a file that is not a video");
+    assert_eq!(preview_path(&env, &root_text, "Effect Packs/4_Glow_Overlay_2/Data/missing.mp4", "", "screen").unwrap_err(), "That clip is not in the folder.");
+    assert_eq!(preview_path(&env, &root_text, glow, "../secret.mp4", "normal").unwrap_err(), "That matte is not in the folder.");
+    assert_eq!(preview_path(&env, &root_text, glow, "", "dodge").unwrap_err(), "That blend is not known.");
+    assert!(preview_path(&env, &dir.path().join("nowhere").display().to_string(), glow, "", "screen").is_err());
+}
+
+#[test]
+fn a_folder_without_packs_gives_each_video_a_preview_as_it_is() {
+    let Some(tools) = tools() else { return };
+    let dir = tempfile::tempdir().unwrap();
+    let env = env(dir.path());
+    let root = dir.path().join("downloads");
+    clip(&tools, &root.join("Smoke Pack").join("Smoke 1.mp4"));
+    let reply = scan(&env, &payload(json!({"path": root.display().to_string()}))).unwrap();
+    let url = reply["files"][0]["preview_url"].as_str().unwrap();
+    assert!(url.contains("Smoke%20Pack") && url.ends_with("blend=normal"), "{url}");
+    let made = preview_path(&env, &root.display().to_string(), "Smoke Pack/Smoke 1.mp4", "", "normal").unwrap();
+    assert_eq!(shape(&tools, &made), ("h264".to_string(), 384, 216));
+    let _ = fs::remove_file(made);
 }
 
 #[test]
