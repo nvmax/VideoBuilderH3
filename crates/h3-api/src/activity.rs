@@ -235,6 +235,14 @@ fn merge_touched(items: &mut Vec<Value>, change: &Value) -> bool {
             if change["marker_ids"].as_array().is_some_and(|m| !m.is_empty()) {
                 add(None, Vec::new(), Some("notes"));
             }
+            for name in change["lists"].as_array().into_iter().flatten().filter_map(Value::as_str) {
+                match name {
+                    "scene_transitions" => add(None, Vec::new(), Some("transitions")),
+                    "video_effects" => add(None, Vec::new(), Some("effects")),
+                    "video_filters" => add(None, Vec::new(), Some("filters")),
+                    _ => {}
+                }
+            }
         }
         _ => add(None, Vec::new(), Some("project")),
     }
@@ -620,5 +628,16 @@ mod tests {
         assert!(merge_touched(&mut items, &json!({"kind": "project"})));
         assert!(!merge_touched(&mut items, &json!({"kind": "project"})));
         assert_eq!(items.last().unwrap(), &json!({"project": true}));
+    }
+
+    #[test]
+    fn a_lane_an_agent_changed_is_listed_by_name_once() {
+        let mut items = Vec::new();
+        let change = json!({"kind": "scene_fields", "scenes": {}, "lists": ["scene_transitions", "video_filters"]});
+        assert!(merge_touched(&mut items, &change));
+        assert_eq!(items, vec![json!({"transitions": true}), json!({"filters": true})]);
+        assert!(!merge_touched(&mut items, &change), "the same lane twice is listed once");
+        assert!(merge_touched(&mut items, &json!({"kind": "scene_fields", "scenes": {}, "lists": ["video_effects"]})));
+        assert_eq!(items.last().unwrap(), &json!({"effects": true}));
     }
 }

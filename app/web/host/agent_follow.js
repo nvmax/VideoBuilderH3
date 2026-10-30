@@ -327,6 +327,12 @@ export function startAgentFollow() {
         lines.push("The project");
       } else if (item.notes) {
         lines.push("Timeline notes");
+      } else if (item.transitions) {
+        lines.push("Transitions");
+      } else if (item.effects) {
+        lines.push("Effects");
+      } else if (item.filters) {
+        lines.push("Filters");
       } else {
         const number = inOpenProject(entry.project_id) ? sceneNumber(item.scene_id) : 0;
         const fields = [...new Set((item.fields || []).map(fieldName))];

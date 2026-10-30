@@ -135,6 +135,36 @@ async fn the_builder_is_told_about_every_change_an_agent_makes_and_about_nothing
 }
 
 #[tokio::test]
+async fn a_transition_effect_or_filter_an_agent_adds_is_announced_as_its_lane_and_not_as_the_project() {
+    let mut s = start().await;
+    s.tool("project_create", json!({"project_name": "Demo"})).await;
+    s.tool("timeline_build", json!({"project_id": "Demo", "text": "4 first line\n4 second line"})).await;
+    s.drain().await;
+    // The Builder merges a lane list without a reload, so a render running in its window cannot hold the block back. A change to `project` would wait for it.
+    let api = format!("{}/api/v1/projects/Demo", s.root);
+    let cases = [
+        ("transitions/set", json!({"transition": "BlockDissolve", "start": 3.5, "seconds": 1.0}), "scene_transitions"),
+        ("effects/set", json!({"look": "BeatBounce", "start": 0.5, "seconds": 2.0}), "video_effects"),
+        ("filters/set", json!({"look": "Adjust", "start": 0.0, "seconds": 3.0}), "video_filters"),
+    ];
+    let mut revision = 0;
+    for (path, body, key) in cases {
+        let answer: Value = s.client.post(format!("{api}/{path}")).json(&body).send().await.unwrap().json().await.unwrap();
+        assert_eq!(answer["ok"], true, "{answer}");
+        let event = s.next(is("vrgdg.project_changed")).await;
+        assert_eq!(event["data"]["change"], json!({"kind": "scene_fields", "scenes": {}, "lists": [key]}), "{key}: {event}");
+        let number = event["data"]["revision"].as_i64().unwrap();
+        assert!(number > revision, "revisions follow each other: {number} after {revision}");
+        revision = number;
+    }
+    // Taking the last block out of a lane is announced too.
+    let cleared: Value = s.client.put(format!("{api}/transitions")).json(&json!({"scene_transitions": []})).send().await.unwrap().json().await.unwrap();
+    assert_eq!(cleared["ok"], true, "{cleared}");
+    let event = s.next(is("vrgdg.project_changed")).await;
+    assert_eq!(event["data"]["change"]["lists"], json!(["scene_transitions"]), "{event}");
+}
+
+#[tokio::test]
 async fn the_feed_lists_what_the_agent_does_while_it_does_it() {
     let mut s = start().await;
     s.tool("project_create", json!({"project_name": "Demo Song"})).await;

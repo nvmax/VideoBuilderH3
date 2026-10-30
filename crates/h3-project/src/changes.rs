@@ -2,8 +2,10 @@
 //! finishing) is described and handed to the listeners, which tell the open Builder. The description is the one the Builder's own merge code reads
 //! (`music_video_builder/external_changes.mjs`):
 //!
-//! - `{"kind": "scene_fields", "scenes": {scene_id: {"segment": [keys], "references": ["subjects", "locations"]}}, "marker_ids": [...]}` when only scene fields,
-//!   the characters or location mapped to a scene, or Timeline Notes changed. The Builder merges these field by field and keeps what the user has not saved.
+//! - `{"kind": "scene_fields", "scenes": {scene_id: {"segment": [keys], "references": ["subjects", "locations"]}}, "marker_ids": [...], "lists": [keys]}` when only
+//!   scene fields, the characters or location mapped to a scene, Timeline Notes, or the blocks of the transition, effect and filter lanes (`lists`: the session keys of the
+//!   lanes that changed) changed. The Builder merges these field by field and keeps what the user has not saved. It needs no reload, so a render or a focused field does not
+//!   hold a lane back.
 //! - `{"kind": "project"}` for anything else. The Builder then reloads the project when nothing is unsaved, focused or rendering.
 
 use std::path::{Path, PathBuf};
@@ -66,8 +68,10 @@ const NOT_THE_PROJECT: [&str; 22] = [
     "active_timeline_marker_id", "left_panel_width", "left_panel_collapsed", "right_panel_width", "right_panel_collapsed", "left_panel_tab", "timeline_panel_height",
     "timeline_zoom", "llm_popout_open", "llm_popout_width", "llm_popout_height", "llm_popout_x", "llm_popout_y",
 ];
+/// The blocks of the timeline lanes: transitions, effects and filters. Each list is replaced as a whole.
+const LANE_LISTS: [&str; 3] = ["scene_transitions", "video_effects", "video_filters"];
 /// The parts of the session that are compared on their own.
-const COMPARED_APART: [&str; 4] = ["segments", "overlay_segments", "flux_reference_builder", "timeline_markers"];
+const COMPARED_APART: [&str; 7] = ["segments", "overlay_segments", "flux_reference_builder", "timeline_markers", LANE_LISTS[0], LANE_LISTS[1], LANE_LISTS[2]];
 /// Parts of the reference builder that belong to a scene: which characters and which location it uses.
 const SCENE_REFERENCES: [(&str, &str, &str); 2] = [("subjects", "subject_scene_map", "use_subject_reference"), ("locations", "scene_map", "use_location_references")];
 
@@ -157,13 +161,19 @@ pub fn describe_change(previous: Option<&Obj>, saved: &Obj) -> Value {
         }
     }
 
-    if scenes.is_empty() && marker_ids.is_empty() {
+    // The lanes: the lists that differ, by session key.
+    let lists: Vec<&str> = LANE_LISTS.into_iter().filter(|name| list(before, name) != list(saved, name)).collect();
+
+    if scenes.is_empty() && marker_ids.is_empty() && lists.is_empty() {
         // Nothing the Builder shows changed (a bookkeeping save). It still needs the revision, so it is announced as an empty field change.
         return json!({"kind": "scene_fields", "scenes": {}});
     }
     let mut change = json!({"kind": "scene_fields", "scenes": Value::Object(scenes)});
     if !marker_ids.is_empty() {
         change["marker_ids"] = json!(marker_ids);
+    }
+    if !lists.is_empty() {
+        change["lists"] = json!(lists);
     }
     change
 }
@@ -243,6 +253,42 @@ mod tests {
         after.insert("revision".into(), json!(5));
         after.insert("updated".into(), json!(99));
         assert_eq!(describe_change(Some(&base()), &after), json!({"kind": "scene_fields", "scenes": {}}));
+    }
+
+    #[test]
+    fn the_blocks_of_a_lane_are_a_list_change_and_not_the_project() {
+        let mut after = base();
+        after.insert("revision".into(), json!(5));
+        after.insert("scene_transitions".into(), json!([{"id": "t1", "transition": "Fade", "start": 1.0, "seconds": 1.0}]));
+        assert_eq!(describe_change(Some(&base()), &after), json!({"kind": "scene_fields", "scenes": {}, "lists": ["scene_transitions"]}));
+        // Every lane that changed is named, next to the scene fields of the same save.
+        after.insert("video_effects".into(), json!([{"id": "e1"}]));
+        after.insert("video_filters".into(), json!([{"id": "f1"}]));
+        after["segments"][0]["label"] = json!("Opening");
+        let change = describe_change(Some(&base()), &after);
+        assert_eq!(change["kind"], "scene_fields");
+        assert_eq!(change["lists"], json!(["scene_transitions", "video_effects", "video_filters"]));
+        assert_eq!(change["scenes"]["a"]["segment"], json!(["label"]));
+    }
+
+    #[test]
+    fn a_lane_that_did_not_change_is_not_named_and_an_empty_lane_is_a_missing_one() {
+        let mut before = base();
+        before.insert("scene_transitions".into(), json!([{"id": "t1"}]));
+        let mut after = before.clone();
+        after.insert("video_effects".into(), json!([]));
+        after.insert("revision".into(), json!(5));
+        assert_eq!(describe_change(Some(&before), &after), json!({"kind": "scene_fields", "scenes": {}}));
+        after.insert("scene_transitions".into(), json!([]));
+        assert_eq!(describe_change(Some(&before), &after)["lists"], json!(["scene_transitions"]), "taking out the last block is a change");
+    }
+
+    #[test]
+    fn a_lane_change_next_to_a_project_setting_is_still_the_project() {
+        let mut after = base();
+        after.insert("scene_transitions".into(), json!([{"id": "t1"}]));
+        after.insert("video_type".into(), json!("speaking"));
+        assert_eq!(describe_change(Some(&base()), &after), json!({"kind": "project"}));
     }
 
     #[test]
