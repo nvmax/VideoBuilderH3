@@ -1862,7 +1862,7 @@ dependencies = [
 
 [[package]]
 name = "h3-api"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "axum",
  "base64 0.22.1",
@@ -1893,7 +1893,7 @@ dependencies = [
 
 [[package]]
 name = "h3-builder"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -1916,7 +1916,7 @@ dependencies = [
 
 [[package]]
 name = "h3-cli"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "anyhow",
  "clap",
@@ -1935,7 +1935,7 @@ dependencies = [
 
 [[package]]
 name = "h3-comfy"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "futures-util",
  "reqwest 0.12.28",
@@ -1948,7 +1948,7 @@ dependencies = [
 
 [[package]]
 name = "h3-core"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "base64 0.22.1",
  "fancy-regex",
@@ -1960,7 +1960,7 @@ dependencies = [
 
 [[package]]
 name = "h3-graph"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "base64 0.22.1",
  "h3-core",
@@ -1972,7 +1972,7 @@ dependencies = [
 
 [[package]]
 name = "h3-image"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "h3-comfy",
  "h3-core",
@@ -1986,7 +1986,7 @@ dependencies = [
 
 [[package]]
 name = "h3-jobs"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "chrono",
  "rusqlite",
@@ -1999,7 +1999,7 @@ dependencies = [
 
 [[package]]
 name = "h3-llm"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "axum",
  "base64 0.22.1",
@@ -2016,7 +2016,7 @@ dependencies = [
 
 [[package]]
 name = "h3-media"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "fontdb",
  "h3-core",
@@ -2032,7 +2032,7 @@ dependencies = [
 
 [[package]]
 name = "h3-pipeline"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "axum",
  "h3-comfy",
@@ -2050,7 +2050,7 @@ dependencies = [
 
 [[package]]
 name = "h3-project"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -2070,7 +2070,7 @@ dependencies = [
 
 [[package]]
 name = "h3-studio"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "h3-api",
  "h3-jobs",
@@ -2086,7 +2086,7 @@ dependencies = [
 
 [[package]]
 name = "h3-transitions"
-version = "0.1.14"
+version = "0.1.15"
 dependencies = [
  "gl-transitions",
  "image",
