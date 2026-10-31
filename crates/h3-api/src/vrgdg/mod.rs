@@ -13,6 +13,7 @@ pub(crate) mod llm;
 mod post_process;
 mod projects;
 pub(crate) mod refmod;
+pub(crate) mod refmod_server;
 mod runner;
 mod settings;
 pub(crate) mod speaking;
@@ -51,6 +52,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = llm::routes(router);
     let router = post_process::routes(router);
     let router = refmod::routes(router);
+    let router = refmod_server::routes(router);
     let router = runner::routes(router);
     let router = settings::routes(router);
     let router = speaking::routes(router);

@@ -110,6 +110,11 @@ fn entry(name: &str, path: &Path, directory: &Path) -> Option<LibraryEntry> {
     })
 }
 
+/// The RefMod in one file, whatever its name: None when the file is not a picture or video RefMod. Used to check a download before it is kept.
+pub fn read_entry(name: &str, path: &Path, directory: &Path) -> Option<LibraryEntry> {
+    entry(name, path, directory)
+}
+
 fn walk(dir: &Path, found: &mut Vec<PathBuf>) {
     let Ok(read) = fs::read_dir(dir) else { return };
     let mut files: Vec<PathBuf> = Vec::new();
