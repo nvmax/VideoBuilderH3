@@ -184,30 +184,34 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
         payload.insert("image_paths".into(), json!([]));
         payload.insert("video_references".into(), json!([]));
     }
-    let args = SceneInputsArgs {
-        continuity_mode: &continuity_mode,
-        has_previous_segment: index > 0,
-        scene_number: i64::from(scene_number),
-        configured_image_paths: configured_images.as_deref(),
-        configured_video_references: configured_videos.as_deref(),
-        render_pass: &render_pass,
-    };
-    let video_mode = settings.get("video_mode").and_then(Value::as_str).unwrap_or("reference_to_video");
-    let inputs = resolve_scene_inputs(&session, &segment, video_mode, index, &args, &|path| Path::new(path).is_file())
-        .map_err(|e| RenderError::Invalid(format!("Scene {scene_number}: {}", e.message)))?;
-    let missing: Vec<String> = inputs
-        .get("missing_image_paths")
-        .and_then(Value::as_array)
-        .map(|a| a.iter().filter_map(|v| v.as_str().map(str::to_string)).collect())
-        .unwrap_or_default();
-    if !missing.is_empty() {
-        return Err(RenderError::Invalid(format!("Scene {scene_number} references image files that do not exist: {}", missing.join(", "))));
-    }
-    for key in ["continuity_mode", "image_paths", "video_references"] {
-        payload.insert(key.into(), inputs.get(key).cloned().unwrap_or(Value::Null));
-    }
-    if let Some(last) = inputs.get("last_frame_path") {
-        payload.insert("last_frame_path".into(), last.clone());
+    // The RefMod pipeline sends no images, so it has no Reference Builder pictures to look for or check (the pack does the same in
+    // `agent_api/orchestrator/video_orchestrator.py`). Its payload was filled above.
+    if !refmod {
+        let args = SceneInputsArgs {
+            continuity_mode: &continuity_mode,
+            has_previous_segment: index > 0,
+            scene_number: i64::from(scene_number),
+            configured_image_paths: configured_images.as_deref(),
+            configured_video_references: configured_videos.as_deref(),
+            render_pass: &render_pass,
+        };
+        let video_mode = settings.get("video_mode").and_then(Value::as_str).unwrap_or("reference_to_video");
+        let inputs = resolve_scene_inputs(&session, &segment, video_mode, index, &args, &|path| Path::new(path).is_file())
+            .map_err(|e| RenderError::Invalid(format!("Scene {scene_number}: {}", e.message)))?;
+        let missing: Vec<String> = inputs
+            .get("missing_image_paths")
+            .and_then(Value::as_array)
+            .map(|a| a.iter().filter_map(|v| v.as_str().map(str::to_string)).collect())
+            .unwrap_or_default();
+        if !missing.is_empty() {
+            return Err(RenderError::Invalid(format!("Scene {scene_number} references image files that do not exist: {}", missing.join(", "))));
+        }
+        for key in ["continuity_mode", "image_paths", "video_references"] {
+            payload.insert(key.into(), inputs.get(key).cloned().unwrap_or(Value::Null));
+        }
+        if let Some(last) = inputs.get("last_frame_path") {
+            payload.insert("last_frame_path".into(), last.clone());
+        }
     }
     for (k, v) in p {
         payload.insert(k.clone(), v.clone());
