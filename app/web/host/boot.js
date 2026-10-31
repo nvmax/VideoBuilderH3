@@ -60,6 +60,8 @@ async function start() {
   openBuilder(standInNode(), {});
   const { startAppSettings } = await import("/host/settings.js");
   startAppSettings();
+  const { startOpenProject } = await import("/host/open_project.js");
+  startOpenProject();
   const { startAgentFollow } = await import("/host/agent_follow.js");
   startAgentFollow();
   const { startUpdates } = await import("/host/updates.js");

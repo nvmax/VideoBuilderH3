@@ -3,6 +3,10 @@
 Every endpoint of the agent API this app serves, under `/api/v1`. The MCP tools call these. `{pid}` is the project id, `{sid}` a scene id.
 A call that runs as a job returns a job id: poll `GET /jobs/{id}` (the `job_wait` tool does).
 
+## app
+
+- `GET /app/open-project` The project open in the H3 Studio window right now: `open`, `project_id` and `project_folder` (null when no project is open). Use it when the user says this project, the current project or the open project, and pass `project_id` to the other tools. The user can open another project at any time, so ask again instead of remembering the answer. Every other endpoint still takes the project id in its path.
+
 ## assets
 
 - `GET /projects/{pid}/assets` Files in the project folder: images, videos, thumbnails, audio and final videos.

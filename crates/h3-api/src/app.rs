@@ -58,6 +58,8 @@ pub struct AppState {
     pub web_dir: Option<PathBuf>,
     /// What an agent is doing, for the open Builder (see `activity.rs`).
     pub activity: crate::activity::Feed,
+    /// The project the app's window has open, which an agent is told (see `open_project.rs`).
+    pub open_project: crate::open_project::OpenProject,
 }
 
 impl AppState {
@@ -121,6 +123,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/setup/config", get(crate::setup_routes::config).put(crate::setup_routes::save))
         .route("/setup/mcp", get(crate::mcp::info))
         .route("/agent/activity", get(crate::activity::recent))
+        .route("/app/open-project", get(crate::open_project::get_open).put(crate::open_project::put_open))
         .route("/openapi.json", get(crate::mcp::openapi))
         .route("/endpoints.md", get(crate::mcp::endpoints))
         .route("/queue", get(queue))

@@ -96,7 +96,7 @@ async fn handle(state: &McpState, method: &str, params: &Value) -> Result<Value,
         "initialize" => {
             // The open Builder shows who connected.
             state.app.agent_connected(params);
-            Ok(initialize(params))
+            Ok(initialize(params, &state.app.open_project_note()))
         }
         "ping" => Ok(json!({})),
         "tools/list" => Ok(json!({"tools": tool_list()})),
@@ -114,14 +114,15 @@ async fn handle(state: &McpState, method: &str, params: &Value) -> Result<Value,
     }
 }
 
-fn initialize(params: &Value) -> Value {
+/// `open_project` says which project the app has open now, as the last line of the instructions.
+fn initialize(params: &Value, open_project: &str) -> Value {
     let wanted = params.get("protocolVersion").and_then(Value::as_str);
     let version = wanted.filter(|w| VERSIONS.contains(w)).unwrap_or(VERSIONS[0]);
     json!({
         "protocolVersion": version,
         "capabilities": {"tools": {"listChanged": false}, "resources": {"listChanged": false, "subscribe": false}, "prompts": {"listChanged": false}},
         "serverInfo": {"name": SERVER_NAME, "title": "VRGDG H3 Studio", "version": env!("CARGO_PKG_VERSION")},
-        "instructions": docs::INSTRUCTIONS,
+        "instructions": format!("{}\n{open_project}", docs::INSTRUCTIONS),
     })
 }
 

@@ -3,6 +3,16 @@
  "endpoints": [
   {
    "method": "GET",
+   "path": "/app/open-project",
+   "path_params": [],
+   "body_keys": [],
+   "query": [],
+   "if_match": false,
+   "job": false,
+   "description": "The project open in the H3 Studio window right now: `open`, `project_id` and `project_folder` (null when no project is open). Use it when the user says this project, the current project or the open project, and pass `project_id` to the other tools. The user can open another project at any time, so ask again instead of remembering the answer. Every other endpoint still takes the project id in its path."
+  },
+  {
+   "method": "GET",
    "path": "/overlay-library",
    "path_params": [],
    "body_keys": [],

@@ -2802,6 +2802,8 @@ export function openBuilder(node, options = {}) {
   });
   window.__h3Builder = {
     state,
+    // The Builder's header, above the toolbar. The app shows the project's name in it (host/open_project.js).
+    header: () => shellHeader,
     selectScene(sceneId) {
       const found = [...(state.segments || []), ...(state.overlaySegments || [])].find((segment) => segment?.id === sceneId);
       if (!found) return false;

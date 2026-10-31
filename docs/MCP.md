@@ -67,6 +67,19 @@ The open Builder shows what an agent does while it does it, so you can watch the
 The events travel over `/vrgdg/events` (`h3_project::changes` for the saves, `activity.rs` for the feed). The panel is `app/web/host/agent_follow.js`. The Builder gives it a
 small handle (`window.__h3Builder`: select a scene, load a project, whether it is busy, which scenes render) through patches in `tools/builder_ui_patches.json`.
 
+## Which project is open
+
+The app tells an agent which project its window has open, so "this project" has an answer:
+
+- **At connection.** The instructions the server sends with `initialize` end with the open project (`The project open in the app right now is "Demo"`) or say that none is open.
+- **On request.** `GET /api/v1/app/open-project` (the tool `api_get_app_open_project`) answers `open`, `project_id` and `project_folder`. The user can open another project at
+  any time and the MCP connection cannot push the change, so the instructions tell the agent to ask again before it acts on the answer.
+- **How the server knows.** The window reports it. `app/web/host/open_project.js` reads the Builder's open folder (`window.__h3Builder.state.projectFolder`) when a project has loaded
+  and every second, and sends `PUT /api/v1/app/open-project` when it changes and when the page closes. Only a project the agent API can find counts: saved, in a project folder the
+  app lists. The report carries an `Origin`, so it is not listed as agent activity.
+- **The project bar.** The same script shows the project's name in a bar at the top of the Builder (`window.__h3Builder.header()`, a patch in `tools/builder_ui_patches.json`), with the
+  full path as its tooltip. A project the agent API cannot find shows `Agents cannot see this project`.
+
 ## ElevenLabs
 
 The key is saved once in Menu > App Settings > ElevenLabs API key, in the same place as Builder Settings. A Speaking project (`video_type: speaking`) uses its

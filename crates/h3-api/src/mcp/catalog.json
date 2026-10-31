@@ -4615,6 +4615,29 @@
    }
   },
   {
+   "name": "api_get_app_open_project",
+   "description": "The project open in the H3 Studio window right now: `open`, `project_id` and `project_folder` (null when no project is open). Use it when the user says this project, the current project or the open project, and pass `project_id` to the other tools. The user can open another project at any time, so ask again instead of remembering the answer. Every other endpoint still takes the project id in its path. (GET /app/open-project)",
+   "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": []
+   },
+   "kind": "endpoint",
+   "annotations": {
+    "readOnlyHint": true,
+    "destructiveHint": false,
+    "idempotentHint": true,
+    "openWorldHint": false
+   },
+   "route": {
+    "method": "GET",
+    "path": "/app/open-project",
+    "args": {},
+    "job": false,
+    "if_match": false
+   }
+  },
+  {
    "name": "api_get_overlay_library",
    "description": "The overlay library: `items` (clips to overlay, each with `id`, `category`, `duration`, size and `suggested_blend`), `fonts` (names a text clip's `font` can use: the bundled fonts, font files in the fonts folder and the fonts installed on the computer), `luts` (installed .cube files for a LUT clip), `caption_styles` (clean, bold, lower) and `kinds` (media, grain, vignette, text, lut). The person fills the library in the app (Post Process, Overlays). Use an item's `id` with POST /projects/{pid}/overlay-layers/media. (GET /overlay-library)",
    "inputSchema": {
@@ -5299,6 +5322,15 @@
   }
  ],
  "endpoints": [
+  {
+   "method": "GET",
+   "path": "/app/open-project",
+   "description": "The project open in the H3 Studio window right now: `open`, `project_id` and `project_folder` (null when no project is open). Use it when the user says this project, the current project or the open project, and pass `project_id` to the other tools. The user can open another project at any time, so ask again instead of remembering the answer. Every other endpoint still takes the project id in its path.",
+   "job": false,
+   "body_keys": [],
+   "query": [],
+   "if_match": false
+  },
   {
    "method": "GET",
    "path": "/effects",
