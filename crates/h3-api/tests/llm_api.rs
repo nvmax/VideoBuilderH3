@@ -15,6 +15,8 @@ struct Server {
     dir: tempfile::TempDir,
 }
 
+const ONE_PIXEL_PNG: &str = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVR4nGP4z8AAAAMBAQDJ/pLvAAAAAElFTkSuQmCC";
+
 fn session() -> Value {
     json!({
         "project_name": "Demo",
@@ -35,7 +37,10 @@ fn session() -> Value {
 
 async fn start() -> Server {
     // The stand-in LLM always answers one shot.
-    let llm = Router::new().route("/v1/models", axum::routing::get(|| async { Json(json!({"data": [{"id": "zeta-model"}, {"id": "alpha-model"}]})) })).route(
+    let llm = Router::new()
+        .route("/v1/models", axum::routing::get(|| async { Json(json!({"data": [{"id": "zeta-model"}, {"id": "alpha-model"}]})) }))
+        .route("/v1/images/generations", post(|| async { Json(json!({"data": [{"b64_json": ONE_PIXEL_PNG}]})) }))
+        .route(
         "/v1/chat/completions",
         post(|Json(body): Json<Value>| async move {
             // A picture request gets a description, anything else gets one shot.
@@ -264,3 +269,19 @@ async fn models_can_be_listed_before_the_settings_are_saved() {
     assert_eq!((code, body["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")));
 }
 
+#[tokio::test]
+async fn a_custom_server_picture_is_saved_in_the_project() {
+    let s = start().await;
+    let root = s.base.trim_end_matches("/api/v1");
+    let project = s.dir.path().join("projects").join("Demo");
+    let body = json!({
+        "own_server_url": s.mock, "prompt": "A tram stop at night", "image_model": "gpt-image-2", "width": 1024, "height": 1024,
+        "project_folder": project, "reference_type": "location", "name": "Lone Tram Stop",
+    });
+    let reply: Value = s.client.post(format!("{root}/vrgdg/music_builder/own_server_reference_image")).json(&body).send().await.unwrap().json().await.unwrap();
+    // The Builder puts saved_path on the card: without it the card has no picture.
+    let saved = std::path::PathBuf::from(reply["saved_path"].as_str().unwrap_or_else(|| panic!("no saved_path: {reply}")));
+    assert_eq!(saved, project.join("project_context").join("flux_references").join("locations").join("Lone Tram Stop.png"));
+    assert!(std::fs::read(&saved).unwrap().starts_with(b"\x89PNG"));
+    assert_eq!((reply["reference_type"].as_str(), reply["size"].as_str()), (Some("location"), Some("1024x1024")));
+}
