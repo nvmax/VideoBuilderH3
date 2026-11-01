@@ -11,6 +11,20 @@ function resolveRoot() {
   return location.protocol.startsWith("http") ? location.origin : "http://127.0.0.1:8190";
 }
 
+// A request body this large (a project save is a few MB of JSON) is sent gzipped: over a slow link the Builder waits for
+// the upload, not for the server. The server unpacks it.
+const GZIP_BODY_MIN = 256 * 1024;
+
+async function gzipLargeBody(options) {
+  const { body } = options;
+  if (typeof body !== "string" || body.length < GZIP_BODY_MIN || typeof CompressionStream === "undefined") return options;
+  const headers = new Headers(options.headers);
+  if (headers.has("Content-Encoding")) return options;
+  headers.set("Content-Encoding", "gzip");
+  const packed = new Blob([body]).stream().pipeThrough(new CompressionStream("gzip"));
+  return { ...options, headers, body: await new Response(packed).blob() };
+}
+
 class StudioApi extends EventTarget {
   constructor() {
     super();
@@ -32,9 +46,9 @@ class StudioApi extends EventTarget {
     return `${this.root}${route}`;
   }
 
-  fetchApi(route, options = {}) {
+  async fetchApi(route, options = {}) {
     const headers = { ...(options.headers || {}) };
-    return fetch(this.apiURL(route), { ...options, headers });
+    return fetch(this.apiURL(route), await gzipLargeBody({ ...options, headers }));
   }
 
   // ComfyUI sends server events over a WebSocket. The H3 Studio server sends the same kind of events over one

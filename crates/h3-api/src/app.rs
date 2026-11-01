@@ -23,7 +23,10 @@ use serde::Deserialize;
 use serde_json::{json, Value};
 use tokio_stream::wrappers::BroadcastStream;
 use tokio_stream::StreamExt;
+use tower_http::compression::predicate::{DefaultPredicate, NotForContentType, Predicate};
+use tower_http::compression::CompressionLayer;
 use tower_http::cors::{AllowOrigin, Any, CorsLayer};
+use tower_http::decompression::RequestDecompressionLayer;
 
 use crate::error::{respond, success, ApiError, ApiResult};
 use crate::job_handlers::{self, VIDEOS_RENDER_BATCH, VIDEO_RENDER, VIDEO_STITCH};
@@ -281,8 +284,23 @@ pub fn router(state: Arc<AppState>) -> Router {
         .with_state(state)
         .merge(mcp)
         .layer(DefaultBodyLimit::max(REQUEST_BODY_LIMIT))
+        .layer(compression())
+        // The Builder sends large bodies (a project save) gzipped. Unpacked here, so every route reads plain JSON.
+        .layer(RequestDecompressionLayer::new())
         // Outermost, so it covers every route, the ComfyUI pass-through and /mcp.
         .layer(axum::middleware::from_fn(crate::guard::only_this_computer))
+}
+
+/// Text the app sends (the screens, JSON) is gzipped for a browser that asks for it, which matters when the app is reached
+/// over a slow link. Media are compressed already and are sent in byte ranges, so they go out as they are.
+fn compression() -> CompressionLayer<impl Predicate> {
+    let predicate = DefaultPredicate::new()
+        .and(NotForContentType::const_new("video/"))
+        .and(NotForContentType::const_new("audio/"))
+        .and(NotForContentType::const_new("font/"))
+        .and(NotForContentType::const_new("application/octet-stream"))
+        .and(NotForContentType::const_new("application/zip"));
+    CompressionLayer::new().compress_when(predicate)
 }
 
 // -- helpers ----------------------------------------------------------------------------------------------------------------
