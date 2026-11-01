@@ -138,6 +138,58 @@ pub fn finalize_graph(saved: &Obj, checkpoint: &str) -> Result<Obj> {
     Ok(result)
 }
 
+/// What a replacement Turbo LoRA must share with the one a draft was made with, and its version.
+struct TurboLora {
+    family: String,
+    lightx: bool,
+    steps: u32,
+    version: Vec<u32>,
+}
+
+/// `minimax_h3_{fl2v|ref2v}_[lightx2v_]turbo_{N}step_v{X.Y}...`, the names the MiniMax H3 Turbo LoRAs are released under.
+fn turbo_lora(name: &str) -> Option<TurboLora> {
+    let base = base_name(name).to_lowercase();
+    let (family, rest) = base.strip_prefix("minimax_h3_")?.split_once('_')?;
+    if family != "fl2v" && family != "ref2v" {
+        return None;
+    }
+    let (lightx, rest) = rest.strip_prefix("lightx2v_").map_or((false, rest), |rest| (true, rest));
+    let (steps, rest) = rest.strip_prefix("turbo_")?.split_once("step_v")?;
+    let version: String = rest.chars().take_while(|c| c.is_ascii_digit() || *c == '.').collect();
+    let version = version.trim_end_matches('.').split('.').map(|part| part.parse().ok()).collect::<Option<Vec<u32>>>()?;
+    Some(TurboLora { family: family.to_string(), lightx, steps: steps.parse().ok()?, version })
+}
+
+/// The newest installed Turbo LoRA of the same family, kind and step count. Full LoRAs without "comfy" in the name are the
+/// original-format files, which ComfyUI does not load.
+fn installed_turbo_lora<'a>(wanted: &TurboLora, installed: &'a [String]) -> Option<&'a String> {
+    installed
+        .iter()
+        .filter_map(|name| turbo_lora(name).map(|lora| (name, lora)))
+        .filter(|(name, lora)| lora.family == wanted.family && lora.lightx == wanted.lightx && lora.steps == wanted.steps && (lora.lightx || name.to_lowercase().contains("comfy")))
+        .max_by(|(_, a), (_, b)| a.version.cmp(&b.version))
+        .map(|(name, _)| name)
+}
+
+/// A draft keeps the Turbo LoRA names it was made with, and a newer release replaces the old file. Point every LoRA loader
+/// whose Turbo LoRA is no longer installed at the newest installed one of the same kind and step count, so pass 2 keeps
+/// its step count. Returns the names it changed, old and new.
+pub fn replace_missing_turbo_loras(result: &mut Obj, installed: &[String]) -> Vec<(String, String)> {
+    let mut changed = Vec::new();
+    let Some(prompt) = result.get_mut("prompt").and_then(Value::as_object_mut) else { return changed };
+    for node in prompt.values_mut() {
+        let Some(inputs) = node.get_mut("inputs").and_then(Value::as_object_mut) else { continue };
+        let name = text_or_empty(inputs.get("lora_name"));
+        if name.is_empty() || installed.contains(&name) {
+            continue;
+        }
+        let Some(replacement) = turbo_lora(&name).and_then(|wanted| installed_turbo_lora(&wanted, installed)) else { continue };
+        inputs.insert("lora_name".into(), json!(replacement));
+        changed.push((name, replacement.clone()));
+    }
+    changed
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -196,5 +248,40 @@ mod tests {
         assert!(!is_two_pass(&plain));
         assert_eq!(draft_diffusion_models(&graph()), vec!["big.gguf", "small.safetensors"]);
         assert_eq!(draft_steps(&saved()).unwrap(), json!({"pass1": 4, "pass2": 3}));
+    }
+
+    #[test]
+    fn a_draft_whose_turbo_lora_was_replaced_uses_the_installed_release() {
+        let mut saved = json!({"prompt": {
+            "207": {"class_type": "LoraLoaderModelOnly", "inputs": {"lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors"}},
+            "208": {"class_type": "LoraLoaderModelOnly", "inputs": {"lora_name": "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors"}},
+            "209": {"class_type": "LoraLoaderModelOnly", "inputs": {"lora_name": "style.safetensors"}},
+            "210": {"class_type": "LoraLoaderModelOnly", "inputs": {"lora_name": "minimax_h3_ref2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors"}}
+        }})
+        .as_object()
+        .cloned()
+        .unwrap();
+        let installed: Vec<String> = [
+            "minimax_h3_fl2v_turbo_8step_v1.1_768p_bf16.safetensors",
+            "minimax_h3_fl2v_turbo_8step_v1.1_768p_comfyui_bf16.safetensors",
+            "minimax_h3_fl2v_turbo_8step_v1.10_768p_comfyui_bf16.safetensors",
+            "minimax_h3_fl2v_turbo_4step_v1.3_768p_comfyui_bf16.safetensors",
+            "minimax_h3_ref2v_turbo_8step_v1.1_768p_comfyui_bf16.safetensors",
+            "minimax_h3_ref2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors",
+        ]
+        .iter()
+        .map(|s| s.to_string())
+        .collect();
+        let changed = replace_missing_turbo_loras(&mut saved, &installed);
+        assert_eq!(changed, vec![(
+            "minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors".to_string(),
+            "minimax_h3_fl2v_turbo_8step_v1.10_768p_comfyui_bf16.safetensors".to_string()
+        )]);
+        let prompt = &saved["prompt"];
+        assert_eq!(prompt["207"]["inputs"]["lora_name"], "minimax_h3_fl2v_turbo_8step_v1.10_768p_comfyui_bf16.safetensors");
+        // No installed LightX2V 4 step LoRA, and no Turbo LoRA at all: both stay as saved for ComfyUI to report.
+        assert_eq!(prompt["208"]["inputs"]["lora_name"], "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy.safetensors");
+        assert_eq!(prompt["209"]["inputs"]["lora_name"], "style.safetensors");
+        assert_eq!(prompt["210"]["inputs"]["lora_name"], "minimax_h3_ref2v_turbo_4step_v1.0_768p_comfyui_bf16.safetensors");
     }
 }
