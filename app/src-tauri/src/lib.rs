@@ -43,7 +43,13 @@ fn open_popup(app: &tauri::AppHandle, url: tauri::Url, features: NewWindowFeatur
     }
     let label = format!("popup-{}", POPUPS.fetch_add(1, Ordering::Relaxed));
     let blank = WebviewUrl::External("about:blank".parse().expect("a valid address"));
-    match WebviewWindowBuilder::new(app, label, blank).window_features(features).title("VRGDG H3 Studio").on_document_title_changed(|window, title| drop(window.set_title(&title))).build() {
+    match WebviewWindowBuilder::new(app, label, blank)
+        .window_features(features)
+        .title("VRGDG H3 Studio")
+        .disable_drag_drop_handler()
+        .on_document_title_changed(|window, title| drop(window.set_title(&title)))
+        .build()
+    {
         Ok(window) => NewWindowResponse::Create { window },
         Err(error) => {
             eprintln!("[VRGDG-RS Window] Could not open the pop-out window: {error}");
@@ -78,6 +84,9 @@ pub fn run() {
                 .title("VRGDG H3 Studio")
                 .inner_size(1400.0, 900.0)
                 .maximized(true)
+                // The Builder takes dropped files and reorders cards with the page's own drag and drop. On Windows that only works when
+                // Tauri's drag-drop handler, which replaces the one in WebView2, is off. Nothing here listens for Tauri's drop events.
+                .disable_drag_drop_handler()
                 .on_new_window(move |url, features| open_popup(&handle, url, features))
                 .build()?;
             Ok(())
