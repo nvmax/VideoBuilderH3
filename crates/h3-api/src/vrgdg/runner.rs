@@ -42,7 +42,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/build_minimax_h3_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_2pass"), false)))
         .route(&format!("{base}/build_minimax_h3_advanced_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_advanced_2pass"), true)))
         .route(&format!("{base}/build_minimax_h3_draft_prompt"), axum_post(|state, body| build(state, body, Builder::Draft, false)))
-        .route(&format!("{base}/build_minimax_h3_finalize_prompt"), post(|_, p| fields(h3_builder::drafts::build_finalize(&p))))
+        .route(&format!("{base}/build_minimax_h3_finalize_prompt"), axum_post(finalize))
         .route(&format!("{base}/build_clear_memory_prompt"), post(|_, _| fields(clear_memory())))
         .route(&format!("{base}/build_timestamped_transcribe_prompt"), post(|_, p| fields(timestamp_prompt(&p))))
         .route("/vrgdg/music_prompt_creator/build_whisper_prompt", axum_post(build_whisper))
@@ -117,6 +117,27 @@ async fn build(State(state): State<Arc<AppState>>, body: Bytes, builder: Builder
         Ok(Err(message)) => super::failure(StatusCode::BAD_REQUEST, message),
         Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}")),
     }
+}
+
+/// `POST /vrgdg/workflow_runner/build_minimax_h3_finalize_prompt`. A draft keeps the Turbo LoRA names it was made with, so
+/// one whose LoRA was replaced by a newer release finishes with the installed one.
+async fn finalize(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match super::body_object(&body) {
+        Ok(payload) => payload,
+        Err(fail) => return super::into_response(Err(fail)),
+    };
+    // Without ComfyUI's list the draft is finished as saved, and ComfyUI reports a missing file itself.
+    let loras = state.object_info(false).await.map(|info| h3_comfy::models::model_choices(&info, "loras")).unwrap_or_default();
+    let reply = tokio::task::spawn_blocking(move || {
+        let mut result = h3_builder::drafts::build_finalize(&payload)?;
+        if let Some(result) = result.as_object_mut() {
+            h3_graph::drafts::replace_missing_turbo_loras(result, &loras);
+        }
+        Ok(result)
+    })
+    .await
+    .unwrap_or_else(|e| Err(format!("The request failed: {e}")));
+    super::into_response(fields(reply))
 }
 
 /// `POST /vrgdg/workflow_runner/build_clear_memory_prompt`.

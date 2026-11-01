@@ -132,7 +132,7 @@ pub(super) fn envelope(value: Value) -> Value {
 }
 
 /// The request body as an object. An empty body is an empty object. Anything else that is not a JSON object is an error.
-fn body_object(body: &Bytes) -> Result<Obj, Fail> {
+pub(super) fn body_object(body: &Bytes) -> Result<Obj, Fail> {
     if body.iter().all(u8::is_ascii_whitespace) {
         return Ok(Obj::new());
     }
