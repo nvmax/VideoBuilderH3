@@ -171,7 +171,8 @@ async fn lm_studio_models(state: &AppState, payload: &Obj) -> Result<Value, Stri
     Ok(json!({"models": models, "raw": raw}))
 }
 
-/// `POST own_server_reference_image`: one picture from the custom server's image endpoint.
+/// `POST own_server_reference_image`: one picture from the custom server's image endpoint, saved in the project like
+/// `save_flux_reference_image` does.
 async fn own_server_image(state: &AppState, payload: &Obj) -> Result<Value, String> {
     let cfg = forced_config(state, payload, "own_server", 1200);
     let number = |key: &str| payload.get(key).filter(|v| !v.is_null() && v.as_str() != Some("")).and_then(h3_core::pyval::to_float);
@@ -180,7 +181,11 @@ async fn own_server_image(state: &AppState, payload: &Obj) -> Result<Value, Stri
     let prompt = text_or_empty(payload.get("prompt"));
     let model = text_or_empty(payload.get("image_model"));
     let (image_data, size) = own_server::generate_image(&cfg, &prompt, number("width"), number("height"), &model, seed, steps).await.map_err(|e| e.to_string())?;
-    Ok(json!({"image_data": image_data, "size": size}))
+    let mut save = payload.clone();
+    save.insert("image_data".into(), json!(image_data));
+    let mut saved = tokio::task::spawn_blocking(move || h3_builder::assets::save_flux_reference_image(&save, None)).await.map_err(|e| e.to_string())??;
+    saved["size"] = json!(size);
+    Ok(saved)
 }
 
 /// `POST clear_memory_direct`: ask ComfyUI to unload its models and free memory.
