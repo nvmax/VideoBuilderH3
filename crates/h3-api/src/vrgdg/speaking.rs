@@ -55,12 +55,12 @@ impl Transport for Network {
     }
 }
 
-fn done(result: Result<Value, String>) -> Response {
+pub(super) fn done(result: Result<Value, String>) -> Response {
     into_response(result.map(Out::from).map_err(|message| Fail::new(StatusCode::BAD_REQUEST, message)))
 }
 
 /// Error text of an LLM helper without any of the request's keys.
-fn redacted(mut message: String, payload: &Obj) -> String {
+pub(super) fn redacted(mut message: String, payload: &Obj) -> String {
     for field in ["llm_api_key", "llm_api_key_project", "own_server_api_key", "own_server_api_key_project", "lmstudio_api_key"] {
         let secret = text_or_empty(payload.get(field));
         if !secret.is_empty() {

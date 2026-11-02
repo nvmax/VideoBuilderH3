@@ -13,6 +13,7 @@ pub mod resolution;
 pub mod scene;
 pub mod scene_card;
 pub mod scene_defaults;
+pub mod seedance;
 pub mod settings;
 pub mod speaking;
 pub mod story;

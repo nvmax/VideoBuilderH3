@@ -14,5 +14,6 @@ pub mod lyrics;
 pub mod masked;
 pub mod performance;
 pub mod plan;
+pub mod singer_timing;
 pub mod task;
 pub mod text;

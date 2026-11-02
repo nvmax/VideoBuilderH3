@@ -8,7 +8,7 @@ use h3_builder::story::agent::location_style_theme_text;
 use h3_core::pyval::{text_or_empty, Obj};
 use h3_core::timeline::sort_segments;
 use h3_jobs::{Handler, JobCtx, JobError, ProgressUpdate};
-use h3_pipeline::minimax_prompts::{generate_scene_prompt, PromptError, PromptParams};
+use h3_pipeline::minimax_prompts::{generate_scene_prompt_timed, PromptError, PromptParams};
 use h3_project::{load_session, session_ops, Stamp};
 use serde_json::{json, Value};
 
@@ -112,13 +112,16 @@ async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
         });
         // The project is read again for each scene, because the scenes written before it changed it.
         let session = read_session(&folder).await?.session;
-        match generate_scene_prompt(&current(&state), &session, *index, &params).await {
+        // A scene that cuts between shots has its sung words timed first (Stable-ts in ComfyUI), so each shot gets its words.
+        let timer = crate::singer_timer::ComfyTimer { state: &state, ctx: &ctx, folder: folder.clone() };
+        match generate_scene_prompt_timed(&current(&state), &session, *index, &params, Some(&timer)).await {
             Ok(written) => {
                 let mut fields = Obj::new();
                 fields.insert("minimax_h3_prompt".into(), json!(written.prompt));
                 fields.insert("minimax_h3_prompt_origin".into(), json!("gemma"));
                 fields.insert("minimax_h3_mode".into(), json!("reference_to_video"));
                 fields.insert("video_prompt_type".into(), json!("rtv"));
+                fields.extend(written.timing_fields.clone());
                 let saved = {
                     let _guard = state.edit_lock.lock().await;
                     let (folder, id) = (folder.clone(), id.clone());
@@ -130,6 +133,13 @@ async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
             }
             // The LLM being down fails the whole job. A scene's own problem fails only that scene.
             Err(PromptError::Llm(e @ h3_llm::LlmError::Unavailable(_))) => return Err(fail(ApiError::from(e))),
+            // So does ComfyUI failing to time the words, or the job being stopped while it did.
+            Err(PromptError::Timing(message)) => {
+                if ctx.is_cancelled() {
+                    return Err(JobError::cancelled());
+                }
+                return Err(JobError::new("COMFY_EXECUTION_ERROR", message));
+            }
             Err(e) => failures.push(json!({"scene_id": id, "scene_number": index + 1, "error": e.to_string()})),
         }
     }

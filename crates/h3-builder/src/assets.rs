@@ -62,7 +62,7 @@ fn extension(path: &Path) -> String {
 }
 
 /// A random 32 digit hex name part, like `uuid.uuid4().hex`.
-fn random_hex() -> String {
+pub(crate) fn random_hex() -> String {
     static COUNTER: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
     let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map_or(0, |d| d.as_nanos());
     let seed = format!("{nanos}:{}:{}", std::process::id(), COUNTER.fetch_add(1, std::sync::atomic::Ordering::Relaxed));

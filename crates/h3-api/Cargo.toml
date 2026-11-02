@@ -39,3 +39,4 @@ h3-project.workspace = true
 image.workspace = true
 base64.workspace = true
 zip.workspace = true
+hound.workspace = true

@@ -173,8 +173,8 @@ pub async fn models_for(State(state): Shared, body: Option<Json<Value>>) -> ApiR
 pub async fn write_prompts(State(state): Shared, axum::extract::Path(pid): axum::extract::Path<String>, body: Option<Json<Value>>) -> ApiResult {
     let params = body_object(body)?;
     crate::app::load(&state, &pid).await?;
-    // The LLM runs in its own process, so this job does not wait behind a render.
-    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), false)?;
+    // A scene that cuts between shots has its sung words timed with Stable-ts in ComfyUI first, so this job takes the GPU turn.
+    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), true)?;
     Ok(crate::app::job_response(&job))
 }
 
@@ -223,7 +223,7 @@ pub async fn scene_video_prompt(State(state): Shared, axum::extract::Path((pid, 
     let loaded = crate::app::load(&state, &pid).await?;
     crate::views::find_scene(&loaded, &sid)?;
     params.insert("scene_ids".into(), json!([sid]));
-    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), false)?;
+    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), true)?;
     Ok(crate::app::job_response(&job))
 }
 
@@ -243,7 +243,7 @@ pub async fn batch_prompts(State(state): Shared, axum::extract::Path(pid): axum:
     // Video prompts are the MiniMax H3 prompts. Without `resume_missing` every scene is written again.
     let resume = h3_core::pyval::text_or_empty(params.get("run_mode")).trim().to_lowercase() == "resume_missing";
     params.insert("replace_existing".into(), json!(!resume));
-    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), false)?;
+    let job = state.jobs.submit(crate::llm_jobs::MINIMAX_PROMPTS, Some(&pid), Value::Object(params), true)?;
     Ok(crate::app::job_response(&job))
 }
 

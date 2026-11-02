@@ -31,6 +31,7 @@ pub const CONTINUOUS_CUTS_RULES: &str = concat!(
 const CRAFT_ACTING: &str = concat!(
     "PERFORMANCE CRAFT — MANDATORY: Give every visible face its own concrete expression in every shot, ",
     "written as what the brows, eyes, smile, head and shoulders do, for example eyes narrowing, brows lifting, a slow smile spreading or the head turning away. ",
+    "Include each readable supporting face by subject label in every shot where it is visible, even behind the lead. Give each a distinct scene-motivated reaction that develops during the shot; do not give everyone the same raised brows and smile or reduce them to 'the others watch'. Carry expressions and eyelines naturally across cuts. Describe only faces readable in the existing framing, without adding cast or camera coverage. ",
     "Take each emotion from this scene's lyric meaning, story beat and song energy rather than a stock mood, choose two specific emotions wherever an emotion header is written, ",
     "and let the expression change at least once in a longer shot. Scale every expression to the {style} video style and the scene's energy: ",
     "stylized, animated or high-energy scenes use big, exaggerated expressions; realistic or quiet scenes use small, precise ones. ",
@@ -39,7 +40,7 @@ const CRAFT_ACTING: &str = concat!(
 );
 const CRAFT_SILENT: &str = concat!(
     "SILENT PEOPLE: Name every visible person who is not singing or speaking at that moment and state that their lips stay pressed together, ",
-    "with their own expression, for example '<Subject 2> watches with her lips pressed together and her brows lifted.'"
+    "while their eyes, brows, cheeks and closed-mouth expressions remain active. Silence restricts vocals, not facial acting. For example '<Subject 2> remains silent, her brows pinching before one brow arches toward the singer.' Give each visible supporting person a different reaction suited to the scene and requested facial intensity, without adding speech, singing or audible laughter."
 );
 const CRAFT_FRAMING: &str = concat!(
     "FACES WHILE SINGING OR SPEAKING: Unless a per-shot framing above says otherwise, frame a person who is singing or speaking ",

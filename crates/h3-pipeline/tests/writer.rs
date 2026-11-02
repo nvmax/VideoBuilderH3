@@ -7,11 +7,31 @@ use std::sync::{Arc, Mutex};
 use axum::extract::State;
 use axum::routing::post;
 use axum::{Json, Router};
+use h3_core::prompt::singer_timing::TimingPlan;
+use h3_core::pyval::Obj;
 use h3_llm::LlmConfig;
-use h3_pipeline::minimax_prompts::{compose_request, generate_scene_prompt, PromptError, PromptParams};
+use h3_pipeline::minimax_prompts::{compose_request, generate_scene_prompt, generate_scene_prompt_timed, PromptError, PromptParams, SingerTimer, TimerFuture};
 use serde_json::{json, Value};
 
 type Shared = Arc<Mutex<(String, Vec<Value>)>>;
+
+/// Answers every scene's timing with the words the case gives, and counts how often it was asked.
+struct Canned {
+    words: Obj,
+    asked: std::sync::atomic::AtomicUsize,
+}
+
+impl SingerTimer for Canned {
+    fn project_folder(&self) -> String {
+        "Z:\\h3fixture\\proj".into()
+    }
+
+    fn time<'a>(&'a self, _plan: &'a TimingPlan) -> TimerFuture<'a> {
+        self.asked.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        let words = self.words.clone();
+        Box::pin(async move { Ok(words) })
+    }
+}
 
 async fn start() -> (LlmConfig, Shared) {
     let shared: Shared = Arc::new(Mutex::new((String::new(), vec![])));
@@ -39,15 +59,23 @@ async fn prompts_match_the_pack() {
     image::RgbImage::from_pixel(32, 18, image::Rgb([30, 60, 90])).save(&frame).unwrap();
     let mut compared = 0;
     let mut with_frame = 0;
+    let mut timed = 0;
     for case in cases["cases"].as_array().unwrap() {
         let name = case["name"].as_str().unwrap();
         shared.lock().unwrap().0 = case["reply"].as_str().unwrap().to_string();
         let session = case["session"].as_object().unwrap();
         let params = PromptParams { previous_frame: case["previous_frame"].as_bool().unwrap_or(false).then(|| frame.clone()), ..PromptParams::default() };
-        let result = generate_scene_prompt(&cfg, session, case["index"].as_u64().unwrap() as usize, &params).await;
+        // A case with `canned` words is timed first, like the pack does with Stable-ts. The others are not timed.
+        let timer = case.get("canned").and_then(Value::as_object).map(|words| Canned { words: words.clone(), asked: Default::default() });
+        let result = generate_scene_prompt_timed(&cfg, session, case["index"].as_u64().unwrap() as usize, &params, timer.as_ref().map(|t| t as &dyn SingerTimer)).await;
         match (result, case.get("error")) {
             (Err(PromptError::Invalid(m)), Some(want)) => assert_eq!(&json!(m), want, "{name}"),
             (Ok(written), None) => {
+                if let Some(timer) = &timer {
+                    assert_eq!(timer.asked.load(std::sync::atomic::Ordering::SeqCst) > 0, case["timed"].as_bool().unwrap(), "{name}: timed");
+                    assert_eq!(Value::Object(written.timing_fields.clone()), case["timing_fields"], "{name}: timing fields");
+                    timed += 1;
+                }
                 assert_eq!(written.prompt, case["prompt"].as_str().unwrap(), "{name}: prompt");
                 assert_eq!(json!(written.characters), case["characters"], "{name}");
                 assert_eq!(json!(written.shots), case["shots"], "{name}");
@@ -71,7 +99,8 @@ async fn prompts_match_the_pack() {
             (other, want) => panic!("{name}: {other:?} vs {want:?}"),
         }
     }
-    assert_eq!(compared, 78);
+    assert_eq!(compared, 88);
+    assert_eq!(timed, 10, "ten of the cases give the writer words to time");
     assert_eq!(with_frame, 2, "two cases show the previous frame to the LLM");
     // The request carries the pack's instructions, the shot task and the default notes.
     let sent = shared.lock().unwrap().1[0].clone();

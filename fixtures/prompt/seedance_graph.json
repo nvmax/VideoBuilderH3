@@ -1,0 +1,3100 @@
+{
+ "cases": [
+  {
+   "name": "one_image",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "defaults_are_filled",
+   "payload": {
+    "prompt": "  Ava walks.  ",
+    "reference_images": [
+     "{dir}/ava.png"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "every_kind",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ben.jpg"
+     },
+     {
+      "path": "{dir}/roof.JPEG"
+     }
+    ],
+    "reference_videos": [
+     "{dir}/clip.mp4",
+     {
+      "path": "{dir}/clip.mov"
+     }
+    ],
+    "reference_audios": [
+     "{dir}/excerpt.wav",
+     "{dir}/song.mp3"
+    ],
+    "duration": 12
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_2": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.jpg"
+      }
+     },
+     "image_3": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.jpeg"
+      }
+     },
+     "video_1": {
+      "class_type": "LoadVideo",
+      "inputs": {
+       "file": "vrgdg_seedance_<ID>.mp4"
+      }
+     },
+     "video_2": {
+      "class_type": "LoadVideo",
+      "inputs": {
+       "file": "vrgdg_seedance_<ID>.mov"
+      }
+     },
+     "audio_1": {
+      "class_type": "LoadAudio",
+      "inputs": {
+       "audio": "vrgdg_seedance_<ID>.wav"
+      }
+     },
+     "audio_2": {
+      "class_type": "LoadAudio",
+      "inputs": {
+       "audio": "vrgdg_seedance_<ID>.mp3"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 12,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ],
+       "model.reference_images.image_2": [
+        "image_2",
+        0
+       ],
+       "model.reference_images.image_3": [
+        "image_3",
+        0
+       ],
+       "model.reference_videos.video_1": [
+        "video_1",
+        0
+       ],
+       "model.reference_videos.video_2": [
+        "video_2",
+        0
+       ],
+       "model.reference_audios.audio_1": [
+        "audio_1",
+        0
+       ],
+       "model.reference_audios.audio_2": [
+        "audio_2",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 12,
+    "timeline_duration": 12.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.jpeg",
+    "vrgdg_seedance_<ID>.jpg",
+    "vrgdg_seedance_<ID>.mov",
+    "vrgdg_seedance_<ID>.mp3",
+    "vrgdg_seedance_<ID>.mp4",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.wav"
+   ]
+  },
+  {
+   "name": "settings",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": 6.2,
+    "resolution": "1080p",
+    "ratio": "9:16",
+    "generate_audio": false,
+    "seed": 5
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "1080p",
+       "model.ratio": "9:16",
+       "model.duration": 7,
+       "model.generate_audio": false,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 5,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 7,
+    "timeline_duration": 6.2
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "seed_wraps",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "seed": 2147483689
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 41,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "negative_seed",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "seed": -3
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 2147483645,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "duration_rounds_up",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": 4.01
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 4.01
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "short_duration_is_four",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": 1.5
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 4,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 4,
+    "timeline_duration": 1.5
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "the_longest_scene",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": 30
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 30,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 30,
+    "timeline_duration": 30.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "image_from_a_data_url",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "jpeg_data_url",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "data": "data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.jpg"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.jpg"
+   ]
+  },
+  {
+   "name": "webp_data_url",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "data": "data:image/webp;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.webp"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.webp"
+   ]
+  },
+  {
+   "name": "data_without_a_header",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "path_wins_over_data",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png",
+      "data": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "quoted_path",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": "\"{dir}/ava.png\""
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "scene_audio_mode",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "lip_sync_image": 1
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "audio_1": {
+      "class_type": "LoadAudio",
+      "inputs": {
+       "audio": "vrgdg_seedance_<ID>.wav"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. The performer from @Image 1 lip-syncs to the actual vocals/speech in @Audio 1. Match the supplied words, phrasing, phonemes, melody and pauses at their original timestamps. Keep the mouth visible during vocal lines. Other people keep their lips closed unless the scene explicitly assigns them a vocal part. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ],
+       "model.reference_audios.audio_1": [
+        "audio_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.wav"
+   ]
+  },
+  {
+   "name": "scene_audio_without_a_singer",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "no_lip_sync": true
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "audio_1": {
+      "class_type": "LoadAudio",
+      "inputs": {
+       "audio": "vrgdg_seedance_<ID>.wav"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. This is a non-vocal/instrumental performance shot. Keep every person's lips closed; use the audio only for musical timing and body/instrument movement. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ],
+       "model.reference_audios.audio_1": [
+        "audio_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.wav"
+   ]
+  },
+  {
+   "name": "scene_audio_needs_one_excerpt",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "audio_mode": "scene_audio"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Scene-audio mode requires exactly one prepared project/custom audio excerpt as Audio 1."
+  },
+  {
+   "name": "scene_audio_singer_not_attached",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "lip_sync_image": 4
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Select a lip-sync performer image that is actually attached to this scene."
+  },
+  {
+   "name": "empty_prompt",
+   "payload": {
+    "prompt": "   ",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance needs a prompt between 1 and 15,000 characters."
+  },
+  {
+   "name": "prompt_at_the_limit",
+   "payload": {
+    "prompt": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "prompt_over_the_limit",
+   "payload": {
+    "prompt": "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance needs a prompt between 1 and 15,000 characters."
+  },
+  {
+   "name": "scene_audio_text_over_the_limit",
+   "payload": {
+    "prompt": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "The prompt plus scene-audio timing instructions exceeds 15,000 characters. Shorten the prompt first."
+  },
+  {
+   "name": "duration_zero",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": 0
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance scenes must be longer than zero and at most 30 seconds. Split longer scenes first."
+  },
+  {
+   "name": "duration_too_long",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": 30.5
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance scenes must be longer than zero and at most 30 seconds. Split longer scenes first."
+  },
+  {
+   "name": "duration_infinite_as_text",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": "inf"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance scenes must be longer than zero and at most 30 seconds. Split longer scenes first."
+  },
+  {
+   "name": "duration_as_text",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "duration": "6.5"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 7,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 7,
+    "timeline_duration": 6.5
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "unknown_resolution",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "resolution": "4k"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Unsupported Seedance resolution."
+  },
+  {
+   "name": "unknown_ratio",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "ratio": "5:4"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Unsupported Seedance aspect ratio."
+  },
+  {
+   "name": "adaptive_ratio",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "ratio": "adaptive"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "Ava walks across the roof.",
+       "model.resolution": "720p",
+       "model.ratio": "adaptive",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "no_references",
+   "payload": {
+    "prompt": "x"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Reference to Video needs at least one image, video, or audio reference."
+  },
+  {
+   "name": "empty_reference_lists",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [],
+    "reference_videos": [],
+    "reference_audios": []
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Reference to Video needs at least one image, video, or audio reference."
+  },
+  {
+   "name": "too_many_images",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance accepts at most 30 image references."
+  },
+  {
+   "name": "thirty_images",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "image_1": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_2": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_3": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_4": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_5": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_6": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_7": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_8": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_9": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_10": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_11": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_12": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_13": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_14": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_15": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_16": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_17": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_18": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_19": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_20": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_21": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_22": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_23": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_24": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_25": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_26": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_27": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_28": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_29": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "image_30": {
+      "class_type": "LoadImage",
+      "inputs": {
+       "image": "vrgdg_seedance_<ID>.png"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_images.image_1": [
+        "image_1",
+        0
+       ],
+       "model.reference_images.image_2": [
+        "image_2",
+        0
+       ],
+       "model.reference_images.image_3": [
+        "image_3",
+        0
+       ],
+       "model.reference_images.image_4": [
+        "image_4",
+        0
+       ],
+       "model.reference_images.image_5": [
+        "image_5",
+        0
+       ],
+       "model.reference_images.image_6": [
+        "image_6",
+        0
+       ],
+       "model.reference_images.image_7": [
+        "image_7",
+        0
+       ],
+       "model.reference_images.image_8": [
+        "image_8",
+        0
+       ],
+       "model.reference_images.image_9": [
+        "image_9",
+        0
+       ],
+       "model.reference_images.image_10": [
+        "image_10",
+        0
+       ],
+       "model.reference_images.image_11": [
+        "image_11",
+        0
+       ],
+       "model.reference_images.image_12": [
+        "image_12",
+        0
+       ],
+       "model.reference_images.image_13": [
+        "image_13",
+        0
+       ],
+       "model.reference_images.image_14": [
+        "image_14",
+        0
+       ],
+       "model.reference_images.image_15": [
+        "image_15",
+        0
+       ],
+       "model.reference_images.image_16": [
+        "image_16",
+        0
+       ],
+       "model.reference_images.image_17": [
+        "image_17",
+        0
+       ],
+       "model.reference_images.image_18": [
+        "image_18",
+        0
+       ],
+       "model.reference_images.image_19": [
+        "image_19",
+        0
+       ],
+       "model.reference_images.image_20": [
+        "image_20",
+        0
+       ],
+       "model.reference_images.image_21": [
+        "image_21",
+        0
+       ],
+       "model.reference_images.image_22": [
+        "image_22",
+        0
+       ],
+       "model.reference_images.image_23": [
+        "image_23",
+        0
+       ],
+       "model.reference_images.image_24": [
+        "image_24",
+        0
+       ],
+       "model.reference_images.image_25": [
+        "image_25",
+        0
+       ],
+       "model.reference_images.image_26": [
+        "image_26",
+        0
+       ],
+       "model.reference_images.image_27": [
+        "image_27",
+        0
+       ],
+       "model.reference_images.image_28": [
+        "image_28",
+        0
+       ],
+       "model.reference_images.image_29": [
+        "image_29",
+        0
+       ],
+       "model.reference_images.image_30": [
+        "image_30",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png",
+    "vrgdg_seedance_<ID>.png"
+   ]
+  },
+  {
+   "name": "too_many_videos",
+   "payload": {
+    "prompt": "x",
+    "reference_videos": [
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4",
+     "{dir}/clip.mp4"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance accepts at most 10 video references."
+  },
+  {
+   "name": "too_many_audios",
+   "payload": {
+    "prompt": "x",
+    "reference_audios": [
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3",
+     "{dir}/song.mp3"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance accepts at most 10 audio references."
+  },
+  {
+   "name": "references_not_a_list",
+   "payload": {
+    "prompt": "x",
+    "reference_images": "{dir}/ava.png"
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance accepts at most 30 image references."
+  },
+  {
+   "name": "missing_image_file",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": "{dir}/nope.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance image reference was not found: {dir}/nope.png"
+  },
+  {
+   "name": "empty_image_path",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": ""
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance image reference was not found: (empty)"
+  },
+  {
+   "name": "image_format_not_allowed",
+   "payload": {
+    "prompt": "x",
+    "reference_images": [
+     {
+      "path": "{dir}/picture.gif"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Unsupported Seedance image reference format: .gif"
+  },
+  {
+   "name": "video_format_not_allowed",
+   "payload": {
+    "prompt": "x",
+    "reference_videos": [
+     "{dir}/notes.txt"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Unsupported Seedance video reference format: .txt"
+  },
+  {
+   "name": "audio_format_not_allowed",
+   "payload": {
+    "prompt": "x",
+    "reference_audios": [
+     "{dir}/clip.mov"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Unsupported Seedance audio reference format: .mov"
+  },
+  {
+   "name": "mp4_is_allowed_as_audio",
+   "payload": {
+    "prompt": "x",
+    "reference_audios": [
+     "{dir}/clip.mp4"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "result": {
+    "prompt": {
+     "audio_1": {
+      "class_type": "LoadAudio",
+      "inputs": {
+       "audio": "vrgdg_seedance_<ID>.mp4"
+      }
+     },
+     "seedance": {
+      "class_type": "ByteDance2ReferenceNodeV2",
+      "inputs": {
+       "model": "Seedance 2.5",
+       "model.prompt": "x",
+       "model.resolution": "720p",
+       "model.ratio": "16:9",
+       "model.duration": 5,
+       "model.generate_audio": true,
+       "model.task_type": "reference",
+       "model.output_format": "mp4",
+       "model.auto_downscale": true,
+       "model.auto_upscale": false,
+       "seed": 0,
+       "watermark": false,
+       "model.reference_audios.audio_1": [
+        "audio_1",
+        0
+       ]
+      }
+     },
+     "save_video": {
+      "class_type": "SaveVideo",
+      "inputs": {
+       "video": [
+        "seedance",
+        0
+       ],
+       "filename_prefix": "vrgdg_api_video/seedance25_<ID>/video",
+       "format": "mp4",
+       "format.codec": "auto"
+      }
+     }
+    },
+    "output_root": "<OUT>",
+    "generation_duration": 5,
+    "timeline_duration": 5.0
+   },
+   "staged": [
+    "vrgdg_seedance_<ID>.mp4"
+   ]
+  },
+  {
+   "name": "data_url_for_a_video_is_not_a_file",
+   "payload": {
+    "prompt": "x",
+    "reference_videos": [
+     {
+      "data": "data:video/mp4;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage",
+    "LoadVideo",
+    "LoadAudio"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Seedance video reference was not found: (empty)"
+  },
+  {
+   "name": "partner_node_missing",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "LoadImage"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Update ComfyUI and enable API nodes. Missing nodes: ByteDance2ReferenceNodeV2, SaveVideo"
+  },
+  {
+   "name": "save_video_missing",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "LoadImage"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "Update ComfyUI and enable API nodes. Missing nodes: SaveVideo"
+  },
+  {
+   "name": "loader_missing",
+   "payload": {
+    "prompt": "Ava walks across the roof.",
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "reference_audios": [
+     "{dir}/song.mp3"
+    ]
+   },
+   "nodes": [
+    "ByteDance2ReferenceNodeV2",
+    "SaveVideo",
+    "LoadImage"
+   ],
+   "files": [
+    "ava.png",
+    "ben.jpg",
+    "roof.JPEG",
+    "clip.mp4",
+    "clip.mov",
+    "excerpt.wav",
+    "song.mp3",
+    "notes.txt",
+    "picture.gif"
+   ],
+   "error": "ComfyUI is missing LoadAudio. Update ComfyUI first."
+  }
+ ]
+}

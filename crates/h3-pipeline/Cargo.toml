@@ -13,6 +13,7 @@ h3-llm.workspace = true
 h3-media.workspace = true
 h3-project.workspace = true
 serde_json.workspace = true
+sha2.workspace = true
 thiserror.workspace = true
 tokio.workspace = true
 

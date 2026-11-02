@@ -5,6 +5,7 @@
 
 pub mod audio_mask;
 pub mod context;
+pub mod drafts;
 pub mod env;
 pub mod finish;
 pub mod minimax_prompts;
@@ -19,5 +20,5 @@ pub mod video_ops;
 
 pub use context::connect;
 pub use env::LiveEnv;
-pub use finish::{randomize_seeds, SEED_FIELDS, batch_targets, finish_scene, render_all, render_scene_full, stitch_project, BatchOptions, BatchResult, FinishOptions, RunContext, SceneHook, SceneResult, StitchHook};
-pub use render::{prepare_scene_render, render_scene, Prepared, RenderError, RenderEvent, RenderOutcome, RenderParams};
+pub use finish::{randomize_seeds, stage_fields, SEED_FIELDS, batch_targets, finish_scene, render_all, render_scene_full, stitch_project, BatchOptions, BatchResult, FinishOptions, RunContext, SceneHook, SceneResult, StitchHook};
+pub use render::{build_draft_graph, prepare_finalize, prepare_scene_render, render_scene, Prepared, RenderError, RenderEvent, RenderOutcome, RenderParams, RenderPhase};

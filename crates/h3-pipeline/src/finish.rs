@@ -15,7 +15,7 @@ use h3_project::{latents, load_session, persist_session, takes, Stamp};
 use serde_json::{json, Value};
 
 use crate::env::LiveEnv;
-use crate::render::{render_scene, RenderError, RenderEvent, RenderOutcome, RenderParams};
+use crate::render::{render_scene, RenderError, RenderEvent, RenderOutcome, RenderParams, RenderPhase};
 use crate::scene_video::{apply_scene_video, continuity_used};
 use crate::stitch_plan::build_stitch_request;
 
@@ -46,6 +46,10 @@ pub struct SceneResult {
     pub history_index: usize,
     pub history_count: usize,
     pub revision: i64,
+    /// `full`, `draft` or `finalize`.
+    pub render_phase: String,
+    /// The id of the draft a `draft` render saved. Empty for the other phases.
+    pub draft_id: String,
 }
 
 fn other(message: impl std::fmt::Display) -> RenderError {
@@ -54,6 +58,26 @@ fn other(message: impl std::fmt::Display) -> RenderError {
 
 fn f64_of(value: Option<&Value>) -> f64 {
     value.and_then(h3_core::pyval::to_float).unwrap_or(0.0)
+}
+
+/// The pass 1, pass 2 and draft fields the Builder saves on a scene after a MiniMax render (`_minimax_stage_fields`, the Builder's
+/// `finishMiniMaxVideoRender`). `graph` is what the graph builder reported.
+pub fn stage_fields(phase: RenderPhase, video_path: &str, graph: &Obj) -> Obj {
+    let draft = phase == RenderPhase::Draft;
+    // A two pass graph reports its settings under `two_pass` or `advanced_two_pass`, even when they are empty.
+    let multi_pass = ["two_pass", "advanced_two_pass"].iter().any(|key| graph.get(*key).is_some_and(|value| !value.is_null()));
+    let stage1 = if draft { video_path } else { "" };
+    let stage2 = if !draft && multi_pass { video_path } else { "" };
+    let mut fields = Obj::new();
+    fields.insert("video_source_path".into(), json!(video_path));
+    fields.insert("minimax_h3_stage1_path".into(), json!(stage1));
+    fields.insert("minimax_h3_stage1_source_path".into(), json!(stage1));
+    fields.insert("minimax_h3_stage2_path".into(), json!(stage2));
+    fields.insert("minimax_h3_stage2_source_path".into(), json!(stage2));
+    fields.insert("minimax_h3_timing".into(), graph.get("timing").filter(|value| truthy(value)).cloned().unwrap_or_else(|| json!({})));
+    let saved_draft = if draft { json!({"id": graph.get("draft_id").cloned().unwrap_or_else(|| json!("")), "video_path": video_path}) } else { Value::Null };
+    fields.insert("minimax_h3_draft".into(), saved_draft);
+    fields
 }
 
 /// Cut, collect, color match, record and bookkeep one rendered scene. Blocking: call it on a blocking thread.
@@ -84,7 +108,9 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
         }
     }
     let now = Stamp::now();
-    let collected = collect_scene_video(&env.tools, project, scene, &source, Existing::Backup, &now.compact, &now).map_err(other)?;
+    // Finishing a draft replaces the draft's clip. Every other render keeps the clip it replaces as a backup.
+    let existing = if outcome.phase == RenderPhase::Finalize { Existing::Overwrite } else { Existing::Backup };
+    let collected = collect_scene_video(&env.tools, project, scene, &source, existing, &now.compact, &now).map_err(other)?;
     let final_video = collected.video_path.clone();
     let mut final_thumbnail = collected.thumbnail_path.clone();
 
@@ -129,6 +155,9 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
     let report = outcome.graph.get("latent_continuation_settings");
     let snapshot: Vec<Value> = segments.clone();
     for (k, v) in continuity_used(&outcome.continuity_mode, report, &snapshot, scene as usize) {
+        segment.insert(k, v);
+    }
+    for (k, v) in stage_fields(outcome.phase, &video_text, &outcome.graph) {
         segment.insert(k, v);
     }
     // The untrimmed render, so a later re-trim can start from the whole take.
@@ -176,6 +205,8 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
         history_index,
         history_count,
         revision: saved.revision,
+        render_phase: outcome.phase.name().to_string(),
+        draft_id: if outcome.phase == RenderPhase::Draft { text_or_empty(outcome.graph.get("draft_id")) } else { String::new() },
     })
 }
 
@@ -241,13 +272,18 @@ pub async fn render_scene_full(
 ) -> Result<SceneResult, RenderError> {
     let project_path = project.to_path_buf();
     let mut params = params;
-    if params.overrides.remove("randomize_seed").is_some_and(|v| truthy(&v)) {
-        let (env, path, scene) = (Arc::clone(&ctx.env), project_path.clone(), scene_ref.to_string());
-        tokio::task::spawn_blocking(move || randomize_seeds(&env, &path, &scene)).await.map_err(other)??;
-    }
-    if let Some(hook) = &ctx.before_scene {
-        let has_prompt = params.overrides.get("prompt").is_some_and(truthy);
-        hook(project_path.clone(), scene_ref.to_string(), has_prompt).await.map_err(other)?;
+    // A bad phase is refused before anything is changed.
+    let phase = params.phase()?;
+    // Finishing a draft replays its saved graph. No seed, prompt or reference is resolved again.
+    if phase != RenderPhase::Finalize {
+        if params.overrides.remove("randomize_seed").is_some_and(|v| truthy(&v)) {
+            let (env, path, scene) = (Arc::clone(&ctx.env), project_path.clone(), scene_ref.to_string());
+            tokio::task::spawn_blocking(move || randomize_seeds(&env, &path, &scene)).await.map_err(other)??;
+        }
+        if let Some(hook) = &ctx.before_scene {
+            let has_prompt = params.overrides.get("prompt").is_some_and(truthy);
+            hook(project_path.clone(), scene_ref.to_string(), has_prompt).await.map_err(other)?;
+        }
     }
     let loaded = {
         let path = project_path.clone();

@@ -107,7 +107,10 @@ pub fn opening_wrapper(style: &str, continuous: bool, guidance: &str) -> String 
     let continuity = if continuous { format!(" {CONTINUOUS_CUTS_OPENING}") } else { String::new() };
     let look = if guidance.trim().is_empty() { ".".to_string() } else { format!(": {}", guidance.trim()) };
     let style = if style.is_empty() { "photorealistic cinematic" } else { style };
-    format!("detailed_description:\nThe target video is in a {style} music-video style{look}{continuity}\n\n")
+    // A style that already ends in "music video" is not repeated: "cinematic music video" reads "cinematic music-video".
+    let named = format!("{} music-video", style.trim());
+    let style_name = rx!(r"(?i)\bmusic[ -]video(?:\s+music[ -]video)+$").replace(&named, "music-video").into_owned();
+    format!("detailed_description:\nThe target video is in a {style_name} style{look}{continuity}\n\n")
 }
 
 /// Keep only positive visual sentences. Quoted lyric words are sung text, never a reason to drop a sentence.

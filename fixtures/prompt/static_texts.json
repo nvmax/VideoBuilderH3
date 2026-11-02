@@ -313,7 +313,7 @@
     "guidance": "",
     "style": "  claymation  "
    },
-   "output": "detailed_description:\nThe target video is in a   claymation   music-video style.\n\n"
+   "output": "detailed_description:\nThe target video is in a claymation music-video style.\n\n"
   },
   {
    "input": {
@@ -322,7 +322,7 @@
     "guidance": "Soft film grain and warm light.",
     "style": "  claymation  "
    },
-   "output": "detailed_description:\nThe target video is in a   claymation   music-video style: Soft film grain and warm light.\n\n"
+   "output": "detailed_description:\nThe target video is in a claymation music-video style: Soft film grain and warm light.\n\n"
   },
   {
    "input": {
@@ -331,7 +331,7 @@
     "guidance": "",
     "style": "  claymation  "
    },
-   "output": "detailed_description:\nThe target video is in a   claymation   music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+   "output": "detailed_description:\nThe target video is in a claymation music-video style. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
   },
   {
    "input": {
@@ -340,7 +340,7 @@
     "guidance": "Soft film grain and warm light.",
     "style": "  claymation  "
    },
-   "output": "detailed_description:\nThe target video is in a   claymation   music-video style: Soft film grain and warm light. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
+   "output": "detailed_description:\nThe target video is in a claymation music-video style: Soft film grain and warm light. All shots follow one continuous performance, preserving every person's exact position, body orientation, posture, and ongoing movement across every camera cut. Each new shot continues directly from the final physical moment of the previous shot, with only the camera angle and framing changing.\n\n"
   },
   {
    "input": {

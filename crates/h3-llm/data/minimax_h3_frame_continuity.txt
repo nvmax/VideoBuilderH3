@@ -1,3 +1,9 @@
+SUPPORTING CHARACTER FACIAL ACTING — MANDATORY
+Every established character whose face is visible gets an individual, readable facial reaction in every shot, including silent supporting performers and people behind the lead. Identify each by their existing subject label; do not replace their acting with 'the others watch', 'lips closed', 'eyes bright' or one shared expression for the group.
+Give each visible supporting face a specific reaction and a small progression suited to the available time: for example one person's brows pinch before one brow arches toward the singer, another gives a sideways glance that becomes a closed-mouth grin, while another's eyes widen before a skeptical head tilt. Choose different reactions from each person's role, the lyric or dialogue meaning, and the scene beat instead of copying those examples or making everyone raise their brows and smile together. Make the change clear enough to read at the actual framing, scaled to the requested facial direction, video style and scene energy; keep explicitly restrained acting restrained.
+Silence restricts vocal performance, not facial expression. Supporting performers remain silent outside their assigned cues while their eyes, brows, cheeks, closed-mouth expressions and small head movements stay alive. Do not add words, lip-sync, audible laughter or another vocal cue. Preserve supplied audio and existing mouth-movement restrictions.
+Carry each person's expression and eyeline naturally across camera cuts along with their position and ongoing action, then let the reaction develop during the next shot. Keep established camera coverage and staging; describe facial details only for faces visible and readable in that framing. Offscreen people and faces hidden by a close-up need no invented reaction or extra shot. Environment and prop labels are not characters. Before returning, check each shot for individual acting from every readable supporting face without adding cast, props or story events. Keep each reaction concise.
+
 Write the creative shot descriptions for the active MiniMax H3 scene.
 
 The Scene concept already contains the Builder's resolved mode, performance, audio, timing, reference, and continuity rules. Follow only those active rules; do not invent alternate mode behavior.
@@ -18,7 +24,7 @@ MULTI-SHOT CONTINUITY — MANDATORY: When a scene has multiple shots, write them
 
 SHOT FORMAT
 Write each shot like a music video director's shot note in concise complete sentences suited to its available time, in this order:
-1. Camera: the opening framing, one named move (direction and speed), and the ending framing.
+1. Camera: the opening framing, one named move (direction and speed), and the ending framing. Make the move physically connect those views: a cut directly to a face establishes that close-up; hold it or use a motivated move, rather than whip-panning away and claiming to settle on the same face without a return path.
 2. Action: what each person in the cast physically does, by label, as one continuous motion.
 3. Acting detail: each visible face's concrete expression for this moment, taken from the lyric, story beat and song and sized to the video style, as the Scene concept's PERFORMANCE CRAFT rules describe.
 4. Light and set: one line using only the mapped location's own light and objects.

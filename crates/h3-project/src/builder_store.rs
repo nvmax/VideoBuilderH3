@@ -109,6 +109,25 @@ const MODEL_DEFAULT_KEYS: [&str; 29] = [
 /// API keys kept for every project, never inside a project's session.
 const GLOBAL_LLM_KEY_FIELDS: [&str; 3] = ["llm_api_key", "own_server_api_key", "elevenlabs_api_key"];
 
+/// The ComfyUI API key (comfy.org) the API Nodes video engine signs in with. It has a file of its own, apart from the keys above: the Builder
+/// page gets those, but only learns that this one is saved. The server adds it to a job it passes on to ComfyUI.
+pub fn load_comfy_api_key(output: &Path) -> String {
+    text_or_empty(read_object(&defaults_folder(output).join("comfy_api_key.json")).get("comfy_api_key")).trim().to_string()
+}
+
+/// Save the ComfyUI API key. An empty key removes it.
+pub fn save_comfy_api_key(output: &Path, key: &str) -> std::io::Result<()> {
+    let path = defaults_folder(output).join("comfy_api_key.json");
+    let key = key.trim();
+    if key.is_empty() {
+        return match fs::remove_file(&path) {
+            Err(e) if e.kind() != std::io::ErrorKind::NotFound => Err(e),
+            _ => Ok(()),
+        };
+    }
+    atomic_write_json(&path, &json!({"comfy_api_key": key}))
+}
+
 /// LLM runner settings kept for every project, in session key names.
 const GLOBAL_LLM_RUNNER_FIELDS: [&str; 19] = [
     "text_gemma_runner",

@@ -243,6 +243,7 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/projects/{pid}/elevenlabs/voice-design/create", post(sp::voice_create))
         .route("/setup/elevenlabs", get(sp::app_key_status).put(sp::app_key_save))
         .route("/setup/elevenlabs/test", post(sp::app_key_test))
+        .route("/setup/comfy_api_key", get(crate::setup_routes::comfy_key_status).put(crate::setup_routes::comfy_key_save))
         .route("/projects/{pid}/prompts/motion-notes", post(lr::motion_notes))
         .route("/projects/{pid}/scenes/{sid}/prompts/enhance", post(lr::enhance_scene_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/edit", post(lr::edit_scene_prompt))
@@ -647,7 +648,7 @@ async fn video_graph(State(state): Shared, Path(pid): Path<String>, body: Option
     views::find_scene(&loaded, &scene)?;
     let run = connect(&state.cfg).await.map_err(|e| ApiError::new(StatusCode::SERVICE_UNAVAILABLE, "COMFY_UNAVAILABLE", e).retryable())?;
     let env = run.env;
-    let render = RenderParams { overrides: params.into_iter().filter(|(k, _)| k != "mode").collect(), timeout_hours: None };
+    let render = RenderParams { overrides: params.into_iter().filter(|(k, _)| k != "mode").collect(), timeout_hours: None, ..RenderParams::default() };
     let result = blocking(move || -> Result<Value, h3_pipeline::RenderError> {
         let prepared = prepare_scene_render(&*env, &loaded, &scene, &render)?;
         let built = h3_graph::build(&*env, prepared.workflow_key, &prepared.payload)?;

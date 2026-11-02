@@ -53,7 +53,7 @@ fn project(pipeline: &str, card: Value) -> LoadedSession {
 }
 
 fn prepare(loaded: &LoadedSession) -> Result<Prepared, RenderError> {
-    prepare_scene_render(&Env, loaded, "1", &RenderParams { overrides: serde_json::Map::new(), timeout_hours: None })
+    prepare_scene_render(&Env, loaded, "1", &RenderParams::default())
 }
 
 #[test]

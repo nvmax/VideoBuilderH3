@@ -10,7 +10,7 @@ use std::time::{Duration, SystemTime};
 
 use h3_comfy::{extract_videos, ComfyClient, ComfyError};
 use h3_core::continuity::{canonical_continuity_mode, MASKED};
-use h3_core::pyval::{text_or_empty, to_float, truthy, Obj};
+use h3_core::pyval::{py_str, text_or_empty, to_float, truthy, Obj};
 use h3_core::scene::{resolve_scene_inputs, SceneInputsArgs};
 use h3_core::settings::{build_render_payload, settings_for_scene, workflow_key};
 use h3_graph::{build, GraphEnv};
@@ -43,6 +43,49 @@ pub enum RenderError {
 pub struct RenderParams {
     pub overrides: Obj,
     pub timeout_hours: Option<f64>,
+    /// The `render_phase` the caller asked for, as it was sent. [`RenderParams::phase`] reads it.
+    pub phase: Value,
+}
+
+impl RenderParams {
+    /// Which part of a two pass render to run. Nothing sent means all of it.
+    pub fn phase(&self) -> Result<RenderPhase, RenderError> {
+        RenderPhase::parse(&self.phase)
+    }
+}
+
+/// Which part of a MiniMax render to run (`render_phase` of the render route): the Video Builder's "Render Draft - Pass 1 Only" and
+/// "Finalize Draft - Pass 2 Only".
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum RenderPhase {
+    /// Both passes, as one render.
+    #[default]
+    Full,
+    /// Pass 1 only. Its latent is saved as the scene's draft, to look at and finish later.
+    Draft,
+    /// Pass 2 from the scene's saved draft.
+    Finalize,
+}
+
+impl RenderPhase {
+    /// `full`, `draft` or `finalize`, whatever the case and spacing. A missing or empty value is `full`.
+    pub fn parse(value: &Value) -> Result<Self, RenderError> {
+        let text = if truthy(value) { py_str(Some(value)) } else { "full".to_string() };
+        match text.trim().to_lowercase().as_str() {
+            "full" => Ok(Self::Full),
+            "draft" => Ok(Self::Draft),
+            "finalize" => Ok(Self::Finalize),
+            _ => Err(RenderError::Invalid(format!("Unknown render_phase '{}'. Supported: full, draft, finalize.", py_str(Some(value))))),
+        }
+    }
+
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Full => "full",
+            Self::Draft => "draft",
+            Self::Finalize => "finalize",
+        }
+    }
 }
 
 /// Progress the render reports.
@@ -105,6 +148,7 @@ pub struct RenderOutcome {
     pub graph: Obj,
     pub graph_nodes: Value,
     pub restore_audio: Option<(PathBuf, f64)>,
+    pub phase: RenderPhase,
 }
 
 fn segment_text(segment: &Obj, key: &str) -> String {
@@ -287,6 +331,88 @@ pub fn prepare_scene_render(env: &dyn GraphEnv, loaded: &LoadedSession, scene_re
     })
 }
 
+/// The position of the scene a reference names: its id, or its number as text.
+fn scene_position(segments: &[Value], scene_ref: &str) -> Result<usize, RenderError> {
+    segments
+        .iter()
+        .enumerate()
+        .position(|(i, s)| s.get("id").and_then(Value::as_str) == Some(scene_ref) || (i + 1).to_string() == scene_ref)
+        .ok_or_else(|| RenderError::SceneNotFound(scene_ref.to_string()))
+}
+
+/// The graph that renders pass 1 of a two pass scene only and saves its latent as the scene's draft. The scene is prepared as for a
+/// full render, and its full graph is saved with the draft so pass 2 can run from it later.
+pub fn build_draft_graph(env: &dyn GraphEnv, prepared: &Prepared) -> Result<Obj, RenderError> {
+    if !matches!(prepared.workflow_key, "minimax_h3_2pass" | "minimax_h3_advanced_2pass") {
+        return Err(RenderError::Invalid("Draft rendering requires a MiniMax two-pass workflow (render_pass two_pass or three_pass).".into()));
+    }
+    let mut payload = prepared.payload.clone();
+    for (key, from) in [("timeline_start_seconds", "start"), ("timeline_end_seconds", "end")] {
+        payload.insert(key.into(), payload.get(from).cloned().unwrap_or(Value::Null));
+    }
+    let restore = match &prepared.restore_audio {
+        Some((path, start)) => json!({"restore_audio_path": path.display().to_string(), "restore_audio_start_seconds": start}),
+        None => json!({}),
+    };
+    payload.insert("draft_restore_audio".into(), restore);
+    let full = build(env, prepared.workflow_key, &payload)?;
+    let draft = crate::drafts::build_draft(&full, &payload).map_err(RenderError::Invalid)?;
+    Ok(draft.as_object().cloned().unwrap_or_default())
+}
+
+/// A scene finished from its saved draft: pass 2 only, replaying the draft's own graph from its saved pass-1 latent. Nothing else is
+/// resolved again, so no prompt, audio or reference is read.
+pub fn prepare_finalize(env: &dyn GraphEnv, loaded: &LoadedSession, scene_ref: &str) -> Result<(Prepared, Obj), RenderError> {
+    let session = Value::Object(loaded.session.clone());
+    let segments: Vec<Value> = loaded.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    let index = scene_position(&segments, scene_ref)?;
+    let segment: Obj = segments[index].as_object().cloned().unwrap_or_default();
+    let scene_number = index as u32 + 1;
+    let settings = settings_for_scene(&session, Some(&segments[index]));
+    let draft_id = text_or_empty(segment.get("minimax_h3_draft").and_then(|draft| draft.get("id")));
+    if draft_id.is_empty() {
+        return Err(RenderError::Invalid(format!("Scene {scene_number} has no draft. Render it with render_phase 'draft' first.")));
+    }
+    let seconds = |key: &str| segment.get(key).filter(|v| truthy(v)).and_then(to_float).unwrap_or(0.0);
+    let request: Obj = [
+        ("project_folder", json!(loaded.project_folder.display().to_string())),
+        ("draft_id", json!(draft_id)),
+        ("scene_number", json!(scene_number)),
+        ("timeline_start_seconds", json!(seconds("start"))),
+        ("timeline_end_seconds", json!(seconds("end"))),
+        ("diffusion_model_name", json!(text_or_empty(settings.get("diffusion_model_name")))),
+    ]
+    .into_iter()
+    .map(|(key, value)| (key.to_string(), value))
+    .collect();
+    let finished = crate::drafts::build_finalize(&request).map_err(|message| RenderError::Invalid(format!("Scene {scene_number}: {message}")))?;
+    if finished.get("stale_draft").is_some_and(truthy) {
+        let models = finished.get("draft_models").and_then(Value::as_array).map(|a| a.iter().map(|m| text_or_empty(Some(m))).collect::<Vec<_>>().join(", ")).unwrap_or_default();
+        return Err(RenderError::Invalid(format!(
+            "Scene {scene_number}'s draft was made with {models}, but the scene now uses {}. Render a new draft, or switch the diffusion model back to finalize this one.",
+            text_or_empty(finished.get("current_model"))
+        )));
+    }
+    let mut result = finished.as_object().cloned().ok_or_else(|| RenderError::Other("The saved draft is not a workflow.".into()))?;
+    // A draft keeps the Turbo LoRA names it was made with, and a newer release replaces the old file: use the one that is installed.
+    h3_graph::drafts::replace_missing_turbo_loras(&mut result, &env.model_choices("loras"));
+    let restore = result.get("draft_restore_audio").and_then(Value::as_object);
+    let restore_audio = restore
+        .map(|r| (text_or_empty(r.get("restore_audio_path")), r.get("restore_audio_start_seconds").and_then(to_float).unwrap_or(0.0)))
+        .filter(|(path, _)| !path.is_empty())
+        .map(|(path, start)| (PathBuf::from(path), start));
+    let payload: Obj = [("continuity_mode".to_string(), settings.get("continuity_mode").cloned().unwrap_or(Value::Null))].into_iter().collect();
+    let prepared = Prepared {
+        scene_index: index,
+        scene_number,
+        scene_id: segment.get("id").and_then(Value::as_str).unwrap_or("").to_string(),
+        workflow_key: workflow_key(&settings),
+        payload,
+        restore_audio,
+    };
+    Ok((prepared, result))
+}
+
 /// The scene's clip when ComfyUI's history does not name it: the newest final clip in the scene's output folder.
 fn find_output_in_folder(folder: &str, scene_number: u32, since: SystemTime) -> Option<String> {
     let needle = format!("MiniMaxH3_scene_{scene_number:04}");
@@ -319,6 +445,7 @@ pub async fn render_scene(
     mut on_event: impl FnMut(RenderEvent),
 ) -> Result<RenderOutcome, RenderError> {
     // Every event names its scene, so a window can show which one is rendering. A reference that names no scene fails in the preparation below.
+    let phase = params.phase()?;
     let scene_id = scene_id_of(&loaded, scene_ref);
     let mut emit = |percent: f64, stage: &'static str, message: String| on_event(RenderEvent { percent, stage, message, scene_id: scene_id.clone() });
     emit(5.0, "preparing", format!("Preparing scene {scene_ref}..."));
@@ -327,8 +454,11 @@ pub async fn render_scene(
         let scene_ref = scene_ref.to_string();
         let params = params.clone();
         tokio::task::spawn_blocking(move || -> Result<(Prepared, Obj), RenderError> {
+            if phase == RenderPhase::Finalize {
+                return prepare_finalize(&*env, &loaded, &scene_ref);
+            }
             let prepared = prepare_scene_render(&*env, &loaded, &scene_ref, &params)?;
-            let result = build(&*env, prepared.workflow_key, &prepared.payload)?;
+            let result = if phase == RenderPhase::Draft { build_draft_graph(&*env, &prepared)? } else { build(&*env, prepared.workflow_key, &prepared.payload)? };
             Ok((prepared, result))
         })
         .await
@@ -382,5 +512,6 @@ pub async fn render_scene(
         graph: graph_result.clone().into_iter().filter(|(k, _)| k != "prompt").collect(),
         graph_nodes: graph,
         restore_audio: prepared.restore_audio.clone(),
+        phase,
     })
 }

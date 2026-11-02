@@ -4,6 +4,9 @@
 
 const fromQuery = new URLSearchParams(location.search).get("api");
 
+// What the page sends in place of the ComfyUI API key. The server (`COMFY_KEY_PLACEHOLDER` in vrgdg/mod.rs) swaps it for the saved key.
+const COMFY_KEY_PLACEHOLDER = "h3-studio:saved-comfy-api-key";
+
 function resolveRoot() {
   if (window.__H3_API_ROOT__) return window.__H3_API_ROOT__;
   if (fromQuery) return fromQuery.replace(/\/api\/v1\/?$/, "").replace(/\/$/, "");
@@ -32,6 +35,22 @@ class StudioApi extends EventTarget {
     this.user = "";
     this.api_base = "";
     this.api_host = "";
+    // The Builder reads these when it sends a job to a partner node (API Nodes video). ComfyUI's page signs in with an account. This app has no
+    // such page, and it keeps the ComfyUI API key on its server: the page only gets a placeholder when a key is saved, and the server swaps it
+    // for the key on the way to ComfyUI.
+    this.authToken = undefined;
+    this.apiKey = undefined;
+  }
+
+  // Ask the app whether a ComfyUI API key is saved. Run at start and after the key is saved or removed in App Settings.
+  async refreshCredentials() {
+    try {
+      const reply = await fetch(this.apiURL("/api/v1/setup/comfy_api_key"));
+      const body = await reply.json();
+      this.apiKey = body?.data?.configured ? COMFY_KEY_PLACEHOLDER : undefined;
+    } catch {
+      this.apiKey = undefined;
+    }
   }
 
   get root() {
@@ -73,4 +92,5 @@ class StudioApi extends EventTarget {
 
 export const api = new StudioApi();
 api.connectEvents();
+api.refreshCredentials();
 export default api;

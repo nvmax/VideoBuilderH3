@@ -32,6 +32,7 @@ pub mod mcp;
 pub mod session_routes;
 pub mod speaking_routes;
 pub mod setup_routes;
+mod singer_timer;
 pub mod story_jobs;
 pub mod views;
 pub mod vrgdg;

@@ -1,0 +1,4203 @@
+{
+ "clip_audio": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+ "align": [
+  {
+   "name": "no_words",
+   "payload": {
+    "segments": []
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": []
+  },
+  {
+   "name": "only_instrumental",
+   "payload": {
+    "segments": [
+     {
+      "type": "instrumental",
+      "words": [
+       {
+        "text": "la",
+        "start": 1.0,
+        "end": 1.5
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": []
+  },
+  {
+   "name": "one_cut_between_words",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "hold me",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 4.0,
+     "vocal_start": 0.4,
+     "vocal_end": 1.4
+    },
+    {
+     "type": "vocal",
+     "text": "close tonight",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 4.0,
+     "end": 8.0,
+     "vocal_start": 5.0,
+     "vocal_end": 6.4
+    }
+   ]
+  },
+  {
+   "name": "cut_inside_a_word_moves_to_the_gap",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.5,
+        "end": 1.0
+       },
+       {
+        "text": "me",
+        "start": 1.1,
+        "end": 1.6
+       },
+       {
+        "text": "close",
+        "start": 3.7,
+        "end": 4.6
+       },
+       {
+        "text": "tonight",
+        "start": 5.2,
+        "end": 6.0
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "hold me close",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 4.9,
+     "vocal_start": 0.5,
+     "vocal_end": 4.6
+    },
+    {
+     "type": "vocal",
+     "text": "tonight",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 4.9,
+     "end": 8.0,
+     "vocal_start": 5.2,
+     "vocal_end": 6.0
+    }
+   ]
+  },
+  {
+   "name": "cut_inside_a_word_no_gap_near",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "held",
+        "start": 0.0,
+        "end": 7.9
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "held",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 4.0,
+     "vocal_start": 0.0,
+     "vocal_end": 4.0
+    },
+    {
+     "type": "instrumental",
+     "text": "",
+     "action_note": "",
+     "singer_id": "",
+     "singer_name": "",
+     "start": 4.0,
+     "end": 8.0,
+     "vocal_start": null,
+     "vocal_end": null
+    }
+   ]
+  },
+  {
+   "name": "three_cuts",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": 0.5,
+        "end": 1.0
+       },
+       {
+        "text": "b",
+        "start": 2.2,
+        "end": 2.8
+       },
+       {
+        "text": "c",
+        "start": 4.1,
+        "end": 4.9
+       },
+       {
+        "text": "d",
+        "start": 6.0,
+        "end": 6.9
+       },
+       {
+        "text": "e",
+        "start": 7.4,
+        "end": 7.9
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 9.0,
+    "cut_times_seconds": [
+     2.0,
+     4.5,
+     7.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 2.0,
+     "vocal_start": 0.5,
+     "vocal_end": 1.0
+    },
+    {
+     "type": "vocal",
+     "text": "b c",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 2.0,
+     "end": 5.45,
+     "vocal_start": 2.2,
+     "vocal_end": 4.9
+    },
+    {
+     "type": "vocal",
+     "text": "d",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 5.45,
+     "end": 7.0,
+     "vocal_start": 6.0,
+     "vocal_end": 6.9
+    },
+    {
+     "type": "vocal",
+     "text": "e",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 7.0,
+     "end": 9.0,
+     "vocal_start": 7.4,
+     "vocal_end": 7.9
+    }
+   ]
+  },
+  {
+   "name": "cut_beside_the_ends",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": 0.5,
+        "end": 1.0
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 5.0,
+    "cut_times_seconds": [
+     0.0005,
+     4.9995,
+     2.5
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 2.5,
+     "vocal_start": 0.5,
+     "vocal_end": 1.0
+    },
+    {
+     "type": "instrumental",
+     "text": "",
+     "action_note": "",
+     "singer_id": "",
+     "singer_name": "",
+     "start": 2.5,
+     "end": 5.0,
+     "vocal_start": null,
+     "vocal_end": null
+    }
+   ]
+  },
+  {
+   "name": "unsorted_words_and_text_key",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "word": "later",
+        "start": 3.0,
+        "end": 3.5
+       },
+       {
+        "text": "first",
+        "start": 0.2,
+        "end": 0.7
+       },
+       {
+        "text": "  ",
+        "start": 1.0,
+        "end": 1.2
+       },
+       {
+        "text": "bad",
+        "start": 2.0,
+        "end": 1.9
+       },
+       {
+        "text": "none",
+        "start": null,
+        "end": 2.0
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 6.0,
+    "cut_times_seconds": [
+     3.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "first later",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 3.6,
+     "vocal_start": 0.2,
+     "vocal_end": 3.5
+    },
+    {
+     "type": "instrumental",
+     "text": "",
+     "action_note": "",
+     "singer_id": "",
+     "singer_name": "",
+     "start": 3.6,
+     "end": 6.0,
+     "vocal_start": null,
+     "vocal_end": null
+    }
+   ]
+  },
+  {
+   "name": "negative_start_is_clamped",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": -0.5,
+        "end": 0.4
+       },
+       {
+        "text": "b",
+        "start": 4.0,
+        "end": 4.5
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 6.0,
+    "cut_times_seconds": [
+     2.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 2.0,
+     "vocal_start": 0.0,
+     "vocal_end": 0.4
+    },
+    {
+     "type": "vocal",
+     "text": "b",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 2.0,
+     "end": 6.0,
+     "vocal_start": 4.0,
+     "vocal_end": 4.5
+    }
+   ]
+  },
+  {
+   "name": "cut_at_the_scene_end_is_ignored",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": 0.5,
+        "end": 1.0
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 5.0,
+    "cut_times_seconds": [
+     5.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 5.0,
+     "vocal_start": 0.5,
+     "vocal_end": 1.0
+    }
+   ]
+  },
+  {
+   "name": "equal_cuts_do_not_double",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": 0.5,
+        "end": 1.0
+       },
+       {
+        "text": "b",
+        "start": 3.0,
+        "end": 3.5
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 5.0,
+    "cut_times_seconds": [
+     2.0,
+     2.0005
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 2.0,
+     "vocal_start": 0.5,
+     "vocal_end": 1.0
+    },
+    {
+     "type": "vocal",
+     "text": "b",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 2.0,
+     "end": 5.0,
+     "vocal_start": 3.0,
+     "vocal_end": 3.5
+    }
+   ]
+  },
+  {
+   "name": "word_on_the_last_boundary",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": 3.9,
+        "end": 4.1
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 4.0,
+    "cut_times_seconds": [
+     2.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "instrumental",
+     "text": "",
+     "action_note": "",
+     "singer_id": "",
+     "singer_name": "",
+     "start": 0.0,
+     "end": 2.0,
+     "vocal_start": null,
+     "vocal_end": null
+    },
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 2.0,
+     "end": 4.0,
+     "vocal_start": 3.9,
+     "vocal_end": 4.0
+    }
+   ]
+  },
+  {
+   "name": "two_gaps_tie",
+   "payload": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "a",
+        "start": 0.0,
+        "end": 2.9
+       },
+       {
+        "text": "b",
+        "start": 3.1,
+        "end": 4.0
+       },
+       {
+        "text": "c",
+        "start": 4.2,
+        "end": 4.6
+       }
+      ]
+     }
+    ]
+   },
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     3.0
+    ]
+   },
+   "performer": {
+    "id": "a",
+    "name": "Ava"
+   },
+   "cues": [
+    {
+     "type": "vocal",
+     "text": "a",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 0.0,
+     "end": 3.0,
+     "vocal_start": 0.0,
+     "vocal_end": 2.9
+    },
+    {
+     "type": "vocal",
+     "text": "b c",
+     "action_note": "",
+     "singer_id": "a",
+     "singer_name": "Ava",
+     "start": 3.0,
+     "end": 8.0,
+     "vocal_start": 3.1,
+     "vocal_end": 4.6
+    }
+   ]
+  }
+ ],
+ "timing": [
+  {
+   "name": "singing_scene",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "no_cuts",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": []
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "no_character",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "no_character_present": true
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "no_lip_sync",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_no_lip_sync": true
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "no_lyric",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "instrumental_lyric",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "[instrumental]",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "scene_performance_not_singing",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "performance_mode": "speaking"
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "project_performance_not_singing",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "speaking",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "scene_performance_singing_wins",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "speaking",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "performance_mode": "singing"
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "complete_cue_map_needs_nothing",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "hold me",
+        "start": 0.0,
+        "end": 4.0
+       },
+       {
+        "type": "vocal",
+        "text": "close tonight",
+        "start": 4.0
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "cue_map_row_without_start",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "text": "hold me",
+        "end": 4.0
+       },
+       {
+        "type": "vocal",
+        "text": "close tonight",
+        "start": 4.0
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me\nclose tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "cue_map_row_ends_before_it_starts",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "text": "hold me",
+        "start": 5.0,
+        "end": 4.0
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "cue_map_last_row_ends_at_scene_end",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "text": "all",
+        "start": 7.9
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "skip": true
+  },
+  {
+   "name": "cue_map_last_row_starts_at_scene_end",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "text": "all",
+        "start": 8.0
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "all",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "cue_map_not_in_cue_mode",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "together",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "hold me",
+        "start": 0.0,
+        "end": 4.0
+       },
+       {
+        "type": "vocal",
+        "text": "close tonight",
+        "start": 4.0
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me\nclose tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "incomplete_cue_map_keeps_its_words",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": "hold me",
+        "start": 0.0
+       },
+       {
+        "type": "instrumental",
+        "start": 3.0
+       },
+       {
+        "type": "vocal",
+        "text": "close tonight"
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me\nclose tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "no_mapped_singer",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": []
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "error": "Scene 1: auto-time-before-prompt needs a mapped singer."
+  },
+  {
+   "name": "unknown_singer",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "zed"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "error": "Scene 1: auto-time-before-prompt needs a mapped singer."
+  },
+  {
+   "name": "singer_by_name_lowercase",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "AVA"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "singer_by_comma_text",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": "zed; ben stone"
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "b",
+      "singer_name": "Ben Stone",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "b",
+      "singer_name": "Ben Stone",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "singer_text_with_edge_separators",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": ",a,"
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "empty_subject_matches_an_empty_name",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "",
+       "name": ""
+      },
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": ",a"
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "",
+      "singer_name": "",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "",
+      "singer_name": "",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "performer_map_by_scene_id",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {
+      "s1": [
+       "b"
+      ],
+      "1": [
+       "a"
+      ]
+     }
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "b",
+      "singer_name": "Ben Stone",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "b",
+      "singer_name": "Ben Stone",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "performer_map_by_scene_number",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {
+      "1": "b"
+     }
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "b",
+      "singer_name": "Ben Stone",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "b",
+      "singer_name": "Ben Stone",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "performer_map_empty_falls_to_scene",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      }
+     ],
+     "performer_scene_map": {
+      "s1": []
+     }
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "no_reference_builder",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": null,
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "error": "Scene 1: auto-time-before-prompt needs a mapped singer."
+  },
+  {
+   "name": "no_audio",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ],
+    "audio_file": ""
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "error": "Scene 1: load project audio or add custom scene audio before auto-timing cues."
+  },
+  {
+   "name": "audio_file_key",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ],
+    "audio_file": "Z:\\h3fixture\\older.wav"
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\older.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "custom_scene_audio",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "custom_audio_path": "Z:\\h3fixture\\clip.wav",
+      "custom_audio_source_start": 2.5,
+      "custom_audio_duration": 6.0
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\clip.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 2.5,
+    "duration_seconds": 6.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "custom_scene_audio_defaults",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "custom_audio_path": "Z:\\h3fixture\\clip.wav"
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\clip.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "scene_two_of_three",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 8.0,
+      "end": 16.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 1,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 2,
+    "start_seconds": 8.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "scene_starts_late",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 12.25,
+      "end": 18.25,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 6.0,
+    "cut_times_seconds": [
+     3.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 12.25,
+    "duration_seconds": 6.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 6.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 3.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 3.0,
+      "end": 6.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.0
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "short_scene_window",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 0.5,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 0.5,
+    "cut_times_seconds": [
+     0.25
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 0.5
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me close tonight",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 1.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "instrumental",
+      "text": "",
+      "action_note": "",
+      "singer_id": "",
+      "singer_name": "",
+      "start": 0.0,
+      "end": 0.25,
+      "vocal_start": null,
+      "vocal_end": null
+     },
+     {
+      "type": "instrumental",
+      "text": "",
+      "action_note": "",
+      "singer_id": "",
+      "singer_name": "",
+      "start": 0.25,
+      "end": 0.5,
+      "vocal_start": null,
+      "vocal_end": null
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "reference_lyrics_from_saved_cues",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ],
+      "lyric_performance_mode": "cue_map",
+      "lyric_cue_map": [
+       {
+        "type": "vocal",
+        "text": " hold me ",
+        "start": 0.0
+       },
+       {
+        "type": "instrumental",
+        "text": "ignored"
+       },
+       {
+        "type": "vocal",
+        "text": "",
+        "start": 3.0
+       },
+       {
+        "type": "vocal",
+        "text": "close",
+        "start": 3.5
+       }
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "words": [
+       {
+        "text": "hold",
+        "start": 0.4,
+        "end": 0.9
+       },
+       {
+        "text": "me",
+        "start": 1.0,
+        "end": 1.4
+       },
+       {
+        "text": "close",
+        "start": 5.0,
+        "end": 5.5
+       },
+       {
+        "text": "tonight",
+        "start": 5.6,
+        "end": 6.4
+       }
+      ]
+     }
+    ]
+   },
+   "clip": {
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "project_folder": "Z:\\h3fixture\\proj",
+    "scene_number": 1,
+    "start_seconds": 0.0,
+    "duration_seconds": 8.0
+   },
+   "graph": {
+    "audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene_0001.wav",
+    "reference_lyrics": "hold me\nclose",
+    "language": "english",
+    "segment_mode": "reference_scene_words",
+    "include_instrumental_gaps": true,
+    "instrumental_text": "[instrumental]",
+    "min_gap_seconds": 0.5,
+    "min_scene_seconds": 1.0,
+    "max_scene_seconds": 8.0,
+    "vocal_tail_padding_seconds": 0.0,
+    "model_name": "large-v3"
+   },
+   "fields": {
+    "lyric_cue_map": [
+     {
+      "type": "vocal",
+      "text": "hold me",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 0.0,
+      "end": 4.0,
+      "vocal_start": 0.4,
+      "vocal_end": 1.4
+     },
+     {
+      "type": "vocal",
+      "text": "close tonight",
+      "action_note": "",
+      "singer_id": "a",
+      "singer_name": "Ava",
+      "start": 4.0,
+      "end": 8.0,
+      "vocal_start": 5.0,
+      "vocal_end": 6.4
+     }
+    ],
+    "lyric_performance_mode": "cue_map",
+    "lyric_shot_word_timing_enabled": true
+   }
+  },
+  {
+   "name": "no_words_back",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": []
+   },
+   "error": "Scene 1: Whisper returned no word timings; prompt generation was stopped."
+  },
+  {
+   "name": "words_back_all_instrumental",
+   "session": {
+    "project_folder": "Z:\\h3fixture\\proj",
+    "audio_path": "Z:\\h3fixture\\song.wav",
+    "video_type": "singing",
+    "flux_reference_builder": {
+     "subjects": [
+      {
+       "id": "a",
+       "name": "Ava"
+      },
+      {
+       "id": "b",
+       "name": "Ben Stone"
+      }
+     ],
+     "performer_scene_map": {}
+    },
+    "segments": [
+     {
+      "id": "s1",
+      "start": 0.0,
+      "end": 8.0,
+      "lyric_text": "hold me close tonight",
+      "lyric_singers": [
+       "a"
+      ]
+     }
+    ]
+   },
+   "index": 0,
+   "cut_plan": {
+    "exact_duration_seconds": 8.0,
+    "cut_times_seconds": [
+     4.0
+    ]
+   },
+   "reply": {
+    "segments": [
+     {
+      "type": "instrumental",
+      "words": [
+       {
+        "text": "x",
+        "start": 1.0,
+        "end": 2.0
+       }
+      ]
+     }
+    ]
+   },
+   "error": "Scene 1: Whisper returned no word timings; prompt generation was stopped."
+  }
+ ]
+}

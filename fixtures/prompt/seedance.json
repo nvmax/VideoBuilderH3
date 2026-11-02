@@ -1,0 +1,2249 @@
+{
+ "headings": [
+  "References",
+  "Scene",
+  "Preservation",
+  "Shots",
+  "Sound",
+  "Music",
+  "Final assembly"
+ ],
+ "plan_schema": {
+  "type": "object",
+  "properties": {
+   "sections": {
+    "type": "array",
+    "minItems": 1,
+    "items": {
+     "type": "object",
+     "properties": {
+      "heading": {
+       "type": "string",
+       "enum": [
+        "References",
+        "Scene",
+        "Preservation",
+        "Shots",
+        "Sound",
+        "Music",
+        "Final assembly"
+       ]
+      },
+      "block_ids": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "required": [
+      "heading",
+      "block_ids"
+     ],
+     "additionalProperties": false
+    }
+   }
+  },
+  "required": [
+   "sections"
+  ],
+  "additionalProperties": false
+ },
+ "vocal_role_guidance": "Follow the singer/speaker roles explicitly assigned in this scene. Instrument-only performers keep their mouths closed unless the source explicitly gives them a vocal part. Keep each lyric phrase assigned to its source performer, including parenthetical words. Backing singers already identified in the scene perform their distinct backing-vocal responses where supported by the source assignment and @Audio 1, at their actual recorded times. Preserve the source's lead-vocal assignment for ambiguous phrases. Each performer follows their own assigned vocal or instrumental part. Keep the active singer's face and mouth readable during each vocal phrase.",
+ "prepare": [
+  {
+   "name": "shots_and_tags",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English, longing, singing] Hold me <i>close</i> tonight.</d> in sync with <Audio 1>. Hard cut, the same moment on the same stage. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] Close-up of <Subject 1> spinning once while she sings.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "audio_paths": [
+     "a.wav"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    }
+   ]
+  },
+  {
+   "name": "subject_without_alias_keeps_its_number",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English, longing, singing] Hold me <i>close</i> tonight.</d> in sync with <Audio 1>. Hard cut, the same moment on the same stage. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] Close-up of <Subject 1> spinning once while she sings.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2"
+    },
+    "audio_paths": [
+     "a.wav"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Subject 1 sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Subject 1 making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    }
+   ]
+  },
+  {
+   "name": "picture_without_alias_is_an_error",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English, longing, singing] Hold me <i>close</i> tonight.</d> in sync with <Audio 1>. Hard cut, the same moment on the same stage. The action takes place in the environment from <Picture 3>.\n\n[Shot 2] Close-up of <Subject 1> spinning once while she sings.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "audio_paths": [
+     "a.wav"
+    ]
+   },
+   "error": "Cannot map <Picture 3> to an actual reference. Check this scene's reference assignments."
+  },
+  {
+   "name": "aliases_default_from_image_references",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "detailed_description:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] <Subject 1> sings <d>[English, longing, singing] Hold me <i>close</i> tonight.</d> in sync with <Audio 1>. Hard cut, the same moment on the same stage. The action takes place in the environment from <Picture 2>.\n\n[Shot 2] Close-up of <Subject 1> spinning once while she sings.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "audio_paths": [
+     "a.wav"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Subject 1 sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Subject 1 making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    }
+   ]
+  },
+  {
+   "name": "alias_value_is_text",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <Picture 1> stands.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1 and @Image 2"
+    }
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] @Image 1 and @Image 2 stands."
+    }
+   ]
+  },
+  {
+   "name": "bare_labels_and_case",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] picture 1 meets IMAGE 2 and image 1 again; @Image 2 stays; <Picture 02> too.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] @Image 1 meets @Image 2 and @Image 1 again; @Image 2 stays; @Image 2 too."
+    }
+   ]
+  },
+  {
+   "name": "leading_zero_number",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <Picture 001> and <Image 0002>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] @Image 1 and @Image 2."
+    }
+   ]
+  },
+  {
+   "name": "unknown_video_label_is_an_error",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] See <Video 1>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "error": "Cannot map <Video 1> to an actual reference. Check this scene's reference assignments."
+  },
+  {
+   "name": "video_and_audio_labels",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] See <Video 1> and <Audio 2>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "video_paths": [
+     "a.mp4"
+    ],
+    "audio_paths": [
+     "a.wav",
+     "b.wav"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] See @Video 1 and @Audio 2."
+    }
+   ]
+  },
+  {
+   "name": "original_soundtrack_alias",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] She sings to <Audio 1>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "original_soundtrack": true
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] She sings to Original soundtrack."
+    }
+   ]
+  },
+  {
+   "name": "original_soundtrack_with_audio_paths",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] She sings to <Audio 1>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "original_soundtrack": true,
+    "audio_paths": [
+     "a.wav"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] She sings to @Audio 1."
+    }
+   ]
+  },
+  {
+   "name": "delivery_tag_with_directions_and_emphasis",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <d>[English, tender, singing] <i>Hold</i> me <i>close</i></d> now.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] (English, tender, singing) \"Hold me close\" (emphasize \"Hold\", \"close\") now."
+    }
+   ]
+  },
+  {
+   "name": "delivery_tag_without_directions",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <d>just words</d> and <D>  more words </D>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] \"just words\" and \"more words\"."
+    }
+   ]
+  },
+  {
+   "name": "delivery_tag_multiline_and_spacing",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <d>[ English ]\n  line one\nline two</d>",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] ( English ) \"line one\nline two\""
+    }
+   ]
+  },
+  {
+   "name": "stray_tags",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <i>lone</i> words </d> and <d> never closed",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] lone words  and  never closed"
+    }
+   ]
+  },
+  {
+   "name": "headings_set_the_hint",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "summary:\nA roof at dusk.\n\nretention_analysis:\nKeep the jacket.\n\ndetailed_description:\n[Shot 1] She sings.\n\noverall_soundscape:\nWind.\n\nnon_diegetic_music:\nSoft synth.\n\nsubject_definitions:\nAva.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "A roof at dusk."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Preservation",
+     "text": "Keep the jacket."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] She sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    },
+    {
+     "id": "b5",
+     "heading_hint": "Music",
+     "text": "Soft synth."
+    },
+    {
+     "id": "b6",
+     "heading_hint": "References",
+     "text": "Ava."
+    }
+   ]
+  },
+  {
+   "name": "known_destination_headings",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "References:\nAva.\nShots:\n[Shot 1] She sings.\nFinal assembly:\nKeep the song.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "References",
+     "text": "Ava."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] She sings."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Final assembly",
+     "text": "Keep the song."
+    }
+   ]
+  },
+  {
+   "name": "unknown_heading_stays_content",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "Notes for later:\nSome text.\n\nsummary:\nBody.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "Notes for later:\nSome text."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Scene",
+     "text": "Body."
+    }
+   ]
+  },
+  {
+   "name": "blank_lines_split_blocks",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "One.\n\n\nTwo.\nStill two.\n\n  \nThree.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "One."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Scene",
+     "text": "Two.\nStill two."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Scene",
+     "text": "Three."
+    }
+   ]
+  },
+  {
+   "name": "odd_line_ends",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "One.\r\nTwo.\rThree. Four.\u000bFive.\fSix.Seven.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "One.\nTwo.\nThree.\nFour.\nFive.\nSix.\nSeven."
+    }
+   ]
+  },
+  {
+   "name": "hard_cut_forms_are_repaired",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Hard cut, the same moment on the same stage. [Shot 2] Hard cut,  SAME MOMENT. [Shot 3] Hard cut, the same moment, again.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Hard cut, continuing immediately from the preceding shot on the same stage. [Shot 2] Hard cut, continuing immediately from the preceding shot. [Shot 3] Hard cut, continuing immediately from the preceding shot, again."
+    }
+   ]
+  },
+  {
+   "name": "hard_cut_inside_a_lyric_is_left_alone",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] She sings \"Hard cut, the same moment\" and “Hard cut, same moment” aloud. Hard cut, same moment.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] She sings \"Hard cut, the same moment\" and “Hard cut, same moment” aloud. Hard cut, continuing immediately from the preceding shot."
+    }
+   ]
+  },
+  {
+   "name": "spinning_in_a_vocal_close_up",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Close-up of Ava as she sings, spinning once. [Shot 2] A wide shot, spinning a full turn.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Close-up of Ava as she sings, making a partial turn toward the camera while keeping the singing mouth visible. [Shot 2] A wide shot, spinning a full turn."
+    }
+   ]
+  },
+  {
+   "name": "spinning_in_a_close_up_without_vocals",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Close up of Ava, spinning once.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Close up of Ava, spinning once."
+    }
+   ]
+  },
+  {
+   "name": "spinning_inside_the_lyric",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Close-up of Ava who sings \"spinning once\" and spinning a full turn.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Close-up of Ava who sings \"spinning once\" and making a partial turn toward the camera while keeping the singing mouth visible."
+    }
+   ]
+  },
+  {
+   "name": "shot_text_in_a_scene_block",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "Plain intro.\n\n[Shot 1] Close-up of Ava singing, spinning once.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "Plain intro."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Close-up of Ava singing, making a partial turn toward the camera while keeping the singing mouth visible."
+    }
+   ]
+  },
+  {
+   "name": "escaped_quote_in_a_lyric",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Close-up of Ava who sings \"she said \\\"hard cut, same moment\\\"\" and spins once, spinning once.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Close-up of Ava who sings \"she said \\\"hard cut, same moment\\\"\" and spins once, making a partial turn toward the camera while keeping the singing mouth visible."
+    }
+   ]
+  },
+  {
+   "name": "unclosed_quote",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Close-up of Ava who sings \"never closed, spinning once.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Close-up of Ava who sings \"never closed, making a partial turn toward the camera while keeping the singing mouth visible."
+    }
+   ]
+  },
+  {
+   "name": "stock_phrases",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] fully_preserved look, fully_copy audio [reference generation + audio reuse]. preserving every person's exact position, posture, and movement across every camera cut.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] preserve exactly look, retain without alteration in final assembly audio [Reference-guided generation; original soundtrack retained in final assembly]. continuing every person's position, posture, and movement naturally across every camera cut without resetting or freezing the action."
+    }
+   ]
+  },
+  {
+   "name": "scene_audio_inserts_the_definition",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "summary:\nAva sings on a roof.\n\ndetailed_description:\n[Shot 1] <Subject 1> sings in sync with <Audio 1>, Original soundtrack playing. Lip-sync to the Original soundtrack.\n\noverall_soundscape:\nOriginal soundtrack",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "use_scene_audio": true,
+    "original_soundtrack": true
+   },
+   "blocks": [
+    {
+     "id": "scene_audio",
+     "heading_hint": "References",
+     "text": "@Audio 1 is the supplied project/custom audio excerpt for this scene, beginning at scene time 0. Follow its original words, vocal phrasing, pauses and tempo. The full original soundtrack is retained by the Builder during final assembly."
+    },
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "Ava sings on a roof."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings in sync with @Audio 1, @Audio 1 playing. Lip-sync to the @Audio 1."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Sound",
+     "text": "Original soundtrack"
+    },
+    {
+     "id": "vocal_roles",
+     "heading_hint": "Sound",
+     "text": "Follow the singer/speaker roles explicitly assigned in this scene. Instrument-only performers keep their mouths closed unless the source explicitly gives them a vocal part. Keep each lyric phrase assigned to its source performer, including parenthetical words. Backing singers already identified in the scene perform their distinct backing-vocal responses where supported by the source assignment and @Audio 1, at their actual recorded times. Preserve the source's lead-vocal assignment for ambiguous phrases. Each performer follows their own assigned vocal or instrumental part. Keep the active singer's face and mouth readable during each vocal phrase."
+    }
+   ]
+  },
+  {
+   "name": "scene_audio_with_audio_paths_is_an_error",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "summary:\nAva sings on a roof.\n\ndetailed_description:\n[Shot 1] <Subject 1> sings in sync with <Audio 1>, Original soundtrack playing. Lip-sync to the Original soundtrack.\n\noverall_soundscape:\nOriginal soundtrack",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "use_scene_audio": true,
+    "audio_paths": [
+     "a.wav"
+    ]
+   },
+   "error": "Scene-audio mode requires an empty audio-reference file list so the scene excerpt can be Audio 1."
+  },
+  {
+   "name": "scene_audio_without_vocals",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Ava walks across the roof.\n\nBuilder note: Original soundtrack.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "use_scene_audio": true
+   },
+   "blocks": [
+    {
+     "id": "scene_audio",
+     "heading_hint": "References",
+     "text": "@Audio 1 is the supplied project/custom audio excerpt for this scene, beginning at scene time 0. Follow its original words, vocal phrasing, pauses and tempo. The full original soundtrack is retained by the Builder during final assembly."
+    },
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Ava walks across the roof."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Scene",
+     "text": "Builder note: Original soundtrack."
+    }
+   ]
+  },
+  {
+   "name": "scene_audio_reconversion_keeps_one_definition",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "References:\n@Audio 1 is the supplied project/custom audio excerpt for this scene, beginning at scene time 0. Follow its original words, vocal phrasing, pauses and tempo. The full original soundtrack is retained by the Builder during final assembly.\n\nShots:\n[Shot 1] <Subject 1> sings in sync with <Audio 1>.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "use_scene_audio": true,
+    "original_soundtrack": true
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "References",
+     "text": "@Audio 1 is the supplied project/custom audio excerpt for this scene, beginning at scene time 0. Follow its original words, vocal phrasing, pauses and tempo. The full original soundtrack is retained by the Builder during final assembly."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings in sync with @Audio 1."
+    },
+    {
+     "id": "vocal_roles",
+     "heading_hint": "Sound",
+     "text": "Follow the singer/speaker roles explicitly assigned in this scene. Instrument-only performers keep their mouths closed unless the source explicitly gives them a vocal part. Keep each lyric phrase assigned to its source performer, including parenthetical words. Backing singers already identified in the scene perform their distinct backing-vocal responses where supported by the source assignment and @Audio 1, at their actual recorded times. Preserve the source's lead-vocal assignment for ambiguous phrases. Each performer follows their own assigned vocal or instrumental part. Keep the active singer's face and mouth readable during each vocal phrase."
+    }
+   ]
+  },
+  {
+   "name": "scene_audio_reconversion_keeps_one_guidance",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] <Subject 1> sings in sync with <Audio 1>.\n\nSound:\nFollow the singer/speaker roles explicitly assigned in this scene. Instrument-only performers keep their mouths closed unless the source explicitly gives them a vocal part. Keep each lyric phrase assigned to its source performer, including parenthetical words. Backing singers already identified in the scene perform their distinct backing-vocal responses where supported by the source assignment and @Audio 1, at their actual recorded times. Preserve the source's lead-vocal assignment for ambiguous phrases. Each performer follows their own assigned vocal or instrumental part. Keep the active singer's face and mouth readable during each vocal phrase.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "use_scene_audio": true,
+    "original_soundtrack": true
+   },
+   "blocks": [
+    {
+     "id": "scene_audio",
+     "heading_hint": "References",
+     "text": "@Audio 1 is the supplied project/custom audio excerpt for this scene, beginning at scene time 0. Follow its original words, vocal phrasing, pauses and tempo. The full original soundtrack is retained by the Builder during final assembly."
+    },
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Ava sings in sync with @Audio 1."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Sound",
+     "text": "Follow the singer/speaker roles explicitly assigned in this scene. Instrument-only performers keep their mouths closed unless the source explicitly gives them a vocal part. Keep each lyric phrase assigned to its source performer, including parenthetical words. Backing singers already identified in the scene perform their distinct backing-vocal responses where supported by the source assignment and @Audio 1, at their actual recorded times. Preserve the source's lead-vocal assignment for ambiguous phrases. Each performer follows their own assigned vocal or instrumental part. Keep the active singer's face and mouth readable during each vocal phrase."
+    }
+   ]
+  },
+  {
+   "name": "scene_audio_lyric_in_quotes_only",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Ava stands. She says \"sings\" and \"lip-sync\" aloud.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    },
+    "use_scene_audio": true
+   },
+   "blocks": [
+    {
+     "id": "scene_audio",
+     "heading_hint": "References",
+     "text": "@Audio 1 is the supplied project/custom audio excerpt for this scene, beginning at scene time 0. Follow its original words, vocal phrasing, pauses and tempo. The full original soundtrack is retained by the Builder during final assembly."
+    },
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] Ava stands. She says \"sings\" and \"lip-sync\" aloud."
+    }
+   ]
+  },
+  {
+   "name": "image_beyond_the_references",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] @Image 3 sings.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "error": "@Image 3 does not have an attached reference. Check the scene's reference assignments."
+  },
+  {
+   "name": "image_number_zero",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] @Image 0 sings.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "error": "@Image 0 does not have an attached reference. Check the scene's reference assignments."
+  },
+  {
+   "name": "video_without_a_reference",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] @Video 1 plays.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "error": "@Video 1 does not have an attached reference. Check the scene's reference assignments."
+  },
+  {
+   "name": "video_reference_present",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] @Video 1 plays.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "video_paths": [
+     "a.mp4"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] @Video 1 plays."
+    }
+   ]
+  },
+  {
+   "name": "audio_reference_in_scene_audio_mode",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] @Audio 1 and @Audio 2 play.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "use_scene_audio": true
+   },
+   "error": "@Audio 2 does not have an attached reference. Check the scene's reference assignments."
+  },
+  {
+   "name": "audio_reference_present",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] @Audio 2 plays.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {},
+    "audio_paths": [
+     "a.wav",
+     "b.wav"
+    ]
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] @Audio 2 plays."
+    }
+   ]
+  },
+  {
+   "name": "empty_prompt",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    }
+   },
+   "error": "The source prompt is empty."
+  },
+  {
+   "name": "blank_prompt",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "   \n  ",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    }
+   },
+   "error": "The source prompt is empty."
+  },
+  {
+   "name": "only_headings",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "summary:\nshots:\n",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "error": "No prompt content remains to format."
+  },
+  {
+   "name": "number_in_a_longer_word",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": "[Shot 1] Image 1x is fine, and Subject 3 too, and reimage 1.",
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {}
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "[Shot 1] @Image 1x is fine, and Subject 3 too, and reimage 1."
+    }
+   ]
+  },
+  {
+   "name": "source_prompt_is_a_number",
+   "scene": {
+    "id": "s1",
+    "label": "Scene 1",
+    "source_key": "minimax_h3_prompt",
+    "source_prompt": 12345,
+    "image_references": [
+     {
+      "label": "Ava"
+     },
+     {
+      "label": "Roof"
+     }
+    ],
+    "reference_aliases": {
+     "<Picture 1>": "@Image 1",
+     "<Picture 2>": "@Image 2",
+     "<Subject 1>": "Ava"
+    }
+   },
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "12345"
+    }
+   ]
+  }
+ ],
+ "assemble": [
+  {
+   "name": "one_section",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b1",
+       "b2",
+       "b3",
+       "b4"
+      ]
+     }
+    ]
+   },
+   "prompt": "Shots:\nThe target video is in a photorealistic cinematic music-video style.\n\n[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2.\n\n[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings.\n\nWind."
+  },
+  {
+   "name": "two_sections",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "References",
+      "block_ids": [
+       "b1"
+      ]
+     },
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b2",
+       "b3",
+       "b4"
+      ]
+     }
+    ]
+   },
+   "prompt": "References:\nThe target video is in a photorealistic cinematic music-video style.\n\nShots:\n[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2.\n\n[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings.\n\nWind."
+  },
+  {
+   "name": "every_block_its_own_section",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b1"
+      ]
+     },
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b2"
+      ]
+     },
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b3"
+      ]
+     },
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b4"
+      ]
+     }
+    ]
+   },
+   "prompt": "Shots:\nThe target video is in a photorealistic cinematic music-video style.\n\nShots:\n[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2.\n\nShots:\n[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings.\n\nShots:\nWind."
+  },
+  {
+   "name": "reordered",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b4",
+       "b3",
+       "b2",
+       "b1"
+      ]
+     }
+    ]
+   },
+   "error": "The LLM dropped, duplicated, or reordered source content. No prompts were changed."
+  },
+  {
+   "name": "dropped_block",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b1",
+       "b2",
+       "b3"
+      ]
+     }
+    ]
+   },
+   "error": "The LLM dropped, duplicated, or reordered source content. No prompts were changed."
+  },
+  {
+   "name": "duplicated_block",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b1",
+       "b2",
+       "b3",
+       "b4",
+       "b1"
+      ]
+     }
+    ]
+   },
+   "error": "The LLM dropped, duplicated, or reordered source content. No prompts were changed."
+  },
+  {
+   "name": "unknown_block",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b1",
+       "b2",
+       "b3",
+       "b4",
+       "b99"
+      ]
+     }
+    ]
+   },
+   "error": "The LLM dropped, duplicated, or reordered source content. No prompts were changed."
+  },
+  {
+   "name": "unknown_heading",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Intro",
+      "block_ids": [
+       "b1",
+       "b2",
+       "b3",
+       "b4"
+      ]
+     }
+    ]
+   },
+   "error": "The LLM returned an invalid formatting section. No prompts were changed."
+  },
+  {
+   "name": "lower_case_heading",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "shots",
+      "block_ids": [
+       "b1",
+       "b2",
+       "b3",
+       "b4"
+      ]
+     }
+    ]
+   },
+   "error": "The LLM returned an invalid formatting section. No prompts were changed."
+  },
+  {
+   "name": "empty_block_ids",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": []
+     }
+    ]
+   },
+   "error": "The LLM returned an invalid formatting section. No prompts were changed."
+  },
+  {
+   "name": "block_ids_not_a_list",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": "b1"
+     }
+    ]
+   },
+   "error": "The LLM returned an invalid formatting section. No prompts were changed."
+  },
+  {
+   "name": "section_not_an_object",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     "Shots"
+    ]
+   },
+   "error": "The LLM returned an invalid formatting section. No prompts were changed."
+  },
+  {
+   "name": "no_sections",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": []
+   },
+   "error": "The LLM did not return a Seedance formatting plan. No prompts were changed."
+  },
+  {
+   "name": "sections_not_a_list",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": {}
+   },
+   "error": "The LLM did not return a Seedance formatting plan. No prompts were changed."
+  },
+  {
+   "name": "plan_without_sections",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {},
+   "error": "The LLM did not return a Seedance formatting plan. No prompts were changed."
+  },
+  {
+   "name": "plan_not_an_object",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": [
+    "sections"
+   ],
+   "error": "The LLM did not return a Seedance formatting plan. No prompts were changed."
+  },
+  {
+   "name": "numeric_block_ids",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Shots",
+     "text": "The target video is in a photorealistic cinematic music-video style."
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "[Shot 1] Ava sings (English, longing, singing) \"Hold me close tonight.\" (emphasize \"close\") in sync with @Audio 1. Hard cut, continuing immediately from the preceding shot on the same stage. The action takes place in the environment from @Image 2."
+    },
+    {
+     "id": "b3",
+     "heading_hint": "Shots",
+     "text": "[Shot 2] Close-up of Ava making a partial turn toward the camera while keeping the singing mouth visible while she sings."
+    },
+    {
+     "id": "b4",
+     "heading_hint": "Sound",
+     "text": "Wind."
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       1,
+       2,
+       3
+      ]
+     }
+    ]
+   },
+   "error": "The LLM dropped, duplicated, or reordered source content. No prompts were changed."
+  },
+  {
+   "name": "exactly_the_limit",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b1"
+      ]
+     }
+    ]
+   },
+   "prompt": "Shots:\nzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+  },
+  {
+   "name": "over_the_limit",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Shots",
+     "text": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Scene",
+      "block_ids": [
+       "b1"
+      ]
+     },
+     {
+      "heading": "Shots",
+      "block_ids": [
+       "b2"
+      ]
+     }
+    ]
+   },
+   "error": "The complete converted prompt exceeds Seedance's 15,000-character limit. Nothing was truncated."
+  },
+  {
+   "name": "blocks_keep_their_text",
+   "blocks": [
+    {
+     "id": "b1",
+     "heading_hint": "Scene",
+     "text": "line one\nline two ünï"
+    },
+    {
+     "id": "b2",
+     "heading_hint": "Scene",
+     "text": ""
+    }
+   ],
+   "plan": {
+    "sections": [
+     {
+      "heading": "Scene",
+      "block_ids": [
+       "b1",
+       "b2"
+      ]
+     }
+    ]
+   },
+   "prompt": "Scene:\nline one\nline two ünï\n\n"
+  }
+ ],
+ "audio_prompt": [
+  {
+   "name": "not_scene_audio",
+   "payload": {
+    "audio_mode": "uploaded",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ]
+   },
+   "prompt": "Prompt text."
+  },
+  {
+   "name": "no_audio_mode",
+   "payload": {},
+   "prompt": "Prompt text."
+  },
+  {
+   "name": "without_an_excerpt",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": []
+   },
+   "error": "Scene-audio mode requires exactly one prepared project/custom audio excerpt as Audio 1."
+  },
+  {
+   "name": "two_excerpts",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav",
+     "{dir}/excerpt.wav"
+    ]
+   },
+   "error": "Scene-audio mode requires exactly one prepared project/custom audio excerpt as Audio 1."
+  },
+  {
+   "name": "singing_by_assignment",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ]
+   },
+   "prompt": "Prompt text.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. Use the existing scene's singer/speaker assignments to lip-sync to the actual vocals/speech in @Audio 1. Match the supplied words, phrasing, phonemes and pauses at their original timestamps. Keep the assigned singer's face and mouth readable during vocal phrases. Keep non-singers' lips closed and preserve all instrumental-only/lips-closed shot instructions. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly."
+  },
+  {
+   "name": "singer_image_one",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "lip_sync_image": 1
+   },
+   "prompt": "Prompt text.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. The performer from @Image 1 lip-syncs to the actual vocals/speech in @Audio 1. Match the supplied words, phrasing, phonemes, melody and pauses at their original timestamps. Keep the mouth visible during vocal lines. Other people keep their lips closed unless the scene explicitly assigns them a vocal part. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly."
+  },
+  {
+   "name": "singer_image_as_text",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     },
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "lip_sync_image": "2"
+   },
+   "prompt": "Prompt text.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. The performer from @Image 2 lip-syncs to the actual vocals/speech in @Audio 1. Match the supplied words, phrasing, phonemes, melody and pauses at their original timestamps. Keep the mouth visible during vocal lines. Other people keep their lips closed unless the scene explicitly assigns them a vocal part. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly."
+  },
+  {
+   "name": "singer_image_beyond_the_images",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "lip_sync_image": 2
+   },
+   "error": "Select a lip-sync performer image that is actually attached to this scene."
+  },
+  {
+   "name": "singer_image_negative",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "lip_sync_image": -1
+   },
+   "error": "Select a lip-sync performer image that is actually attached to this scene."
+  },
+  {
+   "name": "singer_image_zero_means_assignment",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "lip_sync_image": 0
+   },
+   "prompt": "Prompt text.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. Use the existing scene's singer/speaker assignments to lip-sync to the actual vocals/speech in @Audio 1. Match the supplied words, phrasing, phonemes and pauses at their original timestamps. Keep the assigned singer's face and mouth readable during vocal phrases. Keep non-singers' lips closed and preserve all instrumental-only/lips-closed shot instructions. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly."
+  },
+  {
+   "name": "no_lip_sync",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "reference_images": [
+     {
+      "path": "{dir}/ava.png"
+     }
+    ],
+    "lip_sync_image": 1,
+    "no_lip_sync": true
+   },
+   "prompt": "Prompt text.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. This is a non-vocal/instrumental performance shot. Keep every person's lips closed; use the audio only for musical timing and body/instrument movement. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly."
+  },
+  {
+   "name": "no_lip_sync_without_a_singer",
+   "payload": {
+    "audio_mode": "scene_audio",
+    "reference_audios": [
+     "{dir}/excerpt.wav"
+    ],
+    "no_lip_sync": 1
+   },
+   "prompt": "Prompt text.\n\nScene audio timing:\n@Audio 1 is the exact project/custom audio excerpt for this scene, starting at scene time 0. Use its original timing and tempo; do not rewrite words, invent vocals, or stretch or retime the performance. Any trailing silence is padding after the scene ends. This is a non-vocal/instrumental performance shot. Keep every person's lips closed; use the audio only for musical timing and body/instrument movement. The Builder restores the supplied audio to the finished scene and uses the project soundtrack in final assembly."
+  }
+ ]
+}

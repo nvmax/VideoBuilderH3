@@ -59,6 +59,9 @@ def main() -> int:
     store._load_storyboard = lambda payload: {"exists": False}
     orch.prepare_llm_payload = lambda body: body
     orch.llm_payload_from_session = lambda session, overrides=None: {}
+    # A multi-shot singing scene is timed with Stable-ts in ComfyUI before its prompt is written. The cases here cover the text the
+    # writer makes, so the timing is off. Its decisions and results are covered by make_singer_timing_fixtures.py.
+    orch.time_scene_singer_cues = lambda *args, **kwargs: {}
 
     state = {"reply": "", "task": ""}
 
@@ -252,6 +255,87 @@ def main() -> int:
     scoped_continued = continued("masked", location_for_s2="l2", builder_storyboard_defaults={"minimax_h3_cut_frequency": 5, "performance_style": "theatrical"})
     scoped_continued["segments"][1]["scene_defaults"] = {"performance_style": "theatrical", "camera_flow": "pretty_little_malfunction", "minimax_h3_cut_frequency": 1}
     add("continued_scoped", scoped_continued, 1)
+
+    # Scenes timed with Stable-ts before the prompt is written. ComfyUI and the audio clip are replaced by a canned reply, so each case
+    # holds the pack's decision (timed or not), the cue map it saved and the prompt it wrote from it.
+    lyr = importlib.import_module("vrgdg_pack.agent_api.orchestrator.lyrics_orchestrator")
+    errors = importlib.import_module("vrgdg_pack.agent_api.errors")
+    sp = importlib.import_module("vrgdg_pack.minimax.shot_prompt")
+    real_timing = lyr.time_scene_singer_cues
+    timed_calls = []
+
+    class Client:
+        def queue_prompt(self, prompt, client_id=None):
+            timed_calls.append(prompt)
+            return {"prompt_id": "p1"}
+
+        async def wait_for_prompt(self, prompt_id, timeout_seconds=0, check_cancel=None):
+            return {"p1": {"outputs": {}}}
+
+    lyr._prepare_scene_audio_clip = lambda request: {"audio_path": "Z:\\h3fixture\\proj\\scene_audio\\scene.wav"}
+    lyr.utility_workflows._build_timestamped_transcribe_api_prompt = lambda request: {"workflow_path": "x", "prompt": {"1": {}}}
+    lyr.get_comfy_client = lambda: Client()
+    orch.time_scene_singer_cues = real_timing
+
+    def add_timed(name, session, index, canned):
+        lyr.extract_text_from_history = lambda history, prompt_id: [json.dumps(canned)]
+        entry = {"name": name, "session": copy.deepcopy(session), "index": index, "canned": canned}
+        for shots in range(1, 9):
+            attempt = copy.deepcopy(session)
+            timed_calls.clear()
+            cards = sync.scene_cards(attempt)
+            state["reply"] = shots_json(shots)
+            try:
+                result = orch.generate_scene_prompt(attempt, ROOT, attempt["segments"][index], cards[index], index, {})
+            except errors.ValidationError as exc:
+                entry["reply"] = state["reply"]
+                entry["error"] = str(exc)
+                break
+            except sp.ShotPromptError:
+                continue
+            entry.update({"reply": state["reply"], "prompt": result["prompt"], "characters": result["characters"], "shots": result["shots"],
+                          "task": state["task"], "timing_fields": result["timing_fields"], "timed": bool(timed_calls)})
+            break
+        else:
+            raise SystemExit(f"{name}: no shot count from 1 to 8 worked")
+        cases.append(entry)
+
+    words = {"segments": [{"words": [
+        {"text": "hold", "start": 0.3, "end": 0.8}, {"text": "me", "start": 0.9, "end": 1.3},
+        {"text": "close", "start": 2.4, "end": 2.9}, {"text": "tonight", "start": 3.0, "end": 3.6}]}]}
+    cut_defaults = {"minimax_h3_cut_frequency": 3}
+
+    def timed_session(**extra):
+        session = base_session(builder_storyboard_defaults=dict(cut_defaults), audio_path="Z:\\h3fixture\\song.wav", **extra)
+        session["flux_reference_builder"]["performer_scene_map"] = {"s1": ["a"], "s3": ["a"]}
+        return session
+
+    add_timed("timed_scene1", timed_session(), 0, words)
+    add_timed("timed_scene3", timed_session(), 2, {"segments": [{"words": [{"text": "we", "start": 0.4, "end": 0.7}, {"text": "run", "start": 0.8, "end": 1.2}, {"text": "back", "start": 5.0, "end": 5.6}]}]})
+    add_timed("timed_instrumental_scene2_is_skipped", timed_session(), 1, words)
+    add_timed("timed_structured", timed_session(use_structured_outputs=True), 0, words)
+    add_timed("timed_built_in_audio_is_skipped", timed_session(minimax_h3_settings={"audio_mode": "built_in_audio", "aspect_ratio": "16:9"}), 0, words)
+    scene_audio = timed_session()
+    scene_audio["segments"][0].update(use_scene_minimax_h3_settings=True, minimax_h3_settings={"audio_mode": "built_in_audio", "aspect_ratio": "9:16 (Portrait Widescreen)"})
+    add_timed("timed_scene_settings_built_in_audio_is_skipped", scene_audio, 0, words)
+    own_aspect = timed_session()
+    own_aspect["segments"][0].update(use_scene_minimax_h3_settings=True, minimax_h3_settings={"audio_mode": "input_audio", "aspect_ratio": "9:16 (Portrait Widescreen)"})
+    add_timed("timed_scene_settings_aspect_ratio", own_aspect, 0, words)
+    no_singer = timed_session()
+    no_singer["flux_reference_builder"]["performer_scene_map"] = {}
+    add_timed("timed_without_a_mapped_singer", no_singer, 0, words)
+    add_timed("timed_no_words_back", timed_session(), 0, {"segments": []})
+    omit_timed = timed_session(omit_lyrics_from_video_prompts=True)
+    add_timed("timed_omit_lyrics", omit_timed, 0, words)
+    done_already = timed_session()
+    done_already["segments"][0].update(lyric_performance_mode="cue_map", lyric_cue_map=[
+        {"type": "vocal", "text": "hold me", "singer_name": "Ava", "singer_id": "a", "start": 0.0, "end": 1.8, "vocal_start": 0.3, "vocal_end": 1.3},
+        {"type": "vocal", "text": "close tonight", "singer_name": "Ava", "singer_id": "a", "start": 1.8, "end": 4.0, "vocal_start": 2.4, "vocal_end": 3.6}])
+    add_timed("timed_cue_map_already_timed", done_already, 0, words)
+    continued_timed = continued("masked", location_for_s2="l2", builder_storyboard_defaults=dict(cut_defaults))
+    continued_timed["flux_reference_builder"]["performer_scene_map"] = {"s1": ["a"], "s2": ["a"]}
+    add_timed("timed_continued_scene_is_skipped", continued_timed, 1, words)
+
     (out / "writer.json").write_text(json.dumps({"cases": cases}, indent=1, ensure_ascii=False), encoding="utf-8")
     print("writer cases:", len(cases), "errors:", sum(1 for c in cases if "error" in c))
     for c in cases:

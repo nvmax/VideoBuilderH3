@@ -28,6 +28,7 @@ pub mod refmod_studio;
 pub mod prompt_writers;
 pub mod render_log;
 pub mod runner;
+pub mod seedance;
 pub mod story;
 pub mod system;
 pub mod transcribe;

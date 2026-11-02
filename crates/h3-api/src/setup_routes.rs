@@ -9,6 +9,7 @@ use axum::extract::State;
 use axum::Json;
 use h3_comfy::{check_nodes, ComfyClient, Feature};
 use h3_media::Tools;
+use h3_project::builder_store::{load_comfy_api_key, save_comfy_api_key};
 use h3_project::AppConfig;
 use serde_json::{json, Value};
 
@@ -231,4 +232,29 @@ pub async fn save(State(state): Shared, body: Option<Json<Value>>) -> ApiResult 
     })
     .await??;
     Ok(success(json!({"saved": true, "restart_required": true, "config": config_view(&saved)}), None))
+}
+
+// -- the ComfyUI API key (API Nodes video) -----------------------------------------------------------------------------------
+
+/// `GET /setup/comfy_api_key`: whether a ComfyUI API key is saved. The key is never returned.
+pub async fn comfy_key_status(State(state): Shared) -> ApiResult {
+    let output = state.builder_env().output;
+    let configured = blocking(move || !load_comfy_api_key(&output).is_empty()).await?;
+    Ok(success(json!({"configured": configured}), None))
+}
+
+/// `PUT /setup/comfy_api_key`: save (or, with an empty string, clear) the key the API Nodes video engine signs in to ComfyUI with. It stays on
+/// this computer, in a file of its own. The Builder page never receives it: the server adds it to a job on its way to ComfyUI.
+pub async fn comfy_key_save(State(state): Shared, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let Some(key) = body.get("api_key").and_then(Value::as_str) else {
+        return Err(ApiError::validation("api_key is required; use an empty string to clear it."));
+    };
+    let key = key.trim().to_string();
+    if key.chars().any(char::is_whitespace) || key.chars().count() > 400 {
+        return Err(ApiError::validation("That does not look like a ComfyUI API key. Paste the whole key without spaces."));
+    }
+    let output = state.builder_env().output;
+    blocking(move || save_comfy_api_key(&output, &key)).await?.map_err(|e| ApiError::internal(format!("The key could not be saved: {e}")))?;
+    comfy_key_status(State(state)).await
 }

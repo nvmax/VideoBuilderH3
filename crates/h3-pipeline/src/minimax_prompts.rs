@@ -20,6 +20,7 @@ use h3_core::prompt::lyrics::{ensure_quoted_lyrics, last_shot_text};
 use h3_core::prompt::masked::masked_continuation_context;
 use h3_core::prompt::performance::strip_singing_articulation;
 use h3_core::prompt::plan::{apply_cut_style, shot_plan, HARD_LIMIT};
+use h3_core::prompt::singer_timing::{plan_singer_timing, TimingPlan};
 use h3_core::prompt::task::{build_shot_task, ShotTaskArgs};
 use h3_core::prompt::text::{assemble_prompt, parse_shot_descriptions};
 use h3_core::pyval::{py_str, text_or_empty, to_float, truthy, Obj};
@@ -31,6 +32,8 @@ use h3_core::timeline::sort_segments;
 use h3_core::CoreError;
 use h3_llm::{chat, ChatRequest, LlmConfig, LlmError};
 use serde_json::{json, Value};
+use std::future::Future;
+use std::pin::Pin;
 
 pub const INSTRUCTIONS: &str = include_str!("../../h3-llm/data/minimax_h3_reference_to_video.txt");
 /// The Video Builder's instruction for a scene written from the previous scene's final frame.
@@ -48,6 +51,29 @@ pub enum PromptError {
     Llm(#[from] LlmError),
     #[error("{}", .0.message)]
     Shot(CoreError),
+    /// ComfyUI could not time the scene's words. Unlike a problem with one scene, it stops the whole job.
+    #[error("{0}")]
+    Timing(String),
+}
+
+/// Why a scene's sung words could not be timed.
+#[derive(Debug, Clone, PartialEq)]
+pub enum TimerError {
+    /// A problem with this scene: its audio, or the workflow's reply. The other scenes go on.
+    Scene(String),
+    /// ComfyUI failed, was not reachable or was stopped.
+    Comfy(String),
+}
+
+pub type TimerFuture<'a> = Pin<Box<dyn Future<Output = Result<Obj, TimerError>> + Send + 'a>>;
+
+/// Times a scene's words with Stable-ts in ComfyUI. A scene that cuts between shots and has a lyric to sing is timed before its
+/// prompt is written, so each shot gets the words sung during it (`time_scene_singer_cues` in the pack).
+pub trait SingerTimer: Sync {
+    /// The project's folder, where the scene's audio clip is cut.
+    fn project_folder(&self) -> String;
+    /// The timed words (the workflow's `segments` payload) for the scene's audio.
+    fn time<'a>(&'a self, plan: &'a TimingPlan) -> TimerFuture<'a>;
 }
 
 #[derive(Debug, Clone)]
@@ -75,6 +101,8 @@ pub struct WrittenPrompt {
     pub warnings: Vec<String>,
     /// The LLM looked at the previous scene's final frame to write this prompt.
     pub used_previous_frame: bool,
+    /// The scene fields the timing of its sung words set (the cue map). Saved with the prompt. Empty when nothing was timed.
+    pub timing_fields: Obj,
 }
 
 fn field(obj: &Obj, key: &str) -> String {
@@ -220,11 +248,17 @@ fn location_ref(session: &Obj, segment: &Obj) -> Option<Obj> {
     Some(slim)
 }
 
-/// Write the prompt of the scene at `index` (position in the timeline order).
+/// Write the prompt of the scene at `index` (position in the timeline order). No scene's words are timed first.
 pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize, params: &PromptParams) -> Result<WrittenPrompt, PromptError> {
+    generate_scene_prompt_timed(llm, session, index, params, None).await
+}
+
+/// [`generate_scene_prompt`] that first times the words of a scene that cuts between shots with `timer`, so each shot is written
+/// with the words sung during it. A scene continued from the previous one, or with the built-in audio, is not timed.
+pub async fn generate_scene_prompt_timed(llm: &LlmConfig, session: &Obj, index: usize, params: &PromptParams, timer: Option<&dyn SingerTimer>) -> Result<WrittenPrompt, PromptError> {
     let mut segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
     sort_segments(&mut segments);
-    let segment = segments.get(index).and_then(Value::as_object).cloned().ok_or_else(|| PromptError::Invalid("The scene was not found.".into()))?;
+    let mut segment = segments.get(index).and_then(Value::as_object).cloned().ok_or_else(|| PromptError::Invalid("The scene was not found.".into()))?;
     let session_value = Value::Object(session.clone());
     let label = Some(field(&segment, "label")).filter(|l| !l.is_empty()).unwrap_or_else(|| format!("Scene {}", index + 1));
     // The project's defaults with the scene's own Scene Defaults on top.
@@ -234,7 +268,9 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
     defaults.extend(scoped.clone());
     let card = scene_card(&segment, &project_defaults);
     let theatrical_lines = theatrical::direction_lines(&card, Some(&defaults));
-    let settings = obj_of(session.get("minimax_h3_settings"));
+    // The scene's own MiniMax settings count when it has them (`minimax_h3_settings_for_scene`).
+    let scene_settings = h3_core::settings::settings_for_scene(&session_value, Some(&Value::Object(segment.clone())));
+    let settings = scene_settings.clone();
     let mut warnings: Vec<String> = Vec::new();
 
     let items = ordered_reference_items(&session_value, &segment, MODE, index);
@@ -244,9 +280,21 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
     let audio_mode = Some(field(&settings, "audio_mode")).filter(|s| !s.is_empty()).unwrap_or_else(|| "input_audio".into());
     let performance = Some(field(&segment, "performance_mode")).filter(|s| !s.is_empty()).or_else(|| Some(field(session, "video_type")).filter(|s| !s.is_empty())).unwrap_or_else(|| "singing".into());
     let singing = performance == "singing" && audio_mode != "built_in_audio";
-    let omit = scene_enabled(session, &segment);
-    let scene_settings = h3_core::settings::settings_for_scene(&session_value, Some(&Value::Object(segment.clone())));
     let continued = index > 0 && scene_settings.get("continuity_mode").and_then(Value::as_str) == Some("latent_continuation_masked");
+    // A scene that cuts between shots is timed first, and its cue map then drives the shots (`time_scene_singer_cues`).
+    let mut timing_fields = Obj::new();
+    if let (false, true, Some(timer)) = (continued, audio_mode != "built_in_audio", timer) {
+        let cut_plan = scene_cut_plan(&segment, session);
+        if let Some(plan) = plan_singer_timing(session, &timer.project_folder(), &segment, index, &cut_plan).map_err(PromptError::Invalid)? {
+            let words = timer.time(&plan).await.map_err(|e| match e {
+                TimerError::Scene(message) => PromptError::Invalid(message),
+                TimerError::Comfy(message) => PromptError::Timing(message),
+            })?;
+            timing_fields = plan.cue_fields(&words).map_err(PromptError::Invalid)?;
+            segment.extend(timing_fields.clone());
+        }
+    }
+    let omit = scene_enabled(session, &segment);
 
     let (start, end) = (number(segment.get("start"), 0.0), number(segment.get("end"), 0.0));
     let duration = (end - start).max(0.1);
@@ -451,7 +499,7 @@ pub async fn generate_scene_prompt(llm: &LlmConfig, session: &Obj, index: usize,
             }
         });
         match checked {
-            Ok(()) => return Ok(WrittenPrompt { characters: prompt.chars().count(), prompt, shots: budget.shot_count as usize, attempts: attempt, model: reply.model, warnings, used_previous_frame: use_picture }),
+            Ok(()) => return Ok(WrittenPrompt { characters: prompt.chars().count(), prompt, shots: budget.shot_count as usize, attempts: attempt, model: reply.model, warnings, used_previous_frame: use_picture, timing_fields: timing_fields.clone() }),
             Err(e) if e.code.as_deref() == Some("MINIMAX_H3_REFERENCE_COMPOSITION_LEAK") && attempt < MAX_ATTEMPTS => continue,
             Err(e) if e.code.as_deref() == Some("MINIMAX_H3_PROMPT_TOO_LONG") && attempt < MAX_ATTEMPTS => {
                 last_length = e.length as usize;

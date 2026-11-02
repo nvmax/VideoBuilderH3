@@ -2,6 +2,8 @@
 // and where ffmpeg is. Opened by the "App Settings" entry this adds to the Builder's Menu, and on its own the first time the app starts (or when
 // ffmpeg cannot be found), with the same checks the setup of the agent API makes.
 
+import { api } from "/scripts/api.js";
+
 const API = "/api/v1";
 const SKIPPED = "h3studio.setupSkipped";
 const FIELDS = [
@@ -46,11 +48,11 @@ function restartApp() {
   return true;
 }
 
-// The ElevenLabs key is kept for every project, in the same place as the Builder's own settings, and used by any project that has no key of its own. It
+// A saved key (ElevenLabs, ComfyUI) is kept for every project, in the same place as the Builder's own settings, and used by any project that has no key of its own. It
 // saves at once, with no restart. An agent can make speech with it through the app and never sees it.
-function elevenLabsBlock() {
+function keyBlock({ title, path, placeholder, hint: hintText, testPath = "", onChange = null }) {
   const wrap = element("div", "margin:14px 0 10px;border-top:1px solid #1e293b;padding-top:12px;");
-  wrap.append(element("div", "font-weight:800;color:#cbd5e1;", "ElevenLabs API key"));
+  wrap.append(element("div", "font-weight:800;color:#cbd5e1;", title));
   const row = element("div", "display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;");
   const input = element("input", "flex:1;min-width:200px;box-sizing:border-box;border:1px solid #3f3f46;border-radius:6px;background:#18181b;color:#f4f4f5;padding:7px 9px;font-size:12px;");
   input.type = "password";
@@ -58,9 +60,10 @@ function elevenLabsBlock() {
   input.spellcheck = false;
   const save = button("Save key");
   const check = button("Test");
+  check.style.display = testPath ? "" : "none";
   const remove = button("Remove");
   row.append(input, save, check, remove);
-  const hint = element("div", "color:#71717a;font-size:11px;margin-top:3px;", "For Speaking projects: voices and speech. It is saved at once and used by every project without a key of its own. AI agents can make speech with it through the app and never see it.");
+  const hint = element("div", "color:#71717a;font-size:11px;margin-top:3px;", hintText);
   const state = element("div", "min-height:16px;margin-top:4px;font-size:12px;color:#94a3b8;");
   wrap.append(row, hint, state);
   const say = (text, color = "#94a3b8") => {
@@ -68,19 +71,20 @@ function elevenLabsBlock() {
     state.style.color = color;
   };
   const show = (configured) => {
-    input.placeholder = configured ? "A key is saved. Paste a new one to replace it." : "Paste your ElevenLabs API key";
+    input.placeholder = configured ? "A key is saved. Paste a new one to replace it." : placeholder;
     remove.style.display = configured ? "" : "none";
     say(configured ? "A key is saved." : "No key is saved.", configured ? "#86efac" : "#94a3b8");
   };
   show(false);
-  call("/setup/elevenlabs").then((found) => show(Boolean(found.configured))).catch((error) => say(String(error?.message || error), "#fca5a5"));
+  call(path).then((found) => show(Boolean(found.configured))).catch((error) => say(String(error?.message || error), "#fca5a5"));
   save.onclick = async () => {
     const key = input.value.trim();
     if (!key) return say("Paste a key first.", "#fbbf24");
     try {
-      const found = await call("/setup/elevenlabs", { method: "PUT", body: JSON.stringify({ api_key: key }) });
+      const found = await call(path, { method: "PUT", body: JSON.stringify({ api_key: key }) });
       input.value = "";
       show(Boolean(found.configured));
+      if (onChange) onChange();
     } catch (error) {
       say(String(error?.message || error), "#fca5a5");
     }
@@ -88,22 +92,45 @@ function elevenLabsBlock() {
   check.onclick = async () => {
     say("Testing...");
     try {
-      await call("/setup/elevenlabs/test", { method: "POST", body: JSON.stringify({ api_key: input.value.trim() }) });
-      say("Connected: ElevenLabs accepted the key.", "#86efac");
+      await call(testPath, { method: "POST", body: JSON.stringify({ api_key: input.value.trim() }) });
+      say("Connected: the key was accepted.", "#86efac");
     } catch (error) {
       say(String(error?.message || error), "#fca5a5");
     }
   };
   remove.onclick = async () => {
     try {
-      const found = await call("/setup/elevenlabs", { method: "PUT", body: JSON.stringify({ api_key: "" }) });
+      const found = await call(path, { method: "PUT", body: JSON.stringify({ api_key: "" }) });
       input.value = "";
       show(Boolean(found.configured));
+      if (onChange) onChange();
     } catch (error) {
       say(String(error?.message || error), "#fca5a5");
     }
   };
   return wrap;
+}
+
+function elevenLabsBlock() {
+  return keyBlock({
+    title: "ElevenLabs API key",
+    path: "/setup/elevenlabs",
+    testPath: "/setup/elevenlabs/test",
+    placeholder: "Paste your ElevenLabs API key",
+    hint: "For Speaking projects: voices and speech. It is saved at once and used by every project without a key of its own. AI agents can make speech with it through the app and never see it.",
+  });
+}
+
+// The ComfyUI API key (comfy.org) is what the API Nodes video engine (Seedance) signs in to ComfyUI with. It is kept on this computer and the
+// Builder page never receives it: it only learns that one is saved, and the server adds the key to the job on its way to ComfyUI.
+function comfyKeyBlock() {
+  return keyBlock({
+    title: "ComfyUI API key",
+    path: "/setup/comfy_api_key",
+    placeholder: "Paste your ComfyUI API key",
+    onChange: () => api.refreshCredentials(),
+    hint: "For the API Nodes video engine (Seedance 2.5): your comfy.org account pays for each video, so it needs credits. Create the key at platform.comfy.org. It is saved at once and stays on this computer.",
+  });
 }
 
 export function openAppSettings({ welcome = false } = {}) {
@@ -142,6 +169,7 @@ export function openAppSettings({ welcome = false } = {}) {
     panel.append(wrap);
   }
   panel.append(elevenLabsBlock());
+  panel.append(comfyKeyBlock());
   const suggestion = element("div", "display:none;margin:-2px 0 10px;color:#94a3b8;font-size:12px;");
   panel.append(suggestion);
 

@@ -15,8 +15,9 @@ use crate::error::ApiError;
 use crate::views::resolve_project;
 
 /// Params that steer the job. Every other key replaces a render setting for this run, like the pack's render params.
-const CONTROL_KEYS: [&str; 12] =
-    ["scene_id", "mode", "timeout_hours", "match_start_color", "resume", "run_mode", "scope", "scene_ids", "range", "force", "skip_final_stitch", "audio_mode"];
+const CONTROL_KEYS: [&str; 13] = [
+    "scene_id", "mode", "timeout_hours", "match_start_color", "resume", "run_mode", "scope", "scene_ids", "range", "force", "skip_final_stitch", "audio_mode", "render_phase",
+];
 
 pub const VIDEO_RENDER: &str = "video.render";
 pub const VIDEOS_RENDER_BATCH: &str = "videos.render_batch";
@@ -63,7 +64,7 @@ pub(crate) fn render_params(params: &Value) -> RenderParams {
             }
         }
     }
-    RenderParams { overrides, timeout_hours: params.get("timeout_hours").and_then(Value::as_f64) }
+    RenderParams { overrides, timeout_hours: params.get("timeout_hours").and_then(Value::as_f64), phase: params.get("render_phase").cloned().unwrap_or(Value::Null) }
 }
 
 pub(crate) fn finish_options(params: &Value) -> FinishOptions {
@@ -132,6 +133,8 @@ async fn render_one(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError
         "raw_video_path": done.raw_video_path,
         "history_index": done.history_index,
         "history_count": done.history_count,
+        "render_phase": done.render_phase,
+        "draft_id": done.draft_id,
         "revision": done.revision,
     }))
 }

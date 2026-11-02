@@ -1986,7 +1986,7 @@
   },
   {
    "name": "minimax_prompts",
-   "description": "Write MiniMax H3 reference-to-video prompts with the project's LLM, as a background job. Only scenes without a prompt are written unless replace_existing; limit caps the count. Every scene needs a mapped character with an image. Run after story_create beats. Returns a job id for job_wait. For LM Studio the loaded model is used and never changed.",
+   "description": "Write MiniMax H3 reference-to-video prompts with the project's LLM, as a background job. Only scenes without a prompt are written unless replace_existing; limit caps the count. Every scene needs a mapped character with an image. Multi-shot singing scenes automatically run Stable-ts on scene audio before writing prompts; complete cue timings are kept. These scenes need lyrics, a mapped singer and project/custom audio. Timing failure stops that scene's prompt. Run after story_create beats. Returns a job id for job_wait. For LM Studio the loaded model is used and never changed.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -5902,7 +5902,7 @@
   {
    "method": "POST",
    "path": "/projects/{pid}/minimax-prompts",
-   "description": "Write MiniMax H3 reference-to-video prompts with the project's LLM for scenes that have none (`replace_existing`, `scene_ids`, `limit`). Each singing scene's prompt has its lyric in double quotes after 'sings the lyric line,'. Saves them on the scenes and in the Storyboard Builder's copy (`storyboard/storyboard.json` and the `prompts/` files). Needs a mapped character with an image on each scene. Each prompt is the Builder's full format: subject definitions tying `<Subject N>` to `<Picture N>`, summary, retention analysis, the shots, and the soundscape.",
+   "description": "Write MiniMax H3 reference-to-video prompts with the project's LLM for scenes that have none (`replace_existing`, `scene_ids`, `limit`). Multi-shot singing scenes using supplied audio automatically run Stable-ts word timing first; complete cue timings are preserved. Requires scene lyrics, a mapped singer and project/custom audio. Timing failure stops that scene prompt. Saves lyric_cue_map, lyric_performance_mode and lyric_shot_word_timing_enabled with the prompt. Runs as a GPU job; the MCP minimax_prompts tool uses this same route. Timed lyric cues assign each shot its own words and vocal interval. Saves them on the scenes and in the Storyboard Builder's copy (`storyboard/storyboard.json` and the `prompts/` files). Needs a mapped character with an image on each scene. Prompts use compact picture-grounded shot prose by default; use_structured_outputs enables the reference definitions, summary, retention analysis and soundscape sections.",
    "job": true,
    "body_keys": [],
    "query": [],
@@ -6849,7 +6849,7 @@
   {
    "method": "POST",
    "path": "/projects/{project_id}/scenes/{scene_id}/video/render",
-   "description": "Render one scene's video with ComfyUI (`mode`, e.g. `minimax_h3`). To render against another sound than the project song, send `audio_path` (for example the `no_vocals_path` of POST audio/stems). Trims to the exact timeline length and saves it as `video_NNNN-audio.mp4`. Set `audio_mode: built_in_audio` in the MiniMax settings for H3 voices and sound (all MiniMax video modes and supported passes, including 2 Pass Advanced). With `continuity_mode: latent_continuation_masked` the previous scene must be rendered first (`PREDECESSOR_MISSING` otherwise); it works in Single and 2 Pass. When `continuity_prompt_from_last_frame` is also true, the scene's prompt is first written by the LLM from the previous scene's rendered final frame (the Video Builder's automatic prompt), saved on the scene, and then rendered. A `prompt` in `params` skips that.",
+   "description": "Render one scene's video with ComfyUI (`mode`, e.g. `minimax_h3`). To render against another sound than the project song, send `audio_path` (for example the `no_vocals_path` of POST audio/stems). Trims to the exact timeline length and saves it as `video_NNNN-audio.mp4`. Set `audio_mode: built_in_audio` in the MiniMax settings for H3 voices and sound (all MiniMax video modes and supported passes, including 2 Pass Advanced). With `continuity_mode: latent_continuation_masked` the previous scene must be rendered first (`PREDECESSOR_MISSING` otherwise); it works in Single and 2 Pass. When `continuity_prompt_from_last_frame` is also true, the scene's prompt is first written by the LLM from the previous scene's rendered final frame (the Video Builder's automatic prompt), saved on the scene, and then rendered. A `prompt` in `params` skips that. `render_phase` (MiniMax 2 Pass or 2 Pass Advanced only) matches the Builder's draft buttons: `draft` renders pass 1 only and saves its latent under `minimax_drafts/` (the scene gets `minimax_h3_draft` and the job result a `draft_id`); `finalize` runs pass 2 from that saved latent and replaces the draft video (the scene's timing and diffusion model must be unchanged, or render a new draft); `full` (default) runs both passes.",
    "job": true,
    "body_keys": [],
    "query": [],

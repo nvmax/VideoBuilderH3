@@ -101,7 +101,7 @@ pub async fn render(cfg: &AppConfig, args: RenderArgs) -> Result<()> {
     let overrides = parse_overrides(&args.set)?;
     let ctx = make_context(cfg).await?;
     let loaded = load_session(&args.project).with_context(|| format!("opening {}", args.project.display()))?;
-    let params = RenderParams { overrides, timeout_hours: args.timeout_hours };
+    let params = RenderParams { overrides, timeout_hours: args.timeout_hours, ..RenderParams::default() };
 
     if args.dry_run {
         let env = Arc::clone(&ctx.env);
@@ -174,7 +174,7 @@ pub async fn render_all_cmd(cfg: &AppConfig, args: BatchArgs) -> Result<()> {
         force: args.force,
         skip_existing: false,
         skip_final_stitch: args.skip_stitch,
-        params: RenderParams { overrides: parse_overrides(&args.set)?, timeout_hours: args.timeout_hours },
+        params: RenderParams { overrides: parse_overrides(&args.set)?, timeout_hours: args.timeout_hours, ..RenderParams::default() },
         finish: FinishOptions { match_start_color: args.match_start_color, ..FinishOptions::default() },
     };
     let result = render_all(&ctx, &args.project, options, print_event).await.map_err(|e| anyhow!("{e}"))?;

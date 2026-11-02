@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import pack_env  # noqa: E402
 
-MODULES = ["concepts", "emotion_expression", "gemma4", "image", "location_scout", "lyrics", "minimax", "speech", "story_mode", "storyboard", "video"]
+MODULES = ["concepts", "emotion_expression", "gemma4", "image", "location_scout", "lyrics", "minimax", "seedance", "speech", "story_mode", "storyboard", "video"]
 
 
 def jsonable(value):

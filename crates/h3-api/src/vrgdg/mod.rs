@@ -15,6 +15,7 @@ mod projects;
 pub(crate) mod refmod;
 pub(crate) mod refmod_server;
 mod runner;
+mod seedance;
 mod settings;
 pub(crate) mod speaking;
 mod story;
@@ -36,7 +37,7 @@ use axum::routing::{get, MethodRouter};
 use axum::Router;
 use h3_builder::Env;
 use h3_core::pyval::Obj;
-use h3_project::builder_store::StoreError;
+use h3_project::builder_store::{load_comfy_api_key, StoreError};
 use serde_json::{json, Value};
 use tokio_stream::wrappers::BroadcastStream;
 use tokio_stream::StreamExt;
@@ -54,6 +55,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = refmod::routes(router);
     let router = refmod_server::routes(router);
     let router = runner::routes(router);
+    let router = seedance::routes(router);
     let router = settings::routes(router);
     let router = speaking::routes(router);
     let router = story::routes(router);
@@ -270,6 +272,27 @@ pub async fn fallback(State(state): State<Arc<AppState>>, request: Request) -> R
     proxy_to_comfy(&state, request).await
 }
 
+/// What the Builder page sends in place of the ComfyUI API key. The page only learns that a key is saved (`GET /setup/comfy_api_key`), so
+/// the server swaps this for the saved key when the job goes on to ComfyUI.
+pub const COMFY_KEY_PLACEHOLDER: &str = "h3-studio:saved-comfy-api-key";
+
+/// A job (`POST /prompt`) that carries [`COMFY_KEY_PLACEHOLDER`] as its `api_key_comfy_org` gets the saved key. With no key saved the field is
+/// dropped, and ComfyUI answers that the node needs a sign-in.
+fn with_saved_comfy_key(state: &AppState, bytes: Bytes) -> Bytes {
+    let Ok(mut body) = serde_json::from_slice::<Value>(&bytes) else { return bytes };
+    let Some(extra) = body.get_mut("extra_data").and_then(Value::as_object_mut) else { return bytes };
+    if extra.get("api_key_comfy_org").and_then(Value::as_str) != Some(COMFY_KEY_PLACEHOLDER) {
+        return bytes;
+    }
+    let key = load_comfy_api_key(&state.builder_env().output);
+    if key.is_empty() {
+        extra.remove("api_key_comfy_org");
+    } else {
+        extra.insert("api_key_comfy_org".into(), Value::String(key));
+    }
+    serde_json::to_vec(&body).map(Bytes::from).unwrap_or(bytes)
+}
+
 async fn proxy_to_comfy(state: &AppState, request: Request) -> Response {
     let (parts, body) = request.into_parts();
     let url = format!("{}{}", state.cfg.comfy_base(), parts.uri.path_and_query().map_or("/", |p| p.as_str()));
@@ -277,6 +300,7 @@ async fn proxy_to_comfy(state: &AppState, request: Request) -> Response {
         Ok(bytes) => bytes,
         Err(e) => return failure(StatusCode::BAD_REQUEST, format!("The request body could not be read: {e}")),
     };
+    let bytes = if parts.method == axum::http::Method::POST && parts.uri.path() == "/prompt" { with_saved_comfy_key(state, bytes) } else { bytes };
     let method = reqwest::Method::from_bytes(parts.method.as_str().as_bytes()).unwrap_or(reqwest::Method::GET);
     let reply = reqwest::Client::new().request(method, &url).headers(forwarded(&parts.headers)).body(bytes).send().await;
     match reply {
