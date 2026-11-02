@@ -1,15 +1,18 @@
 ﻿Copied unchanged from the pack's web folder by tools\sync_builder_ui.ps1.
-Pack commit: de8365b
+Pack commit: 79a70c0
 Do not edit these files. Change app\web\host\* (the ComfyUI stand-in), tools\builder_ui_patches.json or rerun the script.
 Changes made to the copies by tools\builder_ui_patches.json:
   music_video_builder/builder.mjs: A new project is a MiniMax H3 project. The app makes H3 videos only. A saved project that says it is LTX still opens as LTX.
-  music_video_builder/controls.mjs: A session with no engine is a MiniMax H3 project.
-  music_video_builder/minimax_panel.mjs: The engine badge can move an old LTX project to MiniMax H3. It no longer moves a project back to LTX.
+  music_video_builder/controls.mjs: A session with no engine is a MiniMax H3 project. API Nodes (Seedance) is the only other engine the app offers. A saved LTX project still opens as LTX.
+  music_video_builder/minimax_panel.mjs: The engine badge switches a project between MiniMax H3 and API Nodes. An old LTX project moves to MiniMax H3, and nothing moves a project back to LTX.
   music_video_builder/project_actions.mjs: Resetting the Builder for a new project keeps the MiniMax H3 engine.
   music_video_builder/video_mode_resume.mjs: The saved video mode of a project with no engine is MiniMax H3.
   music_video_builder/dialogs.mjs: The Download Models dialog has no LTX tab and opens on MiniMax H3.
   music_video_builder/dialogs.mjs: The Download Models dialog opens on MiniMax H3.
-  music_video_builder/project_setup.mjs: Builder Settings has no Project Video Engine or LTX Version sections.
+  music_video_builder/project_setup.mjs: Builder Settings has no LTX Version section. It keeps Project Video Engine, which switches a project between MiniMax H3 and API Nodes.
+  music_video_builder/project_setup.mjs: The Project Video Engine list has no LTX entry. The app makes MiniMax H3 videos, or Seedance videos through API Nodes.
+  music_video_builder/project_setup.mjs: The note under Project Video Engine names the app's own sign-in: a ComfyUI API key saved in H3 Studio, not the ComfyUI account the browser Builder uses.
+  music_video_builder/comfy_api.mjs: H3 Studio has no ComfyUI sign-in page to read. It keeps the ComfyUI API key on its server, so the message points at the place the key goes.
   music_video_builder/toolbar.mjs: The Menu has no Buy me a coffee button. It also loaded a script from another site that the app's page does not allow.
   music_video_builder/llm_popout.mjs: The LLM Prompting pop-out is a window of its own that can go to another screen. The panel is moved into it, so every field, button and timer keeps working. Every window the page opens is kept in one list, so unchecking it closes the window and only one is ever open. Where the app cannot open a window, the floating panel in the page stays.
   music_video_builder/llm_popout.mjs: Opening the pop-out opens its window, closing it closes the window.

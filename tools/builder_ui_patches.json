@@ -7,17 +7,17 @@
     "expect": 1
   },
   {
-    "why": "A session with no engine is a MiniMax H3 project.",
+    "why": "A session with no engine is a MiniMax H3 project. API Nodes (Seedance) is the only other engine the app offers. A saved LTX project still opens as LTX.",
     "file": "music_video_builder/controls.mjs",
-    "find": "return String(value || \"\").trim().toLowerCase() === \"minimax_h3\" ? \"minimax_h3\" : \"ltx\";",
-    "replace": "return String(value || \"\").trim().toLowerCase() === \"ltx\" ? \"ltx\" : \"minimax_h3\";",
+    "find": "return [\"minimax_h3\", \"api_nodes\"].includes(engine) ? engine : \"ltx\";",
+    "replace": "return engine === \"ltx\" || engine === \"api_nodes\" ? engine : \"minimax_h3\";",
     "expect": 1
   },
   {
-    "why": "The engine badge can move an old LTX project to MiniMax H3. It no longer moves a project back to LTX.",
+    "why": "The engine badge switches a project between MiniMax H3 and API Nodes. An old LTX project moves to MiniMax H3, and nothing moves a project back to LTX.",
     "file": "music_video_builder/minimax_panel.mjs",
-    "find": "    state.projectVideoEngine = normalizeProjectVideoEngine(state.projectVideoEngine) === \"minimax_h3\"\n      ? \"ltx\"\n      : \"minimax_h3\";",
-    "replace": "    if (normalizeProjectVideoEngine(state.projectVideoEngine) === \"minimax_h3\") {\n      toast(\"H3 Studio makes MiniMax H3 videos.\");\n      return;\n    }\n    state.projectVideoEngine = \"minimax_h3\";",
+    "find": "    const engines = [\"ltx\", \"minimax_h3\", \"api_nodes\"];",
+    "replace": "    const engines = [\"minimax_h3\", \"api_nodes\"];",
     "expect": 1
   },
   {
@@ -49,10 +49,31 @@
     "expect": 1
   },
   {
-    "why": "Builder Settings has no Project Video Engine or LTX Version sections.",
+    "why": "Builder Settings has no LTX Version section. It keeps Project Video Engine, which switches a project between MiniMax H3 and API Nodes.",
     "file": "music_video_builder/project_setup.mjs",
     "find": "projectStoragePanel, projectVideoEnginePanel, ltxVersionPanel, renderWaitingPanel,",
     "replace": "projectStoragePanel, renderWaitingPanel,",
+    "expect": 1
+  },
+  {
+    "why": "The Project Video Engine list has no LTX entry. The app makes MiniMax H3 videos, or Seedance videos through API Nodes.",
+    "file": "music_video_builder/project_setup.mjs",
+    "find": "      { value: \"ltx\", label: \"LTX (current Builder)\" },\n      { value: \"minimax_h3\", label: \"MiniMax H3\" },\n      { value: \"api_nodes\", label: \"API Nodes\" },",
+    "replace": "      { value: \"minimax_h3\", label: \"MiniMax H3\" },\n      { value: \"api_nodes\", label: \"API Nodes\" },",
+    "expect": 1
+  },
+  {
+    "why": "The note under Project Video Engine names the app's own sign-in: a ComfyUI API key saved in H3 Studio, not the ComfyUI account the browser Builder uses.",
+    "file": "music_video_builder/project_setup.mjs",
+    "find": "Choose LTX or MiniMax H3 for local generation, or API Nodes for remote video generation using your ComfyUI account and credits.",
+    "replace": "Choose MiniMax H3 for local generation, or API Nodes for remote video generation (Seedance) using a ComfyUI API key and credits. Save the key under Menu, Settings, ComfyUI API key.",
+    "expect": 1
+  },
+  {
+    "why": "H3 Studio has no ComfyUI sign-in page to read. It keeps the ComfyUI API key on its server, so the message points at the place the key goes.",
+    "file": "music_video_builder/comfy_api.mjs",
+    "find": "Sign into your ComfyUI account or configure a ComfyUI API key in Settings before rendering Seedance. Your account needs credits.",
+    "replace": "Save your ComfyUI API key in H3 Studio (Menu, Settings, ComfyUI API key) before rendering Seedance. The key's account needs credits.",
     "expect": 1
   },
   {
