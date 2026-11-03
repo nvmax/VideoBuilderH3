@@ -92,11 +92,16 @@ fn normalize_error(provider: &str, message: &str) -> String {
 }
 
 async fn post_json(url: &str, headers: &[(&str, String)], body: &Value, timeout: u64) -> Result<Value, String> {
-    let mut request = reqwest::Client::new().post(url).timeout(Duration::from_secs(timeout)).header("Accept", "application/json").header("User-Agent", "VRGDG-LLM-Multi/1.0 (+ComfyUI)");
-    for (name, value) in headers {
-        request = request.header(*name, value);
-    }
-    let response = request.json(body).send().await.map_err(|e| format!("Network error: {e}"))?;
+    // A hosted API is reached over verified HTTPS, with the built-in CA certificates as the fallback (`tls.rs`, pack PR 314).
+    let response = crate::tls::send(|client| {
+        let mut request = client.post(url).timeout(Duration::from_secs(timeout)).header("Accept", "application/json").header("User-Agent", "VRGDG-LLM-Multi/1.0 (+ComfyUI)");
+        for (name, value) in headers {
+            request = request.header(*name, value);
+        }
+        request.json(body)
+    })
+    .await
+    .map_err(|e| format!("Network error: {e}"))?;
     let status = response.status();
     let text = response.text().await.unwrap_or_default();
     if !status.is_success() {

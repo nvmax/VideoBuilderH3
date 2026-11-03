@@ -19,7 +19,7 @@ use std::thread::JoinHandle;
 use h3_transitions::{params_from_json, transition, TransitionRenderer};
 use serde_json::Value;
 
-use crate::tools::{args, command, MediaError, Tools};
+use crate::tools::{args, command, scene_video_crf, source_crf, MediaError, Tools, SCENE_VIDEO_PRESET};
 use crate::video::video_size;
 
 /// A transition needs at least this many frames to be a transition.
@@ -334,9 +334,11 @@ pub fn render_window(
     };
     // The scene clips carry no colour tags, so neither does this one: a tag appearing in the middle of the joined video would change how a player shows
     // everything after it.
+    // Never coarser than the scene clips the transition is drawn from.
+    let crf = scene_video_crf(source_crf(&[first_clip, second_clip])).to_string();
     let encode = args(&[
         "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgba", "-s", &format!("{width}x{height}"), "-r", &fps.to_string(), "-i", "pipe:0", "-an", "-vf", UNTAGGED_YUV, "-c:v",
-        "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p", "-r", &fps.to_string(), &output.display().to_string(),
+        "libx264", "-preset", SCENE_VIDEO_PRESET, "-crf", &crf, "-pix_fmt", "yuv420p", "-r", &fps.to_string(), &output.display().to_string(),
     ]);
     let mut encoder = match Piped::spawn(&tools.ffmpeg, &encode, Stdio::piped(), Stdio::null()) {
         Ok(p) => p,

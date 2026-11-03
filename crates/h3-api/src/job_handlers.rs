@@ -135,6 +135,7 @@ async fn render_one(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError
         "history_count": done.history_count,
         "render_phase": done.render_phase,
         "draft_id": done.draft_id,
+        "redecode": done.redecode,
         "revision": done.revision,
     }))
 }

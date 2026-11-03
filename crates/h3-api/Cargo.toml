@@ -14,6 +14,7 @@ h3-graph.workspace = true
 h3-image.workspace = true
 h3-jobs.workspace = true
 h3-llm.workspace = true
+futures-util.workspace = true
 reqwest.workspace = true
 h3-media.workspace = true
 h3-pipeline.workspace = true

@@ -66,7 +66,7 @@ pub async fn active(State(state): Shared) -> ApiResult {
 /// Anthropic and Google list what their API reports. Nothing is loaded or changed anywhere.
 async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
     let client = reqwest::Client::new();
-    let unreachable = |url: &str, e: reqwest::Error| ApiError::from(h3_llm::LlmError::Unavailable(format!("Could not reach {url}: {e}")));
+    let unreachable = |url: &str, e: String| ApiError::from(h3_llm::LlmError::Unavailable(format!("Could not reach {url}: {e}")));
     let refused = |url: &str, status: u16| {
         let why = if matches!(status, 401 | 403) { "The key was refused." } else { "The server did not list its models." };
         ApiError::from(h3_llm::LlmError::Unavailable(format!("{url} answered {status}. {why}")))
@@ -89,11 +89,12 @@ async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
         "own_server" | "openai" => {
             let (url, key) = if cfg.runner == "openai" { ("https://api.openai.com/v1".to_string(), cfg.api_key.clone()) } else { (cfg.own_server_url.trim_end_matches('/').to_string(), cfg.own_server_api_key.clone()) };
             let url = format!("{url}/models");
-            let mut request = client.get(&url).timeout(std::time::Duration::from_secs(15));
-            if !key.is_empty() {
-                request = request.bearer_auth(&key);
-            }
-            let response = request.send().await.map_err(|e| unreachable(&url, e))?;
+            let ask = |client: &reqwest::Client| {
+                let request = client.get(&url).timeout(std::time::Duration::from_secs(15));
+                if key.is_empty() { request } else { request.bearer_auth(&key) }
+            };
+            // OpenAI is a hosted API: verified HTTPS with the built-in CA certificates as the fallback (pack PR 314). An own server keeps its own rules.
+            let response = if cfg.runner == "openai" { h3_llm::tls::send(ask).await.map_err(|e| unreachable(&url, e.to_string()))? } else { ask(&client).send().await.map_err(|e| unreachable(&url, e.to_string()))? };
             if !response.status().is_success() {
                 return Err(refused(&url, response.status().as_u16()));
             }
@@ -104,7 +105,9 @@ async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
         }
         "anthropic" => {
             let url = "https://api.anthropic.com/v1/models?limit=100";
-            let response = client.get(url).header("x-api-key", &cfg.api_key).header("anthropic-version", "2023-06-01").timeout(std::time::Duration::from_secs(15)).send().await.map_err(|e| unreachable(url, e))?;
+            let response = h3_llm::tls::send(|client| client.get(url).header("x-api-key", &cfg.api_key).header("anthropic-version", "2023-06-01").timeout(std::time::Duration::from_secs(15)))
+                .await
+                .map_err(|e| unreachable(url, e.to_string()))?;
             if !response.status().is_success() {
                 return Err(refused(url, response.status().as_u16()));
             }
@@ -113,7 +116,9 @@ async fn list_models(cfg: &LlmConfig) -> Result<Value, ApiError> {
         }
         "google" => {
             let url = "https://generativelanguage.googleapis.com/v1beta/models?pageSize=200";
-            let response = client.get(url).header("x-goog-api-key", &cfg.api_key).timeout(std::time::Duration::from_secs(15)).send().await.map_err(|e| unreachable(url, e))?;
+            let response = h3_llm::tls::send(|client| client.get(url).header("x-goog-api-key", &cfg.api_key).timeout(std::time::Duration::from_secs(15)))
+                .await
+                .map_err(|e| unreachable(url, e.to_string()))?;
             if !response.status().is_success() {
                 return Err(refused(url, response.status().as_u16()));
             }

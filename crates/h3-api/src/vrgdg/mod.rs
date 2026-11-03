@@ -10,6 +10,7 @@ pub(crate) mod audio_mask;
 mod choices;
 mod files;
 pub(crate) mod llm;
+mod models;
 mod post_process;
 mod projects;
 pub(crate) mod refmod;
@@ -51,6 +52,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = assets::routes(router);
     let router = audio_mask::routes(router);
     let router = llm::routes(router);
+    let router = models::routes(router);
     let router = post_process::routes(router);
     let router = refmod::routes(router);
     let router = refmod_server::routes(router);

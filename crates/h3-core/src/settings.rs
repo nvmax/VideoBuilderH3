@@ -16,7 +16,7 @@ const DEFAULTS_JSON: &str = include_str!("../data/h3_settings_defaults.json");
 
 const LORA_APPLY_TO: [&str; 3] = ["both", "pass1", "pass2"];
 const REFERENCE_MODES: [&str; 2] = ["reference_to_video", "image_reference_to_video"];
-const DECIMAL_KEY_TOKENS: [&str; 8] = ["megapixels", "denoise", "strength", "scale", "percent", "threshold", "depth", "noise"];
+const DECIMAL_KEY_TOKENS: [&str; 9] = ["megapixels", "denoise", "strength", "scale", "percent", "threshold", "depth", "noise", "sigma"];
 const SAGE_ATTENTION: [&str; 8] = [
     "disabled",
     "auto",
@@ -152,6 +152,10 @@ fn numeric_range(key: &str) -> Option<(f64, f64)> {
     }
     if key == "denoise" || key.ends_with("_denoise") {
         return Some((0.0, 1.0));
+    }
+    // Sigma shift (ModelSamplingMiniMaxH3): sigma_pass{1,2}_{video,audio}.
+    if key.starts_with("sigma_pass") && (key.ends_with("_video") || key.ends_with("_audio")) {
+        return Some((0.01, 100.0));
     }
     None
 }
@@ -391,6 +395,15 @@ pub fn normalize_settings(raw: Option<&Value>) -> Obj {
         settings.insert("t2v_pass_settings_version".into(), json!(1));
     }
 
+    // DMAD, like RefMod, has Single and 2 Pass only.
+    let dmad = settings.get("use_dmad").and_then(Value::as_bool).unwrap_or(false);
+    if dmad && str_of(&settings, "render_pass") == "three_pass" {
+        settings.insert("render_pass".into(), json!("two_pass"));
+    }
+    if !dmad {
+        settings.insert("dmad_backup".into(), json!({}));
+    }
+
     // One output resolution for every pass type. Older saves took it from the pass type they rendered with.
     let (preset, megapixels) = migrate_resolution(raw, str_of(&settings, "render_pass"));
     settings.insert("resolution_preset".into(), json!(preset));
@@ -447,12 +460,145 @@ pub fn settings_for_scene(session: &Value, segment: Option<&Value>) -> Obj {
     normalize_settings(Some(&Value::Object(merged)))
 }
 
+const DMAD_LORA_NAME: &str = "dmad_minimax_h3_4step_full_critic_comfyui.safetensors";
+const DMAD_REFINER_LORA_NAME: &str = "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors";
+const DMAD_LORA_KEYS: [&str; 3] = ["use_loras", "lora_count", "loras"];
+
+/// What choosing DMAD writes into the settings. Twin of `DMAD_PRESET` in minimax/settings_payload.py.
+fn dmad_preset() -> Vec<(&'static str, Value)> {
+    vec![
+        ("sampler_name", json!("lcm")),
+        ("scheduler", json!("simple")),
+        ("steps", json!(4)),
+        ("denoise", json!(1)),
+        ("two_pass_pass1_sampler", json!("lcm")),
+        ("two_pass_pass1_scheduler", json!("simple")),
+        ("two_pass_pass1_steps", json!(4)),
+        ("two_pass_pass1_denoise", json!(1)),
+        ("two_pass_pass2_sampler", json!("res_multistep")),
+        ("two_pass_pass2_scheduler", json!("simple")),
+        ("two_pass_pass2_steps", json!(3)),
+        ("two_pass_pass2_denoise", json!(0.2)),
+        ("two_pass_lora_name", json!(DMAD_REFINER_LORA_NAME)),
+        ("two_pass_lora_strength", json!(0.7)),
+        ("sigma_pass1_enabled", json!(true)),
+        ("sigma_pass1_video", json!(12)),
+        ("sigma_pass1_audio", json!(2)),
+        ("sigma_pass2_enabled", json!(false)),
+        ("use_turbo_lora", json!(false)),
+    ]
+}
+
+/// The extra LoRAs a settings object really uses (an off list or a [none] row is nothing).
+fn active_extra_loras(settings: &Obj) -> Vec<Value> {
+    let Some(Value::Array(loras)) = settings.get("loras") else { return Vec::new() };
+    if !settings.get("use_loras").is_some_and(truthy) {
+        return Vec::new();
+    }
+    let count = match settings.get("lora_count") {
+        None => loras.len() as i64,
+        Some(v) if truthy(v) => to_float(v).map_or(0, |f| f as i64),
+        Some(_) => 0,
+    };
+    let count = count.clamp(0, 4) as usize;
+    loras
+        .iter()
+        .take(count)
+        .filter(|item| {
+            item.as_object().is_some_and(|o| o.get("name").is_some_and(truthy) && o.get("name") != Some(&json!("[none]")))
+        })
+        .cloned()
+        .collect()
+}
+
+fn without_dmad_lora(settings: &Obj) -> Vec<Value> {
+    active_extra_loras(settings)
+        .into_iter()
+        .filter(|item| item.get("name") != Some(&json!(DMAD_LORA_NAME)))
+        .collect()
+}
+
+fn apply_dmad_to_profile(settings: &Obj, base: &Obj) -> Obj {
+    if settings.get("use_dmad").is_some_and(truthy) {
+        return settings.clone();
+    }
+    let preset = dmad_preset();
+    let mut backup = Obj::new();
+    for key in preset.iter().map(|(key, _)| *key).chain(DMAD_LORA_KEYS) {
+        backup.insert(key.to_string(), settings.get(key).or_else(|| base.get(key)).cloned().unwrap_or(Value::Null));
+    }
+    let others: Vec<Value> = without_dmad_lora(settings).into_iter().take(3).collect();
+    let mut result = settings.clone();
+    for (key, value) in preset {
+        result.insert(key.to_string(), value);
+    }
+    result.insert("use_dmad".into(), json!(true));
+    result.insert("dmad_backup".into(), Value::Object(backup));
+    result.insert("use_loras".into(), json!(true));
+    result.insert("lora_count".into(), json!(others.len() + 1));
+    let mut loras = vec![json!({"name": DMAD_LORA_NAME, "strength": 1, "apply_to": "pass1"})];
+    loras.extend(others);
+    result.insert("loras".into(), Value::Array(loras));
+    // DMAD has no 2 Pass Advanced.
+    if str_of(settings, "render_pass") == "three_pass" {
+        result.insert("render_pass".into(), json!("two_pass"));
+    }
+    result
+}
+
+fn remove_dmad_from_profile(settings: &Obj, base: &Obj) -> Obj {
+    if !settings.get("use_dmad").is_some_and(truthy) {
+        return settings.clone();
+    }
+    let empty = Obj::new();
+    let backup = settings.get("dmad_backup").and_then(Value::as_object).unwrap_or(&empty);
+    let mut restored = settings.clone();
+    for (key, _) in dmad_preset() {
+        restored.insert(key.to_string(), backup.get(key).or_else(|| base.get(key)).cloned().unwrap_or(Value::Null));
+    }
+    // Extra LoRAs added while DMAD was on stay. Only the DMAD LoRA goes.
+    let rest = without_dmad_lora(settings);
+    restored.insert("use_loras".into(), json!(!rest.is_empty()));
+    restored.insert("lora_count".into(), json!(rest.len()));
+    restored.insert("loras".into(), Value::Array(rest));
+    restored.insert("use_dmad".into(), json!(false));
+    restored.insert("dmad_backup".into(), json!({}));
+    restored
+}
+
+/// Turn DMAD on or off for a settings object and for every saved pass profile in it. Twin of `set_minimax_h3_dmad`
+/// in minimax/settings_payload.py: choosing DMAD fills in its LoRAs, sampler settings and sigma shift and remembers
+/// the values it replaced, choosing Standard puts those back.
+pub fn set_dmad(settings: &Obj, enabled: bool) -> Obj {
+    let base = defaults();
+    let update = |profile: &Obj| if enabled { apply_dmad_to_profile(profile, &base) } else { remove_dmad_from_profile(profile, &base) };
+    let mut result = update(settings);
+    for key in ["ref_pass_profiles", "i2v_pass_profiles"] {
+        if let Some(Value::Object(profiles)) = settings.get(key) {
+            let updated: Obj = profiles
+                .iter()
+                .map(|(name, profile)| (name.clone(), profile.as_object().map_or_else(|| profile.clone(), |p| Value::Object(update(p)))))
+                .collect();
+            result.insert(key.to_string(), Value::Object(updated));
+        }
+    }
+    result
+}
+
 /// Merge an intentional API edit without treating pass selection as an old save. Unedited legacy saves still migrate to Single. An explicit
 /// pass edit opts into the current pass semantics, like the Builder's pass buttons do. `inherited_mode` is the project's mode, for a scene.
+/// Changing `use_dmad` fills in or puts back the DMAD settings first, like the Builder's Standard / DMAD buttons, then the rest of the patch is applied.
 pub fn apply_settings_patch(current: Option<&Obj>, patch: &Obj, inherited_mode: Option<&str>) -> Obj {
     let mut merged: Obj = current.cloned().unwrap_or_default();
+    if let Some(wanted) = patch.get("use_dmad").map(truthy) {
+        if wanted != merged.get("use_dmad").is_some_and(truthy) {
+            merged = set_dmad(&merged, wanted);
+        }
+    }
     for (key, value) in patch {
-        merged.insert(key.clone(), value.clone());
+        if key != "use_dmad" && key != "dmad_backup" {
+            merged.insert(key.clone(), value.clone());
+        }
     }
     if patch.contains_key("render_pass") {
         let mode = merged.get("video_mode").filter(|v| truthy(v)).map(|v| text_or_empty(Some(v))).or_else(|| inherited_mode.filter(|m| !m.is_empty()).map(str::to_string)).unwrap_or_else(|| "text_to_video".into());
@@ -532,6 +678,13 @@ pub fn build_render_payload(settings: &Obj, overrides: Option<&Obj>) -> Result<O
         "use_fast_vae_decode",
     ] {
         put(key, g(key));
+    }
+    // Sigma shift (ModelSamplingMiniMaxH3). Pass 1 is also the single pass; 2 Pass Advanced ignores both.
+    for number in [1, 2] {
+        for field in ["enabled", "video", "audio"] {
+            let key = format!("sigma_pass{number}_{field}");
+            put(&key, g(&key));
+        }
     }
     put("te_speed_processing_control", g("two_pass_te_speed_processing_control"));
     put("te_speed_start_percent", g("two_pass_te_speed_start_percent"));

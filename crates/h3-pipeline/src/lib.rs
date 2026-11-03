@@ -21,4 +21,4 @@ pub mod video_ops;
 pub use context::connect;
 pub use env::LiveEnv;
 pub use finish::{randomize_seeds, stage_fields, SEED_FIELDS, batch_targets, finish_scene, render_all, render_scene_full, stitch_project, BatchOptions, BatchResult, FinishOptions, RunContext, SceneHook, SceneResult, StitchHook};
-pub use render::{build_draft_graph, prepare_finalize, prepare_scene_render, render_scene, Prepared, RenderError, RenderEvent, RenderOutcome, RenderParams, RenderPhase};
+pub use render::{build_draft_graph, prepare_finalize, prepare_redecode, prepare_scene_render, render_scene, Prepared, RenderError, RenderEvent, RenderOutcome, RenderParams, RenderPhase};

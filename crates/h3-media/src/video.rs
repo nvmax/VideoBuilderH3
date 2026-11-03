@@ -6,7 +6,7 @@ use std::path::{Path, PathBuf};
 
 use serde_json::Value;
 
-use crate::tools::{args, failure_text, run, run_in, MediaError, Tools};
+use crate::tools::{args, failure_text, probe_x264_crf, run, run_in, scene_audio_args, scene_video_args, MediaError, Tools};
 
 /// A frame rate as a fraction, so a clip's length is exactly `frames / fps` seconds.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -252,7 +252,9 @@ pub fn trim_scene_video(tools: &Tools, req: &TrimRequest, stamp: &str) -> Result
         a.extend(args(&["-ss", &format!("{:.6}", audio_start.max(0.0)), "-i", &audio.display().to_string()]));
     }
     a.extend(args(&["-t", &format!("{duration:.6}"), "-map", "0:v:0", "-map", if req.restore_audio.is_some() { "1:a:0" } else { "0:a?" }]));
-    a.extend(args(&["-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", "-c:a", "aac", "-movflags", "+faststart"]));
+    a.extend(scene_video_args(probe_x264_crf(&req.source)));
+    a.extend(scene_audio_args());
+    a.extend(args(&["-movflags", "+faststart"]));
     if req.frames > 0 {
         // Match the frame count the stitcher keeps so the clip's last frame is the one shown.
         a.extend(args(&["-frames:v", &req.frames.to_string()]));

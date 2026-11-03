@@ -19,6 +19,7 @@ pub mod prompts;
 pub mod providers;
 pub mod runner;
 pub mod story_prompts;
+pub mod tls;
 
 pub use client::{chat, describe_active, list_lm_studio_models, loaded_lm_studio_models, ActiveLlm, ChatReply, ChatRequest, LlmError, LoadedModel};
 pub use config::LlmConfig;

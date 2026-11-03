@@ -120,6 +120,26 @@ def cases():
         add(f"r2v_single_{key}", {**base, "render_pass": "single", key: True})
         two_key = "two_pass_" + key.replace("use_", "use_", 1)
         add(f"r2v_two_pass_{key}", {**base, "render_pass": "two_pass", two_key: True, key: True})
+    # Sigma shift (ModelSamplingMiniMaxH3): Single, each pass of 2 Pass, and 2 Pass Advanced, which ignores it.
+    sigma = {"sigma_pass1_enabled": True, "sigma_pass1_video": 8.5, "sigma_pass1_audio": 1.25}
+    add("r2v_single_sigma", {**base, "render_pass": "single", **sigma})
+    add("r2v_two_pass_sigma_pass1", {**base, "render_pass": "two_pass", **sigma})
+    add("r2v_two_pass_sigma_pass2", {**base, "render_pass": "two_pass", "sigma_pass2_enabled": True,
+                                     "sigma_pass2_video": 5, "sigma_pass2_audio": 2})
+    add("r2v_two_pass_sigma_both", {**base, "render_pass": "two_pass", **sigma, "sigma_pass2_enabled": True,
+                                    "sigma_pass2_video": 5, "sigma_pass2_audio": 2})
+    add("r2v_advanced_sigma_ignored", {**base, "render_pass": "three_pass", **sigma})
+    add("r2v_single_sigma_with_feedforward_and_lora", {
+        **base, "render_pass": "single", **sigma, "use_feedforward": True, "use_loras": True, "lora_count": 1, "loras": [lora]})
+    # DMAD: the settings the Builder's DMAD button fills in (set_minimax_h3_dmad), compiled like any other settings.
+    # The compiler knows nothing about DMAD, only about the LoRAs, sampler and sigma shift that button sets.
+    import importlib
+
+    set_dmad = importlib.import_module("vrgdg_pack.minimax.settings_payload").set_minimax_h3_dmad
+    for render_pass in ("single", "two_pass"):
+        add(f"r2v_{render_pass}_dmad", set_dmad({**base, "render_pass": render_pass}, True))
+    add("r2v_two_pass_dmad_with_extra_lora", set_dmad({**base, "render_pass": "two_pass", "use_loras": True, "lora_count": 1,
+                                                       "loras": [{**lora, "apply_to": "both"}]}, True))
     add("r2v_single_sage_auto", {**base, "render_pass": "single", "sage_attention": "auto"})
     add("r2v_single_sage_memory_efficient", {**base, "render_pass": "single", "use_memory_efficient_sage_attention": True})
     add("r2v_single_easy_cache", {**base, "render_pass": "single", "easy_cache_bypass": False, "easy_cache_reuse_threshold": 0.3})

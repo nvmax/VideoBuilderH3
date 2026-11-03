@@ -12,6 +12,10 @@ h3-comfy.workspace = true
 h3-core.workspace = true
 image.workspace = true
 reqwest.workspace = true
+# The rustls reqwest already uses (no crypto provider of its own): the error that says a certificate was refused. And the
+# operating system's trusted certificates, for the TLS fallback in `tls.rs`.
+rustls = { version = "0.23", default-features = false, features = ["std"] }
+rustls-native-certs = "0.8"
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
@@ -19,3 +23,6 @@ tokio.workspace = true
 
 [dev-dependencies]
 axum = "0.8"
+# A throwaway TLS server with a made-up certificate, for the TLS tests. `ring` only, like reqwest.
+rcgen = { version = "0.13", default-features = false, features = ["crypto", "pem", "ring"] }
+tokio-rustls = { version = "0.26", default-features = false, features = ["ring", "tls12"] }

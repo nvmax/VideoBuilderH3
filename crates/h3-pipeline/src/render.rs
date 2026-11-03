@@ -55,7 +55,7 @@ impl RenderParams {
 }
 
 /// Which part of a MiniMax render to run (`render_phase` of the render route): the Video Builder's "Render Draft - Pass 1 Only" and
-/// "Finalize Draft - Pass 2 Only".
+/// "Finalize Draft - Pass 2 Only", and decoding a scene's saved latent again.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum RenderPhase {
     /// Both passes, as one render.
@@ -65,17 +65,20 @@ pub enum RenderPhase {
     Draft,
     /// Pass 2 from the scene's saved draft.
     Finalize,
+    /// No sampling: the scene's saved latent is decoded again and encoded at the CRF the caller chose.
+    Redecode,
 }
 
 impl RenderPhase {
-    /// `full`, `draft` or `finalize`, whatever the case and spacing. A missing or empty value is `full`.
+    /// `full`, `draft`, `finalize` or `redecode`, whatever the case and spacing. A missing or empty value is `full`.
     pub fn parse(value: &Value) -> Result<Self, RenderError> {
         let text = if truthy(value) { py_str(Some(value)) } else { "full".to_string() };
         match text.trim().to_lowercase().as_str() {
             "full" => Ok(Self::Full),
             "draft" => Ok(Self::Draft),
             "finalize" => Ok(Self::Finalize),
-            _ => Err(RenderError::Invalid(format!("Unknown render_phase '{}'. Supported: full, draft, finalize.", py_str(Some(value))))),
+            "redecode" => Ok(Self::Redecode),
+            _ => Err(RenderError::Invalid(format!("Unknown render_phase '{}'. Supported: full, draft, finalize, redecode.", py_str(Some(value))))),
         }
     }
 
@@ -84,6 +87,7 @@ impl RenderPhase {
             Self::Full => "full",
             Self::Draft => "draft",
             Self::Finalize => "finalize",
+            Self::Redecode => "redecode",
         }
     }
 }
@@ -413,6 +417,32 @@ pub fn prepare_finalize(env: &dyn GraphEnv, loaded: &LoadedSession, scene_ref: &
     Ok((prepared, result))
 }
 
+/// A scene made again from its saved latent: the scene is prepared and compiled as for a full render, then the graph is cut down to
+/// decoding the latent and encoding it at `crf`. No latent is continued from or saved, so the next scene's continuation stays valid.
+///
+/// The decoded frames are trimmed exactly as the render's were, so the scene is prepared with the continuity that render used.
+pub fn prepare_redecode(env: &dyn GraphEnv, loaded: &LoadedSession, scene_ref: &str, params: &RenderParams, crf: u32) -> Result<(Prepared, Obj), RenderError> {
+    let session = Value::Object(loaded.session.clone());
+    let segments: Vec<Value> = loaded.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+    let index = scene_position(&segments, scene_ref)?;
+    let segment: Obj = segments[index].as_object().cloned().unwrap_or_default();
+    let settings = settings_for_scene(&session, Some(&segments[index]));
+    let mut params = params.clone();
+    if !params.overrides.get("continuity_mode").is_some_and(truthy) {
+        let used = segment_text(&segment, "minimax_h3_continuity_mode_used");
+        let wanted = if used.is_empty() { text_or_empty(settings.get("continuity_mode").filter(|v| truthy(v))).trim().to_string() } else { used };
+        params.overrides.insert("continuity_mode".into(), json!(if wanted.is_empty() { "off" } else { wanted.as_str() }));
+    }
+    let mut prepared = prepare_scene_render(env, loaded, scene_ref, &params)?;
+    // The latent patches would continue from the previous scene and save a latent over the one being decoded.
+    prepared.payload.insert("_skip_latent_patches".into(), json!(true));
+    let graph = build(env, prepared.workflow_key, &prepared.payload)?;
+    let folder = loaded.project_folder.display().to_string();
+    let result = h3_graph::redecode::build_redecode_graph(env, &graph, &folder, prepared.scene_number, crf)
+        .map_err(|e| RenderError::Invalid(format!("Scene {}: {}", prepared.scene_number, e.message)))?;
+    Ok((prepared, result))
+}
+
 /// The scene's clip when ComfyUI's history does not name it: the newest final clip in the scene's output folder.
 fn find_output_in_folder(folder: &str, scene_number: u32, since: SystemTime) -> Option<String> {
     let needle = format!("MiniMaxH3_scene_{scene_number:04}");
@@ -446,6 +476,13 @@ pub async fn render_scene(
 ) -> Result<RenderOutcome, RenderError> {
     // Every event names its scene, so a window can show which one is rendering. A reference that names no scene fails in the preparation below.
     let phase = params.phase()?;
+    let mut params = params;
+    // The quality of a re-decode is its own parameter: it must not leak into the render payload.
+    let redecode_crf = if phase == RenderPhase::Redecode {
+        h3_graph::redecode::parse_crf(params.overrides.remove("crf").as_ref()).map_err(|e| RenderError::Invalid(e.message))?
+    } else {
+        h3_graph::redecode::DEFAULT_CRF
+    };
     let scene_id = scene_id_of(&loaded, scene_ref);
     let mut emit = |percent: f64, stage: &'static str, message: String| on_event(RenderEvent { percent, stage, message, scene_id: scene_id.clone() });
     emit(5.0, "preparing", format!("Preparing scene {scene_ref}..."));
@@ -456,6 +493,9 @@ pub async fn render_scene(
         tokio::task::spawn_blocking(move || -> Result<(Prepared, Obj), RenderError> {
             if phase == RenderPhase::Finalize {
                 return prepare_finalize(&*env, &loaded, &scene_ref);
+            }
+            if phase == RenderPhase::Redecode {
+                return prepare_redecode(&*env, &loaded, &scene_ref, &params, redecode_crf);
             }
             let prepared = prepare_scene_render(&*env, &loaded, &scene_ref, &params)?;
             let result = if phase == RenderPhase::Draft { build_draft_graph(&*env, &prepared)? } else { build(&*env, prepared.workflow_key, &prepared.payload)? };
@@ -482,8 +522,9 @@ pub async fn render_scene(
     drop(feed);
     emit(75.0, "collecting", "Locating the rendered clip...".into());
 
-    // The final clip is saved by node 142. The 2 Pass Advanced backup comes from another node and is never the answer.
-    let videos = extract_videos(&history, &queued.prompt_id, Some("142"));
+    // The final clip is saved by node 142 unless the graph says otherwise. The 2 Pass Advanced backup comes from another node and is never the answer.
+    let final_node = graph_result.get("final_video_node_id").and_then(Value::as_str).unwrap_or("142");
+    let videos = extract_videos(&history, &queued.prompt_id, Some(final_node));
     let output_folder = graph_result.get("output_folder").and_then(Value::as_str).unwrap_or("").to_string();
     let mut raw = videos
         .last()

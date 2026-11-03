@@ -758,6 +758,45 @@ pub fn patch_te_speed(prompt: &mut Obj, model: &Value, payload: &Obj, node_id: &
     link(node_id, 0)
 }
 
+/// Sigma shift (the `MiniMaxH3SigmaShift` / ModelSamplingMiniMaxH3 node) on one pass's model path. `target` is `pass1`
+/// (also the single pass) or `pass2`. Port of `_patch_minimax_h3_sigma_shift`. Off, which is the default, gives back the
+/// model unchanged and a null summary. Otherwise the node goes in and its link and a summary come back.
+pub fn patch_sigma_shift(
+    env: &dyn GraphEnv,
+    prompt: &mut Obj,
+    model: &Value,
+    payload: &Obj,
+    target: &str,
+    node_id: &str,
+) -> Result<(Value, Value)> {
+    let prefix = format!("sigma_{target}_");
+    if !bool_payload(payload, &format!("{prefix}enabled"), false) {
+        return Ok((model.clone(), Value::Null));
+    }
+    let video = float_payload(payload, &format!("{prefix}video"), 12.0, 0.01, 100.0);
+    let audio = float_payload(payload, &format!("{prefix}audio"), 3.0, 0.01, 100.0);
+    if env.node_info("MiniMaxH3SigmaShift").is_none() {
+        return Err(GraphError::new(
+            "Sigma shift needs the MiniMaxH3SigmaShift (ModelSamplingMiniMaxH3) node, which this ComfyUI does not have. \
+             Update ComfyUI, or turn off sigma shift in MiniMax Video Settings.",
+        ));
+    }
+    let mut id = node_id.to_string();
+    while prompt.contains_key(&id) {
+        id = (id.parse::<i64>().unwrap_or(0) + 1).to_string();
+    }
+    prompt.insert(
+        id.clone(),
+        json!({
+            "class_type": "MiniMaxH3SigmaShift",
+            "inputs": {"model": model, "shift_video": video, "shift_audio": audio},
+            "_meta": {"title": format!("MiniMax H3 Sigma Shift - {target}")},
+        }),
+    );
+    let summary = json!({"node": id, "target": target, "shift_video": video, "shift_audio": audio});
+    Ok((link(&id, 0), summary))
+}
+
 /// Swap the final decode for the tiled fast decoder.
 pub fn patch_fast_decode(env: &dyn GraphEnv, prompt: &mut Obj) -> Result<()> {
     if env.node_info("H3FastVAEDecode").is_none() {

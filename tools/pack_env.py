@@ -41,6 +41,8 @@ MODEL_FILES = {
         "minimax_h3_fl2v_lightx2v_turbo_4step_v0.1_comfy_resized_avg_rank_21_bf16.safetensors",
         "style\\film_look.safetensors",
         "style\\soft_light.safetensors",
+        "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+        "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
     ],
     "latent_upscale_models": ["minimax_h3_latent_upscaler_3d_bf16.safetensors"],
     "upscale_models": [],

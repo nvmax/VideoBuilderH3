@@ -150,6 +150,821 @@
     "render_pass": "two_pass",
     "video_mode": ""
    }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "two_pass",
+     "video_mode": "reference_to_video"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 0,
+     "loras": [],
+     "sampler_name": "res_multistep",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 20,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": false,
+     "use_turbo_lora": false
+    },
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 4,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 3,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false,
+    "video_mode": "reference_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "two_pass",
+     "sampler_name": "euler",
+     "steps": 30,
+     "two_pass_pass1_steps": 20,
+     "video_mode": "reference_to_video"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 0,
+     "loras": [],
+     "sampler_name": "euler",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 30,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": false,
+     "use_turbo_lora": false
+    },
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 4,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 3,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false,
+    "video_mode": "reference_to_video"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "lora_count": 2,
+     "loras": [
+      {
+       "apply_to": "both",
+       "name": "style.safetensors",
+       "strength": 0.8
+      },
+      {
+       "apply_to": "pass1",
+       "name": "[none]",
+       "strength": 1
+      }
+     ],
+     "render_pass": "single",
+     "use_loras": true
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 2,
+     "loras": [
+      {
+       "apply_to": "both",
+       "name": "style.safetensors",
+       "strength": 0.8
+      },
+      {
+       "apply_to": "pass1",
+       "name": "[none]",
+       "strength": 1
+      }
+     ],
+     "sampler_name": "res_multistep",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 20,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": true,
+     "use_turbo_lora": false
+    },
+    "lora_count": 2,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     },
+     {
+      "apply_to": "both",
+      "name": "style.safetensors",
+      "strength": 0.8
+     }
+    ],
+    "render_pass": "single",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 4,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 3,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "three_pass"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 0,
+     "loras": [],
+     "sampler_name": "res_multistep",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 20,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": false,
+     "use_turbo_lora": false
+    },
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 4,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 3,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "two_pass"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "two_pass_pass1_steps": 8,
+     "two_pass_pass2_steps": 6,
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 0,
+     "loras": [],
+     "sampler_name": "res_multistep",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 20,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": false,
+     "use_turbo_lora": false
+    },
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 8,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 6,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "two_pass",
+     "steps": 30,
+     "two_pass_pass1_steps": 20
+    },
+    "inherited_mode": null,
+    "patch": {
+     "dmad_backup": {
+      "steps": 1
+     },
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 0,
+     "loras": [],
+     "sampler_name": "res_multistep",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 30,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": false,
+     "use_turbo_lora": false
+    },
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 4,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 3,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "ref_pass_profiles": {
+      "single": "bad",
+      "two_pass": {
+       "render_pass": "two_pass",
+       "steps": 25,
+       "two_pass_pass1_steps": 20
+      }
+     },
+     "render_pass": "two_pass"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {
+     "denoise": 1,
+     "lora_count": 0,
+     "loras": [],
+     "sampler_name": "res_multistep",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 3,
+     "sigma_pass1_enabled": false,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 20,
+     "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+     "two_pass_lora_strength": 1,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "res_multistep",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 20,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 2,
+     "use_loras": false,
+     "use_turbo_lora": false
+    },
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass1",
+      "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+      "strength": 1
+     }
+    ],
+    "ref_pass_profiles": {
+     "single": "bad",
+     "two_pass": {
+      "denoise": 1,
+      "dmad_backup": {
+       "denoise": 1,
+       "lora_count": 0,
+       "loras": [],
+       "sampler_name": "res_multistep",
+       "scheduler": "simple",
+       "sigma_pass1_audio": 3,
+       "sigma_pass1_enabled": false,
+       "sigma_pass1_video": 12,
+       "sigma_pass2_enabled": false,
+       "steps": 25,
+       "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "two_pass_lora_strength": 1,
+       "two_pass_pass1_denoise": 1,
+       "two_pass_pass1_sampler": "res_multistep",
+       "two_pass_pass1_scheduler": "simple",
+       "two_pass_pass1_steps": 20,
+       "two_pass_pass2_denoise": 0.2,
+       "two_pass_pass2_sampler": "res_multistep",
+       "two_pass_pass2_scheduler": "simple",
+       "two_pass_pass2_steps": 2,
+       "use_loras": false,
+       "use_turbo_lora": false
+      },
+      "lora_count": 1,
+      "loras": [
+       {
+        "apply_to": "pass1",
+        "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+        "strength": 1
+       }
+      ],
+      "render_pass": "two_pass",
+      "sampler_name": "lcm",
+      "scheduler": "simple",
+      "sigma_pass1_audio": 2,
+      "sigma_pass1_enabled": true,
+      "sigma_pass1_video": 12,
+      "sigma_pass2_enabled": false,
+      "steps": 4,
+      "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+      "two_pass_lora_strength": 0.7,
+      "two_pass_pass1_denoise": 1,
+      "two_pass_pass1_sampler": "lcm",
+      "two_pass_pass1_scheduler": "simple",
+      "two_pass_pass1_steps": 4,
+      "two_pass_pass2_denoise": 0.2,
+      "two_pass_pass2_sampler": "res_multistep",
+      "two_pass_pass2_scheduler": "simple",
+      "two_pass_pass2_steps": 3,
+      "use_dmad": true,
+      "use_loras": true,
+      "use_turbo_lora": false
+     }
+    },
+    "render_pass": "two_pass",
+    "sampler_name": "lcm",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 2,
+    "sigma_pass1_enabled": true,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 4,
+    "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+    "two_pass_lora_strength": 0.7,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "lcm",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 4,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 3,
+    "use_dmad": true,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "two_pass",
+     "use_dmad": true
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": true
+    }
+   },
+   "output": {
+    "render_pass": "two_pass",
+    "use_dmad": true
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "render_pass": "single"
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": false
+    }
+   },
+   "output": {
+    "render_pass": "single"
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "denoise": 1,
+     "dmad_backup": {
+      "denoise": 1,
+      "lora_count": 0,
+      "loras": [],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "sigma_pass1_audio": 3,
+      "sigma_pass1_enabled": false,
+      "sigma_pass1_video": 12,
+      "sigma_pass2_enabled": false,
+      "steps": 30,
+      "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+      "two_pass_lora_strength": 1,
+      "two_pass_pass1_denoise": 1,
+      "two_pass_pass1_sampler": "res_multistep",
+      "two_pass_pass1_scheduler": "simple",
+      "two_pass_pass1_steps": 20,
+      "two_pass_pass2_denoise": 0.2,
+      "two_pass_pass2_sampler": "res_multistep",
+      "two_pass_pass2_scheduler": "simple",
+      "two_pass_pass2_steps": 2,
+      "use_loras": false,
+      "use_turbo_lora": false
+     },
+     "lora_count": 2,
+     "loras": [
+      {
+       "apply_to": "pass1",
+       "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+       "strength": 1
+      },
+      {
+       "apply_to": "pass2",
+       "name": "later.safetensors",
+       "strength": 0.5
+      }
+     ],
+     "render_pass": "two_pass",
+     "sampler_name": "lcm",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 2,
+     "sigma_pass1_enabled": true,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 4,
+     "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+     "two_pass_lora_strength": 0.7,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "lcm",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 4,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 3,
+     "use_dmad": true,
+     "use_loras": true,
+     "use_turbo_lora": false
+    },
+    "inherited_mode": null,
+    "patch": {
+     "use_dmad": false
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {},
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass2",
+      "name": "later.safetensors",
+      "strength": 0.5
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 3,
+    "sigma_pass1_enabled": false,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 30,
+    "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+    "two_pass_lora_strength": 1,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "res_multistep",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 20,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 2,
+    "use_dmad": false,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
+  },
+  {
+   "input": {
+    "current": {
+     "denoise": 1,
+     "dmad_backup": {
+      "denoise": 1,
+      "lora_count": 0,
+      "loras": [],
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "sigma_pass1_audio": 3,
+      "sigma_pass1_enabled": false,
+      "sigma_pass1_video": 12,
+      "sigma_pass2_enabled": false,
+      "steps": 30,
+      "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+      "two_pass_lora_strength": 1,
+      "two_pass_pass1_denoise": 1,
+      "two_pass_pass1_sampler": "res_multistep",
+      "two_pass_pass1_scheduler": "simple",
+      "two_pass_pass1_steps": 20,
+      "two_pass_pass2_denoise": 0.2,
+      "two_pass_pass2_sampler": "res_multistep",
+      "two_pass_pass2_scheduler": "simple",
+      "two_pass_pass2_steps": 2,
+      "use_loras": false,
+      "use_turbo_lora": false
+     },
+     "lora_count": 2,
+     "loras": [
+      {
+       "apply_to": "pass1",
+       "name": "dmad_minimax_h3_4step_full_critic_comfyui.safetensors",
+       "strength": 1
+      },
+      {
+       "apply_to": "pass2",
+       "name": "later.safetensors",
+       "strength": 0.5
+      }
+     ],
+     "render_pass": "two_pass",
+     "sampler_name": "lcm",
+     "scheduler": "simple",
+     "sigma_pass1_audio": 2,
+     "sigma_pass1_enabled": true,
+     "sigma_pass1_video": 12,
+     "sigma_pass2_enabled": false,
+     "steps": 4,
+     "two_pass_lora_name": "minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
+     "two_pass_lora_strength": 0.7,
+     "two_pass_pass1_denoise": 1,
+     "two_pass_pass1_sampler": "lcm",
+     "two_pass_pass1_scheduler": "simple",
+     "two_pass_pass1_steps": 4,
+     "two_pass_pass2_denoise": 0.2,
+     "two_pass_pass2_sampler": "res_multistep",
+     "two_pass_pass2_scheduler": "simple",
+     "two_pass_pass2_steps": 3,
+     "use_dmad": true,
+     "use_loras": true,
+     "use_turbo_lora": false
+    },
+    "inherited_mode": null,
+    "patch": {
+     "steps": 12,
+     "use_dmad": false
+    }
+   },
+   "output": {
+    "denoise": 1,
+    "dmad_backup": {},
+    "lora_count": 1,
+    "loras": [
+     {
+      "apply_to": "pass2",
+      "name": "later.safetensors",
+      "strength": 0.5
+     }
+    ],
+    "render_pass": "two_pass",
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "sigma_pass1_audio": 3,
+    "sigma_pass1_enabled": false,
+    "sigma_pass1_video": 12,
+    "sigma_pass2_enabled": false,
+    "steps": 12,
+    "two_pass_lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+    "two_pass_lora_strength": 1,
+    "two_pass_pass1_denoise": 1,
+    "two_pass_pass1_sampler": "res_multistep",
+    "two_pass_pass1_scheduler": "simple",
+    "two_pass_pass1_steps": 20,
+    "two_pass_pass2_denoise": 0.2,
+    "two_pass_pass2_sampler": "res_multistep",
+    "two_pass_pass2_scheduler": "simple",
+    "two_pass_pass2_steps": 2,
+    "use_dmad": false,
+    "use_loras": true,
+    "use_turbo_lora": false
+   }
   }
  ],
  "function": "apply_minimax_h3_settings_patch"

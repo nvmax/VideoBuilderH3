@@ -13,7 +13,7 @@ use rustfft::FftPlanner;
 
 use h3_transitions::TransitionRenderer;
 
-use crate::tools::{args, run, MediaError, Tools};
+use crate::tools::{args, run, scene_audio_args, scene_video_args, source_crf, MediaError, Tools};
 use crate::looks::{apply_looks, AppliedLook, LookItem};
 use crate::transition::{clip_at, clip_bounds, clip_frames, pieces, plan, render_window, AppliedTransition, Piece, Source, TransitionItem};
 use crate::video::{clip_frame_length, is_video_file, probe_output_media, probe_stream_fields, video_size, Ratio};
@@ -145,7 +145,7 @@ pub fn unique_final_video_path(project: &Path, prefix: &str) -> PathBuf {
 }
 
 /// Scale and crop a clip to the canvas. Returns false when it already has that size.
-fn normalize_canvas(tools: &Tools, source: &Path, target: &Path, width: u32, height: u32) -> Result<bool, MediaError> {
+fn normalize_canvas(tools: &Tools, source: &Path, target: &Path, width: u32, height: u32, render_crf: Option<f64>) -> Result<bool, MediaError> {
     if width == 0 || height == 0 {
         return Ok(false);
     }
@@ -155,7 +155,10 @@ fn normalize_canvas(tools: &Tools, source: &Path, target: &Path, width: u32, hei
         }
     }
     let vf = format!("scale={width}:{height}:force_original_aspect_ratio=increase,crop={width}:{height},setsar=1");
-    tools.ffmpeg_checked(&args(&["-y", "-i", &s(source), "-an", "-vf", &vf, "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", &s(target)]), "FFmpeg could not normalize the canvas.")?;
+    let mut a = args(&["-y", "-i", &s(source), "-an", "-vf", &vf]);
+    a.extend(scene_video_args(render_crf));
+    a.push(s(target));
+    tools.ffmpeg_checked(&a, "FFmpeg could not normalize the canvas.")?;
     Ok(true)
 }
 
@@ -453,6 +456,8 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
     // The project song fills scene audio that runs short and plays continuously when the clips' audio is the song.
     let song_path: Option<PathBuf> = req.song_path.clone().filter(|p| p.is_file()).or_else(|| audio_path.clone());
 
+    // The CRF the scene clips were written at, so the stitch never encodes them coarser than that.
+    let render_crf = source_crf(&req.scene_paths);
     let mut timeline_sync: Vec<PathBuf> = Vec::new();
     let mut timeline_frames: i64 = 0;
     let mut timeline_lengths: Vec<(i64, Ratio)> = Vec::new();
@@ -494,10 +499,10 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
                 Piece::Scene { clip, from, to } => {
                     let sync_path = target_dir.join(format!("_temp_timeline_scene_{:04}.mp4", number + 1));
                     let filter = format!("fps={fps},tpad=stop_mode=clone:stop_duration=1,trim=start_frame={from}:end_frame={to},setpts=PTS-STARTPTS");
-                    let result = run(
-                        &tools.ffmpeg,
-                        &args(&["-y", "-i", &s(&req.scene_paths[clip]), "-map", "0:v:0", "-an", "-vf", &filter, "-frames:v", &(to - from).to_string(), "-r", &fps.to_string(), "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", &s(&sync_path)]),
-                    )?;
+                    let mut sync_args = args(&["-y", "-i", &s(&req.scene_paths[clip]), "-map", "0:v:0", "-an", "-vf", &filter, "-frames:v", &(to - from).to_string(), "-r", &fps.to_string()]);
+                    sync_args.extend(scene_video_args(render_crf));
+                    sync_args.push(s(&sync_path));
+                    let result = run(&tools.ffmpeg, &sync_args)?;
                     if !result.status.success() || !sync_path.is_file() {
                         return Err(MediaError::Failed(crate::tools::failure_text(&result, &format!("FFmpeg failed to align scene {} to the timeline.", clip + 1))));
                     }
@@ -566,7 +571,9 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
                 if let Some(duration) = duration {
                     a.extend(args(&["-t", &format!("{:.6}", duration.max(0.05))]));
                 }
-                a.extend(args(&["-an", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "veryfast", &s(&part)]));
+                a.extend(args(&["-an"]));
+                a.extend(scene_video_args(render_crf));
+                a.push(s(&part));
                 tools.ffmpeg_checked(&a, "FFmpeg could not cut an insert part.")?;
                 parts.push(part);
                 Ok(())
@@ -606,7 +613,7 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
         }
 
         if req.width > 0 && req.height > 0 {
-            normalized_canvas = normalize_canvas(tools, &temp_video, &normalized_video, req.width, req.height)?;
+            normalized_canvas = normalize_canvas(tools, &temp_video, &normalized_video, req.width, req.height, render_crf)?;
             if normalized_canvas {
                 remove_quietly(&temp_video);
                 temp_video = normalized_video.clone();
@@ -659,7 +666,9 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
                     if item.duration != 0.0 {
                         a.extend(args(&["-t", &item.duration.to_string()]));
                     }
-                    a.extend(args(&["-vn", "-c:a", "aac", &s(&part)]));
+                    a.extend(args(&["-vn"]));
+                    a.extend(scene_audio_args());
+                    a.push(s(&part));
                     tools.ffmpeg_checked(&a, "FFmpeg could not cut scene audio.")?;
                     temp_audio_parts.push(part.clone());
                     path = part;
@@ -667,7 +676,10 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
                 list.push_str(&format!("file '{}'\n", concat_path(&path)));
             }
             fs::write(&audio_concat_file, list)?;
-            tools.ffmpeg_checked(&args(&["-y", "-f", "concat", "-safe", "0", "-i", &s(&audio_concat_file), "-vn", "-c:a", "aac", &s(&temp_audio)]), "FFmpeg could not join scene audio.")?;
+            let mut join = args(&["-y", "-f", "concat", "-safe", "0", "-i", &s(&audio_concat_file), "-vn"]);
+            join.extend(scene_audio_args());
+            join.push(s(&temp_audio));
+            tools.ffmpeg_checked(&join, "FFmpeg could not join scene audio.")?;
             mux_audio = temp_audio.clone();
         } else if req.audio_start != 0.0 || req.audio_duration != 0.0 {
             let mut a = args(&["-y"]);
@@ -678,12 +690,15 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
             if req.audio_duration != 0.0 {
                 a.extend(args(&["-t", &format!("{:.6}", req.audio_duration)]));
             }
-            a.extend(args(&["-vn", "-c:a", "aac", &s(&temp_global_audio)]));
+            a.extend(args(&["-vn"]));
+            a.extend(scene_audio_args());
+            a.push(s(&temp_global_audio));
             tools.ffmpeg_checked(&a, "FFmpeg could not cut the song.")?;
             mux_audio = temp_global_audio.clone();
         }
 
-        let mut mux = args(&["-y", "-i", &s(&temp_video), "-i", &s(&mux_audio), "-c:v", "copy", "-c:a", "aac"]);
+        let mut mux = args(&["-y", "-i", &s(&temp_video), "-i", &s(&mux_audio), "-c:v", "copy"]);
+        mux.extend(scene_audio_args());
         if timeline_sync.is_empty() && !audio_matches_video {
             // -shortest ends the file at the shorter stream. The joined embedded audio is already exactly the video's
             // length, and -shortest would clip its last few ms with the last frame's duration.

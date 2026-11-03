@@ -21,6 +21,8 @@ pub enum Feature {
     ImageToVideo,
     RefMod,
     BuiltInAudio,
+    /// Making a scene's video again from its saved latent (`render_phase` redecode).
+    Redecode,
 }
 
 impl Feature {
@@ -34,6 +36,7 @@ impl Feature {
             Feature::ImageToVideo => "Image to Video",
             Feature::RefMod => "RefMod pipeline",
             Feature::BuiltInAudio => "Built-in audio",
+            Feature::Redecode => "Re-decode from saved latents",
         }
     }
 }
@@ -108,6 +111,7 @@ pub const REQUIRED_NODES: &[NodeRequirement] = &[
     req("MiniMaxH3RefModAudioExtract", H3MOD, Feature::RefMod),
     req("VRGDG_RefModCombine", VRGDG, Feature::RefMod),
     req("LTXVAudioVAEDecode", CORE_COMFY, Feature::BuiltInAudio),
+    req("VRGDG_MiniMaxH3LoadLatentFull", VRGDG, Feature::Redecode),
 ];
 
 /// Result of comparing [`REQUIRED_NODES`] with `/object_info`.

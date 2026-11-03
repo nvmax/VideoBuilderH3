@@ -43,8 +43,12 @@ fn a_phase_is_read_like_the_pack_does() {
     }
     assert_eq!(RenderParams::default().phase().unwrap(), RenderPhase::Full, "nothing sent");
     let error = RenderParams { phase: json!("pass2"), ..RenderParams::default() }.phase().unwrap_err();
-    assert_eq!(error.to_string(), "Unknown render_phase 'pass2'. Supported: full, draft, finalize.");
-    assert_eq!((RenderPhase::Full.name(), RenderPhase::Draft.name(), RenderPhase::Finalize.name()), ("full", "draft", "finalize"));
+    assert_eq!(error.to_string(), "Unknown render_phase 'pass2'. Supported: full, draft, finalize, redecode.");
+    assert_eq!(RenderParams { phase: json!(" Redecode "), ..RenderParams::default() }.phase().unwrap(), RenderPhase::Redecode);
+    assert_eq!(
+        (RenderPhase::Full.name(), RenderPhase::Draft.name(), RenderPhase::Finalize.name(), RenderPhase::Redecode.name()),
+        ("full", "draft", "finalize", "redecode")
+    );
 }
 
 #[test]
@@ -216,4 +220,44 @@ fn a_finished_scene_keeps_its_draft_and_a_finished_draft_replaces_it() {
     let finished = finish_scene(&env, &project_dir, &outcome(dir.path(), &raw3, RenderPhase::Finalize, json!({"two_pass": {}})), &FinishOptions::default()).unwrap();
     assert_eq!(finished.render_phase, "finalize");
     assert_eq!(finished.backup_path, "", "the draft's clip is replaced, not kept");
+}
+
+#[test]
+fn a_redecode_leaves_the_next_scenes_continuation_alone_and_a_render_does_not() {
+    let Ok(tools) = h3_media::Tools::find("ffmpeg", "ffprobe") else {
+        eprintln!("ffmpeg is not installed: the finished scene is not tested");
+        return;
+    };
+    let dir = tempfile::tempdir().unwrap();
+    let project_dir = dir.path().join("Demo");
+    std::fs::create_dir_all(project_dir.join("latents")).unwrap();
+    let env = LiveEnv::new(json!({}), ComfyDirs { output: dir.path().display().to_string(), input: String::new(), temp: String::new() }, tools);
+    // Two scenes. Scene 2 has been rendered from scene 1's latent, as far as its record says.
+    let scene = |id: &str, start: f64, end: f64| json!({"id": id, "start": start, "end": end, "label": id, "minimax_h3_prompt": "Brad walks."});
+    let session = object(json!({"project_name": "Demo", "revision": 1, "video_engine": "minimax_h3", "minimax_h3_settings": {"render_pass": "two_pass"}, "segments": [scene("a", 0.0, 2.0), scene("b", 2.0, 4.0)]}));
+    std::fs::write(project_dir.join("vrgdg_builder_session.json"), serde_json::to_string_pretty(&session).unwrap()).unwrap();
+    std::fs::write(project_dir.join("latents").join("scene_002.latent"), b"latent").unwrap();
+    let dirty = project_dir.join("latents").join("scene_002.dirty");
+
+    let first = dir.path().join("MiniMaxH3_scene_0001_full.mp4");
+    make_clip(&first, 2);
+    finish_scene(&env, &project_dir, &outcome(dir.path(), &first, RenderPhase::Full, json!({"two_pass": {}})), &FinishOptions::default()).unwrap();
+    assert!(dirty.is_file(), "a render of scene 1 makes scene 2's continuation stale");
+    std::fs::remove_file(&dirty).unwrap();
+
+    // The same latent decoded again: the new clip replaces the old one as a backup, and nothing downstream is stale.
+    let again = dir.path().join("MiniMaxH3_scene_0001_redecode.mp4");
+    make_clip(&again, 2);
+    let graph = json!({"two_pass": {}, "redecode": {"crf": 12, "frame_count": 150}});
+    let done = finish_scene(&env, &project_dir, &outcome(dir.path(), &again, RenderPhase::Redecode, graph), &FinishOptions::default()).unwrap();
+    assert!(!dirty.is_file(), "a re-decode does not touch the next scene");
+    assert_eq!(done.render_phase, "redecode");
+    assert_eq!(done.redecode, Some(json!({"crf": 12, "frame_count": 150})));
+    assert!(!done.backup_path.is_empty(), "the clip it replaces is kept");
+
+    // Any other phase says nothing about a re-decode.
+    let other = dir.path().join("MiniMaxH3_scene_0001_other.mp4");
+    make_clip(&other, 2);
+    let full = finish_scene(&env, &project_dir, &outcome(dir.path(), &other, RenderPhase::Full, json!({"two_pass": {}, "redecode": {"crf": 1}})), &FinishOptions::default()).unwrap();
+    assert_eq!(full.redecode, None);
 }

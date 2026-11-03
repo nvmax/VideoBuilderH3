@@ -10,6 +10,7 @@ pub mod image;
 pub mod images;
 pub mod inputs;
 pub mod patches;
+pub mod redecode;
 pub mod refmod;
 pub mod timestamp;
 pub mod utility;

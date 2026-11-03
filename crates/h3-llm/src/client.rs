@@ -240,6 +240,17 @@ pub fn message_text(data: &Value) -> String {
 
 async fn send_json(request: reqwest::RequestBuilder, body: &Value, what: &str) -> Result<Value, LlmError> {
     let response = request.json(body).send().await.map_err(|e| LlmError::Request(format!("{what} could not be reached: {e}")))?;
+    read_json(response, what).await
+}
+
+/// [`send_json`] for a hosted API: verified HTTPS with the built-in CA certificates as the fallback (`tls.rs`, pack PR 314). `build` makes
+/// the request for the client it is given and may be called twice.
+async fn send_hosted_json(build: impl Fn(&reqwest::Client) -> reqwest::RequestBuilder + Sync, body: &Value, what: &str) -> Result<Value, LlmError> {
+    let response = crate::tls::send(|client| build(client).json(body)).await.map_err(|e| LlmError::Request(format!("{what} could not be reached: {e}")))?;
+    read_json(response, what).await
+}
+
+async fn read_json(response: reqwest::Response, what: &str) -> Result<Value, LlmError> {
     let status = response.status();
     let text = response.text().await.unwrap_or_default();
     if !status.is_success() {
@@ -351,7 +362,8 @@ async fn openai_compatible_chat(base: &str, model: &str, key: &str, timeout: u32
     if let Some(schema) = &req.json_schema {
         body["response_format"] = json!({"type": "json_schema", "json_schema": {"name": "response", "strict": true, "schema": schema}});
     }
-    let data = send_json(bearer(http(timeout).post(format!("{base}/chat/completions")), key), &body, label).await?;
+    let (url, limit) = (format!("{base}/chat/completions"), Duration::from_secs(u64::from(timeout.max(5))));
+    let data = send_hosted_json(|client| bearer(client.post(&url).timeout(limit), key), &body, label).await?;
     let text = message_text(&data);
     if text.is_empty() {
         return Err(LlmError::Empty(format!("{label} returned empty text.")));
@@ -367,8 +379,13 @@ async fn anthropic_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply,
         return Err(LlmError::Unavailable("Enter the Anthropic API key and model name in the LLM settings.".into()));
     }
     let body = json!({"model": cfg.api_model.trim(), "max_tokens": req.max_new_tokens.max(64), "temperature": req.temperature, "top_p": req.top_p, "messages": [{"role": "user", "content": req.instruction}]});
-    let request = http(cfg.own_server_timeout).post("https://api.anthropic.com/v1/messages").header("x-api-key", cfg.api_key.trim()).header("anthropic-version", "2023-06-01");
-    let data = send_json(request, &body, "Anthropic").await?;
+    let limit = Duration::from_secs(u64::from(cfg.own_server_timeout.max(5)));
+    let data = send_hosted_json(
+        |client| client.post("https://api.anthropic.com/v1/messages").timeout(limit).header("x-api-key", cfg.api_key.trim()).header("anthropic-version", "2023-06-01"),
+        &body,
+        "Anthropic",
+    )
+    .await?;
     let text: String = data.get("content").and_then(Value::as_array).map(|blocks| blocks.iter().filter_map(|b| b.get("text").and_then(Value::as_str)).collect::<Vec<_>>().join("\n")).unwrap_or_default();
     if text.trim().is_empty() {
         return Err(LlmError::Empty("Anthropic returned empty text.".into()));
@@ -388,7 +405,8 @@ async fn google_chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, Ll
         "contents": [{"role": "user", "parts": [{"text": req.instruction}]}],
         "generationConfig": {"temperature": req.temperature, "topP": req.top_p, "maxOutputTokens": req.max_new_tokens.max(64)},
     });
-    let data = send_json(http(cfg.own_server_timeout).post(url).header("x-goog-api-key", cfg.api_key.trim()), &body, "Google").await?;
+    let limit = Duration::from_secs(u64::from(cfg.own_server_timeout.max(5)));
+    let data = send_hosted_json(|client| client.post(&url).timeout(limit).header("x-goog-api-key", cfg.api_key.trim()), &body, "Google").await?;
     let text: String = data
         .pointer("/candidates/0/content/parts")
         .and_then(Value::as_array)

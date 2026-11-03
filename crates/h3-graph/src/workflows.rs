@@ -22,7 +22,8 @@ use crate::inputs::{
 use crate::patches::{
     clean_lora_name, cooldown_frames, effective_warmup_frames, is_latent_mode, latent_continuation_mode, model_choice_exists,
     patch_advanced_settings, patch_fast_decode, patch_latent_continuation, patch_loras, patch_memory_efficient_sage_attention,
-    patch_optional_model_paths, patch_save_latent, patch_te_speed, patch_turbo, require_model_choice, text_or, NONE_LORA,
+    patch_optional_model_paths, patch_save_latent, patch_sigma_shift, patch_te_speed, patch_turbo, require_model_choice, text_or,
+    NONE_LORA,
 };
 
 // -- shared pieces ------------------------------------------------------------------------------------------------------
@@ -293,6 +294,17 @@ pub fn build_single(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         let patched = patch_te_speed(&mut prompt, &current, &payload, "9210");
         set_models(&mut prompt, &[&scheduler, &guider], &patched)?;
     }
+    // Sigma shift goes last on the model path, so the scheduler and guider read the shifted model.
+    let sigma_shift = {
+        let scheduler = node_id_by_class(&prompt, "BasicScheduler", Some("124"))?;
+        let guider = node_id_by_class(&prompt, "BasicGuider", Some("126"))?;
+        let current = inputs(&prompt, &scheduler).and_then(|i| i.get("model")).cloned().unwrap_or(Value::Null);
+        let (shifted, summary) = patch_sigma_shift(env, &mut prompt, &current, &payload, "pass1", "9401")?;
+        if !summary.is_null() {
+            set_models(&mut prompt, &[&scheduler, &guider], &shifted)?;
+        }
+        summary
+    };
     if bool_payload(&payload, "use_fast_vae_decode", false) {
         patch_fast_decode(env, &mut prompt)?;
     }
@@ -337,6 +349,7 @@ pub fn build_single(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         "turbo_settings": turbo,
         "memory_efficient_sage_attention": mem_eff,
         "optional_patch_nodes": optional_patch_nodes,
+        "sigma_shift": sigma_shift,
     })))
 }
 
@@ -711,6 +724,9 @@ pub fn build_two_pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         model_refs[slot].1 = branch.remove(0).1;
     }
     let (pass1_model, pass2_model) = (model_refs[0].1.clone(), model_refs[1].1.clone());
+    // Sigma shift goes last on each pass's model path, so its scheduler and guider read the shifted model.
+    let (pass1_model, pass1_sigma) = patch_sigma_shift(env, &mut prompt, &pass1_model, payload, "pass1", "9401")?;
+    let (pass2_model, pass2_sigma) = patch_sigma_shift(env, &mut prompt, &pass2_model, payload, "pass2", "9402")?;
     set_models(&mut prompt, &["124", "126"], &pass1_model)?;
     set_models(&mut prompt, &["192", "193"], &pass2_model)?;
 
@@ -764,6 +780,7 @@ pub fn build_two_pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
             "te_speed_enabled": any("te_speed"),
             "pass_acceleration": acceleration,
             "extra_loras": applied_extra,
+            "sigma_shift": {"pass1": pass1_sigma, "pass2": pass2_sigma},
             "feedforward_enabled": any("feedforward"),
             "block_sparse_attention_enabled": any("block_sparse_attention"),
             "optional_patch_nodes": optional_patch_nodes,

@@ -1806,7 +1806,7 @@
    "path": "/vrgdg/resource-monitor",
    "handler": "resource_monitor",
    "file": "core/system_routes.py",
-   "line": 75,
+   "line": 77,
    "doc": "",
    "callers": [
     "VRGDG_ResourceMonitor.js",
@@ -1818,7 +1818,7 @@
    "path": "/vrgdg/resource-monitor/clear-memory",
    "handler": "clear_memory",
    "file": "core/system_routes.py",
-   "line": 151,
+   "line": 153,
    "doc": "",
    "callers": [
     "VRGDG_ResourceMonitor.js"
@@ -1829,7 +1829,7 @@
    "path": "/vrgdg/update/v10/status",
    "handler": "vrgdg_update_v10_status",
    "file": "core/system_routes.py",
-   "line": 402,
+   "line": 404,
    "doc": "",
    "callers": [
     "update_banner.mjs"
@@ -1840,7 +1840,7 @@
    "path": "/vrgdg/update/v10",
    "handler": "vrgdg_update_v10",
    "file": "core/system_routes.py",
-   "line": 410,
+   "line": 412,
    "doc": "",
    "callers": [
     "toolbar.mjs"
@@ -1851,7 +1851,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/status",
    "handler": "custom_nodes_status",
    "file": "core/system_routes.py",
-   "line": 499,
+   "line": 501,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1862,10 +1862,43 @@
    "path": "/vrgdg/video_builder/custom_nodes/install",
    "handler": "custom_nodes_install",
    "file": "core/system_routes.py",
-   "line": 504,
+   "line": 506,
    "doc": "",
    "callers": [
     "dialogs.mjs"
+   ]
+  },
+  {
+   "method": "GET",
+   "path": "/vrgdg/video_builder/models/status",
+   "handler": "models_status",
+   "file": "core/system_routes.py",
+   "line": 525,
+   "doc": "Allowlisted downloadable models (the Models dialog's DMAD Models tab): installed or not, and download progress.",
+   "callers": [
+    "dmad_models_tab.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/video_builder/models/install",
+   "handler": "models_install",
+   "file": "core/system_routes.py",
+   "line": 532,
+   "doc": "Start downloading allowlisted models into ComfyUI's model folders. Poll ``models/status`` for progress.",
+   "callers": [
+    "dmad_models_tab.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/video_builder/models/cancel",
+   "handler": "models_cancel",
+   "file": "core/system_routes.py",
+   "line": 543,
+   "doc": "Stop running model downloads.",
+   "callers": [
+    "dmad_models_tab.mjs"
    ]
   },
   {

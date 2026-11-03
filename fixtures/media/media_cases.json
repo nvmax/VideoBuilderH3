@@ -81,7 +81,7 @@
       "audio_duration": 2.0,
       "format_duration": 2.0
      },
-     "audio_hash": "41b0e9d8e75a11e66302c466398388a39ce004fd"
+     "audio_hash": "6c0bd6abd8208ffdbdbab6e2f1da167181702932"
     }
    ],
    "tree": [
@@ -167,7 +167,7 @@
       "audio_duration": 1.51,
       "format_duration": 1.51
      },
-     "audio_hash": "8df02bead0c3291a6343fae0487ccf50169ebdc9"
+     "audio_hash": "de0e829b43c374debbc2b0e7c06ab8fce3407633"
     }
    ],
    "tree": [
@@ -266,7 +266,7 @@
       "audio_duration": 1.0,
       "format_duration": 1.0
      },
-     "audio_hash": "290622df31001a2545009e96a7b656371f3b520e"
+     "audio_hash": "fb26aa8a890ca0e084f428fc2913aab49bd42d46"
     },
     {
      "video": "proj/rendered_scene_videos/video_0001-minimax_exact_20260101_000007_02-audio.mp4",
@@ -281,7 +281,7 @@
       "audio_duration": 1.0,
       "format_duration": 1.0
      },
-     "audio_hash": "022d1933abc39afd12abded589893d8cfeaabba1"
+     "audio_hash": "ef3e3ec616ae6f5626aa43ff0f392ca5c4fc36da"
     }
    ],
    "tree": [
@@ -412,7 +412,7 @@
       "audio_duration": 1.0,
       "format_duration": 1.0
      },
-     "audio_hash": "290622df31001a2545009e96a7b656371f3b520e"
+     "audio_hash": "fb26aa8a890ca0e084f428fc2913aab49bd42d46"
     },
     {
      "video": "proj/rendered_scene_videos/video_0004-audio.mp4",
@@ -443,7 +443,7 @@
       "audio_duration": 1.0,
       "format_duration": 1.0
      },
-     "audio_hash": "7a2d296513c9f7e45deeee099782b110892ea36a"
+     "audio_hash": "6e0bc71a77ba4e80b98f0bb9843cd4bf9c7e82b5"
     },
     {
      "video": "proj/rendered_scene_videos/video_0004-audio.mp4",
@@ -474,7 +474,7 @@
       "audio_duration": 1.0,
       "format_duration": 1.0
      },
-     "audio_hash": "657ed96507801efc92c7eb6ba39b3442c167cecf"
+     "audio_hash": "7deabc305a8b721fbdf7ced5f11e687e1470e12d"
     },
     {
      "video": "proj/rendered_scene_videos/video_0004-audio.mp4",
@@ -594,7 +594,7 @@
       "audio_duration": 1.0,
       "format_duration": 1.0
      },
-     "audio_hash": "290622df31001a2545009e96a7b656371f3b520e"
+     "audio_hash": "fb26aa8a890ca0e084f428fc2913aab49bd42d46"
     },
     {
      "image": "proj/scene_image_previews/scene_0002/preview_20260101_000002.png",
@@ -857,7 +857,7 @@
       "audio_duration": 9.5,
       "format_duration": 9.5
      },
-     "audio_hash": "724a888a04ff0c49071ffcd4b6e9ccdb8e516a7f",
+     "audio_hash": "4da8cf28eb025a0ed232d0dc1988ed96770f9a44",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": false,
@@ -1037,7 +1037,7 @@
       "audio_duration": 14.0,
       "format_duration": 14.0
      },
-     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "audio_hash": "c7c9534f4baa6fbd37e0e1959bfbc95df7fb09e3",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -1217,7 +1217,7 @@
       "audio_duration": 14.0,
       "format_duration": 14.0
      },
-     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "audio_hash": "c7c9534f4baa6fbd37e0e1959bfbc95df7fb09e3",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -1392,7 +1392,7 @@
       "audio_duration": 6.5,
       "format_duration": 6.5
      },
-     "audio_hash": "4feca39d66117d1b44c232a0af4844b8251f9285",
+     "audio_hash": "3ce7eee9936e5cdcaa7f38fad5526102e0d24811",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -1572,7 +1572,7 @@
       "audio_duration": 9.5,
       "format_duration": 9.5
      },
-     "audio_hash": "89d190616fd556430a0b0f95939d22f81e12603b",
+     "audio_hash": "02eb0d02698708d17d318698bbfdfd90cae4c46b",
      "embedded_audio_mode": "continuous_song",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -1739,7 +1739,7 @@
       "audio_duration": 9.5,
       "format_duration": 9.5
      },
-     "audio_hash": "89d190616fd556430a0b0f95939d22f81e12603b",
+     "audio_hash": "02eb0d02698708d17d318698bbfdfd90cae4c46b",
      "embedded_audio_mode": "continuous_song",
      "normalized_canvas": false,
      "timeline_frame_sync": false,
@@ -1880,7 +1880,7 @@
       "audio_duration": 5.5,
       "format_duration": 5.5
      },
-     "audio_hash": "5522798375c654461cf5039dfa44c48e9dae8eea",
+     "audio_hash": "112f60d4866195ff6baa931705b63a18522bada5",
      "embedded_audio_mode": "per_scene",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -2021,7 +2021,7 @@
       "audio_duration": 5.5,
       "format_duration": 5.5
      },
-     "audio_hash": "a2e45dce6267b8070492558aca2416a8b354d36e",
+     "audio_hash": "3769bdc41afbc3fe00f1d6a842dd5868f5c96437",
      "embedded_audio_mode": "per_scene",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -2151,7 +2151,7 @@
       "audio_duration": 5.5,
       "format_duration": 5.5
      },
-     "audio_hash": "626b1064eb88e797621ab90cafe4ce93da37de12",
+     "audio_hash": "980cc957954550596cc7d1f4b0ba4b4d1c367e82",
      "embedded_audio_mode": "per_scene",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -2292,7 +2292,7 @@
       "audio_duration": 5.5,
       "format_duration": 5.5
      },
-     "audio_hash": "dc833cf8153ca382fcbbcd36b90e47cf4fa85a8b",
+     "audio_hash": "5b1654f0535879e7027bb6d963251dc2fd800c5a",
      "embedded_audio_mode": "per_scene",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -2507,7 +2507,7 @@
       "audio_duration": 14.0,
       "format_duration": 14.0
      },
-     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "audio_hash": "c7c9534f4baa6fbd37e0e1959bfbc95df7fb09e3",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -2652,7 +2652,7 @@
       "audio_duration": 14.0,
       "format_duration": 14.0
      },
-     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "audio_hash": "c7c9534f4baa6fbd37e0e1959bfbc95df7fb09e3",
      "embedded_audio_mode": "",
      "normalized_canvas": true,
      "timeline_frame_sync": true,
@@ -2870,7 +2870,7 @@
       "audio_duration": 14.0,
       "format_duration": 14.0
      },
-     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "audio_hash": "c7c9534f4baa6fbd37e0e1959bfbc95df7fb09e3",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": true,
@@ -2893,7 +2893,7 @@
       "audio_duration": 14.0,
       "format_duration": 14.0
      },
-     "audio_hash": "7fa4d11a3eecf0d757ab06ef9e48fb52a040e2af",
+     "audio_hash": "c7c9534f4baa6fbd37e0e1959bfbc95df7fb09e3",
      "embedded_audio_mode": "",
      "normalized_canvas": false,
      "timeline_frame_sync": true,

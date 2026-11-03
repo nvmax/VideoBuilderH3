@@ -46,10 +46,12 @@ pub struct SceneResult {
     pub history_index: usize,
     pub history_count: usize,
     pub revision: i64,
-    /// `full`, `draft` or `finalize`.
+    /// `full`, `draft`, `finalize` or `redecode`.
     pub render_phase: String,
     /// The id of the draft a `draft` render saved. Empty for the other phases.
     pub draft_id: String,
+    /// What a `redecode` made the video from: the CRF, the frames and the latent. `None` for the other phases.
+    pub redecode: Option<Value>,
 }
 
 fn other(message: impl std::fmt::Display) -> RenderError {
@@ -193,8 +195,11 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
     session.insert("segments".into(), Value::Array(all_segments));
     let saved = persist_session(project, session, Stamp::now()).map_err(other)?;
 
-    latents::clear_dirty(project, scene);
-    latents::mark_successor_dirty(project, scene, &format!("Scene {scene:03} re-rendered"), &Stamp::now());
+    // A re-decode leaves the latent as it was, so the next scene's continuation from it stays valid.
+    if outcome.phase != RenderPhase::Redecode {
+        latents::clear_dirty(project, scene);
+        latents::mark_successor_dirty(project, scene, &format!("Scene {scene:03} re-rendered"), &Stamp::now());
+    }
     Ok(SceneResult {
         scene_id: outcome.scene_id.clone(),
         scene_number: scene,
@@ -207,6 +212,7 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
         revision: saved.revision,
         render_phase: outcome.phase.name().to_string(),
         draft_id: if outcome.phase == RenderPhase::Draft { text_or_empty(outcome.graph.get("draft_id")) } else { String::new() },
+        redecode: if outcome.phase == RenderPhase::Redecode { outcome.graph.get("redecode").cloned() } else { None },
     })
 }
 
@@ -274,15 +280,19 @@ pub async fn render_scene_full(
     let mut params = params;
     // A bad phase is refused before anything is changed.
     let phase = params.phase()?;
-    // Finishing a draft replays its saved graph. No seed, prompt or reference is resolved again.
+    // Finishing a draft replays its saved graph. No seed, prompt or reference is resolved again. A re-decode decodes the latent
+    // that is saved, so new seeds and a prompt written from the last frame would change the scene for nothing.
     if phase != RenderPhase::Finalize {
-        if params.overrides.remove("randomize_seed").is_some_and(|v| truthy(&v)) {
-            let (env, path, scene) = (Arc::clone(&ctx.env), project_path.clone(), scene_ref.to_string());
-            tokio::task::spawn_blocking(move || randomize_seeds(&env, &path, &scene)).await.map_err(other)??;
-        }
-        if let Some(hook) = &ctx.before_scene {
-            let has_prompt = params.overrides.get("prompt").is_some_and(truthy);
-            hook(project_path.clone(), scene_ref.to_string(), has_prompt).await.map_err(other)?;
+        let new_seeds = params.overrides.remove("randomize_seed").is_some_and(|v| truthy(&v));
+        if phase != RenderPhase::Redecode {
+            if new_seeds {
+                let (env, path, scene) = (Arc::clone(&ctx.env), project_path.clone(), scene_ref.to_string());
+                tokio::task::spawn_blocking(move || randomize_seeds(&env, &path, &scene)).await.map_err(other)??;
+            }
+            if let Some(hook) = &ctx.before_scene {
+                let has_prompt = params.overrides.get("prompt").is_some_and(truthy);
+                hook(project_path.clone(), scene_ref.to_string(), has_prompt).await.map_err(other)?;
+            }
         }
     }
     let loaded = {

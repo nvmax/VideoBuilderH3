@@ -156,6 +156,57 @@ pub fn args(items: &[&str]) -> Vec<String> {
     items.iter().map(|s| s.to_string()).collect()
 }
 
+/// Scene copies are the files the final video is made of, and a stitch can encode them again (timeline sync, inserts,
+/// canvas fit, transitions). The MiniMax H3 render is CRF 19, so these stay below it and add no visible loss. Without
+/// explicit values x264 falls back to CRF 23 / veryfast and AAC to its default bitrate. Keep in step with the pack's
+/// `SCENE_VIDEO_CRF`, `SCENE_VIDEO_PRESET` and `SCENE_AUDIO_BITRATE` in `runner/video_files.py`.
+pub const SCENE_VIDEO_CRF: u32 = 16;
+pub const SCENE_VIDEO_PRESET: &str = "medium";
+pub const SCENE_AUDIO_BITRATE: &str = "256k";
+
+/// Bytes from the start of a file that are searched for the settings string x264 writes into its first frame.
+const X264_SETTINGS_SCAN_BYTES: u64 = 1 << 20;
+
+/// The CRF an x264 file was encoded at, read from the settings string x264 stores in it (`rc=crf ... crf=19.0`).
+/// `None` when the file is not CRF encoded by x264 or cannot be read.
+pub fn probe_x264_crf(path: &Path) -> Option<f64> {
+    use std::io::Read;
+    let mut head = Vec::new();
+    std::fs::File::open(path).ok()?.take(X264_SETTINGS_SCAN_BYTES).read_to_end(&mut head).ok()?;
+    let needle = b"x264 - core";
+    let start = head.windows(needle.len()).position(|w| w == needle)?;
+    let end = head[start..].iter().position(|b| *b == 0).map_or(head.len(), |n| start + n);
+    let text = String::from_utf8_lossy(&head[start..end]);
+    if !text.split_whitespace().any(|word| word == "rc=crf") {
+        return None;
+    }
+    text.split_whitespace().find_map(|word| word.strip_prefix("crf=")).and_then(|value| value.parse().ok())
+}
+
+/// The lowest CRF the given files state, or `None` when none of them does.
+pub fn source_crf<P: AsRef<Path>>(paths: &[P]) -> Option<f64> {
+    paths.iter().filter_map(|path| probe_x264_crf(path.as_ref())).fold(None, |lowest, crf| Some(lowest.map_or(crf, |l: f64| l.min(crf))))
+}
+
+/// The CRF for a scene copy: `SCENE_VIDEO_CRF`, or the source's own CRF when that is lower, so a copy is never coarser
+/// than the clip it is made from.
+pub fn scene_video_crf(source: Option<f64>) -> u32 {
+    match source {
+        Some(crf) if crf.is_finite() => (crf.max(0.0) as u32).min(SCENE_VIDEO_CRF),
+        _ => SCENE_VIDEO_CRF,
+    }
+}
+
+/// The ffmpeg video encoder arguments for every scene copy and stitch re-encode, given the CRF the source was written at.
+pub fn scene_video_args(source: Option<f64>) -> Vec<String> {
+    args(&["-c:v", "libx264", "-preset", SCENE_VIDEO_PRESET, "-crf", &scene_video_crf(source).to_string(), "-pix_fmt", "yuv420p"])
+}
+
+/// The ffmpeg AAC encoder arguments for every scene copy and stitch audio encode.
+pub fn scene_audio_args() -> Vec<String> {
+    args(&["-c:a", "aac", "-b:a", SCENE_AUDIO_BITRATE])
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

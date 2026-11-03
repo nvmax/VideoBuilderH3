@@ -262,6 +262,28 @@ def main() -> int:
         ({"video_mode": "text_to_video", "render_pass": "two_pass"}, {"steps": 12}, None),
         ({"video_mode": "text_to_video"}, {"render_pass": "two_pass", "steps": 12}, "image_to_video"),
         ({"video_mode": ""}, {"render_pass": "two_pass"}, "image_to_video"),
+        # DMAD: on fills in the preset and the LoRAs, off puts back what it replaced, and the rest of the patch applies after.
+        ({"video_mode": "reference_to_video", "render_pass": "two_pass"}, {"use_dmad": True}, None),
+        ({"video_mode": "reference_to_video", "render_pass": "two_pass", "steps": 30, "sampler_name": "euler", "two_pass_pass1_steps": 20}, {"use_dmad": True}, None),
+        ({"render_pass": "single", "use_loras": True, "lora_count": 2,
+          "loras": [{"name": "style.safetensors", "strength": 0.8, "apply_to": "both"}, {"name": "[none]", "strength": 1, "apply_to": "pass1"}]},
+         {"use_dmad": True}, None),
+        ({"render_pass": "three_pass"}, {"use_dmad": True}, None),
+        ({"render_pass": "two_pass"}, {"use_dmad": True, "two_pass_pass1_steps": 8, "two_pass_pass2_steps": 6}, None),
+        ({"render_pass": "two_pass", "steps": 30, "two_pass_pass1_steps": 20}, {"use_dmad": True, "dmad_backup": {"steps": 1}}, None),
+        ({"render_pass": "two_pass", "ref_pass_profiles": {"two_pass": {"render_pass": "two_pass", "steps": 25, "two_pass_pass1_steps": 20}, "single": "bad"}},
+         {"use_dmad": True}, None),
+        ({"render_pass": "two_pass", "use_dmad": True}, {"use_dmad": True}, None),
+        ({"render_pass": "single"}, {"use_dmad": False}, None),
+    ]
+    # Turning DMAD off after turning it on puts the values back and keeps LoRAs added in between.
+    on = payload_mod.apply_minimax_h3_settings_patch(
+        {"render_pass": "two_pass", "steps": 30, "two_pass_pass1_steps": 20, "sampler_name": "euler"}, {"use_dmad": True}, None)
+    on["loras"].append({"name": "later.safetensors", "strength": 0.5, "apply_to": "pass2"})
+    on["lora_count"] = 2
+    edits += [
+        (on, {"use_dmad": False}, None),
+        (on, {"use_dmad": False, "steps": 12}, None),
     ]
     cases = [{"input": {"current": cur, "patch": patch, "inherited_mode": inherited},
               **call(payload_mod.apply_minimax_h3_settings_patch, cur, patch, inherited)} for cur, patch, inherited in edits]
