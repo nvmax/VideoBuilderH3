@@ -1891,11 +1891,12 @@ dependencies = [
 
 [[package]]
 name = "h3-api"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "axum",
  "base64 0.22.1",
  "flate2",
+ "futures-util",
  "h3-builder",
  "h3-comfy",
  "h3-core",
@@ -1925,7 +1926,7 @@ dependencies = [
 
 [[package]]
 name = "h3-builder"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -1948,7 +1949,7 @@ dependencies = [
 
 [[package]]
 name = "h3-cli"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "anyhow",
  "clap",
@@ -1967,7 +1968,7 @@ dependencies = [
 
 [[package]]
 name = "h3-comfy"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "futures-util",
  "reqwest 0.12.28",
@@ -1980,7 +1981,7 @@ dependencies = [
 
 [[package]]
 name = "h3-core"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "base64 0.22.1",
  "fancy-regex",
@@ -1992,7 +1993,7 @@ dependencies = [
 
 [[package]]
 name = "h3-graph"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "base64 0.22.1",
  "h3-core",
@@ -2004,7 +2005,7 @@ dependencies = [
 
 [[package]]
 name = "h3-image"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "h3-comfy",
  "h3-core",
@@ -2018,7 +2019,7 @@ dependencies = [
 
 [[package]]
 name = "h3-jobs"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "chrono",
  "rusqlite",
@@ -2031,7 +2032,7 @@ dependencies = [
 
 [[package]]
 name = "h3-llm"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "axum",
  "base64 0.22.1",
@@ -2039,16 +2040,20 @@ dependencies = [
  "h3-comfy",
  "h3-core",
  "image",
+ "rcgen",
  "reqwest 0.12.28",
+ "rustls",
+ "rustls-native-certs",
  "serde",
  "serde_json",
  "thiserror 2.0.21",
  "tokio",
+ "tokio-rustls",
 ]
 
 [[package]]
 name = "h3-media"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "fontdb",
  "h3-core",
@@ -2064,7 +2069,7 @@ dependencies = [
 
 [[package]]
 name = "h3-pipeline"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "axum",
  "h3-comfy",
@@ -2083,7 +2088,7 @@ dependencies = [
 
 [[package]]
 name = "h3-project"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "base64 0.22.1",
  "chrono",
@@ -2103,7 +2108,7 @@ dependencies = [
 
 [[package]]
 name = "h3-studio"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "h3-api",
  "h3-jobs",
@@ -2119,7 +2124,7 @@ dependencies = [
 
 [[package]]
 name = "h3-transitions"
-version = "0.1.21"
+version = "0.1.22"
 dependencies = [
  "gl-transitions",
  "image",
@@ -3572,6 +3577,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "pem"
+version = "3.0.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1d30c53c26bc5b31a98cd02d20f25a7c8567146caf63ed593a9d87b2775291be"
+dependencies = [
+ "base64 0.22.1",
+ "serde_core",
+]
+
+[[package]]
 name = "percent-encoding"
 version = "2.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4041,6 +4056,19 @@ dependencies = [
  "objc2-core-foundation",
  "objc2-foundation",
  "objc2-quartz-core",
+]
+
+[[package]]
+name = "rcgen"
+version = "0.13.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "75e669e5202259b5314d1ea5397316ad400819437857b90861765f24c4cf80a2"
+dependencies = [
+ "pem",
+ "ring",
+ "rustls-pki-types",
+ "time",
+ "yasna",
 ]
 
 [[package]]
@@ -6878,6 +6906,15 @@ checksum = "32e45ad4206f6d2479085147f02bc2ef834ac85886624a23575ae137c8aa8156"
 dependencies = [
  "libc",
  "rustix",
+]
+
+[[package]]
+name = "yasna"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e17bb3549cc1321ae1296b9cdc2698e2b6cb1992adfa19a8c72e5b7a738f44cd"
+dependencies = [
+ "time",
 ]
 
 [[package]]
