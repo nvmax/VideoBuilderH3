@@ -6024,6 +6024,164 @@
   "python_module": "custom_nodes.comfyui-workflow-encrypt",
   "search_aliases": []
  },
+ "VRGDG_MiniMaxH3ChunkedPass2": {
+  "category": "VRGDG/MiniMax H3",
+  "description": "MiniMax H3 second pass in temporal windows: the normal learned upscale and SamplerCustomAdvanced for one window at a time, assembled on the CPU, with the first-pass audio preserved exactly. The Video Builder uses it for scenes longer than its Pass 2 chunking threshold.",
+  "display_name": "VRGDG H3 Chunked Pass 2",
+  "has_intermediate_output": false,
+  "input": {
+   "optional": {
+    "head_latent": [
+     "LATENT",
+     {
+      "tooltip": "Masked continuation: the predecessor window from VRGDG H3 Load Latent (masked_av). It becomes the locked first tokens of the refined clip."
+     }
+    ],
+    "head_vae": [
+     "VAE",
+     {
+      "tooltip": "Video VAE, used only to resize a head that was saved at another size."
+     }
+    ],
+    "max_window_tokens": [
+     "INT",
+     {
+      "default": 0,
+      "max": 2000000,
+      "min": 0,
+      "step": 1000,
+      "tooltip": "Size windows by video tokens instead of seconds. 0 turns the budget off. A budget below the smallest window (7 latent frames) uses that window and says so."
+     }
+    ],
+    "tail_trim_seconds": [
+     "FLOAT",
+     {
+      "default": 0.7,
+      "max": 10.0,
+      "min": 0.0,
+      "step": 0.1,
+      "tooltip": "Throw away this much of each window's tail (snapped to 0.708 s groups) and let the next window redo it with refined history on the left and content on the right. Needs an overlap of at least two groups (1.6 s). 0 keeps every window's tail."
+     }
+    ],
+    "upscale": [
+     [
+      "per_window",
+      "whole_clip"
+     ],
+     {
+      "tooltip": "per_window upscales only the current window, so upscaler memory is one window. whole_clip upscales the entire clip first: window edges get real neighbours, but upscaler memory grows with the clip."
+     }
+    ]
+   },
+   "required": {
+    "chunk_seconds": [
+     "FLOAT",
+     {
+      "default": 3.0,
+      "max": 120.0,
+      "min": 0.1,
+      "step": 0.1
+     }
+    ],
+    "conditioning": [
+     "CONDITIONING"
+    ],
+    "latent": [
+     "LATENT",
+     {
+      "tooltip": "The first-pass joint video+audio latent."
+     }
+    ],
+    "model": [
+     "MODEL"
+    ],
+    "overlap_mode": [
+     [
+      "locked",
+      "crossfade"
+     ],
+     {
+      "tooltip": "locked pins the previous refined overlap while the next window samples. crossfade refines both versions of the overlap and blends them."
+     }
+    ],
+    "overlap_seconds": [
+     "FLOAT",
+     {
+      "default": 1.6,
+      "max": 30.0,
+      "min": 0.0,
+      "step": 0.1
+     }
+    ],
+    "sampler": [
+     "SAMPLER"
+    ],
+    "scale": [
+     "FLOAT",
+     {
+      "default": 2.0,
+      "max": 4.0,
+      "min": 1.0,
+      "step": 0.1
+     }
+    ],
+    "seed": [
+     "INT",
+     {
+      "control_after_generate": true,
+      "default": 42,
+      "max": 18446744073709551615,
+      "min": 0
+     }
+    ],
+    "sigmas": [
+     "SIGMAS"
+    ],
+    "upscale_model": [
+     "VRGDG_MINIMAX_H3_LATENT_UPSCALE_MODEL"
+    ]
+   }
+  },
+  "input_order": {
+   "optional": [
+    "tail_trim_seconds",
+    "max_window_tokens",
+    "upscale",
+    "head_latent",
+    "head_vae"
+   ],
+   "required": [
+    "latent",
+    "model",
+    "conditioning",
+    "upscale_model",
+    "sampler",
+    "sigmas",
+    "scale",
+    "chunk_seconds",
+    "overlap_seconds",
+    "overlap_mode",
+    "seed"
+   ]
+  },
+  "is_input_list": false,
+  "name": "VRGDG_MiniMaxH3ChunkedPass2",
+  "output": [
+   "LATENT",
+   "STRING"
+  ],
+  "output_is_list": [
+   false,
+   false
+  ],
+  "output_name": [
+   "refined_av_latent",
+   "chunk_report"
+  ],
+  "output_node": false,
+  "python_module": "custom_nodes.comfyui-workflow-encrypt",
+  "search_aliases": []
+ },
  "VRGDG_MiniMaxH3KeyframeTiming": {
   "category": "VRGDG/MiniMax H3",
   "description": "",

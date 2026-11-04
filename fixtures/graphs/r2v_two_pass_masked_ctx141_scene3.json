@@ -53,6 +53,8 @@
   "pass1_use_block_sparse_attention": false,
   "pass1_use_feedforward": false,
   "pass1_use_te_speed": false,
+  "pass2_chunking": "auto",
+  "pass2_chunking_min_seconds": 8,
   "pass2_denoise": 0.2,
   "pass2_sampler_name": "res_multistep",
   "pass2_scheduler": "simple",
@@ -129,6 +131,32 @@
  "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
  "result": {
   "audio_mode": "input_audio",
+  "chunked_pass2": {
+   "chunk_node_id": "9502",
+   "chunk_seconds": 3.0,
+   "enabled": true,
+   "encode_node_id": "9501",
+   "head_locked": true,
+   "min_seconds": 8.0,
+   "mode": "auto",
+   "overlap_mode": "locked",
+   "overlap_seconds": 1.6,
+   "prompt_node_id": "9500",
+   "reason": "12.25 s is longer than 8 s, so pass 2 runs in windows.",
+   "removed_nodes": [
+    "194",
+    "193",
+    "211",
+    "181",
+    "182",
+    "189",
+    "9212"
+   ],
+   "rendered_seconds": 12.25,
+   "tail_trim_seconds": 0.7,
+   "upscale": "per_window",
+   "windows": 8
+  },
   "latent_continuation_settings": {
    "apply_node_id": "9211",
    "context_frames": 141,
@@ -504,38 +532,6 @@
      "video_references": "[]"
     }
    },
-   "181": {
-    "_meta": {
-     "title": "PASS 1 OUTPUT - Separate Video and Audio Latents"
-    },
-    "class_type": "MiniMaxH3AVLatentSeparateT8",
-    "inputs": {
-     "av_latent": [
-      "9851",
-      0
-     ]
-    }
-   },
-   "182": {
-    "_meta": {
-     "title": "LEARNED UPSCALE - MiniMax H3"
-    },
-    "class_type": "VRGDG_MiniMaxH3LearnedLatentUpscale",
-    "inputs": {
-     "latent": [
-      "181",
-      0
-     ],
-     "scale": [
-      "185",
-      0
-     ],
-     "upscale_model": [
-      "188",
-      0
-     ]
-    }
-   },
    "183": {
     "_meta": {
      "title": "Final Center Crop - Exact 1920x1080"
@@ -625,22 +621,6 @@
      "precision": "bf16"
     }
    },
-   "189": {
-    "_meta": {
-     "title": "PASS 2 - Restore Upscaled Video into Locked AV Latent"
-    },
-    "class_type": "VRGDG_MiniMaxH3ReplaceUpscaledVideoLatent",
-    "inputs": {
-     "original_av_latent": [
-      "9851",
-      0
-     ],
-     "upscaled_video_latent": [
-      "182",
-      0
-     ]
-    }
-   },
    "190": {
     "_meta": {
      "title": "BUILDER INPUT - Refinement Schedule Steps"
@@ -680,50 +660,6 @@
      ]
     }
    },
-   "193": {
-    "_meta": {
-     "title": "PASS 2 - Basic Guider"
-    },
-    "class_type": "BasicGuider",
-    "inputs": {
-     "conditioning": [
-      "136",
-      0
-     ],
-     "model": [
-      "207",
-      0
-     ]
-    }
-   },
-   "194": {
-    "_meta": {
-     "title": "PASS 2 - High Resolution Refinement"
-    },
-    "class_type": "SamplerCustomAdvanced",
-    "inputs": {
-     "guider": [
-      "193",
-      0
-     ],
-     "latent_image": [
-      "9212",
-      0
-     ],
-     "noise": [
-      "211",
-      0
-     ],
-     "sampler": [
-      "210",
-      0
-     ],
-     "sigmas": [
-      "192",
-      0
-     ]
-    }
-   },
    "207": {
     "_meta": {
      "title": "Load LoRA"
@@ -745,15 +681,6 @@
     "class_type": "KSamplerSelect",
     "inputs": {
      "sampler_name": "res_multistep"
-    }
-   },
-   "211": {
-    "_meta": {
-     "title": "BUILDER INPUT - Pass 2 Seed"
-    },
-    "class_type": "RandomNoise",
-    "inputs": {
-     "noise_seed": 5678
     }
    },
    "9210": {
@@ -790,23 +717,163 @@
      ]
     }
    },
-   "9212": {
+   "9500": {
     "_meta": {
-     "title": "MiniMax H3 Latent Continuation Masked · Pass 2 (141 frames)"
+     "title": "Pass 2 prompt (no lyric text, no times)"
     },
-    "class_type": "VRGDG_MiniMaxH3ApplyMaskedContinuation",
+    "class_type": "PrimitiveStringMultiline",
     "inputs": {
-     "context_latent": [
-      "9210",
+     "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+    }
+   },
+   "9501": {
+    "_meta": {
+     "title": "Pass 2 conditioning (windows)"
+    },
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+     "audio_vae": [
+      "120",
       0
      ],
-     "include_audio": false,
-     "latent": [
-      "189",
+     "clip": [
+      "128",
       0
+     ],
+     "height": [
+      "187",
+      1
+     ],
+     "length": [
+      "131",
+      1
+     ],
+     "prompt": [
+      "9500",
+      0
+     ],
+     "ref_audios.ref_audio_0": [
+      "171",
+      0
+     ],
+     "ref_image_size": "max",
+     "ref_images.ref_image_0": [
+      "180",
+      0
+     ],
+     "ref_images.ref_image_1": [
+      "180",
+      1
+     ],
+     "ref_images.ref_image_2": [
+      "180",
+      2
+     ],
+     "ref_images.ref_image_3": [
+      "180",
+      3
+     ],
+     "ref_images.ref_image_4": [
+      "180",
+      4
+     ],
+     "ref_images.ref_image_5": [
+      "180",
+      5
+     ],
+     "ref_images.ref_image_6": [
+      "180",
+      6
+     ],
+     "ref_images.ref_image_7": [
+      "180",
+      7
+     ],
+     "ref_images.ref_image_8": [
+      "180",
+      8
+     ],
+     "ref_video_audios.ref_video_audio_0": [
+      "180",
+      12
+     ],
+     "ref_video_audios.ref_video_audio_1": [
+      "180",
+      13
+     ],
+     "ref_video_audios.ref_video_audio_2": [
+      "180",
+      14
+     ],
+     "ref_videos.ref_video_0": [
+      "180",
+      9
+     ],
+     "ref_videos.ref_video_1": [
+      "180",
+      10
+     ],
+     "ref_videos.ref_video_2": [
+      "180",
+      11
      ],
      "vae": [
       "119",
+      0
+     ],
+     "width": [
+      "186",
+      1
+     ]
+    }
+   },
+   "9502": {
+    "_meta": {
+     "title": "Pass 2 in windows (12.25 s clip)"
+    },
+    "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+    "inputs": {
+     "chunk_seconds": 3.0,
+     "conditioning": [
+      "9501",
+      0
+     ],
+     "head_latent": [
+      "9210",
+      0
+     ],
+     "head_vae": [
+      "119",
+      0
+     ],
+     "latent": [
+      "9851",
+      0
+     ],
+     "max_window_tokens": 0,
+     "model": [
+      "207",
+      0
+     ],
+     "overlap_mode": "locked",
+     "overlap_seconds": 1.6,
+     "sampler": [
+      "210",
+      0
+     ],
+     "scale": [
+      "185",
+      0
+     ],
+     "seed": 5678,
+     "sigmas": [
+      "192",
+      0
+     ],
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window",
+     "upscale_model": [
+      "188",
       0
      ]
     }
@@ -820,7 +887,7 @@
      "fps": 24.0,
      "frame_count": 0,
      "latent": [
-      "194",
+      "9502",
       0
      ],
      "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
@@ -973,6 +1040,8 @@
   "lora_count": 0,
   "loras": [],
   "megapixels": 0.5625,
+  "pass2_chunking": "auto",
+  "pass2_chunking_min_seconds": 8,
   "pipeline": "standard",
   "ref_image_size": "max",
   "render_pass": "two_pass",

@@ -470,6 +470,404 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video Combine"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9310": {
+      "class_type": "MiniMaxH3RefModAudioExtract",
+      "inputs": {
+       "audio": [
+        "171",
+        0
+       ],
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "name": "scene_audio",
+       "max_seconds": 60.0,
+       "max_tokens": 0,
+       "budget_policy": "error",
+       "concept_type": "singing",
+       "description": "",
+       "subfolder": "",
+       "save": false
+      },
+      "_meta": {
+       "title": "Scene audio as an audio RefMod"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ],
+       "mods_2": [
+        "9310",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
+    }
    }
   },
   {
@@ -891,6 +1289,376 @@
      "scene_audio_mod": false,
      "guiders_rewired": 1,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video Combine"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
     }
    }
   },
@@ -4639,6 +5407,666 @@
      "guiders_rewired": 2,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Width"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 1024
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "Low Resolution Generation"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "187",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "max",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "186",
+        1
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "183",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "183": {
+      "_meta": {
+       "title": "Final Center Crop - Exact 1920x1080"
+      },
+      "class_type": "ImageResizeKJv2",
+      "inputs": {
+       "crop_position": "center",
+       "device": "cpu",
+       "divisible_by": 0,
+       "height": [
+        "184",
+        0
+       ],
+       "image": [
+        "122",
+        0
+       ],
+       "keep_proportion": "crop",
+       "pad_color": "0, 0, 0",
+       "upscale_method": "nvidia_rtx_vsr",
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "184": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Height"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 576
+      }
+     },
+     "185": {
+      "_meta": {
+       "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 2.0
+      }
+     },
+     "186": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Width"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "115",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "187": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Height"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "184",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "188": {
+      "_meta": {
+       "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+      },
+      "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+      "inputs": {
+       "device": "cuda",
+       "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+       "precision": "bf16"
+      }
+     },
+     "190": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Schedule Steps"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 2
+      }
+     },
+     "191": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Denoise"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 0.2
+      }
+     },
+     "192": {
+      "_meta": {
+       "title": "PASS 2 - Adjustable Refinement Scheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": [
+        "191",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": [
+        "190",
+        0
+       ]
+      }
+     },
+     "207": {
+      "_meta": {
+       "title": "Load LoRA"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 1.0
+      }
+     },
+     "210": {
+      "_meta": {
+       "title": "BUILDER INPUT - Pass 2 Sampler"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "9502",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9851": {
+      "_meta": {
+       "title": "First-Pass Latent Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "pass1": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9310": {
+      "class_type": "MiniMaxH3RefModAudioExtract",
+      "inputs": {
+       "audio": [
+        "171",
+        0
+       ],
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "name": "scene_audio",
+       "max_seconds": 60.0,
+       "max_tokens": 0,
+       "budget_policy": "error",
+       "concept_type": "singing",
+       "description": "",
+       "subfolder": "",
+       "save": false
+      },
+      "_meta": {
+       "title": "Scene audio as an audio RefMod"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ],
+       "mods_2": [
+        "9310",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     },
+     "9500": {
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+      },
+      "_meta": {
+       "title": "Pass 2 prompt (no lyric text, no times)"
+      }
+     },
+     "9501": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "9500",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Pass 2 conditioning (windows)"
+      }
+     },
+     "9502": {
+      "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+      "inputs": {
+       "latent": [
+        "9851",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "conditioning": [
+        "9501",
+        0
+       ],
+       "upscale_model": [
+        "188",
+        0
+       ],
+       "sampler": [
+        "210",
+        0
+       ],
+       "sigmas": [
+        "192",
+        0
+       ],
+       "scale": [
+        "185",
+        0
+       ],
+       "chunk_seconds": 3.0,
+       "overlap_seconds": 1.6,
+       "overlap_mode": "locked",
+       "seed": 5678,
+       "tail_trim_seconds": 0.7,
+       "max_window_tokens": 0,
+       "upscale": "per_window"
+      },
+      "_meta": {
+       "title": "Pass 2 in windows (13.667 s clip)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": true,
+     "reason": "13.67 s is longer than 8 s, so pass 2 runs in windows.",
+     "windows": 9,
+     "chunk_node_id": "9502",
+     "encode_node_id": "9501",
+     "prompt_node_id": "9500",
+     "removed_nodes": [
+      "194",
+      "193",
+      "211",
+      "181",
+      "182",
+      "189"
+     ],
+     "head_locked": false,
+     "chunk_seconds": 3.0,
+     "overlap_seconds": 1.6,
+     "overlap_mode": "locked",
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window"
+    }
    }
   },
   {
@@ -5328,6 +6756,638 @@
      "scene_audio_mod": false,
      "guiders_rewired": 2,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Width"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 1024
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "Low Resolution Generation"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "187",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "max",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "186",
+        1
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "183",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "183": {
+      "_meta": {
+       "title": "Final Center Crop - Exact 1920x1080"
+      },
+      "class_type": "ImageResizeKJv2",
+      "inputs": {
+       "crop_position": "center",
+       "device": "cpu",
+       "divisible_by": 0,
+       "height": [
+        "184",
+        0
+       ],
+       "image": [
+        "122",
+        0
+       ],
+       "keep_proportion": "crop",
+       "pad_color": "0, 0, 0",
+       "upscale_method": "nvidia_rtx_vsr",
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "184": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Height"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 576
+      }
+     },
+     "185": {
+      "_meta": {
+       "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 2.0
+      }
+     },
+     "186": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Width"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "115",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "187": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Height"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "184",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "188": {
+      "_meta": {
+       "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+      },
+      "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+      "inputs": {
+       "device": "cuda",
+       "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+       "precision": "bf16"
+      }
+     },
+     "190": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Schedule Steps"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 2
+      }
+     },
+     "191": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Denoise"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 0.2
+      }
+     },
+     "192": {
+      "_meta": {
+       "title": "PASS 2 - Adjustable Refinement Scheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": [
+        "191",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": [
+        "190",
+        0
+       ]
+      }
+     },
+     "207": {
+      "_meta": {
+       "title": "Load LoRA"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 1.0
+      }
+     },
+     "210": {
+      "_meta": {
+       "title": "BUILDER INPUT - Pass 2 Sampler"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "9502",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9851": {
+      "_meta": {
+       "title": "First-Pass Latent Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "pass1": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     },
+     "9500": {
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+      },
+      "_meta": {
+       "title": "Pass 2 prompt (no lyric text, no times)"
+      }
+     },
+     "9501": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "9500",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Pass 2 conditioning (windows)"
+      }
+     },
+     "9502": {
+      "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+      "inputs": {
+       "latent": [
+        "9851",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "conditioning": [
+        "9501",
+        0
+       ],
+       "upscale_model": [
+        "188",
+        0
+       ],
+       "sampler": [
+        "210",
+        0
+       ],
+       "sigmas": [
+        "192",
+        0
+       ],
+       "scale": [
+        "185",
+        0
+       ],
+       "chunk_seconds": 3.0,
+       "overlap_seconds": 1.6,
+       "overlap_mode": "locked",
+       "seed": 5678,
+       "tail_trim_seconds": 0.7,
+       "max_window_tokens": 0,
+       "upscale": "per_window"
+      },
+      "_meta": {
+       "title": "Pass 2 in windows (13.667 s clip)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": true,
+     "reason": "13.67 s is longer than 8 s, so pass 2 runs in windows.",
+     "windows": 9,
+     "chunk_node_id": "9502",
+     "encode_node_id": "9501",
+     "prompt_node_id": "9500",
+     "removed_nodes": [
+      "194",
+      "193",
+      "211",
+      "181",
+      "182",
+      "189"
+     ],
+     "head_locked": false,
+     "chunk_seconds": 3.0,
+     "overlap_seconds": 1.6,
+     "overlap_mode": "locked",
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window"
     }
    }
   },
@@ -10372,6 +12432,361 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "121": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Decode MiniMax Generated Audio"
+      },
+      "class_type": "LTXVAudioVAEDecode",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "samples": [
+        "125",
+        0
+       ]
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "136",
+        1
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video - Native Generated Audio"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt With Lyric Dialogue And Audio Direction"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video With MiniMax Generated Audio"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "121",
+        0
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
+    }
    }
   },
   {
@@ -10778,6 +13193,361 @@
      "scene_audio_mod": false,
      "guiders_rewired": 1,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "121": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Decode MiniMax Generated Audio"
+      },
+      "class_type": "LTXVAudioVAEDecode",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "samples": [
+        "125",
+        0
+       ]
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "136",
+        1
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video - Native Generated Audio"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt With Lyric Dialogue And Audio Direction"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video With MiniMax Generated Audio"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "121",
+        0
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
     }
    }
   },
@@ -14218,6 +16988,623 @@
      "guiders_rewired": 2,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Width"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 1024
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "Low Resolution Generation"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "136",
+        1
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "187",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "max",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "186",
+        1
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "212",
+        0
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "183",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "183": {
+      "_meta": {
+       "title": "Final Center Crop - Exact 1920x1080"
+      },
+      "class_type": "ImageResizeKJv2",
+      "inputs": {
+       "crop_position": "center",
+       "device": "cpu",
+       "divisible_by": 0,
+       "height": [
+        "184",
+        0
+       ],
+       "image": [
+        "122",
+        0
+       ],
+       "keep_proportion": "crop",
+       "pad_color": "0, 0, 0",
+       "upscale_method": "nvidia_rtx_vsr",
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "184": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Height"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 576
+      }
+     },
+     "185": {
+      "_meta": {
+       "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 2.0
+      }
+     },
+     "186": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Width"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "115",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "187": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Height"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "184",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "188": {
+      "_meta": {
+       "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+      },
+      "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+      "inputs": {
+       "device": "cuda",
+       "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+       "precision": "bf16"
+      }
+     },
+     "190": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Schedule Steps"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 2
+      }
+     },
+     "191": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Denoise"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 0.2
+      }
+     },
+     "192": {
+      "_meta": {
+       "title": "PASS 2 - Adjustable Refinement Scheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": [
+        "191",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": [
+        "190",
+        0
+       ]
+      }
+     },
+     "207": {
+      "_meta": {
+       "title": "Load LoRA"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 1.0
+      }
+     },
+     "210": {
+      "_meta": {
+       "title": "BUILDER INPUT - Pass 2 Sampler"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "212": {
+      "_meta": {
+       "title": "Decode MiniMax H3 native audio (pass 1)"
+      },
+      "class_type": "LTXVAudioVAEDecode",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "samples": [
+        "9851",
+        0
+       ]
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "9502",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9851": {
+      "_meta": {
+       "title": "First-Pass Latent Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "pass1": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     },
+     "9500": {
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+      },
+      "_meta": {
+       "title": "Pass 2 prompt (no lyric text, no times)"
+      }
+     },
+     "9501": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "9500",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Pass 2 conditioning (windows)"
+      }
+     },
+     "9502": {
+      "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+      "inputs": {
+       "latent": [
+        "9851",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "conditioning": [
+        "9501",
+        0
+       ],
+       "upscale_model": [
+        "188",
+        0
+       ],
+       "sampler": [
+        "210",
+        0
+       ],
+       "sigmas": [
+        "192",
+        0
+       ],
+       "scale": [
+        "185",
+        0
+       ],
+       "chunk_seconds": 3.0,
+       "overlap_seconds": 1.6,
+       "overlap_mode": "locked",
+       "seed": 5678,
+       "tail_trim_seconds": 0.7,
+       "max_window_tokens": 0,
+       "upscale": "per_window"
+      },
+      "_meta": {
+       "title": "Pass 2 in windows (13.667 s clip)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": true,
+     "reason": "13.67 s is longer than 8 s, so pass 2 runs in windows.",
+     "windows": 9,
+     "chunk_node_id": "9502",
+     "encode_node_id": "9501",
+     "prompt_node_id": "9500",
+     "removed_nodes": [
+      "194",
+      "193",
+      "211",
+      "181",
+      "182",
+      "189"
+     ],
+     "head_locked": false,
+     "chunk_seconds": 3.0,
+     "overlap_seconds": 1.6,
+     "overlap_mode": "locked",
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window"
+    }
    }
   },
   {
@@ -14892,6 +18279,623 @@
      "scene_audio_mod": false,
      "guiders_rewired": 2,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Width"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 1024
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "Low Resolution Generation"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "136",
+        1
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "187",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "max",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "186",
+        1
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "212",
+        0
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "183",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "183": {
+      "_meta": {
+       "title": "Final Center Crop - Exact 1920x1080"
+      },
+      "class_type": "ImageResizeKJv2",
+      "inputs": {
+       "crop_position": "center",
+       "device": "cpu",
+       "divisible_by": 0,
+       "height": [
+        "184",
+        0
+       ],
+       "image": [
+        "122",
+        0
+       ],
+       "keep_proportion": "crop",
+       "pad_color": "0, 0, 0",
+       "upscale_method": "nvidia_rtx_vsr",
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "184": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Height"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 576
+      }
+     },
+     "185": {
+      "_meta": {
+       "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 2.0
+      }
+     },
+     "186": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Width"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "115",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "187": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Height"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "184",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "188": {
+      "_meta": {
+       "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+      },
+      "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+      "inputs": {
+       "device": "cuda",
+       "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+       "precision": "bf16"
+      }
+     },
+     "190": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Schedule Steps"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 2
+      }
+     },
+     "191": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Denoise"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 0.2
+      }
+     },
+     "192": {
+      "_meta": {
+       "title": "PASS 2 - Adjustable Refinement Scheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": [
+        "191",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": [
+        "190",
+        0
+       ]
+      }
+     },
+     "207": {
+      "_meta": {
+       "title": "Load LoRA"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 1.0
+      }
+     },
+     "210": {
+      "_meta": {
+       "title": "BUILDER INPUT - Pass 2 Sampler"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "212": {
+      "_meta": {
+       "title": "Decode MiniMax H3 native audio (pass 1)"
+      },
+      "class_type": "LTXVAudioVAEDecode",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "samples": [
+        "9851",
+        0
+       ]
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "9502",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9851": {
+      "_meta": {
+       "title": "First-Pass Latent Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "pass1": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     },
+     "9500": {
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+      },
+      "_meta": {
+       "title": "Pass 2 prompt (no lyric text, no times)"
+      }
+     },
+     "9501": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "9500",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Pass 2 conditioning (windows)"
+      }
+     },
+     "9502": {
+      "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+      "inputs": {
+       "latent": [
+        "9851",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "conditioning": [
+        "9501",
+        0
+       ],
+       "upscale_model": [
+        "188",
+        0
+       ],
+       "sampler": [
+        "210",
+        0
+       ],
+       "sigmas": [
+        "192",
+        0
+       ],
+       "scale": [
+        "185",
+        0
+       ],
+       "chunk_seconds": 3.0,
+       "overlap_seconds": 1.6,
+       "overlap_mode": "locked",
+       "seed": 5678,
+       "tail_trim_seconds": 0.7,
+       "max_window_tokens": 0,
+       "upscale": "per_window"
+      },
+      "_meta": {
+       "title": "Pass 2 in windows (13.667 s clip)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": true,
+     "reason": "13.67 s is longer than 8 s, so pass 2 runs in windows.",
+     "windows": 9,
+     "chunk_node_id": "9502",
+     "encode_node_id": "9501",
+     "prompt_node_id": "9500",
+     "removed_nodes": [
+      "194",
+      "193",
+      "211",
+      "181",
+      "182",
+      "189"
+     ],
+     "head_locked": false,
+     "chunk_seconds": 3.0,
+     "overlap_seconds": 1.6,
+     "overlap_mode": "locked",
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window"
     }
    }
   },
@@ -19750,6 +23754,438 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "9211",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 9.708333333
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video Combine"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0003/MiniMaxH3_scene_0003",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0003.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "9210": {
+      "_meta": {
+       "title": "Predecessor Latent Context (Scene 002 · 90 frames · masked)"
+      },
+      "class_type": "VRGDG_MiniMaxH3LoadLatent",
+      "inputs": {
+       "context_frames": 90,
+       "exact_frame_mode": false,
+       "masked_av": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 2
+      }
+     },
+     "9211": {
+      "_meta": {
+       "title": "MiniMax H3 Latent Continuation Masked (90 frames)"
+      },
+      "class_type": "VRGDG_MiniMaxH3ApplyMaskedContinuation",
+      "inputs": {
+       "context_latent": [
+        "9210",
+        0
+       ],
+       "include_audio": false,
+       "latent": [
+        "172",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 003)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 3,
+       "tail_padding_frames": 10
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9310": {
+      "class_type": "MiniMaxH3RefModAudioExtract",
+      "inputs": {
+       "audio": [
+        "171",
+        0
+       ],
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "name": "scene_audio",
+       "max_seconds": 60.0,
+       "max_tokens": 0,
+       "budget_policy": "error",
+       "concept_type": "singing",
+       "description": "",
+       "subfolder": "",
+       "save": false
+      },
+      "_meta": {
+       "title": "Scene audio as an audio RefMod"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ],
+       "mods_2": [
+        "9310",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
+    }
    }
   },
   {
@@ -20205,6 +24641,410 @@
      "scene_audio_mod": false,
      "guiders_rewired": 1,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "141",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "9211",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "141",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 9.708333333
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video Combine"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0003/MiniMaxH3_scene_0003",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0003.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "9210": {
+      "_meta": {
+       "title": "Predecessor Latent Context (Scene 002 · 90 frames · masked)"
+      },
+      "class_type": "VRGDG_MiniMaxH3LoadLatent",
+      "inputs": {
+       "context_frames": 90,
+       "exact_frame_mode": false,
+       "masked_av": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 2
+      }
+     },
+     "9211": {
+      "_meta": {
+       "title": "MiniMax H3 Latent Continuation Masked (90 frames)"
+      },
+      "class_type": "VRGDG_MiniMaxH3ApplyMaskedContinuation",
+      "inputs": {
+       "context_latent": [
+        "9210",
+        0
+       ],
+       "include_audio": false,
+       "latent": [
+        "172",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 003)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 3,
+       "tail_padding_frames": 10
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
     }
    }
   },
@@ -24171,6 +29011,680 @@
      "guiders_rewired": 2,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Width"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 1024
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "9201",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "Low Resolution Generation"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "9201",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "187",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "max",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "186",
+        1
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "183",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "183": {
+      "_meta": {
+       "title": "Final Center Crop - Exact 1920x1080"
+      },
+      "class_type": "ImageResizeKJv2",
+      "inputs": {
+       "crop_position": "center",
+       "device": "cpu",
+       "divisible_by": 0,
+       "height": [
+        "184",
+        0
+       ],
+       "image": [
+        "122",
+        0
+       ],
+       "keep_proportion": "crop",
+       "pad_color": "0, 0, 0",
+       "upscale_method": "nvidia_rtx_vsr",
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "184": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Height"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 576
+      }
+     },
+     "185": {
+      "_meta": {
+       "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 2.0
+      }
+     },
+     "186": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Width"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "115",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "187": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Height"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "184",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "188": {
+      "_meta": {
+       "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+      },
+      "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+      "inputs": {
+       "device": "cuda",
+       "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+       "precision": "bf16"
+      }
+     },
+     "190": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Schedule Steps"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 2
+      }
+     },
+     "191": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Denoise"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 0.2
+      }
+     },
+     "192": {
+      "_meta": {
+       "title": "PASS 2 - Adjustable Refinement Scheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": [
+        "191",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": [
+        "190",
+        0
+       ]
+      }
+     },
+     "207": {
+      "_meta": {
+       "title": "Load LoRA"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 1.0
+      }
+     },
+     "210": {
+      "_meta": {
+       "title": "BUILDER INPUT - Pass 2 Sampler"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "9201": {
+      "_meta": {
+       "title": "Extra MiniMax LoRA 1 - pass1"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "style\\film_look.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 0.7
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "9502",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9851": {
+      "_meta": {
+       "title": "First-Pass Latent Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "pass1": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9310": {
+      "class_type": "MiniMaxH3RefModAudioExtract",
+      "inputs": {
+       "audio": [
+        "171",
+        0
+       ],
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "name": "scene_audio",
+       "max_seconds": 60.0,
+       "max_tokens": 0,
+       "budget_policy": "error",
+       "concept_type": "singing",
+       "description": "",
+       "subfolder": "",
+       "save": false
+      },
+      "_meta": {
+       "title": "Scene audio as an audio RefMod"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ],
+       "mods_2": [
+        "9310",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     },
+     "9500": {
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+      },
+      "_meta": {
+       "title": "Pass 2 prompt (no lyric text, no times)"
+      }
+     },
+     "9501": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "9500",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Pass 2 conditioning (windows)"
+      }
+     },
+     "9502": {
+      "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+      "inputs": {
+       "latent": [
+        "9851",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "conditioning": [
+        "9501",
+        0
+       ],
+       "upscale_model": [
+        "188",
+        0
+       ],
+       "sampler": [
+        "210",
+        0
+       ],
+       "sigmas": [
+        "192",
+        0
+       ],
+       "scale": [
+        "185",
+        0
+       ],
+       "chunk_seconds": 3.0,
+       "overlap_seconds": 1.6,
+       "overlap_mode": "locked",
+       "seed": 5678,
+       "tail_trim_seconds": 0.7,
+       "max_window_tokens": 0,
+       "upscale": "per_window"
+      },
+      "_meta": {
+       "title": "Pass 2 in windows (13.667 s clip)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": true,
+     "reason": "13.67 s is longer than 8 s, so pass 2 runs in windows.",
+     "windows": 9,
+     "chunk_node_id": "9502",
+     "encode_node_id": "9501",
+     "prompt_node_id": "9500",
+     "removed_nodes": [
+      "194",
+      "193",
+      "211",
+      "181",
+      "182",
+      "189"
+     ],
+     "head_locked": false,
+     "chunk_seconds": 3.0,
+     "overlap_seconds": 1.6,
+     "overlap_mode": "locked",
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window"
+    }
    }
   },
   {
@@ -24874,6 +30388,652 @@
      "scene_audio_mod": false,
      "guiders_rewired": 2,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Width"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 1024
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode - Two-Pass Refined Upscaled Latent"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "9201",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "Low Resolution Generation"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "9201",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "187",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "max",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "186",
+        1
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Learned Latent Upscaled 1080p Video"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001_stage2",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "183",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "183": {
+      "_meta": {
+       "title": "Final Center Crop - Exact 1920x1080"
+      },
+      "class_type": "ImageResizeKJv2",
+      "inputs": {
+       "crop_position": "center",
+       "device": "cpu",
+       "divisible_by": 0,
+       "height": [
+        "184",
+        0
+       ],
+       "image": [
+        "122",
+        0
+       ],
+       "keep_proportion": "crop",
+       "pad_color": "0, 0, 0",
+       "upscale_method": "nvidia_rtx_vsr",
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "184": {
+      "_meta": {
+       "title": "BUILDER INPUT - Desired Final Height"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 576
+      }
+     },
+     "185": {
+      "_meta": {
+       "title": "BUILDER INPUT - Learned Latent Upscale Scale"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 2.0
+      }
+     },
+     "186": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Width"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "115",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "187": {
+      "_meta": {
+       "title": "AUTO - Aligned First Pass Height"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(32, ceil((a / b) / 32) * 32)",
+       "values.a": [
+        "184",
+        0
+       ],
+       "values.b": [
+        "185",
+        0
+       ]
+      }
+     },
+     "188": {
+      "_meta": {
+       "title": "BUILDER INPUT - MiniMax H3 Latent Upscale Model"
+      },
+      "class_type": "VRGDG_MiniMaxH3LatentUpscaleModelLoader",
+      "inputs": {
+       "device": "cuda",
+       "model_name": "minimax_h3_latent_upscaler_3d_bf16.safetensors",
+       "precision": "bf16"
+      }
+     },
+     "190": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Schedule Steps"
+      },
+      "class_type": "PrimitiveInt",
+      "inputs": {
+       "value": 2
+      }
+     },
+     "191": {
+      "_meta": {
+       "title": "BUILDER INPUT - Refinement Denoise"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 0.2
+      }
+     },
+     "192": {
+      "_meta": {
+       "title": "PASS 2 - Adjustable Refinement Scheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": [
+        "191",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": [
+        "190",
+        0
+       ]
+      }
+     },
+     "207": {
+      "_meta": {
+       "title": "Load LoRA"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 1.0
+      }
+     },
+     "210": {
+      "_meta": {
+       "title": "BUILDER INPUT - Pass 2 Sampler"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "9201": {
+      "_meta": {
+       "title": "Extra MiniMax LoRA 1 - pass1"
+      },
+      "class_type": "LoraLoaderModelOnly",
+      "inputs": {
+       "lora_name": "style\\film_look.safetensors",
+       "model": [
+        "141",
+        0
+       ],
+       "strength_model": 0.7
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "9502",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9851": {
+      "_meta": {
+       "title": "First-Pass Latent Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "pass1": true,
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     },
+     "9500": {
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings in sync with <Audio 1>."
+      },
+      "_meta": {
+       "title": "Pass 2 prompt (no lyric text, no times)"
+      }
+     },
+     "9501": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "9500",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Pass 2 conditioning (windows)"
+      }
+     },
+     "9502": {
+      "class_type": "VRGDG_MiniMaxH3ChunkedPass2",
+      "inputs": {
+       "latent": [
+        "9851",
+        0
+       ],
+       "model": [
+        "207",
+        0
+       ],
+       "conditioning": [
+        "9501",
+        0
+       ],
+       "upscale_model": [
+        "188",
+        0
+       ],
+       "sampler": [
+        "210",
+        0
+       ],
+       "sigmas": [
+        "192",
+        0
+       ],
+       "scale": [
+        "185",
+        0
+       ],
+       "chunk_seconds": 3.0,
+       "overlap_seconds": 1.6,
+       "overlap_mode": "locked",
+       "seed": 5678,
+       "tail_trim_seconds": 0.7,
+       "max_window_tokens": 0,
+       "upscale": "per_window"
+      },
+      "_meta": {
+       "title": "Pass 2 in windows (13.667 s clip)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": true,
+     "reason": "13.67 s is longer than 8 s, so pass 2 runs in windows.",
+     "windows": 9,
+     "chunk_node_id": "9502",
+     "encode_node_id": "9501",
+     "prompt_node_id": "9500",
+     "removed_nodes": [
+      "194",
+      "193",
+      "211",
+      "181",
+      "182",
+      "189"
+     ],
+     "head_locked": false,
+     "chunk_seconds": 3.0,
+     "overlap_seconds": 1.6,
+     "overlap_mode": "locked",
+     "tail_trim_seconds": 0.7,
+     "upscale": "per_window"
     }
    }
   },
@@ -30064,6 +36224,422 @@
      "guiders_rewired": 1,
      "labels_relabelled": {}
     }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "9210",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "9210",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video Combine"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "9210": {
+      "_meta": {
+       "title": "TE-Speed MiniMax H3"
+      },
+      "class_type": "TESpeedMiniMaxH3",
+      "inputs": {
+       "cache_depth": 0.75,
+       "device": "auto",
+       "mcs": 2,
+       "model": [
+        "141",
+        0
+       ],
+       "processing_control_value": 0.07,
+       "processing_percent_1": 0.1,
+       "processing_percent_2": 0.9
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9310": {
+      "class_type": "MiniMaxH3RefModAudioExtract",
+      "inputs": {
+       "audio": [
+        "171",
+        0
+       ],
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "name": "scene_audio",
+       "max_seconds": 60.0,
+       "max_tokens": 0,
+       "budget_policy": "error",
+       "concept_type": "singing",
+       "description": "",
+       "subfolder": "",
+       "save": false
+      },
+      "_meta": {
+       "title": "Scene audio as an audio RefMod"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ],
+       "mods_2": [
+        "9310",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
+    }
    }
   },
   {
@@ -30503,6 +37079,394 @@
      "scene_audio_mod": false,
      "guiders_rewired": 1,
      "labels_relabelled": {}
+    }
+   },
+   "chunked": {
+    "frames": 328,
+    "prompt": {
+     "115": {
+      "_meta": {
+       "title": "Resolution Selector (Size)"
+      },
+      "class_type": "ResolutionSelector",
+      "inputs": {
+       "aspect_ratio": "16:9 (Widescreen)",
+       "megapixels": 0.5625,
+       "multiple": 32
+      }
+     },
+     "119": {
+      "_meta": {
+       "title": "Load Video VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+     },
+     "120": {
+      "_meta": {
+       "title": "Load Audio VAE"
+      },
+      "class_type": "VAELoader",
+      "inputs": {
+       "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+     },
+     "122": {
+      "_meta": {
+       "title": "VAE Decode"
+      },
+      "class_type": "VAEDecode",
+      "inputs": {
+       "samples": [
+        "9850",
+        0
+       ],
+       "vae": [
+        "119",
+        0
+       ]
+      }
+     },
+     "123": {
+      "_meta": {
+       "title": "KSamplerSelect"
+      },
+      "class_type": "KSamplerSelect",
+      "inputs": {
+       "sampler_name": "res_multistep"
+      }
+     },
+     "124": {
+      "_meta": {
+       "title": "BasicScheduler"
+      },
+      "class_type": "BasicScheduler",
+      "inputs": {
+       "denoise": 1.0,
+       "model": [
+        "9210",
+        0
+       ],
+       "scheduler": "simple",
+       "steps": 20
+      }
+     },
+     "125": {
+      "_meta": {
+       "title": "SamplerCustomAdvanced"
+      },
+      "class_type": "SamplerCustomAdvanced",
+      "inputs": {
+       "guider": [
+        "126",
+        0
+       ],
+       "latent_image": [
+        "172",
+        0
+       ],
+       "noise": [
+        "129",
+        0
+       ],
+       "sampler": [
+        "123",
+        0
+       ],
+       "sigmas": [
+        "124",
+        0
+       ]
+      }
+     },
+     "126": {
+      "_meta": {
+       "title": "Basic Guider"
+      },
+      "class_type": "BasicGuider",
+      "inputs": {
+       "conditioning": [
+        "9330",
+        0
+       ],
+       "model": [
+        "9210",
+        0
+       ]
+      }
+     },
+     "128": {
+      "_meta": {
+       "title": "Load CLIP"
+      },
+      "class_type": "CLIPLoader",
+      "inputs": {
+       "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+       "device": "default",
+       "type": "minimax"
+      }
+     },
+     "129": {
+      "_meta": {
+       "title": "BUILDER INPUT - Seed"
+      },
+      "class_type": "RandomNoise",
+      "inputs": {
+       "noise_seed": 1234
+      }
+     },
+     "131": {
+      "_meta": {
+       "title": "H3 Duration To Valid Frame Count"
+      },
+      "class_type": "ComfyMathExpression",
+      "inputs": {
+       "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+       "values.a": [
+        "132",
+        0
+       ]
+      }
+     },
+     "132": {
+      "_meta": {
+       "title": "BUILDER INPUT - Duration"
+      },
+      "class_type": "PrimitiveFloat",
+      "inputs": {
+       "value": 6.0
+      }
+     },
+     "136": {
+      "_meta": {
+       "title": "MiniMax H3 Reference to Video"
+      },
+      "class_type": "MiniMaxH3ReferenceToVideo",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "clip": [
+        "128",
+        0
+       ],
+       "height": [
+        "115",
+        1
+       ],
+       "length": [
+        "131",
+        1
+       ],
+       "prompt": " ",
+       "ref_image_size": "match",
+       "vae": [
+        "119",
+        0
+       ],
+       "width": [
+        "115",
+        0
+       ]
+      }
+     },
+     "138": {
+      "_meta": {
+       "title": "BUILDER INPUT - Prompt"
+      },
+      "class_type": "PrimitiveStringMultiline",
+      "inputs": {
+       "value": "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+      }
+     },
+     "141": {
+      "_meta": {
+       "title": "Diffusion Model Loader KJ"
+      },
+      "class_type": "DiffusionModelLoaderKJ",
+      "inputs": {
+       "compute_dtype": "default",
+       "enable_fp16_accumulation": true,
+       "model_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+       "patch_cublaslinear": false,
+       "sage_attention": "auto",
+       "weight_dtype": "default"
+      }
+     },
+     "142": {
+      "_meta": {
+       "title": "BUILDER OUTPUT - Video Combine"
+      },
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+       "audio": [
+        "172",
+        1
+       ],
+       "crf": 19,
+       "filename_prefix": "VRGDG_MiniMaxH3/Demo_Song_ae60cccf/scene_0001/MiniMaxH3_scene_0001",
+       "format": "video/h264-mp4",
+       "frame_rate": 24,
+       "images": [
+        "122",
+        0
+       ],
+       "loop_count": 0,
+       "pingpong": false,
+       "pix_fmt": "yuv420p",
+       "save_metadata": true,
+       "save_output": true,
+       "trim_to_audio": false
+      }
+     },
+     "171": {
+      "_meta": {
+       "title": "BUILDER INPUT - Custom Source Audio Path"
+      },
+      "class_type": "VHS_LoadAudio",
+      "inputs": {
+       "audio_file": "Z:\\h3fixture\\Projects\\Demo Song\\minimax_h3_scene_audio\\scene_audio_0001.wav",
+       "duration": 0,
+       "seek_seconds": 0
+      }
+     },
+     "172": {
+      "_meta": {
+       "title": "LOCK SOURCE AUDIO - GENERATE VIDEO ONLY"
+      },
+      "class_type": "VRGDG_MiniMaxH3AudioDrive",
+      "inputs": {
+       "audio_vae": [
+        "120",
+        0
+       ],
+       "av_latent": [
+        "136",
+        1
+       ],
+       "source_audio": [
+        "171",
+        0
+       ]
+      }
+     },
+     "9210": {
+      "_meta": {
+       "title": "TE-Speed MiniMax H3"
+      },
+      "class_type": "TESpeedMiniMaxH3",
+      "inputs": {
+       "cache_depth": 0.75,
+       "device": "auto",
+       "mcs": 2,
+       "model": [
+        "141",
+        0
+       ],
+       "processing_control_value": 0.07,
+       "processing_percent_1": 0.1,
+       "processing_percent_2": 0.9
+      }
+     },
+     "9850": {
+      "_meta": {
+       "title": "Universal Latent Auto-Save (Scene 001)"
+      },
+      "class_type": "VRGDG_MiniMaxH3SaveLatent",
+      "inputs": {
+       "fps": 24.0,
+       "frame_count": 0,
+       "latent": [
+        "125",
+        0
+       ],
+       "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
+       "scene_number": 1,
+       "tail_padding_frames": 14
+      }
+     },
+     "9301": {
+      "class_type": "MiniMaxH3RefModsLoader",
+      "inputs": {
+       "show_info": false,
+       "mod_1": "identity/brad",
+       "strength_1": 1.0,
+       "copies_1": 1,
+       "mod_2": "identity/darrel",
+       "strength_2": 0.8,
+       "copies_2": 1,
+       "mod_3": "background/meadow",
+       "strength_3": 1.0,
+       "copies_3": 1,
+       "mod_4": "(none)",
+       "strength_4": 1.0,
+       "copies_4": 1,
+       "mod_5": "(none)",
+       "strength_5": 1.0,
+       "copies_5": 1,
+       "mod_6": "(none)",
+       "strength_6": 1.0,
+       "copies_6": 1,
+       "mod_7": "(none)",
+       "strength_7": 1.0,
+       "copies_7": 1,
+       "mod_8": "(none)",
+       "strength_8": 1.0,
+       "copies_8": 1
+      },
+      "_meta": {
+       "title": "RefMods for this scene (1)"
+      }
+     },
+     "9320": {
+      "class_type": "VRGDG_RefModCombine",
+      "inputs": {
+       "mods_1": [
+        "9301",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "RefMods and scene audio"
+      }
+     },
+     "9330": {
+      "class_type": "MiniMaxH3RefModTextEncode",
+      "inputs": {
+       "clip": [
+        "128",
+        0
+       ],
+       "mods": [
+        "9320",
+        0
+       ],
+       "prompt": [
+        "138",
+        0
+       ],
+       "reference_fps": 24.0,
+       "max_total_tokens": 0,
+       "vae": [
+        "119",
+        0
+       ]
+      },
+      "_meta": {
+       "title": "Text Encode with RefMods (labels the references)"
+      }
+     }
+    },
+    "summary": {
+     "mode": "auto",
+     "min_seconds": 8.0,
+     "rendered_seconds": 13.667,
+     "enabled": false,
+     "reason": "Pass 2 runs in one piece because the graph has no single learned-upscale replace node.",
+     "windows": 9
     }
    }
   },

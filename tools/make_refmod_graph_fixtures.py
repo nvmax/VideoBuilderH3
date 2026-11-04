@@ -3,7 +3,9 @@
     python tools/make_refmod_graph_fixtures.py --pack <pack folder>
 
 The pack's ``apply_refmod_pipeline`` runs on graphs that are already golden fixtures, with a stand-in RefMod library.
-Writes ``fixtures/timeline/refmod_graphs.json``.
+Writes ``fixtures/timeline/refmod_graphs.json``. For the ``base`` and ``built_in`` payloads each case also holds the graph
+after the pack's chunked second pass (``apply_chunked_pass2``) ran on the RefMod graph, which is the order the 2 Pass
+builder uses.
 """
 
 import argparse
@@ -23,6 +25,8 @@ LIBRARY = {
     "style/film": {"name": "style/film", "kind": "image", "tokens": 300},
 }
 
+CHUNKED_PAYLOADS = ("base", "built_in")
+CHUNKED_FRAMES = 328  # 13.67 s, longer than the 8 s default
 GRAPHS = ["r2v_single_scene1", "r2v_two_pass_scene1", "r2v_single_built_in_audio", "r2v_two_pass_built_in_audio", "r2v_single_masked_ctx90_scene3", "r2v_two_pass_lora", "r2v_single_use_te_speed"]
 
 BASE_REFS = [{"name": "identity/brad", "strength": 1.0}, {"name": "identity/darrel", "strength": 0.8}, {"name": "background/meadow", "strength": 1.0}]
@@ -61,6 +65,7 @@ def main() -> int:
     pack_env.install_server_stub()
     rm = importlib.import_module("vrgdg_pack.runner.minimax_refmod")
     rm.find_refmod = lambda name: LIBRARY.get(name)
+    chunked = importlib.import_module("vrgdg_pack.runner.minimax_chunked_pass2")
 
     cases = []
     for graph_name in GRAPHS:
@@ -72,6 +77,11 @@ def main() -> int:
             try:
                 summary = rm.apply_refmod_pipeline(prompt, copy.deepcopy(payload))
                 entry["return"] = {"prompt": prompt, "summary": summary}
+                if label in CHUNKED_PAYLOADS:
+                    after = copy.deepcopy(prompt)
+                    result = chunked.apply_chunked_pass2(
+                        after, {"pass2_chunking": "auto", "pass2_chunking_min_seconds": 8}, {"h3_frame_count": CHUNKED_FRAMES})
+                    entry["chunked"] = {"frames": CHUNKED_FRAMES, "prompt": after, "summary": result}
             except Exception as exc:  # noqa: BLE001
                 entry["return"] = {"error": str(exc), "type": type(exc).__name__}
             cases.append(entry)

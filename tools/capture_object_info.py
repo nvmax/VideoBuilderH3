@@ -20,7 +20,7 @@ PATCHER_NODES = [
     "VRGDG_MiniMaxH3KeyframeTiming", "VRGDG_MiniMaxH3LoadDraft", "VRGDG_MiniMaxH3LoadLatent",
     "VRGDG_MiniMaxH3SaveDraft", "VRGDG_MiniMaxH3SaveLatent", "VRGDG_MiniMaxH3SpatialTilePlan",
     "VRGDG_MiniMaxH3UltimateUpscaleParams", "VRGDG_RefModCombine", "LoadImage", "ImageResizeKJv2",
-    "MiniMaxChunkFeedForward", "BlockSparseAttention", "MiniMaxH3SigmaShift",
+    "MiniMaxChunkFeedForward", "BlockSparseAttention", "MiniMaxH3SigmaShift", "VRGDG_MiniMaxH3ChunkedPass2",
 ]
 
 

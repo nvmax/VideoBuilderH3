@@ -751,6 +751,13 @@ pub fn build_two_pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         patch_i2v_keyframe_timing(&mut prompt, &timing);
     }
     let refmod = apply_refmod_if_requested(env, &mut prompt, payload)?;
+    // Long clips refine their second pass in windows. Every other patch has already been applied, so the rewrite only
+    // swaps the whole-clip upscale and sampler. The payload must ask for it, so direct callers keep the normal graph.
+    let chunked_pass2 = if text(payload.get("pass2_chunking")).to_lowercase() == "auto" {
+        json!(crate::chunked_pass2::apply_chunked_pass2(env, &mut prompt, payload, Some(timing.h3_frame_count)))
+    } else {
+        Value::Null
+    };
     let pass1_steps = inputs(&prompt, "124").and_then(|i| i.get("steps")).cloned().unwrap_or(Value::Null);
     let pass2_steps = inputs(&prompt, "190").and_then(|i| i.get("value")).cloned().unwrap_or(Value::Null);
     let any = |key: &str| ["pass1", "pass2"].iter().any(|t| flag(t, key));
@@ -759,6 +766,7 @@ pub fn build_two_pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         "output_folder": output_folder,
         "prompt": prompt,
         "refmod": refmod,
+        "chunked_pass2": chunked_pass2,
         "latent_continuation_settings": continuation,
         "save_latent_settings": save_latent,
         "used_seed": seed,
@@ -846,6 +854,8 @@ pub fn build_advanced(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         base.entry(key.to_string()).or_insert(value);
     }
     base.insert("_skip_latent_patches".into(), json!(true));
+    // Advanced replaces the whole second pass with its own tiled one, so the windowed second pass has nothing to swap.
+    base.insert("pass2_chunking".into(), json!("off"));
     let mut result = build_two_pass(env, &base)?;
     let mut prompt = result.get("prompt").and_then(Value::as_object).cloned().unwrap_or_default();
 

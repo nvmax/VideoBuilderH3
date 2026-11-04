@@ -23,6 +23,8 @@ pub enum Feature {
     BuiltInAudio,
     /// Making a scene's video again from its saved latent (`render_phase` redecode).
     Redecode,
+    /// Refining a long scene's second pass in windows (`pass2_chunking`).
+    ChunkedPass2,
 }
 
 impl Feature {
@@ -37,6 +39,7 @@ impl Feature {
             Feature::RefMod => "RefMod pipeline",
             Feature::BuiltInAudio => "Built-in audio",
             Feature::Redecode => "Re-decode from saved latents",
+            Feature::ChunkedPass2 => "Pass 2 in windows for long scenes",
         }
     }
 }
@@ -112,6 +115,7 @@ pub const REQUIRED_NODES: &[NodeRequirement] = &[
     req("VRGDG_RefModCombine", VRGDG, Feature::RefMod),
     req("LTXVAudioVAEDecode", CORE_COMFY, Feature::BuiltInAudio),
     req("VRGDG_MiniMaxH3LoadLatentFull", VRGDG, Feature::Redecode),
+    req("VRGDG_MiniMaxH3ChunkedPass2", VRGDG, Feature::ChunkedPass2),
 ];
 
 /// Result of comparing [`REQUIRED_NODES`] with `/object_info`.

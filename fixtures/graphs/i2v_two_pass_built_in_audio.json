@@ -45,6 +45,8 @@
   "pass1_use_block_sparse_attention": false,
   "pass1_use_feedforward": false,
   "pass1_use_te_speed": false,
+  "pass2_chunking": "auto",
+  "pass2_chunking_min_seconds": 8,
   "pass2_denoise": 0.2,
   "pass2_sampler_name": "res_multistep",
   "pass2_scheduler": "simple",
@@ -120,6 +122,13 @@
  "project_folder": "Z:\\h3fixture\\Projects\\Demo Song",
  "result": {
   "audio_mode": "built_in_audio",
+  "chunked_pass2": {
+   "enabled": false,
+   "min_seconds": 8.0,
+   "mode": "auto",
+   "reason": "6.58 s is not longer than 8 s, so pass 2 runs in one piece.",
+   "rendered_seconds": 6.583
+  },
   "latent_continuation_settings": {
    "enabled": false,
    "reason": "Continuity mode is not latent_continuation_masked"
@@ -878,6 +887,8 @@
   "lora_count": 0,
   "loras": [],
   "megapixels": 0.5625,
+  "pass2_chunking": "auto",
+  "pass2_chunking_min_seconds": 8,
   "pipeline": "standard",
   "ref_image_size": "max",
   "render_pass": "two_pass",

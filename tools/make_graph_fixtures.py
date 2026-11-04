@@ -23,6 +23,26 @@ IMAGES = [pack_env.FAKE_ROOT + "\\Projects\\Demo Song\\refs\\" + n for n in ("si
 START_FRAME = pack_env.FAKE_ROOT + "\\Projects\\Demo Song\\zimage_approved\\image_0003.png"
 LAST_FRAME = pack_env.FAKE_ROOT + "\\Projects\\Demo Song\\zimage_approved\\image_0004.png"
 PROMPT = "A singer walks down a neon street at night, <Subject 1> sings <d>[English] Hold on tight.</d> in sync with <Audio 1>."
+# A six-section prompt with shot times and lyric cues, for the chunked second pass. Shots 2 and 3 read the same once the
+# cues are removed, so the pass 2 prompt merges them.
+LONG_PROMPT = (
+    "subject_definitions:\n"
+    "<Subject 1> is Gabriel from the <Picture 1> character reference.\n\n"
+    "<Audio 1> is the complete synchronized song and vocal track.\n\n"
+    "detailed_description:\n"
+    "The target video is a gritty, photorealistic cinematic music video.\n\n"
+    "[Shot 1] A continuous medium close-up of <Subject 1>'s face: <Subject 1> sings in sync with the vocals in "
+    "<Audio 1> from 1.0 s to 4.44 s, <d>[English, somber, soft singing] My <i>brother's</i> gone quiet <breath> the "
+    "<i>throne</i> stands bare</d>, delivered softly with small natural lip and jaw movements.\n\n"
+    "[Shot 2] At 00:04.600, continuing directly from the previous shot's final moment, <Subject 1> sings in sync "
+    "with the vocals in <Audio 1> from 4.76 s to 5.76 s, <d>[English, quiet] I breathe the <i>air</i>.</d>, "
+    "delivered softly.\n\n"
+    "[Shot 3] At 00:06.000, continuing directly from the previous shot's final moment, <Subject 1> sings in sync "
+    "with the vocals in <Audio 1> from 6.0 s to 7.5 s, <d>[English, quiet] Hold on tight.</d>, delivered softly.\n\n"
+    "[Shot 4] At 00:08.000, the camera slowly pulls back to a wide shot of the empty hall while <Subject 1> hums.\n\n"
+    "overall_soundscape:\n"
+    "<Audio 1> remains the sole complete soundtrack.\n"
+)
 
 
 def scene(number=1, start=0.0, end=6.0, **extra):
@@ -169,6 +189,22 @@ def cases():
     add("i2v_two_pass_built_in_audio", {"video_mode": "image_to_video", **seeds, "render_pass": "two_pass", "i2v_pass_settings_version": 1,
                                         "audio_mode": "built_in_audio"}, one_image)
     add("r2v_advanced_built_in_audio", {**base, "render_pass": "three_pass", "audio_mode": "built_in_audio"})
+    # Pass 2 in windows (pass2_chunking): a rendered clip longer than the limit swaps its second pass for the chunk node.
+    long_scene = scene(number=1, start=0.0, end=12.0, prompt=LONG_PROMPT)
+    two = {**base, "render_pass": "two_pass"}
+    add("r2v_two_pass_chunked_long", two, long_scene)
+    add("r2v_two_pass_chunked_limit3", {**two, "pass2_chunking_min_seconds": 3}, scene(number=1, start=0.0, end=5.0, prompt=LONG_PROMPT))
+    add("r2v_two_pass_chunked_limit_not_met", {**two, "pass2_chunking_min_seconds": 6.5}, scene(number=1, start=0.0, end=5.0, prompt=LONG_PROMPT))
+    add("r2v_two_pass_chunking_off_long", {**two, "pass2_chunking": "off"}, long_scene)
+    add("r2v_two_pass_chunked_masked_scene3", {**two, "continuity_mode": "latent_continuation_masked", "latent_context_frames": 90},
+        scene(number=3, start=12.0, end=21.0, continuity_mode="latent_continuation_masked", prompt=LONG_PROMPT))
+    add("r2v_two_pass_chunked_built_in_audio", {**two, "audio_mode": "built_in_audio"}, long_scene)
+    add("r2v_two_pass_chunked_dmad", set_dmad({**two, "use_loras": True, "lora_count": 1, "loras": [{**lora, "apply_to": "both"}]}, True), long_scene)
+    add("r2v_two_pass_chunked_sigma_both", {**two, **sigma, "sigma_pass2_enabled": True, "sigma_pass2_video": 5, "sigma_pass2_audio": 2}, long_scene)
+    add("r2v_advanced_long_not_chunked", {**base, "render_pass": "three_pass"}, long_scene)
+    add("t2v_two_pass_chunked_long", {**t2v, "render_pass": "two_pass"}, scene(number=1, start=0.0, end=12.0, prompt=LONG_PROMPT, image_paths=[]))
+    add("i2v_two_pass_chunked_unsupported", {"video_mode": "image_to_video", **seeds, "render_pass": "two_pass", "i2v_pass_settings_version": 1},
+        scene(image_paths=[START_FRAME], start=0.0, end=12.0))
     # Scene prompt, timing and input edge cases that must error.
     add("error_empty_prompt", {**base, "render_pass": "single"}, scene(prompt=""))
     add("error_unknown_model", {**base, "render_pass": "single", "diffusion_model_name": "missing_model.safetensors"})

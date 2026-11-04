@@ -16,7 +16,8 @@ const DEFAULTS_JSON: &str = include_str!("../data/h3_settings_defaults.json");
 
 const LORA_APPLY_TO: [&str; 3] = ["both", "pass1", "pass2"];
 const REFERENCE_MODES: [&str; 2] = ["reference_to_video", "image_reference_to_video"];
-const DECIMAL_KEY_TOKENS: [&str; 9] = ["megapixels", "denoise", "strength", "scale", "percent", "threshold", "depth", "noise", "sigma"];
+const DECIMAL_KEY_TOKENS: [&str; 10] =
+    ["megapixels", "denoise", "strength", "scale", "percent", "threshold", "depth", "noise", "sigma", "seconds"];
 const SAGE_ATTENTION: [&str; 8] = [
     "disabled",
     "auto",
@@ -100,6 +101,7 @@ fn enum_values(key: &str) -> Option<Vec<String>> {
             "natural", "surreal_morph", "dreamlike_dissolve", "environment_transformation", "camera_reveal", "custom",
         ]),
         "ref_image_size" => list(&["max", "match"]),
+        "pass2_chunking" => list(&["auto", "off"]),
         "resolution_preset" | "advanced_two_pass_pass1_resolution_preset" => list(&RESOLUTION_PRESETS),
         "advanced_two_pass_vram_preset" => list(&["8gb", "12gb", "16gb", "24gb"]),
         "continuity_mode" => list(&["off", MASKED]),
@@ -156,6 +158,10 @@ fn numeric_range(key: &str) -> Option<(f64, f64)> {
     // Sigma shift (ModelSamplingMiniMaxH3): sigma_pass{1,2}_{video,audio}.
     if key.starts_with("sigma_pass") && (key.ends_with("_video") || key.ends_with("_audio")) {
         return Some((0.01, 100.0));
+    }
+    // Pass 2 chunking: a rendered clip longer than this many seconds is refined in windows.
+    if key == "pass2_chunking_min_seconds" {
+        return Some((1.0, 15.0));
     }
     None
 }
@@ -726,6 +732,8 @@ pub fn build_render_payload(settings: &Obj, overrides: Option<&Obj>) -> Result<O
         put("final_width", json!(w));
         put("final_height", json!(h));
         put("latent_upscale_scale", g("two_pass_latent_upscale_scale"));
+        put("pass2_chunking", g("pass2_chunking"));
+        put("pass2_chunking_min_seconds", g("pass2_chunking_min_seconds"));
     }
     if multi {
         put("latent_upscaler_name", g("two_pass_latent_upscaler_name"));

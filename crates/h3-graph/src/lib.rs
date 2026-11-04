@@ -4,6 +4,7 @@
 //! API graph and a summary. They reach the outside world only through [`GraphEnv`].
 
 pub mod api;
+pub mod chunked_pass2;
 pub mod drafts;
 pub mod env;
 pub mod image;

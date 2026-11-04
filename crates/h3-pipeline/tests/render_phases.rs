@@ -179,6 +179,33 @@ fn outcome(dir: &Path, raw: &Path, phase: RenderPhase, graph: Value) -> RenderOu
 }
 
 #[test]
+fn a_finished_scene_reports_what_pass_2_did() {
+    let Ok(tools) = h3_media::Tools::find("ffmpeg", "ffprobe") else {
+        eprintln!("ffmpeg is not installed: the finished scene is not tested");
+        return;
+    };
+    let dir = tempfile::tempdir().unwrap();
+    let project_dir = dir.path().join("Demo");
+    std::fs::create_dir_all(&project_dir).unwrap();
+    let env = LiveEnv::new(json!({}), ComfyDirs { output: dir.path().display().to_string(), input: String::new(), temp: String::new() }, tools);
+    project(&project_dir, json!({}), json!({"render_pass": "two_pass"}));
+
+    let report = json!({"mode": "auto", "min_seconds": 5.0, "rendered_seconds": 6.0, "enabled": true, "windows": 4, "reason": "6.00 s is longer than 5 s, so pass 2 runs in windows."});
+    let raw = dir.path().join("MiniMaxH3_scene_0001_windowed.mp4");
+    make_clip(&raw, 2);
+    let windowed = finish_scene(&env, &project_dir, &outcome(dir.path(), &raw, RenderPhase::Full, json!({"two_pass": {}, "chunked_pass2": report.clone()})), &FinishOptions::default()).unwrap();
+    assert_eq!(windowed.chunked_pass2, Some(report));
+
+    // A graph with pass 2 chunking off reports null, and a graph that says nothing has no key. Both leave it out.
+    for (name, graph) in [("off", json!({"two_pass": {}, "chunked_pass2": null})), ("silent", json!({"two_pass": {}}))] {
+        let raw = dir.path().join(format!("MiniMaxH3_scene_0001_{name}.mp4"));
+        make_clip(&raw, 2);
+        let done = finish_scene(&env, &project_dir, &outcome(dir.path(), &raw, RenderPhase::Full, graph), &FinishOptions::default()).unwrap();
+        assert_eq!(done.chunked_pass2, None, "{name}");
+    }
+}
+
+#[test]
 fn a_finished_scene_keeps_its_draft_and_a_finished_draft_replaces_it() {
     let Ok(tools) = h3_media::Tools::find("ffmpeg", "ffprobe") else {
         eprintln!("ffmpeg is not installed: the finished scene is not tested");

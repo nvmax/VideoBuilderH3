@@ -116,7 +116,7 @@ pub async fn render(cfg: &AppConfig, args: RenderArgs) -> Result<()> {
         println!("scene {} ({}), workflow {}", prepared.scene_number, prepared.scene_id, prepared.workflow_key);
         let graph = result.get("prompt").cloned().unwrap_or(Value::Null);
         println!("graph: {} nodes", graph.as_object().map_or(0, |g| g.len()));
-        for key in ["used_seed", "timing", "post_render_trim", "output_folder", "latent_continuation_settings"] {
+        for key in ["used_seed", "timing", "post_render_trim", "output_folder", "latent_continuation_settings", "chunked_pass2"] {
             if let Some(v) = result.get(key) {
                 println!("{key}: {v}");
             }
@@ -144,6 +144,9 @@ pub async fn render(cfg: &AppConfig, args: RenderArgs) -> Result<()> {
     println!("scene {} ({})", done.scene_number, done.scene_id);
     println!("clip: {}", done.video_path);
     println!("raw render: {}", done.raw_video_path);
+    if let Some(reason) = done.chunked_pass2.as_ref().and_then(|report| report.get("reason")).and_then(Value::as_str) {
+        println!("pass 2: {reason}");
+    }
     if !done.backup_path.is_empty() {
         println!("previous clip kept as: {}", done.backup_path);
     }

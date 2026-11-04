@@ -141,6 +141,7 @@
    "vram_preset": "16gb"
   },
   "audio_mode": "input_audio",
+  "chunked_pass2": null,
   "latent_continuation_settings": {
    "enabled": false,
    "reason": "Continuity mode is not latent_continuation_masked"
@@ -997,6 +998,8 @@
   "lora_count": 0,
   "loras": [],
   "megapixels": 0.5625,
+  "pass2_chunking": "auto",
+  "pass2_chunking_min_seconds": 8,
   "pipeline": "standard",
   "ref_image_size": "max",
   "render_pass": "three_pass",

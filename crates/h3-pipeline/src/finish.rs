@@ -52,6 +52,8 @@ pub struct SceneResult {
     pub draft_id: String,
     /// What a `redecode` made the video from: the CRF, the frames and the latent. `None` for the other phases.
     pub redecode: Option<Value>,
+    /// What the graph builder decided for pass 2 (`enabled`, `windows`, `reason`). `None` when the graph reported nothing.
+    pub chunked_pass2: Option<Value>,
 }
 
 fn other(message: impl std::fmt::Display) -> RenderError {
@@ -213,6 +215,7 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
         render_phase: outcome.phase.name().to_string(),
         draft_id: if outcome.phase == RenderPhase::Draft { text_or_empty(outcome.graph.get("draft_id")) } else { String::new() },
         redecode: if outcome.phase == RenderPhase::Redecode { outcome.graph.get("redecode").cloned() } else { None },
+        chunked_pass2: outcome.graph.get("chunked_pass2").filter(|value| !value.is_null()).cloned(),
     })
 }
 
