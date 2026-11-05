@@ -135,6 +135,39 @@ async fn a_picture_is_uploaded_and_passed_to_the_node() {
     assert_eq!(graph["gemma"]["inputs"]["mmproj_file"], "mmproj-small.gguf");
 }
 
+/// Pack PR 319: a main model without vision can have another model for the image steps. Text steps keep the main one.
+#[tokio::test]
+async fn a_vision_model_serves_the_picture_steps_only() {
+    let s = start(true).await;
+    s.call(Method::PUT, "/llm/settings", Some(json!({"runner": "comfyui_gemma", "comfy_gemma_model": "gemma-big.gguf"}))).await;
+    let (_, active) = s.call(Method::GET, "/llm/active", None).await;
+    assert_eq!((active["data"]["model"].as_str(), active["data"]["vision_model"].as_str()), (Some("gemma-big.gguf"), Some("gemma-big.gguf")), "no vision model means the main one: {active}");
+
+    let (code, saved) = s.call(Method::PUT, "/llm/settings", Some(json!({"comfy_gemma_vision_model": "gemma-small.gguf"}))).await;
+    assert_eq!((code, saved["data"]["comfy_gemma_vision_model"].as_str()), (200, Some("gemma-small.gguf")), "{saved}");
+    let (_, active) = s.call(Method::GET, "/llm/active", None).await;
+    assert_eq!((active["data"]["model"].as_str(), active["data"]["vision_model"].as_str()), (Some("gemma-big.gguf"), Some("gemma-small.gguf")), "{active}");
+
+    s.call(Method::POST, "/llm/test", None).await;
+    let text_graph = s.graphs.lock().unwrap().last().cloned().unwrap();
+    assert_eq!(text_graph["gemma"]["inputs"]["model_file"], "gemma-big.gguf", "a text step uses the main model");
+
+    s.call(Method::POST, "/projects", Some(json!({"name": "Pic"}))).await;
+    let picture = s.dir.path().join("ava.png");
+    image::RgbImage::from_pixel(16, 16, image::Rgb([200, 40, 40])).save(&picture).unwrap();
+    s.call(Method::PUT, "/projects/Pic/references/subjects/s", Some(json!({"name": "Ava", "image": {"path": picture.display().to_string()}}))).await;
+    let (_, body) = s.call(Method::POST, "/projects/Pic/references/subjects/s/describe", None).await;
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!(job["status"], "succeeded", "{job}");
+    let picture_graph = s.graphs.lock().unwrap().last().cloned().unwrap();
+    assert_eq!(picture_graph["gemma"]["inputs"]["model_file"], "gemma-small.gguf", "a picture step uses the vision model");
+
+    // A vision model ComfyUI no longer lists falls back to the main model instead of failing the step.
+    s.call(Method::PUT, "/llm/settings", Some(json!({"comfy_gemma_vision_model": "gone.gguf"}))).await;
+    let (_, active) = s.call(Method::GET, "/llm/active", None).await;
+    assert_eq!(active["data"]["vision_model"].as_str(), Some("gemma-big.gguf"), "{active}");
+}
+
 #[tokio::test]
 async fn a_comfyui_without_the_gemma_node_says_which_pack_to_install() {
     let s = start(false).await;

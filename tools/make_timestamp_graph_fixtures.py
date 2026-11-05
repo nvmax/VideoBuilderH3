@@ -35,6 +35,10 @@ def main() -> int:
             {"segment_mode": "reference_scene_words", "include_instrumental_gaps": False, "instrumental_text": "[break]"},
             {"segment_mode": "nonsense", "min_gap_seconds": 99, "min_scene_seconds": 0.1, "max_scene_seconds": 500, "vocal_tail_padding_seconds": -4},
             {"model_name": "  medium ", "min_gap_seconds": "3.5", "language": "", "instrumental_text": ""},
+            # The Builder keeps Whisper loaded between scenes with unload_after false (pack PR 319).
+            {"unload_after": False},
+            {"unload_after": "false"},
+            {"unload_after": 0},
             {"audio_path": str(Path(tmp) / "missing.wav")},
         ]
         cases = []

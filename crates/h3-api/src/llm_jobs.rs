@@ -215,14 +215,16 @@ async fn extract_locations(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, J
             planning.push((concept, notes));
         }
     }
-    if lyric_lines.is_empty() && planning.is_empty() {
-        return Err(fail(ApiError::validation("LM Extract needs lyrics, scene notes, or concept prompts first. Create the scenes from the lyrics first.")));
+    let story_layer = session.get("builder_story_layer").filter(|layer| layer.is_object()).cloned().unwrap_or_default();
+    if h3_llm::locations::story_text(&story_layer).is_empty() && lyric_lines.is_empty() && planning.is_empty() {
+        return Err(fail(ApiError::validation("LM Extract needs a story, lyrics, scene notes, or concept prompts first.")));
     }
     let refs = session.get("flux_reference_builder").cloned().unwrap_or_else(|| json!({}));
     let given = text_or_empty(ctx.params.get("style_theme")).trim().to_string();
     let local_notes = if given.is_empty() { text_or_empty(refs.get("location_style_theme")).trim().to_string() } else { given };
     let input = h3_llm::locations::ScoutInput {
         lyrics_text: lyric_lines.join("\n"),
+        story_layer,
         scenes: planning,
         style_theme: location_style_theme_text(&folder, session, &local_notes),
         subject_context: h3_llm::locations::subject_context_for_locations(&refs),

@@ -308,6 +308,10 @@ def brief_cases():
         ({**base, "lyrics_text": "x", "story_layer": {"user_story_arc": "Verse 1: she waits.", "lyric_story_strength": 2}}, ["A brief."]),
         ({"lyrics": "", "scenes": [], "story_layer": {"user_story_arc": "Verse 1: she waits."}}, ["A brief."]),
         ({"lyrics": "", "scenes": SCENES[:2]}, ["A brief."]),
+        # A story idea alone is enough for a brief (pack PR 319), with the project's cards in the prompt when it has them.
+        ({"lyrics": "", "scenes": [], "story_layer": {"overall_story_idea": "A fox crosses a frozen lake."}}, ["A brief."]),
+        ({"lyrics": "", "scenes": [], "story_layer": {"overall_story_idea": "A fox crosses a frozen lake."}, "reference_builder": REFERENCE}, ["A brief."]),
+        ({**base, "story_layer": {"overall_story_idea": "Ava leaves the city.", "user_story_arc": "Verse 1: she waits."}, "reference_builder": REFERENCE}, ["A brief."]),
         ({"lyrics": "just words", "scenes": []}, ["A brief."]),
         ({"lyrics": "", "scenes": []}, []),
         ({"lyrics": "", "scenes": [5, "x"]}, []),

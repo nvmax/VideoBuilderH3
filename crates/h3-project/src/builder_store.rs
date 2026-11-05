@@ -74,11 +74,12 @@ fn json_files(root: &Path) -> Vec<PathBuf> {
 
 // -- model defaults and the global LLM settings -------------------------------------------------------------------------
 
-const MODEL_DEFAULT_KEYS: [&str; 29] = [
+const MODEL_DEFAULT_KEYS: [&str; 30] = [
     "text_gemma_runner",
     "qwen_model_file",
     "qwen_mmproj_file",
     "gemma_model_file",
+    "gemma_vision_model_file",
     "llm_max_tokens",
     "gemma_context_limit",
     "gemma_output_token_limit",
@@ -129,9 +130,10 @@ pub fn save_comfy_api_key(output: &Path, key: &str) -> std::io::Result<()> {
 }
 
 /// LLM runner settings kept for every project, in session key names.
-const GLOBAL_LLM_RUNNER_FIELDS: [&str; 19] = [
+const GLOBAL_LLM_RUNNER_FIELDS: [&str; 20] = [
     "text_gemma_runner",
     "gemma_model_file",
+    "gemma_vision_model_file",
     "qwen_model_file",
     "qwen_mmproj_file",
     "gemma_context_limit",

@@ -41,6 +41,8 @@ pub struct ActiveLlm {
     pub context_length: u32,
     pub base_url: String,
     pub saved_model_setting: String,
+    /// The model for requests with pictures. Only the local Gemma has a separate one.
+    pub vision_model: Option<String>,
 }
 
 #[derive(Debug, Clone)]
@@ -156,15 +158,16 @@ pub async fn describe_active(cfg: &LlmConfig) -> Result<ActiveLlm, LlmError> {
         "lm_studio" => {
             let model = pick_lm_studio_model(cfg).await?;
             let context = if model.context_length > 0 { cfg.lm_studio_context_limit.min(model.context_length) } else { cfg.lm_studio_context_limit };
-            Ok(ActiveLlm { runner: "lm_studio".into(), model: model.id, context_length: context, base_url: api_root(cfg), saved_model_setting: cfg.lm_studio_model.clone() })
+            Ok(ActiveLlm { runner: "lm_studio".into(), model: model.id, context_length: context, base_url: api_root(cfg), saved_model_setting: cfg.lm_studio_model.clone(), vision_model: None })
         }
         "comfyui_gemma" => {
             let found = crate::comfy_gemma::files(cfg).await?;
             let model = crate::comfy_gemma::pick_model(&cfg.comfy_gemma_model, &found)?;
-            Ok(ActiveLlm { runner: "comfyui_gemma".into(), model, context_length: cfg.comfy_gemma_n_ctx, base_url: cfg.comfy_url.clone(), saved_model_setting: cfg.comfy_gemma_model.clone() })
+            let vision_model = Some(crate::comfy_gemma::pick_vision_model(&cfg.comfy_gemma_vision_model, &model, &found));
+            Ok(ActiveLlm { runner: "comfyui_gemma".into(), model, context_length: cfg.comfy_gemma_n_ctx, base_url: cfg.comfy_url.clone(), saved_model_setting: cfg.comfy_gemma_model.clone(), vision_model })
         }
-        "own_server" => Ok(ActiveLlm { runner: "own_server".into(), model: cfg.own_server_model.clone(), context_length: 0, base_url: cfg.own_server_url.clone(), saved_model_setting: cfg.own_server_model.clone() }),
-        other => Ok(ActiveLlm { runner: other.into(), model: cfg.api_model.clone(), context_length: 0, base_url: String::new(), saved_model_setting: cfg.api_model.clone() }),
+        "own_server" => Ok(ActiveLlm { runner: "own_server".into(), model: cfg.own_server_model.clone(), context_length: 0, base_url: cfg.own_server_url.clone(), saved_model_setting: cfg.own_server_model.clone(), vision_model: None }),
+        other => Ok(ActiveLlm { runner: other.into(), model: cfg.api_model.clone(), context_length: 0, base_url: String::new(), saved_model_setting: cfg.api_model.clone(), vision_model: None }),
     }
 }
 

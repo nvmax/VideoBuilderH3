@@ -38,6 +38,16 @@ INPUTS = [
     },
     {"lyrics_text": "x", "scenes": [{"concept": "c", "notes": "n"}], "style_theme": "", "subject_context": "", "existing_locations": []},
     {"lyrics_text": "", "scenes": [], "style_theme": "", "subject_context": "", "existing_locations": []},
+    # Story first (pack PR 319): the saved story steers the scout, with or without lyrics and scenes.
+    {
+        "lyrics_text": "", "scenes": [], "style_theme": "", "subject_context": "", "existing_locations": [],
+        "story_layer": {"overall_story_idea": "A fox crosses a frozen lake.", "user_story_arc": "  ", "song_story_brief": "Ice cabin, then the lake shore."},
+    },
+    {
+        "lyrics_text": "walking down the street", "scenes": [{"concept": "a rooftop at dusk", "notes": "wind"}], "style_theme": "Neon noir", "subject_context": "Ava (character): dark hair",
+        "existing_locations": [{"name": "Roof", "description": "x"}], "story_layer": {"user_story_arc": "Verse 1: Ava leaves the Roof.\n\nVerse 2: she reaches the Harbor."},
+    },
+    {"lyrics_text": "", "scenes": [], "style_theme": "", "subject_context": "", "existing_locations": [], "story_layer": {"overall_story_idea": "", "user_story_arc": None}},
 ]
 
 CONTEXT_TEXTS = [

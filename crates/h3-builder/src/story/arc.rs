@@ -5,7 +5,7 @@
 use std::collections::{HashMap, HashSet};
 
 use fancy_regex::Regex;
-use h3_core::pyjson::dumps;
+use h3_core::pyjson::{dumps, dumps_inline};
 use h3_core::pyval::{py_type_name, text_or_empty, to_int, truthy, Obj};
 use h3_core::story::arc::{cap_words, normalize_output, parse_lyric_sections, scene_entries_enabled, scene_map, section_word_limit, split_sections};
 use h3_core::story::cast_guard::{build_cast_guard, cast_leaks, cast_wall_text, strip_cast_leaks, strip_story_arc_entry_leaks, CastGuard};
@@ -190,10 +190,19 @@ pub async fn build_story_layer_brief(llm: &dyn Llm, payload: &Obj) -> Reply {
         }));
     }
     let user_arc = text_or_empty(story_layer.get("user_story_arc"));
-    if lyrics.is_empty() && compact_scenes.is_empty() && user_arc.is_empty() {
-        return Err("Lyrics, scene lyrics, or a user story arc are required to create a story brief.".into());
+    let story_idea = text_or_empty(story_layer.get("overall_story_idea"));
+    if lyrics.is_empty() && compact_scenes.is_empty() && user_arc.is_empty() && story_idea.is_empty() {
+        return Err("A story idea, lyrics, scene lyrics, or a user story arc are required to create a story brief.".into());
     }
-    let instruction = story_brief_instruction(&lyric_story_strength_guidance(&story_layer), &user_arc, &lyrics, &dumps(&Value::Array(compact_scenes)));
+    let mut instruction = story_brief_instruction(&lyric_story_strength_guidance(&story_layer), &user_arc, &lyrics, &dumps(&Value::Array(compact_scenes)));
+    // The brief may come before any reference image or location card, so the story idea and the cards the project has go in with it.
+    let (subjects, locations) = dialogue_reference_catalog(payload);
+    instruction.push_str(&format!(
+        "\n\nOverall story idea:\n{}\n\nAvailable subjects:\n{}\n\nAvailable locations:\n{}\n\nUse only supplied locations when available. Without locations, use the story arc's named settings or invent a small set of reusable places from the available story context. Keep place names and visual details consistent so they can become location reference cards. No reference images are required.",
+        if story_idea.is_empty() { "[none]" } else { story_idea.as_str() },
+        dumps_inline(&Value::Array(subjects)),
+        dumps_inline(&Value::Array(locations)),
+    ));
     let call = TextCall::new(instruction, number(payload, "temperature", 0.35)?, number(payload, "top_p", 0.90)?, whole(payload, "max_new_tokens", 800)?, "Storyboard Story Brief Gemma").paragraphs();
     let (reply, info) = llm.text(call).await?;
     let brief = text_s(&reply, 4000);

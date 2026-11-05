@@ -32,6 +32,8 @@ pub struct LlmConfig {
     pub api_custom_model: String,
     /// The Gemma GGUF model of `comfyui_gemma`. Empty uses the first one ComfyUI lists.
     pub comfy_gemma_model: String,
+    /// The Gemma GGUF model for requests with pictures, for a main model that has no vision (pack PR 319). Empty uses `comfy_gemma_model`.
+    pub comfy_gemma_vision_model: String,
     /// The mmproj file that lets Gemma look at pictures. Empty uses the first one ComfyUI lists.
     pub comfy_gemma_mmproj: String,
     pub comfy_gemma_n_ctx: u32,
@@ -66,6 +68,7 @@ impl Default for LlmConfig {
             api_provider: "openai".into(),
             api_custom_model: String::new(),
             comfy_gemma_model: String::new(),
+            comfy_gemma_vision_model: String::new(),
             comfy_gemma_mmproj: String::new(),
             comfy_gemma_n_ctx: 32768,
             comfy_gemma_gpu_device: -1,
@@ -102,7 +105,7 @@ impl LlmConfig {
                 "text_runner": "own_server", "own_server_url": self.own_server_url, "own_server_model": self.own_server_model, "own_server_api_key": self.own_server_api_key,
                 "own_server_timeout": self.own_server_timeout, "own_server_output_token_limit": self.own_server_output_limit,
             }),
-            "comfyui_gemma" => json!({"text_runner": "builtin", "gemma_model_file": self.comfy_gemma_model, "mmproj_file": self.comfy_gemma_mmproj, "n_ctx": self.comfy_gemma_n_ctx, "gpu_device": self.comfy_gemma_gpu_device}),
+            "comfyui_gemma" => json!({"text_runner": "builtin", "gemma_model_file": self.comfy_gemma_model, "gemma_vision_model_file": self.comfy_gemma_vision_model, "mmproj_file": self.comfy_gemma_mmproj, "n_ctx": self.comfy_gemma_n_ctx, "gpu_device": self.comfy_gemma_gpu_device}),
             hosted => json!({
                 "text_runner": "llm_api", "llm_api_provider": if hosted == "llm_api" { self.api_provider.as_str() } else { hosted },
                 "llm_api_model": self.api_model, "llm_api_custom_model": self.api_custom_model, "llm_api_key": self.api_key,
@@ -128,9 +131,12 @@ mod tests {
         let own = LlmConfig { runner: "own_server".into(), own_server_url: "http://box:8000/v1".into(), own_server_model: "m".into(), own_server_api_key: "k".into(), own_server_timeout: 120, own_server_output_limit: 4000, ..base.clone() };
         assert_eq!(runner_config(&own.runner_payload(), &base, 1200), own);
 
-        let gemma = LlmConfig { runner: "comfyui_gemma".into(), comfy_gemma_model: "g.gguf".into(), comfy_gemma_mmproj: "p.gguf".into(), comfy_gemma_n_ctx: 32768, comfy_gemma_gpu_device: 1, ..base.clone() };
+        let gemma = LlmConfig { runner: "comfyui_gemma".into(), comfy_gemma_model: "g.gguf".into(), comfy_gemma_vision_model: "v.gguf".into(), comfy_gemma_mmproj: "p.gguf".into(), comfy_gemma_n_ctx: 32768, comfy_gemma_gpu_device: 1, ..base.clone() };
         let back = runner_config(&gemma.runner_payload(), &base, 1200);
-        assert_eq!((back.runner.as_str(), back.comfy_gemma_model.as_str(), back.comfy_gemma_mmproj.as_str(), back.comfy_gemma_n_ctx, back.comfy_gemma_gpu_device), ("comfyui_gemma", "g.gguf", "p.gguf", 32768, 1));
+        assert_eq!(
+            (back.runner.as_str(), back.comfy_gemma_model.as_str(), back.comfy_gemma_vision_model.as_str(), back.comfy_gemma_mmproj.as_str(), back.comfy_gemma_n_ctx, back.comfy_gemma_gpu_device),
+            ("comfyui_gemma", "g.gguf", "v.gguf", "p.gguf", 32768, 1)
+        );
 
         for hosted in ["openai", "anthropic", "google"] {
             let api = LlmConfig { runner: hosted.into(), api_model: "model-1".into(), api_custom_model: "custom".into(), api_key: "k".into(), ..base.clone() };

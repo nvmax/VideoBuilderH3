@@ -18,7 +18,8 @@
       ],
       "min_scene_seconds": 1.0,
       "max_scene_seconds": 8.0,
-      "vocal_tail_padding_seconds": 0.6
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": true
      },
      "class_type": "VRGDG_TimestampedLyricsExtractor",
      "_meta": {
@@ -74,7 +75,8 @@
       ],
       "min_scene_seconds": 1.0,
       "max_scene_seconds": 8.0,
-      "vocal_tail_padding_seconds": 0.6
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": true
      },
      "class_type": "VRGDG_TimestampedLyricsExtractor",
      "_meta": {
@@ -130,7 +132,8 @@
       ],
       "min_scene_seconds": 1.0,
       "max_scene_seconds": 8.0,
-      "vocal_tail_padding_seconds": 0.6
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": true
      },
      "class_type": "VRGDG_TimestampedLyricsExtractor",
      "_meta": {
@@ -188,7 +191,8 @@
       ],
       "min_scene_seconds": 1.0,
       "max_scene_seconds": 60.0,
-      "vocal_tail_padding_seconds": 0.0
+      "vocal_tail_padding_seconds": 0.0,
+      "unload_after": true
      },
      "class_type": "VRGDG_TimestampedLyricsExtractor",
      "_meta": {
@@ -245,7 +249,173 @@
       ],
       "min_scene_seconds": 1.0,
       "max_scene_seconds": 8.0,
-      "vocal_tail_padding_seconds": 0.6
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": true
+     },
+     "class_type": "VRGDG_TimestampedLyricsExtractor",
+     "_meta": {
+      "title": "Timestamped Lyrics Extractor (stable-ts)"
+     }
+    },
+    "963": {
+     "inputs": {
+      "text": [
+       "962",
+       0
+      ]
+     },
+     "class_type": "VRGDG_ShowText",
+     "_meta": {
+      "title": "VRGDG_ShowText"
+     }
+    },
+    "28:114": {
+     "inputs": {
+      "model_name": "htdemucs_ft",
+      "device": "auto",
+      "audio_file_path": "<AUDIO>"
+     },
+     "class_type": "VRGDG_GetStems",
+     "_meta": {
+      "title": "VRGDG_GetStems"
+     }
+    }
+   }
+  }
+ },
+ {
+  "request": {
+   "unload_after": false
+  },
+  "return": {
+   "prompt": {
+    "962": {
+     "inputs": {
+      "reference_lyrics": "",
+      "model_name": "large-v3",
+      "language": "english",
+      "segment_mode": "reference_lines",
+      "include_instrumental_gaps": true,
+      "instrumental_text": "[instrumental]",
+      "min_gap_seconds": 1.0,
+      "audio": [
+       "28:114",
+       0
+      ],
+      "min_scene_seconds": 1.0,
+      "max_scene_seconds": 8.0,
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": false
+     },
+     "class_type": "VRGDG_TimestampedLyricsExtractor",
+     "_meta": {
+      "title": "Timestamped Lyrics Extractor (stable-ts)"
+     }
+    },
+    "963": {
+     "inputs": {
+      "text": [
+       "962",
+       0
+      ]
+     },
+     "class_type": "VRGDG_ShowText",
+     "_meta": {
+      "title": "VRGDG_ShowText"
+     }
+    },
+    "28:114": {
+     "inputs": {
+      "model_name": "htdemucs_ft",
+      "device": "auto",
+      "audio_file_path": "<AUDIO>"
+     },
+     "class_type": "VRGDG_GetStems",
+     "_meta": {
+      "title": "VRGDG_GetStems"
+     }
+    }
+   }
+  }
+ },
+ {
+  "request": {
+   "unload_after": "false"
+  },
+  "return": {
+   "prompt": {
+    "962": {
+     "inputs": {
+      "reference_lyrics": "",
+      "model_name": "large-v3",
+      "language": "english",
+      "segment_mode": "reference_lines",
+      "include_instrumental_gaps": true,
+      "instrumental_text": "[instrumental]",
+      "min_gap_seconds": 1.0,
+      "audio": [
+       "28:114",
+       0
+      ],
+      "min_scene_seconds": 1.0,
+      "max_scene_seconds": 8.0,
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": false
+     },
+     "class_type": "VRGDG_TimestampedLyricsExtractor",
+     "_meta": {
+      "title": "Timestamped Lyrics Extractor (stable-ts)"
+     }
+    },
+    "963": {
+     "inputs": {
+      "text": [
+       "962",
+       0
+      ]
+     },
+     "class_type": "VRGDG_ShowText",
+     "_meta": {
+      "title": "VRGDG_ShowText"
+     }
+    },
+    "28:114": {
+     "inputs": {
+      "model_name": "htdemucs_ft",
+      "device": "auto",
+      "audio_file_path": "<AUDIO>"
+     },
+     "class_type": "VRGDG_GetStems",
+     "_meta": {
+      "title": "VRGDG_GetStems"
+     }
+    }
+   }
+  }
+ },
+ {
+  "request": {
+   "unload_after": 0
+  },
+  "return": {
+   "prompt": {
+    "962": {
+     "inputs": {
+      "reference_lyrics": "",
+      "model_name": "large-v3",
+      "language": "english",
+      "segment_mode": "reference_lines",
+      "include_instrumental_gaps": true,
+      "instrumental_text": "[instrumental]",
+      "min_gap_seconds": 1.0,
+      "audio": [
+       "28:114",
+       0
+      ],
+      "min_scene_seconds": 1.0,
+      "max_scene_seconds": 8.0,
+      "vocal_tail_padding_seconds": 0.6,
+      "unload_after": false
      },
      "class_type": "VRGDG_TimestampedLyricsExtractor",
      "_meta": {

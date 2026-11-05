@@ -43,6 +43,8 @@ pub fn timestamp_graph(request: &Obj) -> Result<Obj> {
     set_input(&mut prompt, &extractor, "min_scene_seconds", json!(float_payload(request, "min_scene_seconds", 1.0, 1.0, 30.0)))?;
     set_input(&mut prompt, &extractor, "max_scene_seconds", json!(float_payload(request, "max_scene_seconds", 8.0, 1.0, 60.0)))?;
     set_input(&mut prompt, &extractor, "vocal_tail_padding_seconds", json!(float_payload(request, "vocal_tail_padding_seconds", 0.6, 0.0, 3.0)))?;
+    // The Builder times many scenes in a row and turns this off to keep the Whisper model loaded between them (pack PR 319).
+    set_input(&mut prompt, &extractor, "unload_after", json!(bool_payload(request, "unload_after", true)))?;
     let model = text(request, "model_name");
     let model = model.trim();
     set_input(&mut prompt, &extractor, "model_name", json!(if model.is_empty() { "large-v3" } else { model }))?;

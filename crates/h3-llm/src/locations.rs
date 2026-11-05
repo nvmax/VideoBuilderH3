@@ -162,6 +162,8 @@ pub fn subject_context_for_locations(refs: &Value) -> String {
 #[derive(Debug, Clone, Default)]
 pub struct ScoutInput {
     pub lyrics_text: String,
+    /// The saved story layer (`overall_story_idea`, `user_story_arc`, `song_story_brief`). A story makes the scout list the places of the story.
+    pub story_layer: Value,
     /// `(concept, notes)` for each scene that has either.
     pub scenes: Vec<(String, String)>,
     pub style_theme: String,
@@ -173,9 +175,26 @@ pub struct ScoutInput {
     pub max_new_tokens: Option<u32>,
 }
 
+/// The saved story as the scout reads it: the story idea, arc and brief that have text, each under its label.
+pub fn story_text(story_layer: &Value) -> String {
+    let field = |key: &str| match story_layer.get(key) {
+        Some(Value::String(s)) => s.trim().to_string(),
+        Some(Value::Null) | None | Some(Value::Bool(false)) => String::new(),
+        Some(other) => other.to_string().trim().to_string(),
+    };
+    [("overall_story_idea", "Story idea"), ("user_story_arc", "Story arc"), ("song_story_brief", "Story brief")]
+        .iter()
+        .map(|(key, label)| (label, field(key)))
+        .filter(|(_, text)| !text.is_empty())
+        .map(|(label, text)| format!("{label}:\n{text}"))
+        .collect::<Vec<_>>()
+        .join("\n\n")
+}
+
 /// The instruction sent to the model. An error says what is missing.
 pub fn scout_instruction(input: &ScoutInput) -> Result<String, String> {
     let lyrics = input.lyrics_text.trim();
+    let story = story_text(&input.story_layer);
     let scene_lines: Vec<String> = input
         .scenes
         .iter()
@@ -185,15 +204,23 @@ pub fn scout_instruction(input: &ScoutInput) -> Result<String, String> {
             (!concept.is_empty() || !notes.is_empty()).then(|| format!("Scene {}: {concept}", i + 1) + &if notes.is_empty() { String::new() } else { format!(" | notes: {notes}") })
         })
         .collect();
-    if lyrics.is_empty() && scene_lines.is_empty() {
-        return Err("LM Extract needs lyrics, scene notes, or concept prompts first.".into());
+    if story.is_empty() && lyrics.is_empty() && scene_lines.is_empty() {
+        return Err("LM Extract needs a story, lyrics, scene notes, or concept prompts first.".into());
     }
     let style = clean_location_context_text(&input.style_theme);
     let subjects = clean_location_context_text(&input.subject_context);
     let existing: Vec<String> = input.existing_locations.iter().map(|n| collapse(n.trim())).filter(|n| !n.is_empty()).map(|n| format!("- {n}")).collect();
     let or_none = |s: String| if s.is_empty() { "(none)".to_string() } else { s };
+    let story_instruction = if story.is_empty() {
+        String::new()
+    } else {
+        format!(
+            "STORY-FIRST OVERRIDE: Extract the physical places used in the saved story below. The story is the narrative authority; lyrics supply mood only. Keep the story's place names and visual details consistent. Create only the reusable locations the story needs; ignore the 18–22 count and do not invent unrelated places to fill it. Reuse existing user location names when the story uses them, returning their descriptions for missing text. Describe environments for reference images, without people or story actions.\n\nSaved story:\n{story}\n\n"
+        )
+    };
+    let existing_label = if story.is_empty() { "Existing user locations (do not repeat these)" } else { "Existing user locations" };
     Ok(format!(
-        "{INSTRUCTIONS}\n--- PROJECT INPUTS ---\n\nStyle/theme notes:\n{}\n\nCharacter notes:\n{}\n\nExisting user locations (do not repeat these):\n{}\n\nScene concepts and notes (optional extra context):\n{}\n\nSong lyrics:\n{}",
+        "{INSTRUCTIONS}\n{story_instruction}--- PROJECT INPUTS ---\n\nStyle/theme notes:\n{}\n\nCharacter notes:\n{}\n\n{existing_label}:\n{}\n\nScene concepts and notes (optional extra context):\n{}\n\nSong lyrics:\n{}",
         or_none(style),
         or_none(subjects),
         or_none(existing.join("\n")),

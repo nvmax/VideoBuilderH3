@@ -188,9 +188,28 @@ async fn own_server_image(state: &AppState, payload: &Obj) -> Result<Value, Stri
     Ok(saved)
 }
 
-/// `POST clear_memory_direct`: ask ComfyUI to unload its models and free memory.
+/// The pack's own `clear_memory_direct` inside ComfyUI. The Whisper model the Builder keeps loaded between scenes (pack PR 319) lives in the ComfyUI
+/// process, and only this route frees it, together with the ComfyUI models and the pack's GGUF models. `None` when the pack there is older, missing or refuses.
+async fn pack_clear_memory(base: &str) -> Option<Value> {
+    let response = reqwest::Client::new().post(format!("{base}/vrgdg/music_builder/clear_memory_direct")).json(&json!({})).timeout(std::time::Duration::from_secs(120)).send().await.ok()?;
+    if !response.status().is_success() {
+        return None;
+    }
+    let mut result: Value = response.json().await.ok()?;
+    let fields = result.as_object_mut()?;
+    if fields.remove("ok") != Some(json!(true)) {
+        return None;
+    }
+    eprintln!("[VRGDG-RS Clear Memory] The pack in ComfyUI cleaned up its models, Whisper included.");
+    Some(result)
+}
+
+/// `POST clear_memory_direct`: free the memory ComfyUI and its pack hold, through the pack's own route when it has one, else ask ComfyUI to unload its models.
 async fn clear_memory_direct(state: &AppState) -> Result<Value, String> {
     let base = state.cfg.comfy_base().to_string();
+    if let Some(result) = pack_clear_memory(&base).await {
+        return Ok(result);
+    }
     let response = reqwest::Client::new().post(format!("{base}/free")).json(&json!({"unload_models": true, "free_memory": true})).send().await.map_err(|e| format!("ComfyUI is not reachable at {base}: {e}"))?;
     if !response.status().is_success() {
         return Err(format!("ComfyUI refused the cleanup request ({}).", response.status()));

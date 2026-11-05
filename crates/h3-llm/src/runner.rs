@@ -153,6 +153,12 @@ pub fn runner_config(payload: &Obj, base: &LlmConfig, requested: i64) -> LlmConf
         kind => {
             cfg.runner = "comfyui_gemma".into();
             cfg.comfy_gemma_model = if kind == "qwen_local" { first_text(payload, &["qwen_model_file", "model_file"]) } else { first_text(payload, &["gemma_model_file", "model_file"]) };
+            // "same" (the Builder's default) and nothing both mean the main model also looks at pictures. Qwen has one model for both.
+            cfg.comfy_gemma_vision_model = match first_text(payload, &["gemma_vision_model_file"]).as_str() {
+                "same" => String::new(),
+                _ if kind == "qwen_local" => String::new(),
+                file => file.to_string(),
+            };
             cfg.comfy_gemma_mmproj = first_text(payload, &["mmproj_file", "gemma_mmproj_file", "qwen_mmproj_file"]);
             cfg.comfy_gemma_n_ctx = gemma_context_limit(payload) as u32;
             cfg.comfy_gemma_gpu_device = gpu_device(payload);

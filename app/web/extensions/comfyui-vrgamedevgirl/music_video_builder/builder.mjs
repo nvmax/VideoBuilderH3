@@ -1050,6 +1050,7 @@ export function openBuilder(node, options = {}) {
     qwenModelFile: "",
     qwenMmprojFile: "",
     gemmaModelFile: "",
+    gemmaVisionModelFile: "same",
     gemmaContextLimit: 16384,
     gemmaOutputTokenLimit: 16384,
     gemmaGpuLayers: 99,

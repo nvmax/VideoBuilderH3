@@ -543,6 +543,7 @@ pub async fn lm_scout_locations(llm: &dyn Llm, payload: &Obj) -> Reply {
     };
     let input = ScoutInput {
         lyrics_text: text(payload, "lyrics_text"),
+        story_layer: payload.get("story_layer").filter(|layer| layer.is_object()).cloned().unwrap_or_default(),
         scenes,
         style_theme: text(payload, "style_theme"),
         subject_context: text(payload, "subject_context"),

@@ -19,6 +19,7 @@ fn text(v: &Value) -> String {
 fn input_from(v: &Value) -> ScoutInput {
     ScoutInput {
         lyrics_text: text(&v["lyrics_text"]),
+        story_layer: v.get("story_layer").cloned().unwrap_or_default(),
         scenes: v["scenes"].as_array().unwrap().iter().map(|s| (text(&s["concept"]), text(&s["notes"]))).collect(),
         style_theme: text(&v["style_theme"]),
         subject_context: text(&v["subject_context"]),

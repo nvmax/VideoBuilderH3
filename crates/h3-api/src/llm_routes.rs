@@ -49,17 +49,19 @@ pub async fn put_settings(State(state): Shared, body: Option<Json<Value>>) -> Ap
 /// Which LLM a request would use right now. For LM Studio this is the model that is loaded.
 pub async fn active(State(state): Shared) -> ApiResult {
     let info = describe_active(&current(&state)).await?;
-    Ok(success(
-        json!({
-            "runner": info.runner,
-            "model": info.model,
-            "context_length": info.context_length,
-            "base_url": info.base_url,
-            "saved_model_setting": info.saved_model_setting,
-            "uses_saved_setting": info.saved_model_setting == info.model,
-        }),
-        None,
-    ))
+    let mut data = json!({
+        "runner": info.runner,
+        "model": info.model,
+        "context_length": info.context_length,
+        "base_url": info.base_url,
+        "saved_model_setting": info.saved_model_setting,
+        "uses_saved_setting": info.saved_model_setting == info.model,
+    });
+    // Gemma Local also names the model it uses for image steps (pack PR 319).
+    if let Some(vision_model) = &info.vision_model {
+        data["vision_model"] = json!(vision_model);
+    }
+    Ok(success(data, None))
 }
 
 /// The models a runner offers. For LM Studio only the loaded ones, read from its status call. Own server, OpenAI,

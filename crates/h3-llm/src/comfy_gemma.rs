@@ -100,6 +100,16 @@ pub fn pick_model(saved: &str, files: &GemmaFiles) -> Result<String, LlmError> {
     files.models.first().cloned().ok_or_else(|| unavailable("ComfyUI has no Gemma GGUF model. Put a .gguf file with \"gemma\" in its name in ComfyUI's models/LLM folder and restart ComfyUI."))
 }
 
+/// The model for a request with pictures: the chosen vision model when ComfyUI lists it, else the main model (pack PR 319).
+pub fn pick_vision_model(vision: &str, main: &str, files: &GemmaFiles) -> String {
+    let vision = vision.trim();
+    if !vision.is_empty() && files.models.iter().any(|m| m.as_str() == vision) {
+        vision.to_string()
+    } else {
+        main.to_string()
+    }
+}
+
 fn pick_mmproj(saved: &str, files: &GemmaFiles) -> String {
     files.mmproj.iter().find(|m| m.as_str() == saved.trim()).or_else(|| files.mmproj.first()).cloned().unwrap_or_else(|| files.mmproj_raw_first.clone())
 }
@@ -191,6 +201,7 @@ pub async fn chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmEr
     let found = files(cfg).await?;
     check_gpu_choice(cfg, &found)?;
     let model = pick_model(&cfg.comfy_gemma_model, &found)?;
+    let model = if req.images.is_empty() { model } else { pick_vision_model(&cfg.comfy_gemma_vision_model, &model, &found) };
     let mut names: Vec<String> = Vec::new();
     if !req.images.is_empty() {
         if found.mmproj.is_empty() {

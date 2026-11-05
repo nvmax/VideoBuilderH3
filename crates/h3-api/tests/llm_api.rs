@@ -45,7 +45,10 @@ async fn start() -> Server {
         post(|Json(body): Json<Value>| async move {
             // A picture request gets a description, anything else gets one shot.
             let asks_for_locations = body["messages"][0]["content"].as_str().is_some_and(|c| c.contains("location scout"));
-            let text = if asks_for_locations {
+            let asks_for_story_locations = body["messages"][0]["content"].as_str().is_some_and(|c| c.contains("STORY-FIRST OVERRIDE"));
+            let text = if asks_for_story_locations {
+                "{\"locations\": [{\"name\": \"Frozen Lake\", \"description\": \"A wide sheet of grey ice under a low winter sky.\"}]}"
+            } else if asks_for_locations {
                 "{\"locations\": [{\"name\": \"Rooftop Garden\", \"description\": \"Potted trees ring a tar roof under a string of warm bulbs.\"}, {\"name\": \"Corner Bodega\", \"description\": \"Red awnings glow over wet asphalt.\"}]}"
             } else if body["messages"][0]["content"].as_str().is_some_and(|c| c.contains("text-to-image prompt")) {
                 "A woman with short dark hair in a denim jacket stands on a rooftop at dusk under warm string lights, wide shot, soft golden light and a gentle breeze."
@@ -171,6 +174,31 @@ async fn locations_are_scouted_and_added_once() {
     let (_, body) = s.call(Method::POST, "/projects/Demo/references/locations/extract", Some(json!({}))).await;
     let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
     assert_eq!((job["result"]["added"].as_i64(), job["result"]["updated"].as_i64(), job["result"]["total_locations"].as_i64()), (Some(0), Some(0), Some(2)));
+}
+
+/// Pack PR 317: LM Extract works from the saved story alone, with no lyrics, scene notes or concept prompts.
+#[tokio::test]
+async fn locations_are_scouted_from_the_saved_story_alone() {
+    let s = start().await;
+    s.call(Method::PUT, "/llm/settings", Some(json!({"runner": "own_server", "own_server_url": s.mock, "own_server_model": "m"}))).await;
+    let bare = |story: Value| json!({"project_name": "Story", "revision": 1, "video_engine": "minimax_h3", "segments": [], "builder_story_layer": story, "flux_reference_builder": {"subjects": [], "locations": []}});
+    let folder = s.dir.path().join("projects/Story");
+    std::fs::create_dir_all(&folder).unwrap();
+
+    // Nothing to go on: the job says what is missing.
+    std::fs::write(folder.join("vrgdg_builder_session.json"), serde_json::to_string(&bare(json!({"overall_story_idea": "  "}))).unwrap()).unwrap();
+    let (_, body) = s.call(Method::POST, "/projects/Story/references/locations/extract", Some(json!({}))).await;
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!((job["status"].as_str(), job["error"]["message"].as_str()), (Some("failed"), Some("LM Extract needs a story, lyrics, scene notes, or concept prompts first.")), "{job}");
+
+    std::fs::write(folder.join("vrgdg_builder_session.json"), serde_json::to_string(&bare(json!({"overall_story_idea": "A fox crosses a frozen lake."}))).unwrap()).unwrap();
+    let (code, body) = s.call(Method::POST, "/projects/Story/references/locations/extract", Some(json!({}))).await;
+    assert_eq!(code, 202, "{body}");
+    let job = s.wait_job(body["data"]["job_id"].as_str().unwrap()).await;
+    assert_eq!(job["status"], "succeeded", "{job}");
+    let (_, refs) = s.call(Method::GET, "/projects/Story/references", None).await;
+    let names: Vec<&str> = refs["data"]["locations"].as_array().unwrap().iter().map(|l| l["name"].as_str().unwrap()).collect();
+    assert_eq!(names, ["Frozen Lake"], "the story-first prompt reached the model");
 }
 
 #[tokio::test]
