@@ -117,7 +117,7 @@ mod tests {
         let restyle = thumbnail_instruction("RUN", "restyle");
         assert!(edit.contains("Recrop the attached image"));
         assert!(!restyle.contains("Recrop the attached image"));
-        assert!(restyle.contains("describes a finished"));
+        assert!(restyle.contains("describes the finished thumbnail"));
         assert!(restyle.to_lowercase().contains("do not mention the attached image"));
         assert!(restyle.contains("\"RUN\""));
         assert!(!restyle.contains("{text_rule}"));
@@ -131,14 +131,41 @@ mod tests {
     #[test]
     fn moss_image_edit_gets_the_short_add_and_keep_instruction_it_was_trained_on() {
         let moss = thumbnail_instruction("HEAT", "moss_edit");
-        assert!(moss.contains("Keep the <named things> unchanged"));
+        assert!(moss.contains("in the form MOSS-Image Edit was trained on"));
+        assert!(moss.contains("one sentence that starts with \"Keep\""));
         assert!(moss.contains("always name the headwear, hair and clothes"));
-        assert!(moss.contains("do not ask it to crop, reframe"));
+        assert!(moss.contains("leave out any cropping or reframing"));
         assert!(!moss.contains("Recrop the attached image"));
         assert!(!moss.contains("{text_rule}"));
         assert_ne!(moss, thumbnail_instruction("HEAT", "edit"));
         assert!(thumbnail_instruction("", "moss_edit").contains("Do not add any text"));
         assert_eq!(thumbnail_instruction("HEAT", " MOSS_EDIT "), moss, "the kind is not case or space sensitive");
+    }
+
+    #[test]
+    fn every_kind_starts_with_the_project_owners_brief_unchanged_and_then_asks_for_one_prompt() {
+        let brief = prompts::text("thumbnail", "THUMBNAIL_ROLE_INSTRUCTIONS");
+        assert!(brief.starts_with("# Role and Objective\nYou are an expert AI image editor and creative director"));
+        assert!(brief.ends_with("optimized for small mobile screens."));
+        for sentence in [
+            "# Core Enhancement Guidelines",
+            "# Output Constraints",
+            "Crop or frame tightly on the subject (chest-up or waist-up) with intense, engaging eye contact toward the camera.",
+            "Maintain intentional **negative space** on one side of the frame (left or right) so a title text overlay can be added later.",
+            "Deepen shadows and boost mid-tone clarity on the artist\u{2019}s face and clothing to create a high-end editorial look.",
+            "- Keep the face, likeness, and key identity of the subject from the input image recognizable.",
+        ] {
+            assert!(brief.contains(sentence), "{sentence}");
+        }
+        for kind in ["edit", "restyle", "moss_edit"] {
+            let instruction = thumbnail_instruction("HEAT", kind);
+            assert!(instruction.starts_with(brief), "{kind}: the brief comes first, untouched");
+            let after = &instruction[brief.len()..];
+            assert!(after.starts_with("\n\n# Your Answer\n"), "{kind}");
+            assert!(after.contains("write the one prompt it will receive"), "{kind}");
+            assert!(after.contains("Output only the prompt: no title, no quotes around it, no explanation, no markdown."), "{kind}");
+            assert!(!instruction.contains("{text_rule}"), "{kind}");
+        }
     }
 
     #[test]
@@ -204,7 +231,7 @@ mod tests {
             Asked::Vision { instruction, .. } => instruction.clone(),
             other => panic!("not a vision call: {other:?}"),
         };
-        assert!(instruction(0).contains("describes a finished YouTube-style video thumbnail"), "restyle describes the picture");
+        assert!(instruction(0).contains("describes the finished thumbnail"), "restyle describes the picture");
         assert!(!instruction(0).contains("Recrop the attached image"));
         assert!(instruction(1).contains("Recrop the attached image"), "no kind means edit");
     }
