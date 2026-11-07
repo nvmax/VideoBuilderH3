@@ -52,6 +52,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/build_krea2_prompt"), axum_post(|state, body| build(state, body, Builder::Image("krea2"), false)))
         .route(&format!("{base}/build_krea2_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::Image("krea2_2pass"), false)))
         .route(&format!("{base}/build_moss_image_prompt"), axum_post(|state, body| build(state, body, Builder::Image("moss_image"), false)))
+        .route(&format!("{base}/build_qwen_image_edit_prompt"), axum_post(|state, body| build(state, body, Builder::Image("qwen_image_edit"), false)))
         .route(&format!("{base}/build_ernie_image_prompt"), axum_post(|state, body| build(state, body, Builder::Image("ernie_image"), false)))
         .route(&format!("{base}/build_flux_klein_prompt"), axum_post(|state, body| build(state, body, Builder::Image("flux_klein"), false)))
         .route(&format!("{base}/build_nb_image_prompt"), axum_post(|state, body| build(state, body, Builder::Image("nb_image"), false)))

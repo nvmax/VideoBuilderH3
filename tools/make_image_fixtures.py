@@ -158,6 +158,38 @@ def write_builder_models(out: Path, workflows, template) -> None:
             "use_edit": True, "prompt": prompt, "seed": 5, "image_ingredients": refs("a.png"), "lora_name": "style\\film_look.safetensors",
             "use_image_to_image": True, "image_to_image_path": FAKE_REFS + "a.png", "denoise": 0.3, "width": 1920, "height": 1088}),
     ]
+    # Qwen Image Edit picks the newest model that is installed, so these cases need the lists of an install to pick from. The Rust
+    # test's fake ComfyUI (crates/h3-graph/tests/image_golden.rs) lists the same files.
+    qwen_lists = {
+        "diffusion_models": [
+            "qwen_image_2512_fp8_e4m3fn.safetensors", "qwen_image_edit_2509_fp8_e4m3fn.safetensors", "qwen_image_edit_2511_bf16.safetensors",
+            "qwen_image_edit_2511_fp8mixed.safetensors",
+        ],
+        "loras": [
+            "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors", "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-fp32.safetensors",
+            "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors", "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-fp32.safetensors",
+        ],
+    }
+
+    def qwen_choices(category):
+        names = category if isinstance(category, (list, tuple)) else [category]
+        return [value for name in names for value in qwen_lists.get(name, [])]
+
+    workflows._folder_choices = qwen_choices
+    qwen_prompt = 'Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text "HEAT".'
+    qwen_edit = [
+        case(workflows._build_qwen_image_edit_api_prompt, {"prompt": qwen_prompt, "seed": 5, "image_ingredients": refs("a.png")}),
+        case(workflows._build_qwen_image_edit_api_prompt, {"prompt": qwen_prompt, "seed": 5, "image_ingredients": refs("a.png"), "turbo": False}),
+        case(workflows._build_qwen_image_edit_api_prompt, {"prompt": qwen_prompt, "seed": 5, "image_ingredients": refs("a.png"), "lora_name": "[none]"}),
+        case(workflows._build_qwen_image_edit_api_prompt, {
+            "prompt": qwen_prompt, "seed": 9, "image_ingredients": refs("a.png"), "unet_name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors"}),
+        case(workflows._build_qwen_image_edit_api_prompt, {
+            "prompt": qwen_prompt, "seed": 9, "image_ingredients": refs("a.png", "b.png", "c.png", "d.png"), "negative_prompt": "blurry",
+            "steps": 6, "cfg": 2}),
+        case(workflows._build_qwen_image_edit_api_prompt, {
+            "prompt": qwen_prompt, "seed": 9, "image_ingredients": refs("a.png", "b.png"), "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+            "vae_name": "qwen_image_vae.safetensors", "lora_name": "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-fp32.safetensors", "steps": 8}),
+    ]
     key = "AIzaSyD-example-key-0123456789abcdef"
     nb = [
         case(workflows._build_nb_image_api_prompt, {"prompt": "a cat in a hat", "api_key": key}),
@@ -168,7 +200,7 @@ def write_builder_models(out: Path, workflows, template) -> None:
         case(workflows._build_z_upscale_enhance_prompt, {"prompt": "sharpen", "seed": 9, "source_image_path": FAKE_REFS + "a.png"}),
         case(workflows._build_z_upscale_enhance_prompt, {"prompt": "sharpen", "seed": 9, "source_image_path": FAKE_REFS + "a.png", "width": 2560, "height": 1440, "enhance_amount": 12, **lora}),
     ]
-    for name, cases in (("krea2", krea2), ("krea2_2pass", krea2_2pass), ("moss_image", moss), ("moss_image_edit", moss_edit), ("nb_image", nb), ("z_upscale_enhance", z_upscale)):
+    for name, cases in (("krea2", krea2), ("krea2_2pass", krea2_2pass), ("moss_image", moss), ("moss_image_edit", moss_edit), ("qwen_image_edit", qwen_edit), ("nb_image", nb), ("z_upscale_enhance", z_upscale)):
         write(out, name, cases)
 
 

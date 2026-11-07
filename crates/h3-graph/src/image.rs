@@ -445,6 +445,125 @@ fn build_moss_image_edit(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     Ok(built("", prompt, Some(seed)))
 }
 
+const QWEN_EDIT_CLIP: &str = "qwen_2.5_vl_7b_fp8_scaled.safetensors";
+const QWEN_EDIT_VAE: &str = "qwen_image_vae.safetensors";
+const QWEN_EDIT_MAX_REFERENCES: usize = 3;
+
+fn base_name_lower(name: &str) -> String {
+    name.replace('\\', "/").rsplit('/').next().unwrap_or("").to_lowercase()
+}
+
+/// `_newest_installed_qwen_edit_model`: the installed Qwen Image Edit diffusion model to use, or `None`: the newest version, and a
+/// smaller fp8 or int8 file before a bigger one.
+fn newest_installed_qwen_edit_model(env: &dyn GraphEnv) -> Option<String> {
+    let mut best: Option<(String, (u8, u8))> = None;
+    for name in ["diffusion_models", "unet"].iter().flat_map(|category| env.model_choices(category)) {
+        let name = name.trim().to_string();
+        let base = base_name_lower(&name);
+        if name.is_empty() || !base.contains("qwen_image_edit") {
+            continue;
+        }
+        let version = if base.contains("2511") { 3 } else if base.contains("2509") { 2 } else { 1 };
+        let rank = (version, u8::from(base.contains("fp8") || base.contains("int8")));
+        if best.as_ref().map_or(true, |(_, current)| rank > *current) {
+            best = Some((name, rank));
+        }
+    }
+    best.map(|(name, _)| name)
+}
+
+/// `_qwen_edit_lightning_lora`: the installed 4 step Lightning LoRA made for this version of Qwen Image Edit (2511 or 2509), or
+/// `None`. A bf16 file comes first.
+fn qwen_edit_lightning_lora(env: &dyn GraphEnv, unet: &str) -> Option<String> {
+    let base = base_name_lower(unet);
+    let version = if base.contains("2511") { "2511" } else if base.contains("2509") { "2509" } else { return None };
+    let wanted = format!("qwen-image-edit-{version}-lightning-4steps");
+    let matches: Vec<String> =
+        env.model_choices("loras").into_iter().map(|name| name.trim().to_string()).filter(|name| !name.is_empty() && base_name_lower(name).contains(&wanted)).collect();
+    matches.iter().find(|name| base_name_lower(name).contains("bf16")).or_else(|| matches.first()).cloned()
+}
+
+/// Qwen Image Edit (2511 or 2509) on ComfyUI's native nodes: an instruction edit of 1 to 3 pictures. Port of
+/// `_build_qwen_image_edit_api_prompt`, the graph of ComfyUI's own `image_qwen_image_edit_2511` template: `TextEncodeQwenImageEditPlus`
+/// for the instruction and for an empty negative, `FluxKontextMultiReferenceLatentMethod` on both, the first picture scaled by
+/// `FluxKontextImageScale` and also the start of the sampling, `ModelSamplingAuraFlow` (shift 3.1) and `CFGNorm`. With the 4 step
+/// Lightning LoRA of the same version, used when it is installed (`turbo` false or `lora_name` `[none]` leaves it out), it samples
+/// 4 steps at CFG 1. Without it, 40 steps at CFG 4. Models the request does not name are the newest installed Qwen Image Edit.
+pub fn build_qwen_image_edit(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
+    let text_value = prompt_text(payload, "Prompt text is empty.")?;
+    let mut paths = ingredient_paths(env, payload, "reference image", "Reference Images", "Reference Image")?;
+    paths.truncate(QWEN_EDIT_MAX_REFERENCES);
+    if paths.is_empty() {
+        return fail("Qwen Image Edit needs at least one reference image: the frame to edit.");
+    }
+    let unet = Some(trimmed(payload, "unet_name")).filter(|name| !name.is_empty()).or_else(|| newest_installed_qwen_edit_model(env));
+    let Some(unet) = unet else {
+        return fail("No Qwen Image Edit diffusion model was found in ComfyUI/models/diffusion_models. Install qwen_image_edit_2511 (Comfy-Org/Qwen-Image-Edit_ComfyUI) there, refresh/restart ComfyUI, then try again.");
+    };
+    let unet = installed_model(env, &["diffusion_models", "unet"], &unet, "Qwen Image Edit diffusion model")?;
+    let clip = installed_model(env, &["text_encoders", "clip"], &first_text(payload, &["clip_name"], QWEN_EDIT_CLIP), "Qwen Image Edit text encoder")?;
+    let vae = installed_model(env, &["vae"], &first_text(payload, &["vae_name"], QWEN_EDIT_VAE), "Qwen Image Edit VAE")?;
+    let asked = trimmed(payload, "lora_name");
+    let lora = if !asked.is_empty() && asked != NONE_LORA {
+        Some(installed_model(env, &["loras"], &asked, "Qwen Image Edit LoRA")?)
+    } else if asked == NONE_LORA || !bool_payload(payload, "turbo", true) {
+        None
+    } else {
+        qwen_edit_lightning_lora(env, &unet)
+    };
+    let seed = pick_seed(env, payload, 1);
+
+    let mut prompt = Obj::new();
+    prompt.insert("1".into(), json!({"class_type": "UNETLoader", "inputs": {"unet_name": unet, "weight_dtype": "default"}}));
+    prompt.insert("2".into(), json!({"class_type": "CLIPLoader", "inputs": {"clip_name": clip, "type": "qwen_image", "device": "default"}}));
+    prompt.insert("3".into(), json!({"class_type": "VAELoader", "inputs": {"vae_name": vae}}));
+    prompt.insert("4".into(), json!({"class_type": "ModelSamplingAuraFlow", "inputs": {"model": ["1", 0], "shift": 3.1}}));
+    prompt.insert("5".into(), json!({"class_type": "CFGNorm", "inputs": {"model": ["4", 0], "strength": 1.0}}));
+    let mut model = json!(["5", 0]);
+    if let Some(lora) = &lora {
+        prompt.insert("6".into(), json!({"class_type": "LoraLoaderModelOnly", "inputs": {"model": model, "lora_name": lora, "strength_model": 1.0}}));
+        model = json!(["6", 0]);
+    }
+    for (index, path) in paths.iter().enumerate() {
+        if index > 0 {
+            // The copies in ComfyUI's input folder are named by the millisecond, so two made together would share a name.
+            std::thread::sleep(Duration::from_millis(2));
+        }
+        let name = env.prepare_load_image(path, "", "image.png").map_err(GraphError::new)?;
+        prompt.insert((20 + index).to_string(), json!({"class_type": "LoadImage", "inputs": {"image": name}}));
+    }
+    prompt.insert("30".into(), json!({"class_type": "FluxKontextImageScale", "inputs": {"image": ["20", 0]}}));
+    // The first picture is the scaled one. The others go to the encoders as they are.
+    let mut pictures = Obj::new();
+    pictures.insert("image1".into(), json!(["30", 0]));
+    for index in 1..paths.len() {
+        pictures.insert(format!("image{}", index + 1), json!([(20 + index).to_string(), 0]));
+    }
+    for (id, words) in [("7", text_value), ("8", text(payload, "negative_prompt"))] {
+        let mut inputs = Obj::new();
+        inputs.insert("clip".into(), json!(["2", 0]));
+        inputs.insert("prompt".into(), json!(words));
+        inputs.insert("vae".into(), json!(["3", 0]));
+        inputs.extend(pictures.clone());
+        prompt.insert(id.into(), json!({"class_type": "TextEncodeQwenImageEditPlus", "inputs": inputs}));
+    }
+    for (id, source) in [("9", "7"), ("10", "8")] {
+        prompt.insert(id.into(), json!({"class_type": "FluxKontextMultiReferenceLatentMethod", "inputs": {
+            "conditioning": [source, 0], "reference_latents_method": "index_timestep_zero",
+        }}));
+    }
+    prompt.insert("11".into(), json!({"class_type": "VAEEncode", "inputs": {"pixels": ["30", 0], "vae": ["3", 0]}}));
+    prompt.insert("12".into(), json!({"class_type": "KSampler", "inputs": {
+        "model": model, "positive": ["9", 0], "negative": ["10", 0], "latent_image": ["11", 0], "seed": seed,
+        "steps": int_payload(payload, "steps", if lora.is_some() { 4 } else { 40 }, 1, 200),
+        "cfg": float_payload(payload, "cfg", if lora.is_some() { 1.0 } else { 4.0 }, 1.0, 20.0),
+        "sampler_name": "euler", "scheduler": "simple", "denoise": 1.0,
+    }}));
+    prompt.insert("13".into(), json!({"class_type": "VAEDecode", "inputs": {"samples": ["12", 0], "vae": ["3", 0]}}));
+    prompt.insert("14".into(), json!({"class_type": "PreviewImage", "inputs": {"images": ["13", 0]}}));
+    Ok(built("", prompt, Some(seed)))
+}
+
 /// MOSS-Image on ComfyUI's native support: text to image, image to image, or instruction edit. A model only LoRA (the 8 step turbo
 /// LoRA) is optional. The model already samples with shift 5 and a timestep multiplier of 1, so there is no ModelSamplingSD3 node:
 /// it forces a multiplier of 1000 and the picture is noise.
@@ -751,6 +870,7 @@ pub fn build_image(env: &dyn GraphEnv, model: &str, payload: &Obj) -> Result<Obj
         "krea2" => build_krea2(env, payload),
         "krea2_2pass" => build_krea2_2pass(env, payload),
         "moss_image" => build_moss_image(env, payload),
+        "qwen_image_edit" => build_qwen_image_edit(env, payload),
         "ernie_image" => build_ernie(env, payload),
         "flux_klein" => build_flux_klein(env, payload),
         "nb_image" => build_nb_image(env, payload),

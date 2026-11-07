@@ -29,11 +29,20 @@ impl GraphEnv for Env {
     fn model_choices(&self, category: &str) -> Vec<String> {
         let names: &[&str] = match category {
             // `e`, `m`, `q` and `f` are the MOSS-Image Edit fixtures' own names.
-            "loras" => &["style\\film_look.safetensors", "style\\soft_light.safetensors", "moss_image_edit_lora.safetensors", "e.safetensors"],
+            // The Qwen Image Edit files are the lists `tools/make_image_fixtures.py` picks from (in the same order).
+            "loras" => &[
+                "style\\film_look.safetensors", "style\\soft_light.safetensors", "moss_image_edit_lora.safetensors", "e.safetensors",
+                "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors", "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-fp32.safetensors",
+                "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors", "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-fp32.safetensors",
+            ],
             // The models the fixtures use are installed.
             // `u`, `c` and `v` are the Flux/Klein fixtures' own names. The graph builder now checks them, as it does for the others.
-            "diffusion_models" => &["krea2_turbo_fp8_scaled.safetensors", "z_image_turbo_bf16.safetensors", "moss_image_sft_bf16.safetensors", "k.safetensors", "u.safetensors", "m.safetensors"],
-            "text_encoders" => &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors", "z.safetensors", "c.safetensors", "q.safetensors"],
+            "diffusion_models" => &[
+                "krea2_turbo_fp8_scaled.safetensors", "z_image_turbo_bf16.safetensors", "moss_image_sft_bf16.safetensors", "k.safetensors", "u.safetensors",
+                "m.safetensors", "qwen_image_2512_fp8_e4m3fn.safetensors", "qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+                "qwen_image_edit_2511_bf16.safetensors", "qwen_image_edit_2511_fp8mixed.safetensors",
+            ],
+            "text_encoders" => &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors", "z.safetensors", "c.safetensors", "q.safetensors", "qwen_2.5_vl_7b_fp8_scaled.safetensors"],
             "vae" => &["qwen_image_vae.safetensors", "ae.safetensors", "flux2-vae.safetensors", "v.safetensors", "f.safetensors"],
             _ => &[],
         };
@@ -127,6 +136,13 @@ fn moss_image_graphs_match_the_pack() {
 #[test]
 fn moss_image_edit_graphs_match_the_pack() {
     run("moss_image_edit", "moss_image");
+}
+
+// Qwen Image Edit: its fixtures hold the Windows paths of the pictures, so it only runs on Windows.
+#[cfg(windows)]
+#[test]
+fn qwen_image_edit_graphs_match_the_pack() {
+    run("qwen_image_edit", "qwen_image_edit");
 }
 
 // Its fixtures hold Windows paths, so it only runs on Windows.

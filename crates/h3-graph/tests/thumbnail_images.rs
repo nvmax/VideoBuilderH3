@@ -10,6 +10,16 @@ use serde_json::{json, Value};
 
 const FAKE_ROOT: &str = "Z:\\h3fixture";
 
+thread_local! {
+    /// Lists that replace what the fake ComfyUI reports for a category in the current test (each test runs on its own thread).
+    static LISTS: std::cell::RefCell<std::collections::HashMap<String, Vec<String>>> = Default::default();
+}
+
+/// Make the fake ComfyUI list exactly `names` for `category` in this test.
+fn install(category: &str, names: &[&str]) {
+    LISTS.with(|lists| lists.borrow_mut().insert(category.to_string(), names.iter().map(|name| name.to_string()).collect()));
+}
+
 /// A ComfyUI that keeps its models in the models folders themselves (no `flux` sub folder).
 struct Env;
 
@@ -25,10 +35,14 @@ impl GraphEnv for Env {
         None
     }
     fn model_choices(&self, category: &str) -> Vec<String> {
+        if let Some(names) = LISTS.with(|lists| lists.borrow().get(category).cloned()) {
+            return names;
+        }
         let names: &[&str] = match category {
             "diffusion_models" => &["flux-2-klein-4b-fp8.safetensors", "moss_image_sft_bf16.safetensors", "Other\\Model.safetensors"],
             "text_encoders" => &["qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors"],
             "vae" => &["flux2-vae.safetensors"],
+            // The Qwen Image Edit tests set their own lists for a category with `install`.
             "loras" => &["moss_image_sft_8_steps_dmd_lora.safetensors", "moss\\moss_image_edit_lora.safetensors"],
             _ => &[],
         };
@@ -248,4 +262,135 @@ fn an_edit_without_a_picture_or_a_prompt_is_refused() {
 fn a_missing_edit_lora_says_which_file_it_needs() {
     let message = moss_edit(json!({"edit_lora_name": "not_there.safetensors"})).unwrap_err();
     assert!(message.contains("MOSS-Image Edit LoRA"), "{message}");
+}
+
+// -- Qwen Image Edit: the graph of ComfyUI's own image_qwen_image_edit_2511 template (mirrors the pack's `QwenImageEditTests`) ----------
+
+const QWEN_UNETS: [&str; 4] = [
+    "qwen_image_2512_fp8_e4m3fn.safetensors", "qwen_image_edit_2509_fp8_e4m3fn.safetensors", "qwen_image_edit_2511_fp8mixed.safetensors",
+    "moss_image_sft_bf16.safetensors",
+];
+const QWEN_LORAS: [&str; 5] = [
+    "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors", "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+    "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-fp32.safetensors", "Qwen-Image-Lightning-4steps-V1.0.safetensors", "style\\film_look.safetensors",
+];
+
+/// An install that has Qwen Image Edit (2509 and 2511, with their Lightning LoRAs).
+fn qwen_install() {
+    install("diffusion_models", &QWEN_UNETS);
+    install("text_encoders", &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_2.5_vl_7b_fp8_scaled.safetensors"]);
+    install("vae", &["qwen_image_2.1_vae_bf16.safetensors", "qwen_image_vae.safetensors"]);
+    install("loras", &QWEN_LORAS);
+}
+
+fn qwen(changes: Value) -> Result<Value, String> {
+    let mut payload = obj(json!({
+        "prompt": "Add the title text \"HEAT\". Keep the man unchanged.", "seed": 3,
+        "image_ingredients": [{"path": format!("{FAKE_ROOT}\\refs\\frame0.png")}],
+    }));
+    payload.extend(obj(changes));
+    build_image(&Env, "qwen_image_edit", &payload).map(|built| built["prompt"].clone()).map_err(|e| e.to_string())
+}
+
+#[cfg(windows)]
+#[test]
+fn qwen_uses_the_newest_installed_model_and_its_lightning_lora_with_comfyuis_own_graph() {
+    qwen_install();
+    let graph = qwen(json!({})).unwrap();
+    let classes: std::collections::BTreeMap<String, String> =
+        graph.as_object().unwrap().iter().map(|(id, node)| (id.clone(), node["class_type"].as_str().unwrap().to_string())).collect();
+    let expected = [
+        ("1", "UNETLoader"), ("2", "CLIPLoader"), ("3", "VAELoader"), ("4", "ModelSamplingAuraFlow"), ("5", "CFGNorm"), ("6", "LoraLoaderModelOnly"),
+        ("20", "LoadImage"), ("30", "FluxKontextImageScale"), ("7", "TextEncodeQwenImageEditPlus"), ("8", "TextEncodeQwenImageEditPlus"),
+        ("9", "FluxKontextMultiReferenceLatentMethod"), ("10", "FluxKontextMultiReferenceLatentMethod"), ("11", "VAEEncode"), ("12", "KSampler"),
+        ("13", "VAEDecode"), ("14", "PreviewImage"),
+    ];
+    assert_eq!(classes, expected.iter().map(|(id, class)| (id.to_string(), class.to_string())).collect());
+    assert_eq!(graph["1"]["inputs"], json!({"unet_name": "qwen_image_edit_2511_fp8mixed.safetensors", "weight_dtype": "default"}), "2511, not 2509 or 2512");
+    assert_eq!(graph["2"]["inputs"], json!({"clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors", "type": "qwen_image", "device": "default"}));
+    assert_eq!(graph["3"]["inputs"], json!({"vae_name": "qwen_image_vae.safetensors"}), "not the 2.1 VAE");
+    assert_eq!(graph["6"]["inputs"]["lora_name"], "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors");
+    let sampler = &graph["12"]["inputs"];
+    assert_eq!(sampler["model"], json!(["6", 0]));
+    assert_eq!((sampler["steps"].clone(), sampler["cfg"].clone(), sampler["sampler_name"].clone(), sampler["scheduler"].clone()), (json!(4), json!(1.0), json!("euler"), json!("simple")));
+    for id in ["7", "8"] {
+        assert_eq!(graph[id]["inputs"]["image1"], json!(["30", 0]));
+        assert_eq!(graph[id]["inputs"]["vae"], json!(["3", 0]));
+    }
+    assert_eq!(graph["8"]["inputs"]["prompt"], "", "the negative is empty, as in the template");
+}
+
+#[cfg(windows)]
+#[test]
+fn qwen_samples_the_whole_way_without_the_lightning_lora() {
+    qwen_install();
+    for changes in [json!({"turbo": false}), json!({"lora_name": "[none]"})] {
+        let graph = qwen(changes).unwrap();
+        assert!(graph.get("6").is_none());
+        assert_eq!(graph["12"]["inputs"]["model"], json!(["5", 0]));
+        assert_eq!((graph["12"]["inputs"]["steps"].clone(), graph["12"]["inputs"]["cfg"].clone()), (json!(40), json!(4.0)));
+    }
+    install("loras", &["style\\film_look.safetensors"]);
+    let graph = qwen(json!({})).unwrap();
+    assert!(graph.get("6").is_none(), "no Lightning LoRA installed: no turbo");
+    assert_eq!(graph["12"]["inputs"]["steps"], 40, "and then not 4 steps either");
+}
+
+#[cfg(windows)]
+#[test]
+fn qwen_with_only_2509_uses_the_lightning_lora_of_its_own_version() {
+    qwen_install();
+    install("diffusion_models", &["qwen_image_edit_2509_fp8_e4m3fn.safetensors"]);
+    let graph = qwen(json!({})).unwrap();
+    assert_eq!(graph["1"]["inputs"]["unet_name"], "qwen_image_edit_2509_fp8_e4m3fn.safetensors");
+    assert_eq!(graph["6"]["inputs"]["lora_name"], "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors");
+    install("loras", &["Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors"]);
+    assert!(qwen(json!({})).unwrap().get("6").is_none(), "the 2511 LoRA does not fit the 2509 model");
+}
+
+#[cfg(windows)]
+#[test]
+fn qwen_prefers_a_smaller_file_of_the_same_version_and_a_bf16_lora() {
+    qwen_install();
+    install("diffusion_models", &["qwen_image_edit_2511_bf16.safetensors", "qwen_image_edit_2511_fp8mixed.safetensors"]);
+    assert_eq!(qwen(json!({})).unwrap()["1"]["inputs"]["unet_name"], "qwen_image_edit_2511_fp8mixed.safetensors");
+    install("loras", &["Qwen-Image-Edit-2511-Lightning-4steps-V1.0-fp32.safetensors", "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors"]);
+    assert_eq!(qwen(json!({})).unwrap()["6"]["inputs"]["lora_name"], "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors");
+}
+
+#[cfg(windows)]
+#[test]
+fn qwen_takes_up_to_three_pictures_the_first_scaled_and_the_others_as_they_are() {
+    qwen_install();
+    let graph = qwen(json!({"image_ingredients": pictures(4)})).unwrap();
+    assert!(graph.get("23").is_none(), "a fourth picture is left out");
+    for id in ["7", "8"] {
+        let inputs = &graph[id]["inputs"];
+        assert_eq!((inputs["image1"].clone(), inputs["image2"].clone(), inputs["image3"].clone()), (json!(["30", 0]), json!(["21", 0]), json!(["22", 0])));
+    }
+    assert!(qwen(json!({})).unwrap()["7"]["inputs"].get("image2").is_none());
+    assert_eq!(qwen(json!({"steps": 6, "cfg": 2})).unwrap()["12"]["inputs"]["steps"], 6);
+}
+
+#[test]
+fn qwen_without_a_picture_a_prompt_or_a_model_is_refused_with_what_to_do() {
+    qwen_install();
+    let none = qwen(json!({"image_ingredients": []})).unwrap_err();
+    assert!(none.contains("at least one reference image"), "{none}");
+    let empty = qwen(json!({"prompt": "  "})).unwrap_err();
+    assert!(empty.contains("Prompt text is empty"), "{empty}");
+}
+
+#[cfg(windows)]
+#[test]
+fn qwen_without_an_installed_edit_model_or_with_a_wrong_name_says_which_file_it_needs() {
+    qwen_install();
+    install("diffusion_models", &["qwen_image_2512_fp8_e4m3fn.safetensors"]);
+    let missing = qwen(json!({})).unwrap_err();
+    assert!(missing.contains("No Qwen Image Edit diffusion model was found") && missing.contains("Comfy-Org/Qwen-Image-Edit_ComfyUI"), "{missing}");
+    qwen_install();
+    for (key, label) in [("clip_name", "Qwen Image Edit text encoder"), ("vae_name", "Qwen Image Edit VAE"), ("unet_name", "Qwen Image Edit diffusion model"), ("lora_name", "Qwen Image Edit LoRA")] {
+        let message = qwen(json!({ key: "not_there.safetensors" })).unwrap_err();
+        assert!(message.contains(label), "{key}: {message}");
+    }
 }

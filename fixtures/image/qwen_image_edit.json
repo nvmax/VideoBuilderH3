@@ -1,0 +1,1241 @@
+{
+ "preset": "qwen_image_edit",
+ "cases": [
+  {
+   "payload": {
+    "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+    "seed": 5,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ]
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "ModelSamplingAuraFlow",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "shift": 3.1
+     }
+    },
+    "5": {
+     "class_type": "CFGNorm",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "strength": 1.0
+     }
+    },
+    "6": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "lora_name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "FluxKontextImageScale",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ]
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "7",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "10": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "8",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "11": {
+     "class_type": "VAEEncode",
+     "inputs": {
+      "pixels": [
+       "30",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "6",
+       0
+      ],
+      "positive": [
+       "9",
+       0
+      ],
+      "negative": [
+       "10",
+       0
+      ],
+      "latent_image": [
+       "11",
+       0
+      ],
+      "seed": 5,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+     }
+    },
+    "13": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "12",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "14": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "13",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 5
+  },
+  {
+   "payload": {
+    "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+    "seed": 5,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ],
+    "turbo": false
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "ModelSamplingAuraFlow",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "shift": 3.1
+     }
+    },
+    "5": {
+     "class_type": "CFGNorm",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "strength": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "FluxKontextImageScale",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ]
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "7",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "10": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "8",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "11": {
+     "class_type": "VAEEncode",
+     "inputs": {
+      "pixels": [
+       "30",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "9",
+       0
+      ],
+      "negative": [
+       "10",
+       0
+      ],
+      "latent_image": [
+       "11",
+       0
+      ],
+      "seed": 5,
+      "steps": 40,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+     }
+    },
+    "13": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "12",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "14": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "13",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 5
+  },
+  {
+   "payload": {
+    "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+    "seed": 5,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ],
+    "lora_name": "[none]"
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "ModelSamplingAuraFlow",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "shift": 3.1
+     }
+    },
+    "5": {
+     "class_type": "CFGNorm",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "strength": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "FluxKontextImageScale",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ]
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "7",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "10": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "8",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "11": {
+     "class_type": "VAEEncode",
+     "inputs": {
+      "pixels": [
+       "30",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "9",
+       0
+      ],
+      "negative": [
+       "10",
+       0
+      ],
+      "latent_image": [
+       "11",
+       0
+      ],
+      "seed": 5,
+      "steps": 40,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+     }
+    },
+    "13": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "12",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "14": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "13",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 5
+  },
+  {
+   "payload": {
+    "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+    "seed": 9,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ],
+    "unet_name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors"
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "qwen_image_edit_2509_fp8_e4m3fn.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "ModelSamplingAuraFlow",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "shift": 3.1
+     }
+    },
+    "5": {
+     "class_type": "CFGNorm",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "strength": 1.0
+     }
+    },
+    "6": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "lora_name": "Qwen-Image-Edit-2509-Lightning-4steps-V1.0-bf16.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "FluxKontextImageScale",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ]
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "7",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "10": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "8",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "11": {
+     "class_type": "VAEEncode",
+     "inputs": {
+      "pixels": [
+       "30",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "6",
+       0
+      ],
+      "positive": [
+       "9",
+       0
+      ],
+      "negative": [
+       "10",
+       0
+      ],
+      "latent_image": [
+       "11",
+       0
+      ],
+      "seed": 9,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+     }
+    },
+    "13": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "12",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "14": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "13",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 9
+  },
+  {
+   "payload": {
+    "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+    "seed": 9,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\b.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\c.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\d.png"
+     }
+    ],
+    "negative_prompt": "blurry",
+    "steps": 6,
+    "cfg": 2
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "ModelSamplingAuraFlow",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "shift": 3.1
+     }
+    },
+    "5": {
+     "class_type": "CFGNorm",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "strength": 1.0
+     }
+    },
+    "6": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "lora_name": "Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "21": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "22": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "FluxKontextImageScale",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ]
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ],
+      "image2": [
+       "21",
+       0
+      ],
+      "image3": [
+       "22",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "blurry",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ],
+      "image2": [
+       "21",
+       0
+      ],
+      "image3": [
+       "22",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "7",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "10": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "8",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "11": {
+     "class_type": "VAEEncode",
+     "inputs": {
+      "pixels": [
+       "30",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "6",
+       0
+      ],
+      "positive": [
+       "9",
+       0
+      ],
+      "negative": [
+       "10",
+       0
+      ],
+      "latent_image": [
+       "11",
+       0
+      ],
+      "seed": 9,
+      "steps": 6,
+      "cfg": 2.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+     }
+    },
+    "13": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "12",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "14": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "13",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 9
+  },
+  {
+   "payload": {
+    "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+    "seed": 9,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\b.png"
+     }
+    ],
+    "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+    "vae_name": "qwen_image_vae.safetensors",
+    "lora_name": "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-fp32.safetensors",
+    "steps": 8
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "qwen_image_edit_2511_fp8mixed.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "ModelSamplingAuraFlow",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "shift": 3.1
+     }
+    },
+    "5": {
+     "class_type": "CFGNorm",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "strength": 1.0
+     }
+    },
+    "6": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "lora_name": "Qwen-Image-Edit-2511-Lightning-8steps-V1.0-fp32.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "21": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "FluxKontextImageScale",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ]
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Enhance this frame into a YouTube thumbnail. Keep the face, likeness and pose. Add the title text \"HEAT\".",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ],
+      "image2": [
+       "21",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeQwenImageEditPlus",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "",
+      "vae": [
+       "3",
+       0
+      ],
+      "image1": [
+       "30",
+       0
+      ],
+      "image2": [
+       "21",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "7",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "10": {
+     "class_type": "FluxKontextMultiReferenceLatentMethod",
+     "inputs": {
+      "conditioning": [
+       "8",
+       0
+      ],
+      "reference_latents_method": "index_timestep_zero"
+     }
+    },
+    "11": {
+     "class_type": "VAEEncode",
+     "inputs": {
+      "pixels": [
+       "30",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "6",
+       0
+      ],
+      "positive": [
+       "9",
+       0
+      ],
+      "negative": [
+       "10",
+       0
+      ],
+      "latent_image": [
+       "11",
+       0
+      ],
+      "seed": 9,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+     }
+    },
+    "13": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "12",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "14": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "13",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 9
+  }
+ ]
+}

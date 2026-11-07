@@ -1539,10 +1539,21 @@
   },
   {
    "method": "POST",
+   "path": "/vrgdg/workflow_runner/build_qwen_image_edit_prompt",
+   "handler": "vrgdg_workflow_runner_build_qwen_image_edit_prompt",
+   "file": "runner/routes.py",
+   "line": 130,
+   "doc": "",
+   "callers": [
+    "thumbnail_engines.mjs"
+   ]
+  },
+  {
+   "method": "POST",
    "path": "/vrgdg/workflow_runner/build_krea2_2pass_prompt",
    "handler": "vrgdg_workflow_runner_build_krea2_2pass_prompt",
    "file": "runner/routes.py",
-   "line": 130,
+   "line": 142,
    "doc": "",
    "callers": [
     "image_generation.mjs",
@@ -1555,7 +1566,7 @@
    "path": "/vrgdg/workflow_runner/build_ernie_image_prompt",
    "handler": "vrgdg_workflow_runner_build_ernie_image_prompt",
    "file": "runner/routes.py",
-   "line": 142,
+   "line": 154,
    "doc": "",
    "callers": [
     "image_generation.mjs",
@@ -1567,7 +1578,7 @@
    "path": "/vrgdg/workflow_runner/build_i2v_prompt",
    "handler": "vrgdg_workflow_runner_build_i2v_prompt",
    "file": "runner/routes.py",
-   "line": 154,
+   "line": 166,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1578,7 +1589,7 @@
    "path": "/vrgdg/workflow_runner/build_t2v_prompt",
    "handler": "vrgdg_workflow_runner_build_t2v_prompt",
    "file": "runner/routes.py",
-   "line": 166,
+   "line": 178,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1589,7 +1600,7 @@
    "path": "/vrgdg/workflow_runner/build_minimax_h3_prompt",
    "handler": "vrgdg_workflow_runner_build_minimax_h3_prompt",
    "file": "runner/routes.py",
-   "line": 178,
+   "line": 190,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1600,7 +1611,7 @@
    "path": "/vrgdg/workflow_runner/build_minimax_h3_2pass_prompt",
    "handler": "vrgdg_workflow_runner_build_minimax_h3_2pass_prompt",
    "file": "runner/routes.py",
-   "line": 190,
+   "line": 202,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1611,7 +1622,7 @@
    "path": "/vrgdg/workflow_runner/build_minimax_h3_advanced_2pass_prompt",
    "handler": "vrgdg_workflow_runner_build_minimax_h3_advanced_2pass_prompt",
    "file": "runner/routes.py",
-   "line": 202,
+   "line": 214,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1622,7 +1633,7 @@
    "path": "/vrgdg/workflow_runner/build_minimax_h3_draft_prompt",
    "handler": "vrgdg_workflow_runner_build_minimax_h3_draft_prompt",
    "file": "runner/routes.py",
-   "line": 218,
+   "line": 230,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1633,7 +1644,7 @@
    "path": "/vrgdg/workflow_runner/build_minimax_h3_finalize_prompt",
    "handler": "vrgdg_workflow_runner_build_minimax_h3_finalize_prompt",
    "file": "runner/routes.py",
-   "line": 230,
+   "line": 242,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1644,7 +1655,7 @@
    "path": "/vrgdg/workflow_runner/build_minimax_h3_3pass_prompt",
    "handler": "vrgdg_workflow_runner_build_minimax_h3_3pass_prompt",
    "file": "runner/routes.py",
-   "line": 240,
+   "line": 252,
    "doc": "",
    "callers": []
   },
@@ -1653,7 +1664,7 @@
    "path": "/vrgdg/workflow_runner/build_rtv_prompt",
    "handler": "vrgdg_workflow_runner_build_rtv_prompt",
    "file": "runner/routes.py",
-   "line": 252,
+   "line": 264,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1664,7 +1675,7 @@
    "path": "/vrgdg/workflow_runner/build_ingredients_prompt",
    "handler": "vrgdg_workflow_runner_build_ingredients_prompt",
    "file": "runner/routes.py",
-   "line": 264,
+   "line": 276,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1675,7 +1686,7 @@
    "path": "/vrgdg/workflow_runner/build_flf_prompt",
    "handler": "vrgdg_workflow_runner_build_flf_prompt",
    "file": "runner/routes.py",
-   "line": 276,
+   "line": 288,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1686,7 +1697,7 @@
    "path": "/vrgdg/workflow_runner/build_id_lora_prompt",
    "handler": "vrgdg_workflow_runner_build_id_lora_prompt",
    "file": "runner/routes.py",
-   "line": 285,
+   "line": 297,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1697,7 +1708,7 @@
    "path": "/vrgdg/workflow_runner/build_flux_klein_prompt",
    "handler": "vrgdg_workflow_runner_build_flux_klein_prompt",
    "file": "runner/routes.py",
-   "line": 297,
+   "line": 309,
    "doc": "",
    "callers": [
     "image_generation.mjs",
@@ -1709,7 +1720,7 @@
    "path": "/vrgdg/workflow_runner/build_nb_image_prompt",
    "handler": "vrgdg_workflow_runner_build_nb_image_prompt",
    "file": "runner/routes.py",
-   "line": 309,
+   "line": 321,
    "doc": "",
    "callers": [
     "image_generation.mjs",
@@ -1721,7 +1732,7 @@
    "path": "/vrgdg/workflow_runner/build_z_upscale_enhance_prompt",
    "handler": "vrgdg_workflow_runner_build_z_upscale_enhance_prompt",
    "file": "runner/routes.py",
-   "line": 321,
+   "line": 333,
    "doc": "",
    "callers": [
     "builder.mjs",
@@ -1733,7 +1744,7 @@
    "path": "/vrgdg/workflow_runner/build_clear_memory_prompt",
    "handler": "vrgdg_workflow_runner_build_clear_memory_prompt",
    "file": "runner/routes.py",
-   "line": 333,
+   "line": 345,
    "doc": "",
    "callers": [
     "VRGDG_WorkflowRunnerUI.js",
@@ -1745,7 +1756,7 @@
    "path": "/vrgdg/workflow_runner/build_transcribe_prompt",
    "handler": "vrgdg_workflow_runner_build_transcribe_prompt",
    "file": "runner/routes.py",
-   "line": 341,
+   "line": 353,
    "doc": "",
    "callers": []
   },
@@ -1754,7 +1765,7 @@
    "path": "/vrgdg/workflow_runner/build_timestamped_transcribe_prompt",
    "handler": "vrgdg_workflow_runner_build_timestamped_transcribe_prompt",
    "file": "runner/routes.py",
-   "line": 353,
+   "line": 365,
    "doc": "",
    "callers": [
     "lyric_transcription.mjs"
@@ -1765,7 +1776,7 @@
    "path": "/vrgdg/workflow_runner/prepare_scene_audio_clip",
    "handler": "vrgdg_workflow_runner_prepare_scene_audio_clip",
    "file": "runner/routes.py",
-   "line": 365,
+   "line": 377,
    "doc": "",
    "callers": [
     "lyric_transcription.mjs"
@@ -1776,7 +1787,7 @@
    "path": "/vrgdg/workflow_runner/save_image",
    "handler": "vrgdg_workflow_runner_save_image",
    "file": "runner/routes.py",
-   "line": 377,
+   "line": 389,
    "doc": "",
    "callers": [
     "VRGDG_WorkflowRunnerUI.js"
@@ -1787,7 +1798,7 @@
    "path": "/vrgdg/workflow_runner/collect_scene_video",
    "handler": "vrgdg_workflow_runner_collect_scene_video",
    "file": "runner/routes.py",
-   "line": 389,
+   "line": 401,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1798,7 +1809,7 @@
    "path": "/vrgdg/workflow_runner/match_scene_video_start_color",
    "handler": "vrgdg_workflow_runner_match_scene_video_start_color",
    "file": "runner/routes.py",
-   "line": 401,
+   "line": 413,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1809,7 +1820,7 @@
    "path": "/vrgdg/workflow_runner/trim_scene_video",
    "handler": "vrgdg_workflow_runner_trim_scene_video",
    "file": "runner/routes.py",
-   "line": 413,
+   "line": 425,
    "doc": "",
    "callers": [
     "timeline_edit.mjs",
@@ -1821,7 +1832,7 @@
    "path": "/vrgdg/workflow_runner/find_scene_video_output",
    "handler": "vrgdg_workflow_runner_find_scene_video_output",
    "file": "runner/routes.py",
-   "line": 428,
+   "line": 440,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1832,7 +1843,7 @@
    "path": "/vrgdg/workflow_runner/collect_minimax_h3_stage_backup",
    "handler": "vrgdg_workflow_runner_collect_minimax_h3_stage_backup",
    "file": "runner/routes.py",
-   "line": 440,
+   "line": 452,
    "doc": "",
    "callers": []
   },
@@ -1841,7 +1852,7 @@
    "path": "/vrgdg/workflow_runner/find_minimax_h3_stage_outputs",
    "handler": "vrgdg_workflow_runner_find_minimax_h3_stage_outputs",
    "file": "runner/routes.py",
-   "line": 452,
+   "line": 464,
    "doc": "",
    "callers": []
   },
@@ -1850,7 +1861,7 @@
    "path": "/vrgdg/workflow_runner/cleanup_minimax_h3_output",
    "handler": "vrgdg_workflow_runner_cleanup_minimax_h3_output",
    "file": "runner/routes.py",
-   "line": 464,
+   "line": 476,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1861,7 +1872,7 @@
    "path": "/vrgdg/workflow_runner/stitch_scene_videos",
    "handler": "vrgdg_workflow_runner_stitch_scene_videos",
    "file": "runner/routes.py",
-   "line": 476,
+   "line": 488,
    "doc": "",
    "callers": [
     "video_render.mjs"
@@ -1872,7 +1883,7 @@
    "path": "/vrgdg/workflow_runner/render_image_slideshow",
    "handler": "vrgdg_workflow_runner_render_image_slideshow",
    "file": "runner/routes.py",
-   "line": 491,
+   "line": 503,
    "doc": "",
    "callers": [
     "video_render.mjs"
