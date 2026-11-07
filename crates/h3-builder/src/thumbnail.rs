@@ -3,8 +3,9 @@
 //!
 //! The Builder's Thumbnail dialog makes the picture (the LLM writes the edit prompt, NanoBanana or Flux/Klein draws it) and
 //! calls [`save_thumbnail_image`] to keep it in `<project>/thumbnail`. After the final stitch the Builder calls
-//! [`prepend_thumbnail_intro`], which shows the picture for a few seconds in silence before the first scene. The scene clips,
-//! the timeline and the audio sync are never touched: only the stitched video is rewritten.
+//! [`prepend_thumbnail_intro`], which makes the picture the video's first frame: exactly one frame in front of the first scene,
+//! with the same length of silence. The scene clips, the timeline and the audio sync are never touched: only the stitched video
+//! is rewritten.
 
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -26,11 +27,6 @@ type Reply = Result<Value, String>;
 pub const THUMBNAIL_FOLDER: &str = "thumbnail";
 /// Bumped when the routes or their fields change in a way the Builder has to know about.
 pub const THUMBNAIL_VERSION: u32 = 1;
-pub const DEFAULT_INTRO_SECONDS: f64 = 2.0;
-pub const MIN_INTRO_SECONDS: f64 = 0.5;
-pub const MAX_INTRO_SECONDS: f64 = 10.0;
-/// How far the joined video may differ from source + intro before the stream-copy join is thrown away.
-const DURATION_TOLERANCE_SECONDS: f64 = 0.35;
 const VIDEO_EXTENSIONS: [&str; 6] = ["mp4", "mov", "mkv", "webm", "avi", "m4v"];
 
 /// `GET /vrgdg/music_builder/thumbnail/capabilities`: tells the Builder that this build can save thumbnails, prepend the intro and take
@@ -41,14 +37,6 @@ pub fn capabilities() -> Reply {
 
 fn absolute(raw: &str) -> PathBuf {
     h3_core::abspath::absolute(raw).unwrap_or_else(|_| PathBuf::from(raw)).components().collect()
-}
-
-/// `_intro_seconds`: the intro length, kept between [`MIN_INTRO_SECONDS`] and [`MAX_INTRO_SECONDS`] (the default for anything else).
-pub fn intro_seconds(value: Option<&Value>) -> f64 {
-    match value.and_then(to_float) {
-        Some(seconds) if seconds.is_finite() => seconds.clamp(MIN_INTRO_SECONDS, MAX_INTRO_SECONDS),
-        _ => DEFAULT_INTRO_SECONDS,
-    }
 }
 
 /// `_next_thumbnail_path`: `<prefix>_NNNN.png` with the first number that is free in `folder`.
@@ -152,18 +140,19 @@ fn frame_rate(values: &std::collections::HashMap<String, String>) -> Ratio {
     ["r_frame_rate", "avg_frame_rate"].iter().filter_map(|k| values.get(*k).and_then(|v| Ratio::parse(v))).find(Ratio::is_positive).unwrap_or(Ratio::new(24, 1))
 }
 
-/// The ffmpeg arguments that turn the picture into a silent clip with the video's size, frame rate and audio format.
+/// The ffmpeg arguments that turn the picture into a one frame clip (with a matching silence) in the video's size, frame rate and audio
+/// format. `seconds` is the length of that one frame (1 / frame rate), and `-frames:v 1` makes it exactly one frame.
 fn intro_command(image: &Path, output: &Path, seconds: f64, size: (i64, i64), rate: Ratio, audio: Option<(i64, i64)>, crf: Option<f64>) -> Vec<String> {
     let (width, height) = size;
     let fill = format!("scale={width}:{height}:force_original_aspect_ratio=increase,crop={width}:{height},setsar=1,format=yuv420p");
-    let length = format!("{seconds:.3}");
+    let length = format!("{seconds:.6}");
     let rate = rate_text(rate);
     let mut command = args(&["-y", "-loop", "1", "-framerate", &rate, "-t", &length, "-i", &image.display().to_string()]);
     if let Some((sample_rate, channels)) = audio {
         let layout = if channels == 1 { "mono" } else { "stereo" };
         command.extend(args(&["-f", "lavfi", "-t", &length, "-i", &format!("anullsrc=r={sample_rate}:cl={layout}")]));
     }
-    command.extend(args(&["-vf", &fill, "-r", &rate]));
+    command.extend(args(&["-vf", &fill, "-r", &rate, "-frames:v", "1"]));
     command.extend(scene_video_args(crf));
     match audio {
         Some((sample_rate, channels)) => {
@@ -223,6 +212,11 @@ impl Drop for WorkDir {
     }
 }
 
+/// How many video frames a file holds, counted from its packets (no decoding, so it is quick even for a long video).
+fn video_packets(tools: &Tools, path: &Path) -> i64 {
+    probe_stream_fields(tools, path, "v:0", &["nb_read_packets"], true).ok().and_then(|f| whole_field(&f, "nb_read_packets")).unwrap_or(0)
+}
+
 fn length_of(tools: &Tools, path: &Path) -> f64 {
     probe_duration(tools, &path.display().to_string()).unwrap_or(0.0)
 }
@@ -231,8 +225,8 @@ fn whole_field(values: &std::collections::HashMap<String, String>, key: &str) ->
     values.get(key).and_then(|v| v.trim().parse().ok())
 }
 
-/// `POST /vrgdg/music_builder/thumbnail/prepend`: `{input_path, image_path, seconds?, replace_source?, crf?}`. Shows `image_path` for a few
-/// seconds in front of `input_path` (a stitched video), in place unless `replace_source` is false.
+/// `POST /vrgdg/music_builder/thumbnail/prepend`: `{input_path, image_path, replace_source?, crf?}`. Makes `image_path` the first frame of
+/// `input_path` (a stitched video): one frame in front of it, in place unless `replace_source` is false.
 pub fn prepend_thumbnail_intro(env: &Env, payload: &Obj) -> Reply {
     let source = absolute(&path_text(payload, "input_path"));
     let image_path = absolute(&path_text(payload, "image_path"));
@@ -244,7 +238,6 @@ pub fn prepend_thumbnail_intro(env: &Env, payload: &Obj) -> Reply {
         return Err(format!("The thumbnail image was not found: {}", image_path.display()));
     }
     image::image_dimensions(&image_path).map_err(|e| format!("Could not read the picture {}: {e}", image_path.display()))?;
-    let seconds = intro_seconds(payload.get("seconds"));
     let replace_source = payload.get("replace_source") != Some(&Value::Bool(false));
 
     let tools = env.tools()?;
@@ -255,8 +248,9 @@ pub fn prepend_thumbnail_intro(env: &Env, payload: &Obj) -> Reply {
     let audio_fields = probe_stream_fields(&tools, &source, "a:0", &["sample_rate", "channels"], false).map_err(|e| e.to_string())?;
     let audio = whole_field(&audio_fields, "sample_rate").map(|rate| (rate, whole_field(&audio_fields, "channels").unwrap_or(2).max(1)));
     let rate = frame_rate(&video);
+    let seconds = 1.0 / rate.as_f64();
     let crf = payload.get("crf").and_then(to_float).or_else(|| source_crf(&[&source]));
-    let source_duration = length_of(&tools, &source);
+    let source_frames = video_packets(&tools, &source);
 
     let folder = source.parent().map(Path::to_path_buf).unwrap_or_default();
     let work = WorkDir::new(&folder)?;
@@ -265,9 +259,9 @@ pub fn prepend_thumbnail_intro(env: &Env, payload: &Obj) -> Reply {
     tools.ffmpeg_checked(&command, "FFmpeg could not make the thumbnail clip.").map_err(|e| e.to_string())?;
     let joined = work.0.join("joined.mp4");
     let mut method = "copy";
+    // One frame is far shorter than a length check could tell, so the frames are counted: exactly one more than before.
     let copied = join_by_copy(&tools, &intro, &source, &joined, &work.0).and_then(|_| {
-        let drift = (length_of(&tools, &joined) - (source_duration + seconds)).abs();
-        if source_duration > 0.0 && drift > DURATION_TOLERANCE_SECONDS { Err("The joined video has the wrong length.".to_string()) } else { Ok(()) }
+        if video_packets(&tools, &joined) == source_frames + 1 { Ok(()) } else { Err("The joined video does not have exactly one more frame.".to_string()) }
     });
     if copied.is_err() {
         method = "reencode";
@@ -283,6 +277,7 @@ pub fn prepend_thumbnail_intro(env: &Env, payload: &Obj) -> Reply {
     fs::rename(&joined, &destination).map_err(|e| format!("The video with the thumbnail could not replace {}: {e}", destination.display()))?;
     Ok(json!({
         "final_video_path": destination.display().to_string(),
+        "intro_frames": 1,
         "intro_seconds": seconds,
         "method": method,
         "duration": length_of(&tools, &destination),
@@ -333,22 +328,22 @@ mod tests {
         image::RgbImage::from_pixel(size.0, size.1, image::Rgb(color)).save(path).unwrap();
     }
 
-    fn first_color(env: &Env, video: &Path, at: &str) -> [u8; 3] {
+    /// Average color of frame `number` (0 is the first frame).
+    fn frame_color(env: &Env, video: &Path, number: u32) -> [u8; 3] {
         let tools = env.tools().unwrap();
-        let frame = video.with_extension("frame.png");
-        tools.ffmpeg_checked(&args(&["-y", "-ss", at, "-i", &video.display().to_string(), "-frames:v", "1", &frame.display().to_string()]), "frame").unwrap();
+        let frame = video.with_extension(format!("frame{number}.png"));
+        let filter = format!("select=eq(n\\,{number})");
+        tools.ffmpeg_checked(&args(&["-y", "-i", &video.display().to_string(), "-vf", &filter, "-frames:v", "1", "-fps_mode", "passthrough", &frame.display().to_string()]), "frame").unwrap();
         let small = image::imageops::resize(&image::open(&frame).unwrap().to_rgb8(), 1, 1, image::imageops::FilterType::Triangle);
         small.get_pixel(0, 0).0
     }
 
-    #[test]
-    fn the_length_is_kept_in_range() {
-        assert_eq!(intro_seconds(Some(&json!(0))), MIN_INTRO_SECONDS);
-        assert_eq!(intro_seconds(Some(&json!(99))), MAX_INTRO_SECONDS);
-        assert_eq!(intro_seconds(Some(&json!("3.5"))), 3.5);
-        for bad in [None, Some(json!("")), Some(json!("abc")), Some(Value::Null)] {
-            assert_eq!(intro_seconds(bad.as_ref()), DEFAULT_INTRO_SECONDS);
-        }
+    fn frame_count(env: &Env, video: &Path) -> i64 {
+        probe_stream_fields(&env.tools().unwrap(), video, "v:0", &["nb_read_packets"], true).unwrap()["nb_read_packets"].parse().unwrap()
+    }
+
+    fn is_red(color: [u8; 3]) -> bool {
+        color[0] > 150 && color[1] < 90 && color[2] < 90
     }
 
     #[test]
@@ -477,50 +472,72 @@ mod tests {
     }
 
     #[test]
-    fn the_picture_shows_first_and_the_video_follows_with_its_audio() {
+    fn the_picture_is_exactly_the_first_frame_and_the_video_follows_unchanged() {
+        let Some(env) = env_with_ffmpeg() else { return };
+        let dir = tempfile::tempdir().unwrap();
+        let video = dir.path().join("FINAL_VIDEO.mp4");
+        make_video(&env, &video, 3, true, "320x180", 24);
+        let before = frame_count(&env, &video);
+        assert_eq!(before, 72);
+        let image = dir.path().join("thumb.png");
+        picture(&image, [220, 30, 30], (640, 360));
+        let reply = prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string()}))).unwrap();
+        assert_eq!(reply["final_video_path"], video.display().to_string());
+        assert_eq!(reply["intro_frames"], 1);
+        assert!((reply["intro_seconds"].as_f64().unwrap() - 1.0 / 24.0).abs() < 1e-6);
+        // One frame more, no more: the picture is frame 0, and the old first frame is now frame 1.
+        assert_eq!(frame_count(&env, &video), before + 1);
+        assert!(is_red(frame_color(&env, &video, 0)), "frame 0 is the picture");
+        assert!(!is_red(frame_color(&env, &video, 1)), "frame 1 is the video's own first frame");
+        assert!(!is_red(frame_color(&env, &video, 2)));
+        assert_eq!(probe(&env, &video, "stream=width,height", Some("v:0")), ["320", "180"]);
+        assert_eq!(probe(&env, &video, "stream=codec_name", Some("a:0")), ["aac"]);
+        // The audio is not pushed by more than the one frame: the file is 1/24 s longer, within an audio frame.
+        assert!((probe(&env, &video, "format=duration", None)[0].parse::<f64>().unwrap() - (3.0 + 1.0 / 24.0)).abs() < 0.06);
+        assert!((reply["duration"].as_f64().unwrap() - (3.0 + 1.0 / 24.0)).abs() < 0.06, "{reply}");
+        let left: Vec<_> = fs::read_dir(dir.path()).unwrap().flatten().map(|e| e.file_name().to_string_lossy().into_owned()).filter(|n| n.starts_with(".thumbnail_intro")).collect();
+        assert!(left.is_empty(), "work folder left behind: {left:?}");
+    }
+
+    #[test]
+    fn a_length_in_the_request_does_not_make_the_picture_stay_longer() {
         let Some(env) = env_with_ffmpeg() else { return };
         let dir = tempfile::tempdir().unwrap();
         let video = dir.path().join("FINAL_VIDEO.mp4");
         make_video(&env, &video, 3, true, "320x180", 24);
         let image = dir.path().join("thumb.png");
         picture(&image, [220, 30, 30], (640, 360));
-        let reply = prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string(), "seconds": 2}))).unwrap();
-        assert_eq!(reply["final_video_path"], video.display().to_string());
-        assert!((reply["duration"].as_f64().unwrap() - 5.0).abs() < 0.4, "{reply}");
-        assert_eq!(probe(&env, &video, "stream=width,height", Some("v:0")), ["320", "180"]);
-        assert_eq!(probe(&env, &video, "stream=codec_name", Some("a:0")), ["aac"]);
-        let [red, green, blue] = first_color(&env, &video, "1.0");
-        assert!(red > 150 && green < 90 && blue < 90, "the intro is not the picture: {red} {green} {blue}");
-        let later = first_color(&env, &video, "3.0");
-        assert!(!(later[0] > 150 && later[1] < 90), "the scene should follow the intro");
-        let left: Vec<_> = fs::read_dir(dir.path()).unwrap().flatten().map(|e| e.file_name().to_string_lossy().into_owned()).filter(|n| n.starts_with(".thumbnail_intro")).collect();
-        assert!(left.is_empty(), "work folder left behind: {left:?}");
+        let reply = prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string(), "seconds": 5}))).unwrap();
+        assert_eq!(frame_count(&env, &video), 73);
+        assert_eq!(reply["intro_frames"], 1);
     }
 
     #[test]
-    fn a_video_without_audio_stays_without_audio() {
+    fn a_video_without_audio_gets_no_audio() {
         let Some(env) = env_with_ffmpeg() else { return };
         let dir = tempfile::tempdir().unwrap();
         let video = dir.path().join("silent.mp4");
         make_video(&env, &video, 3, false, "320x180", 24);
         let image = dir.path().join("thumb.png");
         picture(&image, [220, 30, 30], (640, 360));
-        prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string(), "seconds": 1}))).unwrap();
+        prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string()}))).unwrap();
         assert!(probe(&env, &video, "stream=codec_type", Some("a:0")).is_empty());
-        assert!((probe(&env, &video, "format=duration", None)[0].parse::<f64>().unwrap() - 4.0).abs() < 0.4);
+        assert_eq!(frame_count(&env, &video), 73);
     }
 
     #[test]
-    fn a_picture_of_another_shape_fills_the_frame_without_changing_the_video_size() {
+    fn a_picture_of_another_shape_fills_the_frame_without_changing_the_video_size_or_rate() {
         let Some(env) = env_with_ffmpeg() else { return };
         let dir = tempfile::tempdir().unwrap();
         let video = dir.path().join("wide.mp4");
         make_video(&env, &video, 3, true, "640x360", 30);
         let image = dir.path().join("tall.png");
         picture(&image, [220, 30, 30], (400, 800));
-        prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string(), "seconds": 1}))).unwrap();
+        let reply = prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string()}))).unwrap();
         assert_eq!(probe(&env, &video, "stream=width,height", Some("v:0")), ["640", "360"]);
         assert_eq!(probe(&env, &video, "stream=r_frame_rate", Some("v:0")), ["30/1"]);
+        assert_eq!(frame_count(&env, &video), 91, "3 s at 30 fps plus one frame");
+        assert!((reply["intro_seconds"].as_f64().unwrap() - 1.0 / 30.0).abs() < 1e-6);
     }
 
     #[test]
@@ -531,10 +548,11 @@ mod tests {
         make_video(&env, &video, 3, true, "320x180", 24);
         let image = dir.path().join("thumb.png");
         picture(&image, [220, 30, 30], (640, 360));
-        let reply = prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string(), "seconds": 1, "replace_source": false}))).unwrap();
-        assert!(reply["final_video_path"].as_str().unwrap().ends_with("FINAL_VIDEO_with_thumbnail.mp4"));
-        assert!((probe(&env, &video, "format=duration", None)[0].parse::<f64>().unwrap() - 3.0).abs() < 0.3);
-        assert!((reply["duration"].as_f64().unwrap() - 4.0).abs() < 0.4);
+        let reply = prepend_thumbnail_intro(&env, &obj(json!({"input_path": video.display().to_string(), "image_path": image.display().to_string(), "replace_source": false}))).unwrap();
+        let made = PathBuf::from(reply["final_video_path"].as_str().unwrap());
+        assert!(made.to_string_lossy().ends_with("FINAL_VIDEO_with_thumbnail.mp4"));
+        assert_eq!(frame_count(&env, &video), 72);
+        assert_eq!(frame_count(&env, &made), 73);
     }
 
     #[test]

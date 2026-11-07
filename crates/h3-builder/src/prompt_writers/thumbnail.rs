@@ -21,15 +21,19 @@ fn collapse(text: &str) -> String {
     text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
-/// `thumbnail_instruction`: the instruction with the rule for the title text filled in, or the no-text rule when there is no title.
-pub fn thumbnail_instruction(title: &str) -> String {
+/// `thumbnail_instruction`: the instruction for `kind` (`"edit"` or `"restyle"`; anything else is `"edit"`), with the rule for the
+/// title text filled in, or the no-text rule when there is no title. An "edit" workflow follows an instruction such as "recrop the
+/// attached image". A "restyle" workflow starts from the frame as an image to image source and is given a description of the
+/// finished picture instead.
+pub fn thumbnail_instruction(title: &str, kind: &str) -> String {
     let title = collapse(title);
     let rule = if title.is_empty() {
         prompts::text("thumbnail", "THUMBNAIL_NO_TEXT_RULE").to_string()
     } else {
         prompts::text("thumbnail", "THUMBNAIL_TEXT_RULE").replace("{title}", &title.replace('"', "'"))
     };
-    prompts::text("thumbnail", "THUMBNAIL_EDIT_PROMPT_INSTRUCTIONS").replace("{text_rule}", &rule)
+    let template = if kind.trim().eq_ignore_ascii_case("restyle") { "THUMBNAIL_RESTYLE_PROMPT_INSTRUCTIONS" } else { "THUMBNAIL_EDIT_PROMPT_INSTRUCTIONS" };
+    prompts::text("thumbnail", template).replace("{text_rule}", &rule)
 }
 
 /// `clean_thumbnail_prompt`: strip code fences, a leading label and wrapping quotes from the model's reply.
@@ -56,14 +60,16 @@ fn user_block(payload: &Obj) -> String {
     if lines.is_empty() { "No extra notes. Pick a strong, fitting look from the image.".to_string() } else { lines.join("\n") }
 }
 
-/// `POST thumbnail/prompt`: look at the scene image (`image_path` or `image_data`) and write one edit prompt that makes it a thumbnail.
+/// `POST thumbnail/prompt`: look at the chosen frame (`image_path` or `image_data`) and write the prompt that makes it a thumbnail.
+/// `engine_kind` says which kind of image workflow will use it: `"edit"` (the default) for an instruction an editor follows,
+/// `"restyle"` for a description of the finished picture that an image to image workflow draws.
 pub async fn generate_thumbnail_prompt(llm: &dyn Llm, payload: &Obj) -> Reply {
     let (path, data) = (text(payload, "image_path"), text(payload, "image_data"));
     if path.is_empty() && data.is_empty() {
         return Err("Choose a scene with an image first. The LLM needs the picture to write the thumbnail prompt.".into());
     }
     let image = image_from_payload(&path, &data, "Thumbnail source image")?;
-    let instruction = format!("{}\n\n{}", thumbnail_instruction(&text(payload, "title")), user_block(payload));
+    let instruction = format!("{}\n\n{}", thumbnail_instruction(&text(payload, "title"), &text(payload, "engine_kind")), user_block(payload));
     let temperature = payload.get("temperature").filter(|v| truthy(v)).and_then(to_float).unwrap_or(0.75);
     let max_new_tokens = output_token_limit(payload, 900);
     let (raw, info) = llm.vision(VisionCall { instruction, images: vec![image], temperature, top_p: 0.95, max_new_tokens }).await?;
@@ -91,12 +97,29 @@ mod tests {
 
     #[test]
     fn a_title_is_asked_for_exactly_and_no_title_means_no_text() {
-        let with_title = thumbnail_instruction("NEVER \"LOOK\" BACK");
+        let with_title = thumbnail_instruction("NEVER \"LOOK\" BACK", "edit");
         assert!(with_title.contains("NEVER 'LOOK' BACK"));
         assert!(!with_title.contains("{text_rule}"));
-        let without = thumbnail_instruction("   ");
+        let without = thumbnail_instruction("   ", "edit");
         assert!(without.contains("Do not add any text"));
         assert!(!without.contains("{text_rule}"));
+    }
+
+    #[test]
+    fn a_restyle_workflow_gets_a_description_of_the_finished_picture_not_an_edit_instruction() {
+        let edit = thumbnail_instruction("RUN", "edit");
+        let restyle = thumbnail_instruction("RUN", "restyle");
+        assert!(edit.contains("Recrop the attached image"));
+        assert!(!restyle.contains("Recrop the attached image"));
+        assert!(restyle.contains("describes a finished"));
+        assert!(restyle.to_lowercase().contains("do not mention the attached image"));
+        assert!(restyle.contains("\"RUN\""));
+        assert!(!restyle.contains("{text_rule}"));
+        assert!(thumbnail_instruction("", "restyle").contains("Do not add any text"));
+        assert_eq!(thumbnail_instruction("RUN", " Restyle "), restyle, "the kind is not case or space sensitive");
+        for other in ["", "edit", "anything else"] {
+            assert_eq!(thumbnail_instruction("RUN", other), edit);
+        }
     }
 
     #[test]
@@ -134,6 +157,25 @@ mod tests {
         assert!(instruction.contains("\"RUN\""));
         assert!(instruction.ends_with("THUMBNAIL TITLE: RUN\nSTYLE NOTES: neon city"));
         assert_eq!((*temperature, *top_p), (0.75, 0.95));
+    }
+
+    #[tokio::test]
+    async fn the_kind_of_workflow_decides_which_instruction_the_llm_gets() {
+        let dir = tempfile::tempdir().unwrap();
+        let picture = dir.path().join("scene.png");
+        image::RgbImage::from_pixel(8, 8, image::Rgb([9, 9, 9])).save(&picture).unwrap();
+        let llm = Canned::new(&["A close-up of a singer.", "Recrop the attached image."]);
+        let path = picture.display().to_string();
+        generate_thumbnail_prompt(&llm, &obj(json!({"image_path": path, "engine_kind": "restyle"}))).await.unwrap();
+        generate_thumbnail_prompt(&llm, &obj(json!({"image_path": path}))).await.unwrap();
+        let asked = llm.asked.lock().unwrap();
+        let instruction = |index: usize| match &asked[index] {
+            Asked::Vision { instruction, .. } => instruction.clone(),
+            other => panic!("not a vision call: {other:?}"),
+        };
+        assert!(instruction(0).contains("describes a finished YouTube-style video thumbnail"), "restyle describes the picture");
+        assert!(!instruction(0).contains("Recrop the attached image"));
+        assert!(instruction(1).contains("Recrop the attached image"), "no kind means edit");
     }
 
     #[tokio::test]

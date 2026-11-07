@@ -50,8 +50,13 @@ fn make_video(path: &Path) {
     assert!(status.success());
 }
 
-fn duration(path: &Path) -> f64 {
-    let out = Command::new("ffprobe").args(["-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1"]).arg(path).output().unwrap();
+/// How many video frames a file holds, counted from its packets.
+fn frame_count(path: &Path) -> i64 {
+    let out = Command::new("ffprobe")
+        .args(["-v", "error", "-count_packets", "-select_streams", "v:0", "-show_entries", "stream=nb_read_packets", "-of", "default=noprint_wrappers=1:nokey=1"])
+        .arg(path)
+        .output()
+        .unwrap();
     String::from_utf8_lossy(&out.stdout).trim().parse().unwrap()
 }
 
@@ -100,11 +105,13 @@ async fn a_picture_comfyui_made_is_kept_in_the_project_and_goes_in_front_of_the_
 
     let video = project.join("FINAL_VIDEO.mp4");
     make_video(&video);
-    let (status, joined) = server.post("prepend", json!({"input_path": video.display().to_string(), "image_path": thumbnail, "seconds": 1})).await;
+    assert_eq!(frame_count(&video), 72);
+    // The picture is the first frame of the video: one frame, whatever length the request says.
+    let (status, joined) = server.post("prepend", json!({"input_path": video.display().to_string(), "image_path": thumbnail, "seconds": 5})).await;
     assert_eq!(status, 200, "{joined}");
     assert_eq!(joined["final_video_path"], video.display().to_string());
-    assert_eq!(joined["intro_seconds"], 1.0);
-    assert!((duration(&video) - 4.0).abs() < 0.4, "{joined}");
+    assert_eq!(joined["intro_frames"], 1);
+    assert_eq!(frame_count(&video), 73, "{joined}");
 }
 
 #[tokio::test]

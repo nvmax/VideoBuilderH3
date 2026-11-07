@@ -1499,7 +1499,8 @@
    "callers": [
     "VRGDG_WorkflowRunnerUI.js",
     "image_generation.mjs",
-    "reference_generation.mjs"
+    "reference_generation.mjs",
+    "thumbnail_engines.mjs"
    ]
   },
   {
@@ -1519,7 +1520,8 @@
    "line": 118,
    "doc": "",
    "callers": [
-    "reference_generation.mjs"
+    "reference_generation.mjs",
+    "thumbnail_engines.mjs"
    ]
   },
   {
@@ -1531,7 +1533,8 @@
    "doc": "",
    "callers": [
     "image_generation.mjs",
-    "reference_generation.mjs"
+    "reference_generation.mjs",
+    "thumbnail_engines.mjs"
    ]
   },
   {
@@ -1542,7 +1545,8 @@
    "line": 142,
    "doc": "",
    "callers": [
-    "image_generation.mjs"
+    "image_generation.mjs",
+    "thumbnail_engines.mjs"
    ]
   },
   {
@@ -1684,7 +1688,7 @@
    "doc": "",
    "callers": [
     "image_generation.mjs",
-    "thumbnail.mjs"
+    "thumbnail_engines.mjs"
    ]
   },
   {
@@ -1696,7 +1700,7 @@
    "doc": "",
    "callers": [
     "image_generation.mjs",
-    "thumbnail.mjs"
+    "thumbnail_engines.mjs"
    ]
   },
   {

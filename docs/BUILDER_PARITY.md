@@ -134,14 +134,14 @@ Not kept, as you said: Wizard Legacy, Wizard Beta, Auto Build, the Buy me a coff
 | Route | Status | Used by |
 |-------|--------|---------|
 | `POST workflow_runner/build_clear_memory_prompt` | served | VRGDG_WorkflowRunnerUI, session |
-| `POST workflow_runner/build_ernie_image_prompt` | served | image_generation |
+| `POST workflow_runner/build_ernie_image_prompt` | served | image_generation, thumbnail_engines |
 | `POST workflow_runner/build_flf_prompt` | left out: LTX only (MiniMax H3 scenes use the Builder's own prompt writers) | video_render |
 | `POST workflow_runner/build_flow_gpt_image_prompt` | left out: Browser automation of other sites | VRGDG_BrowserImageBridge |
-| `POST workflow_runner/build_flux_klein_prompt` | served | image_generation, thumbnail |
+| `POST workflow_runner/build_flux_klein_prompt` | served | image_generation, thumbnail_engines |
 | `POST workflow_runner/build_i2v_prompt` | left out: LTX only (MiniMax H3 scenes use the Builder's own prompt writers) | video_render |
 | `POST workflow_runner/build_id_lora_prompt` | left out: LTX only (MiniMax H3 scenes use the Builder's own prompt writers) | video_render |
 | `POST workflow_runner/build_ingredients_prompt` | left out: LTX only (MiniMax H3 scenes use the Builder's own prompt writers) | video_render |
-| `POST workflow_runner/build_krea2_2pass_prompt` | served | image_generation, reference_generation |
+| `POST workflow_runner/build_krea2_2pass_prompt` | served | image_generation, reference_generation, thumbnail_engines |
 | `POST workflow_runner/build_krea2_prompt` | served | - |
 | `POST workflow_runner/build_minimax_h3_2pass_prompt` | served | video_render |
 | `POST workflow_runner/build_minimax_h3_3pass_prompt` | left out: Nothing in the front end calls it | - |
@@ -149,8 +149,8 @@ Not kept, as you said: Wizard Legacy, Wizard Beta, Auto Build, the Buy me a coff
 | `POST workflow_runner/build_minimax_h3_draft_prompt` | served | video_render |
 | `POST workflow_runner/build_minimax_h3_finalize_prompt` | served | video_render |
 | `POST workflow_runner/build_minimax_h3_prompt` | served | video_render |
-| `POST workflow_runner/build_moss_image_prompt` | served | reference_generation |
-| `POST workflow_runner/build_nb_image_prompt` | served | image_generation, thumbnail |
+| `POST workflow_runner/build_moss_image_prompt` | served | reference_generation, thumbnail_engines |
+| `POST workflow_runner/build_nb_image_prompt` | served | image_generation, thumbnail_engines |
 | `POST workflow_runner/build_rtv_prompt` | left out: LTX only (MiniMax H3 scenes use the Builder's own prompt writers) | video_render |
 | `POST workflow_runner/build_seedance25_reference_prompt` | served | video_render |
 | `POST workflow_runner/build_t2v_prompt` | left out: LTX only (MiniMax H3 scenes use the Builder's own prompt writers) | video_render |

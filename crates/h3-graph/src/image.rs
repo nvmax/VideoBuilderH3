@@ -94,6 +94,37 @@ fn fail_missing<T>(categories: &[&str], value: &str, label: &str) -> Result<T> {
     fail(format!("{label} '{value}' was not found in ComfyUI/models/{}. Install the model there, refresh/restart ComfyUI, then try again.", categories[0]))
 }
 
+/// `_resolve_model_choice`: the spelling ComfyUI lists for a model, or `None` when it is not installed.
+///
+/// The name as given when it is installed. Otherwise the installed file with the same path, ignoring slash direction and case, and
+/// otherwise the installed file with the same file name, so a factory default such as `flux\flux2-vae.safetensors` finds
+/// `flux2-vae.safetensors` on an install that keeps its models in the models folder itself. ComfyUI only accepts the exact spelling it
+/// lists, so a graph has to carry this one.
+fn resolve_model(env: &dyn GraphEnv, categories: &[&str], value: &str) -> Option<String> {
+    let wanted = value.trim();
+    if wanted.is_empty() {
+        return None;
+    }
+    let normal = |s: &str| s.replace('\\', "/").to_lowercase();
+    let base = |s: &str| normal(s).rsplit('/').next().unwrap_or("").to_string();
+    let choices: Vec<String> = categories.iter().flat_map(|category| env.model_choices(category)).map(|c| c.trim().to_string()).filter(|c| !c.is_empty()).collect();
+    if choices.iter().any(|c| c == wanted) {
+        return Some(wanted.to_string());
+    }
+    if let Some(found) = choices.iter().find(|c| normal(c) == normal(wanted)) {
+        return Some(found.clone());
+    }
+    choices.iter().find(|c| base(c) == base(wanted)).cloned()
+}
+
+/// `_installed_model_choice`: a model name that must be installed, as ComfyUI lists it. `Err` names the model when it is not installed.
+fn installed_model(env: &dyn GraphEnv, categories: &[&str], value: &str, label: &str) -> Result<String> {
+    match resolve_model(env, categories, value) {
+        Some(found) => Ok(found),
+        None => fail_missing(categories, value.trim(), label),
+    }
+}
+
 /// The picture the sampler's unused image input points at, or the one the user chose for image to image.
 fn set_image_to_image(env: &dyn GraphEnv, prompt: &mut Obj, node: &str, payload: &Obj, enabled: bool, missing: &str) -> Result<()> {
     if enabled {
@@ -327,21 +358,26 @@ pub fn build_krea2_2pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
 
 // -- MOSS-Image ---------------------------------------------------------------------------------------------------------
 
-/// MOSS-Image text to image on ComfyUI's native support. A model only LoRA (the 8 step turbo LoRA) is optional. The model
-/// already samples with shift 5 and a timestep multiplier of 1, so there is no ModelSamplingSD3 node: it forces a
+/// MOSS-Image on ComfyUI's native support: text to image, or image to image. A model only LoRA (the 8 step turbo LoRA) is optional.
+/// The model already samples with shift 5 and a timestep multiplier of 1, so there is no ModelSamplingSD3 node: it forces a
 /// multiplier of 1000 and the picture is noise.
+///
+/// Image to image (`use_image_to_image` with `image_to_image_path` or `image_to_image_data`) restyles a picture: it is scaled to
+/// `width` x `height` (cropped from the center), encoded with the VAE and sampled from at `denoise` (0.05 to 1, 0.65 by default;
+/// lower keeps more of the picture). MOSS-Image has no instruction edit, so the prompt describes the finished picture.
 pub fn build_moss_image(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     let text_value = prompt_text(payload, "Prompt text is empty.")?;
     let unet = first_text(payload, &["unet_name"], "moss_image_sft_bf16.safetensors");
     let clip = first_text(payload, &["clip_name"], "qwen3.5_9b_int8_convrot.safetensors");
     let vae = first_text(payload, &["vae_name"], "flux2-vae.safetensors");
     let lora = first_text(payload, &["lora_name"], NONE_LORA);
-    require_model(env, &["diffusion_models", "unet"], &unet, "MOSS-Image diffusion model")?;
-    require_model(env, &["text_encoders", "clip"], &clip, "MOSS-Image text encoder")?;
-    require_model(env, &["vae"], &vae, "MOSS-Image VAE")?;
-    if lora != NONE_LORA {
-        require_model(env, &["loras"], &lora, "MOSS-Image LoRA")?;
-    }
+    // Each name is the spelling ComfyUI lists (a saved name may differ from it by a folder or by case).
+    let unet = installed_model(env, &["diffusion_models", "unet"], &unet, "MOSS-Image diffusion model")?;
+    let clip = installed_model(env, &["text_encoders", "clip"], &clip, "MOSS-Image text encoder")?;
+    let vae = installed_model(env, &["vae"], &vae, "MOSS-Image VAE")?;
+    let lora = if lora != NONE_LORA { installed_model(env, &["loras"], &lora, "MOSS-Image LoRA")? } else { lora };
+    let use_i2i = bool_payload(payload, "use_image_to_image", false);
+    let (width, height) = (int_payload(payload, "width", 1344, 256, 4096), int_payload(payload, "height", 768, 256, 4096));
     let seed = pick_seed(env, payload, 1);
     let cfg = float_payload(payload, "cfg", 1.0, 1.0, 20.0);
 
@@ -354,17 +390,34 @@ pub fn build_moss_image(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         prompt.insert("4".into(), json!({"class_type": "LoraLoaderModelOnly", "inputs": {"model": model, "lora_name": lora, "strength_model": float_payload(payload, "lora_strength", 1.0, -10.0, 10.0)}}));
         model = json!(["4", 0]);
     }
+    let (latent, denoise) = if use_i2i {
+        let source = env
+            .prepare_load_image(&text(payload, "image_to_image_path"), &text(payload, "image_to_image_data"), &match text(payload, "image_to_image_name") {
+                n if n.is_empty() => "image.png".to_string(),
+                n => n,
+            })
+            .map_err(GraphError::new)?;
+        if source.is_empty() {
+            return fail("MOSS-Image image-to-image is enabled, but no source image was provided.");
+        }
+        prompt.insert("13".into(), json!({"class_type": "LoadImage", "inputs": {"image": source}}));
+        prompt.insert("14".into(), json!({"class_type": "ImageScale", "inputs": {
+            "image": ["13", 0], "upscale_method": "lanczos", "width": width, "height": height, "crop": "center",
+        }}));
+        prompt.insert("15".into(), json!({"class_type": "VAEEncode", "inputs": {"pixels": ["14", 0], "vae": ["3", 0]}}));
+        (json!(["15", 0]), float_payload(payload, "denoise", 0.65, 0.05, 1.0))
+    } else {
+        prompt.insert("9".into(), json!({"class_type": "EmptyFlux2LatentImage", "inputs": {
+            "width": width, "height": height, "batch_size": int_payload(payload, "batch_size", 1, 1, 16),
+        }}));
+        (json!(["9", 0]), 1.0)
+    };
     prompt.insert("7".into(), json!({"class_type": "CLIPTextEncode", "inputs": {"clip": ["2", 0], "text": text_value}}));
     prompt.insert("8".into(), json!({"class_type": "CLIPTextEncode", "inputs": {"clip": ["2", 0], "text": text(payload, "negative_prompt")}}));
-    prompt.insert("9".into(), json!({"class_type": "EmptyFlux2LatentImage", "inputs": {
-        "width": int_payload(payload, "width", 1344, 256, 4096),
-        "height": int_payload(payload, "height", 768, 256, 4096),
-        "batch_size": int_payload(payload, "batch_size", 1, 1, 16),
-    }}));
     prompt.insert("10".into(), json!({"class_type": "KSampler", "inputs": {
-        "model": model, "positive": ["7", 0], "negative": ["8", 0], "latent_image": ["9", 0],
+        "model": model, "positive": ["7", 0], "negative": ["8", 0], "latent_image": latent,
         "seed": seed, "steps": int_payload(payload, "steps", 8, 1, 200), "cfg": cfg,
-        "sampler_name": "euler", "scheduler": "sgm_uniform", "denoise": 1.0,
+        "sampler_name": "euler", "scheduler": "sgm_uniform", "denoise": denoise,
     }}));
     prompt.insert("11".into(), json!({"class_type": "VAEDecode", "inputs": {"samples": ["10", 0], "vae": ["3", 0]}}));
     prompt.insert("12".into(), json!({"class_type": "PreviewImage", "inputs": {"images": ["11", 0]}}));
@@ -490,9 +543,17 @@ pub fn build_flux_klein(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
         set(&mut prompt, "1057", "batch_size", 1)?;
     }
     set(&mut prompt, "1056", "noise_seed", seed)?;
-    set(&mut prompt, "1068", "unet_name", text(payload, "unet_name"))?;
-    set(&mut prompt, "1066", "clip_name", text(payload, "clip_name"))?;
-    set(&mut prompt, "1064", "vae_name", text(payload, "vae_name"))?;
+    // The saved settings may carry a factory default spelled with a folder (`flux\...`) that this install does not use. Each name is
+    // replaced by the spelling ComfyUI lists, and a model that is not installed says so, instead of ComfyUI's own "failed validation".
+    for (node, key, categories, label) in [
+        ("1068", "unet_name", &["diffusion_models", "unet"][..], "Flux/Klein diffusion model"),
+        ("1066", "clip_name", &["text_encoders", "clip"][..], "Flux/Klein text encoder"),
+        ("1064", "vae_name", &["vae"][..], "Flux/Klein VAE"),
+    ] {
+        let requested = text(payload, key);
+        let name = if requested.trim().is_empty() { requested } else { installed_model(env, categories, &requested, label)? };
+        set(&mut prompt, node, key, name)?;
+    }
     let lora_node = node_id_by_class(&prompt, "VRGDG_OptionalMultiLoraModelOnly", Some("1075"))?;
     set(&mut prompt, &lora_node, "use_custom_loras", bool_payload(payload, "use_custom_loras", false))?;
     set(&mut prompt, &lora_node, "lora_count", int_payload(payload, "lora_count", 0, 0, MAX_LORA_SLOTS))?;

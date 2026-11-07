@@ -30,9 +30,10 @@ impl GraphEnv for Env {
         let names: &[&str] = match category {
             "loras" => &["style\\film_look.safetensors", "style\\soft_light.safetensors"],
             // The models the fixtures use are installed.
-            "diffusion_models" => &["krea2_turbo_fp8_scaled.safetensors", "z_image_turbo_bf16.safetensors", "moss_image_sft_bf16.safetensors", "k.safetensors"],
-            "text_encoders" => &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors", "z.safetensors"],
-            "vae" => &["qwen_image_vae.safetensors", "ae.safetensors", "flux2-vae.safetensors"],
+            // `u`, `c` and `v` are the Flux/Klein fixtures' own names. The graph builder now checks them, as it does for the others.
+            "diffusion_models" => &["krea2_turbo_fp8_scaled.safetensors", "z_image_turbo_bf16.safetensors", "moss_image_sft_bf16.safetensors", "k.safetensors", "u.safetensors"],
+            "text_encoders" => &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors", "z.safetensors", "c.safetensors"],
+            "vae" => &["qwen_image_vae.safetensors", "ae.safetensors", "flux2-vae.safetensors", "v.safetensors"],
             _ => &[],
         };
         names.iter().map(|s| s.to_string()).collect()
