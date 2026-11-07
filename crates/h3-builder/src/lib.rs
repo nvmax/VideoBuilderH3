@@ -31,6 +31,7 @@ pub mod runner;
 pub mod seedance;
 pub mod story;
 pub mod system;
+pub mod thumbnail;
 pub mod transcribe;
 
 pub use env::Env;

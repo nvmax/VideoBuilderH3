@@ -18,6 +18,7 @@ pub mod references;
 pub mod repair;
 pub mod seedance;
 pub mod speech;
+pub mod thumbnail;
 pub mod video_prompt;
 
 use std::future::Future;

@@ -10,6 +10,7 @@ use axum::response::{IntoResponse, Response};
 use axum::routing::post as axum_post;
 use axum::Router;
 use h3_builder::runner::{self, ComfyFolders};
+use h3_builder::thumbnail;
 use h3_comfy::ComfyClient;
 use h3_core::pyval::Obj;
 use h3_media::Tools;
@@ -38,6 +39,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/prepare_scene_audio_clip"), post(|env, p| fields(runner::prepare_scene_audio_clip(&env, &p))))
         .route(&format!("{base}/cleanup_minimax_h3_output"), axum_post(cleanup_output))
         .route(&format!("{base}/save_image"), axum_post(save_image))
+        .route("/vrgdg/music_builder/thumbnail/save", axum_post(thumbnail_save))
         .route(&format!("{base}/build_minimax_h3_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3"), false)))
         .route(&format!("{base}/build_minimax_h3_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_2pass"), false)))
         .route(&format!("{base}/build_minimax_h3_advanced_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_advanced_2pass"), true)))
@@ -196,6 +198,24 @@ async fn save_image(State(state): State<Arc<AppState>>, body: Bytes) -> Response
     let folders = ComfyFolders { output: dirs.output.clone(), input: dirs.input.clone(), temp: dirs.temp.clone() };
     let default = std::path::PathBuf::from(&dirs.output);
     match tokio::task::spawn_blocking(move || runner::save_generated_image(&folders, &default, &payload)).await {
+        Ok(result) => super::into_response(result.map(Out::from).map_err(Fail::from)),
+        Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}")),
+    }
+}
+
+/// `POST /vrgdg/music_builder/thumbnail/save`: keep a picture ComfyUI made as the next `thumbnail_NNNN.png` of the project. It needs ComfyUI's
+/// folders, like `save_image`, so it is served here.
+async fn thumbnail_save(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match payload_of(&body) {
+        Ok(payload) => payload,
+        Err(response) => return *response,
+    };
+    let dirs = match h3_pipeline::context::comfy_dirs(&state.cfg).await {
+        Ok(dirs) => dirs,
+        Err(message) => return super::failure(StatusCode::BAD_REQUEST, message),
+    };
+    let folders = ComfyFolders { output: dirs.output.clone(), input: dirs.input.clone(), temp: dirs.temp.clone() };
+    match tokio::task::spawn_blocking(move || thumbnail::save_thumbnail_image(&folders, &payload)).await {
         Ok(result) => super::into_response(result.map(Out::from).map_err(Fail::from)),
         Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}")),
     }
