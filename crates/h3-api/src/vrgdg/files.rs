@@ -42,6 +42,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/music_builder/pick_path", post(|_, p| fields(files::pick_path(&p))))
         .route("/vrgdg/music_builder/export_final_video", post(|_, p| fields(export_video::export_final_video(&p))))
         .route("/vrgdg/music_builder/thumbnail/capabilities", get_query(|_, _| fields(thumbnail::capabilities())))
+        .route("/vrgdg/music_builder/thumbnail/frame", post(|env, p| fields(thumbnail::extract_thumbnail_frame(&env, &p))))
         .route("/vrgdg/music_builder/thumbnail/prepend", post(|env, p| fields(thumbnail::prepend_thumbnail_intro(&env, &p))))
         .route("/vrgdg/music_builder/default_context_paths", get_query(|env, _| Ok(files::default_context_paths(&env).into())))
         .route("/vrgdg/music_builder/default_audio_srt_paths", get_query(|env, _| Ok(files::default_audio_srt_paths(&env).into())))

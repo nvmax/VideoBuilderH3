@@ -59,7 +59,28 @@ fn duration(path: &Path) -> f64 {
 async fn the_build_says_it_can_make_thumbnails() {
     let server = start().await;
     let answer: Value = server.client.get(format!("{}/capabilities", server.root)).send().await.unwrap().json().await.unwrap();
-    assert_eq!(answer, json!({"ok": true, "version": 1}));
+    assert_eq!(answer, json!({"ok": true, "version": 1, "frame": true}));
+}
+
+#[tokio::test]
+async fn one_exact_frame_of_a_scene_video_is_kept_in_the_project() {
+    let server = start().await;
+    let project = server.dir.path().join("projects").join("Demo");
+    std::fs::create_dir_all(&project).unwrap();
+    let video = project.join("video_0001-audio.mp4");
+    make_video(&video);
+
+    let (status, frame) = server.post("frame", json!({"project_folder": project.display().to_string(), "video_path": video.display().to_string(), "seconds": 1.0})).await;
+    assert_eq!(status, 200, "{frame}");
+    assert_eq!((frame["ok"].clone(), frame["frame"].clone(), frame["fps"].clone()), (json!(true), json!(24), json!(24.0)));
+    let path = frame["image_path"].as_str().unwrap();
+    assert!(path.ends_with("source_0001.png") && Path::new(path).is_file(), "{frame}");
+    assert_eq!((frame["width"].clone(), frame["height"].clone()), (json!(160), json!(90)));
+
+    let (status, missing) = server.post("frame", json!({"project_folder": project.display().to_string(), "video_path": "Y:\\nowhere\\a.mp4", "seconds": 1})).await;
+    assert_eq!(status, 400);
+    assert_eq!(missing["ok"], false);
+    assert!(missing["error"].as_str().unwrap().starts_with("The video to take the frame from was not found"));
 }
 
 #[tokio::test]

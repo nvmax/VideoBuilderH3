@@ -33,9 +33,10 @@ pub const MAX_INTRO_SECONDS: f64 = 10.0;
 const DURATION_TOLERANCE_SECONDS: f64 = 0.35;
 const VIDEO_EXTENSIONS: [&str; 6] = ["mp4", "mov", "mkv", "webm", "avi", "m4v"];
 
-/// `GET /vrgdg/music_builder/thumbnail/capabilities`: tells the Builder that this build can save thumbnails and prepend the intro.
+/// `GET /vrgdg/music_builder/thumbnail/capabilities`: tells the Builder that this build can save thumbnails, prepend the intro and take
+/// one exact frame of a video.
 pub fn capabilities() -> Reply {
-    Ok(json!({"version": THUMBNAIL_VERSION}))
+    Ok(json!({"version": THUMBNAIL_VERSION, "frame": true}))
 }
 
 fn absolute(raw: &str) -> PathBuf {
@@ -50,13 +51,13 @@ pub fn intro_seconds(value: Option<&Value>) -> f64 {
     }
 }
 
-/// `_next_thumbnail_path`: `thumbnail_NNNN.png` with the first number that is free in `folder`.
-fn next_thumbnail_path(folder: &Path) -> PathBuf {
+/// `_next_thumbnail_path`: `<prefix>_NNNN.png` with the first number that is free in `folder`.
+fn next_thumbnail_path(folder: &Path, prefix: &str) -> PathBuf {
     let mut number = 1;
-    while folder.join(format!("thumbnail_{number:04}.png")).exists() {
+    while folder.join(format!("{prefix}_{number:04}.png")).exists() {
         number += 1;
     }
-    folder.join(format!("thumbnail_{number:04}.png"))
+    folder.join(format!("{prefix}_{number:04}.png"))
 }
 
 /// `POST /vrgdg/music_builder/thumbnail/save`: `{project_folder, image}` (a ComfyUI `/history` image entry) or `{project_folder, source_path}`.
@@ -80,9 +81,66 @@ pub fn save_thumbnail_image(folders: &ComfyFolders, payload: &Obj) -> Reply {
     };
     let picture = image::open(&source).map_err(|e| format!("Could not read the picture {}: {e}", source.display()))?;
     fs::create_dir_all(&folder).map_err(|e| format!("{}: {e}", folder.display()))?;
-    let target = next_thumbnail_path(&folder);
+    let target = next_thumbnail_path(&folder, "thumbnail");
     picture.to_rgb8().save_with_format(&target, ImageFormat::Png).map_err(|e| format!("{}: {e}", target.display()))?;
     Ok(json!({"image_path": target.display().to_string(), "width": picture.width(), "height": picture.height()}))
+}
+
+/// `POST /vrgdg/music_builder/thumbnail/frame`: `{project_folder, video_path, seconds}`. Takes one exact frame of a video as
+/// `<project>/thumbnail/source_NNNN.png`, the picture the thumbnail is made from. `seconds` is the moment in `video_path`. It is snapped
+/// to the nearest frame, and the seek lands half a frame before that frame's time, so the frame the Builder showed at that moment is the
+/// one that is saved, not its neighbor. A moment past the end gives the last frame.
+pub fn extract_thumbnail_frame(env: &Env, payload: &Obj) -> Reply {
+    let project_text = path_text(payload, "project_folder");
+    if project_text.is_empty() {
+        return Err("Project folder is empty.".into());
+    }
+    let video = absolute(&path_text(payload, "video_path"));
+    let supported = video.extension().is_some_and(|e| VIDEO_EXTENSIONS.contains(&e.to_string_lossy().to_lowercase().as_str()));
+    if !video.is_file() || !supported {
+        return Err(format!("The video to take the frame from was not found: {}", video.display()));
+    }
+    let Some(seconds) = payload.get("seconds").and_then(to_float) else {
+        return Err("Say which moment of the video to use (seconds).".into());
+    };
+    if !seconds.is_finite() || seconds < 0.0 {
+        return Err("The moment in the video must be 0 seconds or more.".into());
+    }
+
+    let tools = env.tools()?;
+    let fields = probe_stream_fields(&tools, &video, "v:0", &["width", "height", "r_frame_rate", "avg_frame_rate"], false).map_err(|e| e.to_string())?;
+    let rate = frame_rate(&fields);
+    let fps = rate.as_f64();
+    let duration = length_of(&tools, &video);
+    let mut frame = (seconds * fps + 0.5).floor() as i64;
+    if duration > 0.0 {
+        frame = frame.min((((duration * fps + 0.5).floor() as i64) - 1).max(0));
+    }
+    let start = if frame > 0 { ((frame as f64 - 0.5) / fps).max(0.0) } else { 0.0 };
+
+    let folder = absolute(&project_text).join(THUMBNAIL_FOLDER);
+    fs::create_dir_all(&folder).map_err(|e| format!("{}: {e}", folder.display()))?;
+    let target = next_thumbnail_path(&folder, "source");
+    let command = args(&["-y", "-ss", &format!("{start:.6}"), "-i", &video.display().to_string(), "-frames:v", "1", "-an", &target.display().to_string()]);
+    let taken = tools
+        .ffmpeg_checked(&command, "FFmpeg could not take the frame.")
+        .map_err(|e| e.to_string())
+        .and_then(|_| {
+            if fs::metadata(&target).map(|m| m.len()).unwrap_or(0) == 0 {
+                return Err("FFmpeg did not find a frame at that moment of the video.".to_string());
+            }
+            image::image_dimensions(&target).map_err(|e| format!("Could not read the picture {}: {e}", target.display()))
+        });
+    match taken {
+        Ok((width, height)) => Ok(json!({
+            "image_path": target.display().to_string(), "width": width, "height": height,
+            "frame": frame, "seconds": frame as f64 / fps, "fps": fps,
+        })),
+        Err(message) => {
+            let _ = fs::remove_file(&target);
+            Err(message)
+        }
+    }
 }
 
 /// A frame rate as ffmpeg reads it: `24` or `30000/1001`.
@@ -334,8 +392,88 @@ mod tests {
     }
 
     #[test]
-    fn the_capabilities_answer_with_a_version() {
-        assert_eq!(capabilities().unwrap()["version"], THUMBNAIL_VERSION);
+    fn the_capabilities_answer_with_a_version_and_the_frame_picker() {
+        assert_eq!(capabilities().unwrap(), json!({"version": THUMBNAIL_VERSION, "frame": true}));
+    }
+
+    /// One second of red, then one second of blue: frames 0 to 23 are red and 24 to 47 are blue at 24 fps.
+    fn make_two_color_video(env: &Env, path: &Path) {
+        let tools = env.tools().unwrap();
+        let command = args(&[
+            "-y", "-f", "lavfi", "-i", "color=c=red:s=160x90:r=24:d=1", "-f", "lavfi", "-i", "color=c=blue:s=160x90:r=24:d=1",
+            "-filter_complex", "[0:v][1:v]concat=n=2:v=1:a=0[v]", "-map", "[v]", "-c:v", "libx264", "-pix_fmt", "yuv420p", &path.display().to_string(),
+        ]);
+        tools.ffmpeg_checked(&command, "two color video").unwrap();
+    }
+
+    fn dominant(path: &str) -> &'static str {
+        let small = image::imageops::resize(&image::open(path).unwrap().to_rgb8(), 1, 1, image::imageops::FilterType::Triangle);
+        let [red, _, blue] = small.get_pixel(0, 0).0;
+        if red > 150 && blue < 100 { "red" } else if blue > 150 && red < 100 { "blue" } else { "other" }
+    }
+
+    fn take(env: &Env, project: &Path, video: &Path, seconds: Value) -> Reply {
+        extract_thumbnail_frame(env, &obj(json!({"project_folder": project.display().to_string(), "video_path": video.display().to_string(), "seconds": seconds})))
+    }
+
+    #[test]
+    fn the_frame_at_a_moment_is_the_frame_the_player_shows_there() {
+        let Some(env) = env_with_ffmpeg() else { return };
+        let dir = tempfile::tempdir().unwrap();
+        let video = dir.path().join("scene.mp4");
+        make_two_color_video(&env, &video);
+        // Frame 23 is the last red one, frame 24 the first blue one: a cut that lands exactly on a frame edge.
+        let before = take(&env, dir.path(), &video, json!(23.0 / 24.0)).unwrap();
+        let after = take(&env, dir.path(), &video, json!(1.0)).unwrap();
+        assert_eq!((before["frame"].clone(), dominant(before["image_path"].as_str().unwrap())), (json!(23), "red"));
+        assert_eq!((after["frame"].clone(), dominant(after["image_path"].as_str().unwrap())), (json!(24), "blue"));
+        for (seconds, color) in [(0.0, "red"), (0.5, "red"), (1.5, "blue")] {
+            let reply = take(&env, dir.path(), &video, json!(seconds)).unwrap();
+            assert_eq!(dominant(reply["image_path"].as_str().unwrap()), color, "at {seconds} s");
+        }
+    }
+
+    #[test]
+    fn a_moment_between_frames_snaps_to_the_nearest_frame_and_past_the_end_gives_the_last() {
+        let Some(env) = env_with_ffmpeg() else { return };
+        let dir = tempfile::tempdir().unwrap();
+        let video = dir.path().join("scene.mp4");
+        make_two_color_video(&env, &video);
+        let snapped = take(&env, dir.path(), &video, json!(0.9999)).unwrap();
+        assert_eq!(snapped["frame"], 24);
+        assert!((snapped["seconds"].as_f64().unwrap() - 1.0).abs() < 1e-6);
+        assert_eq!(snapped["fps"], 24.0);
+        assert_eq!((snapped["width"].clone(), snapped["height"].clone()), (json!(160), json!(90)));
+        let last = take(&env, dir.path(), &video, json!(99)).unwrap();
+        assert_eq!(last["frame"], 47);
+        assert_eq!(dominant(last["image_path"].as_str().unwrap()), "blue");
+    }
+
+    #[test]
+    fn each_frame_gets_its_own_numbered_file_in_the_thumbnail_folder() {
+        let Some(env) = env_with_ffmpeg() else { return };
+        let dir = tempfile::tempdir().unwrap();
+        let video = dir.path().join("scene.mp4");
+        make_two_color_video(&env, &video);
+        let names: Vec<String> = (0..2).map(|_| Path::new(take(&env, dir.path(), &video, json!(0.1)).unwrap()["image_path"].as_str().unwrap()).file_name().unwrap().to_string_lossy().into_owned()).collect();
+        assert_eq!(names, ["source_0001.png", "source_0002.png"]);
+        let mut listed: Vec<String> = fs::read_dir(dir.path().join(THUMBNAIL_FOLDER)).unwrap().flatten().map(|e| e.file_name().to_string_lossy().into_owned()).collect();
+        listed.sort();
+        assert_eq!(listed, names);
+    }
+
+    #[test]
+    fn bad_frame_requests_are_refused_and_leave_nothing_behind() {
+        let Some(env) = env_with_ffmpeg() else { return };
+        let dir = tempfile::tempdir().unwrap();
+        let video = dir.path().join("scene.mp4");
+        make_two_color_video(&env, &video);
+        assert_eq!(extract_thumbnail_frame(&env, &obj(json!({"project_folder": "", "video_path": video.display().to_string(), "seconds": 0}))).unwrap_err(), "Project folder is empty.");
+        assert!(take(&env, dir.path(), &dir.path().join("missing.mp4"), json!(0)).unwrap_err().starts_with("The video to take the frame from was not found"));
+        for bad in [json!(-1), json!("abc"), Value::Null] {
+            assert!(take(&env, dir.path(), &video, bad.clone()).is_err(), "{bad} should be refused");
+        }
+        assert!(!dir.path().join(THUMBNAIL_FOLDER).exists());
     }
 
     #[test]
