@@ -106,6 +106,8 @@ def write_builder_models(out: Path, workflows, template) -> None:
     These engines have no preset in ``h3-image``. The Rust builders in ``h3-graph/src/image.rs`` are compared with these.
     The model lists and the picture copy are replaced, because the fake setup has neither."""
     workflows._require_model_choice = lambda *args, **kwargs: None
+    # The builders now replace each model name with the spelling ComfyUI lists. The fake setup lists none of these, so every name counts as installed.
+    workflows._installed_model_choice = lambda category, value, label: value
     workflows._prepare_load_image_name = lambda path="", data="", name="image.png": "vrgdg_i2i_fixed.png" if (path or data) else ""
     lora = {"lora_1": "style\\film_look.safetensors", "strength_1": 0.6, "lora_2": "style\\soft_light.safetensors", "strength_2": 1.1, "use_custom_loras": True, "lora_count": 2}
 
@@ -133,6 +135,29 @@ def write_builder_models(out: Path, workflows, template) -> None:
         case(workflows._build_moss_image_api_prompt, {"prompt": "a robot", "seed": 5, "lora_name": "style\\film_look.safetensors", "lora_strength": 0.5, "negative_prompt": "blurry"}),
         case(workflows._build_moss_image_api_prompt, {"prompt": "a robot", "seed": 5, "width": 99999, "height": 8, "steps": 12, "cfg": 3.5, "batch_size": 2}),
     ]
+    # The instruction edit. Its cases hold Windows paths (the pictures), like the Flux/Klein ones, so they have their own file and
+    # their test only runs on Windows.
+    def refs(*names):
+        return [{"path": FAKE_REFS + name} for name in names]
+
+    prompt = 'Add the title text "HEAT" in huge bold capital letters. Keep the man and the composition unchanged.'
+    moss_edit = [
+        case(workflows._build_moss_image_api_prompt, {"use_edit": True, "prompt": prompt, "seed": 5, "image_ingredients": refs("a.png")}),
+        case(workflows._build_moss_image_api_prompt, {
+            "use_edit": True, "prompt": prompt, "seed": 11, "image_ingredients": refs("a.png"), "unet_name": "m.safetensors",
+            "clip_name": "q.safetensors", "vae_name": "f.safetensors", "edit_lora_name": "e.safetensors", "edit_lora_strength": 0.8,
+            "megapixels": 0.5, "steps": 20, "cfg": 3, "negative_prompt": "blurry", "edit_format": "ai-toolkit"}),
+        case(workflows._build_moss_image_api_prompt, {
+            "use_edit": True, "prompt": prompt, "seed": 5, "image_ingredients": refs("a.png"), "skip_layer_guidance": False,
+            "edit_format": "not a format", "negative_prompt": ""}),
+        case(workflows._build_moss_image_api_prompt, {"use_edit": True, "prompt": prompt, "seed": 7, "image_ingredients": refs("a.png", "b.png", "c.png")}),
+        case(workflows._build_moss_image_api_prompt, {
+            "use_edit": True, "prompt": prompt, "seed": 7, "image_ingredients": refs("a.png", "b.png", "c.png", "d.png", "e.png"), "megapixels": 99}),
+        # The turbo settings of text to image do not reach an edit, and the edit wins over image to image.
+        case(workflows._build_moss_image_api_prompt, {
+            "use_edit": True, "prompt": prompt, "seed": 5, "image_ingredients": refs("a.png"), "lora_name": "style\\film_look.safetensors",
+            "use_image_to_image": True, "image_to_image_path": FAKE_REFS + "a.png", "denoise": 0.3, "width": 1920, "height": 1088}),
+    ]
     key = "AIzaSyD-example-key-0123456789abcdef"
     nb = [
         case(workflows._build_nb_image_api_prompt, {"prompt": "a cat in a hat", "api_key": key}),
@@ -143,7 +168,7 @@ def write_builder_models(out: Path, workflows, template) -> None:
         case(workflows._build_z_upscale_enhance_prompt, {"prompt": "sharpen", "seed": 9, "source_image_path": FAKE_REFS + "a.png"}),
         case(workflows._build_z_upscale_enhance_prompt, {"prompt": "sharpen", "seed": 9, "source_image_path": FAKE_REFS + "a.png", "width": 2560, "height": 1440, "enhance_amount": 12, **lora}),
     ]
-    for name, cases in (("krea2", krea2), ("krea2_2pass", krea2_2pass), ("moss_image", moss), ("nb_image", nb), ("z_upscale_enhance", z_upscale)):
+    for name, cases in (("krea2", krea2), ("krea2_2pass", krea2_2pass), ("moss_image", moss), ("moss_image_edit", moss_edit), ("nb_image", nb), ("z_upscale_enhance", z_upscale)):
         write(out, name, cases)
 
 

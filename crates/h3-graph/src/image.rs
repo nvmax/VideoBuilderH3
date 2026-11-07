@@ -3,6 +3,7 @@
 //! API templates from the Builder's request, or builds the graph directly (MOSS-Image).
 
 use std::path::{Path, PathBuf};
+use std::time::Duration;
 
 use h3_core::pyval::{bool_payload, float_payload, int_payload, round_half_even, text_or_empty, to_int, truthy, Obj};
 use serde_json::{json, Value};
@@ -358,14 +359,104 @@ pub fn build_krea2_2pass(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
 
 // -- MOSS-Image ---------------------------------------------------------------------------------------------------------
 
-/// MOSS-Image on ComfyUI's native support: text to image, or image to image. A model only LoRA (the 8 step turbo LoRA) is optional.
-/// The model already samples with shift 5 and a timestep multiplier of 1, so there is no ModelSamplingSD3 node: it forces a
-/// multiplier of 1000 and the picture is noise.
+const MOSS_EDIT_LORA: &str = "moss_image_edit_lora.safetensors";
+const MOSS_EDIT_FORMATS: [&str; 3] = ["Moss-Image-Edit", "ai-toolkit", "ai-toolkit (kv_cache off)"];
+const MOSS_EDIT_MAX_REFERENCES: usize = 4;
+/// The negative line the edit LoRA's author recommends (ComfyUI's `image_moss_image_edit` template).
+const MOSS_EDIT_NEGATIVE: &str = "nsfw, worst quality, bad anatomy, watermark, jpeg artifact";
+
+/// MOSS-Image instruction edit: the edit LoRA on the MOSS-Image model, ComfyUI's `TextEncodeMOSSImageEdit` and 1 to 4 pictures.
+/// Port of `_build_moss_image_edit_api_prompt`: the graph of ComfyUI's own `image_moss_image_edit` template (ComfyUI 0.43 or newer).
+/// Each picture (`image_ingredients`) is scaled to about `megapixels` (1 by default, a multiple of 16), both encoders see all of
+/// them, and the new picture takes the size of the first one. The prompt is an instruction in the phrasing the LoRA was trained on.
+/// The sampler is the LoRA author's: 30 steps, CFG 4, euler, normal, skip layer guidance on layer 22, and the recommended negative.
+fn build_moss_image_edit(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
+    let text_value = prompt_text(payload, "Prompt text is empty.")?;
+    let mut paths = ingredient_paths(env, payload, "reference image", "Reference Images", "Reference Image")?;
+    paths.truncate(MOSS_EDIT_MAX_REFERENCES);
+    if paths.is_empty() {
+        return fail("MOSS-Image Edit needs at least one reference image: the frame to edit.");
+    }
+    let unet = first_text(payload, &["unet_name"], "moss_image_sft_bf16.safetensors");
+    let clip = first_text(payload, &["clip_name"], "qwen3.5_9b_int8_convrot.safetensors");
+    let vae = first_text(payload, &["vae_name"], "flux2-vae.safetensors");
+    let edit_lora = first_text(payload, &["edit_lora_name"], MOSS_EDIT_LORA);
+    let unet = installed_model(env, &["diffusion_models", "unet"], &unet, "MOSS-Image diffusion model")?;
+    let clip = installed_model(env, &["text_encoders", "clip"], &clip, "MOSS-Image text encoder")?;
+    let vae = installed_model(env, &["vae"], &vae, "MOSS-Image VAE")?;
+    let edit_lora = installed_model(env, &["loras"], &edit_lora, "MOSS-Image Edit LoRA (moss_image_edit_lora.safetensors)")?;
+    let edit_format = Some(first_text(payload, &["edit_format"], MOSS_EDIT_FORMATS[0]))
+        .filter(|format| MOSS_EDIT_FORMATS.contains(&format.as_str()))
+        .unwrap_or_else(|| MOSS_EDIT_FORMATS[0].to_string());
+    let seed = pick_seed(env, payload, 1);
+    let negative = match payload.get("negative_prompt") {
+        None | Some(Value::Null) => MOSS_EDIT_NEGATIVE.to_string(),
+        Some(_) => text(payload, "negative_prompt"),
+    };
+
+    let mut prompt = Obj::new();
+    prompt.insert("1".into(), json!({"class_type": "UNETLoader", "inputs": {"unet_name": unet, "weight_dtype": "default"}}));
+    prompt.insert("2".into(), json!({"class_type": "CLIPLoader", "inputs": {"clip_name": clip, "type": "moss_image", "device": "default"}}));
+    prompt.insert("3".into(), json!({"class_type": "VAELoader", "inputs": {"vae_name": vae}}));
+    prompt.insert("4".into(), json!({"class_type": "LoraLoaderModelOnly", "inputs": {
+        "model": ["1", 0], "lora_name": edit_lora, "strength_model": float_payload(payload, "edit_lora_strength", 1.0, -10.0, 10.0),
+    }}));
+    let mut model = json!(["4", 0]);
+    if bool_payload(payload, "skip_layer_guidance", true) {
+        prompt.insert("5".into(), json!({"class_type": "SkipLayerGuidanceDiTSimple", "inputs": {
+            "model": model, "double_layers": "", "single_layers": "22", "start_percent": 0.0, "end_percent": 1.0,
+        }}));
+        model = json!(["5", 0]);
+    }
+    let megapixels = float_payload(payload, "megapixels", 1.0, 0.25, 4.0);
+    let mut references = Obj::new();
+    for (index, path) in paths.iter().enumerate() {
+        if index > 0 {
+            // The copies in ComfyUI's input folder are named by the millisecond, so two made together would share a name.
+            std::thread::sleep(Duration::from_millis(2));
+        }
+        let name = env.prepare_load_image(path, "", "image.png").map_err(GraphError::new)?;
+        let (load, scale) = ((20 + index).to_string(), (30 + index).to_string());
+        prompt.insert(load.clone(), json!({"class_type": "LoadImage", "inputs": {"image": name}}));
+        prompt.insert(scale.clone(), json!({"class_type": "ImageScaleToTotalPixels", "inputs": {
+            "image": [load, 0], "upscale_method": "lanczos", "megapixels": megapixels, "resolution_steps": 16,
+        }}));
+        references.insert(format!("images.image_{index}"), json!([scale, 0]));
+    }
+    prompt.insert("40".into(), json!({"class_type": "GetImageSize", "inputs": {"image": ["30", 0]}}));
+    prompt.insert("9".into(), json!({"class_type": "EmptyFlux2LatentImage", "inputs": {"width": ["40", 0], "height": ["40", 1], "batch_size": 1}}));
+    for (id, words) in [("7", text_value), ("8", negative)] {
+        let mut inputs = Obj::new();
+        inputs.insert("clip".into(), json!(["2", 0]));
+        inputs.insert("prompt".into(), json!(words));
+        inputs.insert("edit_format".into(), json!(edit_format));
+        inputs.extend(references.clone());
+        inputs.insert("image_strength".into(), json!(1.0));
+        inputs.insert("vae".into(), json!(["3", 0]));
+        prompt.insert(id.into(), json!({"class_type": "TextEncodeMOSSImageEdit", "inputs": inputs}));
+    }
+    prompt.insert("10".into(), json!({"class_type": "KSampler", "inputs": {
+        "model": model, "positive": ["7", 0], "negative": ["8", 0], "latent_image": ["9", 0],
+        "seed": seed, "steps": int_payload(payload, "steps", 30, 1, 200), "cfg": float_payload(payload, "cfg", 4.0, 1.0, 20.0),
+        "sampler_name": "euler", "scheduler": "normal", "denoise": 1.0,
+    }}));
+    prompt.insert("11".into(), json!({"class_type": "VAEDecode", "inputs": {"samples": ["10", 0], "vae": ["3", 0]}}));
+    prompt.insert("12".into(), json!({"class_type": "PreviewImage", "inputs": {"images": ["11", 0]}}));
+    Ok(built("", prompt, Some(seed)))
+}
+
+/// MOSS-Image on ComfyUI's native support: text to image, image to image, or instruction edit. A model only LoRA (the 8 step turbo
+/// LoRA) is optional. The model already samples with shift 5 and a timestep multiplier of 1, so there is no ModelSamplingSD3 node:
+/// it forces a multiplier of 1000 and the picture is noise.
 ///
 /// Image to image (`use_image_to_image` with `image_to_image_path` or `image_to_image_data`) restyles a picture: it is scaled to
 /// `width` x `height` (cropped from the center), encoded with the VAE and sampled from at `denoise` (0.05 to 1, 0.65 by default;
-/// lower keeps more of the picture). MOSS-Image has no instruction edit, so the prompt describes the finished picture.
+/// lower keeps more of the picture). That only recolors the picture: it does not follow instructions or draw new text. For that use
+/// `use_edit` (see `build_moss_image_edit`): the edit LoRA and ComfyUI's MOSS-Image Edit encoder.
 pub fn build_moss_image(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
+    if bool_payload(payload, "use_edit", false) {
+        return build_moss_image_edit(env, payload);
+    }
     let text_value = prompt_text(payload, "Prompt text is empty.")?;
     let unet = first_text(payload, &["unet_name"], "moss_image_sft_bf16.safetensors");
     let clip = first_text(payload, &["clip_name"], "qwen3.5_9b_int8_convrot.safetensors");

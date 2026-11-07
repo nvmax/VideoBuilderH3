@@ -1,0 +1,1300 @@
+{
+ "preset": "moss_image_edit",
+ "cases": [
+  {
+   "payload": {
+    "use_edit": true,
+    "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+    "seed": 5,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ]
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "moss_image_sft_bf16.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+      "type": "moss_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "lora_name": "moss_image_edit_lora.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "5": {
+     "class_type": "SkipLayerGuidanceDiTSimple",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0.0,
+      "end_percent": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 1.0,
+      "resolution_steps": 16
+     }
+    },
+    "40": {
+     "class_type": "GetImageSize",
+     "inputs": {
+      "image": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "EmptyFlux2LatentImage",
+     "inputs": {
+      "width": [
+       "40",
+       0
+      ],
+      "height": [
+       "40",
+       1
+      ],
+      "batch_size": 1
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "nsfw, worst quality, bad anatomy, watermark, jpeg artifact",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "10": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "7",
+       0
+      ],
+      "negative": [
+       "8",
+       0
+      ],
+      "latent_image": [
+       "9",
+       0
+      ],
+      "seed": 5,
+      "steps": 30,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+     }
+    },
+    "11": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "10",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "11",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 5
+  },
+  {
+   "payload": {
+    "use_edit": true,
+    "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+    "seed": 11,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ],
+    "unet_name": "m.safetensors",
+    "clip_name": "q.safetensors",
+    "vae_name": "f.safetensors",
+    "edit_lora_name": "e.safetensors",
+    "edit_lora_strength": 0.8,
+    "megapixels": 0.5,
+    "steps": 20,
+    "cfg": 3,
+    "negative_prompt": "blurry",
+    "edit_format": "ai-toolkit"
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "m.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "q.safetensors",
+      "type": "moss_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "f.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "lora_name": "e.safetensors",
+      "strength_model": 0.8
+     }
+    },
+    "5": {
+     "class_type": "SkipLayerGuidanceDiTSimple",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0.0,
+      "end_percent": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 0.5,
+      "resolution_steps": 16
+     }
+    },
+    "40": {
+     "class_type": "GetImageSize",
+     "inputs": {
+      "image": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "EmptyFlux2LatentImage",
+     "inputs": {
+      "width": [
+       "40",
+       0
+      ],
+      "height": [
+       "40",
+       1
+      ],
+      "batch_size": 1
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+      "edit_format": "ai-toolkit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "blurry",
+      "edit_format": "ai-toolkit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "10": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "7",
+       0
+      ],
+      "negative": [
+       "8",
+       0
+      ],
+      "latent_image": [
+       "9",
+       0
+      ],
+      "seed": 11,
+      "steps": 20,
+      "cfg": 3.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+     }
+    },
+    "11": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "10",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "11",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 11
+  },
+  {
+   "payload": {
+    "use_edit": true,
+    "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+    "seed": 5,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ],
+    "skip_layer_guidance": false,
+    "edit_format": "not a format",
+    "negative_prompt": ""
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "moss_image_sft_bf16.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+      "type": "moss_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "lora_name": "moss_image_edit_lora.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 1.0,
+      "resolution_steps": 16
+     }
+    },
+    "40": {
+     "class_type": "GetImageSize",
+     "inputs": {
+      "image": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "EmptyFlux2LatentImage",
+     "inputs": {
+      "width": [
+       "40",
+       0
+      ],
+      "height": [
+       "40",
+       1
+      ],
+      "batch_size": 1
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "10": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "positive": [
+       "7",
+       0
+      ],
+      "negative": [
+       "8",
+       0
+      ],
+      "latent_image": [
+       "9",
+       0
+      ],
+      "seed": 5,
+      "steps": 30,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+     }
+    },
+    "11": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "10",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "11",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 5
+  },
+  {
+   "payload": {
+    "use_edit": true,
+    "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+    "seed": 7,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\b.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\c.png"
+     }
+    ]
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "moss_image_sft_bf16.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+      "type": "moss_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "lora_name": "moss_image_edit_lora.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "5": {
+     "class_type": "SkipLayerGuidanceDiTSimple",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0.0,
+      "end_percent": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 1.0,
+      "resolution_steps": 16
+     }
+    },
+    "21": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "31": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "21",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 1.0,
+      "resolution_steps": 16
+     }
+    },
+    "22": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "32": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "22",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 1.0,
+      "resolution_steps": 16
+     }
+    },
+    "40": {
+     "class_type": "GetImageSize",
+     "inputs": {
+      "image": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "EmptyFlux2LatentImage",
+     "inputs": {
+      "width": [
+       "40",
+       0
+      ],
+      "height": [
+       "40",
+       1
+      ],
+      "batch_size": 1
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "images.image_1": [
+       "31",
+       0
+      ],
+      "images.image_2": [
+       "32",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "nsfw, worst quality, bad anatomy, watermark, jpeg artifact",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "images.image_1": [
+       "31",
+       0
+      ],
+      "images.image_2": [
+       "32",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "10": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "7",
+       0
+      ],
+      "negative": [
+       "8",
+       0
+      ],
+      "latent_image": [
+       "9",
+       0
+      ],
+      "seed": 7,
+      "steps": 30,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+     }
+    },
+    "11": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "10",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "11",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 7
+  },
+  {
+   "payload": {
+    "use_edit": true,
+    "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+    "seed": 7,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\b.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\c.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\d.png"
+     },
+     {
+      "path": "Z:\\h3fixture\\refs\\e.png"
+     }
+    ],
+    "megapixels": 99
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "moss_image_sft_bf16.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+      "type": "moss_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "lora_name": "moss_image_edit_lora.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "5": {
+     "class_type": "SkipLayerGuidanceDiTSimple",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0.0,
+      "end_percent": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 4.0,
+      "resolution_steps": 16
+     }
+    },
+    "21": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "31": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "21",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 4.0,
+      "resolution_steps": 16
+     }
+    },
+    "22": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "32": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "22",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 4.0,
+      "resolution_steps": 16
+     }
+    },
+    "23": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "33": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "23",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 4.0,
+      "resolution_steps": 16
+     }
+    },
+    "40": {
+     "class_type": "GetImageSize",
+     "inputs": {
+      "image": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "EmptyFlux2LatentImage",
+     "inputs": {
+      "width": [
+       "40",
+       0
+      ],
+      "height": [
+       "40",
+       1
+      ],
+      "batch_size": 1
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "images.image_1": [
+       "31",
+       0
+      ],
+      "images.image_2": [
+       "32",
+       0
+      ],
+      "images.image_3": [
+       "33",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "nsfw, worst quality, bad anatomy, watermark, jpeg artifact",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "images.image_1": [
+       "31",
+       0
+      ],
+      "images.image_2": [
+       "32",
+       0
+      ],
+      "images.image_3": [
+       "33",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "10": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "7",
+       0
+      ],
+      "negative": [
+       "8",
+       0
+      ],
+      "latent_image": [
+       "9",
+       0
+      ],
+      "seed": 7,
+      "steps": 30,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+     }
+    },
+    "11": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "10",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "11",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 7
+  },
+  {
+   "payload": {
+    "use_edit": true,
+    "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+    "seed": 5,
+    "image_ingredients": [
+     {
+      "path": "Z:\\h3fixture\\refs\\a.png"
+     }
+    ],
+    "lora_name": "style\\film_look.safetensors",
+    "use_image_to_image": true,
+    "image_to_image_path": "Z:\\h3fixture\\refs\\a.png",
+    "denoise": 0.3,
+    "width": 1920,
+    "height": 1088
+   },
+   "graph": {
+    "1": {
+     "class_type": "UNETLoader",
+     "inputs": {
+      "unet_name": "moss_image_sft_bf16.safetensors",
+      "weight_dtype": "default"
+     }
+    },
+    "2": {
+     "class_type": "CLIPLoader",
+     "inputs": {
+      "clip_name": "qwen3.5_9b_int8_convrot.safetensors",
+      "type": "moss_image",
+      "device": "default"
+     }
+    },
+    "3": {
+     "class_type": "VAELoader",
+     "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+     }
+    },
+    "4": {
+     "class_type": "LoraLoaderModelOnly",
+     "inputs": {
+      "model": [
+       "1",
+       0
+      ],
+      "lora_name": "moss_image_edit_lora.safetensors",
+      "strength_model": 1.0
+     }
+    },
+    "5": {
+     "class_type": "SkipLayerGuidanceDiTSimple",
+     "inputs": {
+      "model": [
+       "4",
+       0
+      ],
+      "double_layers": "",
+      "single_layers": "22",
+      "start_percent": 0.0,
+      "end_percent": 1.0
+     }
+    },
+    "20": {
+     "class_type": "LoadImage",
+     "inputs": {
+      "image": "vrgdg_i2i_fixed.png"
+     }
+    },
+    "30": {
+     "class_type": "ImageScaleToTotalPixels",
+     "inputs": {
+      "image": [
+       "20",
+       0
+      ],
+      "upscale_method": "lanczos",
+      "megapixels": 1.0,
+      "resolution_steps": 16
+     }
+    },
+    "40": {
+     "class_type": "GetImageSize",
+     "inputs": {
+      "image": [
+       "30",
+       0
+      ]
+     }
+    },
+    "9": {
+     "class_type": "EmptyFlux2LatentImage",
+     "inputs": {
+      "width": [
+       "40",
+       0
+      ],
+      "height": [
+       "40",
+       1
+      ],
+      "batch_size": 1
+     }
+    },
+    "7": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "Add the title text \"HEAT\" in huge bold capital letters. Keep the man and the composition unchanged.",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "8": {
+     "class_type": "TextEncodeMOSSImageEdit",
+     "inputs": {
+      "clip": [
+       "2",
+       0
+      ],
+      "prompt": "nsfw, worst quality, bad anatomy, watermark, jpeg artifact",
+      "edit_format": "Moss-Image-Edit",
+      "images.image_0": [
+       "30",
+       0
+      ],
+      "image_strength": 1.0,
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "10": {
+     "class_type": "KSampler",
+     "inputs": {
+      "model": [
+       "5",
+       0
+      ],
+      "positive": [
+       "7",
+       0
+      ],
+      "negative": [
+       "8",
+       0
+      ],
+      "latent_image": [
+       "9",
+       0
+      ],
+      "seed": 5,
+      "steps": 30,
+      "cfg": 4.0,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+     }
+    },
+    "11": {
+     "class_type": "VAEDecode",
+     "inputs": {
+      "samples": [
+       "10",
+       0
+      ],
+      "vae": [
+       "3",
+       0
+      ]
+     }
+    },
+    "12": {
+     "class_type": "PreviewImage",
+     "inputs": {
+      "images": [
+       "11",
+       0
+      ]
+     }
+    }
+   },
+   "used_seed": 5
+  }
+ ]
+}

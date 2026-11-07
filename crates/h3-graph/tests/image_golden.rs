@@ -28,12 +28,13 @@ impl GraphEnv for Env {
     }
     fn model_choices(&self, category: &str) -> Vec<String> {
         let names: &[&str] = match category {
-            "loras" => &["style\\film_look.safetensors", "style\\soft_light.safetensors"],
+            // `e`, `m`, `q` and `f` are the MOSS-Image Edit fixtures' own names.
+            "loras" => &["style\\film_look.safetensors", "style\\soft_light.safetensors", "moss_image_edit_lora.safetensors", "e.safetensors"],
             // The models the fixtures use are installed.
             // `u`, `c` and `v` are the Flux/Klein fixtures' own names. The graph builder now checks them, as it does for the others.
-            "diffusion_models" => &["krea2_turbo_fp8_scaled.safetensors", "z_image_turbo_bf16.safetensors", "moss_image_sft_bf16.safetensors", "k.safetensors", "u.safetensors"],
-            "text_encoders" => &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors", "z.safetensors", "c.safetensors"],
-            "vae" => &["qwen_image_vae.safetensors", "ae.safetensors", "flux2-vae.safetensors", "v.safetensors"],
+            "diffusion_models" => &["krea2_turbo_fp8_scaled.safetensors", "z_image_turbo_bf16.safetensors", "moss_image_sft_bf16.safetensors", "k.safetensors", "u.safetensors", "m.safetensors"],
+            "text_encoders" => &["qwen3vl_4b_fp8_scaled.safetensors", "qwen_3_4b.safetensors", "qwen3.5_9b_int8_convrot.safetensors", "z.safetensors", "c.safetensors", "q.safetensors"],
+            "vae" => &["qwen_image_vae.safetensors", "ae.safetensors", "flux2-vae.safetensors", "v.safetensors", "f.safetensors"],
             _ => &[],
         };
         names.iter().map(|s| s.to_string()).collect()
@@ -119,6 +120,13 @@ fn krea2_two_pass_graphs_match_the_pack() {
 #[test]
 fn moss_image_graphs_match_the_pack() {
     run("moss_image", "moss_image");
+}
+
+// The instruction edit: its fixtures hold the Windows paths of the pictures, so it only runs on Windows.
+#[cfg(windows)]
+#[test]
+fn moss_image_edit_graphs_match_the_pack() {
+    run("moss_image_edit", "moss_image");
 }
 
 // Its fixtures hold Windows paths, so it only runs on Windows.

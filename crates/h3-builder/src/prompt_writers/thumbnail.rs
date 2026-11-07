@@ -21,18 +21,23 @@ fn collapse(text: &str) -> String {
     text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
-/// `thumbnail_instruction`: the instruction for `kind` (`"edit"` or `"restyle"`; anything else is `"edit"`), with the rule for the
-/// title text filled in, or the no-text rule when there is no title. An "edit" workflow follows an instruction such as "recrop the
-/// attached image". A "restyle" workflow starts from the frame as an image to image source and is given a description of the
-/// finished picture instead.
+/// `thumbnail_instruction`: the instruction for `kind` (`"edit"`, `"moss_edit"` or `"restyle"`; anything else is `"edit"`), with the
+/// rule for the title text filled in, or the no-text rule when there is no title. An "edit" workflow follows an instruction such as
+/// "recrop the attached image". "moss_edit" (MOSS-Image Edit) follows a short one in the form its edit LoRA was trained on: what to
+/// add or change, then a "Keep ... unchanged" list that names what stays. A "restyle" workflow starts from the frame as an image to
+/// image source and is given a description of the finished picture instead. The title text is mandatory in every kind.
 pub fn thumbnail_instruction(title: &str, kind: &str) -> String {
-    let title = collapse(title);
+    let title = collapse(title).replace('"', "'");
+    let (template, text_rule) = match kind.trim().to_ascii_lowercase().as_str() {
+        "restyle" => ("THUMBNAIL_RESTYLE_PROMPT_INSTRUCTIONS", "THUMBNAIL_TEXT_RULE"),
+        "moss_edit" => ("THUMBNAIL_MOSS_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_MOSS_TEXT_RULE"),
+        _ => ("THUMBNAIL_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_TEXT_RULE"),
+    };
     let rule = if title.is_empty() {
         prompts::text("thumbnail", "THUMBNAIL_NO_TEXT_RULE").to_string()
     } else {
-        prompts::text("thumbnail", "THUMBNAIL_TEXT_RULE").replace("{title}", &title.replace('"', "'"))
+        prompts::text("thumbnail", text_rule).replace("{title}", &title)
     };
-    let template = if kind.trim().eq_ignore_ascii_case("restyle") { "THUMBNAIL_RESTYLE_PROMPT_INSTRUCTIONS" } else { "THUMBNAIL_EDIT_PROMPT_INSTRUCTIONS" };
     prompts::text("thumbnail", template).replace("{text_rule}", &rule)
 }
 
@@ -62,7 +67,8 @@ fn user_block(payload: &Obj) -> String {
 
 /// `POST thumbnail/prompt`: look at the chosen frame (`image_path` or `image_data`) and write the prompt that makes it a thumbnail.
 /// `engine_kind` says which kind of image workflow will use it: `"edit"` (the default) for an instruction an editor follows,
-/// `"restyle"` for a description of the finished picture that an image to image workflow draws.
+/// `"moss_edit"` for the short "Add ... Keep the ... unchanged." instruction MOSS-Image Edit was trained on, `"restyle"` for a
+/// description of the finished picture that an image to image workflow draws.
 pub async fn generate_thumbnail_prompt(llm: &dyn Llm, payload: &Obj) -> Reply {
     let (path, data) = (text(payload, "image_path"), text(payload, "image_data"));
     if path.is_empty() && data.is_empty() {
@@ -119,6 +125,31 @@ mod tests {
         assert_eq!(thumbnail_instruction("RUN", " Restyle "), restyle, "the kind is not case or space sensitive");
         for other in ["", "edit", "anything else"] {
             assert_eq!(thumbnail_instruction("RUN", other), edit);
+        }
+    }
+
+    #[test]
+    fn moss_image_edit_gets_the_short_add_and_keep_instruction_it_was_trained_on() {
+        let moss = thumbnail_instruction("HEAT", "moss_edit");
+        assert!(moss.contains("Keep the <named things> unchanged"));
+        assert!(moss.contains("always name the headwear, hair and clothes"));
+        assert!(moss.contains("do not ask it to crop, reframe"));
+        assert!(!moss.contains("Recrop the attached image"));
+        assert!(!moss.contains("{text_rule}"));
+        assert_ne!(moss, thumbnail_instruction("HEAT", "edit"));
+        assert!(thumbnail_instruction("", "moss_edit").contains("Do not add any text"));
+        assert_eq!(thumbnail_instruction("HEAT", " MOSS_EDIT "), moss, "the kind is not case or space sensitive");
+    }
+
+    #[test]
+    fn the_title_is_mandatory_and_quoted_in_every_kind() {
+        for kind in ["edit", "restyle", "moss_edit"] {
+            let instruction = thumbnail_instruction("NEVER \"LOOK\" BACK", kind);
+            assert!(instruction.contains("is mandatory"), "{kind}");
+            assert!(instruction.contains("in double quotes"), "{kind}");
+            assert!(instruction.contains("\"NEVER 'LOOK' BACK\" in double quotes"), "{kind}");
+            assert!(instruction.contains("Follow any lettering style in the style notes"), "{kind}");
+            assert!(!thumbnail_instruction("", kind).contains("is mandatory"), "{kind}");
         }
     }
 
