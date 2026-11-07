@@ -21,20 +21,21 @@ fn collapse(text: &str) -> String {
     text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
-/// `thumbnail_instruction`: the instruction for `kind` (`"edit"`, `"moss_edit"` or `"restyle"`; anything else is `"edit"`), with the
+/// `thumbnail_instruction`: the instruction for `kind` (`"edit"`, `"moss_edit"`, `"qwen_edit"` or `"restyle"`; anything else is `"edit"`), with the
 /// rule for the title text filled in, or the no-text rule when there is no title. An "edit" workflow follows an instruction such as
 /// "recrop the attached image". "moss_edit" (MOSS-Image Edit) follows a short one in the form its edit LoRA was trained on: what to
 /// add or change, then a "Keep ... unchanged" list that names what stays. A "restyle" workflow starts from the frame as an image to
 /// image source and is given a description of the finished picture instead. The title text is mandatory in every kind.
 pub fn thumbnail_instruction(title: &str, kind: &str) -> String {
     let title = collapse(title).replace('"', "'");
-    let (template, text_rule) = match kind.trim().to_ascii_lowercase().as_str() {
-        "restyle" => ("THUMBNAIL_RESTYLE_PROMPT_INSTRUCTIONS", "THUMBNAIL_TEXT_RULE"),
-        "moss_edit" => ("THUMBNAIL_MOSS_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_MOSS_TEXT_RULE"),
-        _ => ("THUMBNAIL_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_TEXT_RULE"),
+    let (template, text_rule, no_text_rule) = match kind.trim().to_ascii_lowercase().as_str() {
+        "restyle" => ("THUMBNAIL_RESTYLE_PROMPT_INSTRUCTIONS", "THUMBNAIL_TEXT_RULE", "THUMBNAIL_NO_TEXT_RULE"),
+        "moss_edit" => ("THUMBNAIL_MOSS_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_MOSS_TEXT_RULE", "THUMBNAIL_NO_TEXT_RULE"),
+        "qwen_edit" => ("THUMBNAIL_QWEN_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_QWEN_TEXT_RULE", "THUMBNAIL_QWEN_NO_TEXT_RULE"),
+        _ => ("THUMBNAIL_EDIT_PROMPT_INSTRUCTIONS", "THUMBNAIL_TEXT_RULE", "THUMBNAIL_NO_TEXT_RULE"),
     };
     let rule = if title.is_empty() {
-        prompts::text("thumbnail", "THUMBNAIL_NO_TEXT_RULE").to_string()
+        prompts::text("thumbnail", no_text_rule).to_string()
     } else {
         prompts::text("thumbnail", text_rule).replace("{title}", &title)
     };
@@ -140,6 +141,33 @@ mod tests {
         assert_ne!(moss, thumbnail_instruction("HEAT", "edit"));
         assert!(thumbnail_instruction("", "moss_edit").contains("Do not add any text"));
         assert_eq!(thumbnail_instruction("HEAT", " MOSS_EDIT "), moss, "the kind is not case or space sensitive");
+    }
+
+    #[test]
+    fn qwen_image_edit_gets_a_prompt_about_the_change_not_the_picture() {
+        let qwen = thumbnail_instruction("HEAT", "qwen_edit");
+        assert!(!qwen.contains("# Role and Objective"), "Qwen does not use the brief: it already sees the frame");
+        assert!(qwen.contains("The model already sees the frame, so the prompt describes only what to ADD or CHANGE, never the picture itself"));
+        assert!(qwen.contains("most of your words go there"));
+        assert!(qwen.contains("Add the text \"<the title>\" as"));
+        for feature in ["lettering style", "fill colors or gradient", "outline and glow", "drips, splatter, sparks or shine", "decorative lines, swirls"] {
+            assert!(qwen.contains(feature), "{feature}");
+        }
+        for placement in ["fully inside the frame", "how big it is", "never covers the person's face"] {
+            assert!(qwen.contains(placement), "{placement}");
+        }
+        assert!(qwen.contains("starts with \"Keep\""));
+        assert!(qwen.contains("no recropping or reframing, no blur or depth of field, no film grain"));
+        assert!(qwen.contains("The title text is mandatory: the prompt must contain the text \"HEAT\" in double quotes, spelled exactly as given"));
+        assert!(qwen.contains("wildstyle graffiti lettering with an orange-to-red gradient fill"));
+        assert!(!qwen.contains("{text_rule}"));
+        assert_ne!(qwen, thumbnail_instruction("HEAT", "edit"));
+        assert_eq!(thumbnail_instruction("HEAT", " QWEN_EDIT "), qwen, "the kind is not case or space sensitive");
+        assert!(thumbnail_instruction("NEVER \"LOOK\" BACK", "qwen_edit").contains("the text \"NEVER 'LOOK' BACK\" in double quotes"));
+        let none = thumbnail_instruction("  ", "qwen_edit");
+        assert!(none.contains("There is no title text: skip step 1, do not add any text, letters or numbers"));
+        assert!(none.contains("Ignore the example below: it is about a title."));
+        assert!(!none.contains("is mandatory"));
     }
 
     #[test]
