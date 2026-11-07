@@ -1428,6 +1428,7 @@
     "batch_render.mjs",
     "minimax_panel_events.mjs",
     "model_pickers.mjs",
+    "moss_image_panel.mjs",
     "reference_generation.mjs",
     "video_render.mjs"
    ]
@@ -1462,7 +1463,8 @@
    "line": 58,
    "doc": "",
    "callers": [
-    "model_pickers.mjs"
+    "model_pickers.mjs",
+    "moss_image_panel.mjs"
    ]
   },
   {
@@ -1940,7 +1942,8 @@
    "line": 525,
    "doc": "Allowlisted downloadable models (the Models dialog's DMAD Models tab): installed or not, and download progress.",
    "callers": [
-    "dmad_models_tab.mjs"
+    "dmad_models_tab.mjs",
+    "model_install_button.mjs"
    ]
   },
   {
@@ -1951,7 +1954,8 @@
    "line": 532,
    "doc": "Start downloading allowlisted models into ComfyUI's model folders. Poll ``models/status`` for progress.",
    "callers": [
-    "dmad_models_tab.mjs"
+    "dmad_models_tab.mjs",
+    "model_install_button.mjs"
    ]
   },
   {
@@ -1962,7 +1966,8 @@
    "line": 543,
    "doc": "Stop running model downloads.",
    "callers": [
-    "dmad_models_tab.mjs"
+    "dmad_models_tab.mjs",
+    "model_install_button.mjs"
    ]
   },
   {

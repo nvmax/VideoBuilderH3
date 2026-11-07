@@ -1,6 +1,6 @@
-//! The Models dialog's Dmad Models tab: allowlisted LoRA downloads into ComfyUI's `models/loras` folder. Port of
-//! `core/model_downloads.py` and its three routes in `core/system_routes.py`; the routes and replies are the same, so the
-//! tab works the same in the pack and here.
+//! The Models dialog's Dmad Models tab and the MOSS-Image Edit LoRA button: allowlisted LoRA downloads into ComfyUI's
+//! `models/loras` folder. Port of `core/model_downloads.py` and its three routes in `core/system_routes.py`; the routes and
+//! replies are the same, so the tab and the button work the same in the pack and here.
 //!
 //! The browser names a model by id. It never sends a URL or a path, so it cannot make this fetch anything else or write
 //! anywhere else. A download goes to `<name>.part` first, is checked, and only then gets its real name, so ComfyUI never
@@ -28,7 +28,8 @@ use crate::app::AppState;
 const MAX_SAFETENSORS_HEADER_BYTES: u64 = 100 * 1024 * 1024;
 
 /// One downloadable model. Keep the urls and file names in step with `DOWNLOADABLE_MODELS` in `core/model_downloads.py`
-/// and `DMAD_MODEL_FILES` in `web/music_video_builder/models.mjs`.
+/// and `DMAD_MODEL_FILES` / `MOSS_IMAGE_MODEL_DOWNLOADS` in `web/music_video_builder/models.mjs`. `filename` is the name the
+/// file is saved as, which need not be the name in the url.
 struct Model {
     id: &'static str,
     label: &'static str,
@@ -40,7 +41,7 @@ struct Model {
     note: &'static str,
 }
 
-const MODELS: [Model; 2] = [
+const MODELS: [Model; 3] = [
     Model {
         id: "dmad_lora",
         label: "DMAD 4-step LoRA",
@@ -60,6 +61,17 @@ const MODELS: [Model; 2] = [
         url: "https://huggingface.co/Kijai/MiniMax-H3-experimental/resolve/main/loras/minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
         page: "https://huggingface.co/Kijai/MiniMax-H3-experimental/blob/main/loras/minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
         note: "Pass 2 LoRA. Restores detail in 2 to 3 steps.",
+    },
+    // Hugging Face calls this file adapter_model.safetensors. It is saved under the name the MOSS-Image settings look for.
+    Model {
+        id: "moss_edit_lora",
+        label: "MOSS-Image Edit LoRA",
+        group: "moss",
+        folder: "loras",
+        filename: "moss_image_edit_lora.safetensors",
+        url: "https://huggingface.co/chinoll/Moss-Image-Edit/resolve/main/adapter_model.safetensors",
+        page: "https://huggingface.co/chinoll/Moss-Image-Edit/tree/main",
+        note: "Follows a written instruction with one to four reference images. Saved as moss_image_edit_lora.safetensors. Needs a ComfyUI newer than v0.42.1.",
     },
 ];
 
@@ -386,15 +398,37 @@ mod tests {
     }
 
     #[test]
-    fn the_allowlist_holds_the_two_dmad_files_with_hugging_face_urls() {
+    fn the_allowlist_holds_the_dmad_files_and_the_moss_edit_lora_with_hugging_face_urls() {
         let ids: Vec<&str> = MODELS.iter().map(|m| m.id).collect();
-        assert_eq!(ids, ["dmad_lora", "dmad_refiner"]);
+        assert_eq!(ids, ["dmad_lora", "dmad_refiner", "moss_edit_lora"]);
         for model in &MODELS {
             assert!(model.url.starts_with("https://huggingface.co/") && model.url.contains("/resolve/"), "{}", model.id);
-            assert!(model.url.ends_with(model.filename));
+            // Only the Edit LoRA is saved under a name other than the one in its url.
+            assert_eq!(model.url.ends_with(model.filename), model.id != "moss_edit_lora", "{}", model.id);
             assert!(model.filename.ends_with(".safetensors"));
         }
         assert!(find_model("../../evil").is_none());
+    }
+
+    #[test]
+    fn the_moss_edit_lora_is_saved_as_the_name_the_settings_look_for() {
+        let model = find_model("moss_edit_lora").unwrap();
+        assert_eq!(model.filename, "moss_image_edit_lora.safetensors");
+        assert!(model.url.ends_with("/adapter_model.safetensors"));
+        assert_eq!((model.group, model.folder), ("moss", "loras"));
+    }
+
+    #[tokio::test]
+    async fn the_edit_lora_download_is_saved_under_its_own_name_not_the_one_in_the_url() {
+        let dir = tempfile::tempdir().unwrap();
+        let data = safetensors_bytes(2048);
+        // The server's file is called adapter_model.safetensors, as on Hugging Face.
+        let url = serve("200 OK", data.clone(), None, 0).await.replace("file.safetensors", "adapter_model.safetensors");
+        let model = find_model("moss_edit_lora").unwrap();
+        let cancel = start("test_moss_name");
+        download_to("test_moss_name", &url, dir.path(), model.filename, &cancel).await.unwrap();
+        assert_eq!(std::fs::read(dir.path().join("moss_image_edit_lora.safetensors")).unwrap(), data);
+        assert!(!dir.path().join("adapter_model.safetensors").exists());
     }
 
     #[test]

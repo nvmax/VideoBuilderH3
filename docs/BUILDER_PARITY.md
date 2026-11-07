@@ -325,8 +325,8 @@ Not kept, as you said: Wizard Legacy, Wizard Beta, Auto Build, the Buy me a coff
 | `POST music_prompt_creator/repair_segments` | left out: Wizard and Prompt Creator panel (not on the screens this app keeps) | prompt_creator |
 | `POST music_prompt_creator/save_draft` | left out: Wizard and Prompt Creator panel (not on the screens this app keeps) | project_actions, prompt_creator |
 | `POST music_prompt_creator/save_outputs` | left out: Wizard and Prompt Creator panel (not on the screens this app keeps) | prompt_creator |
-| `POST video_builder/models/cancel` | served | dmad_models_tab |
-| `POST video_builder/models/install` | served | dmad_models_tab |
-| `GET video_builder/models/status` | served | dmad_models_tab |
-| `GET workflow_runner/i2v_choices` | served | model_pickers |
+| `POST video_builder/models/cancel` | served | dmad_models_tab, model_install_button |
+| `POST video_builder/models/install` | served | dmad_models_tab, model_install_button |
+| `GET video_builder/models/status` | served | dmad_models_tab, model_install_button |
+| `GET workflow_runner/i2v_choices` | served | model_pickers, moss_image_panel |
 | `GET workflow_runner/lora_list` | served | VRGDG_WorkflowRunnerUI, batch_render, minimax_panel_events |
