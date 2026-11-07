@@ -289,8 +289,8 @@
   {
     "why": "The Models dialog's Select models list has no LTX entry (the app makes MiniMax H3 videos only), so it opens on MiniMax H3 like Download models does. Without this it opened on the LTX models panel that the list no longer offered a button for.",
     "file": "music_video_builder/builder.mjs",
-    "find": "modelSelections: [videoSubTabs.modelSelection, miniMaxSubTabs.modelSelection, ...imageModelSelections],",
-    "replace": "modelSelections: [miniMaxSubTabs.modelSelection, ...imageModelSelections],",
+    "find": "const modelSelections = [videoSubTabs.modelSelection, miniMaxSubTabs.modelSelection, ...imageModelSelections, mossImagePanel.modelSelection];",
+    "replace": "const modelSelections = [miniMaxSubTabs.modelSelection, ...imageModelSelections, mossImagePanel.modelSelection];",
     "expect": 1
   },
   {
