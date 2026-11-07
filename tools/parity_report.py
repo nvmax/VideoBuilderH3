@@ -19,6 +19,7 @@ EXCLUDED = [
     (r"browser_image/|flow_gpt", "Browser automation of other sites"),
     (r"wizard_draft$|import_latest_prompt_creator_outputs$|copy_prompt_creator_outputs$|music_prompt_creator/(?!build_whisper_prompt)", "Wizard and Prompt Creator panel (not on the screens this app keeps)"),
     (r"build_minimax_h3_3pass_prompt$|build_transcribe_prompt$|luts/example$|luts/apply_image$|film_grain/apply_image$|latent_status$|list_scene_latent_takes$", "Nothing in the front end calls it"),
+    (r"thumbnail/overlay$", "Thumbnail Overlay engine, not ported yet: this app's thumbnail/capabilities answer has no overlay, so the dialog does not offer it"),
 ]
 
 GROUPS = OrderedDict([
