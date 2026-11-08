@@ -28,6 +28,8 @@ pub struct GemmaFiles {
     pub mmproj_raw_first: String,
     /// Whether the node has the `gpu_device` input. The node of an older comfyui-vrgamedevgirl pack does not, and a GPU choice needs it.
     pub supports_gpu_choice: bool,
+    /// Whether the node has the `keep_all_text` input. Without it the node cuts every reply to one paragraph, so a story or a list of sections cannot come back whole.
+    pub supports_keep_all_text: bool,
 }
 
 fn unavailable(message: impl Into<String>) -> LlmError {
@@ -71,7 +73,8 @@ pub fn files_from_node_info(info: &Value) -> Result<GemmaFiles, LlmError> {
     let real = |all: Vec<String>| -> Vec<String> { all.into_iter().filter(|f| !f.starts_with("[No ")).collect() };
     let raw_mmproj = listed(info, "mmproj_file");
     let supports_gpu_choice = info.pointer(&format!("/{NODE}/input/optional/gpu_device")).is_some();
-    Ok(GemmaFiles { models: real(listed(info, "model_file")), mmproj_raw_first: raw_mmproj.first().cloned().unwrap_or_default(), mmproj: real(raw_mmproj), supports_gpu_choice })
+    let supports_keep_all_text = info.pointer(&format!("/{NODE}/input/optional/keep_all_text")).is_some();
+    Ok(GemmaFiles { models: real(listed(info, "model_file")), mmproj_raw_first: raw_mmproj.first().cloned().unwrap_or_default(), mmproj: real(raw_mmproj), supports_gpu_choice, supports_keep_all_text })
 }
 
 /// The Gemma models and mmproj files ComfyUI has. Reads one node description. Nothing is loaded.
@@ -87,6 +90,16 @@ pub fn check_gpu_choice(cfg: &LlmConfig, files: &GemmaFiles) -> Result<(), LlmEr
             "GPU {} is chosen in the LLM Runner, but the comfyui-vrgamedevgirl pack in ComfyUI is too old to put a model on a GPU. Update the pack and restart ComfyUI, or choose Automatic.",
             cfg.comfy_gemma_gpu_device
         )));
+    }
+    Ok(())
+}
+
+/// A step that needs the whole reply needs the `keep_all_text` input of the node. An older node would cut the reply to one paragraph (a story would come back as a single act), so say so instead.
+pub fn check_whole_reply(req: &ChatRequest, files: &GemmaFiles) -> Result<(), LlmError> {
+    if req.keep_all_text && !files.supports_keep_all_text {
+        return Err(unavailable(
+            "This step needs the whole reply, but the comfyui-vrgamedevgirl pack in ComfyUI is too old: its Gemma node cuts every reply to one paragraph. Update the pack and restart ComfyUI, or choose another runner in the LLM Runner.",
+        ));
     }
     Ok(())
 }
@@ -145,6 +158,9 @@ pub fn build_graph(cfg: &LlmConfig, req: &ChatRequest, model: &str, mmproj: &str
     if cfg.comfy_gemma_gpu_device >= 0 {
         inputs["gpu_device"] = json!(cfg.comfy_gemma_gpu_device);
     }
+    if req.keep_all_text {
+        inputs["keep_all_text"] = json!(true);
+    }
     if let Some(object) = inputs.as_object_mut() {
         object.extend(node);
     }
@@ -200,6 +216,7 @@ pub async fn chat(cfg: &LlmConfig, req: &ChatRequest) -> Result<ChatReply, LlmEr
     let client = client(cfg)?;
     let found = files(cfg).await?;
     check_gpu_choice(cfg, &found)?;
+    check_whole_reply(req, &found)?;
     let model = pick_model(&cfg.comfy_gemma_model, &found)?;
     let model = if req.images.is_empty() { model } else { pick_vision_model(&cfg.comfy_gemma_vision_model, &model, &found) };
     let mut names: Vec<String> = Vec::new();
@@ -271,6 +288,30 @@ mod tests {
         assert!(check_gpu_choice(&chosen, &new).is_ok());
         let refused = check_gpu_choice(&chosen, &old).unwrap_err().to_string();
         assert!(refused.contains("GPU 0") && refused.contains("Update the pack"), "{refused}");
+    }
+
+    #[test]
+    fn a_step_that_needs_the_whole_reply_asks_the_node_for_it_and_an_old_node_is_noticed() {
+        let plain = ChatRequest::text("Write one prompt.", 0.6, 0.95, 100);
+        let mut whole = ChatRequest::text("Write the story.", 0.6, 0.95, 100);
+        whole.keep_all_text = true;
+        let cfg = LlmConfig::default();
+        assert!(build_graph(&cfg, &plain, "m.gguf", "p.gguf", &[])["gemma"]["inputs"].get("keep_all_text").is_none(), "a single prompt is sent as it always was");
+        assert_eq!(build_graph(&cfg, &whole, "m.gguf", "p.gguf", &[])["gemma"]["inputs"]["keep_all_text"], true);
+
+        let old = files_from_node_info(&node_info()).unwrap();
+        assert!(!old.supports_keep_all_text);
+        let current = json!({NODE: {"input": {
+            "required": {"model_file": [["g.gguf"], {}], "mmproj_file": [["p.gguf"], {}]},
+            "optional": {"keep_all_text": ["BOOLEAN", {"default": false}]},
+        }}});
+        let new = files_from_node_info(&current).unwrap();
+        assert!(new.supports_keep_all_text);
+
+        assert!(check_whole_reply(&plain, &old).is_ok(), "a single prompt works with an old node");
+        assert!(check_whole_reply(&whole, &new).is_ok());
+        let refused = check_whole_reply(&whole, &old).unwrap_err().to_string();
+        assert!(refused.contains("one paragraph") && refused.contains("Update the pack"), "{refused}");
     }
 
     #[test]

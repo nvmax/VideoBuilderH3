@@ -207,6 +207,7 @@ pub async fn run_text(
         request.json_schema = json_schema;
     }
     request.seed = payload.get("seed").and_then(to_int);
+    request.keep_all_text = preserve_paragraphs;
     let reply = chat(&cfg, &request).await?;
     let cleaned = if constrained {
         reply.text.trim().to_string()

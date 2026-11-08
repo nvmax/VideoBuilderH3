@@ -56,6 +56,8 @@ pub struct ChatRequest {
     pub seed: Option<i64>,
     /// Pictures the model looks at, as `data:image/...;base64,...` URLs (`lm_studio` and `own_server` only).
     pub images: Vec<String>,
+    /// The step needs the whole reply (a story, a list of sections), not one paragraph. Only the Gemma node of ComfyUI (`comfyui_gemma`) cuts a reply down to one.
+    pub keep_all_text: bool,
 }
 
 impl ChatRequest {
@@ -65,7 +67,7 @@ impl ChatRequest {
     }
 
     pub fn text(instruction: &str, temperature: f64, top_p: f64, max_new_tokens: u32) -> Self {
-        Self { instruction: instruction.to_string(), temperature, top_p, max_new_tokens, json_schema: None, seed: None, images: vec![] }
+        Self { instruction: instruction.to_string(), temperature, top_p, max_new_tokens, json_schema: None, seed: None, images: vec![], keep_all_text: false }
     }
 }
 
