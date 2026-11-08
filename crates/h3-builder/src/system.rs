@@ -66,9 +66,10 @@ pub fn read_resources() -> Value {
 
 /// The custom nodes the Builder depends on: `(id, install name, folder names)`. The first folder is where a GitHub clone
 /// lands. Only these can be asked for by the browser, never an arbitrary path.
-const CUSTOM_NODES: [(&str, &str, &[&str]); 8] = [
+const CUSTOM_NODES: [(&str, &str, &[&str]); 9] = [
     ("videohelpersuite", "comfyui-videohelpersuite", &["ComfyUI-VideoHelperSuite", "comfyui-videohelpersuite"]),
     ("kjnodes", "comfyui-kjnodes", &["ComfyUI-KJNodes", "comfyui-kjnodes"]),
+    ("euler_flow_matching", "erosdiffusion-eulerflowmatchingdiscretescheduler", &["erosdiffusion-eulerflowmatchingdiscretescheduler", "ComfyUI-EulerDiscreteScheduler", "ComfyUI-EulerFlowMatchingDiscreteScheduler"]),
     ("gguf", "ComfyUI-GGUF", &["ComfyUI-GGUF"]),
     ("ltxvideo", "ComfyUI-LTXVideo", &["ComfyUI-LTXVideo"]),
     ("te_speed_minimax_h3", "https://github.com/HELPMEEADICE/TE-Speed-MiniMaxH3-OSS.git", &["TE-Speed-MiniMaxH3-OSS"]),

@@ -1070,7 +1070,7 @@
   },
   {
    "name": "image_generate",
-   "description": "Submit an image generation job for a scene or batch.",
+   "description": "Submit an image generation job for a scene or batch. mode krea2 uses Reference Builder settings and two Krea-only passes; krea2_2pass uses scene Krea settings. For reference cards use reference_image_generate.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -1681,6 +1681,52 @@
    "annotations": {
     "readOnlyHint": false,
     "destructiveHint": true,
+    "openWorldHint": false
+   },
+   "kind": "named"
+  },
+  {
+   "name": "reference_image_generate",
+   "description": "Generate and save an image on a Reference Builder subject or location card with Krea 2 only, using its two-pass generation and refinement workflow. Uses saved reference_krea2_settings; settings overrides apply to this run. Supply prompt or use the card's description. Returns a GPU job; use job_wait. Existing image files are preserved. No Z-image enhancer.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "project_id": {
+      "type": "string"
+     },
+     "kind": {
+      "type": "string",
+      "enum": [
+       "subjects",
+       "locations"
+      ],
+      "default": "subjects"
+     },
+     "ref_id": {
+      "type": "string",
+      "description": "Saved reference card ID from references_get."
+     },
+     "prompt": {
+      "type": "string",
+      "description": "Image prompt; defaults to the card's saved description."
+     },
+     "settings": {
+      "type": "object",
+      "description": "Krea overrides: krea_unet_name, krea_clip_name, krea_vae_name, first_pass_width/height, width/height (final), seed and seed_mode. No Z-image models are used."
+     },
+     "timeout_seconds": {
+      "type": "number",
+      "minimum": 1,
+      "default": 600
+     }
+    },
+    "required": [
+     "project_id",
+     "ref_id"
+    ]
+   },
+   "annotations": {
+    "readOnlyHint": false,
     "openWorldHint": false
    },
    "kind": "named"
@@ -6624,7 +6670,7 @@
   {
    "method": "POST",
    "path": "/projects/{project_id}/images/generate",
-   "description": "Generate images for many scenes.",
+   "description": "Generate images for many scenes. Krea 2 modes use Krea-only generation and refinement; the krea2 alias uses reference_krea2_settings.",
    "job": true,
    "body_keys": [],
    "query": [],
@@ -6754,7 +6800,7 @@
   {
    "method": "POST",
    "path": "/projects/{project_id}/scenes/{scene_id}/image/generate",
-   "description": "Generate a scene image with ComfyUI.",
+   "description": "Generate a scene image with ComfyUI. mode krea2 now uses the Reference Builder Krea 2 two-pass settings and no Z-image; krea2_2pass uses saved scene Krea settings. For reference-card images use POST /projects/{pid}/references/{kind}/{rid}/image/generate.",
    "job": true,
    "body_keys": [],
    "query": [],

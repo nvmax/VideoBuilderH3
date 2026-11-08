@@ -15,7 +15,10 @@ export const LTX_25_MODEL_DOWNLOADS = [
   { label: "LTX 2.5 Latent Upscaler", url: "https://huggingface.co/Lightricks/LTX-2.5/resolve/main/latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors" },
 ];
 export const MINIMAX_H3_MODEL_DOWNLOADS = [
-  { label: "Diffusion model", url: "https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors" },
+  { label: "Diffusion models", choices: [
+    { label: "Official MiniMax H3 — FL2VA / Ref2VA", url: "https://huggingface.co/Comfy-Org/MiniMax-H3/tree/main/diffusion_models" },
+    { label: "Singularity models", url: "https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity/tree/main" },
+  ] },
   { label: "Qwen3-VL text encoder", url: "https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors" },
   { label: "Video VAE", url: "https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/vae/minimax_h3_video_vae_fp16.safetensors" },
   { label: "Audio VAE", url: "https://huggingface.co/Comfy-Org/MiniMax-H3/blob/main/vae/minimax_h3_audio_vae_fp32.safetensors" },
@@ -48,6 +51,7 @@ export const VIDEO_BUILDER_CUSTOM_NODES = [
   { id: "vrgdg", label: "VRGameDevGirl Video Builder", note: "The builder’s own custom-node pack. This is the pack currently providing this interface and its VRGDG nodes.", url: "https://github.com/vrgamegirl19/comfyui-vrgamedevgirl", current: true },
   { id: "videohelpersuite", label: "ComfyUI-VideoHelperSuite", note: "Video loading, combining, and output nodes used by the builder workflows.", url: "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite" },
   { id: "kjnodes", label: "ComfyUI-KJNodes", note: "KJ utility, video, model-loader, and optimization nodes used by LTX and MiniMax workflows.", url: "https://github.com/kijai/ComfyUI-KJNodes" },
+  { id: "euler_flow_matching", label: "ComfyUI-EulerFlowMatchingDiscreteScheduler", note: "Required FlowMatchEulerDiscreteScheduler (Custom) node used by Z-Image and Krea image workflows.", url: "https://github.com/erosDiffusion/ComfyUI-EulerDiscreteScheduler" },
   { id: "gguf", label: "ComfyUI-GGUF", note: "GGUF diffusion and text-encoder loaders used by the LTX 2.3 and local LLM options.", url: "https://github.com/city96/ComfyUI-GGUF" },
   { id: "ltxvideo", label: "ComfyUI-LTXVideo", note: "Official LTX-Video support, including the sampler wrappers used by LTX builder workflows.", url: "https://github.com/Lightricks/ComfyUI-LTXVideo" },
   { id: "te_speed_minimax_h3", label: "TE-Speed-MiniMaxH3-OSS", note: "Optional MiniMax H3 acceleration node used by the TE-Speed setting in two-pass workflows.", url: "https://github.com/HELPMEEADICE/TE-Speed-MiniMaxH3-OSS" },
@@ -70,14 +74,14 @@ export const MOSS_IMAGE_MODEL_DOWNLOADS = [
   { label: "Qwen3.5 9B text encoder", url: "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/text_encoders/qwen3.5_9b_int8_convrot.safetensors" },
   { label: "Flux2 VAE", url: "https://huggingface.co/Comfy-Org/MOSS-Image/resolve/main/vae/flux2-vae.safetensors" },
   { label: "8-step Turbo LoRA", url: "https://huggingface.co/lodestones/MOSS-Image-SFT-8-steps-dmd/resolve/main/lora.safetensors" },
+  // `install` makes the button install the file through the Builder's own routes (core/model_downloads.py, which holds the same id and url)
+  // and save it as `filename`. Hugging Face calls it adapter_model.safetensors.
+  { label: "Edit LoRA (instruction editing)", url: "https://huggingface.co/chinoll/Moss-Image-Edit/resolve/main/adapter_model.safetensors", install: "moss_edit_lora", filename: "moss_image_edit_lora.safetensors" },
 ];
 export const DEFAULT_KREA2_REFERENCE_SETTINGS = {
   krea_unet_name: "krea2_turbo_fp8_scaled.safetensors",
   krea_clip_name: "qwen3vl_4b_fp8_scaled.safetensors",
   krea_vae_name: "qwen_image_vae.safetensors",
-  z_unet_name: "z_image_turbo_bf16.safetensors",
-  z_clip_name: "qwen_3_4b.safetensors",
-  z_vae_name: "ae.safetensors",
   first_pass_width: 1024,
   first_pass_height: 576,
   width: 1920,
@@ -151,8 +155,10 @@ models/
     flux2-vae.safetensors
   loras/
     moss_image_sft_8_steps_dmd_lora.safetensors
+    moss_image_edit_lora.safetensors
 
-The Turbo LoRA downloads as lora.safetensors. Rename it to moss_image_sft_8_steps_dmd_lora.safetensors.`,
+The Turbo LoRA downloads as lora.safetensors. Rename it to moss_image_sft_8_steps_dmd_lora.safetensors.
+The Edit LoRA button installs the Edit LoRA (chinoll/Moss-Image-Edit) here as moss_image_edit_lora.safetensors. If you download it yourself it is called adapter_model.safetensors: rename it. It follows a written instruction with one to four reference images, and it needs a ComfyUI that has the "Text Encode MOSS-Image Edit" node (newer than v0.42.1). Update ComfyUI first.`,
   "Krea2": `ComfyUI/
 models/
   diffusion_models/

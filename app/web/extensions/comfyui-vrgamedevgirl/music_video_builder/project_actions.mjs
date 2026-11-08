@@ -288,6 +288,7 @@ export function createProjectActions({
     state.videoType = "singing";
     state.projectVideoEngine = "minimax_h3";
     state.miniMaxH3Settings = cloneMiniMaxH3Settings();
+    state.autoBuildDraft = null;
     state.wizardBetaDraft = null;
     state.miniMaxH3TwoPassEnabled = false;
     state.miniMaxH3ThreePassEnabled = false;

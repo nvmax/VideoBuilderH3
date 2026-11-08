@@ -1,5 +1,6 @@
+import { assertMiniMaxLorasInstalled } from "./minimax_lora_validation.mjs";
 import { storyboardGptPayload } from "../storyboard_builder/gpt_payload.mjs";
-import { cancelComfyExecutionAndWaitIdle, postJson } from "./comfy_api.mjs";
+import { cancelComfyExecutionAndWaitIdle, getJson, postJson } from "./comfy_api.mjs";
 import { escapeHtml, normalizeProjectVideoEngine, toast } from "./controls.mjs";
 import { showFinalVideoReadyModal } from "./dialogs.mjs";
 import { sceneImagePromptForEnhanceAll } from "./image_generation.mjs";
@@ -31,7 +32,8 @@ export function createBatchRender({
   generateT2IPromptForSegment, hasFirstLastFrameEndImage, i2vAllScenes, i2vAutoChainEnabled,
   i2vTextGemmaModelSelect, imageAllSegmentsForMode, imageModeDisplayLabel, imageModeImg2ImgContinuityLabel,
   imageModeSupportsImg2ImgContinuity, img2imgContinuityEnabled, krea2TwoPassCreateButtons,
-  krea2TwoPassCreateT2IButton, loadSessionFromProject, miniMaxBatchReferenceProblems, miniMaxH3ModeForSegment,
+  krea2TwoPassCreateT2IButton, loadSessionFromProject, bypassMiniMaxPromptReferences, miniMaxBatchReferenceProblems, miniMaxH3ModeForSegment,
+  miniMaxH3SettingsForSegment,
   miniMaxSceneVideoButtons, nbCreateButtons, persistRenderLog, prepareAutoChainedNextScene,
   prepareAutoImg2ImgContinuityForScene, prepareFLFRenderedFrameNextScene, prepareSceneAudioMix,
   previousAutoChainSourceSegment, previousSceneStartImageIngredient, projectInput, pushHistory,
@@ -48,6 +50,23 @@ export function createBatchRender({
   videoModeDisplayLabel, wizardStoryboardState, zCreateButtons, zEnhanceAllButton, zEnhanceAllToolButton,
   zEnhanceButton, zImageAllButton,
 }) {
+  function showRenderAllMissing(progress, missing, options = {}) {
+    progress.setHtml(renderMissingListHtml(missing), 100);
+    const targets = batchTargetItems(normalizeBatchScope(options.sceneScope))
+      .filter(({ segment }) => options.forceVideos || (!segment.minimax_h3_draft?.id && !String(selectedSegmentVideoPath(segment) || "").trim()));
+    if (normalizeProjectVideoEngine(state.projectVideoEngine) === "minimax_h3"
+      && options.renderPhase !== "finalize" && miniMaxBatchReferenceProblems(targets).length) {
+      progress.setActions([{
+        label: "Bypass reference warnings and retry rendering",
+        onClick: async () => {
+          await bypassMiniMaxPromptReferences(targets.map(({ segment }) => segment));
+          progress.close();
+          await renderAllScenes(options);
+        },
+      }]);
+    }
+  }
+
   async function renderAllScenes(options = {}) {
     updateActiveFromInputs();
     saveI2VVideoSettingsFromPanel();
@@ -64,6 +83,18 @@ export function createBatchRender({
     let currentSceneLog = null;
     const renderWarnings = [];
     let previousRenderEndedMs = 0;
+    if (miniMaxProject && !finalizeDrafts) {
+      try {
+        const inventory = await getJson("/vrgdg/workflow_runner/lora_list");
+        for (const { segment } of batchTargetItems(sceneScope)) {
+          if (!forceVideos && String(selectedSegmentVideoPath(segment) || "").trim()) continue;
+          assertMiniMaxLorasInstalled(miniMaxH3SettingsForSegment(segment), inventory.loras || []);
+        }
+      } catch (error) {
+        toast(String(error?.message || error), true);
+        return;
+      }
+    }
     if (!forceVideos && !finalizeDrafts) {
       try {
         await recoverSceneVideosFromProject({
@@ -79,7 +110,7 @@ export function createBatchRender({
     const missing = validateRenderAllReady({ forceVideos, sceneScope, renderPhase });
     const progress = createProgressWindow(draftRender ? "Render Drafts" : finalizeDrafts ? "Finalize Drafts" : sceneScope === "selected" ? "Render Selected Scenes" : sceneScope === "from_selected" ? "Render From Selected Scene" : "Render All Scenes");
     if (missing.length) {
-      progress.setHtml(renderMissingListHtml(missing), 100);
+      showRenderAllMissing(progress, missing, options);
       toast("Render All needs a few things fixed first.", true);
       return;
     }

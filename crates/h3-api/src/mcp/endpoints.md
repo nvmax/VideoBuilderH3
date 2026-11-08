@@ -61,7 +61,7 @@ A call that runs as a job returns a job id: poll `GET /jobs/{id}` (the `job_wait
 
 ## images
 
-- `POST /projects/{project_id}/images/generate` (job) Generate images for many scenes.
+- `POST /projects/{project_id}/images/generate` (job) Generate images for many scenes. Krea 2 modes use Krea-only generation and refinement; the krea2 alias uses reference_krea2_settings.
 
 ## instructions
 
@@ -201,7 +201,7 @@ A call that runs as a job returns a job id: poll `GET /jobs/{id}` (the `job_wait
 - `PUT /projects/{project_id}/scenes/{scene_id}/image` Set the scene image from a file (`source_path`) or upload (`image_data`). (body: image_data, source_path)
 - `POST /projects/{project_id}/scenes/{scene_id}/image/approve` Approve one generated image as the scene's image (`image_path`). (body: image_path)
 - `POST /projects/{project_id}/scenes/{scene_id}/image/from-video-frame` Take the scene image from a frame of a video (`source_video_path`). (body: source_video_path)
-- `POST /projects/{project_id}/scenes/{scene_id}/image/generate` (job) Generate a scene image with ComfyUI.
+- `POST /projects/{project_id}/scenes/{scene_id}/image/generate` (job) Generate a scene image with ComfyUI. mode krea2 now uses the Reference Builder Krea 2 two-pass settings and no Z-image; krea2_2pass uses saved scene Krea settings. For reference-card images use POST /projects/{pid}/references/{kind}/{rid}/image/generate.
 - `POST /projects/{project_id}/scenes/{scene_id}/image/revert` Step through the scene's image history (`index` or `delta`). (body: delta, index)
 - `DELETE /projects/{project_id}/scenes/{scene_id}/latent` Delete a scene's latent (`all`, `reindex`). (body: all, reindex; query: all, reindex)
 - `GET /projects/{project_id}/scenes/{scene_id}/latent` One scene's latent file and status.

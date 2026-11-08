@@ -1,6 +1,7 @@
 import { getJson, makeEditorImageUrl, postJson } from "./comfy_api.mjs";
 import { makeButton, makeField, makeInput, makeMiniButton, toast } from "./controls.mjs";
 import { renderDmadModelsTab } from "./dmad_models_tab.mjs";
+import { wireInstallButton } from "./model_install_button.mjs";
 import {
   ERNIE_MODEL_DOWNLOADS,
   FLUX_KLEIN_4B_MODEL_DOWNLOADS,
@@ -151,7 +152,9 @@ export function createBaseProgressWindow(title, options = {}) {
   status.textContent = "Starting...";
   const sceneDetails = document.createElement("div");
   sceneDetails.style.cssText = "display:none;margin-top:12px;padding-top:12px;border-top:1px solid #164e63;";
-  body.append(status, sceneDetails);
+  const actions = document.createElement("div");
+  actions.style.cssText = "display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;";
+  body.append(status, actions, sceneDetails);
   const barOuter = document.createElement("div");
   barOuter.style.cssText = "height:8px;background:#164e63;border-radius:999px;margin:0 12px 12px;overflow:hidden;";
   const barInner = document.createElement("div");
@@ -195,15 +198,34 @@ export function createBaseProgressWindow(title, options = {}) {
   lastProgressWindow = registration;
   return {
     set(message, percent = null) {
+      actions.replaceChildren();
       status.textContent = message;
       if (percent !== null) barInner.style.width = `${Math.max(5, Math.min(100, percent))}%`;
       const firstLine = String(message || title).split(/\r?\n/)[0] || title;
       restore.textContent = `${title}: ${firstLine}`;
     },
     setHtml(html, percent = null) {
+      actions.replaceChildren();
       status.innerHTML = html;
       if (percent !== null) barInner.style.width = `${Math.max(5, Math.min(100, percent))}%`;
       restore.textContent = title;
+    },
+    setActions(items) {
+      actions.replaceChildren();
+      for (const item of items) {
+        const button = makeButton(item.label, "primary");
+        button.addEventListener("click", async () => {
+          button.disabled = true;
+          try {
+            await item.onClick();
+          } catch (error) {
+            toast(String(error?.message || error), true);
+          } finally {
+            button.disabled = false;
+          }
+        });
+        actions.append(button);
+      }
     },
     setSceneDetails(details = {}) {
       const images = Array.isArray(details.images) ? details.images : [];
@@ -341,7 +363,8 @@ export function showFinalVideoReadyModal(videoPath) {
   };
 }
 
-export function showModelDownloadModal({ modelSelections = [] } = {}) {
+// `select` is the label of a Select models tab to open on (the dialog opens on Select models with that tab showing).
+export function showModelDownloadModal({ modelSelections = [], select = "" } = {}) {
   const tabs = [
     {
       id: "ltx",
@@ -368,8 +391,8 @@ export function showModelDownloadModal({ modelSelections = [] } = {}) {
       label: "Image Models",
       groups: [
         { title: "ZImage", note: "Core ZImage Turbo diffusion model, Qwen text encoder, and VAE.", downloads: ZIMAGE_MODEL_DOWNLOADS },
-        { title: "Krea2", note: "Krea2 text-to-image model used by the Reference Builder Krea2 + ZImage enhancer option.", downloads: KREA2_MODEL_DOWNLOADS },
-        { title: "MOSS-Image", note: "MOSS-Image option in Generate Subject/Location Reference. The 8-step Turbo LoRA is optional and needs a rename (see folder locations).", downloads: MOSS_IMAGE_MODEL_DOWNLOADS },
+        { title: "Krea2", note: "Krea2 text-to-image model used by the Reference Builder Krea 2 option.", downloads: KREA2_MODEL_DOWNLOADS },
+        { title: "MOSS-Image", note: "MOSS-Image option in Generate Subject/Location Reference. The 8-step Turbo LoRA and the Edit LoRA are optional. The Turbo LoRA needs a rename (see folder locations). The Edit LoRA button installs it for you as moss_image_edit_lora.safetensors, and it needs a newer ComfyUI.", downloads: MOSS_IMAGE_MODEL_DOWNLOADS },
         { title: "Flux/Klein 9B", note: "9B is higher quality. 4B is smaller and lighter.", downloads: FLUX_KLEIN_9B_MODEL_DOWNLOADS },
         { title: "Flux/Klein 4B", note: "4B is smaller and lighter.", downloads: FLUX_KLEIN_4B_MODEL_DOWNLOADS },
         { title: "Ernie Image", note: "Ernie diffusion model, Ministral text encoder, and VAE.", downloads: ERNIE_MODEL_DOWNLOADS },
@@ -430,7 +453,15 @@ export function showModelDownloadModal({ modelSelections = [] } = {}) {
   const tabButtons = new Map();
   const activeSubTabs = new Map();
 
+  // A download that installs itself (item.install) follows its progress. Leaving the tab or closing the dialog stops that.
+  let installStops = [];
+  const stopInstallButtons = () => {
+    for (const stop of installStops) stop();
+    installStops = [];
+  };
+
   const renderGroups = (groups) => {
+    stopInstallButtons();
     body.replaceChildren();
     for (const group of groups) {
       const card = document.createElement("div");
@@ -472,11 +503,34 @@ export function showModelDownloadModal({ modelSelections = [] } = {}) {
         button.style.fontSize = "16px";
         button.style.padding = "12px 16px";
         button.style.borderRadius = "7px";
-        button.addEventListener("click", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          window.open(item.url, "_blank", "noopener,noreferrer");
-        });
+        if (item.install) {
+          installStops.push(wireInstallButton(button, item));
+        } else {
+          button.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            if (item.choices?.length) {
+              const choices = document.createElement("div");
+              choices.style.cssText = "display:flex;flex-direction:column;gap:12px;";
+              for (const choice of item.choices) {
+                const open = makeButton(choice.label, "primary");
+                open.addEventListener("click", () => window.open(choice.url, "_blank", "noopener,noreferrer"));
+                choices.append(open);
+              }
+              showInfoModal({
+                title: "MiniMax H3 Diffusion Models",
+                lines: [
+                  "Choose a collection, then download the model variant you want from its Hugging Face page.",
+                  choices,
+                  "Place downloaded checkpoints in your ComfyUI diffusion_models folder, then refresh the model list. Select a checkpoint that matches your render mode.",
+                ],
+                confirmLabel: "Close",
+              });
+              return;
+            }
+            window.open(item.url, "_blank", "noopener,noreferrer");
+          });
+        }
         buttons.append(button);
       }
       card.append(titleRow, note, buttons);
@@ -612,6 +666,7 @@ export function showModelDownloadModal({ modelSelections = [] } = {}) {
   const renderTab = (tab) => {
     stopTabWork();
     stopTabWork = () => {};
+    stopInstallButtons();
     if (tab.render) {
       stopTabWork = tab.render(body) || (() => {});
       return;
@@ -738,6 +793,7 @@ export function showModelDownloadModal({ modelSelections = [] } = {}) {
   downloadModels.onclick = () => choose("download");
   const finish = () => {
     stopTabWork();
+    stopInstallButtons();
     restoreSelection();
     document.removeEventListener("keydown", onKeyDown);
     backdrop.remove();
@@ -757,6 +813,11 @@ export function showModelDownloadModal({ modelSelections = [] } = {}) {
   backdrop.addEventListener("click", (event) => {
     if (event.target === backdrop) finish();
   });
+  const wanted = select ? selectionButtons.find(([entry]) => entry.label === select) : null;
+  if (wanted) {
+    choose("select");
+    selectPanel(wanted[0]);
+  }
 }
 
 export function showTextInputModal({ title, label, value = "", placeholder = "", confirmLabel = "Continue" } = {}) {

@@ -1945,7 +1945,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/status",
    "handler": "custom_nodes_status",
    "file": "core/system_routes.py",
-   "line": 501,
+   "line": 502,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1956,7 +1956,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/install",
    "handler": "custom_nodes_install",
    "file": "core/system_routes.py",
-   "line": 506,
+   "line": 507,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1967,7 +1967,7 @@
    "path": "/vrgdg/video_builder/models/status",
    "handler": "models_status",
    "file": "core/system_routes.py",
-   "line": 525,
+   "line": 526,
    "doc": "Allowlisted downloadable models (the Models dialog's DMAD Models tab): installed or not, and download progress.",
    "callers": [
     "dmad_models_tab.mjs",
@@ -1979,7 +1979,7 @@
    "path": "/vrgdg/video_builder/models/install",
    "handler": "models_install",
    "file": "core/system_routes.py",
-   "line": 532,
+   "line": 533,
    "doc": "Start downloading allowlisted models into ComfyUI's model folders. Poll ``models/status`` for progress.",
    "callers": [
     "dmad_models_tab.mjs",
@@ -1991,7 +1991,7 @@
    "path": "/vrgdg/video_builder/models/cancel",
    "handler": "models_cancel",
    "file": "core/system_routes.py",
-   "line": 543,
+   "line": 544,
    "doc": "Stop running model downloads.",
    "callers": [
     "dmad_models_tab.mjs",

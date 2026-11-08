@@ -36,7 +36,8 @@ import {
   setWidgetValue,
   toast,
 } from "./controls.mjs";
-import { pickProjectSessionFile, showInfoModal, showLastProgressWindow, showLoadProjectModal, showTextInputModal } from "./dialogs.mjs";
+import { pickProjectSessionFile, showInfoModal, showLastProgressWindow, showLoadProjectModal, showModelDownloadModal, showTextInputModal } from "./dialogs.mjs";
+import { addMossImageOption, createMossImagePanel, MOSS_PANEL_LABEL } from "./moss_image_panel.mjs";
 import { cloneMiniMaxH3Settings } from "./minimax_h3.mjs";
 import { DEFAULT_KREA2_REFERENCE_SETTINGS } from "./models.mjs";
 import { defaultNotificationSettings } from "./notifications.mjs";
@@ -966,6 +967,9 @@ export function openBuilder(node, options = {}) {
     overlayAvailable: false,
     thumbnailIntro: normalizeThumbnailIntro(),
     thumbnailAvailable: false,
+    thumbnailFrameAvailable: false,
+    thumbnailOverlayAvailable: false,
+    thumbnailApiImage: null,
     activeOverlayId: "",
     overlayLaneOpen: false,
     sceneTransitions: [],
@@ -1118,6 +1122,7 @@ export function openBuilder(node, options = {}) {
     builderStoryLayer: normalizeBuilderStoryLayer({}),
     builderStoryboardDefaults: normalizeBuilderStoryboardDefaults({}),
     autoBuildPreparation: normalizeAutoBuildPreparation({}),
+    autoBuildDraft: null,
     wizardBetaDraft: null,
     postProcessTab: "luts",
     adjustLivePreview: false,
@@ -1401,6 +1406,7 @@ export function openBuilder(node, options = {}) {
   });
 
   const {
+    bypassMiniMaxPromptReferences,
     clearMiniMaxImageReferenceStartFrameOnModeSwitch, ensureMiniMaxSpeakerAssignments,
     isMiniMaxBuiltInSpeakerAssignmentMode, isMiniMaxSingerAssignmentMode, miniMaxH3ContinuityModeForSegment,
     miniMaxH3ContinuityReferenceReserved, miniMaxH3ModeForSegment, miniMaxH3SceneImageIsPromptInspiration,
@@ -1460,6 +1466,7 @@ export function openBuilder(node, options = {}) {
     prepareSceneAudioClipForTimestamping: (...args) => prepareSceneAudioClipForTimestamping(...args),
     miniMaxH3PromptCharacterBudget: (...args) => miniMaxH3PromptCharacterBudget(...args),
     miniMaxPromptReferenceMismatch: (...args) => miniMaxPromptReferenceMismatch(...args),
+    miniMaxPromptReferenceSignature: (...args) => miniMaxPromptReferenceSignature(...args),
     render: (...args) => render(...args),
     activateGlobalTimelineAudioPlayback: (...args) => activateGlobalTimelineAudioPlayback(...args),
     activeSegment: (...args) => activeSegment(...args),
@@ -2556,7 +2563,12 @@ export function openBuilder(node, options = {}) {
     button: thumbnailButton, state, projectInput, createProgressWindow,
     runnerPayload: currentLlmRunnerPayload,
     sceneImagePath: (segment) => selectedSegmentImagePath(segment),
+    sceneVideoPath: (segment) => selectedSegmentVideoPath(segment),
     sceneLabel: (segment, index) => sceneDisplayName(segment, index),
+    // The settings the Builder holds for each image workflow that needs any (Qwen Image Edit picks its own models).
+    engineSettings: (engine) => ({
+      nano_banana: () => state.nbImageSettings,
+    })[engine]?.(),
     save: () => autoSaveSessionQuiet("Thumbnail"),
   });
 
@@ -2584,7 +2596,7 @@ export function openBuilder(node, options = {}) {
     hasFirstLastFrameEndImage, i2vAllScenes, i2vAutoChainEnabled, i2vTextGemmaModelSelect,
     imageAllSegmentsForMode, imageModeDisplayLabel, imageModeImg2ImgContinuityLabel,
     imageModeSupportsImg2ImgContinuity, img2imgContinuityEnabled, krea2TwoPassCreateButtons,
-    krea2TwoPassCreateT2IButton, miniMaxBatchReferenceProblems, miniMaxH3ModeForSegment,
+    krea2TwoPassCreateT2IButton, bypassMiniMaxPromptReferences, miniMaxBatchReferenceProblems, miniMaxH3ModeForSegment, miniMaxH3SettingsForSegment,
     miniMaxSceneVideoButtons, nbCreateButtons, persistRenderLog, prepareAutoChainedNextScene,
     prepareAutoImg2ImgContinuityForScene, prepareFLFRenderedFrameNextScene, prepareSceneAudioMix,
     previousAutoChainSourceSegment, previousSceneStartImageIngredient, projectInput, pushHistory,
@@ -2648,7 +2660,7 @@ export function openBuilder(node, options = {}) {
     openStoryboardBuilderFromProject, projectInput, pushHistory, render, runMiniMaxH3PromptGeneration,
     saveGemmaJunkDebug, saveSession, sceneDisplayName, sceneReferenceMapArray, state,
     syncI2VVideoSettingsPanel, syncInspector, syncProjectVideoEngineUI, syncVideoModePanel,
-    syncVideoTypeControl, transcribeExistingScenesWithOptions,
+    syncVideoTypeControl, textGemmaRunnerPayload, transcribeExistingScenesWithOptions,
     sceneDefaultsPromptOptions: (...args) => sceneDefaultsPromptOptions(...args),
   });
 
@@ -3097,8 +3109,12 @@ export function openBuilder(node, options = {}) {
     useSceneMiniMaxH3Settings, useSceneNBImageSettings, useSceneZImageSettings, useT2VVisionReference,
     useVisionReference,
   });
+  // MOSS-Image has its models and settings in Models > Select models. The Image tab's model list opens that dialog on its tab.
+  const mossImagePanel = createMossImagePanel();
+  const modelSelections = [miniMaxSubTabs.modelSelection, ...imageModelSelections, mossImagePanel.modelSelection];
+  addMossImageOption(imageModelSelect, () => showModelDownloadModal({ modelSelections, select: MOSS_PANEL_LABEL }));
   wireToolbar({
-    modelSelections: [miniMaxSubTabs.modelSelection, ...imageModelSelections],
+    modelSelections,
     render,
     activeSegment, addOverlaySegment, addOverlaySegmentButton, addSegment, addSegmentButton,
     addTimelineMarkerButton, addTimelineMarkerFromSelection, applyBuilderFullscreen, autoBuildButton,
@@ -3200,10 +3216,11 @@ export function openBuilder(node, options = {}) {
     segmentTrack, snapSceneEdgeToNearestBeat, undo,
   });
 
-  // The Models dialog's Dmad Models tab finished installing a file: reload the LoRA lists so the pickers and the DMAD
-  // "not found" note see it.
+  // The Models dialog (the Dmad Models tab, the MOSS-Image Edit LoRA button) finished installing a file: reload the LoRA lists so the
+  // pickers, the DMAD "not found" note and the MOSS-Image tab see it.
   builderLifecycle.modelsChangedHandler = () => {
     refreshLoraChoices().then(() => syncMiniMaxH3Panel()).catch(() => null);
+    mossImagePanel.refresh();
   };
   window.addEventListener("vrgdg-models-changed", builderLifecycle.modelsChangedHandler);
 
