@@ -6,6 +6,7 @@ edition.workspace = true
 license-file.workspace = true
 
 [dependencies]
+h3-browser.workspace = true
 h3-core.workspace = true
 h3-graph.workspace = true
 h3-llm.workspace = true

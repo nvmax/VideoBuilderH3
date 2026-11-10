@@ -7,6 +7,7 @@
 
 mod assets;
 pub(crate) mod audio_mask;
+mod browser_image;
 mod choices;
 mod files;
 pub(crate) mod llm;
@@ -51,6 +52,7 @@ pub fn router() -> Router<Arc<AppState>> {
     let router = files::routes(router);
     let router = assets::routes(router);
     let router = audio_mask::routes(router);
+    let router = browser_image::routes(router);
     let router = llm::routes(router);
     let router = models::routes(router);
     let router = post_process::routes(router);

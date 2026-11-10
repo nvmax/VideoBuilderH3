@@ -95,6 +95,12 @@ impl AppState {
     pub fn luts_dir(&self) -> PathBuf {
         self.config_path.parent().map(std::path::Path::to_path_buf).unwrap_or_default().join("luts")
     }
+
+    /// Where the Browser AI engine keeps its Chrome profiles (`chrome-flow-profile` and so on), so a sign-in lasts, and its downloads. Next
+    /// to the config file, in a `browser_ai` folder.
+    pub fn browser_ai_dir(&self) -> PathBuf {
+        self.config_path.parent().map(std::path::Path::to_path_buf).unwrap_or_default().join("browser_ai")
+    }
 }
 
 pub type Shared = State<Arc<AppState>>;

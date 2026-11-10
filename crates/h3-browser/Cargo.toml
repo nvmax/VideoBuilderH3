@@ -1,0 +1,21 @@
+[package]
+name = "h3-browser"
+description = "Drives the person's own Chrome through its debug port (Chrome DevTools Protocol): Flow, ChatGPT Images and Meta AI. No Node.js, no Playwright."
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+
+[dependencies]
+base64.workspace = true
+fancy-regex.workspace = true
+futures-util = { workspace = true, features = ["sink", "std"] }
+reqwest.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tokio.workspace = true
+tokio-tungstenite.workspace = true
+
+[dev-dependencies]
+axum = "0.8"
+tempfile.workspace = true

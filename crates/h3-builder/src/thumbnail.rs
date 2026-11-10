@@ -27,20 +27,23 @@ type Reply = Result<Value, String>;
 pub const THUMBNAIL_FOLDER: &str = "thumbnail";
 /// Bumped when the routes or their fields change in a way the Builder has to know about.
 pub const THUMBNAIL_VERSION: u32 = 1;
-const VIDEO_EXTENSIONS: [&str; 6] = ["mp4", "mov", "mkv", "webm", "avi", "m4v"];
+pub(crate) const VIDEO_EXTENSIONS: [&str; 6] = ["mp4", "mov", "mkv", "webm", "avi", "m4v"];
 
-/// `GET /vrgdg/music_builder/thumbnail/capabilities`: tells the Builder that this build can save thumbnails, prepend the intro and take
-/// one exact frame of a video.
+/// `GET /vrgdg/music_builder/thumbnail/capabilities`: tells the Builder that this build can save thumbnails, prepend the intro, take
+/// one exact frame of a video, draw it with the image API of the LLM Runner's provider (`api_image`: the providers and their image models,
+/// see `thumbnail_api_image.rs`), make it with Flow, GPT Image or Meta AI in the person's Chrome (`browser_ai`, and `browser_ai_direct`
+/// because the app drives Chrome itself, see `thumbnail_browser_ai.rs`, where the pack runs a ComfyUI workflow) and join the person's own
+/// intro video (`video_intro`, see `video_intro.rs`). It has no `overlay`, so the dialog does not offer that engine here.
 pub fn capabilities() -> Reply {
-    Ok(json!({"version": THUMBNAIL_VERSION, "frame": true}))
+    Ok(json!({"version": THUMBNAIL_VERSION, "frame": true, "api_image": h3_llm::api_image::capabilities(), "browser_ai": true, "browser_ai_direct": true, "video_intro": true}))
 }
 
-fn absolute(raw: &str) -> PathBuf {
+pub(crate) fn absolute(raw: &str) -> PathBuf {
     h3_core::abspath::absolute(raw).unwrap_or_else(|_| PathBuf::from(raw)).components().collect()
 }
 
 /// `_next_thumbnail_path`: `<prefix>_NNNN.png` with the first number that is free in `folder`.
-fn next_thumbnail_path(folder: &Path, prefix: &str) -> PathBuf {
+pub(crate) fn next_thumbnail_path(folder: &Path, prefix: &str) -> PathBuf {
     let mut number = 1;
     while folder.join(format!("{prefix}_{number:04}.png")).exists() {
         number += 1;
@@ -132,11 +135,11 @@ pub fn extract_thumbnail_frame(env: &Env, payload: &Obj) -> Reply {
 }
 
 /// A frame rate as ffmpeg reads it: `24` or `30000/1001`.
-fn rate_text(rate: Ratio) -> String {
+pub(crate) fn rate_text(rate: Ratio) -> String {
     if rate.den == 1 { rate.num.to_string() } else { format!("{}/{}", rate.num, rate.den) }
 }
 
-fn frame_rate(values: &std::collections::HashMap<String, String>) -> Ratio {
+pub(crate) fn frame_rate(values: &std::collections::HashMap<String, String>) -> Ratio {
     ["r_frame_rate", "avg_frame_rate"].iter().filter_map(|k| values.get(*k).and_then(|v| Ratio::parse(v))).find(Ratio::is_positive).unwrap_or(Ratio::new(24, 1))
 }
 
@@ -166,7 +169,7 @@ fn intro_command(image: &Path, output: &Path, seconds: f64, size: (i64, i64), ra
 }
 
 /// Join without re-encoding the video: the intro was made to match, so the streams can be copied.
-fn join_by_copy(tools: &Tools, intro: &Path, source: &Path, output: &Path, work: &Path) -> Result<(), String> {
+pub(crate) fn join_by_copy(tools: &Tools, intro: &Path, source: &Path, output: &Path, work: &Path, what: &str) -> Result<(), String> {
     let listing = work.join("join.txt");
     let mut lines = String::new();
     for path in [intro, source] {
@@ -174,11 +177,11 @@ fn join_by_copy(tools: &Tools, intro: &Path, source: &Path, output: &Path, work:
     }
     fs::write(&listing, lines).map_err(|e| e.to_string())?;
     let command = args(&["-y", "-f", "concat", "-safe", "0", "-i", &listing.display().to_string(), "-c", "copy", "-movflags", "+faststart", &output.display().to_string()]);
-    tools.ffmpeg_checked(&command, "FFmpeg could not join the thumbnail and the video.").map(|_| ()).map_err(|e| e.to_string())
+    tools.ffmpeg_checked(&command, &format!("FFmpeg could not join the {what} and the video.")).map(|_| ()).map_err(|e| e.to_string())
 }
 
 /// Join with the concat filter and one new encode, for the rare video the stream-copy join does not fit.
-fn join_by_encoding(tools: &Tools, intro: &Path, source: &Path, output: &Path, has_audio: bool, crf: Option<f64>) -> Result<(), String> {
+pub(crate) fn join_by_encoding(tools: &Tools, intro: &Path, source: &Path, output: &Path, has_audio: bool, crf: Option<f64>, what: &str) -> Result<(), String> {
     let (graph, maps): (&str, Vec<&str>) = if has_audio {
         ("[0:v][0:a][1:v][1:a]concat=n=2:v=1:a=1[v][a]", vec!["-map", "[v]", "-map", "[a]"])
     } else {
@@ -191,16 +194,17 @@ fn join_by_encoding(tools: &Tools, intro: &Path, source: &Path, output: &Path, h
         command.extend(scene_audio_args());
     }
     command.extend(args(&["-movflags", "+faststart", &output.display().to_string()]));
-    tools.ffmpeg_checked(&command, "FFmpeg could not join the thumbnail and the video.").map(|_| ()).map_err(|e| e.to_string())
+    tools.ffmpeg_checked(&command, &format!("FFmpeg could not join the {what} and the video.")).map(|_| ()).map_err(|e| e.to_string())
 }
 
 /// A hidden work folder beside the video, removed when it goes out of scope.
-struct WorkDir(PathBuf);
+pub(crate) struct WorkDir(pub(crate) PathBuf);
 
 impl WorkDir {
-    fn new(beside: &Path) -> Result<Self, String> {
+    /// `prefix` names what the folder is for (`.thumbnail_intro_`, `.video_intro_`), so a leftover is easy to tell.
+    pub(crate) fn new(beside: &Path, prefix: &str) -> Result<Self, String> {
         let nanos = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).map(|d| d.as_nanos()).unwrap_or_default();
-        let path = beside.join(format!(".thumbnail_intro_{}_{nanos}", std::process::id()));
+        let path = beside.join(format!("{prefix}{}_{nanos}", std::process::id()));
         fs::create_dir_all(&path).map_err(|e| format!("{}: {e}", path.display()))?;
         Ok(Self(path))
     }
@@ -213,15 +217,15 @@ impl Drop for WorkDir {
 }
 
 /// How many video frames a file holds, counted from its packets (no decoding, so it is quick even for a long video).
-fn video_packets(tools: &Tools, path: &Path) -> i64 {
+pub(crate) fn video_packets(tools: &Tools, path: &Path) -> i64 {
     probe_stream_fields(tools, path, "v:0", &["nb_read_packets"], true).ok().and_then(|f| whole_field(&f, "nb_read_packets")).unwrap_or(0)
 }
 
-fn length_of(tools: &Tools, path: &Path) -> f64 {
+pub(crate) fn length_of(tools: &Tools, path: &Path) -> f64 {
     probe_duration(tools, &path.display().to_string()).unwrap_or(0.0)
 }
 
-fn whole_field(values: &std::collections::HashMap<String, String>, key: &str) -> Option<i64> {
+pub(crate) fn whole_field(values: &std::collections::HashMap<String, String>, key: &str) -> Option<i64> {
     values.get(key).and_then(|v| v.trim().parse().ok())
 }
 
@@ -253,19 +257,19 @@ pub fn prepend_thumbnail_intro(env: &Env, payload: &Obj) -> Reply {
     let source_frames = video_packets(&tools, &source);
 
     let folder = source.parent().map(Path::to_path_buf).unwrap_or_default();
-    let work = WorkDir::new(&folder)?;
+    let work = WorkDir::new(&folder, ".thumbnail_intro_")?;
     let intro = work.0.join("intro.mp4");
     let command = intro_command(&image_path, &intro, seconds, (width, height), rate, audio, crf);
     tools.ffmpeg_checked(&command, "FFmpeg could not make the thumbnail clip.").map_err(|e| e.to_string())?;
     let joined = work.0.join("joined.mp4");
     let mut method = "copy";
     // One frame is far shorter than a length check could tell, so the frames are counted: exactly one more than before.
-    let copied = join_by_copy(&tools, &intro, &source, &joined, &work.0).and_then(|_| {
+    let copied = join_by_copy(&tools, &intro, &source, &joined, &work.0, "thumbnail").and_then(|_| {
         if video_packets(&tools, &joined) == source_frames + 1 { Ok(()) } else { Err("The joined video does not have exactly one more frame.".to_string()) }
     });
     if copied.is_err() {
         method = "reencode";
-        join_by_encoding(&tools, &intro, &source, &joined, audio.is_some(), crf)?;
+        join_by_encoding(&tools, &intro, &source, &joined, audio.is_some(), crf, "thumbnail")?;
     }
     let destination = if replace_source {
         source.clone()
@@ -387,8 +391,15 @@ mod tests {
     }
 
     #[test]
-    fn the_capabilities_answer_with_a_version_and_the_frame_picker() {
-        assert_eq!(capabilities().unwrap(), json!({"version": THUMBNAIL_VERSION, "frame": true}));
+    fn the_capabilities_answer_with_a_version_the_frame_picker_the_api_image_providers_browser_ai_and_the_video_intro() {
+        let answer = capabilities().unwrap();
+        assert_eq!((answer["version"].clone(), answer["frame"].clone(), answer["video_intro"].clone()), (json!(THUMBNAIL_VERSION), json!(true), json!(true)));
+        // No overlay: the dialog leaves that engine out. Browser AI is offered, and the app runs it itself (no ComfyUI workflow, no Playwright).
+        assert!(answer.get("overlay").is_none());
+        assert_eq!((answer["browser_ai"].clone(), answer["browser_ai_direct"].clone()), (json!(true), json!(true)));
+        let providers = answer["api_image"]["providers"].as_object().unwrap();
+        assert_eq!(providers.keys().cloned().collect::<Vec<_>>(), ["gemini", "grok", "openai"]);
+        assert_eq!(providers["gemini"]["default"], "gemini-3-pro-image-preview");
     }
 
     /// One second of red, then one second of blue: frames 0 to 23 are red and 24 to 47 are blue at 24 fps.

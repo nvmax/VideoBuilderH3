@@ -32,6 +32,9 @@ pub mod seedance;
 pub mod story;
 pub mod system;
 pub mod thumbnail;
+pub mod thumbnail_api_image;
+pub mod thumbnail_browser_ai;
 pub mod transcribe;
+pub mod video_intro;
 
 pub use env::Env;

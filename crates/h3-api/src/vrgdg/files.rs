@@ -10,7 +10,7 @@ use axum::http::{header, HeaderMap, HeaderValue, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::routing::get;
 use axum::Router;
-use h3_builder::{error_log, export_video, files, media, thumbnail, Env};
+use h3_builder::{error_log, export_video, files, media, thumbnail, video_intro, Env};
 use h3_core::pyval::Obj;
 use h3_project::Stamp;
 use serde_json::{json, Value};
@@ -44,6 +44,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/music_builder/thumbnail/capabilities", get_query(|_, _| fields(thumbnail::capabilities())))
         .route("/vrgdg/music_builder/thumbnail/frame", post(|env, p| fields(thumbnail::extract_thumbnail_frame(&env, &p))))
         .route("/vrgdg/music_builder/thumbnail/prepend", post(|env, p| fields(thumbnail::prepend_thumbnail_intro(&env, &p))))
+        .route("/vrgdg/music_builder/video_intro/prepend", post(|env, p| fields(video_intro::prepend_video_intro(&env, &p))))
         .route("/vrgdg/music_builder/default_context_paths", get_query(|env, _| Ok(files::default_context_paths(&env).into())))
         .route("/vrgdg/music_builder/default_audio_srt_paths", get_query(|env, _| Ok(files::default_audio_srt_paths(&env).into())))
         .route("/vrgdg/music_builder/project_prompt_creator_paths", post(|_, p| fields(files::project_prompt_creator_paths(&p))))

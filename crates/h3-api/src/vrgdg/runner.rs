@@ -10,7 +10,7 @@ use axum::response::{IntoResponse, Response};
 use axum::routing::post as axum_post;
 use axum::Router;
 use h3_builder::runner::{self, ComfyFolders};
-use h3_builder::thumbnail;
+use h3_builder::{thumbnail, thumbnail_api_image, thumbnail_browser_ai};
 use h3_comfy::ComfyClient;
 use h3_core::pyval::Obj;
 use h3_media::Tools;
@@ -40,6 +40,9 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/cleanup_minimax_h3_output"), axum_post(cleanup_output))
         .route(&format!("{base}/save_image"), axum_post(save_image))
         .route("/vrgdg/music_builder/thumbnail/save", axum_post(thumbnail_save))
+        .route("/vrgdg/music_builder/thumbnail/api_image", axum_post(thumbnail_api_image))
+        .route("/vrgdg/music_builder/thumbnail/browser_ai", axum_post(thumbnail_browser_ai_make))
+        .route("/vrgdg/music_builder/thumbnail/browser_ai/open", axum_post(thumbnail_browser_ai_open))
         .route(&format!("{base}/build_minimax_h3_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3"), false)))
         .route(&format!("{base}/build_minimax_h3_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_2pass"), false)))
         .route(&format!("{base}/build_minimax_h3_advanced_2pass_prompt"), axum_post(|state, body| build(state, body, Builder::H3("minimax_h3_advanced_2pass"), true)))
@@ -220,4 +223,37 @@ async fn thumbnail_save(State(state): State<Arc<AppState>>, body: Bytes) -> Resp
         Ok(result) => super::into_response(result.map(Out::from).map_err(Fail::from)),
         Err(e) => super::failure(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}")),
     }
+}
+
+/// `POST /vrgdg/music_builder/thumbnail/api_image`: the chosen frame edited by Gemini, Grok or OpenAI, with the provider and the key from the
+/// LLM Runner. It keeps the picture as the next `thumbnail_NNNN.png`. The call to the provider can take minutes, so it is awaited here and
+/// holds no lock.
+async fn thumbnail_api_image(body: Bytes) -> Response {
+    let payload = match payload_of(&body) {
+        Ok(payload) => payload,
+        Err(response) => return *response,
+    };
+    super::into_response(thumbnail_api_image::make_thumbnail_api_image(&payload).await.map(Out::from).map_err(Fail::from))
+}
+
+/// `POST /vrgdg/music_builder/thumbnail/browser_ai`: the chosen frame edited by Flow, GPT Image or Meta AI in the person's Chrome, driven by this
+/// app (no ComfyUI, no Node.js, no Playwright). It keeps the picture as the next `thumbnail_NNNN.png`. The site can take many minutes, so the
+/// call is awaited here and holds no lock.
+async fn thumbnail_browser_ai_make(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match payload_of(&body) {
+        Ok(payload) => payload,
+        Err(response) => return *response,
+    };
+    let work = state.browser_ai_dir().join("downloads");
+    super::into_response(thumbnail_browser_ai::make_thumbnail_browser_ai(&payload, &work).await.map(Out::from).map_err(Fail::from))
+}
+
+/// `POST /vrgdg/music_builder/thumbnail/browser_ai/open`: open the provider's site in its own Chrome window (its own profile, so the sign-in
+/// lasts) for the person to sign in. Returns once the window is up.
+async fn thumbnail_browser_ai_open(State(state): State<Arc<AppState>>, body: Bytes) -> Response {
+    let payload = match payload_of(&body) {
+        Ok(payload) => payload,
+        Err(response) => return *response,
+    };
+    super::into_response(thumbnail_browser_ai::open_thumbnail_browser_ai(&payload, &state.browser_ai_dir()).await.map(Out::from).map_err(Fail::from))
 }

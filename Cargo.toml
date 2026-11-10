@@ -3,7 +3,7 @@ resolver = "2"
 members = ["crates/*", "app/src-tauri"]
 
 [workspace.package]
-version = "0.1.25"
+version = "0.1.26"
 edition = "2021"
 license-file = "LICENSE"
 
@@ -17,6 +17,7 @@ h3-llm = { path = "crates/h3-llm" }
 h3-jobs = { path = "crates/h3-jobs" }
 h3-pipeline = { path = "crates/h3-pipeline" }
 h3-api = { path = "crates/h3-api" }
+h3-browser = { path = "crates/h3-browser" }
 h3-builder = { path = "crates/h3-builder" }
 h3-image = { path = "crates/h3-image" }
 h3-transitions = { path = "crates/h3-transitions" }
