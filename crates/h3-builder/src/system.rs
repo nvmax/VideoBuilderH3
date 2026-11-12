@@ -78,8 +78,9 @@ const CUSTOM_NODES: [(&str, &str, &[&str]); 9] = [
     ("minimax_h3_latent_upscaler", "https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler.git", &["Comfyui_Minimax_h3_latent_Upscaler"]),
 ];
 
-/// `GET /vrgdg/video_builder/custom_nodes/status` for the ComfyUI custom node folder `dir`. Installing is not offered
-/// from this app, so ComfyUI-Manager is reported as not available.
+/// `GET /vrgdg/video_builder/custom_nodes/status` for the ComfyUI custom node folder `dir`, read by folder name. The app uses this only when
+/// the VRGDG pack inside ComfyUI cannot answer (ComfyUI is down, or the pack is not installed in it). It cannot install nodes, so
+/// ComfyUI-Manager is reported as not available, and it does not know what the ComfyUI version has built in.
 pub fn custom_nodes_status(dir: Option<&Path>) -> Value {
     let base: PathBuf = dir.map(Path::to_path_buf).unwrap_or_default();
     let nodes: Vec<Value> = CUSTOM_NODES

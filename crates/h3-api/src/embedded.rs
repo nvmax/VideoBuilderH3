@@ -37,4 +37,27 @@ mod tests {
         assert!(file("/host/host.css").is_some());
         assert!(file("/nothing/here.js").is_none());
     }
+
+    /// The app is only the Builder, so it fills the window and never shows the floating panel it has inside ComfyUI. That takes both halves: the
+    /// Builder opens filling the window, and the toolbar's fullscreen button, the only thing that returns it to the panel, is hidden. A sync that
+    /// brings in a Builder that opens as a panel, or a label that changes, must not leave the window without a way back.
+    #[test]
+    fn the_builder_always_fills_the_window() {
+        let text = |name: &str| WEB.get_file(name).and_then(|f| f.contents_utf8()).unwrap_or_else(|| panic!("{name} is not embedded")).to_string();
+        let css = text("host/host.css");
+        for label in ["Enter fullscreen", "Exit fullscreen"] {
+            assert!(css.contains(&format!("button[aria-label=\"{label}\"]")), "host.css does not hide the {label} button");
+        }
+        let builder = text("extensions/comfyui-vrgamedevgirl/music_video_builder/builder.mjs");
+        assert!(builder.contains("applyBuilderFullscreen(true);"), "the Builder no longer opens filling the window");
+        // Two calls: the one that opens it filling the window, and the one of the button. A third is something else that could change it.
+        let calls: usize = WEB
+            .get_dir("extensions/comfyui-vrgamedevgirl/music_video_builder")
+            .expect("the Builder's folder")
+            .files()
+            .filter_map(|f| f.contents_utf8())
+            .map(|t| t.matches("applyBuilderFullscreen(").count() - t.matches("function applyBuilderFullscreen(").count())
+            .sum();
+        assert_eq!(calls, 2, "something else now switches the Builder out of fullscreen, or the button's call moved");
+    }
 }

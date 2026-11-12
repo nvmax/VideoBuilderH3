@@ -5,7 +5,7 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
-use axum::extract::State;
+use axum::extract::{Request, State};
 use axum::http::{header, StatusCode};
 use axum::response::{IntoResponse, Response};
 use axum::routing::{get, post};
@@ -24,7 +24,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/resource-monitor/clear-memory", post(clear_memory))
         .route("/vrgdg/update/v10/status", get(update_status))
         .route("/vrgdg/update/v10", post(update))
-        .route("/vrgdg/video_builder/custom_nodes/status", get(custom_nodes_status))
+        .route(CUSTOM_NODES_STATUS, get(custom_nodes_status))
         .route("/vrgdg/video_builder/custom_nodes/install", post(custom_nodes_install))
 }
 
@@ -88,11 +88,50 @@ async fn custom_nodes_dir(state: &AppState) -> Option<PathBuf> {
     paths.get("custom_nodes")?.as_array()?.iter().filter_map(Value::as_str).map(PathBuf::from).find(|p| p.is_dir())
 }
 
-async fn custom_nodes_status(State(state): State<Arc<AppState>>) -> Response {
-    let dir = custom_nodes_dir(&state).await;
-    Json(h3_builder::system::custom_nodes_status(dir.as_deref())).into_response()
+const CUSTOM_NODES_STATUS: &str = "/vrgdg/video_builder/custom_nodes/status";
+
+/// What the VRGDG node pack inside ComfyUI answers for the custom node check, or why there is no answer (the text the dialog shows). The pack
+/// knows what this app cannot see from outside: whether ComfyUI-Manager is in ComfyUI's Python, which ComfyUI version this is, and what that
+/// version has built in.
+async fn pack_custom_nodes_status(state: &AppState) -> Result<Value, String> {
+    let base = state.cfg.comfy_base().to_string();
+    let http = reqwest::Client::builder().timeout(Duration::from_secs(15)).build().map_err(|e| e.to_string())?;
+    let response = http
+        .get(format!("{base}{CUSTOM_NODES_STATUS}"))
+        .send()
+        .await
+        .map_err(|_| format!("ComfyUI is not reachable at {base}, so nodes cannot be installed from here. Start ComfyUI and open this window again."))?;
+    if response.status().as_u16() == 404 {
+        return Err("The VRGDG node pack is not installed in the ComfyUI this app uses, so nodes cannot be installed from here. Install the pack, or install the nodes with ComfyUI-Manager, then restart ComfyUI.".into());
+    }
+    let status: Value = response.json().await.map_err(|e| format!("The VRGDG node pack in ComfyUI gave an answer this app cannot read: {e}"))?;
+    if status["ok"] == true && status["nodes"].is_array() {
+        Ok(status)
+    } else {
+        Err(format!("The VRGDG node pack in ComfyUI could not check the custom nodes: {}", status["error"].as_str().unwrap_or("no reason given")))
+    }
 }
 
-async fn custom_nodes_install() -> Response {
-    super::failure(StatusCode::BAD_REQUEST, "Installing custom nodes is not available in H3 Studio. Install them with ComfyUI-Manager and restart ComfyUI.")
+/// `GET /vrgdg/video_builder/custom_nodes/status`: the pack's own answer from ComfyUI. Without it the folder is read here, and the answer says
+/// installing is not possible and why (`manager_note`).
+async fn custom_nodes_status(State(state): State<Arc<AppState>>) -> Response {
+    match pack_custom_nodes_status(&state).await {
+        Ok(status) => Json(status).into_response(),
+        Err(note) => {
+            let dir = custom_nodes_dir(&state).await;
+            let mut status = h3_builder::system::custom_nodes_status(dir.as_deref());
+            status["manager_note"] = json!(note);
+            Json(status).into_response()
+        }
+    }
+}
+
+/// `POST /vrgdg/video_builder/custom_nodes/install`: the pack inside ComfyUI installs the nodes with ComfyUI-Manager, so the call goes there as it
+/// is. A 404 means ComfyUI does not have the pack's route.
+async fn custom_nodes_install(State(state): State<Arc<AppState>>, request: Request) -> Response {
+    let reply = super::proxy_to_comfy(&state, request).await;
+    if reply.status() == StatusCode::NOT_FOUND {
+        return super::failure(StatusCode::NOT_IMPLEMENTED, "ComfyUI has no custom node install route. Installing from here needs the VRGDG node pack in the ComfyUI this app uses. Install the pack, or install the nodes with ComfyUI-Manager, then restart ComfyUI.");
+    }
+    reply
 }

@@ -46,8 +46,13 @@ body {
   font-size: 16px;
 }
 
-/* Parts of the pack's Builder this app does not use. (host/trim.js hides the ones that can only be found by their text.) */
+/* Parts of the pack's Builder this app does not use. (host/trim.js hides the ones that can only be found by their text.)
+   The fullscreen button of the Builder's toolbar goes too: inside ComfyUI it switches between the full page and a floating panel over the
+   canvas, but this app is only the Builder. It opens filling the window (builder.mjs applyBuilderFullscreen(true)) and nothing else puts
+   it back in a panel, so with the button gone it always fills the window. The label changes with the state, so both are listed. */
 button[aria-label="Close Video Builder"],
+button[aria-label="Enter fullscreen"],
+button[aria-label="Exit fullscreen"],
 button[title="What does the updater do?"],
 a[href*="buymeacoffee.com"],
 div:has(> a[href*="buymeacoffee.com"]) {
