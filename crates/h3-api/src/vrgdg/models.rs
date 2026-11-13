@@ -1,4 +1,4 @@
-//! The Models dialog's Dmad Models tab and the MOSS-Image Edit LoRA button: allowlisted LoRA downloads into ComfyUI's
+//! The Models dialog's Dmad Models tab and the two MOSS-Image LoRA buttons: allowlisted LoRA downloads into ComfyUI's
 //! `models/loras` folder. Port of `core/model_downloads.py` and its three routes in `core/system_routes.py`; the routes and
 //! replies are the same, so the tab and the button work the same in the pack and here.
 //!
@@ -41,7 +41,7 @@ struct Model {
     note: &'static str,
 }
 
-const MODELS: [Model; 3] = [
+const MODELS: [Model; 4] = [
     Model {
         id: "dmad_lora",
         label: "DMAD 4-step LoRA",
@@ -61,6 +61,17 @@ const MODELS: [Model; 3] = [
         url: "https://huggingface.co/Kijai/MiniMax-H3-experimental/resolve/main/loras/minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
         page: "https://huggingface.co/Kijai/MiniMax-H3-experimental/blob/main/loras/minimax_h3_open_regenerate_2k_refiner_rank_16_bf16.safetensors",
         note: "Pass 2 LoRA. Restores detail in 2 to 3 steps.",
+    },
+    // Hugging Face calls this file lora.safetensors. It is saved under the name the MOSS-Image settings look for.
+    Model {
+        id: "moss_turbo_lora",
+        label: "MOSS-Image 8-step Turbo LoRA",
+        group: "moss",
+        folder: "loras",
+        filename: "moss_image_sft_8_steps_dmd_lora.safetensors",
+        url: "https://huggingface.co/lodestones/MOSS-Image-SFT-8-steps-dmd/resolve/main/lora.safetensors",
+        page: "https://huggingface.co/lodestones/MOSS-Image-SFT-8-steps-dmd/tree/main",
+        note: "Samples MOSS-Image in 8 steps. Saved as moss_image_sft_8_steps_dmd_lora.safetensors.",
     },
     // Hugging Face calls this file adapter_model.safetensors. It is saved under the name the MOSS-Image settings look for.
     Model {
@@ -398,16 +409,36 @@ mod tests {
     }
 
     #[test]
-    fn the_allowlist_holds_the_dmad_files_and_the_moss_edit_lora_with_hugging_face_urls() {
+    fn the_allowlist_holds_the_dmad_files_and_the_two_moss_loras_with_hugging_face_urls() {
         let ids: Vec<&str> = MODELS.iter().map(|m| m.id).collect();
-        assert_eq!(ids, ["dmad_lora", "dmad_refiner", "moss_edit_lora"]);
+        assert_eq!(ids, ["dmad_lora", "dmad_refiner", "moss_turbo_lora", "moss_edit_lora"]);
         for model in &MODELS {
             assert!(model.url.starts_with("https://huggingface.co/") && model.url.contains("/resolve/"), "{}", model.id);
-            // Only the Edit LoRA is saved under a name other than the one in its url.
-            assert_eq!(model.url.ends_with(model.filename), model.id != "moss_edit_lora", "{}", model.id);
+            // Only the two MOSS-Image LoRAs are saved under a name other than the one in their url.
+            assert_eq!(model.url.ends_with(model.filename), !matches!(model.id, "moss_turbo_lora" | "moss_edit_lora"), "{}", model.id);
             assert!(model.filename.ends_with(".safetensors"));
         }
         assert!(find_model("../../evil").is_none());
+    }
+
+    #[test]
+    fn the_moss_turbo_lora_is_saved_as_the_name_the_settings_look_for() {
+        let model = find_model("moss_turbo_lora").unwrap();
+        assert_eq!(model.filename, "moss_image_sft_8_steps_dmd_lora.safetensors");
+        assert!(model.url.ends_with("/lora.safetensors"));
+        assert_eq!((model.group, model.folder), ("moss", "loras"));
+    }
+
+    #[tokio::test]
+    async fn the_turbo_lora_download_is_saved_under_its_own_name_not_lora_safetensors() {
+        let dir = tempfile::tempdir().unwrap();
+        let data = safetensors_bytes(2048);
+        let url = serve("200 OK", data.clone(), None, 0).await.replace("file.safetensors", "lora.safetensors");
+        let model = find_model("moss_turbo_lora").unwrap();
+        let cancel = start("test_moss_turbo_name");
+        download_to("test_moss_turbo_name", &url, dir.path(), model.filename, &cancel).await.unwrap();
+        assert_eq!(std::fs::read(dir.path().join("moss_image_sft_8_steps_dmd_lora.safetensors")).unwrap(), data);
+        assert!(!dir.path().join("lora.safetensors").exists());
     }
 
     #[test]
