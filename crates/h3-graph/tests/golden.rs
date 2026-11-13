@@ -31,6 +31,8 @@ struct FakeEnv {
     predecessor_frames: i64,
     predecessor_padding: i64,
     trim_call: RefCell<Option<Value>>,
+    /// False for the `_no_rtx_vsr` cases: the generator ran them with the nvidia-vfx library missing.
+    nvidia_vsr: bool,
 }
 
 impl FakeEnv {
@@ -104,6 +106,9 @@ impl GraphEnv for FakeEnv {
     fn random_seed(&self) -> u64 {
         4_242
     }
+    fn nvidia_vsr_available(&self) -> bool {
+        self.nvidia_vsr
+    }
 }
 
 /// Where two JSON values first differ, as a path. Numbers compare by kind too (`1` is not `1.0`).
@@ -170,6 +175,7 @@ fn rust_graphs_equal_the_golden_graphs() {
             predecessor_frames: record["scene"]["predecessor_latent_frames"].as_i64().unwrap_or(169),
             predecessor_padding: record["scene"]["predecessor_tail_padding"].as_i64().unwrap_or(9),
             trim_call: RefCell::new(None),
+            nvidia_vsr: record.get("nvidia_vsr_available").and_then(Value::as_bool).unwrap_or(true),
         };
         let mut problem: Option<String> = None;
         let settings = normalize_settings(Some(&record["settings_overrides"]));
@@ -195,7 +201,10 @@ fn rust_graphs_equal_the_golden_graphs() {
         payload.insert("i2v_prompt".into(), record["scene"]["prompt"].clone());
         payload.insert("t2v_prompt".into(), record["scene"]["prompt"].clone());
         let _ = render_pass(&settings);
-        if let Some(found) = first_difference("payload", &Value::Object(payload.clone()), &record["payload"]) {
+        // The `_no_rtx_vsr` cases are about the graph. Their payload comes from the newest pack, which carries a settings key the app's defaults
+        // do not have yet (`use_dmad`, false by default and read as false when missing), so it is not compared.
+        let compare_payload = env.nvidia_vsr;
+        if let Some(found) = first_difference("payload", &Value::Object(payload.clone()), &record["payload"]).filter(|_| compare_payload) {
             // Whole floats written as ints by the settings defaults compare equal in meaning, so only flag other kinds.
             if !found.contains(" got ") || !found.contains(" want ") {
                 problem = Some(found);

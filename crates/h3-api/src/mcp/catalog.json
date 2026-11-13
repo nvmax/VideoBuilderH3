@@ -4023,7 +4023,7 @@
   },
   {
    "name": "api_post_timeline_snap",
-   "description": "Snap a scene edge to the nearest beat (`scene_id`, `edge`, `scope`). (POST /projects/{pid}/timeline/snap)",
+   "description": "Snap scene boundaries to a beat within 0.14 s: one edge (`scope` `edge`, with `scene_id` and `edge`) or every scene start (`scope` `all`). Returns how many scenes `moved`; an unknown `scope` is refused. (POST /projects/{pid}/timeline/snap)",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -6602,7 +6602,7 @@
   {
    "method": "POST",
    "path": "/projects/{pid}/timeline/snap",
-   "description": "Snap a scene edge to the nearest beat (`scene_id`, `edge`, `scope`).",
+   "description": "Snap scene boundaries to a beat within 0.14 s: one edge (`scope` `edge`, with `scene_id` and `edge`) or every scene start (`scope` `all`). Returns how many scenes `moved`; an unknown `scope` is refused.",
    "job": false,
    "body_keys": [
     "edge",

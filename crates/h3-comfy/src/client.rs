@@ -139,4 +139,12 @@ impl ComfyClient {
     pub async fn object_info(&self) -> Result<Value, ComfyError> {
         self.get_json("/object_info").await
     }
+
+    /// Whether the `nvidia-vfx` library (RTX Video Super Resolution) is installed in ComfyUI's Python, as the VRGDG node pack inside ComfyUI
+    /// reports it in its custom node check. `None` when the pack does not say: it is not installed, it is older than the `nvidia_vfx` entry, or
+    /// ComfyUI does not answer.
+    pub async fn nvidia_vsr_installed(&self) -> Option<bool> {
+        let status = self.get_json::<Value>("/vrgdg/video_builder/custom_nodes/status").await.ok()?;
+        status.get("nodes")?.as_array()?.iter().find(|node| node["id"] == "nvidia_vfx")?.get("installed")?.as_bool()
+    }
 }

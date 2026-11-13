@@ -425,14 +425,21 @@ pub fn close_gaps(project: &Path, now: &Stamp) -> OpResult {
     Ok(json!({"removed_duration": removed, "revision": revision}))
 }
 
-/// Snap a scene edge, or every scene start, to the nearest beat.
+const SNAP_SCOPES: [&str; 3] = ["edge", "all", "all_starts"];
+
+/// Snap a scene edge (`edge`), or every scene start (`all`, also spelled `all_starts`), to the nearest beat. A start is also the end of
+/// the scene before it. A boundary only moves when a beat is within 0.14 s. `moved` counts the scenes whose start or end changed.
 pub fn snap_to_beats(project: &Path, scope: &str, scene_id: Option<&str>, edge: &str, now: &Stamp) -> OpResult {
+    if !SNAP_SCOPES.contains(&scope) {
+        return Err(OpError::Validation(format!("Unknown snap scope '{scope}'. Supported: {}.", SNAP_SCOPES.join(", "))));
+    }
     let mut edit = open(project, None)?;
     let beats: Vec<Value> = crate::session_ops::session_beats(&edit.session);
     if beats.is_empty() {
         return Err(OpError::Validation("No beats loaded in project. Analyze audio first.".into()));
     }
     let mut segs = edit.segments();
+    let before: Vec<(f64, f64)> = segs.iter().map(|s| (num(s, "start", 0.0), num(s, "end", 0.0))).collect();
     if scope == "edge" {
         let idx = scene_id.and_then(|id| find_first(&segs, id)).unwrap_or(0);
         if idx < segs.len() {
@@ -441,20 +448,22 @@ pub fn snap_to_beats(project: &Path, scope: &str, scene_id: Option<&str>, edge: 
             set(&mut segs[idx], key, json!(snapped));
             normalize_segments(&mut segs, idx);
         }
-    } else if scope == "all_starts" {
-        for (i, seg) in segs.iter_mut().enumerate() {
-            if i > 0 && !has_locked_video(seg) {
-                let snapped = snap_to_beat(num(seg, "start", 0.0), &beats, 0.14);
-                set(seg, "start", json!(snapped));
+    } else {
+        // One start at a time, settled straight away: settling puts the previous scene's end on the new start, so settling once after
+        // all of them would put every start back where it was.
+        for i in 1..segs.len() {
+            if has_locked_video(&segs[i]) {
+                continue;
             }
-        }
-        for i in 0..segs.len() {
+            let snapped = snap_to_beat(num(&segs[i], "start", 0.0), &beats, 0.14);
+            set(&mut segs[i], "start", json!(snapped));
             normalize_segments(&mut segs, i);
         }
     }
+    let moved = segs.iter().zip(&before).filter(|(s, b)| (num(s, "start", 0.0), num(s, "end", 0.0)) != **b).count();
     edit.put_segments(segs);
     let revision = edit.save(now)?;
-    Ok(json!({"snapped": true, "revision": revision}))
+    Ok(json!({"snapped": true, "moved": moved, "revision": revision}))
 }
 
 /// Build or extend the timeline from text. A line may end with the words of its scene. `action` is `replace` or `append`.

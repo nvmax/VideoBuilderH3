@@ -1408,10 +1408,10 @@
   },
   {
    "method": "POST",
-   "path": "/vrgdg/music_builder/flux_reference_zimage_prompt",
-   "handler": "vrgdg_music_builder_flux_reference_zimage_prompt",
+   "path": "/vrgdg/music_builder/reference_image_prompt",
+   "handler": "vrgdg_music_builder_reference_image_prompt",
    "file": "builder/routes.py",
-   "line": 1404,
+   "line": 1405,
    "doc": "",
    "callers": [
     "gemma_runner.mjs",
@@ -1420,10 +1420,19 @@
   },
   {
    "method": "POST",
+   "path": "/vrgdg/music_builder/flux_reference_zimage_prompt",
+   "handler": "vrgdg_music_builder_reference_image_prompt",
+   "file": "builder/routes.py",
+   "line": 1406,
+   "doc": "",
+   "callers": []
+  },
+  {
+   "method": "POST",
    "path": "/vrgdg/gemma4/generate",
    "handler": "vrgdg_gemma4_generate",
    "file": "builder/routes.py",
-   "line": 1413,
+   "line": 1415,
    "doc": "",
    "callers": [
     "llm_runner.mjs",
@@ -1916,7 +1925,7 @@
    "path": "/vrgdg/resource-monitor",
    "handler": "resource_monitor",
    "file": "core/system_routes.py",
-   "line": 77,
+   "line": 78,
    "doc": "",
    "callers": [
     "VRGDG_ResourceMonitor.js",
@@ -1928,7 +1937,7 @@
    "path": "/vrgdg/resource-monitor/clear-memory",
    "handler": "clear_memory",
    "file": "core/system_routes.py",
-   "line": 153,
+   "line": 154,
    "doc": "",
    "callers": [
     "VRGDG_ResourceMonitor.js"
@@ -1939,7 +1948,7 @@
    "path": "/vrgdg/update/v10/status",
    "handler": "vrgdg_update_v10_status",
    "file": "core/system_routes.py",
-   "line": 404,
+   "line": 405,
    "doc": "",
    "callers": [
     "update_banner.mjs"
@@ -1950,7 +1959,7 @@
    "path": "/vrgdg/update/v10",
    "handler": "vrgdg_update_v10",
    "file": "core/system_routes.py",
-   "line": 412,
+   "line": 413,
    "doc": "",
    "callers": [
     "toolbar.mjs"
@@ -1961,7 +1970,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/status",
    "handler": "custom_nodes_status",
    "file": "core/system_routes.py",
-   "line": 502,
+   "line": 543,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1972,7 +1981,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/install",
    "handler": "custom_nodes_install",
    "file": "core/system_routes.py",
-   "line": 507,
+   "line": 548,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1983,7 +1992,7 @@
    "path": "/vrgdg/video_builder/models/status",
    "handler": "models_status",
    "file": "core/system_routes.py",
-   "line": 526,
+   "line": 567,
    "doc": "Allowlisted downloadable models (the Models dialog's DMAD Models tab): installed or not, and download progress.",
    "callers": [
     "dmad_models_tab.mjs",
@@ -1995,7 +2004,7 @@
    "path": "/vrgdg/video_builder/models/install",
    "handler": "models_install",
    "file": "core/system_routes.py",
-   "line": 533,
+   "line": 574,
    "doc": "Start downloading allowlisted models into ComfyUI's model folders. Poll ``models/status`` for progress.",
    "callers": [
     "dmad_models_tab.mjs",
@@ -2007,7 +2016,7 @@
    "path": "/vrgdg/video_builder/models/cancel",
    "handler": "models_cancel",
    "file": "core/system_routes.py",
-   "line": 544,
+   "line": 585,
    "doc": "Stop running model downloads.",
    "callers": [
     "dmad_models_tab.mjs",

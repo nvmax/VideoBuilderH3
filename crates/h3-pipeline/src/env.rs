@@ -18,16 +18,24 @@ pub struct LiveEnv {
     pub tools: Tools,
     /// Folders the saved RefMods are read from.
     pub refmod_dirs: Vec<std::path::PathBuf>,
+    /// Whether `nvidia-vfx` is installed in ComfyUI's Python. `true` until [`LiveEnv::with_nvidia_vsr`] says otherwise.
+    pub nvidia_vsr: bool,
 }
 
 impl LiveEnv {
     /// `object_info` is shared, so many renders can read one copy of ComfyUI's node list.
     pub fn new(object_info: impl Into<std::sync::Arc<Value>>, dirs: ComfyDirs, tools: Tools) -> Self {
-        Self { object_info: object_info.into(), dirs, tools, refmod_dirs: Vec::new() }
+        Self { object_info: object_info.into(), dirs, tools, refmod_dirs: Vec::new(), nvidia_vsr: true }
     }
 
     pub fn with_refmod_dirs(mut self, dirs: Vec<std::path::PathBuf>) -> Self {
         self.refmod_dirs = dirs;
+        self
+    }
+
+    /// Record whether `nvidia-vfx` is installed (see `ComfyClient::nvidia_vsr_installed`). Without it the graphs end in a `lanczos` resize.
+    pub fn with_nvidia_vsr(mut self, installed: bool) -> Self {
+        self.nvidia_vsr = installed;
         self
     }
 }
@@ -91,6 +99,10 @@ impl GraphEnv for LiveEnv {
 
     fn refmod_entry(&self, name: &str) -> Option<h3_graph::refmod::RefmodEntry> {
         crate::refmod_library::find_refmod(&self.refmod_dirs, name).map(|e| e.as_graph_entry())
+    }
+
+    fn nvidia_vsr_available(&self) -> bool {
+        self.nvidia_vsr
     }
 
     fn random_seed(&self) -> u64 {

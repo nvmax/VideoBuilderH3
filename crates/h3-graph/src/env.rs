@@ -78,4 +78,9 @@ pub trait GraphEnv {
     fn check_memory_efficient_sage_attention(&self) -> std::result::Result<(), String> {
         Ok(())
     }
+    /// Whether the `nvidia-vfx` library (RTX Video Super Resolution) is installed in ComfyUI's Python. KJNodes' `nvidia_rtx_vsr` resize
+    /// method fails without it, at the last node of a render. `true` when it is not known, so the graph is left as it is.
+    fn nvidia_vsr_available(&self) -> bool {
+        true
+    }
 }

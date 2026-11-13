@@ -86,8 +86,10 @@ async fn live_env(state: &AppState) -> Result<LiveEnv, String> {
     let info = state.object_info(false).await?;
     let dirs = h3_pipeline::context::comfy_dirs(&state.cfg).await?;
     let tools = Tools::find(&state.cfg.ffmpeg_path, &state.cfg.ffprobe_path).map_err(|e| e.to_string())?;
-    let folder_paths = ComfyClient::new(state.cfg.comfy_base()).folder_paths().await;
-    Ok(LiveEnv::new(info, dirs, tools).with_refmod_dirs(h3_pipeline::context::refmod_dirs(folder_paths.as_ref())))
+    let client = ComfyClient::new(state.cfg.comfy_base());
+    let folder_paths = client.folder_paths().await;
+    let nvidia_vsr = h3_pipeline::context::nvidia_vsr_installed(&client).await;
+    Ok(LiveEnv::new(info, dirs, tools).with_refmod_dirs(h3_pipeline::context::refmod_dirs(folder_paths.as_ref())).with_nvidia_vsr(nvidia_vsr))
 }
 
 /// Build the ComfyUI graph for one pass type or image model. `debug_copy` also saves the graph beside the scene's outputs.

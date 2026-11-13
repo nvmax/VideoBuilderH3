@@ -202,6 +202,11 @@ def cases():
     add("r2v_two_pass_chunked_dmad", set_dmad({**two, "use_loras": True, "lora_count": 1, "loras": [{**lora, "apply_to": "both"}]}, True), long_scene)
     add("r2v_two_pass_chunked_sigma_both", {**two, **sigma, "sigma_pass2_enabled": True, "sigma_pass2_video": 5, "sigma_pass2_audio": 2}, long_scene)
     add("r2v_advanced_long_not_chunked", {**base, "render_pass": "three_pass"}, long_scene)
+    # The nvidia-vfx library is not installed ("_no_rtx_vsr" cases run with nvidia_vsr_available() answering False): the final resize
+    # that would be nvidia_rtx_vsr is lanczos instead (2 Pass Advanced has no such resize). Every other case runs as if the library were installed.
+    add("r2v_two_pass_no_rtx_vsr", two)
+    add("r2v_two_pass_chunked_no_rtx_vsr", two, long_scene)
+    add("i2v_two_pass_no_rtx_vsr", {"video_mode": "image_to_video", **seeds, "render_pass": "two_pass", "i2v_pass_settings_version": 1}, one_image)
     add("t2v_two_pass_chunked_long", {**t2v, "render_pass": "two_pass"}, scene(number=1, start=0.0, end=12.0, prompt=LONG_PROMPT, image_paths=[]))
     add("i2v_two_pass_chunked_unsupported", {"video_mode": "image_to_video", **seeds, "render_pass": "two_pass", "i2v_pass_settings_version": 1},
         scene(image_paths=[START_FRAME], start=0.0, end=12.0))
@@ -234,8 +239,12 @@ def main() -> int:
 
     payload_mod = importlib.import_module("vrgdg_pack.minimax.settings_payload")
     workflows = importlib.import_module("vrgdg_pack.runner.minimax_workflows")
+    api_graph = importlib.import_module("vrgdg_pack.runner.api_graph")
 
     recorded = {}
+    # Whether the pack finds nvidia-vfx depends on the machine, so each case says it (see "_no_rtx_vsr" in cases()).
+    vsr = {"installed": True}
+    api_graph.nvidia_vsr_available = lambda: vsr["installed"]
 
     def fake_probe(path):
         recorded.setdefault("probe", []).append(path)
@@ -277,6 +286,9 @@ def main() -> int:
         pred["frames"] = int(scene_inputs.get("predecessor_latent_frames", 169))
         pred["tail_padding"] = int(scene_inputs.get("predecessor_tail_padding", 9))
         record = {"name": name, "settings_overrides": overrides, "scene": scene_inputs, "project_folder": PROJECT}
+        vsr["installed"] = not name.endswith("_no_rtx_vsr")
+        if not vsr["installed"]:
+            record["nvidia_vsr_available"] = False
         try:
             settings = payload_mod.normalize_minimax_h3_settings(overrides)
             record["settings"] = settings

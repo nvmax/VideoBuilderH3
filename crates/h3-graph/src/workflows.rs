@@ -1047,15 +1047,44 @@ pub fn build_advanced(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     Ok(result)
 }
 
-/// Pick the builder for a workflow key (`minimax_h3`, `minimax_h3_2pass`, `minimax_h3_advanced_2pass`).
+const RTX_VSR_RESIZE_METHOD: &str = "nvidia_rtx_vsr";
+const RTX_VSR_FALLBACK_RESIZE_METHOD: &str = "lanczos";
+const RTX_VSR_INSTALL_COMMAND: &str = r"python_embeded\python.exe -m pip install nvidia-vfx --extra-index-url https://pypi.nvidia.com";
+
+/// Port of `_fall_back_from_unavailable_rtx_vsr`: swap `nvidia_rtx_vsr` for `lanczos` on every resize node. KJNodes' `ImageResizeKJv2` fails
+/// with `nvidia_rtx_vsr` when `nvidia-vfx` is not installed, and that node is the last one of a render, so a scene would fail only after its
+/// whole render. Returns the ids of the nodes that were changed.
+pub fn fall_back_from_unavailable_rtx_vsr(prompt: &mut Obj) -> Vec<String> {
+    let mut changed = Vec::new();
+    for (id, node) in prompt.iter_mut() {
+        let Some(method) = node.get_mut("inputs").and_then(|inputs| inputs.get_mut("upscale_method")) else { continue };
+        if method.as_str() == Some(RTX_VSR_RESIZE_METHOD) {
+            *method = json!(RTX_VSR_FALLBACK_RESIZE_METHOD);
+            changed.push(id.clone());
+        }
+    }
+    changed
+}
+
+/// Pick the builder for a workflow key (`minimax_h3`, `minimax_h3_2pass`, `minimax_h3_advanced_2pass`). A render that would end in the
+/// `nvidia_rtx_vsr` resize without `nvidia-vfx` installed ends in `lanczos` instead.
 pub fn build(env: &dyn GraphEnv, workflow_key: &str, payload: &Obj) -> Result<Obj> {
     if workflow_key == "minimax_h3_advanced_2pass" && crate::refmod::refmod_requested(payload) {
         return Err(GraphError::new("The RefMod pipeline supports Single and 2 Pass only. Choose one of those passes."));
     }
-    match workflow_key {
+    let mut result = match workflow_key {
         "minimax_h3_advanced_2pass" => build_advanced(env, payload),
         "minimax_h3_2pass" => build_two_pass(env, payload),
         "minimax_h3" => build_single(env, payload),
         other => Err(GraphError::new(format!("Unknown MiniMax H3 workflow: {other}"))),
+    }?;
+    if !env.nvidia_vsr_available() {
+        let changed = result.get_mut("prompt").and_then(Value::as_object_mut).map(fall_back_from_unavailable_rtx_vsr).unwrap_or_default();
+        if !changed.is_empty() {
+            eprintln!(
+                "[VRGDG-RS MiniMax] nvidia-vfx is not installed, so the final resize uses {RTX_VSR_FALLBACK_RESIZE_METHOD} instead of {RTX_VSR_RESIZE_METHOD}. To use RTX Video Super Resolution, run: {RTX_VSR_INSTALL_COMMAND}"
+            );
+        }
     }
+    Ok(result)
 }

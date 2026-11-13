@@ -94,7 +94,14 @@ pub async fn connect(cfg: &AppConfig) -> Result<RunContext, String> {
         dirs.output = cfg.comfy_output_dir.trim().to_string();
     }
     let object_info = client.object_info().await.map_err(|e| e.to_string())?;
-    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools).with_refmod_dirs(refmod_dirs(folder_paths.as_ref()))), cancel: Arc::new(AtomicBool::new(false)), before_scene: None, after_stitch: None })
+    let nvidia_vsr = nvidia_vsr_installed(&client).await;
+    Ok(RunContext { client, env: Arc::new(LiveEnv::new(object_info, dirs, tools).with_refmod_dirs(refmod_dirs(folder_paths.as_ref())).with_nvidia_vsr(nvidia_vsr)), cancel: Arc::new(AtomicBool::new(false)), before_scene: None, after_stitch: None })
+}
+
+/// Whether ComfyUI has `nvidia-vfx` (RTX Video Super Resolution), as its VRGDG node pack says. `true` when the pack does not answer within a few
+/// seconds (not installed, or too old to know), so a render is never changed on a guess.
+pub async fn nvidia_vsr_installed(client: &ComfyClient) -> bool {
+    tokio::time::timeout(std::time::Duration::from_secs(5), client.nvidia_vsr_installed()).await.ok().flatten().unwrap_or(true)
 }
 
 #[cfg(test)]

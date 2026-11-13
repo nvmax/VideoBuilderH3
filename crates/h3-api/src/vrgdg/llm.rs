@@ -95,6 +95,7 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route(&format!("{base}/flux_reference_location_map"), writer!(references::flux_reference_location_map))
         .route(&format!("{base}/flux_reference_extract_locations"), writer!(references::flux_reference_extract_locations))
         .route(&format!("{base}/flux_reference_extract_subjects"), writer!(references::flux_reference_extract_subjects))
+        .route(&format!("{base}/reference_image_prompt"), writer!(references::flux_reference_zimage_prompt))
         .route(&format!("{base}/flux_reference_zimage_prompt"), writer!(references::flux_reference_zimage_prompt))
         .route(&format!("{base}/lm_scout_locations"), writer!(references::lm_scout_locations))
         .route(&format!("{base}/wizard_locations_from_lyrics"), writer!(references::wizard_locations_from_lyrics))
