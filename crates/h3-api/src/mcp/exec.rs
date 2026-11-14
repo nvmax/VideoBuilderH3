@@ -453,6 +453,11 @@ async fn named_tool(api: &Api, name: &str, args: &Args) -> Result<Output, ToolEr
             let path = format!("{}/references/{}/{}/describe", project(args)?, seg(&kind), seg(&need(args, "ref_id")?));
             api.send("POST", &path, &rest(args, &["project_id", "kind", "ref_id"]), None).await?
         }
+        "reference_image_generate" => {
+            let kind = Some(text(args, "kind")).filter(|k| !k.is_empty()).unwrap_or_else(|| "subjects".into());
+            let path = format!("{}/references/{}/{}/image/generate", project(args)?, seg(&kind), seg(&need(args, "ref_id")?));
+            api.send("POST", &path, &rest(args, &["project_id", "kind", "ref_id"]), None).await?
+        }
         "reference_extract_locations" => api.send("POST", &format!("{}/references/locations/extract", project(args)?), &rest(args, &["project_id"]), None).await?,
         "reference_assign_scenes" => api.send("POST", &format!("{}/references/assign-scenes", project(args)?), &rest(args, &["project_id"]), None).await?,
         "llm_active" => api.get("/llm/active", &one("project_id", text(args, "project_id"))).await?,

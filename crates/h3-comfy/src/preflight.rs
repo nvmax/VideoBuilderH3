@@ -101,6 +101,8 @@ pub const REQUIRED_NODES: &[NodeRequirement] = &[
     req("MiniMaxH3MemoryEfficientSageAttentionPatch", KJ, Feature::SageAttention),
     req("MiniMaxChunkFeedForward", KJ, Feature::ModelPatches),
     req("BlockSparseAttention", CORE_COMFY, Feature::ModelPatches),
+    // Sigma shift (`sigma_pass1_*`, `sigma_pass2_*`), off by default. It is ComfyUI's own ModelSamplingMiniMaxH3 node.
+    req("MiniMaxH3SigmaShift", CORE_COMFY, Feature::ModelPatches),
     req("VRGDG_MiniMaxH3SpatialTilePlan", VRGDG, Feature::TwoPassAdvanced),
     req("VRGDG_MiniMaxH3UltimateUpscaleParams", VRGDG, Feature::TwoPassAdvanced),
     req("MMH3UltimateUpscale", MMH3, Feature::TwoPassAdvanced),
