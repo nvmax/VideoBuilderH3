@@ -247,7 +247,7 @@ async fn lut_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     if text_or_empty(ctx.params.get("media_type")).trim().to_lowercase() == "image" {
         return Err(invalid("LUTs on scene images are not supported by this app yet. Grade the video."));
     }
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = tokio::task::spawn_blocking({
         let folder = folder.clone();
         move || load_session(&folder)
@@ -293,7 +293,7 @@ async fn apply_all_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobEr
     }
     let lut_config = stack.get("lut").and_then(Value::as_object).cloned();
     let lut = lut_config.as_ref().map(|l| text_or_empty(l.get("lut_name"))).unwrap_or_default();
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = tokio::task::spawn_blocking({
         let folder = folder.clone();
         move || load_session(&folder)

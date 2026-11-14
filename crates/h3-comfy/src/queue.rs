@@ -72,6 +72,27 @@ impl ComfyClient {
         self.post_text("/queue", &json!({"delete": prompt_ids})).await.map(|(status, _)| status == 200).unwrap_or(false)
     }
 
+    /// Stop the given prompts if ComfyUI still has them, such as the ones an app that stopped left behind: a running prompt is interrupted and a waiting
+    /// one is taken out of the queue. An id ComfyUI does not list is left alone, so no other prompt is interrupted by mistake. Returns the ids it stopped.
+    pub async fn cancel_prompts(&self, prompt_ids: &[String]) -> Vec<String> {
+        let state = self.queue_state().await;
+        let ids_in = |key: &str| -> Vec<String> {
+            state.get(key).and_then(Value::as_array).map(|items| items.iter().filter_map(|item| item.get(1).and_then(Value::as_str).map(str::to_string)).collect()).unwrap_or_default()
+        };
+        let (running, pending) = (ids_in("queue_running"), ids_in("queue_pending"));
+        let mut stopped = Vec::new();
+        let waiting: Vec<String> = prompt_ids.iter().filter(|id| pending.contains(id)).cloned().collect();
+        if !waiting.is_empty() && self.delete_queue_items(&waiting).await {
+            stopped.extend(waiting);
+        }
+        if let Some(id) = prompt_ids.iter().find(|id| running.contains(id)) {
+            if self.interrupt().await {
+                stopped.push(id.clone());
+            }
+        }
+        stopped
+    }
+
     /// Poll until the prompt finishes. Returns its history entry. Setting `cancel` interrupts ComfyUI and returns
     /// [`ComfyError::Cancelled`]. `on_status` hears each poll.
     pub async fn wait_for_prompt(
@@ -357,7 +378,8 @@ impl ComfyClient {
     pub async fn upload_image(&self, filename: &str, bytes: Vec<u8>, temp: bool) -> Result<String, ComfyError> {
         let part = reqwest::multipart::Part::bytes(bytes).file_name(filename.to_string()).mime_str("image/png").map_err(|e| ComfyError::Execution(e.to_string()))?;
         let form = reqwest::multipart::Form::new().part("image", part).text("type", if temp { "temp" } else { "input" }).text("overwrite", "true");
-        let response = reqwest::Client::new()
+        let response = self
+            .http
             .post(format!("{}/upload/image", self.base_url()))
             .multipart(form)
             .timeout(Duration::from_secs(120))

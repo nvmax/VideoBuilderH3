@@ -46,10 +46,12 @@ pub(crate) async fn context_for(state: &AppState, ctx: &JobCtx) -> Result<(RunCo
     // Every stitch a job makes draws the project's overlays onto the video, the way the Video Builder's Export does.
     let overlay_pass = crate::overlay_routes::stitch_hook(state.builder_env());
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
-    let mut run = connect(&state.cfg).await.map_err(|e| {
-        fail(ApiError::new(axum::http::StatusCode::SERVICE_UNAVAILABLE, "COMFY_UNAVAILABLE", e).retryable())
-    })?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
+    let mut run = connect(&state.cfg)
+        .await
+        .map_err(|e| fail(ApiError::new(axum::http::StatusCode::SERVICE_UNAVAILABLE, "COMFY_UNAVAILABLE", e).retryable()))?
+        // What a render writes into the project takes the same lock as every other edit.
+        .with_session_lock(state.session_lock());
     run.cancel = Arc::clone(&ctx.cancel);
     run.after_stitch = Some(overlay_pass);
     Ok((run, folder))
@@ -90,6 +92,10 @@ pub(crate) fn reporter_in(ctx: &JobCtx, scene_id: Option<String>, from: f64, spa
     let mut logged_stage = "";
     move |event: RenderEvent| {
         let position = batch_position(&event.message);
+        // The prompt ComfyUI was given is kept on the job, so a cancel or a restart can find it.
+        if let Some(prompt_id) = &event.prompt_id {
+            ctx.set_prompt_id(prompt_id);
+        }
         // The render reports once a second while ComfyUI works: the log keeps the first line of each stage, not every tick.
         if event.stage != logged_stage || event.stage == "batch_videos" {
             ctx.log("info", &event.message);
@@ -105,6 +111,7 @@ pub(crate) fn reporter_in(ctx: &JobCtx, scene_id: Option<String>, from: f64, spa
             scene_count: position.map(|p| p.1),
             stage_index: position.map_or(0, |p| p.0),
             stage_count: position.map_or(1, |p| p.1),
+            eta_seconds: event.eta_seconds,
         });
     }
 }

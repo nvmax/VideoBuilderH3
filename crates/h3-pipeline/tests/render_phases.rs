@@ -205,6 +205,62 @@ fn a_finished_scene_reports_what_pass_2_did() {
     }
 }
 
+/// A finished scene does its slow work (cutting and collecting the clip) before it takes the project's edit lock, and saves under it: while another
+/// edit holds the lock the clip is on disk but the project does not know it yet, and the save happens as soon as the lock is free.
+#[test]
+fn a_finished_scene_saves_under_the_edit_lock_and_does_the_slow_work_before_it() {
+    use std::sync::atomic::{AtomicBool, Ordering};
+    use std::sync::Arc;
+    use std::time::{Duration, Instant};
+
+    struct Held(Arc<AtomicBool>);
+    impl Drop for Held {
+        fn drop(&mut self) {
+            self.0.store(false, Ordering::SeqCst);
+        }
+    }
+    let Ok(tools) = h3_media::Tools::find("ffmpeg", "ffprobe") else {
+        eprintln!("ffmpeg is not installed: the finished scene is not tested");
+        return;
+    };
+    let dir = tempfile::tempdir().unwrap();
+    let project_dir = dir.path().join("Demo");
+    std::fs::create_dir_all(&project_dir).unwrap();
+    project(&project_dir, json!({}), json!({"render_pass": "two_pass"}));
+    let raw = dir.path().join("MiniMaxH3_scene_0001.mp4");
+    make_clip(&raw, 2);
+
+    // Somebody else is editing the project.
+    let taken = Arc::new(AtomicBool::new(true));
+    let lock_flag = Arc::clone(&taken);
+    let mut env = LiveEnv::new(json!({}), ComfyDirs { output: dir.path().display().to_string(), input: String::new(), temp: String::new() }, tools);
+    env.session_lock = Some(Arc::new(move || {
+        while lock_flag.compare_exchange(false, true, Ordering::SeqCst, Ordering::SeqCst).is_err() {
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        Box::new(Held(Arc::clone(&lock_flag)))
+    }));
+    let (path, raw_path, out_dir) = (project_dir.clone(), raw.clone(), dir.path().to_path_buf());
+    let worker = std::thread::spawn(move || finish_scene(&env, &path, &outcome(&out_dir, &raw_path, RenderPhase::Full, json!({"two_pass": {}})), &FinishOptions::default()));
+
+    let collected = || std::fs::read_dir(project_dir.join("rendered_scene_videos")).map(|d| d.flatten().any(|e| e.path().extension().is_some_and(|x| x == "mp4"))).unwrap_or(false);
+    let started = Instant::now();
+    while !collected() && started.elapsed() < Duration::from_secs(30) {
+        std::thread::sleep(Duration::from_millis(50));
+    }
+    assert!(collected(), "the clip is collected while another edit holds the lock");
+    let text = std::fs::read_to_string(project_dir.join("vrgdg_builder_session.json")).unwrap();
+    assert!(serde_json::from_str::<Value>(&text).unwrap()["segments"][0].get("video_path").is_none_or(|v| v.as_str().unwrap_or("").is_empty()), "the project is not told before the lock is free");
+    assert!(!worker.is_finished());
+
+    taken.store(false, Ordering::SeqCst);
+    let done = worker.join().unwrap().unwrap();
+    assert!(!done.video_path.is_empty());
+    let text = std::fs::read_to_string(project_dir.join("vrgdg_builder_session.json")).unwrap();
+    assert_eq!(serde_json::from_str::<Value>(&text).unwrap()["segments"][0]["video_path"].as_str(), Some(done.video_path.as_str()));
+    assert!(!taken.load(Ordering::SeqCst), "the lock is given back after the save");
+}
+
 #[test]
 fn a_finished_scene_keeps_its_draft_and_a_finished_draft_replaces_it() {
     let Ok(tools) = h3_media::Tools::find("ffmpeg", "ffprobe") else {

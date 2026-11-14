@@ -46,6 +46,40 @@ async fn runs_a_job_and_keeps_progress_and_logs() {
 }
 
 #[tokio::test]
+async fn a_jobs_eta_is_reported_and_a_later_update_without_one_clears_it() {
+    let manager = JobManager::new(JobStore::open_in_memory().unwrap());
+    let (stop, hold) = tokio::sync::oneshot::channel::<()>();
+    let hold = Arc::new(tokio::sync::Mutex::new(Some(hold)));
+    manager.register(
+        "eta",
+        handler(move |ctx| {
+            let hold = Arc::clone(&hold);
+            async move {
+                ctx.progress(ProgressUpdate { percent: 40.0, stage: "rendering".into(), eta_seconds: Some(125.5), ..Default::default() });
+                if let Some(hold) = hold.lock().await.take() {
+                    let _ = hold.await;
+                }
+                ctx.progress(ProgressUpdate { percent: 80.0, stage: "collecting".into(), ..Default::default() });
+                Ok(json!({}))
+            }
+        }),
+    );
+    let job = manager.submit("eta", None, json!({}), false).unwrap();
+    for _ in 0..200 {
+        if manager.get(&job.id).unwrap().progress.eta_seconds.is_some() {
+            break;
+        }
+        tokio::time::sleep(Duration::from_millis(25)).await;
+    }
+    let running = manager.get(&job.id).unwrap();
+    assert_eq!(running.progress.eta_seconds, Some(125.5));
+    assert_eq!(running.to_api()["progress"]["eta_seconds"], 125.5);
+    stop.send(()).unwrap();
+    wait_for(&manager, &job.id, "succeeded").await;
+    assert_eq!(manager.get(&job.id).unwrap().progress.eta_seconds, None);
+}
+
+#[tokio::test]
 async fn gpu_jobs_run_one_at_a_time_and_a_queued_job_can_be_cancelled() {
     let manager = JobManager::new(JobStore::open_in_memory().unwrap());
     manager.register(

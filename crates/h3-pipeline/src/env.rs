@@ -20,12 +20,26 @@ pub struct LiveEnv {
     pub refmod_dirs: Vec<std::path::PathBuf>,
     /// Whether `nvidia-vfx` is installed in ComfyUI's Python. `true` until [`LiveEnv::with_nvidia_vsr`] says otherwise.
     pub nvidia_vsr: bool,
+    /// The lock that orders edits of a project. `None` where nothing else edits the project (the command line, tests). See [`LiveEnv::edit_session`].
+    pub session_lock: Option<SessionLock>,
 }
+
+/// Takes the lock that orders edits of a project and returns it. The lock is held until the returned value is dropped.
+///
+/// It blocks the calling thread until the lock is free, so call it on a blocking thread, never on an async one.
+pub type SessionLock = std::sync::Arc<dyn Fn() -> Box<dyn std::any::Any + Send> + Send + Sync>;
 
 impl LiveEnv {
     /// `object_info` is shared, so many renders can read one copy of ComfyUI's node list.
     pub fn new(object_info: impl Into<std::sync::Arc<Value>>, dirs: ComfyDirs, tools: Tools) -> Self {
-        Self { object_info: object_info.into(), dirs, tools, refmod_dirs: Vec::new(), nvidia_vsr: true }
+        Self { object_info: object_info.into(), dirs, tools, refmod_dirs: Vec::new(), nvidia_vsr: true, session_lock: None }
+    }
+
+    /// Run `change`, which reads the project's session and saves it again, while no other edit can land between the read and the save. Keep it short: a
+    /// render's slow work (ffmpeg, waiting for ComfyUI) belongs outside it, because every other edit waits for it.
+    pub fn edit_session<R>(&self, change: impl FnOnce() -> R) -> R {
+        let _held = self.session_lock.as_ref().map(|lock| lock());
+        change()
     }
 
     pub fn with_refmod_dirs(mut self, dirs: Vec<std::path::PathBuf>) -> Self {

@@ -147,55 +147,59 @@ pub fn finish_scene(env: &LiveEnv, project: &Path, outcome: &RenderOutcome, opti
         }
     }
 
-    // Record the clip on the scene, in a session read just now so edits made while the render ran are kept.
-    let mut session = load_session(project).map_err(other)?.session;
+    // Record the clip on the scene, in a session read just now so edits made while the render ran are kept. The read and the save are one step under the
+    // project's edit lock, so an edit made in between is not lost either.
     let video_text = final_video.display().to_string();
     let thumbnail_text = final_thumbnail.as_ref().map(|p| p.display().to_string()).unwrap_or_default();
-    let mut all_segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
-    let Some(segment) = all_segments.get_mut(index).and_then(Value::as_object_mut) else {
-        return Err(RenderError::SceneNotFound(outcome.scene_id.clone()));
-    };
-    apply_scene_video(segment, &video_text, &thumbnail_text, (Stamp::now().epoch * 1000.0) as i64);
-    let report = outcome.graph.get("latent_continuation_settings");
-    let snapshot: Vec<Value> = segments.clone();
-    for (k, v) in continuity_used(&outcome.continuity_mode, report, &snapshot, scene as usize) {
-        segment.insert(k, v);
-    }
-    for (k, v) in stage_fields(outcome.phase, &video_text, &outcome.graph) {
-        segment.insert(k, v);
-    }
-    // The untrimmed render, so a later re-trim can start from the whole take.
-    segment.insert("raw_video_path".into(), json!(outcome.raw_video_path));
-    let mut raw_history: Vec<String> = segment
-        .get("raw_video_history")
-        .and_then(Value::as_array)
-        .map(|a| a.iter().map(|v| text_or_empty(Some(v))).filter(|p| !p.trim().is_empty()).collect())
-        .unwrap_or_default();
-    if !raw_history.contains(&outcome.raw_video_path) {
-        raw_history.push(outcome.raw_video_path.clone());
-    }
-    segment.insert("raw_video_history".into(), json!(raw_history));
-    // A replaced render is kept as a backup the timeline can switch back to.
-    if let Some(backup) = &collected.backup_path {
-        let backup_text = backup.display().to_string();
-        let mut list: Vec<Value> = segment.get("video_backup_paths").and_then(Value::as_array).cloned().unwrap_or_default();
-        if !list.iter().any(|v| v.as_str() == Some(backup_text.as_str())) {
-            list.push(json!(backup_text));
+    let (history_index, history_count, saved) = env.edit_session(|| -> Result<_, RenderError> {
+        let mut session = load_session(project).map_err(other)?.session;
+        let mut all_segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+        let Some(segment) = all_segments.get_mut(index).and_then(Value::as_object_mut) else {
+            return Err(RenderError::SceneNotFound(outcome.scene_id.clone()));
+        };
+        apply_scene_video(segment, &video_text, &thumbnail_text, (Stamp::now().epoch * 1000.0) as i64);
+        let report = outcome.graph.get("latent_continuation_settings");
+        let snapshot: Vec<Value> = segments.clone();
+        for (k, v) in continuity_used(&outcome.continuity_mode, report, &snapshot, scene as usize) {
+            segment.insert(k, v);
         }
-        segment.insert("video_backup_paths".into(), Value::Array(list));
-        if let Some(thumb) = &collected.backup_thumbnail_path {
-            let thumb_text = thumb.display().to_string();
-            let mut thumbs: Vec<Value> = segment.get("video_backup_thumbnail_paths").and_then(Value::as_array).cloned().unwrap_or_default();
-            if !thumbs.iter().any(|v| v.as_str() == Some(thumb_text.as_str())) {
-                thumbs.push(json!(thumb_text));
+        for (k, v) in stage_fields(outcome.phase, &video_text, &outcome.graph) {
+            segment.insert(k, v);
+        }
+        // The untrimmed render, so a later re-trim can start from the whole take.
+        segment.insert("raw_video_path".into(), json!(outcome.raw_video_path));
+        let mut raw_history: Vec<String> = segment
+            .get("raw_video_history")
+            .and_then(Value::as_array)
+            .map(|a| a.iter().map(|v| text_or_empty(Some(v))).filter(|p| !p.trim().is_empty()).collect())
+            .unwrap_or_default();
+        if !raw_history.contains(&outcome.raw_video_path) {
+            raw_history.push(outcome.raw_video_path.clone());
+        }
+        segment.insert("raw_video_history".into(), json!(raw_history));
+        // A replaced render is kept as a backup the timeline can switch back to.
+        if let Some(backup) = &collected.backup_path {
+            let backup_text = backup.display().to_string();
+            let mut list: Vec<Value> = segment.get("video_backup_paths").and_then(Value::as_array).cloned().unwrap_or_default();
+            if !list.iter().any(|v| v.as_str() == Some(backup_text.as_str())) {
+                list.push(json!(backup_text));
             }
-            segment.insert("video_backup_thumbnail_paths".into(), Value::Array(thumbs));
+            segment.insert("video_backup_paths".into(), Value::Array(list));
+            if let Some(thumb) = &collected.backup_thumbnail_path {
+                let thumb_text = thumb.display().to_string();
+                let mut thumbs: Vec<Value> = segment.get("video_backup_thumbnail_paths").and_then(Value::as_array).cloned().unwrap_or_default();
+                if !thumbs.iter().any(|v| v.as_str() == Some(thumb_text.as_str())) {
+                    thumbs.push(json!(thumb_text));
+                }
+                segment.insert("video_backup_thumbnail_paths".into(), Value::Array(thumbs));
+            }
         }
-    }
-    let history_index = segment.get("video_history_index").and_then(Value::as_u64).unwrap_or(0) as usize;
-    let history_count = segment.get("video_history").and_then(Value::as_array).map_or(0, Vec::len);
-    session.insert("segments".into(), Value::Array(all_segments));
-    let saved = persist_session(project, session, Stamp::now()).map_err(other)?;
+        let history_index = segment.get("video_history_index").and_then(Value::as_u64).unwrap_or(0) as usize;
+        let history_count = segment.get("video_history").and_then(Value::as_array).map_or(0, Vec::len);
+        session.insert("segments".into(), Value::Array(all_segments));
+        let saved = persist_session(project, session, Stamp::now()).map_err(other)?;
+        Ok((history_index, history_count, saved))
+    })?;
 
     // A re-decode leaves the latent as it was, so the next scene's continuation from it stays valid.
     if outcome.phase != RenderPhase::Redecode {
@@ -239,6 +243,18 @@ pub struct RunContext {
     pub after_stitch: Option<StitchHook>,
 }
 
+impl RunContext {
+    /// Make the render's writes to the project's session take `lock` (see [`LiveEnv::edit_session`]). Call it right after the context is made, before it is
+    /// shared.
+    pub fn with_session_lock(mut self, lock: crate::env::SessionLock) -> Self {
+        match Arc::get_mut(&mut self.env) {
+            Some(env) => env.session_lock = Some(lock),
+            None => eprintln!("[VRGDG-RS Render] The run context was already shared, so the project's edit lock was not set on it."),
+        }
+        self
+    }
+}
+
 /// The MiniMax seed settings. Same list as `SEED_FIELDS` in the pack's `settings_payload.py`.
 pub const SEED_FIELDS: [&str; 5] = ["seed", "two_pass_pass1_seed", "two_pass_pass2_seed", "advanced_two_pass_pass1_seed", "advanced_two_pass_pass2_seed"];
 
@@ -247,27 +263,29 @@ pub const SEED_FIELDS: [&str; 5] = ["seed", "two_pass_pass1_seed", "two_pass_pas
 /// seeds from the saved project, so it can be repeated.
 pub fn randomize_seeds(env: &LiveEnv, project: &Path, scene_ref: &str) -> Result<(), RenderError> {
     use h3_graph::GraphEnv;
-    let loaded = load_session(project).map_err(other)?;
-    let mut session = loaded.session;
-    let segments = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
-    let index = segments
-        .iter()
-        .position(|s| s.get("id").and_then(Value::as_str) == Some(scene_ref))
-        .or_else(|| scene_ref.parse::<usize>().ok().filter(|n| *n >= 1 && *n <= segments.len()).map(|n| n - 1))
-        .ok_or_else(|| RenderError::SceneNotFound(scene_ref.to_string()))?;
-    let fresh: Obj = SEED_FIELDS.iter().map(|f| (f.to_string(), json!(env.random_seed() % 2_147_483_647 + 1))).collect();
-    let locked = segments[index].get("use_scene_minimax_h3_settings").is_some_and(truthy) && segments[index].get("minimax_h3_settings").is_some_and(Value::is_object);
-    let target = if locked {
-        session.get_mut("segments").and_then(Value::as_array_mut).and_then(|a| a.get_mut(index)).and_then(Value::as_object_mut).and_then(|s| s.get_mut("minimax_h3_settings"))
-    } else {
-        Some(session.entry("minimax_h3_settings").or_insert_with(|| json!({})))
-    };
-    match target.and_then(Value::as_object_mut) {
-        Some(settings) => settings.extend(fresh),
-        None => return Err(other("The project's MiniMax settings are not an object.")),
-    }
-    persist_session(project, session, Stamp::now()).map_err(other)?;
-    Ok(())
+    env.edit_session(|| {
+        let loaded = load_session(project).map_err(other)?;
+        let mut session = loaded.session;
+        let segments = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
+        let index = segments
+            .iter()
+            .position(|s| s.get("id").and_then(Value::as_str) == Some(scene_ref))
+            .or_else(|| scene_ref.parse::<usize>().ok().filter(|n| *n >= 1 && *n <= segments.len()).map(|n| n - 1))
+            .ok_or_else(|| RenderError::SceneNotFound(scene_ref.to_string()))?;
+        let fresh: Obj = SEED_FIELDS.iter().map(|f| (f.to_string(), json!(env.random_seed() % 2_147_483_647 + 1))).collect();
+        let locked = segments[index].get("use_scene_minimax_h3_settings").is_some_and(truthy) && segments[index].get("minimax_h3_settings").is_some_and(Value::is_object);
+        let target = if locked {
+            session.get_mut("segments").and_then(Value::as_array_mut).and_then(|a| a.get_mut(index)).and_then(Value::as_object_mut).and_then(|s| s.get_mut("minimax_h3_settings"))
+        } else {
+            Some(session.entry("minimax_h3_settings").or_insert_with(|| json!({})))
+        };
+        match target.and_then(Value::as_object_mut) {
+            Some(settings) => settings.extend(fresh),
+            None => return Err(other("The project's MiniMax settings are not an object.")),
+        }
+        persist_session(project, session, Stamp::now()).map_err(other)?;
+        Ok(())
+    })
 }
 
 /// Render one scene and finish it: the whole of "Render" for a scene.

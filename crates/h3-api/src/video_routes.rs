@@ -82,7 +82,7 @@ fn record_video(project: &FsPath, scene: &str, video: &str, thumbnail: &str) -> 
 /// `GET .../video/takes`: the scene's raw renders.
 pub async fn takes_route(State(state): Shared, Path((pid, sid)): Path<(String, String)>) -> ApiResult {
     let loaded = load(&state, &pid).await?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let tools = tools(&state)?;
     let dir = output_dir(&state).await?;
     let listing = blocking(move || list_scene_takes(&tools, &dir, &folder, &loaded.session, &sid)).await?.map_err(|e| op_error(e, &pid))?;
@@ -108,7 +108,7 @@ pub async fn recover_route(State(state): Shared, Path((pid, sid)): Path<(String,
     let given = text_or_empty(body.get("source_path")).trim().to_string();
     let source = if given.is_empty() {
         let loaded = load(&state, &pid).await?;
-        let folder = resolve_project(&state.roots, &pid)?;
+        let folder = resolve_project(&state.roots(), &pid)?;
         let segments = segments_of(&loaded.session);
         let index = scene_index(&segments, &sid).ok_or_else(|| ApiError::scene_not_found(&sid, &pid))?;
         let mode = Some(text_or_empty(loaded.session.get("video_mode"))).filter(|m| !m.is_empty()).unwrap_or_else(|| "i2v".into());
@@ -124,7 +124,7 @@ pub async fn recover_route(State(state): Shared, Path((pid, sid)): Path<(String,
 
 async fn restore(state: &crate::app::AppState, pid: &str, sid: &str, source: PathBuf) -> ApiResult {
     let loaded = load(state, pid).await?;
-    let folder = resolve_project(&state.roots, pid)?;
+    let folder = resolve_project(&state.roots(), pid)?;
     let index = scene_index(&segments_of(&loaded.session), sid).ok_or_else(|| ApiError::scene_not_found(sid, pid))?;
     let tools = tools(state)?;
     let _guard = state.edit_lock.lock().await;
@@ -148,7 +148,7 @@ async fn restore(state: &crate::app::AppState, pid: &str, sid: &str, source: Pat
 
 /// `DELETE .../video`: clear the scene's clip. The files stay on disk.
 pub async fn delete_route(State(state): Shared, Path((pid, sid)): Path<(String, String)>, _headers: HeaderMap) -> ApiResult {
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let (scene, project) = (sid.clone(), folder);
     let revision = blocking(move || -> Result<i64, ApiError> {
@@ -218,7 +218,7 @@ async fn trim_job(state: Arc<crate::app::AppState>, ctx: JobCtx) -> Result<Value
     if scene.is_empty() {
         return Err(invalid("scene_id is required in params."));
     }
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = session_of(&folder).await?;
     let segments = segments_of(&session);
     let index = scene_index(&segments, &scene).ok_or_else(|| fail(ApiError::scene_not_found(&scene, &pid)))?;
@@ -277,7 +277,7 @@ async fn match_color_job(state: Arc<crate::app::AppState>, ctx: JobCtx) -> Resul
     if scene.is_empty() {
         return Err(invalid("scene_id is required in params."));
     }
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = session_of(&folder).await?;
     let segments = segments_of(&session);
     let index = scene_index(&segments, &scene).ok_or_else(|| fail(ApiError::scene_not_found(&scene, &pid)))?;
@@ -335,7 +335,7 @@ async fn scratch_for(state: &crate::app::AppState, folder: &FsPath, scene: u32, 
 pub async fn stage_recover_route(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let loaded = load(&state, &pid).await?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let segments = segments_of(&loaded.session);
     let index = scene_index(&segments, &sid).ok_or_else(|| ApiError::scene_not_found(&sid, &pid))?;
     let scene = index as u32 + 1;
@@ -371,7 +371,7 @@ pub async fn stage_recover_route(State(state): Shared, Path((pid, sid)): Path<(S
 pub async fn cleanup_route(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let loaded = load(&state, &pid).await?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let mut scene = body.get("scene_number").and_then(h3_core::pyval::to_int).unwrap_or(0);
     if scene <= 0 {
         if let Some(sid) = body.get("scene_id").filter(|v| truthy(v)).map(|v| text_or_empty(Some(v))) {
@@ -398,7 +398,7 @@ pub async fn cleanup_route(State(state): Shared, Path(pid): Path<String>, body: 
 
 /// `POST /projects/{pid}/video/scan`: index the scene clips and backups, recovering clips left in old scratch folders.
 pub async fn scan_route(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let tools = tools(&state)?;
     let result = blocking(move || h3_pipeline::scratch_ops::scan_scene_videos(&tools, &folder)).await?.map_err(|e| op_error(e, &pid))?;
     Ok(success(result, None))
@@ -407,7 +407,7 @@ pub async fn scan_route(State(state): Shared, Path(pid): Path<String>) -> ApiRes
 /// `GET /projects/{pid}/minimax/index`: write and return the MiniMax project file map.
 pub async fn index_route(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
     let loaded = load(&state, &pid).await?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let mut session = loaded.session.clone();
     session.insert("video_engine".into(), json!("minimax_h3"));
     let written = blocking(move || h3_project::derived::write_minimax_index(&folder, &session)).await?.map_err(|e| ApiError::internal(e.to_string()))?;
@@ -420,7 +420,7 @@ pub async fn index_route(State(state): Shared, Path(pid): Path<String>) -> ApiRe
 pub async fn from_video_frame_route(State(state): Shared, Path((pid, sid)): Path<(String, String)>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let loaded = load(&state, &pid).await?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let segments = segments_of(&loaded.session);
     let index = scene_index(&segments, &sid).ok_or_else(|| ApiError::scene_not_found(&sid, &pid))?;
     let mut video = text_or_empty(body.get("source_video_path")).trim().to_string();
@@ -492,7 +492,7 @@ fn slideshow_request(project: &FsPath, session: &Obj, params: &Value) -> Result<
 
 async fn slideshow_job(state: Arc<crate::app::AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| invalid("project_id is required."))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = session_of(&folder).await?;
     let request = slideshow_request(&folder, &session, &ctx.params).map_err(fail)?;
     let tools = job_tools(&state)?;

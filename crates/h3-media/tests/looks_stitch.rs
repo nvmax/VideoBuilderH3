@@ -3,7 +3,7 @@
 
 use std::path::Path;
 
-use h3_media::looks::{block_state, items_from_json, plan, segments, Block, LookItem};
+use h3_media::looks::{block_state, items_from_json, plain_parts, plan, segments, Block, LookItem, Part};
 use h3_media::stitch::{stitch_scene_videos, StitchRequest, TimingItem};
 use h3_media::tools::{args, run, Tools};
 use h3_transitions::Kind;
@@ -103,6 +103,31 @@ fn items_come_from_json_with_defaults_and_are_checked() {
     assert!(items_from_json(Kind::Filter, Some(&json!([{"look": "Sepia"}]))).is_err(), "it needs its start");
     assert!(items_from_json(Kind::Filter, Some(&json!([{"look": "Sepia", "start": 0, "params": {"nope": 1}}]))).is_err());
     assert!(items_from_json(Kind::Filter, None).unwrap().is_empty());
+}
+
+fn part(from: i64, to: i64, copy: bool) -> Part {
+    Part { from, to, copy }
+}
+
+#[test]
+fn frames_without_a_look_are_copied_from_keyframe_to_keyframe_and_the_rest_is_encoded() {
+    let keys = [0, 30, 60, 90, 120];
+    // Cut at the keyframes inside the stretch: the frames before the first and after the last are encoded again.
+    assert_eq!(plain_parts(10, 100, 200, &keys, 24), vec![part(10, 30, false), part(30, 90, true), part(90, 100, false)]);
+    // A stretch that starts on a keyframe has nothing in front of it.
+    assert_eq!(plain_parts(0, 100, 200, &keys, 24), vec![part(0, 90, true), part(90, 100, false)]);
+    // Up to the end of the video the last group of pictures ends with the video, so it is copied whole.
+    assert_eq!(plain_parts(100, 200, 200, &[0, 96, 120, 168], 24), vec![part(100, 120, false), part(120, 200, true)]);
+    assert_eq!(plain_parts(120, 200, 200, &[0, 96, 120, 168], 24), vec![part(120, 200, true)]);
+}
+
+#[test]
+fn a_stretch_with_no_whole_group_of_pictures_in_it_is_encoded_whole() {
+    assert_eq!(plain_parts(10, 50, 200, &[0, 30, 60], 24), vec![part(10, 50, false)], "no keyframe to end the copy on");
+    assert_eq!(plain_parts(31, 59, 200, &[0, 30, 60], 24), vec![part(31, 59, false)], "no keyframe inside");
+    assert_eq!(plain_parts(30, 90, 200, &[0, 30, 40, 90], 24), vec![part(30, 90, true)]);
+    assert_eq!(plain_parts(25, 55, 200, &[0, 30, 40, 60], 24), vec![part(25, 55, false)], "10 frames are not worth a piece of their own");
+    assert_eq!(plain_parts(0, 100, 200, &[], 24), vec![part(0, 100, false)], "no keyframes known");
 }
 
 // -- a real stitch ----------------------------------------------------------------------------------------------------------
@@ -208,4 +233,87 @@ fn a_stitch_with_looks_but_no_scene_timing_says_so() {
     let result = stitch_scene_videos(&tools, &request).expect("stitch");
     assert!(result.looks.is_empty());
     assert_eq!(result.look_notes.len(), 1, "{:?}", result.look_notes);
+}
+
+/// A clip with a keyframe every half second, written at `crf` like a scene clip of the stitch.
+fn make_gop_clip(tools: &Tools, path: &Path, hue: u32, seconds: u32, crf: u32) {
+    let source = format!("testsrc2=s={W}x{H}:r={FPS}:d={seconds},hue=h={hue}");
+    let out = run(
+        &tools.ffmpeg,
+        &args(&[
+            "-y", "-f", "lavfi", "-i", &source, "-c:v", "libx264", "-preset", "medium", "-crf", &crf.to_string(), "-g", "12", "-keyint_min", "12", "-sc_threshold", "0", "-pix_fmt", "yuv420p",
+            &path.display().to_string(),
+        ]),
+    )
+    .unwrap();
+    assert!(out.status.success(), "{}", String::from_utf8_lossy(&out.stderr));
+}
+
+/// The `(crf, ref)` of every x264 settings string in a file: each piece of a joined video carries the one of its own first frame.
+fn x264_settings(video: &Path) -> Vec<(String, String)> {
+    let bytes = std::fs::read(video).unwrap();
+    let text = String::from_utf8_lossy(&bytes);
+    let token = |settings: &str, key: &str| settings.split_whitespace().find_map(|w| w.strip_prefix(key)).unwrap_or("").to_string();
+    text.split("x264 - core").skip(1).map(|rest| {
+        let settings = rest.split('\0').next().unwrap_or("");
+        (token(settings, "crf="), token(settings, "ref="))
+    }).collect()
+}
+
+#[test]
+fn frames_between_the_looks_are_copied_and_what_is_encoded_keeps_the_scene_quality() {
+    let tools = Tools::find("", "").expect("ffmpeg and ffprobe on PATH");
+    let dir = tempfile::tempdir().unwrap();
+    // Three scenes of four seconds, rendered at crf 10. The stitch writes each scene again with one keyframe at its start (frames 0, 96 and 192).
+    let clips: Vec<_> = (0..3).map(|i| dir.path().join(format!("scene{i}.mp4"))).collect();
+    for (i, clip) in clips.iter().enumerate() {
+        make_gop_clip(&tools, clip, 100 * (i as u32 + 1), 4, 10);
+    }
+    let song = dir.path().join("song.wav");
+    let out = run(&tools.ffmpeg, &args(&["-y", "-f", "lavfi", "-i", "sine=frequency=440:duration=12", &song.display().to_string()])).unwrap();
+    assert!(out.status.success());
+    let stitch_with = |looks: Vec<LookItem>, prefix: &str| {
+        let request = StitchRequest {
+            project: dir.path().join("project"),
+            scene_paths: clips.clone(),
+            audio_path: Some(song.clone()),
+            scene_timing: (0..3).map(|i| TimingItem { start: f64::from(i) * 4.0, end: f64::from(i + 1) * 4.0 }).collect(),
+            timeline_fps: FPS,
+            looks,
+            output_prefix: prefix.into(),
+            ..Default::default()
+        };
+        stitch_scene_videos(&tools, &request).expect("stitch")
+    };
+    let plain = stitch_with(vec![], "PLAIN");
+    // Effects over frames 18..30 and 204..216. Between them, the group of pictures that runs from the keyframe at 96 to the one at 192 is copied. Frames
+    // 30..96 and 192..204 are encoded again (no keyframe to cut on), and so are frames 0..18 and 216..288 (no whole group of pictures in them).
+    let styled = stitch_with(vec![effect("Negative", 0.75, 0.5), effect("Pixelate", 8.5, 0.5)], "STYLED");
+    assert_eq!(styled.timeline_frame_count, 288);
+    assert_eq!(styled.looks.len(), 2);
+
+    let (a, b) = (luma_frames(&tools, &plain.final_video_path), luma_frames(&tools, &styled.final_video_path));
+    assert_eq!((a.len(), b.len()), (288, 288), "the frames of the timeline are kept");
+    for n in 96..192 {
+        assert!(a[n] == b[n], "frame {n} was copied from the video, so it is the plain video's frame bit for bit");
+    }
+    for n in (0..18).chain(30..96).chain(192..204).chain(216..288) {
+        let error = mean_square(&a[n], &b[n]);
+        assert!(error < 40.0, "frame {n} is encoded again but still the plain video's frame (mean square error {error:.1})");
+    }
+    for n in [24, 210] {
+        assert!(mean_square(&a[n], &b[n]) > 150.0, "frame {n} is changed by its look");
+    }
+
+    // The video plays without a decoder complaint, and the pieces were joined without being decoded.
+    let check = run(&tools.ffmpeg, &args(&["-v", "error", "-i", &styled.final_video_path.display().to_string(), "-f", "null", "-"])).unwrap();
+    assert!(check.stderr.is_empty(), "{}", String::from_utf8_lossy(&check.stderr));
+
+    // What was encoded here is as good as the scene clips (crf 10, not the old crf 17) and the same preset (ref 3, not the veryfast ref 1).
+    let settings = x264_settings(&styled.final_video_path);
+    assert!(settings.len() >= 3, "{settings:?}");
+    for (crf, refs) in &settings {
+        assert_eq!(crf, "10.0", "{settings:?}");
+        assert_eq!(refs, "3", "{settings:?}");
+    }
 }

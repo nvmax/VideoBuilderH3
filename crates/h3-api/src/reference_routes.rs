@@ -130,7 +130,7 @@ pub async fn put(State(state): Shared, Path((pid, sid)): Path<(String, String)>,
         return Err(ApiError::validation("Send `keys` (a list of reference keys) or `automatic: true`."));
     }
     let expected = if_match(&headers)?;
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let loaded = load(&state, &pid).await?;
     let index = views::find_scene(&loaded, &sid)?;

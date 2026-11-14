@@ -45,6 +45,10 @@ fn reporter(ctx: &JobCtx, scene_id: Option<String>, from: f64, span: f64) -> imp
     let ctx = ctx.clone();
     let mut logged_stage = "";
     move |event: ImageEvent| {
+        // The prompt ComfyUI was given is kept on the job, so a cancel or a restart can find it.
+        if let Some(prompt_id) = &event.prompt_id {
+            ctx.set_prompt_id(prompt_id);
+        }
         // The generation reports every second while ComfyUI works: the log keeps the first line of each stage, not every tick.
         if event.stage != logged_stage {
             ctx.log("info", &event.message);
@@ -56,6 +60,7 @@ fn reporter(ctx: &JobCtx, scene_id: Option<String>, from: f64, span: f64) -> imp
             message: event.message,
             scene_id: scene_id.clone(),
             stage_count: 1,
+            eta_seconds: event.eta_seconds,
             ..Default::default()
         });
     }
@@ -160,6 +165,8 @@ pub(crate) async fn generate_for_scene(state: &AppState, ctx: &JobCtx, run: &Run
 
     let scene_number = index as u32 + 1;
     let info = json!({"filename": image.file_name().map(|n| n.to_string_lossy().into_owned()).unwrap_or_default(), "path": image.display().to_string()});
+    // The read and the save below are one step under the edit lock, so an edit made while the picture rendered, or in between, is not lost.
+    let _guard = state.edit_lock.lock().await;
     let outcome = blocking(move || -> std::io::Result<(String, usize, usize, i64)> {
         let now = Stamp::now();
         let saved = images::archive_scene_image(&project, scene_number, &image, &now)?;
@@ -238,6 +245,7 @@ async fn batch_images(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobErr
             scene_count: Some(total as i64),
             stage_index: n as i64 + 1,
             stage_count: total as i64,
+            ..Default::default()
         });
         match generate_for_scene(&state, &ctx, &run, &folder, &number.to_string(), &params, from, 100.0 / total as f64).await {
             Ok(done) => results.push(json!({"scene_id": id, "status": "success", "saved_path": done["saved_path"]})),
@@ -292,6 +300,8 @@ async fn reference_image(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
     }
     let made = generate(&run.client, &run.env.dirs, &run.env.object_info, &preset, &values, timeout(&ctx.params), &ctx.cancel, reporter(&ctx, None, 0.0, 85.0)).await.map_err(fail)?;
     let image = made.images.last().cloned().ok_or_else(|| fail(h3_image::ImageError::NoImage(made.prompt_id.clone())))?;
+    // The read and the save below are one step under the edit lock, so an edit made while the picture rendered, or in between, is not lost.
+    let _guard = state.edit_lock.lock().await;
     let revision = blocking(move || -> std::io::Result<i64> {
         let card_image = images::save_reference_image(&folder, &kind, &name, &image)?;
         let fresh = load_session(&folder)?;

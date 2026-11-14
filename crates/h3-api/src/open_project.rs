@@ -29,14 +29,14 @@ impl AppState {
     /// The window says which project it has open (`folder` is its path, empty for none). A project the agent API cannot find counts as none.
     pub fn set_open_project(&self, folder: &str) {
         let id = id_of(folder.trim());
-        let found = (!id.is_empty() && views::resolve_project(&self.roots, id).is_ok()).then(|| id.to_string());
+        let found = (!id.is_empty() && views::resolve_project(&self.roots(), id).is_ok()).then(|| id.to_string());
         *self.open_project.0.lock().unwrap_or_else(|e| e.into_inner()) = found;
     }
 
     /// The open project's id and folder. None when no project is open or it was deleted since.
     pub fn open_project(&self) -> Option<(String, PathBuf)> {
         let id = self.open_project.0.lock().unwrap_or_else(|e| e.into_inner()).clone()?;
-        let folder = views::resolve_project(&self.roots, &id).ok()?;
+        let folder = views::resolve_project(&self.roots(), &id).ok()?;
         Some((id, folder))
     }
 

@@ -1,5 +1,6 @@
 //! HTTP client for the ComfyUI endpoints the app uses.
 
+use std::sync::OnceLock;
 use std::time::Duration;
 
 use serde::Deserialize;
@@ -61,18 +62,30 @@ pub struct DeviceInfo {
 #[derive(Debug, Clone)]
 pub struct ComfyClient {
     base: String,
-    http: reqwest::Client,
+    pub(crate) http: reqwest::Client,
+}
+
+/// The HTTP client every `ComfyClient` shares. Building one sets up TLS and a connection pool, so it is done once and cloned (a clone is a
+/// handle to the same pool). Idle connections are dropped well before ComfyUI's own keep-alive timeout closes them.
+static SHARED_HTTP: OnceLock<reqwest::Client> = OnceLock::new();
+
+fn shared_http() -> reqwest::Client {
+    SHARED_HTTP
+        .get_or_init(|| {
+            reqwest::Client::builder()
+                .connect_timeout(Duration::from_secs(5))
+                .timeout(Duration::from_secs(60))
+                .pool_idle_timeout(Duration::from_secs(15))
+                .build()
+                .expect("reqwest client with static settings")
+        })
+        .clone()
 }
 
 impl ComfyClient {
     /// Create a client for `base_url` (for example `http://127.0.0.1:8188`).
     pub fn new(base_url: &str) -> Self {
-        let http = reqwest::Client::builder()
-            .connect_timeout(Duration::from_secs(5))
-            .timeout(Duration::from_secs(60))
-            .build()
-            .expect("reqwest client with static settings");
-        Self { base: base_url.trim_end_matches('/').to_string(), http }
+        Self { base: base_url.trim_end_matches('/').to_string(), http: shared_http() }
     }
 
     pub fn base_url(&self) -> &str {

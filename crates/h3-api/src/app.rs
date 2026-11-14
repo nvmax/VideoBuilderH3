@@ -43,16 +43,21 @@ pub struct AppState {
     /// The LLM settings in use. They change at run time and are saved to `config_path`.
     pub llm: std::sync::RwLock<h3_llm::LlmConfig>,
     pub config_path: PathBuf,
-    pub roots: Vec<PathBuf>,
-    /// ComfyUI's output folder, when known. The Builder keeps its profiles and defaults there, like the pack.
-    pub comfy_output: Option<PathBuf>,
+    /// The folders that hold projects. Read them with [`AppState::roots`]: ComfyUI's output folder joins them when it becomes known.
+    pub(crate) roots: std::sync::RwLock<Vec<PathBuf>>,
+    /// ComfyUI's output folder, when known. The Builder keeps its profiles and defaults there, like the pack. Read it with [`AppState::comfy_output`]:
+    /// it becomes known later when ComfyUI was not running as the app started (see [`AppState::find_comfy_output`]).
+    pub(crate) comfy_output: std::sync::RwLock<Option<PathBuf>>,
+    /// The saved-project listener's registration, so a folder that becomes known later is watched too (see `h3_project::changes`).
+    pub(crate) save_listener: std::sync::OnceLock<h3_project::changes::ListenerId>,
     /// `models/overlay` of the ComfyUI the app last talked to. See `overlay_dir.rs`.
     pub overlay_found: std::sync::RwLock<Option<PathBuf>>,
     pub jobs: JobManager,
     pub presets: h3_image::PresetStore,
     pub presets_dir: PathBuf,
-    /// Edits of a project run one at a time, so two requests cannot overwrite each other's changes.
-    pub edit_lock: tokio::sync::Mutex<()>,
+    /// Edits of a project run one at a time, so two requests cannot overwrite each other's changes. It is shared (`Arc`) so a render running on a blocking
+    /// thread can take it too (see `AppState::session_lock`).
+    pub edit_lock: Arc<tokio::sync::Mutex<()>>,
     /// Messages for the Builder's event stream (`/vrgdg/events`), as JSON text.
     pub builder_events: tokio::sync::broadcast::Sender<String>,
     /// ComfyUI's node list (`/object_info`, several MB), kept for a short while because the Builder asks for it often.
@@ -79,11 +84,48 @@ impl AppState {
         Ok(info)
     }
 
+    /// The edit lock for code that runs on a blocking thread, such as a render saving its result into the project. It waits for the lock without an
+    /// executor, so it must not be called from async code.
+    pub fn session_lock(&self) -> h3_pipeline::SessionLock {
+        let lock = Arc::clone(&self.edit_lock);
+        Arc::new(move || Box::new(Arc::clone(&lock).blocking_lock_owned()))
+    }
+
+    /// The folders that hold projects, as they are now.
+    pub fn roots(&self) -> Vec<PathBuf> {
+        self.roots.read().unwrap_or_else(|e| e.into_inner()).clone()
+    }
+
+    /// ComfyUI's output folder, when it is known.
+    pub fn comfy_output(&self) -> Option<PathBuf> {
+        self.comfy_output.read().unwrap_or_else(|e| e.into_inner()).clone()
+    }
+
+    /// Ask ComfyUI where its output folder is when that is not known yet, which is the case when the app started before ComfyUI did. Once it is known the folder
+    /// joins the project folders and the Builder keeps its files there, with no restart. Returns whether the folder is known now.
+    pub async fn find_comfy_output(&self) -> bool {
+        if self.comfy_output().is_some() {
+            return true;
+        }
+        let asked = tokio::time::timeout(std::time::Duration::from_secs(3), h3_pipeline::context::comfy_dirs(&self.cfg)).await;
+        let Some(output) = asked.ok().and_then(Result::ok).map(|dirs| PathBuf::from(dirs.output)).filter(|output| !output.as_os_str().is_empty()) else {
+            return false;
+        };
+        let roots = views::project_roots(&self.cfg.project_root, Some(&output));
+        if let Some(id) = self.save_listener.get() {
+            h3_project::changes::watch_more(*id, &roots);
+        }
+        *self.roots.write().unwrap_or_else(|e| e.into_inner()) = roots;
+        eprintln!("[VRGDG-RS API] ComfyUI's output folder is now known: {}", output.display());
+        *self.comfy_output.write().unwrap_or_else(|e| e.into_inner()) = Some(output);
+        true
+    }
+
     /// The folders and tools a Builder call works with.
     pub fn builder_env(&self) -> h3_builder::Env {
         h3_builder::Env {
-            output: self.comfy_output.clone().unwrap_or_else(|| self.cfg.project_root.clone()),
-            roots: self.roots.clone(),
+            output: self.comfy_output().unwrap_or_else(|| self.cfg.project_root.clone()),
+            roots: self.roots(),
             ffmpeg: self.cfg.ffmpeg_path.clone(),
             ffprobe: self.cfg.ffprobe_path.clone(),
             luts: self.luts_dir(),
@@ -317,7 +359,7 @@ pub(crate) async fn blocking<T: Send + 'static>(work: impl FnOnce() -> T + Send 
 }
 
 pub(crate) async fn load(state: &AppState, pid: &str) -> Result<LoadedSession, ApiError> {
-    let folder = views::resolve_project(&state.roots, pid)?;
+    let folder = views::resolve_project(&state.roots(), pid)?;
     blocking(move || load_session(&folder)).await?.map_err(|e| ApiError::internal(e.to_string()))
 }
 
@@ -525,7 +567,7 @@ async fn retry_job(State(state): Shared, Path(id): Path<String>, body: Option<Js
 // -- projects ---------------------------------------------------------------------------------------------------------------
 
 async fn list_projects(State(state): Shared) -> ApiResult {
-    let roots = state.roots.clone();
+    let roots = state.roots().clone();
     Ok(success(Value::Array(blocking(move || views::list_projects(&roots)).await?), None))
 }
 
@@ -573,6 +615,8 @@ async fn patch_settings(State(state): Shared, Path(pid): Path<String>, headers: 
     if patch.is_empty() {
         return Err(ApiError::validation("Send the settings to change, for example {\"minimax_h3\": {\"render_pass\": \"two_pass\"}}."));
     }
+    // The read and the save are one step, so two patches at once cannot both start from the same revision and the second overwrite the first.
+    let _guard = state.edit_lock.lock().await;
     let loaded = load(&state, &pid).await?;
     check_revision(&headers, loaded.revision)?;
     let mut session = loaded.session.clone();

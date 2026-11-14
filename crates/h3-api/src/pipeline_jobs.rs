@@ -126,7 +126,7 @@ async fn full_video(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError
 /// Images for scenes without one, a prompt for scenes without one, every missing video, then the stitch.
 async fn run_full_video(state: &Arc<AppState>, ctx: &JobCtx, params: &Value) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let loaded = load_session(&folder).map_err(io_fail)?;
     let session = loaded.session;
     let segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
@@ -281,7 +281,7 @@ async fn run_full_video(state: &Arc<AppState>, ctx: &JobCtx, params: &Value) -> 
 /// Prepare a project from a song (audio, lyrics, scenes), then build the full video.
 async fn from_song(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let params = ctx.params.clone();
     progress(&ctx, 2.0, "preparing_project", "Checking project audio...".into(), None);
 
@@ -356,7 +356,7 @@ pub async fn rebuild_latents_route(State(state): Shared, Path(pid): Path<String>
 
 async fn rebuild_latents(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let mut dirty = h3_project::latents::list_dirty(&folder);
     if dirty.is_empty() {
         progress(&ctx, 100.0, "completed", "No dirty latents found.".into(), None);

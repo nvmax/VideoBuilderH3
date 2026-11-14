@@ -100,17 +100,33 @@ pub struct RenderEvent {
     pub message: String,
     /// The id of the scene being rendered, when the event is about one.
     pub scene_id: Option<String>,
+    /// Seconds ComfyUI has left for the node that runs now, when it can tell.
+    pub eta_seconds: Option<f64>,
+    /// The ComfyUI prompt the render was just given. Only the event that announces the prompt carries it.
+    pub prompt_id: Option<String>,
 }
 
 impl RenderEvent {
     /// An event that is not about one scene (a batch starting, the stitch).
     pub fn new(percent: f64, stage: &'static str, message: impl Into<String>) -> Self {
-        Self { percent, stage, message: message.into(), scene_id: None }
+        Self { percent, stage, message: message.into(), scene_id: None, eta_seconds: None, prompt_id: None }
     }
 
     /// An event about the scene with this id.
     pub fn for_scene(percent: f64, stage: &'static str, message: impl Into<String>, scene_id: &str) -> Self {
-        Self { percent, stage, message: message.into(), scene_id: Some(scene_id.to_string()) }
+        Self { scene_id: Some(scene_id.to_string()), ..Self::new(percent, stage, message) }
+    }
+
+    /// The same event with the seconds ComfyUI has left.
+    pub fn with_eta(mut self, eta_seconds: Option<f64>) -> Self {
+        self.eta_seconds = eta_seconds;
+        self
+    }
+
+    /// The same event announcing the ComfyUI prompt the render was given.
+    pub fn with_prompt(mut self, prompt_id: &str) -> Self {
+        self.prompt_id = Some(prompt_id.to_string());
+        self
     }
 }
 
@@ -484,8 +500,9 @@ pub async fn render_scene(
         h3_graph::redecode::DEFAULT_CRF
     };
     let scene_id = scene_id_of(&loaded, scene_ref);
-    let mut emit = |percent: f64, stage: &'static str, message: String| on_event(RenderEvent { percent, stage, message, scene_id: scene_id.clone() });
-    emit(5.0, "preparing", format!("Preparing scene {scene_ref}..."));
+    // Every event of this render is about this scene.
+    let mut emit = |event: RenderEvent| on_event(RenderEvent { scene_id: scene_id.clone(), ..event });
+    emit(RenderEvent::new(5.0, "preparing", format!("Preparing scene {scene_ref}...")));
     let (prepared, graph_result) = {
         let env = Arc::clone(&env);
         let scene_ref = scene_ref.to_string();
@@ -504,23 +521,23 @@ pub async fn render_scene(
         .await
         .map_err(|e| RenderError::Other(e.to_string()))??
     };
-    emit(15.0, "compiling_graph", "Compiled the ComfyUI video graph.".into());
+    emit(RenderEvent::new(15.0, "compiling_graph", "Compiled the ComfyUI video graph."));
     let graph = graph_result.get("prompt").cloned().unwrap_or(Value::Null);
     let started = SystemTime::now();
     // The progress socket is opened first, under the id the prompt is queued with, so no step is missed. Without it only the clock moves.
     let client_id = h3_comfy::unique_client_id();
     let feed = client.progress_feed(&client_id).await;
     let queued = client.queue_prompt_as(&graph, &client_id).await?;
-    emit(30.0, "rendering", format!("Rendering with ComfyUI (prompt {})...", queued.prompt_id));
+    emit(RenderEvent::new(30.0, "rendering", format!("Rendering with ComfyUI (prompt {})...", queued.prompt_id)).with_prompt(&queued.prompt_id));
     let timeout = Duration::from_secs_f64((params.timeout_hours.unwrap_or(1.0) * 3600.0).max(60.0));
     // 30% is the graph handed to ComfyUI and 75% the clip found, so the render itself fills what lies between.
     let history = client
         .wait_for_prompt_live(&queued.prompt_id, &graph, feed.as_ref(), timeout, Duration::from_secs(1), &cancel, |live, elapsed| {
-            emit(30.0 + 45.0 * live.fraction, "rendering", live.describe("Rendering with ComfyUI", elapsed));
+            emit(RenderEvent::new(30.0 + 45.0 * live.fraction, "rendering", live.describe("Rendering with ComfyUI", elapsed)).with_eta(live.eta_seconds));
         })
         .await?;
     drop(feed);
-    emit(75.0, "collecting", "Locating the rendered clip...".into());
+    emit(RenderEvent::new(75.0, "collecting", "Locating the rendered clip..."));
 
     // The final clip is saved by node 142 unless the graph says otherwise. The 2 Pass Advanced backup comes from another node and is never the answer.
     let final_node = graph_result.get("final_video_node_id").and_then(Value::as_str).unwrap_or("142");
@@ -540,7 +557,7 @@ pub async fn render_scene(
             queued.prompt_id
         ))));
     }
-    emit(100.0, "rendered", format!("Rendered {raw}"));
+    emit(RenderEvent::new(100.0, "rendered", format!("Rendered {raw}")));
     let continuity_mode = text_or_empty(prepared.payload.get("continuity_mode")).trim().to_string();
     Ok(RenderOutcome {
         scene_index: prepared.scene_index,

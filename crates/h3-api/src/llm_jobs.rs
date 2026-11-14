@@ -71,7 +71,7 @@ async fn read_session(folder: &std::path::Path) -> Result<h3_project::LoadedSess
 /// listed in `failures` and the rest go on.
 async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let loaded = read_session(&folder).await?;
     let mut segments: Vec<Value> = loaded.session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
     if segments.is_empty() {
@@ -109,6 +109,7 @@ async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
             scene_count: Some(total as i64),
             stage_index: done as i64 + 1,
             stage_count: total as i64,
+            ..Default::default()
         });
         // The project is read again for each scene, because the scenes written before it changed it.
         let session = read_session(&folder).await?.session;
@@ -155,7 +156,7 @@ async fn minimax_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, Job
 /// Describe a character or location picture with the LLM and save the text on the card.
 async fn describe_reference(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let kind = ctx.params.get("kind").and_then(Value::as_str).unwrap_or("").to_string();
     let card_id = ctx.params.get("ref_id").and_then(Value::as_str).unwrap_or("").to_string();
     let loaded = read_session(&folder).await?;
@@ -199,7 +200,7 @@ fn new_location_id(taken: &[String]) -> String {
 /// Ask the LLM for filming locations from the lyrics and scene notes and add them to the Reference Builder.
 async fn extract_locations(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let loaded = read_session(&folder).await?;
     let session = &loaded.session;
     let segments: Vec<&Value> = session.get("segments").and_then(Value::as_array).map(|a| a.iter().filter(|s| s.is_object()).collect()).unwrap_or_default();
@@ -275,7 +276,7 @@ pub(crate) fn prompt_failure(e: PromptError) -> JobError {
 /// Write a scene's still image prompt and save it as the scene's `t2i_prompt`.
 async fn scene_image_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let scene = text_or_empty(ctx.params.get("scene_id")).trim().to_string();
     if scene.is_empty() {
         return Err(fail(ApiError::validation("scene_id is required.")));
@@ -297,7 +298,7 @@ pub(crate) async fn save_scene_image_prompt(state: &AppState, folder: &std::path
 /// Write the prompt for a character reference sheet or a location image. The prompt is returned and not saved.
 async fn reference_image_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let kind = text_or_empty(ctx.params.get("kind")).trim().to_string();
     let card = text_or_empty(ctx.params.get("ref_id")).trim().to_string();
     let session = read_session(&folder).await?.session;
@@ -309,7 +310,7 @@ async fn reference_image_prompt(state: Arc<AppState>, ctx: JobCtx) -> Result<Val
 /// Write image prompts for many scenes. Scenes that already have one are skipped with `run_mode: resume_missing`.
 async fn batch_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = read_session(&folder).await?.session;
     let mut segments: Vec<Value> = session.get("segments").and_then(Value::as_array).cloned().unwrap_or_default();
     sort_segments(&mut segments);
@@ -344,6 +345,7 @@ async fn batch_prompts(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobEr
             scene_count: Some(total as i64),
             stage_index: n as i64 + 1,
             stage_count: total as i64,
+            ..Default::default()
         });
         // The project is read again for each scene, because the scenes written before it changed it.
         let fresh = read_session(&folder).await?.session;
@@ -397,7 +399,7 @@ fn scene_text(session: &Obj, scene: &str, key: &str) -> String {
 
 fn job_project(state: &AppState, ctx: &JobCtx) -> Result<std::path::PathBuf, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    resolve_project(&state.roots, &pid).map_err(fail)
+    resolve_project(&state.roots(), &pid).map_err(fail)
 }
 
 /// Concept prompts for the scenes in the request, like the Builder's Concept Prompts button.

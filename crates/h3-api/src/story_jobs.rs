@@ -83,7 +83,7 @@ fn job_error(failure: StepFailure, pid: &str) -> JobError {
 
 async fn run(state: Arc<AppState>, step: &'static str, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| ApiError::validation("project_id is required.").into_job_error())?;
-    let folder = resolve_project(&state.roots, &pid).map_err(|e| e.into_job_error())?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(|e| e.into_job_error())?;
     let params = ctx.params.as_object().cloned().unwrap_or_default();
     let config = crate::vrgdg::llm::base_config(&state);
     let llm = AppLlm { config: &config };

@@ -154,7 +154,16 @@ pub fn post<F>(f: F) -> MethodRouter<Arc<AppState>>
 where
     F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
 {
-    post_in(f, false)
+    post_in(f, false, false)
+}
+
+/// [`post`] for a route that does its work while holding the project edit lock, like the edit routes of `/api/v1`. Use it for a route that renames
+/// the files of a project's scenes, which must not run while another edit or a render's save is in the middle of its work.
+pub fn post_locked<F>(f: F) -> MethodRouter<Arc<AppState>>
+where
+    F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
+{
+    post_in(f, false, true)
 }
 
 /// [`post`] for a route that works with the overlay library, which finds its folder first (`AppState::overlay_env`).
@@ -162,10 +171,10 @@ pub fn post_overlay<F>(f: F) -> MethodRouter<Arc<AppState>>
 where
     F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
 {
-    post_in(f, true)
+    post_in(f, true, false)
 }
 
-fn post_in<F>(f: F, overlay_library: bool) -> MethodRouter<Arc<AppState>>
+fn post_in<F>(f: F, overlay_library: bool, locked: bool) -> MethodRouter<Arc<AppState>>
 where
     F: Fn(Env, Obj) -> Reply + Clone + Send + Sync + 'static,
 {
@@ -177,6 +186,7 @@ where
                 Err(fail) => return into_response(Err(fail)),
             };
             let env = if overlay_library { state.overlay_env().await } else { state.builder_env() };
+            let _guard = if locked { Some(state.edit_lock.lock().await) } else { None };
             let reply = tokio::task::spawn_blocking(move || f(env, payload)).await.unwrap_or_else(|e| Err(Fail::new(StatusCode::INTERNAL_SERVER_ERROR, format!("The request failed: {e}"))));
             into_response(reply)
         }
@@ -297,6 +307,12 @@ fn with_saved_comfy_key(state: &AppState, bytes: Bytes) -> Bytes {
     serde_json::to_vec(&body).map(Bytes::from).unwrap_or(bytes)
 }
 
+/// The client the pass-through to ComfyUI shares. It has no overall timeout: a pass-through can stream a large file or wait on a long call.
+fn proxy_client() -> reqwest::Client {
+    static CLIENT: std::sync::OnceLock<reqwest::Client> = std::sync::OnceLock::new();
+    CLIENT.get_or_init(|| reqwest::Client::builder().pool_idle_timeout(Duration::from_secs(15)).build().unwrap_or_default()).clone()
+}
+
 async fn proxy_to_comfy(state: &AppState, request: Request) -> Response {
     let (parts, body) = request.into_parts();
     let url = format!("{}{}", state.cfg.comfy_base(), parts.uri.path_and_query().map_or("/", |p| p.as_str()));
@@ -306,7 +322,7 @@ async fn proxy_to_comfy(state: &AppState, request: Request) -> Response {
     };
     let bytes = if parts.method == axum::http::Method::POST && parts.uri.path() == "/prompt" { with_saved_comfy_key(state, bytes) } else { bytes };
     let method = reqwest::Method::from_bytes(parts.method.as_str().as_bytes()).unwrap_or(reqwest::Method::GET);
-    let reply = reqwest::Client::new().request(method, &url).headers(forwarded(&parts.headers)).body(bytes).send().await;
+    let reply = proxy_client().request(method, &url).headers(forwarded(&parts.headers)).body(bytes).send().await;
     match reply {
         Err(e) => failure(StatusCode::BAD_GATEWAY, format!("ComfyUI is not reachable at {}: {e}", state.cfg.comfy_base())),
         Ok(response) => {

@@ -92,7 +92,7 @@ pub async fn stems(State(state): Shared, UrlPath(pid): UrlPath<String>, body: Op
 
 async fn stems_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| ApiError::validation("project_id is required.").into_job_error())?;
-    let folder = resolve_project(&state.roots, &pid).map_err(|e| e.into_job_error())?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(|e| e.into_job_error())?;
     started(&ctx, "stems", "Splitting the song into stems with Demucs...");
     let loaded = load(&state, &pid).await.map_err(|e| e.into_job_error())?;
     let params = ctx.params.as_object().cloned().unwrap_or_default();

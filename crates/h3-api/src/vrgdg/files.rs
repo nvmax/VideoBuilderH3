@@ -17,7 +17,7 @@ use serde_json::{json, Value};
 use tower::ServiceExt;
 use tower_http::services::ServeFile;
 
-use super::{get_query, post, Fail, Out};
+use super::{get_query, post, post_locked, Fail, Out};
 use crate::app::AppState;
 
 const AUDIO_TYPES: [&str; 6] = ["wav", "mp3", "flac", "m4a", "ogg", "mp4"];
@@ -56,10 +56,10 @@ pub fn routes(router: Router<Arc<AppState>>) -> Router<Arc<AppState>> {
         .route("/vrgdg/music_builder/check_latent_predecessor", post(|_, p| raw(media::check_latent_predecessor(&p))))
         .route("/vrgdg/music_builder/delete_scene_latent", post(|_, p| fields(media::delete_scene_latent(&p))))
         .route("/vrgdg/music_builder/list_dirty_latents", post(|_, p| fields(media::list_dirty_latents(&p))))
-        .route("/vrgdg/music_builder/renumber_scenes_after_removal", post(|_, p| fields(media::renumber_after_removal(&p, &Stamp::now()))))
-        .route("/vrgdg/music_builder/renumber_scenes_after_insert", post(|_, p| fields(media::renumber_after_insert(&p))))
+        .route("/vrgdg/music_builder/renumber_scenes_after_removal", post_locked(|_, p| fields(media::renumber_after_removal(&p, &Stamp::now()))))
+        .route("/vrgdg/music_builder/renumber_scenes_after_insert", post_locked(|_, p| fields(media::renumber_after_insert(&p))))
         .route("/vrgdg/music_builder/scan_scene_videos", post(|env, p| fields(media::scan_scene_videos(&env, &p))))
-        .route("/vrgdg/music_builder/restore_scene_video", post(|env, p| fields(media::restore_scene_video_route(&env, &p, &Stamp::now()))))
+        .route("/vrgdg/music_builder/restore_scene_video", post_locked(|env, p| fields(media::restore_scene_video_route(&env, &p, &Stamp::now()))))
         .route("/vrgdg/music_builder/error_log", post(|_, p| fields(error_log::project_error_log(&p, false, true))))
         .route("/vrgdg/music_builder/error_log/clear", post(|_, p| fields(error_log::project_error_log(&p, true, true))))
         .route("/vrgdg/music_builder/error_log/append", post(append_error))

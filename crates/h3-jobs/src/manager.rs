@@ -71,6 +71,8 @@ pub struct ProgressUpdate {
     pub scene_count: Option<i64>,
     pub stage_index: i64,
     pub stage_count: i64,
+    /// Seconds left for what is running now, when it can be told. It is reported with each update, so a later update without one clears it.
+    pub eta_seconds: Option<f64>,
 }
 
 struct Inner {
@@ -85,6 +87,8 @@ struct Inner {
     queued_gpu: Mutex<VecDeque<String>>,
     active_gpu: Mutex<Option<String>>,
     log_seq: Mutex<HashMap<String, i64>>,
+    /// The ComfyUI prompts that jobs a stopped app left unfinished had been given, until [`JobManager::take_orphaned_prompts`] hands them over.
+    orphaned_prompts: Mutex<Vec<String>>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,7 @@ impl JobManager {
                 queued_gpu: Mutex::new(VecDeque::new()),
                 active_gpu: Mutex::new(None),
                 log_seq: Mutex::new(HashMap::new()),
+                orphaned_prompts: Mutex::new(Vec::new()),
             }),
         }
     }
@@ -159,10 +164,22 @@ impl JobManager {
     /// Mark jobs a previous run left unfinished as `interrupted`. Call once at startup.
     pub fn recover_on_startup(&self) -> Result<usize, ManagerError> {
         let recovered = self.inner.store.recover_interrupted()?;
+        let mut orphans = self.inner.orphaned_prompts.lock().unwrap_or_else(|e| e.into_inner());
         for job in &recovered {
             self.append_log(&job.id, "warning", "The app stopped while this job was unfinished. It is marked interrupted.", None);
+            // The prompt the job had in ComfyUI when the app stopped. ComfyUI may still be running it, with nobody to collect the result.
+            if let Some(prompt_id) = job.comfy.get("current_prompt_id").and_then(Value::as_str).map(str::trim).filter(|id| !id.is_empty()) {
+                if !orphans.iter().any(|known| known == prompt_id) {
+                    orphans.push(prompt_id.to_string());
+                }
+            }
         }
         Ok(recovered.len())
+    }
+
+    /// The ComfyUI prompts of the jobs [`Self::recover_on_startup`] marked interrupted. Each call empties the list.
+    pub fn take_orphaned_prompts(&self) -> Vec<String> {
+        std::mem::take(&mut *self.inner.orphaned_prompts.lock().unwrap_or_else(|e| e.into_inner()))
     }
 
     fn mutate<R>(&self, id: &str, change: impl FnOnce(&mut Job) -> R) -> Result<(R, Job), ManagerError> {
@@ -240,7 +257,7 @@ impl JobManager {
                 stage_count: update.stage_count.max(1),
                 message: update.message,
                 scene_id: update.scene_id,
-                eta_seconds: None,
+                eta_seconds: update.eta_seconds,
                 scene_index: update.scene_index.unwrap_or(previous.scene_index),
                 scene_count: update.scene_count.unwrap_or(previous.scene_count),
             };

@@ -23,7 +23,7 @@ fn text_fields(query: HashMap<String, String>) -> Obj {
 /// A request that names a project is run against that project's own instructions.
 fn with_project(state: &crate::app::AppState, payload: &mut Obj) -> Result<(), ApiError> {
     if let Some(pid) = payload.get("project_id").and_then(Value::as_str).map(str::to_string) {
-        let folder = views::resolve_project(&state.roots, &pid)?;
+        let folder = views::resolve_project(&state.roots(), &pid)?;
         payload.insert("project_folder".into(), json!(folder.display().to_string()));
     }
     Ok(())

@@ -1,8 +1,12 @@
 //! "New seeds" for a scene: fresh values in the project's settings, or in the scene's when they are locked.
 
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
+use std::time::Duration;
+
 use h3_comfy::ComfyDirs;
 use h3_media::Tools;
-use h3_pipeline::{randomize_seeds, LiveEnv, SEED_FIELDS};
+use h3_pipeline::{randomize_seeds, LiveEnv, SessionLock, SEED_FIELDS};
 use h3_project::load_session;
 use serde_json::{json, Value};
 
@@ -44,6 +48,45 @@ fn a_scene_with_locked_settings_keeps_the_projects_seeds() {
     let loaded = load_session(dir.path()).unwrap();
     assert_fresh(&loaded.session["segments"][0]["minimax_h3_settings"]);
     assert_eq!(loaded.session["minimax_h3_settings"]["seed"], 5);
+}
+
+/// A stand-in for the project edit lock: `taken` is true while somebody holds it.
+fn spin_lock(taken: &Arc<AtomicBool>) -> SessionLock {
+    struct Held(Arc<AtomicBool>);
+    impl Drop for Held {
+        fn drop(&mut self) {
+            self.0.store(false, Ordering::SeqCst);
+        }
+    }
+    let taken = Arc::clone(taken);
+    Arc::new(move || {
+        while taken.compare_exchange(false, true, Ordering::SeqCst, Ordering::SeqCst).is_err() {
+            std::thread::sleep(Duration::from_millis(5));
+        }
+        Box::new(Held(Arc::clone(&taken)))
+    })
+}
+
+#[test]
+fn new_seeds_wait_for_the_edit_lock_and_give_it_back() {
+    let dir = project(json!({"revision": 2, "segments": [{"id": "a"}], "minimax_h3_settings": {"seed": 5}}));
+    let taken = Arc::new(AtomicBool::new(false));
+    let mut locked = env();
+    locked.session_lock = Some(spin_lock(&taken));
+
+    // Somebody else is editing the project.
+    taken.store(true, Ordering::SeqCst);
+    let path = dir.path().to_path_buf();
+    let worker = std::thread::spawn(move || randomize_seeds(&locked, &path, "a"));
+    std::thread::sleep(Duration::from_millis(300));
+    assert_eq!(load_session(dir.path()).unwrap().revision, 2, "nothing is saved while another edit holds the lock");
+    assert!(!worker.is_finished());
+
+    // The other edit is done.
+    taken.store(false, Ordering::SeqCst);
+    worker.join().unwrap().unwrap();
+    assert_eq!(load_session(dir.path()).unwrap().revision, 3);
+    assert!(!taken.load(Ordering::SeqCst), "the lock is given back after the save");
 }
 
 #[test]

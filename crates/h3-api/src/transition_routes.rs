@@ -62,7 +62,7 @@ pub async fn put_transitions(State(state): Shared, Path(pid): Path<String>, head
         check_entry(entry).map_err(|e| ApiError::validation(format!("Transition {}: {e}", n + 1)))?;
     }
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || transition_project::put_transitions(&folder, &list, expected, &Stamp::now())).await?.map_err(op_error)?;
     let revision = view.get("revision").and_then(Value::as_i64);
@@ -83,7 +83,7 @@ pub async fn set_transition(State(state): Shared, Path(pid): Path<String>, heade
         check_entry(&Value::Object(fields.clone())).map_err(ApiError::validation)?;
     }
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || transition_project::set_transition(&folder, &fields, expected, &Stamp::now())).await?.map_err(op_error)?;
     let revision = view.get("revision").and_then(Value::as_i64);

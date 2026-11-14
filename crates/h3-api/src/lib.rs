@@ -50,8 +50,12 @@ pub fn jobs_db_path(config_path: &Path) -> std::path::PathBuf {
     config_path.parent().unwrap_or_else(|| Path::new(".")).join("jobs.db")
 }
 
+/// How long the app waits at start for ComfyUI to say where its output folder is. The desktop window opens after this, so it is kept short. A ComfyUI that is
+/// running answers at once. One that is not running yet is asked again later (see `watch_for_comfy_output`).
+const OUTPUT_DIR_WAIT: std::time::Duration = std::time::Duration::from_secs(1);
+
 /// ComfyUI's output folder: the configured one, else the one the running ComfyUI reports. Asking happens on its own
-/// thread so this works inside and outside an async runtime. No answer within a few seconds means it is not known yet.
+/// thread so this works inside and outside an async runtime. No answer within [`OUTPUT_DIR_WAIT`] means it is not known yet.
 fn detect_output_dir(cfg: &AppConfig) -> Option<std::path::PathBuf> {
     let configured = cfg.comfy_output_dir.trim();
     if !configured.is_empty() {
@@ -60,7 +64,7 @@ fn detect_output_dir(cfg: &AppConfig) -> Option<std::path::PathBuf> {
     let cfg = cfg.clone();
     std::thread::spawn(move || {
         let runtime = tokio::runtime::Builder::new_current_thread().enable_all().build().ok()?;
-        runtime.block_on(async { tokio::time::timeout(std::time::Duration::from_secs(4), h3_pipeline::context::comfy_dirs(&cfg)).await.ok()?.ok() }).map(|dirs| std::path::PathBuf::from(dirs.output))
+        runtime.block_on(async { tokio::time::timeout(OUTPUT_DIR_WAIT, h3_pipeline::context::comfy_dirs(&cfg)).await.ok()?.ok() }).map(|dirs| std::path::PathBuf::from(dirs.output))
     })
     .join()
     .ok()
@@ -94,13 +98,13 @@ fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Res
     let presets_dir = db_path.parent().unwrap_or_else(|| Path::new(".")).join("image_presets");
     let llm = std::sync::RwLock::new(cfg.llm.clone());
     let overlay_found = std::sync::RwLock::new(overlay_dir::remembered(config_path));
-    let state = Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots, comfy_output: output, overlay_found, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: tokio::sync::Mutex::new(()), builder_events: tokio::sync::broadcast::channel(256).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()), activity: activity::Feed::default(), open_project: open_project::OpenProject::default() });
+    let state = Arc::new(AppState { llm, config_path: config_path.to_path_buf(), cfg, roots: std::sync::RwLock::new(roots), comfy_output: std::sync::RwLock::new(output), save_listener: std::sync::OnceLock::new(), overlay_found, jobs, presets: h3_image::PresetStore::new(&presets_dir), presets_dir, edit_lock: Arc::new(tokio::sync::Mutex::new(())), builder_events: tokio::sync::broadcast::channel(256).0, object_info_cache: tokio::sync::Mutex::new(None), web_dir: std::env::var_os("H3_WEB").filter(|p| !p.is_empty()).map(std::path::PathBuf::from).filter(|p| p.is_dir()), activity: activity::Feed::default(), open_project: open_project::OpenProject::default() });
     // A save that the Video Builder did not make itself (an agent, a job) is announced to the open Builder windows, which show it. See `h3_project::changes`.
     let sender = state.builder_events.clone();
     // A weak handle: the listener lives as long as the process, the state may not.
     let feed = Arc::downgrade(&state);
-    h3_project::changes::on_saved(
-        &state.roots,
+    let listener = h3_project::changes::on_saved(
+        &state.roots(),
         Arc::new(move |saved| {
             let data = serde_json::json!({
                 "project_folder": saved.project_folder.display().to_string(), "revision": saved.revision, "builder_save_revision": saved.builder_save_revision,
@@ -113,6 +117,7 @@ fn build_state_at(mut cfg: AppConfig, db_path: &Path, config_path: &Path) -> Res
             }
         }),
     );
+    let _ = state.save_listener.set(listener);
     Ok(state)
 }
 
@@ -126,7 +131,42 @@ pub async fn serve_on(listener: tokio::net::TcpListener, state: Arc<AppState>) -
     if let Ok(address) = listener.local_addr() {
         eprintln!("[VRGDG-RS API] Listening on http://{address}/api/v1");
     }
+    stop_orphaned_prompts(&state);
+    watch_for_comfy_output(&state);
     axum::serve(listener, router(state)).await
+}
+
+/// ComfyUI may start after the app. Until its output folder is known, ask again in the background, soon at first and then every ten seconds, so the Builder
+/// finds its files and the projects in that folder without a restart. Nothing runs when the folder is known already, such as when the config names it.
+fn watch_for_comfy_output(state: &Arc<AppState>) {
+    if state.comfy_output().is_some() {
+        return;
+    }
+    let state = Arc::clone(state);
+    tokio::spawn(async move {
+        for seconds in [1, 2, 5].into_iter().chain(std::iter::repeat(10)) {
+            tokio::time::sleep(std::time::Duration::from_secs(seconds)).await;
+            if state.find_comfy_output().await {
+                return;
+            }
+        }
+    });
+}
+
+/// ComfyUI may still be running a prompt of a job the last run left unfinished, with nobody to collect its result. Stop those, in the background: ComfyUI
+/// may be off, which is fine. A prompt ComfyUI no longer lists is left alone.
+fn stop_orphaned_prompts(state: &AppState) {
+    let orphans = state.jobs.take_orphaned_prompts();
+    if orphans.is_empty() {
+        return;
+    }
+    let base = state.cfg.comfy_base().to_string();
+    tokio::spawn(async move {
+        let stopped = h3_comfy::ComfyClient::new(&base).cancel_prompts(&orphans).await;
+        if !stopped.is_empty() {
+            eprintln!("[VRGDG-RS API] Stopped {} ComfyUI prompt(s) that the last run left unfinished.", stopped.len());
+        }
+    });
 }
 
 /// Serve the API until the process stops.

@@ -67,7 +67,7 @@ async fn put_looks(state: Shared, pid: String, kind: LookKind, headers: HeaderMa
         check_entry(kind, entry).map_err(|e| ApiError::validation(format!("{} {}: {e}", kind.name(), n + 1)))?;
     }
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || looks_project::put_looks(&folder, kind, &list, expected, &Stamp::now())).await?.map_err(op_error)?;
     let revision = view.get("revision").and_then(Value::as_i64);
@@ -91,7 +91,7 @@ async fn set_look(state: Shared, pid: String, kind: LookKind, headers: HeaderMap
         check_entry(kind, &Value::Object(probe)).map_err(ApiError::validation)?;
     }
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || looks_project::set_look(&folder, kind, &fields, expected, &Stamp::now())).await?.map_err(op_error)?;
     let revision = view.get("revision").and_then(Value::as_i64);

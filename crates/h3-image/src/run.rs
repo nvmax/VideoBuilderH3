@@ -27,6 +27,16 @@ pub struct ImageEvent {
     pub percent: f64,
     pub stage: &'static str,
     pub message: String,
+    /// Seconds ComfyUI has left for the node that runs now, when it can tell.
+    pub eta_seconds: Option<f64>,
+    /// The ComfyUI prompt the generation was just given. Only the event that announces the prompt carries it.
+    pub prompt_id: Option<String>,
+}
+
+impl ImageEvent {
+    fn new(percent: f64, stage: &'static str, message: String) -> Self {
+        Self { percent, stage, message, eta_seconds: None, prompt_id: None }
+    }
 }
 
 fn random_u64() -> u64 {
@@ -57,14 +67,14 @@ pub async fn generate(
     if !missing.is_empty() {
         return Err(ImageError::MissingNodes(missing));
     }
-    on_event(ImageEvent { percent: 10.0, stage: "compiling_graph", message: format!("Compiling the {} graph...", preset.name) });
+    on_event(ImageEvent::new(10.0, "compiling_graph", format!("Compiling the {} graph...", preset.name)));
     let mut ctx = ApplyCtx { input_dir: PathBuf::from(&dirs.input), random: Box::new(random_u64) };
     let applied = apply_preset(preset, values, &mut ctx)?;
     // The progress socket is opened first, under the id the prompt is queued with, so no step is missed. Without it only the clock moves.
     let client_id = h3_comfy::unique_client_id();
     let feed = client.progress_feed(&client_id).await;
     let queued = client.queue_prompt_as(&applied.graph, &client_id).await?;
-    on_event(ImageEvent { percent: 30.0, stage: "generating", message: format!("Generating with ComfyUI (prompt {})...", queued.prompt_id) });
+    on_event(ImageEvent { prompt_id: Some(queued.prompt_id.clone()), ..ImageEvent::new(30.0, "generating", format!("Generating with ComfyUI (prompt {})...", queued.prompt_id)) });
     // 30% is the graph handed to ComfyUI and 75% the picture found, so the generation itself fills what lies between.
     let mut last_message = String::new();
     let history = client
@@ -72,7 +82,7 @@ pub async fn generate(
             let message = live.describe("Generating with ComfyUI", elapsed);
             // Polled twice a second, the clock changes once a second.
             if message != last_message {
-                on_event(ImageEvent { percent: 30.0 + 45.0 * live.fraction, stage: "generating", message: message.clone() });
+                on_event(ImageEvent { eta_seconds: live.eta_seconds, ..ImageEvent::new(30.0 + 45.0 * live.fraction, "generating", message.clone()) });
                 last_message = message;
             }
         })
@@ -83,6 +93,6 @@ pub async fn generate(
     if images.is_empty() {
         return Err(ImageError::NoImage(queued.prompt_id));
     }
-    on_event(ImageEvent { percent: 75.0, stage: "generated", message: format!("Generated {} image(s).", images.len()) });
+    on_event(ImageEvent::new(75.0, "generated", format!("Generated {} image(s).", images.len())));
     Ok(Generated { prompt_id: queued.prompt_id, images, seed: applied.seed })
 }

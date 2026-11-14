@@ -602,7 +602,7 @@ pub fn stitch_scene_videos(tools: &Tools, req: &StitchRequest) -> Result<StitchR
                 look_notes.push("Effects and filters need the timeline's scene timing and this stitch has none, so none was drawn.".to_string());
             } else {
                 let styled = target_dir.join("_temp_video_with_looks.mp4");
-                let (applied, notes) = apply_looks(tools, &req.looks, &temp_video, &styled, req.timeline_fps, timeline_frames, &target_dir)?;
+                let (applied, notes) = apply_looks(tools, &req.looks, &temp_video, &styled, req.timeline_fps, timeline_frames, &target_dir, render_crf)?;
                 look_notes.extend(notes);
                 if let Some(applied) = applied {
                     applied_looks = applied;

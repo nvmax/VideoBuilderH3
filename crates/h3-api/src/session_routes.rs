@@ -33,7 +33,7 @@ pub(crate) fn op_error(e: OpError, pid: &str) -> ApiError {
 
 /// Run an edit of the project with edits serialized.
 async fn edit(state: &crate::app::AppState, pid: &str, op: impl FnOnce(&std::path::Path, &Stamp) -> Result<Value, OpError> + Send + 'static) -> ApiResult {
-    let folder = views::resolve_project(&state.roots, pid)?;
+    let folder = views::resolve_project(&state.roots(), pid)?;
     let _guard = state.edit_lock.lock().await;
     let result = blocking(move || op(&folder, &Stamp::now())).await?.map_err(|e| op_error(e, pid))?;
     let revision = result.get("revision").and_then(Value::as_i64);
@@ -59,7 +59,7 @@ pub async fn create_project(State(state): Shared, body: Option<Json<Value>>) -> 
 pub async fn duplicate_project(State(state): Shared, Path(pid): Path<String>, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let name = body.get("new_name").and_then(Value::as_str).unwrap_or("").to_string();
-    let source = views::resolve_project(&state.roots, &pid)?;
+    let source = views::resolve_project(&state.roots(), &pid)?;
     let root = state.cfg.project_root.clone();
     let target = blocking(move || h3_project::duplicate::duplicate_project(&root, &source, &name, &Stamp::now())).await?.map_err(|e| op_error(e, &pid))?;
     Ok(respond(StatusCode::CREATED, json!({"project_id": views::project_id(&target), "project_folder": target.display().to_string(), "revision": 1}), Some(1)))
@@ -69,14 +69,14 @@ pub async fn delete_project(State(state): Shared, Path(pid): Path<String>, Query
     if q.get("confirm").map(|c| c.trim()) != Some(pid.trim()) {
         return Err(ApiError::validation(format!("Confirm parameter must match project_id '{pid}'.")));
     }
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     blocking(move || session_ops::delete_project(&folder)).await?.map_err(|e| op_error(e, &pid))?;
     Ok(success(json!({"deleted": true, "project_id": pid}), None))
 }
 
 pub async fn list_finals(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let finals = blocking(move || {
         let mut found: Vec<(f64, Value)> = std::fs::read_dir(&folder)
             .into_iter()
@@ -206,7 +206,7 @@ pub async fn get_story(State(state): Shared, Path(pid): Path<String>) -> ApiResu
 pub async fn put_story(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
     let story = Value::Object(body_object(body)?);
     let expected = if_match(&headers)?;
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let result = blocking(move || h3_project::story::put_story(&folder, &story, expected, &Stamp::now())).await?.map_err(|e| op_error(e, &pid))?;
     let revision = result.get("revision").and_then(Value::as_i64);
@@ -281,7 +281,7 @@ pub(crate) fn save_project_audio(tools: &Tools, folder: &std::path::Path, source
 pub async fn put_audio(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
     let body = body_object(body)?;
     let expected = if_match(&headers)?;
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let tools = tools(&state)?;
     let source = body.get("audio_path").and_then(Value::as_str).map(str::trim).filter(|p| !p.is_empty()).map(PathBuf::from);
     let name = body.get("audio_name").and_then(Value::as_str).map(str::to_string).or_else(|| source.as_ref().and_then(|p| p.file_name()).map(|n| n.to_string_lossy().into_owned())).unwrap_or_else(|| "audio.wav".into());
@@ -342,7 +342,7 @@ pub async fn silent_audio(State(state): Shared, Path(pid): Path<String>, headers
     if scope == "scene" {
         return Err(ApiError::validation("Silence for a single scene is only used by Speaking scenes, which this app does not have. Use scope 'project'."));
     }
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let tools = tools(&state)?;
     let label = format!("{duration:.2}").trim_end_matches('0').trim_end_matches('.').replace('.', "_");
     let _guard = state.edit_lock.lock().await;
@@ -411,7 +411,7 @@ pub async fn serve_file(State(state): Shared, Query(q): Query<HashMap<String, St
     let Ok(path) = std::fs::canonicalize(wanted.trim()) else {
         return ApiError::new(StatusCode::NOT_FOUND, "ASSET_NOT_FOUND", "File not found.").into_response();
     };
-    let mut roots: Vec<PathBuf> = state.roots.clone();
+    let mut roots: Vec<PathBuf> = state.roots().clone();
     if !state.cfg.comfy_output_dir.trim().is_empty() {
         roots.push(PathBuf::from(state.cfg.comfy_output_dir.trim()));
     }
@@ -427,14 +427,14 @@ pub async fn serve_file(State(state): Shared, Query(q): Query<HashMap<String, St
 
 /// `GET /projects/{pid}/assets`: the media files of the project.
 pub async fn project_assets(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let items = blocking(move || views::project_assets(&folder)).await?;
     Ok(success(json!({"items": items, "count": items.len()}), None))
 }
 
 /// `POST /projects/{pid}/export`: package the project as a portable zip next to the app's config.
 pub async fn export_project(State(state): Shared, Path(pid): Path<String>) -> ApiResult {
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let out = state.config_path.parent().unwrap_or_else(|| std::path::Path::new(".")).join("exports");
     let now = Stamp::now();
     let (zip, name) = blocking(move || h3_project::export::export_project(&folder, &out, &now)).await?.map_err(ApiError::internal)?;

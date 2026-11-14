@@ -30,7 +30,7 @@ pub async fn list_notes(State(state): Shared, Path(pid): Path<String>) -> ApiRes
 }
 
 async fn run(state: &crate::app::AppState, pid: &str, status: StatusCode, op: impl FnOnce(&std::path::Path, &Stamp) -> Result<Value, NoteError> + Send + 'static) -> ApiResult {
-    let folder = resolve_project(&state.roots, pid)?;
+    let folder = resolve_project(&state.roots(), pid)?;
     let _guard = state.edit_lock.lock().await;
     let result = blocking(move || op(&folder, &Stamp::now())).await?.map_err(|e| note_error(e, pid))?;
     let revision = result.get("revision").and_then(Value::as_i64);

@@ -106,7 +106,7 @@ pub async fn get_overlay(State(state): Shared, Path(pid): Path<String>) -> ApiRe
 pub async fn put_overlay(State(state): Shared, Path(pid): Path<String>, headers: HeaderMap, body: Option<Json<Value>>) -> ApiResult {
     let fields = body_object(body)?;
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let env = state.builder_env();
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || overlay_project::put_overlay(&folder, &fields, expected, &Stamp::now()).map(|view| with_warnings(&env, &folder, view))).await?.map_err(op_error)?;
@@ -120,7 +120,7 @@ pub async fn add_clips(State(state): Shared, Path(pid): Path<String>, headers: H
     reject_unknown(&fields, &["layers"])?;
     let Some(clips) = fields.get("layers").and_then(Value::as_array).cloned() else { return Err(ApiError::validation("layers must be a list of overlay layers.")) };
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let env = state.builder_env();
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || overlay_project::add_clips(&folder, &clips, None, expected, &Stamp::now()).map(|view| with_warnings(&env, &folder, view))).await?.map_err(op_error)?;
@@ -135,7 +135,7 @@ pub async fn lyric_captions(State(state): Shared, Path(pid): Path<String>, heade
     let fields = body_object(body)?;
     reject_unknown(&fields, &["style", "font", "from", "to", "replace"])?;
     let expected = if_match(&headers)?;
-    let folder = resolve_project(&state.roots, &pid)?;
+    let folder = resolve_project(&state.roots(), &pid)?;
     let env = state.builder_env();
     let _guard = state.edit_lock.lock().await;
     let view = blocking(move || -> Result<Value, ApiError> {

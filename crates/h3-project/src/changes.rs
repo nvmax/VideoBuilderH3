@@ -34,10 +34,29 @@ fn key(path: &Path) -> String {
     absolute.to_string_lossy().replace('\\', "/").trim_end_matches('/').to_lowercase()
 }
 
+/// Which listener a registration made, so it can be given more roots later (see [`watch_more`]).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ListenerId(usize);
+
 /// Call `listener` after every save of a project inside one of `roots` that the Video Builder did not make itself.
-pub fn on_saved(roots: &[PathBuf], listener: Listener) {
+pub fn on_saved(roots: &[PathBuf], listener: Listener) -> ListenerId {
     let keys = roots.iter().map(|r| key(r)).collect();
-    LISTENERS.write().unwrap_or_else(|e| e.into_inner()).push((keys, listener));
+    let mut listeners = LISTENERS.write().unwrap_or_else(|e| e.into_inner());
+    listeners.push((keys, listener));
+    ListenerId(listeners.len() - 1)
+}
+
+/// Also call the listener for projects inside these `roots`, such as a folder that became known after the listener was registered.
+pub fn watch_more(id: ListenerId, roots: &[PathBuf]) {
+    let mut listeners = LISTENERS.write().unwrap_or_else(|e| e.into_inner());
+    if let Some((keys, _)) = listeners.get_mut(id.0) {
+        for root in roots {
+            let wanted = key(root);
+            if !keys.contains(&wanted) {
+                keys.push(wanted);
+            }
+        }
+    }
 }
 
 fn is_inside(folder: &str, root: &str) -> bool {

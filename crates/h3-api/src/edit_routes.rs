@@ -45,7 +45,7 @@ async fn edit(
     status: StatusCode,
     op: impl FnOnce(&std::path::Path, &Stamp) -> Result<Value, OpError> + Send + 'static,
 ) -> ApiResult {
-    let folder = views::resolve_project(&state.roots, pid)?;
+    let folder = views::resolve_project(&state.roots(), pid)?;
     let _guard = state.edit_lock.lock().await;
     let result = blocking(move || op(&folder, &Stamp::now())).await?.map_err(|e| op_error(e, pid))?;
     let revision = result.get("revision").and_then(Value::as_i64);

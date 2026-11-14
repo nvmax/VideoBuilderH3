@@ -140,7 +140,7 @@ pub async fn save_key(State(state): Shared, Path(pid): Path<String>, headers: He
         return Err(ApiError::validation("api_key is required; use an empty string to clear it."));
     };
     let key = validate_api_key(key, true).map_err(ApiError::validation)?;
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let _guard = state.edit_lock.lock().await;
     let loaded = load(&state, &pid).await?;
     speaking(&loaded.session)?;
@@ -214,7 +214,7 @@ pub async fn voice_description(State(state): Shared, Path((pid, rid)): Path<(Str
 
 async fn voice_description_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = views::resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = views::resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = read_session(folder.clone()).await?.session;
     speaking(&session).map_err(fail)?;
     let brief = voice_brief(ctx.params.as_object().unwrap_or(&Obj::new())).map_err(fail)?;
@@ -243,7 +243,7 @@ pub async fn craft(State(state): Shared, Path((pid, sid)): Path<(String, String)
 
 async fn craft_dialogue_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let pid = ctx.project_id.clone().ok_or_else(|| fail(ApiError::validation("project_id is required.")))?;
-    let folder = views::resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = views::resolve_project(&state.roots(), &pid).map_err(fail)?;
     let session = read_session(folder.clone()).await?.session;
     let scene = text_or_empty(ctx.params.get("scene_id"));
     let (draft, speaker) = dialogue_request(&session, &pid, &scene, ctx.params.get("dialogue").filter(|v| !v.is_null())).map_err(fail)?;
@@ -298,7 +298,7 @@ pub async fn patch_scene_settings(State(state): Shared, Path((pid, sid)): Path<(
 
 /// Save defaults or a scene's overrides, with the dialogue clip imported or removed on request. Port of `patch_audio_settings`.
 async fn patch_audio(state: &Arc<AppState>, pid: String, scene_id: Option<String>, headers: &HeaderMap, payload: Obj) -> ApiResult {
-    let folder = views::resolve_project(&state.roots, &pid)?;
+    let folder = views::resolve_project(&state.roots(), &pid)?;
     let expected = if_match(headers)?;
     let env = state.builder_env();
     let _guard = state.edit_lock.lock().await;

@@ -7,6 +7,10 @@
 //!
 //! The pass runs on the joined video, after the transitions and before the overlays. `plan` and `segments` are pure. `apply_looks` cuts the video where blocks
 //! start and end, draws the frames that have a look on the GPU and leaves the rest as they are, and joins the pieces.
+//!
+//! Frames without a look are not encoded again where that can be avoided: a stretch of them is copied from the video as it is, from one group of pictures to
+//! the next (`plain_parts`), and only the few frames between the stretch and the nearest looks are encoded. What is encoded uses the stitch's own x264
+//! settings (`scene_video_args`), so it is as good as the scene clips and the same preset, which the pieces need to be joined without being decoded.
 
 use std::path::{Path, PathBuf};
 use std::process::Stdio;
@@ -15,14 +19,12 @@ pub use h3_transitions::Kind;
 use h3_transitions::{look, params_from_json, Params, TransitionRenderer};
 use serde_json::{json, Value};
 
-use crate::tools::{args, MediaError, Tools};
+use crate::tools::{args, scene_video_args, MediaError, Tools};
 use crate::transition::{decoder, to_canvas, Piped, UNTAGGED_YUV};
-use crate::video::video_size;
+use crate::video::{probe_stream_fields, video_size};
 
 pub const DEFAULT_INTENSITY: f64 = 1.0;
 pub const SECONDS_RANGE: (f64, f64) = (0.05, 86400.0);
-/// How good the pieces drawn and cut here are kept (x264 crf; the video is encoded once more at the end).
-const CRF: &str = "17";
 
 /// One effect or filter as the caller asks for it.
 #[derive(Debug, Clone)]
@@ -150,16 +152,89 @@ pub fn block_state(block: &Block, frame: i64, fps: u32) -> (f32, f32) {
     (progress / (block.last - block.first) as f32, (frame - block.first) as f32 / fps as f32)
 }
 
-/// Cuts frames `[from, to)` of `input` into `output` and encodes them as they are.
-fn trim_piece(tools: &Tools, input: &Path, from: i64, to: i64, fps: u32, output: &Path) -> Result<(), MediaError> {
-    let filter = format!("fps={fps},trim=start_frame={from}:end_frame={to},setpts=PTS-STARTPTS");
+/// A stretch of the video, frames `[from, to)`, written as it is (`copy`) or encoded again.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Part {
+    pub from: i64,
+    pub to: i64,
+    pub copy: bool,
+}
+
+/// How a stretch of frames without a look is written. `keyframes` are the frames a group of pictures starts at, in order, and `total` the frames of the
+/// video. A stretch can be copied from one keyframe to the next, or to the end of the video, but not cut inside a group of pictures. So the part from the
+/// first keyframe in the stretch to the last keyframe at or before its end is copied when it is at least `min_copy` frames long, and the frames on either
+/// side of it are encoded again. A stretch with no such part is encoded whole.
+pub fn plain_parts(from: i64, to: i64, total: i64, keyframes: &[i64], min_copy: i64) -> Vec<Part> {
+    let start = keyframes.iter().copied().find(|k| *k >= from && *k < to);
+    let end = start.and_then(|a| keyframes.iter().copied().chain(std::iter::once(total)).filter(|b| *b > a && *b <= to).max());
+    match (start, end) {
+        (Some(a), Some(b)) if b - a >= min_copy => {
+            let mut parts = Vec::new();
+            if from < a {
+                parts.push(Part { from, to: a, copy: false });
+            }
+            parts.push(Part { from: a, to: b, copy: true });
+            if b < to {
+                parts.push(Part { from: b, to, copy: false });
+            }
+            parts
+        }
+        _ => vec![Part { from, to, copy: false }],
+    }
+}
+
+/// The frames of `video` that a group of pictures starts at, as `(frame, seconds)` in order. `None` when the video does not have one packet for each of the
+/// `total` frames, because then a packet's place in the video is not its frame number and nothing can be copied safely.
+fn keyframes(tools: &Tools, video: &Path, total: i64) -> Option<Vec<(i64, f64)>> {
+    let out = tools
+        .ffprobe_checked(
+            &args(&["-v", "error", "-select_streams", "v:0", "-show_entries", "packet=pts_time,flags", "-of", "csv=p=0", &video.display().to_string()]),
+            "ffprobe could not list the packets of the video.",
+        )
+        .ok()?;
+    let mut packets: Vec<(f64, bool)> = Vec::new();
+    for line in String::from_utf8_lossy(&out.stdout).lines().filter(|l| !l.trim().is_empty()) {
+        let (time, flags) = line.trim().split_once(',')?;
+        packets.push((time.parse().ok()?, flags.contains('K')));
+    }
+    if packets.len() as i64 != total {
+        return None;
+    }
+    // Packets come in the order they are decoded, frames in the order they are shown.
+    packets.sort_by(|a, b| a.0.total_cmp(&b.0));
+    Some(packets.iter().enumerate().filter(|(_, packet)| packet.1).map(|(frame, packet)| (frame as i64, packet.0)).collect())
+}
+
+/// Copies `count` frames of `input` into `output` without encoding them, starting at the keyframe that is shown at `seconds`. The copy is checked: when it
+/// does not hold exactly `count` frames of the right length the file is removed and an error comes back, and the caller encodes those frames instead.
+fn copy_piece(tools: &Tools, input: &Path, seconds: f64, count: i64, fps: u32, output: &Path) -> Result<(), MediaError> {
+    // The time ffprobe gave is rounded to the microsecond, and a seek lands on the keyframe at or before it. One microsecond more is past the keyframe
+    // whichever way it was rounded and far short of the next frame. Seeking further would shift the copy's timestamps by the difference.
+    let start = format!("{:.6}", seconds + 0.000_001);
+    let wrong = || MediaError::Failed("FFmpeg did not copy the frames of the video as they were.".into());
     tools.ffmpeg_checked(
-        &args(&[
-            "-y", "-v", "error", "-i", &input.display().to_string(), "-map", "0:v:0", "-an", "-vf", &filter, "-frames:v", &(to - from).to_string(), "-c:v", "libx264", "-preset", "veryfast", "-crf", CRF,
-            "-pix_fmt", "yuv420p", "-r", &fps.to_string(), &output.display().to_string(),
-        ]),
-        "FFmpeg could not cut a piece of the video for the effects.",
+        &args(&["-y", "-v", "error", "-ss", &start, "-i", &input.display().to_string(), "-map", "0:v:0", "-an", "-c:v", "copy", "-frames:v", &count.to_string(), &output.display().to_string()]),
+        "FFmpeg could not copy a piece of the video for the effects.",
     )?;
+    let checked = probe_stream_fields(tools, output, "v:0", &["nb_read_packets", "duration"], true).ok().filter(|f| {
+        let frames = f.get("nb_read_packets").and_then(|v| v.parse::<i64>().ok());
+        let seconds = f.get("duration").and_then(|v| v.parse::<f64>().ok());
+        frames == Some(count) && seconds.is_some_and(|s| (s - count as f64 / f64::from(fps)).abs() < 1.5 / f64::from(fps))
+    });
+    if checked.is_none() {
+        let _ = std::fs::remove_file(output);
+        return Err(wrong());
+    }
+    Ok(())
+}
+
+/// Cuts frames `[from, to)` of `input` into `output` and encodes them as they are.
+fn trim_piece(tools: &Tools, input: &Path, from: i64, to: i64, fps: u32, render_crf: Option<f64>, output: &Path) -> Result<(), MediaError> {
+    let filter = format!("fps={fps},trim=start_frame={from}:end_frame={to},setpts=PTS-STARTPTS");
+    let mut a = args(&["-y", "-v", "error", "-i", &input.display().to_string(), "-map", "0:v:0", "-an", "-vf", &filter, "-frames:v", &(to - from).to_string()]);
+    a.extend(scene_video_args(render_crf));
+    a.extend(args(&["-r", &fps.to_string(), &output.display().to_string()]));
+    tools.ffmpeg_checked(&a, "FFmpeg could not cut a piece of the video for the effects.")?;
     Ok(())
 }
 
@@ -174,6 +249,7 @@ fn draw_piece(
     items: &[LookItem],
     params: &[Params],
     fps: u32,
+    render_crf: Option<f64>,
     output: &Path,
 ) -> Result<(), MediaError> {
     let (width, height) = video_size(tools, input)?;
@@ -181,10 +257,9 @@ fn draw_piece(
     let frames = (segment.to - segment.from) as u32;
     let chain = format!("fps={fps},trim=start_frame={}:end_frame={},setpts=PTS-STARTPTS,{}", segment.from, segment.to, to_canvas(width, height));
     let mut reader = decoder(tools, input, &chain, frames)?;
-    let encode = args(&[
-        "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgba", "-s", &format!("{width}x{height}"), "-r", &fps.to_string(), "-i", "pipe:0", "-an", "-vf", UNTAGGED_YUV, "-c:v", "libx264", "-preset",
-        "veryfast", "-crf", CRF, "-pix_fmt", "yuv420p", "-r", &fps.to_string(), &output.display().to_string(),
-    ]);
+    let mut encode = args(&["-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "rgba", "-s", &format!("{width}x{height}"), "-r", &fps.to_string(), "-i", "pipe:0", "-an", "-vf", UNTAGGED_YUV]);
+    encode.extend(scene_video_args(render_crf));
+    encode.extend(args(&["-r", &fps.to_string(), &output.display().to_string()]));
     let mut writer = match Piped::spawn(&tools.ffmpeg, &encode, Stdio::piped(), Stdio::null()) {
         Ok(p) => p,
         Err(e) => {
@@ -224,8 +299,19 @@ fn draw_piece(
 }
 
 /// Applies the looks to `input` and writes the result to `output`. Returns what was drawn and a note for each item that was cut short or left out. When no
-/// item covers a frame nothing is written (`None` for the applied list) and the caller keeps `input`.
-pub fn apply_looks(tools: &Tools, items: &[LookItem], input: &Path, output: &Path, fps: u32, total: i64, scratch: &Path) -> Result<(Option<Vec<AppliedLook>>, Vec<String>), MediaError> {
+/// item covers a frame nothing is written (`None` for the applied list) and the caller keeps `input`. `render_crf` is the quality the scene clips were
+/// rendered at (`source_crf`), which what is encoded here is never coarser than.
+#[allow(clippy::too_many_arguments)]
+pub fn apply_looks(
+    tools: &Tools,
+    items: &[LookItem],
+    input: &Path,
+    output: &Path,
+    fps: u32,
+    total: i64,
+    scratch: &Path,
+    render_crf: Option<f64>,
+) -> Result<(Option<Vec<AppliedLook>>, Vec<String>), MediaError> {
     let (blocks, notes) = plan(items, total, fps);
     if blocks.is_empty() {
         return Ok((None, notes));
@@ -237,14 +323,26 @@ pub fn apply_looks(tools: &Tools, items: &[LookItem], input: &Path, output: &Pat
     }
     let mut renderer = TransitionRenderer::new().map_err(|e| MediaError::Failed(e.to_string()))?;
     let mut pieces: Vec<PathBuf> = Vec::new();
+    // Where a group of pictures starts, so the frames between the looks can be copied.
+    let keys = keyframes(tools, input, total).unwrap_or_default();
+    let key_frames: Vec<i64> = keys.iter().map(|(frame, _)| *frame).collect();
     let result = (|| -> Result<(), MediaError> {
-        for (n, segment) in segments(&blocks, total).iter().enumerate() {
-            let path = scratch.join(format!("_temp_look_piece_{:04}.mp4", n + 1));
-            pieces.push(path.clone());
+        for segment in segments(&blocks, total).iter() {
             if segment.blocks.is_empty() {
-                trim_piece(tools, input, segment.from, segment.to, fps, &path)?;
+                for part in plain_parts(segment.from, segment.to, total, &key_frames, i64::from(fps)) {
+                    let path = scratch.join(format!("_temp_look_piece_{:04}.mp4", pieces.len() + 1));
+                    pieces.push(path.clone());
+                    let seconds = keys.iter().find(|(frame, _)| *frame == part.from).map(|(_, seconds)| *seconds);
+                    // A copy that does not check out is encoded instead: the frames matter more than the speed.
+                    let copied = part.copy && seconds.is_some_and(|s| copy_piece(tools, input, s, part.to - part.from, fps, &path).is_ok());
+                    if !copied {
+                        trim_piece(tools, input, part.from, part.to, fps, render_crf, &path)?;
+                    }
+                }
             } else {
-                draw_piece(tools, &mut renderer, input, segment, &blocks, items, &params, fps, &path)?;
+                let path = scratch.join(format!("_temp_look_piece_{:04}.mp4", pieces.len() + 1));
+                pieces.push(path.clone());
+                draw_piece(tools, &mut renderer, input, segment, &blocks, items, &params, fps, render_crf, &path)?;
             }
         }
         let list = scratch.join("_temp_look_pieces.txt");

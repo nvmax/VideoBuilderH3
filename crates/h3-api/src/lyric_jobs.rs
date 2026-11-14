@@ -217,7 +217,7 @@ fn has_scene_media(segment: &Value) -> bool {
 async fn from_lines_job(state: Arc<AppState>, ctx: JobCtx) -> Result<Value, JobError> {
     let params = ctx.params.clone();
     let pid = ctx.project_id.clone().ok_or_else(|| validation("project_id is required."))?;
-    let folder = resolve_project(&state.roots, &pid).map_err(fail)?;
+    let folder = resolve_project(&state.roots(), &pid).map_err(fail)?;
     let loaded = read_session(&folder).await?;
     let existing: Vec<&Value> = loaded.session.get("segments").and_then(Value::as_array).map(|a| a.iter().filter(|s| s.is_object()).collect()).unwrap_or_default();
     if !existing.is_empty() && !flag(&params, "replace_existing", false) {
