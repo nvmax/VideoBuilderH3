@@ -678,10 +678,24 @@ pub fn bulk_scene_ops(project: &Path, operations: &[Value], if_match: Option<i64
             }
             _ => {
                 let fields = op.get("fields").and_then(Value::as_object).filter(|f| !f.is_empty()).cloned().ok_or_else(|| need("fields", ": an object of scene fields to set."))?;
-                for (k, v) in &fields {
+                // Scene-card fields are saved like `PATCH /scenes/{sid}`: the Builder's keys, and the Reference Builder maps for subject_ids and
+                // location_id. Other fields are copied onto the scene as they are (pack PR 318).
+                let (values, legacy) = parse_scene_card_patch(&fields).map_err(|e| OpError::Validation(format!("{here} (patch): {e}")))?;
+                let card_only = card_only_names(&values);
+                if !card_only.is_empty() {
+                    return Err(OpError::Validation(format!("{here} (patch): {} belong to a Storyboard card, which this app does not have.", card_only.join(", "))));
+                }
+                let engine = text_or_empty(edit.session.get("video_engine"));
+                let image_mode = Some(text_or_empty(edit.session.get("image_model_mode"))).filter(|m| !m.trim().is_empty()).unwrap_or_else(|| "zimage".into());
+                let scene_key = if id.is_empty() { given.clone() } else { id.clone() };
+                apply_scene_references(&mut edit.session, &scene_key, &values)?;
+                let plain: Obj = values.iter().filter(|(k, _)| !matches!(k.as_str(), "subject_ids" | "location_id")).map(|(k, v)| (k.clone(), v.clone())).collect();
+                apply_to_segment(&mut segs[idx], &plain, &engine, &image_mode);
+                for (k, v) in &legacy {
                     set(&mut segs[idx], k, v.clone());
                 }
-                if fields.contains_key("lyric_text") && !fields.contains_key("lyric_no_lip_sync") {
+                let sets = |key: &str| values.contains_key(key) || legacy.contains_key(key);
+                if sets("lyric_text") && !sets("lyric_no_lip_sync") {
                     let instrumental = is_instrumental_lyric_text(&text_or_empty(segs[idx].get("lyric_text")));
                     set(&mut segs[idx], "lyric_no_lip_sync", json!(instrumental));
                 }

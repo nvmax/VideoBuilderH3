@@ -10,7 +10,7 @@ use super::lyrics::lyric_chunks;
 use super::plan::{cut_plan_instruction, performance_craft_instruction, shot_plan};
 use super::rx::{rx, sub};
 use super::text::{literal_scene_instruction, motion_energy_text, scene_timing_instruction};
-use crate::pyval::{fmt_g, round_to, take_chars, Obj};
+use crate::pyval::{fmt_g, round_to, take_chars, text_or_empty, Obj};
 
 fn default_target_limit() -> i64 {
     7000
@@ -51,6 +51,11 @@ pub struct ShotTaskArgs {
     pub continuity: String,
     pub storyboard_context: String,
     pub cues: Option<Vec<CueRow>>,
+    /// `"speaking"` with `dialogue` writes the Builder's speaking task: only the assigned speakers talk, and their exact lines go in `<d>` tags
+    /// (pack PR 318). Anything else is the singing task.
+    pub performance_mode: String,
+    /// The scene's speaker assignments, each with `speaker_name`, `text` and an optional `type`.
+    pub dialogue: Vec<Obj>,
 }
 
 impl Default for ShotTaskArgs {
@@ -86,6 +91,8 @@ impl Default for ShotTaskArgs {
             continuity: String::new(),
             storyboard_context: String::new(),
             cues: None,
+            performance_mode: "singing".to_string(),
+            dialogue: Vec::new(),
         }
     }
 }
@@ -140,6 +147,22 @@ pub fn build_shot_task(a: &ShotTaskArgs) -> String {
         text
     };
     let built_in = a.audio_mode == "built_in_audio";
+    // A speaking scene talks instead of sings: only the assigned speakers speak, in the order of their lines (`minimax_prompt.mjs`).
+    let speaking = a.performance_mode == "speaking" && !a.lyric_text.is_empty() && !a.visual_only && !a.no_character;
+    let dialogue_rows: Vec<&Obj> = a
+        .dialogue
+        .iter()
+        .filter(|d| !text_or_empty(d.get("text")).trim().is_empty() && {
+            let kind = text_or_empty(d.get("type"));
+            (if kind.is_empty() { "dialogue" } else { kind.as_str() }) != "instrumental"
+        })
+        .collect();
+    let speaker_label = |name: &str| -> String {
+        let key = name.trim().to_lowercase();
+        cast.iter().find(|l| !key.is_empty() && !l.name.is_empty() && l.name.trim().to_lowercase() == key).map(|l| l.label.clone()).unwrap_or_default()
+    };
+    let speaker_labels: std::collections::BTreeSet<String> =
+        dialogue_rows.iter().map(|d| speaker_label(&text_or_empty(d.get("speaker_name")))).filter(|l| !l.is_empty()).collect();
 
     let mut parts: Vec<String> = vec![
         "MiniMax H3 shot-description task.".to_string(),
@@ -190,6 +213,12 @@ pub fn build_shot_task(a: &ShotTaskArgs) -> String {
         for item in &cast {
             let role = if a.visual_only || a.lyric_text.is_empty() {
                 "does not sing, speak, or lip sync; acts and reacts silently with a relaxed closed mouth"
+            } else if speaking && !speaker_labels.is_empty() {
+                if speaker_labels.contains(&item.label) {
+                    "SPEAKS only its own assigned lines from the Exact dialogue order, with visible lip sync"
+                } else {
+                    "does not speak or lip sync; listens and reacts silently with a relaxed closed mouth"
+                }
             } else if built_in {
                 "SINGS and lip-syncs the exact lyric line with visible mouth, lip, and jaw movement"
             } else {
@@ -227,6 +256,25 @@ pub fn build_shot_task(a: &ShotTaskArgs) -> String {
         parts.push("Vocal performance: no visible character / no lip sync. Do not invent a visible singer or speaker.".to_string());
     } else if a.visual_only || a.lyric_text.is_empty() {
         parts.push("Vocal performance: no exact lyric is assigned to this scene. Do not add singing, speaking, or lip sync.".to_string());
+    } else if speaking {
+        parts.push(format!(
+            "Vocal performance: speaking with exact dialogue lip sync. Use the stable visible subject label, and place every spoken cue inside <d>[English] exact words with final punctuation.</d>. Mention the visible speaking action naturally in the shot descriptions. The characters speak; they never sing.{}",
+            if built_in { " Show clear, natural mouth, lip, jaw, and facial movement synchronized to the audible speech." } else { "" }
+        ));
+        let order: Vec<String> = dialogue_rows
+            .iter()
+            .enumerate()
+            .map(|(i, d)| {
+                let name = text_or_empty(d.get("speaker_name"));
+                let who = Some(speaker_label(&name)).filter(|l| !l.is_empty()).or_else(|| Some(name.trim().to_string()).filter(|n| !n.is_empty())).unwrap_or_else(|| "The assigned speaker".to_string());
+                format!("{}. {who} says exactly: “{}”", i + 1, text_or_empty(d.get("text")).trim())
+            })
+            .collect();
+        parts.push(if order.is_empty() {
+            format!("Exact dialogue order:\nThe assigned speaker says exactly: \"{}\"", compact(&a.lyric_text, 900))
+        } else {
+            format!("Exact dialogue order:\n{}", order.join("\n"))
+        });
     } else if let Some(cues) = cues {
         parts.push(
             concat!(
@@ -304,7 +352,7 @@ pub fn build_shot_task(a: &ShotTaskArgs) -> String {
         a.continuation.is_some(),
     ));
     parts.push(literal_scene_instruction());
-    if !built_in && !a.visual_only && !a.no_character {
+    if !built_in && !a.visual_only && !a.no_character && !speaking {
         parts.push(
             concat!(
                 "SUPPLIED-AUDIO SINGING: Include the assigned singer and Audio 1 synchronization cue once, only during audible vocals. ",

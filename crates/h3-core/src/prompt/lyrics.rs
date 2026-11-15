@@ -1,7 +1,7 @@
 //! Lyric splitting and `<d>` tagging. Port of the lyric part of `minimax/shot_prompt.py`.
 
 use super::cues::cue_text;
-use super::rx::{find_all, find_all_group, group, is_match, rx, sub};
+use super::rx::{find_all, find_all_group, group, is_match, rx, sub, sub_with};
 use crate::pyval::collapse_ws;
 
 /// The scene's lyric as clean single lines (section tags and blank lines dropped).
@@ -112,6 +112,20 @@ pub fn ensure_quoted_lyrics(descriptions: &[String], lyric_text: &str, performer
     result
 }
 
+/// A speaking scene's shot says its `<d>` lines instead of singing them (pack PR 318, `speaking_wording`).
+///
+/// `sings <d>` becomes `says <d>`, a `singing` delivery mark inside the tag becomes `speaking`, and with built-in audio (nothing to sync to)
+/// ` in sync with <Audio 1>` is dropped.
+pub fn speaking_wording(description: &str, built_in_audio: bool) -> String {
+    let text = sub_with(rx!(r"(?i)\bsings(\s+<d>)"), description, |c| format!("says{}", group(c, 1)));
+    let text = sub_with(rx!(r"(?i)(<d>\[[^\]]*?)\bsinging\b"), &text, |c| format!("{}speaking", group(c, 1)));
+    if built_in_audio {
+        sub(rx!(r"(?i)\s+in sync with <Audio 1>"), &text, "")
+    } else {
+        text
+    }
+}
+
 /// The last `[Shot N]` description of a saved prompt: what is on screen when the next scene starts.
 pub fn last_shot_text(saved_prompt: &str, limit: usize) -> String {
     let marker = rx!(r"\[Shot\s+\d+\]\s*(?:At\s+[0-9:.]+,\s*)?");
@@ -125,5 +139,20 @@ pub fn last_shot_text(saved_prompt: &str, limit: usize) -> String {
         format!("{}...", block.chars().take(limit).collect::<String>().trim_end())
     } else {
         block
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::speaking_wording;
+
+    #[test]
+    fn a_speaking_shot_says_its_lines() {
+        let shot = "Ava stands. Ava sings <d>[English, singing] Hold on.</d> in sync with <Audio 1>.";
+        assert_eq!(speaking_wording(shot, false), "Ava stands. Ava says <d>[English, speaking] Hold on.</d> in sync with <Audio 1>.");
+        assert_eq!(speaking_wording(shot, true), "Ava stands. Ava says <d>[English, speaking] Hold on.</d>.");
+        assert_eq!(speaking_wording("Ava Sings <d>[English] Hi.</d>", false), "Ava says <d>[English] Hi.</d>");
+        // Only the delivery mark in the tag and `sings` before it change.
+        assert_eq!(speaking_wording("The crowd sings along softly.", true), "The crowd sings along softly.");
     }
 }

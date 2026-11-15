@@ -128,3 +128,34 @@ async fn a_bad_reply_is_an_error_not_a_prompt() {
         }
     }
 }
+
+/// A speaking scene is asked to speak, not sing (pack PR 318): the task names the speakers and their lines in order, and a shot that still
+/// says `sings <d>` comes out as `says <d>`. With built-in audio there is no `<Audio 1>` in it.
+#[tokio::test]
+async fn a_speaking_scene_is_told_to_speak() {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../fixtures/prompt/writer.json");
+    let cases: Value = serde_json::from_str(&std::fs::read_to_string(path).unwrap()).unwrap();
+    let (cfg, shared) = start().await;
+    let reply = json!({"shots": [{"description": "<Subject 1> (Ava) stands on the roof, the camera drifting closer. <Subject 1> sings <d>[English, singing] Hold me close tonight.</d> in sync with <Audio 1>."}]});
+    shared.lock().unwrap().0 = reply.to_string();
+    for (case_name, built_in) in [("plain_scene1", false), ("built_in_audio_scene1", true)] {
+        let case = cases["cases"].as_array().unwrap().iter().find(|c| c["name"] == case_name).unwrap();
+        let mut session = case["session"].as_object().unwrap().clone();
+        session.insert("video_type".into(), json!("speaking"));
+        let segment = session["segments"][0].as_object_mut().unwrap();
+        segment.insert("minimax_speaker_assignments".into(), json!([{"speaker_name": "Ava", "text": "Hold me close tonight."}]));
+        let written = generate_scene_prompt(&cfg, &session, 0, &PromptParams::default()).await.unwrap_or_else(|e| panic!("{case_name}: {e:?}"));
+
+        let sent = shared.lock().unwrap().1.last().cloned().unwrap();
+        let request = sent["messages"][0]["content"].as_str().unwrap().to_string();
+        assert!(request.contains("Vocal performance: speaking with exact dialogue lip sync."), "{case_name}: {request}");
+        assert!(request.contains("Exact dialogue order:\n1. <Subject 1> says exactly: “Hold me close tonight.”"), "{case_name}");
+        assert!(request.contains("<Subject 1> (Ava): SPEAKS only its own assigned lines from the Exact dialogue order"), "{case_name}");
+        assert!(!request.contains("MANDATORY VOCAL PERFORMANCE"), "{case_name}: the singing task was sent");
+        assert!(!request.contains("SUPPLIED-AUDIO SINGING"), "{case_name}: the singing rule was sent");
+
+        assert!(written.prompt.contains("says <d>[English, speaking] Hold me close tonight.</d>"), "{case_name}: {}", written.prompt);
+        assert!(!written.prompt.contains("sings <d>"), "{case_name}: {}", written.prompt);
+        assert_eq!(written.prompt.contains("<Audio 1>"), !built_in, "{case_name}: <Audio 1> only with supplied audio: {}", written.prompt);
+    }
+}

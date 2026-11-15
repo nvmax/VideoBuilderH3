@@ -16,7 +16,7 @@ use h3_core::prompt::cues::{cue_cut_plan, enforce_cue_shot, timed_cue_rows};
 use h3_core::prompt::emotion::{emotion_expression_input, emotion_expression_instruction};
 use h3_core::prompt::frame::{character_budget, compact_reference_prompt, reference_frame, reference_labels, validate_prompt, wrap_reference_prompt};
 use h3_core::prompt::lyric_free::{apply_shots, prompt_context, scene_cut_plan, scene_enabled, scene_performers, Labels};
-use h3_core::prompt::lyrics::{ensure_quoted_lyrics, last_shot_text};
+use h3_core::prompt::lyrics::{ensure_quoted_lyrics, last_shot_text, speaking_wording};
 use h3_core::prompt::masked::masked_continuation_context;
 use h3_core::prompt::performance::strip_singing_articulation;
 use h3_core::prompt::plan::{apply_cut_style, shot_plan, HARD_LIMIT};
@@ -317,6 +317,20 @@ pub async fn generate_scene_prompt_timed(llm: &LlmConfig, session: &Obj, index: 
     let lyric_raw = field(&segment, "lyric_text");
     let visual_only = segment.get("lyric_no_lip_sync").is_some_and(truthy) || segment.get("no_character_present").is_some_and(truthy) || h3_core::lyric_scenes::is_instrumental_lyric_text(&lyric_raw);
     let lyric = if visual_only { String::new() } else { h3_core::pyval::collapse_ws(&lyric_raw) };
+    // A speaking scene talks instead of sings: the scene's own performance first, then the project's video type (pack PR 318).
+    let speaking = !visual_only && matches!(performance.trim().to_lowercase().replace(['-', ' '], "_").as_str(), "speaking" | "short_film" | "dialogue" | "dialog");
+    let dialogue: Vec<Obj> = if speaking {
+        ["minimax_speaker_assignments", "speaker_assignments", "dialogue_cues"]
+            .iter()
+            .map(|key| h3_core::story::helpers::normalize_speaker_assignments(segment.get(*key)))
+            .find(|rows| !rows.is_empty())
+            .unwrap_or_default()
+            .into_iter()
+            .filter_map(|row| row.as_object().cloned())
+            .collect()
+    } else {
+        Vec::new()
+    };
     let labels = reference_labels(&items);
     let subject_text = mapped_subjects(session, &segment).iter().map(|(name, description)| if description.is_empty() { name.clone() } else { format!("{name}: {description}") }).collect::<Vec<_>>().join("\n");
     let location_text = location_ref(session, &segment).map(|card| [field(&card, "name"), field(&card, "description")].into_iter().filter(|part| !part.is_empty()).collect::<Vec<_>>().join("\n")).unwrap_or_default();
@@ -375,7 +389,7 @@ pub async fn generate_scene_prompt_timed(llm: &LlmConfig, session: &Obj, index: 
 
     let mut emotion_payload = emotion_expression_input(&segment, session);
     emotion_payload.insert("lyric_text".into(), json!(lyric));
-    emotion_payload.insert("performance_mode".into(), json!(if visual_only { "no_lip_sync" } else { "singing" }));
+    emotion_payload.insert("performance_mode".into(), json!(if visual_only { "no_lip_sync" } else if speaking { "speaking" } else { "singing" }));
     emotion_payload.insert("audio_mode".into(), json!(audio_mode));
     let emotion = emotion_expression_instruction(&emotion_payload);
 
@@ -445,6 +459,8 @@ pub async fn generate_scene_prompt_timed(llm: &LlmConfig, session: &Obj, index: 
             audio_direction: field(&segment, "audio_direction"),
             continuity: field(&segment, "continuity"),
             storyboard_context: context.clone(),
+            performance_mode: if speaking { "speaking" } else { "singing" }.into(),
+            dialogue: dialogue.clone(),
         };
         let max_new = params.max_new_tokens.min(((budget.shot_chars as f64 / 2.5) as u32 + 250).max(600));
         let ask = |with_picture: bool| {
@@ -475,6 +491,8 @@ pub async fn generate_scene_prompt_timed(llm: &LlmConfig, session: &Obj, index: 
             descriptions = apply_shots(&descriptions, &segment, &plan, &performer, &performer_labels, session);
         } else if !cues.is_empty() {
             descriptions = descriptions.iter().zip(cues.iter()).map(|(text, cue)| enforce_cue_shot(text, cue)).collect();
+        } else if speaking {
+            descriptions = descriptions.iter().map(|d| speaking_wording(d, audio_mode == "built_in_audio")).collect();
         } else if !lyric.is_empty() && audio_mode != "built_in_audio" && !labels.is_empty() {
             let cast: Vec<_> = labels.iter().filter(|l| l.kind == "subject").collect();
             let first = cast.first().copied().unwrap_or(&labels[0]);

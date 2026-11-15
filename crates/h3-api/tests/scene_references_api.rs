@@ -332,3 +332,48 @@ two"}))).await;
     assert_eq!(plan["data"]["summary"]["videos_to_render"], 2);
 }
 
+
+/// A bulk patch saves scene-card fields like `PATCH /scenes/{sid}` (pack PR 318): speaker assignments under the Builder's key, and the character
+/// and location in the Reference Builder maps. Before, the keys were copied onto the scene as sent and the maps never changed.
+#[tokio::test]
+async fn a_bulk_patch_saves_card_fields_like_a_single_patch() {
+    let s = start().await;
+    s.call(Method::POST, "/projects", Some(json!({"name": "BulkCards"}))).await;
+    let p = "/projects/BulkCards";
+    s.call(Method::POST, &format!("{p}/timeline/bulk"), Some(json!({"text": "4 a\n4 b", "mode": "durations"}))).await;
+    s.call(Method::PUT, &format!("{p}/references/subjects/subj1"), Some(json!({"name": "Ava", "description": "a singer"}))).await;
+    s.call(Method::PUT, &format!("{p}/references/locations/loc1"), Some(json!({"name": "Roof", "description": "a rooftop"}))).await;
+    let (_, scenes) = s.call(Method::GET, &format!("{p}/scenes"), None).await;
+    let first = scenes["data"][0]["id"].as_str().unwrap().to_string();
+    let second = scenes["data"][1]["id"].as_str().unwrap().to_string();
+    let fields = json!({
+        "speaker_assignments": [{"speaker_id": "subj1", "speaker_name": "Ava", "text": "Hold me close."}],
+        "subject_ids": ["subj1"],
+        "location_id": "loc1",
+    });
+
+    let (code, single) = s.call(Method::PATCH, &format!("{p}/scenes/{first}"), Some(fields.clone())).await;
+    assert_eq!(code, 200, "{single}");
+    let (code, bulk) = s.call(Method::POST, &format!("{p}/scenes/bulk"), Some(json!({"operations": [{"op": "patch", "scene_id": second, "fields": fields}]}))).await;
+    assert_eq!(code, 200, "{bulk}");
+
+    let (_, one) = s.call(Method::GET, &format!("{p}/scenes/{first}"), None).await;
+    let (_, two) = s.call(Method::GET, &format!("{p}/scenes/{second}"), None).await;
+    let (one, two) = (&one["data"], &two["data"]);
+    // The speaker lines become the scene's lyrics and singers, as they do for a single patch.
+    assert_eq!((two["lyrics"].as_str(), &two["lyric_singers"]), (Some("Hold me close."), &json!(["Ava"])), "{two}");
+    assert_eq!((&two["lyrics"], &two["lyric_singers"]), (&one["lyrics"], &one["lyric_singers"]));
+
+    let (_, map) = s.call(Method::GET, &format!("{p}/references/scene-mapping"), None).await;
+    let mapping = &map["data"]["scene_mapping"];
+    let text = mapping.to_string();
+    for scene in [&first, &second] {
+        assert!(text.contains(&format!("\"{scene}\"")), "{scene} is in the maps: {text}");
+    }
+    assert_eq!(text.matches("subj1").count(), 2, "both scenes have the character: {text}");
+    assert_eq!(text.matches("loc1").count(), 2, "both scenes have the location: {text}");
+
+    // An invalid card value fails the whole batch and saves nothing.
+    let (code, bad) = s.call(Method::POST, &format!("{p}/scenes/bulk"), Some(json!({"operations": [{"op": "patch", "scene_id": first, "fields": {"subject_ids": ["nobody"]}}]}))).await;
+    assert_eq!((code, bad["error"]["code"].as_str()), (400, Some("VALIDATION_ERROR")), "{bad}");
+}

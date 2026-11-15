@@ -277,8 +277,10 @@ pub fn build_krea2(env: &dyn GraphEnv, payload: &Obj) -> Result<Obj> {
     set(&mut prompt, "193:82", "start_at_step", start)?;
     set(&mut prompt, "193:82", "end_at_step", steps)?;
     if !use_enhance {
-        // PreviewImage is the output. Pointing it at the Krea decode drops the unused ZImage branch from the run.
+        // PreviewImage is the output. Point it at the Krea decode and drop the ZImage branch (and the resize that only feeds it): ComfyUI checks that
+        // every node class in a prompt exists, so the branch's custom scheduler node would fail the prompt even when unused (pack PR 318).
         set(&mut prompt, "199", "images", link("30:8", 0))?;
+        prompt.retain(|id, _| !id.starts_with("193:") && id != "201");
     }
     if let Some(aspect) = prompt.get_mut("49").and_then(Value::as_object_mut) {
         let inputs = aspect.entry("inputs").or_insert_with(|| json!({}));
