@@ -1,4 +1,4 @@
-// Updates: the Menu's "Check for Updates" and the note the app shows at start when a newer version is out. The app window does the work through
+// Updates: the Menu's "Check for Updates" and the note the app shows, at start and every few hours after, when a newer version is out. The app window does the work through
 // the update commands of the Tauri shell (see src-tauri/src/updates.rs). An update is only installed after the user clicks Install and restart,
 // never while a job runs, and only when its signature matches the key built into the app.
 
@@ -8,6 +8,7 @@ const API = "/api/v1";
 const SKIPPED = "h3studio.updateSkipped";
 const REPO = "github.com/nvmax/VideoBuilderH3";
 const START_DELAY_MS = 8000;
+const CHECK_EVERY_MS = 4 * 60 * 60 * 1000;
 
 /** The shell of the app window. A browser tab that shows the app has none, so it cannot install anything. */
 export function shell() {
@@ -68,7 +69,7 @@ export function openUpdates(found = null) {
   const startupBox = element("input");
   startupBox.type = "checkbox";
   startupBox.checked = true;
-  startup.append(startupBox, element("span", "", "Look for updates when the app starts"));
+  startup.append(startupBox, element("span", "", "Look for updates when the app starts and every few hours"));
   panel.append(startup);
   panel.append(element("div", "color:#71717a;font-size:11px;line-height:1.45;margin:0 0 12px;", `Updates come from ${REPO}. The check reads one public file there and sends nothing about you or your projects. An update only installs when its signature matches the key built into this app, and never while a job runs.`));
 
@@ -189,16 +190,22 @@ function showNote(info) {
   document.body.append(note);
 }
 
-/** A few seconds after the app starts, look for a new version unless the check is switched off. A failed check says nothing. */
+/** One look for a new version, unless the check is switched off. The setting is read each time, so the checkbox works without a restart. A failed check says nothing. */
+async function lookForUpdate() {
+  // The Updates window or the note is already open: it holds the answer, and a new check would replace the update it offers.
+  if (document.getElementById("h3-updates") || document.getElementById("h3-update-note")) return;
+  try {
+    if ((await config()).check_for_updates === false) return;
+    const info = await ask("update_check");
+    if (info && info.version !== skippedVersion()) showNote(info);
+  } catch {
+    // Offline, or no release yet: nothing to show.
+  }
+}
+
+/** A few seconds after the app starts, look for a new version, then again every few hours so an app that stays open for days still hears about one. */
 export function startUpdates() {
   if (!shell()) return;
-  setTimeout(async () => {
-    try {
-      if ((await config()).check_for_updates === false) return;
-      const info = await ask("update_check");
-      if (info && info.version !== skippedVersion()) showNote(info);
-    } catch {
-      // Offline, or no release yet: nothing to show.
-    }
-  }, START_DELAY_MS);
+  setTimeout(lookForUpdate, START_DELAY_MS);
+  setInterval(lookForUpdate, CHECK_EVERY_MS);
 }
