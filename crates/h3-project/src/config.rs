@@ -86,9 +86,66 @@ impl AppConfig {
     }
 }
 
+/// Where the Hugging Face token is kept: `hf_token.json` next to the config file. It has a file of its own and is not a field of `config.json`,
+/// because the Settings screen reads the config back and the token never goes to a page.
+pub fn hf_token_path(config_path: &Path) -> PathBuf {
+    config_path.parent().unwrap_or_else(|| Path::new(".")).join("hf_token.json")
+}
+
+/// The saved Hugging Face token, or an empty string when none is saved. The model installer sends it with its downloads from huggingface.co.
+pub fn load_hf_token(config_path: &Path) -> String {
+    let text = std::fs::read_to_string(hf_token_path(config_path)).unwrap_or_default();
+    let value: serde_json::Value = serde_json::from_str(text.trim_start_matches('\u{feff}')).unwrap_or_default();
+    value.get("hf_token").and_then(serde_json::Value::as_str).unwrap_or_default().trim().to_string()
+}
+
+/// Save the Hugging Face token atomically. An empty token removes it.
+pub fn save_hf_token(config_path: &Path, token: &str) -> io::Result<()> {
+    let path = hf_token_path(config_path);
+    let token = token.trim();
+    if token.is_empty() {
+        return match std::fs::remove_file(&path) {
+            Err(e) if e.kind() != io::ErrorKind::NotFound => Err(e),
+            _ => Ok(()),
+        };
+    }
+    if let Some(folder) = path.parent() {
+        std::fs::create_dir_all(folder)?;
+    }
+    atomic_write_json(&path, &serde_json::json!({"hf_token": token}))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn the_hugging_face_token_is_kept_in_its_own_file_next_to_the_config() {
+        let dir = tempfile::tempdir().unwrap();
+        let config = dir.path().join("sub").join("config.json");
+        assert_eq!(load_hf_token(&config), "", "nothing is saved at first");
+        save_hf_token(&config, "  hf_abc123  ").unwrap();
+        assert_eq!(load_hf_token(&config), "hf_abc123", "it is saved trimmed, and the folder is made when it is missing");
+        assert_eq!(hf_token_path(&config), dir.path().join("sub").join("hf_token.json"));
+        assert!(!config.exists(), "the config file is not touched");
+        save_hf_token(&config, "hf_other").unwrap();
+        assert_eq!(load_hf_token(&config), "hf_other");
+        // An empty token removes it, and removing what is not there is fine.
+        save_hf_token(&config, "   ").unwrap();
+        assert_eq!(load_hf_token(&config), "");
+        assert!(!hf_token_path(&config).exists());
+        save_hf_token(&config, "").unwrap();
+    }
+
+    #[test]
+    fn a_damaged_token_file_reads_as_no_token() {
+        let dir = tempfile::tempdir().unwrap();
+        let config = dir.path().join("config.json");
+        std::fs::write(hf_token_path(&config), "not json").unwrap();
+        assert_eq!(load_hf_token(&config), "");
+        std::fs::write(hf_token_path(&config), "\u{feff}{\"hf_token\": \"hf_x\"}").unwrap();
+        assert_eq!(load_hf_token(&config), "hf_x", "a byte order mark is fine");
+    }
 
     #[test]
     fn the_default_project_folder_is_never_relative() {

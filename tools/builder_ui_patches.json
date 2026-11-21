@@ -299,5 +299,54 @@
     "find": "if (segment?.video_status === \"running\") rendering.push(sceneLabel(segment, index));",
     "replace": "if (segment?.video_status === \"running\" || window.__h3Builder?.agentRendering?.has(segment?.id)) rendering.push(sceneLabel(segment, index));",
     "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. The window reads the progress with the app's own fetch.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "import { getJson, makeEditorImageUrl, postJson } from \"./comfy_api.mjs\";",
+    "replace": "import { api } from \"../../../scripts/api.js\";\nimport { getJson, makeEditorImageUrl, postJson } from \"./comfy_api.mjs\";",
+    "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. The panel and the reader.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "    body.append(intro, actions, restartNote, managerMissing, list);\n    let managerAvailable = true;",
+    "replace": "    const installProgress = document.createElement(\"div\");\n    installProgress.style.cssText = \"display:none;padding:10px 12px;border:1px solid #1d4ed8;border-radius:7px;background:#172554;color:#bfdbfe;font-size:13px;line-height:1.45;white-space:pre-wrap;word-break:break-word;\";\n    body.append(intro, actions, installProgress, restartNote, managerMissing, list);\n    let managerAvailable = true;\n    let installing = false;\n    // H3 Studio installs the nodes itself when the pack is not in ComfyUI, and tells how far it is (`/install/progress`). Read it while the\n    // install request is open. The pack inside ComfyUI has no such route, so the first answer that is not ok ends the reading and the text stays.\n    const watchInstall = () => {\n      installing = true;\n      installProgress.textContent = \"Starting the install. ComfyUI-Manager runs on its own, so ComfyUI's console stays quiet. This can take several minutes.\";\n      installProgress.style.display = \"\";\n      let stopped = false;\n      let reading = false;\n      let seen = 0;\n      const tick = async () => {\n        if (reading || stopped) return;\n        reading = true;\n        try {\n          const response = await api.fetchApi(\"/vrgdg/video_builder/custom_nodes/install/progress\", { timeoutMs: null });\n          if (!response.ok) {\n            clearInterval(timer);\n            return;\n          }\n          const p = await response.json();\n          if (stopped || !p.running) return;\n          const finished = (p.done?.length || 0) + (p.failed?.length || 0);\n          const label = VIDEO_BUILDER_CUSTOM_NODES.find((node) => node.id === p.current)?.label || p.current || \"\";\n          const failed = p.failed?.length ? `\\n${p.failed.length} failed so far.` : \"\";\n          installProgress.textContent = `Installing ${Math.min(finished + 1, p.total)} of ${p.total}: ${label} (${p.current_seconds || 0}s)${p.line ? `\\n${p.line}` : \"\"}${failed}`;\n          if (finished !== seen) {\n            seen = finished;\n            await load();\n          }\n        } catch {\n          // Keep the text and try again.\n        } finally {\n          reading = false;\n        }\n      };\n      const timer = setInterval(tick, 1500);\n      return () => {\n        stopped = true;\n        installing = false;\n        clearInterval(timer);\n        installProgress.style.display = \"none\";\n        installAll.disabled = !managerAvailable;\n      };\n    };",
+    "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. Redrawing the cards during an install keeps Install Missing Nodes disabled.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "      installAll.disabled = !managerAvailable;\n      const byId = new Map(statuses.map((item) => [item.id, item]));",
+    "replace": "      installAll.disabled = !managerAvailable || installing;\n      const byId = new Map(statuses.map((item) => [item.id, item]));",
+    "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. Install button of one card: start reading.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "          install.textContent = \"Installing...\";\n          try {\n            const result = await postJson(\"/vrgdg/video_builder/custom_nodes/install\", { ids: [item.id] }, 1200000);",
+    "replace": "          install.textContent = \"Installing...\";\n          const stopWatching = watchInstall();\n          try {\n            const result = await postJson(\"/vrgdg/video_builder/custom_nodes/install\", { ids: [item.id] }, 1200000);",
+    "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. Install button of one card: stop reading.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "          } finally {\n            install.disabled = button.disabled;\n            install.textContent = button.text;\n          }",
+    "replace": "          } finally {\n            stopWatching();\n            install.disabled = button.disabled;\n            install.textContent = button.text;\n          }",
+    "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. Install Missing Nodes: start reading.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "      installAll.textContent = \"Installing Missing...\";\n      try {",
+    "replace": "      installAll.textContent = \"Installing Missing...\";\n      const stopWatching = watchInstall();\n      try {",
+    "expect": 1
+  },
+  {
+    "why": "Custom Nodes window: while H3 Studio installs the nodes itself it shows which pack is installing, how many are done and the last line ComfyUI-Manager printed. Install Missing Nodes: stop reading.",
+    "file": "music_video_builder/dialogs.mjs",
+    "find": "      } finally {\n        installAll.disabled = !managerAvailable;\n        installAll.textContent = \"Install Missing Nodes\";",
+    "replace": "      } finally {\n        stopWatching();\n        installAll.disabled = !managerAvailable;\n        installAll.textContent = \"Install Missing Nodes\";",
+    "expect": 1
   }
 ]

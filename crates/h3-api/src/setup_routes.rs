@@ -10,6 +10,7 @@ use axum::Json;
 use h3_comfy::{check_nodes, ComfyClient, Feature};
 use h3_media::Tools;
 use h3_project::builder_store::{load_comfy_api_key, save_comfy_api_key};
+use h3_project::config::{load_hf_token, save_hf_token};
 use h3_project::AppConfig;
 use serde_json::{json, Value};
 
@@ -234,6 +235,69 @@ pub async fn save(State(state): Shared, body: Option<Json<Value>>) -> ApiResult 
     Ok(success(json!({"saved": true, "restart_required": true, "config": config_view(&saved)}), None))
 }
 
+// -- the Hugging Face token (model downloads) ------------------------------------------------------------------------------
+
+/// Where Hugging Face answers. The model installer sends the token only to this host.
+pub(crate) const HF_BASE: &str = "https://huggingface.co";
+
+/// A Hugging Face token as it was pasted, without the spaces around it, or what is wrong with it. An empty string stays empty (it clears the saved token).
+/// The Builder's Models dialog (`vrgdg/models.rs`) checks the same way. It also keeps a line break out of the Authorization header.
+pub(crate) fn checked_hf_token(raw: &str) -> Result<String, &'static str> {
+    let token = raw.trim();
+    if !token.is_empty() && (!token.starts_with("hf_") || token.chars().any(char::is_whitespace) || token.chars().count() > 400) {
+        return Err("That does not look like a Hugging Face token. It starts with hf_. Paste the whole token without spaces.");
+    }
+    Ok(token.to_string())
+}
+
+/// `GET /setup/hf_token`: whether a Hugging Face token is saved. The token is never returned.
+pub async fn hf_token_status(State(state): Shared) -> ApiResult {
+    let config_path = state.config_path.clone();
+    let configured = blocking(move || !load_hf_token(&config_path).is_empty()).await?;
+    Ok(success(json!({"configured": configured}), None))
+}
+
+/// `PUT /setup/hf_token`: save (or, with an empty string, clear) the token the model installer downloads with. It is what lets the Models dialog install
+/// the files Hugging Face keeps behind a login (the Flux Klein 9B diffusion model), and Hugging Face counts such downloads against the account instead of
+/// the shared limit of anonymous ones. It stays on this computer, in a file of its own next to the config file, and no reply ever carries it.
+pub async fn hf_token_save(State(state): Shared, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let Some(token) = body.get("api_key").and_then(Value::as_str) else {
+        return Err(ApiError::validation("api_key is required; use an empty string to clear it."));
+    };
+    let token = checked_hf_token(token).map_err(ApiError::validation)?;
+    let config_path = state.config_path.clone();
+    blocking(move || save_hf_token(&config_path, &token)).await?.map_err(|e| ApiError::internal(format!("The token could not be saved: {e}")))?;
+    hf_token_status(State(state)).await
+}
+
+/// Ask Hugging Face (at `base`) whose token `token` is. Gives the account name.
+pub(crate) async fn hf_whoami(base: &str, token: &str) -> Result<String, String> {
+    let client = reqwest::Client::builder().timeout(Duration::from_secs(20)).build().map_err(|e| e.to_string())?;
+    let response = client.get(format!("{base}/api/whoami-v2")).bearer_auth(token).send().await.map_err(|e| format!("Could not reach Hugging Face: {e}"))?;
+    match response.status().as_u16() {
+        200 => {
+            let account: Value = response.json().await.unwrap_or(Value::Null);
+            Ok(account.get("name").and_then(Value::as_str).unwrap_or_default().to_string())
+        }
+        401 | 403 => Err("Hugging Face did not accept that token. Check that you copied the whole token and that it was not revoked.".into()),
+        code => Err(format!("Hugging Face answered {code}.")),
+    }
+}
+
+/// `POST /setup/hf_token/test`: ask Hugging Face who the saved token belongs to, or the one in `api_key` when it is sent.
+pub async fn hf_token_test(State(state): Shared, body: Option<Json<Value>>) -> ApiResult {
+    let body = body_object(body)?;
+    let sent = body.get("api_key").and_then(Value::as_str).unwrap_or_default().trim().to_string();
+    let config_path = state.config_path.clone();
+    let token = if sent.is_empty() { blocking(move || load_hf_token(&config_path)).await? } else { sent };
+    if token.is_empty() {
+        return Err(ApiError::validation("No Hugging Face token is saved. Paste one and try again."));
+    }
+    let user = hf_whoami(HF_BASE, &token).await.map_err(ApiError::validation)?;
+    Ok(success(json!({"connected": true, "user": user}), None))
+}
+
 // -- the ComfyUI API key (API Nodes video) -----------------------------------------------------------------------------------
 
 /// `GET /setup/comfy_api_key`: whether a ComfyUI API key is saved. The key is never returned.
@@ -257,4 +321,48 @@ pub async fn comfy_key_save(State(state): Shared, body: Option<Json<Value>>) -> 
     let output = state.builder_env().output;
     blocking(move || save_comfy_api_key(&output, &key)).await?.map_err(|e| ApiError::internal(format!("The key could not be saved: {e}")))?;
     comfy_key_status(State(state)).await
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::sync::{Arc, Mutex};
+    use tokio::io::{AsyncReadExt, AsyncWriteExt};
+
+    /// A localhost server that answers the next request with `status` and `body`, and keeps the request text.
+    async fn serve(status: &'static str, body: &'static str) -> (String, Arc<Mutex<String>>) {
+        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
+        let base = format!("http://{}", listener.local_addr().unwrap());
+        let seen = Arc::new(Mutex::new(String::new()));
+        let log = seen.clone();
+        tokio::spawn(async move {
+            let Ok((mut socket, _)) = listener.accept().await else { return };
+            let mut buffer = vec![0u8; 4096];
+            let read = socket.read(&mut buffer).await.unwrap_or(0);
+            *log.lock().unwrap() = String::from_utf8_lossy(&buffer[..read]).to_lowercase();
+            let reply = format!("HTTP/1.1 {status}\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}", body.len());
+            let _ = socket.write_all(reply.as_bytes()).await;
+            let _ = socket.shutdown().await;
+        });
+        (base, seen)
+    }
+
+    #[tokio::test]
+    async fn hugging_face_names_the_owner_of_a_token_it_accepts() {
+        let (base, seen) = serve("200 OK", r#"{"type":"user","name":"vrgdg-fan"}"#).await;
+        assert_eq!(hf_whoami(&base, "hf_abc123").await.unwrap(), "vrgdg-fan");
+        let request = seen.lock().unwrap().clone();
+        assert!(request.starts_with("get /api/whoami-v2 "), "{request}");
+        assert!(request.contains("authorization: bearer hf_abc123"), "{request}");
+    }
+
+    #[tokio::test]
+    async fn a_token_hugging_face_turns_down_gets_a_plain_message_without_the_token() {
+        let (base, _) = serve("401 Unauthorized", r#"{"error":"Invalid credentials"}"#).await;
+        let message = hf_whoami(&base, "hf_wrong").await.unwrap_err();
+        assert!(message.contains("did not accept that token") && !message.contains("hf_wrong"), "{message}");
+        let (base, _) = serve("500 Internal Server Error", "{}").await;
+        assert_eq!(hf_whoami(&base, "hf_abc").await.unwrap_err(), "Hugging Face answered 500.");
+        assert!(hf_whoami("http://127.0.0.1:9", "hf_abc").await.unwrap_err().starts_with("Could not reach Hugging Face"));
+    }
 }

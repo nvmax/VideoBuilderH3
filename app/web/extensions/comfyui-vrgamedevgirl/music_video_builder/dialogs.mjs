@@ -1,6 +1,8 @@
+import { api } from "../../../scripts/api.js";
 import { getJson, makeEditorImageUrl, postJson } from "./comfy_api.mjs";
 import { llmText, makeButton, makeField, makeInput, makeMiniButton, toast } from "./controls.mjs";
 import { MANAGER_MISSING_TEXT, builtInLine, installButtonState, managerNoteText, missingNodeIds, nodeBadge } from "./custom_nodes_status.mjs";
+import { renderCatalogTab } from "./catalog_models_tab.mjs";
 import { renderDmadModelsTab } from "./dmad_models_tab.mjs";
 import { wireInstallButton } from "./model_install_button.mjs";
 import {
@@ -366,6 +368,24 @@ export function showFinalVideoReadyModal(videoPath) {
 
 // `select` is the label of a Select models tab to open on (the dialog opens on Select models with that tab showing).
 export function showModelDownloadModal({ modelSelections = [], select = "" } = {}) {
+  // A tab that installs its files itself. `cards` are shown when the Builder has the file catalog, `groups` (plain links) when it does not.
+  const catalogTab = ({ id, label, category, intro, cards, groups }) => ({
+    id,
+    label,
+    groups,
+    render: (panel) =>
+      renderCatalogTab(panel, {
+        category,
+        groups: cards,
+        intro,
+        showFolders: (group) => showFolderHint(group),
+        fallback: () => {
+          panel.style.display = "grid";
+          panel.style.flexDirection = "";
+          renderGroups(groups);
+        },
+      }),
+  });
   const tabs = [
     {
       id: "ltx",
@@ -387,9 +407,22 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
         },
       ],
     },
-    {
+    // Image Models, LLM Models and MiniMax H3 install their files into the right ComfyUI model folders (catalog_models_tab.mjs). The
+    // `cards` are the groups of the Builder's model catalog (core/model_catalog.json), `groups` the plain download links shown instead
+    // when the Builder has no installer for them.
+    catalogTab({
       id: "image-models",
       label: "Image Models",
+      category: "image",
+      intro: "Tick the image models you want, then click Install Selected. Each file is saved into the right ComfyUI model folder for you. Nothing is ticked by default, so you only download what you use.",
+      cards: [
+        { title: "ZImage", note: "Core ZImage Turbo diffusion model, Qwen text encoder, and VAE." },
+        { title: "Krea2", note: "Krea2 text-to-image model used by the Reference Builder Krea 2 option." },
+        { title: "MOSS-Image", note: "MOSS-Image option in Generate Subject/Location Reference. The 8-step Turbo LoRA and the Edit LoRA are optional. They are saved as moss_image_sft_8_steps_dmd_lora.safetensors and moss_image_edit_lora.safetensors, and the Edit LoRA needs a newer ComfyUI." },
+        { title: "Flux/Klein 9B", note: "9B is higher quality. 4B is smaller and lighter. The 9B diffusion model is gated on Hugging Face: accept its licence on its page, then save your Hugging Face token in the box at the top of this tab (H3 Studio: also in Menu > App Settings) and it installs like the others. Without a token, download it from its page.", hint: "Flux/Klein 9B" },
+        { title: "Flux/Klein 4B", note: "4B is smaller and lighter." },
+        { title: "Ernie Image", note: "Ernie diffusion model, Ministral text encoder, and VAE." },
+      ],
       groups: [
         { title: "ZImage", note: "Core ZImage Turbo diffusion model, Qwen text encoder, and VAE.", downloads: ZIMAGE_MODEL_DOWNLOADS },
         { title: "Krea2", note: "Krea2 text-to-image model used by the Reference Builder Krea 2 option.", downloads: KREA2_MODEL_DOWNLOADS },
@@ -398,34 +431,38 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
         { title: "Flux/Klein 4B", note: "4B is smaller and lighter.", downloads: FLUX_KLEIN_4B_MODEL_DOWNLOADS },
         { title: "Ernie Image", note: "Ernie diffusion model, Ministral text encoder, and VAE.", downloads: ERNIE_MODEL_DOWNLOADS },
       ],
-    },
-    {
+    }),
+    catalogTab({
       id: "llm",
       label: "LLM Models",
-      subTabs: [
-        {
-          id: "gemma",
-          label: "Gemma",
-          groups: [
-            { title: "LLM / Gemma", note: "SuperGemma is used for text prompting. Gemma Vision GGUF plus its matching mmproj are used for image-reference prompting.", downloads: GEMMA_LLM_MODEL_DOWNLOADS },
-          ],
-        },
-        {
-          id: "qwen",
-          label: "Qwen",
-          groups: [
-            { title: "LLM / Qwen", note: "Qwen3.8 requires both a chosen GGUF model (including all shards for that quantization) and its matching vision mmproj. Rename the projector to qwen-mmproj-BF16.gguf so it is not confused with Gemma's mmproj-BF16.gguf.", downloads: QWEN_LLM_MODEL_DOWNLOADS },
-          ],
-        },
+      category: "llm",
+      intro: "Local LLM models for prompt writing. Each Install Recommended button installs that card's files into ComfyUI/models/LLM. Starred files are the recommended ones. For Qwen, tick another quantization instead if you want a different size.",
+      cards: [
+        { title: "Gemma", note: "SuperGemma is used for text prompting. Gemma Vision GGUF plus its matching mmproj are used for image-reference prompting.", hint: "LLM / Gemma" },
+        { title: "Qwen", note: "Qwen3.8 needs one GGUF model and its vision mmproj. Pick one quantization: a bigger file is more accurate and needs more memory. The mmproj is saved as qwen-mmproj-BF16.gguf so it is not confused with Gemma's mmproj-BF16.gguf.", hint: "LLM / Qwen" },
       ],
-    },
-    {
+      groups: [
+        { title: "LLM / Gemma", note: "SuperGemma is used for text prompting. Gemma Vision GGUF plus its matching mmproj are used for image-reference prompting.", downloads: GEMMA_LLM_MODEL_DOWNLOADS },
+        { title: "LLM / Qwen", note: "Qwen3.8 requires both a chosen GGUF model (including all shards for that quantization) and its matching vision mmproj. Rename the projector to qwen-mmproj-BF16.gguf so it is not confused with Gemma's mmproj-BF16.gguf.", downloads: QWEN_LLM_MODEL_DOWNLOADS },
+      ],
+    }),
+    catalogTab({
       id: "minimax",
       label: "MiniMax H3",
+      category: "minimax",
+      intro: "Install Recommended downloads the files the Builder selects by default: the Ref2VA diffusion model, the Qwen3-VL text encoder, both VAEs, the Turbo LoRAs and the latent upscaler. Every file goes into the right ComfyUI folder. Tick any other variant to install it too. The diffusion models are large, so check the size first.",
+      cards: [
+        { title: "Core models", note: "The diffusion model, text encoder and VAEs the Builder selects by default for MiniMax H3 rendering.", hint: "MiniMax H3" },
+        { title: "More diffusion models (official)", note: "Other official variants. FL2VA is first and last frame to video, Ref2VA is reference to video. Pruned and quantized files are smaller. Select one that matches your render mode.", hint: "MiniMax H3" },
+        { title: "More diffusion models (Singularity)", note: "Community Singularity fine-tunes for reference to video.", hint: "MiniMax H3" },
+        { title: "LoRAs (Kijai)", note: "Turbo LoRAs by Kijai. The starred one is the Builder's default for 3 Pass.", hint: "MiniMax H3" },
+        { title: "LoRAs (LightX2V Turbo)", note: "LightX2V Turbo LoRAs in ComfyUI format. The starred one is the Builder's default for 2 Pass.", hint: "MiniMax H3" },
+        { title: "Latent upscaler", note: "The MiniMax H3 latent upscaler model used by the 2 Pass workflows. ComfyUI 0.44.0 and newer has the node built in, the model file is separate.", hint: "MiniMax H3" },
+      ],
       groups: [
         { title: "MiniMax H3", note: "Required diffusion model, Qwen3-VL text encoder, video VAE, and audio VAE for MiniMax H3 rendering.", downloads: MINIMAX_H3_MODEL_DOWNLOADS },
       ],
-    },
+    }),
     // Installs the two DMAD LoRAs into models/loras (dmad_models_tab.mjs). render returns a function that stops its polling.
     { id: "dmad", label: "Dmad Models", custom: true, render: renderDmadModelsTab },
     { id: "custom-nodes", label: "Custom Nodes", custom: true },
@@ -461,6 +498,20 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
     installStops = [];
   };
 
+  // Where a card's files live in ComfyUI (`MODEL_FOLDER_HINTS`, by `hint` or the title of the card).
+  const showFolderHint = (group) => {
+    const pre = document.createElement("pre");
+    pre.textContent = MODEL_FOLDER_HINTS[group.hint || group.title] || "No folder location listed yet.";
+    pre.style.cssText = "white-space:pre-wrap;margin:0;padding:12px;border:1px solid #334155;border-radius:8px;background:#020617;color:#bae6fd;font-size:12px;line-height:1.45;overflow:auto;";
+    showInfoModal({
+      title: `${group.title} Folder Locations`,
+      lines: [
+        "Place the files here, then restart ComfyUI if the dropdowns do not refresh.",
+        pre,
+      ],
+    });
+  };
+
   const renderGroups = (groups) => {
     stopInstallButtons();
     body.replaceChildren();
@@ -478,16 +529,7 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
       folderButton.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        const pre = document.createElement("pre");
-        pre.textContent = MODEL_FOLDER_HINTS[group.title] || "No folder location listed yet.";
-        pre.style.cssText = "white-space:pre-wrap;margin:0;padding:12px;border:1px solid #334155;border-radius:8px;background:#020617;color:#bae6fd;font-size:12px;line-height:1.45;overflow:auto;";
-        showInfoModal({
-          title: `${group.title} Folder Locations`,
-          lines: [
-            "Place the files here, then restart ComfyUI if the dropdowns do not refresh.",
-            pre,
-          ],
-        });
+        showFolderHint(group);
       });
       titleRow.append(groupTitle, folderButton);
       const note = document.createElement("div");
@@ -562,8 +604,54 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
     managerMissing.style.cssText = "display:none;padding:10px 12px;border:1px solid #b91c1c;border-radius:7px;background:#450a0a;color:#fecaca;font-size:12px;line-height:1.4;";
     const list = document.createElement("div");
     list.style.cssText = "display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px;";
-    body.append(intro, actions, restartNote, managerMissing, list);
+    const installProgress = document.createElement("div");
+    installProgress.style.cssText = "display:none;padding:10px 12px;border:1px solid #1d4ed8;border-radius:7px;background:#172554;color:#bfdbfe;font-size:13px;line-height:1.45;white-space:pre-wrap;word-break:break-word;";
+    body.append(intro, actions, installProgress, restartNote, managerMissing, list);
     let managerAvailable = true;
+    let installing = false;
+    // H3 Studio installs the nodes itself when the pack is not in ComfyUI, and tells how far it is (`/install/progress`). Read it while the
+    // install request is open. The pack inside ComfyUI has no such route, so the first answer that is not ok ends the reading and the text stays.
+    const watchInstall = () => {
+      installing = true;
+      installProgress.textContent = "Starting the install. ComfyUI-Manager runs on its own, so ComfyUI's console stays quiet. This can take several minutes.";
+      installProgress.style.display = "";
+      let stopped = false;
+      let reading = false;
+      let seen = 0;
+      const tick = async () => {
+        if (reading || stopped) return;
+        reading = true;
+        try {
+          const response = await api.fetchApi("/vrgdg/video_builder/custom_nodes/install/progress", { timeoutMs: null });
+          if (!response.ok) {
+            clearInterval(timer);
+            return;
+          }
+          const p = await response.json();
+          if (stopped || !p.running) return;
+          const finished = (p.done?.length || 0) + (p.failed?.length || 0);
+          const label = VIDEO_BUILDER_CUSTOM_NODES.find((node) => node.id === p.current)?.label || p.current || "";
+          const failed = p.failed?.length ? `\n${p.failed.length} failed so far.` : "";
+          installProgress.textContent = `Installing ${Math.min(finished + 1, p.total)} of ${p.total}: ${label} (${p.current_seconds || 0}s)${p.line ? `\n${p.line}` : ""}${failed}`;
+          if (finished !== seen) {
+            seen = finished;
+            await load();
+          }
+        } catch {
+          // Keep the text and try again.
+        } finally {
+          reading = false;
+        }
+      };
+      const timer = setInterval(tick, 1500);
+      return () => {
+        stopped = true;
+        installing = false;
+        clearInterval(timer);
+        installProgress.style.display = "none";
+        installAll.disabled = !managerAvailable;
+      };
+    };
     let managerNote = {};
     let comfyuiVersion = "";
     // Every answer of the status route says whether nodes can be installed, why not, and which ComfyUI this is.
@@ -576,7 +664,7 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
     const draw = (statuses = []) => {
       managerMissing.textContent = managerNoteText(managerNote);
       managerMissing.style.display = managerAvailable ? "none" : "";
-      installAll.disabled = !managerAvailable;
+      installAll.disabled = !managerAvailable || installing;
       const byId = new Map(statuses.map((item) => [item.id, item]));
       list.replaceChildren();
       for (const item of VIDEO_BUILDER_CUSTOM_NODES) {
@@ -616,6 +704,7 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
         install.addEventListener("click", async () => {
           install.disabled = true;
           install.textContent = "Installing...";
+          const stopWatching = watchInstall();
           try {
             const result = await postJson("/vrgdg/video_builder/custom_nodes/install", { ids: [item.id] }, 1200000);
             toast(`${item.label} installed. Restart ComfyUI before using it.`);
@@ -625,6 +714,7 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
           } catch (error) {
             toast(String(error?.message || error), true);
           } finally {
+            stopWatching();
             install.disabled = button.disabled;
             install.textContent = button.text;
           }
@@ -654,6 +744,7 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
     installAll.onclick = async () => {
       installAll.disabled = true;
       installAll.textContent = "Installing Missing...";
+      const stopWatching = watchInstall();
       try {
         const current = await getJson("/vrgdg/video_builder/custom_nodes/status");
         const missing = missingNodeIds(current.nodes);
@@ -667,6 +758,7 @@ export function showModelDownloadModal({ modelSelections = [], select = "" } = {
       } catch (error) {
         toast(String(error?.message || error), true);
       } finally {
+        stopWatching();
         installAll.disabled = !managerAvailable;
         installAll.textContent = "Install Missing Nodes";
       }

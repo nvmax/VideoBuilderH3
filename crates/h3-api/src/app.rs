@@ -292,6 +292,8 @@ pub fn router(state: Arc<AppState>) -> Router {
         .route("/setup/elevenlabs", get(sp::app_key_status).put(sp::app_key_save))
         .route("/setup/elevenlabs/test", post(sp::app_key_test))
         .route("/setup/comfy_api_key", get(crate::setup_routes::comfy_key_status).put(crate::setup_routes::comfy_key_save))
+        .route("/setup/hf_token", get(crate::setup_routes::hf_token_status).put(crate::setup_routes::hf_token_save))
+        .route("/setup/hf_token/test", post(crate::setup_routes::hf_token_test))
         .route("/projects/{pid}/prompts/motion-notes", post(lr::motion_notes))
         .route("/projects/{pid}/scenes/{sid}/prompts/enhance", post(lr::enhance_scene_prompt))
         .route("/projects/{pid}/scenes/{sid}/prompts/edit", post(lr::edit_scene_prompt))

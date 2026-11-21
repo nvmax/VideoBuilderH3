@@ -50,7 +50,7 @@ function restartApp() {
 
 // A saved key (ElevenLabs, ComfyUI) is kept for every project, in the same place as the Builder's own settings, and used by any project that has no key of its own. It
 // saves at once, with no restart. An agent can make speech with it through the app and never sees it.
-function keyBlock({ title, path, placeholder, hint: hintText, testPath = "", onChange = null }) {
+function keyBlock({ title, path, placeholder, hint: hintText, testPath = "", onChange = null, noun = "key" }) {
   const wrap = element("div", "margin:14px 0 10px;border-top:1px solid #1e293b;padding-top:12px;");
   wrap.append(element("div", "font-weight:800;color:#cbd5e1;", title));
   const row = element("div", "display:flex;gap:6px;margin-top:3px;flex-wrap:wrap;");
@@ -58,7 +58,7 @@ function keyBlock({ title, path, placeholder, hint: hintText, testPath = "", onC
   input.type = "password";
   input.autocomplete = "off";
   input.spellcheck = false;
-  const save = button("Save key");
+  const save = button(`Save ${noun}`);
   const check = button("Test");
   check.style.display = testPath ? "" : "none";
   const remove = button("Remove");
@@ -71,15 +71,15 @@ function keyBlock({ title, path, placeholder, hint: hintText, testPath = "", onC
     state.style.color = color;
   };
   const show = (configured) => {
-    input.placeholder = configured ? "A key is saved. Paste a new one to replace it." : placeholder;
+    input.placeholder = configured ? `A ${noun} is saved. Paste a new one to replace it.` : placeholder;
     remove.style.display = configured ? "" : "none";
-    say(configured ? "A key is saved." : "No key is saved.", configured ? "#86efac" : "#94a3b8");
+    say(configured ? `A ${noun} is saved.` : `No ${noun} is saved.`, configured ? "#86efac" : "#94a3b8");
   };
   show(false);
   call(path).then((found) => show(Boolean(found.configured))).catch((error) => say(String(error?.message || error), "#fca5a5"));
   save.onclick = async () => {
     const key = input.value.trim();
-    if (!key) return say("Paste a key first.", "#fbbf24");
+    if (!key) return say(`Paste a ${noun} first.`, "#fbbf24");
     try {
       const found = await call(path, { method: "PUT", body: JSON.stringify({ api_key: key }) });
       input.value = "";
@@ -92,8 +92,8 @@ function keyBlock({ title, path, placeholder, hint: hintText, testPath = "", onC
   check.onclick = async () => {
     say("Testing...");
     try {
-      await call(testPath, { method: "POST", body: JSON.stringify({ api_key: input.value.trim() }) });
-      say("Connected: the key was accepted.", "#86efac");
+      const found = await call(testPath, { method: "POST", body: JSON.stringify({ api_key: input.value.trim() }) });
+      say(found?.user ? `Connected as ${found.user}: the ${noun} was accepted.` : `Connected: the ${noun} was accepted.`, "#86efac");
     } catch (error) {
       say(String(error?.message || error), "#fca5a5");
     }
@@ -130,6 +130,19 @@ function comfyKeyBlock() {
     placeholder: "Paste your ComfyUI API key",
     onChange: () => api.refreshCredentials(),
     hint: "For the API Nodes video engine (Seedance 2.5): your comfy.org account pays for each video, so it needs credits. Create the key at platform.comfy.org. It is saved at once and stays on this computer.",
+  });
+}
+
+// The Hugging Face token the Models dialog downloads with. A model that Hugging Face keeps behind a login (the Flux Klein 9B diffusion model) installs only with
+// one, and every download counts against the account instead of the shared limit for anonymous ones. It is kept on this computer and no screen or agent gets it back.
+function hfTokenBlock() {
+  return keyBlock({
+    title: "Hugging Face token",
+    noun: "token",
+    path: "/setup/hf_token",
+    testPath: "/setup/hf_token/test",
+    placeholder: "Paste your Hugging Face token (hf_...)",
+    hint: "For the Models dialog: it installs gated models such as the Flux Klein 9B diffusion model with it. Create a token with Read access at huggingface.co/settings/tokens and accept the model's licence on its page with the same account. It is saved at once and stays on this computer.",
   });
 }
 
@@ -170,6 +183,7 @@ export function openAppSettings({ welcome = false } = {}) {
   }
   panel.append(elevenLabsBlock());
   panel.append(comfyKeyBlock());
+  panel.append(hfTokenBlock());
   const suggestion = element("div", "display:none;margin:-2px 0 10px;color:#94a3b8;font-size:12px;");
   panel.append(suggestion);
 

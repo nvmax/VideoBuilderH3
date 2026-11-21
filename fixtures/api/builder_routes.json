@@ -1925,7 +1925,7 @@
    "path": "/vrgdg/resource-monitor",
    "handler": "resource_monitor",
    "file": "core/system_routes.py",
-   "line": 78,
+   "line": 82,
    "doc": "",
    "callers": [
     "VRGDG_ResourceMonitor.js",
@@ -1937,7 +1937,7 @@
    "path": "/vrgdg/resource-monitor/clear-memory",
    "handler": "clear_memory",
    "file": "core/system_routes.py",
-   "line": 154,
+   "line": 158,
    "doc": "",
    "callers": [
     "VRGDG_ResourceMonitor.js"
@@ -1948,7 +1948,7 @@
    "path": "/vrgdg/update/v10/status",
    "handler": "vrgdg_update_v10_status",
    "file": "core/system_routes.py",
-   "line": 405,
+   "line": 409,
    "doc": "",
    "callers": [
     "update_banner.mjs"
@@ -1959,7 +1959,7 @@
    "path": "/vrgdg/update/v10",
    "handler": "vrgdg_update_v10",
    "file": "core/system_routes.py",
-   "line": 413,
+   "line": 417,
    "doc": "",
    "callers": [
     "toolbar.mjs"
@@ -1970,7 +1970,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/status",
    "handler": "custom_nodes_status",
    "file": "core/system_routes.py",
-   "line": 543,
+   "line": 547,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1981,7 +1981,7 @@
    "path": "/vrgdg/video_builder/custom_nodes/install",
    "handler": "custom_nodes_install",
    "file": "core/system_routes.py",
-   "line": 548,
+   "line": 552,
    "doc": "",
    "callers": [
     "dialogs.mjs"
@@ -1992,9 +1992,10 @@
    "path": "/vrgdg/video_builder/models/status",
    "handler": "models_status",
    "file": "core/system_routes.py",
-   "line": 567,
+   "line": 571,
    "doc": "Allowlisted downloadable models (the Models dialog's DMAD Models tab): installed or not, and download progress.",
    "callers": [
+    "catalog_models_tab.mjs",
     "dmad_models_tab.mjs",
     "model_install_button.mjs"
    ]
@@ -2004,9 +2005,10 @@
    "path": "/vrgdg/video_builder/models/install",
    "handler": "models_install",
    "file": "core/system_routes.py",
-   "line": 574,
+   "line": 578,
    "doc": "Start downloading allowlisted models into ComfyUI's model folders. Poll ``models/status`` for progress.",
    "callers": [
+    "catalog_models_tab.mjs",
     "dmad_models_tab.mjs",
     "model_install_button.mjs"
    ]
@@ -2016,11 +2018,45 @@
    "path": "/vrgdg/video_builder/models/cancel",
    "handler": "models_cancel",
    "file": "core/system_routes.py",
-   "line": 585,
+   "line": 589,
    "doc": "Stop running model downloads.",
    "callers": [
+    "catalog_models_tab.mjs",
     "dmad_models_tab.mjs",
     "model_install_button.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/video_builder/models/hf_token",
+   "handler": "models_hf_token_save",
+   "file": "core/system_routes.py",
+   "line": 599,
+   "doc": "Save the Hugging Face token the installer downloads with (``api_key``; an empty string clears it). No reply carries the token.",
+   "callers": [
+    "hf_token_box.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/video_builder/models/hf_token/test",
+   "handler": "models_hf_token_test",
+   "file": "core/system_routes.py",
+   "line": 612,
+   "doc": "Ask Hugging Face whose token this is: the one in ``api_key`` when it is sent, else the saved one.",
+   "callers": [
+    "hf_token_box.mjs"
+   ]
+  },
+  {
+   "method": "POST",
+   "path": "/vrgdg/video_builder/comfyui/restart",
+   "handler": "comfyui_restart",
+   "file": "core/system_routes.py",
+   "line": 673,
+   "doc": "Restart ComfyUI through ComfyUI-Manager (the Video Builder's Restart ComfyUI button). The restart usually cuts this answer short, so the",
+   "callers": [
+    "comfy_restart.mjs"
    ]
   },
   {

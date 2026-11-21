@@ -1,6 +1,7 @@
 //! The Builder's Custom Nodes window through the real router, against a small stand-in for ComfyUI. The VRGDG node pack inside ComfyUI knows
 //! whether ComfyUI-Manager is in its Python, which ComfyUI version this is and what that version has built in, and it installs the nodes. So
-//! the app asks the pack, and only reads the folder itself (and says why installing is not possible) when the pack cannot answer.
+//! the app asks the pack. When the pack cannot answer it reads the folder itself and installs with ComfyUI-Manager in ComfyUI's Python, or says
+//! why that is not possible.
 
 use std::path::Path;
 use std::sync::{Arc, Mutex};
@@ -63,7 +64,8 @@ async fn comfy(pack: bool, custom_nodes: &Path, seen: Seen) -> String {
             }),
         )
     } else {
-        app
+        // The real ComfyUI answers a POST there with 405, not 404: its catch-all route takes the GET of every address.
+        app.route(INSTALL, get(|| async { "" }))
     };
     let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
     let url = format!("http://{}", listener.local_addr().unwrap());
@@ -122,11 +124,15 @@ async fn with_the_pack_in_comfyui_the_answer_is_the_packs_own() {
 async fn without_the_pack_the_folder_is_read_here_and_the_note_says_why_nothing_installs() {
     let status = start(false).await.status().await;
     assert_eq!(status["manager_available"], false);
+    // The stand-in ComfyUI has no Python next to it, so the app cannot run ComfyUI-Manager either.
     let note = status["manager_note"].as_str().unwrap();
-    assert!(note.contains("VRGDG node pack is not installed in the ComfyUI this app uses"), "{note}");
+    assert!(note.contains("could not find the Python that runs ComfyUI"), "{note}");
     // The folder scan still tells what is installed.
     assert_eq!((node(&status, "kjnodes")["installed"].clone(), node(&status, "gguf")["installed"].clone()), (json!(true), json!(false)));
-    assert_eq!(status["nodes"].as_array().unwrap().len(), 9);
+    // Nine nodes and the RTX Video Super Resolution library, which is installed with pip.
+    assert_eq!(status["nodes"].as_array().unwrap().len(), 10);
+    let vfx = node(&status, "nvidia_vfx");
+    assert_eq!((vfx["source"].clone(), vfx["installed"].clone()), (json!("pip"), json!(false)));
 }
 
 #[tokio::test]
@@ -153,10 +159,13 @@ async fn an_install_goes_to_the_pack_with_its_ids_and_comes_back_with_its_answer
 }
 
 #[tokio::test]
-async fn an_install_without_the_pack_says_what_to_install() {
-    let (status, answer) = start(false).await.install(json!(["gguf"])).await;
+async fn an_install_without_the_pack_is_done_here_and_says_why_when_it_cannot_be() {
+    let server = start(false).await;
+    let (status, answer) = server.install(json!(["gguf"])).await;
     assert_eq!(status, 501);
-    assert!(answer["error"].as_str().unwrap().contains("needs the VRGDG node pack in the ComfyUI this app uses"), "{answer}");
+    assert!(answer["error"].as_str().unwrap().contains("could not find the Python that runs ComfyUI"), "{answer}");
+    let (status, answer) = server.install(json!("gguf")).await;
+    assert_eq!((status, answer["error"].clone()), (400, json!("ids must be a list.")));
 }
 
 #[tokio::test]
